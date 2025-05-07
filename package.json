@@ -1,0 +1,46 @@
+{
+  "name": "truckingsemis",
+  "version": "1.0.0",
+  "description": "A modern web-based application for trucking companies to manage weight checking and load management.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "push-schema": "node scripts/push-schema.js",
+    "update-schema": "node scripts/update-schema.js",
+    "update-deps": "node scripts/update-dependencies.js",
+    "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
+    "install-deps": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.7",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "pg": "^8.11.3",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simplehostingsolutions/truckingsemis.git"
+  },
+  "keywords": [
+    "trucking",
+    "weight-management",
+    "logistics"
+  ],
+  "author": "simplehostingsolutions",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simplehostingsolutions/truckingsemis/issues"
+  },
+  "homepage": "https://github.com/simplehostingsolutions/truckingsemis#readme",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3"
+  }
+}

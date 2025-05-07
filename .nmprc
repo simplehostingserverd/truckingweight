@@ -1,0 +1,19 @@
+# .npmrc
+
+# Always save exact versions (prevents semver range drift)
+save-exact=true
+
+# Prevent using legacy peer deps (forces modern resolution)
+legacy-peer-deps=false
+
+# Audit automatically after install
+audit=true
+
+# Always prefer offline cache if available (speeds up CI/CD)
+prefer-offline=true
+
+# Disallow package-lock.json shrinkwrap bugs (ensures consistency)
+package-lock=true
+
+# Optional: Make npm install fail if audit finds vulnerabilities
+audit-level=high
