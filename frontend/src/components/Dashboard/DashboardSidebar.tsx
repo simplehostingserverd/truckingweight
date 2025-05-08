@@ -15,43 +15,55 @@ import {
 } from '@heroicons/react/24/outline';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { cn } from '@/lib/utils';
-import { useIsMobile, useIsTablet, useMediaQuery, breakpoints } from '@/hooks/useMediaQuery';
+
+// Define breakpoints directly to avoid using the hook
+const BREAKPOINTS = {
+  md: 768,
+  lg: 1024,
+  xl: 1280
+};
 
 interface SidebarProps {
   isAdmin: boolean;
 }
 
 export default function DashboardSidebar({ isAdmin }: SidebarProps) {
-  // Always initialize with a safe default for SSR
   const [collapsed, setCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
   const pathname = usePathname();
-  const isMobile = useIsMobile();
-  const isTablet = useIsTablet();
-  const isLargeScreen = useMediaQuery('(min-width: 1280px)');
 
-  // Set mounted state after hydration
+  // Handle all responsive states in a single effect
   useEffect(() => {
+    // Mark as mounted
     setMounted(true);
 
-    // Set initial collapsed state based on screen size
-    if (window.matchMedia(breakpoints.md).matches && !window.matchMedia(breakpoints.lg).matches) {
-      setCollapsed(true);
-    } else {
-      setCollapsed(false);
-    }
+    // Function to check screen sizes
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < BREAKPOINTS.md);
+      setIsTablet(width >= BREAKPOINTS.md && width < BREAKPOINTS.lg);
+      setIsLargeScreen(width >= BREAKPOINTS.xl);
+
+      // Set collapsed state based on screen size
+      if (width >= BREAKPOINTS.md && width < BREAKPOINTS.lg) {
+        setCollapsed(true);
+      } else if (width >= BREAKPOINTS.xl) {
+        setCollapsed(false);
+      }
+    };
+
+    // Initial check
+    checkScreenSize();
+
+    // Add event listener
+    window.addEventListener('resize', checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
-
-  // Auto-collapse sidebar on smaller screens - only after mounting
-  useEffect(() => {
-    if (!mounted) return;
-
-    if (isTablet) {
-      setCollapsed(true);
-    } else if (isLargeScreen) {
-      setCollapsed(false);
-    }
-  }, [isTablet, isLargeScreen, mounted]);
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },

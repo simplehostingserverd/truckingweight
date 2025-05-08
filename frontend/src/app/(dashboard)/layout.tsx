@@ -12,10 +12,10 @@ export default async function DashboardLayout({
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user }, error } = await supabase.auth.getUser();
 
   // If user is not logged in, redirect to login
-  if (!session) {
+  if (error || !user) {
     redirect('/login');
   }
 
@@ -23,7 +23,7 @@ export default async function DashboardLayout({
   const { data: userData } = await supabase
     .from('users')
     .select('*, companies(*)')
-    .eq('id', session.user.id)
+    .eq('id', user.id)
     .single();
 
   return (

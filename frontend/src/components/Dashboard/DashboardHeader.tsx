@@ -21,7 +21,7 @@ import {
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { useTheme } from 'next-themes';
 import MobileNav from '@/components/ui/MobileNav';
-import { useIsMobile } from '@/hooks/useMediaQuery';
+// Import removed to avoid React errors
 
 type User = Database['public']['Tables']['users']['Row'];
 
@@ -35,10 +35,25 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
   const supabase = createClientComponentClient<Database>();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Set mounted state after hydration
+  // Set mounted state after hydration and check screen size
   useEffect(() => {
     setMounted(true);
+
+    // Check if mobile
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+
+    // Initial check
+    checkIfMobile();
+
+    // Add resize listener
+    window.addEventListener('resize', checkIfMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
   const handleSignOut = async () => {
@@ -50,8 +65,6 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
-
-  const isMobile = useIsMobile();
 
   // Define navigation items for mobile menu
   const navigation = [

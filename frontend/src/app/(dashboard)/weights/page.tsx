@@ -7,40 +7,40 @@ import { PlusIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 export default async function Weights() {
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
-  
+
   // Get user data
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
   const { data: userData } = await supabase
     .from('users')
     .select('company_id')
-    .eq('id', session?.user.id)
+    .eq('id', user?.id)
     .single();
-  
+
   // Get weights with vehicle and driver info
   const { data: weights, error } = await supabase
     .from('weights')
     .select(`
-      id, 
-      weight, 
-      date, 
-      time, 
-      status, 
+      id,
+      weight,
+      date,
+      time,
+      status,
       created_at,
-      vehicles(id, name), 
+      vehicles(id, name),
       drivers(id, name)
     `)
     .eq('company_id', userData?.company_id)
     .order('created_at', { ascending: false });
-  
+
   if (error) {
     console.error('Error fetching weights:', error);
   }
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Weight Measurements</h1>
-        
+
         <div className="flex space-x-2">
           <Link
             href="/weights/export"
@@ -49,7 +49,7 @@ export default async function Weights() {
             <ArrowDownTrayIcon className="h-4 w-4 mr-2" />
             Export
           </Link>
-          
+
           <Link
             href="/weights/new"
             className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
@@ -59,7 +59,7 @@ export default async function Weights() {
           </Link>
         </div>
       </div>
-      
+
       <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

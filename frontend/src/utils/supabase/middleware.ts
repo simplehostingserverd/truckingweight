@@ -9,6 +9,40 @@ import { getSupabaseConfig } from './config';
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
+  // Apply security headers
+
+  // Content-Security-Policy - Helps prevent XSS attacks
+  res.headers.set(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co; connect-src 'self' https://*.supabase.co; img-src 'self' data: https://images.pexels.com https://*.supabase.co; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; frame-src 'self';"
+  );
+
+  // X-XSS-Protection - Stops pages from loading when they detect reflected XSS attacks
+  res.headers.set('X-XSS-Protection', '1; mode=block');
+
+  // X-Frame-Options - Prevents clickjacking by not allowing the page to be embedded in iframes
+  res.headers.set('X-Frame-Options', 'SAMEORIGIN');
+
+  // X-Content-Type-Options - Prevents MIME type sniffing
+  res.headers.set('X-Content-Type-Options', 'nosniff');
+
+  // Referrer-Policy - Controls how much referrer information is included with requests
+  res.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+  // Strict-Transport-Security - Ensures the browser only uses HTTPS (prevents MITM attacks)
+  if (process.env.NODE_ENV === 'production') {
+    res.headers.set(
+      'Strict-Transport-Security',
+      'max-age=31536000; includeSubDomains; preload'
+    );
+  }
+
+  // Permissions-Policy - Limits which features and APIs can be used in the browser
+  res.headers.set(
+    'Permissions-Policy',
+    'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+  );
+
   // Get Supabase configuration
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
@@ -21,9 +55,9 @@ export async function middleware(req: NextRequest) {
   });
 
   try {
-    // Refresh session if expired - required for Server Components
-    const { data } = await supabase.auth.getSession();
-    const session = data?.session;
+    // Get authenticated user - more secure than getSession()
+    const { data, error } = await supabase.auth.getUser();
+    const user = data?.user;
 
     // Check auth condition
     const isAuthRoute = req.nextUrl.pathname.startsWith('/login') ||
@@ -39,12 +73,12 @@ export async function middleware(req: NextRequest) {
                           req.nextUrl.pathname.match(/\.(svg|png|jpg|jpeg|gif|webp)$/);
 
     // If accessing auth routes while logged in, redirect to dashboard
-    if (session && isAuthRoute) {
+    if (user && isAuthRoute) {
       return NextResponse.redirect(new URL('/dashboard', req.url));
     }
 
-    // If accessing protected routes without session, redirect to login
-    if (!session && !isAuthRoute && !isPublicAsset && !isPublicApiRoute &&
+    // If accessing protected routes without authenticated user, redirect to login
+    if (!user && !isAuthRoute && !isPublicAsset && !isPublicApiRoute &&
         !req.nextUrl.pathname.startsWith('/_next') &&
         !req.nextUrl.pathname.startsWith('/api')) {
       return NextResponse.redirect(new URL('/login', req.url));

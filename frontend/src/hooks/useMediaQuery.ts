@@ -1,44 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-
 /**
- * Custom hook for responsive design
- * @param query - CSS media query string (e.g., '(min-width: 768px)')
- * @returns boolean indicating if the media query matches
+ * TEMPORARY IMPLEMENTATION
+ *
+ * This is a placeholder implementation to avoid React errors.
+ * All hooks return false to prevent any rendering issues.
+ * Components should implement their own responsive logic directly.
  */
-export function useMediaQuery(query: string): boolean {
-  // Always return false during SSR to avoid hydration mismatches
-  const [matches, setMatches] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-
-    // Only run in the browser
-    if (typeof window !== 'undefined') {
-      // Initial check
-      const media = window.matchMedia(query);
-      setMatches(media.matches);
-
-      // Setup listener using the more compatible approach
-      const listener = () => setMatches(media.matches);
-
-      // Use the appropriate method based on browser support
-      if (media.addEventListener) {
-        media.addEventListener('change', listener);
-        return () => media.removeEventListener('change', listener);
-      } else {
-        // Fallback for older browsers
-        media.addListener(listener);
-        return () => media.removeListener(listener);
-      }
-    }
-  }, [query]);
-
-  // Don't use media queries until component is mounted
-  return mounted ? matches : false;
-}
 
 // Predefined breakpoints based on Tailwind CSS defaults
 export const breakpoints = {
@@ -49,17 +17,22 @@ export const breakpoints = {
   '2xl': '(min-width: 1536px)',
 };
 
-// Hooks for common breakpoints
+// Placeholder implementation that always returns false
+export function useMediaQuery(_query: string): boolean {
+  return false;
+}
+
+// Hooks for common breakpoints - all return false to avoid React errors
 export function useIsMobile(): boolean {
-  return !useMediaQuery(breakpoints.md);
+  return false;
 }
 
 export function useIsTablet(): boolean {
-  return useMediaQuery(breakpoints.md) && !useMediaQuery(breakpoints.lg);
+  return false;
 }
 
 export function useIsDesktop(): boolean {
-  return useMediaQuery(breakpoints.lg);
+  return false;
 }
 
 export default useMediaQuery;

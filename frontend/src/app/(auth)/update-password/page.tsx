@@ -15,17 +15,17 @@ export default function UpdatePassword() {
   const supabase = createClientComponentClient();
 
   useEffect(() => {
-    // Check if we have a session when the component mounts
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      // If no session, redirect to login
-      if (!session) {
+    // Check if we have a user when the component mounts
+    const checkUser = async () => {
+      const { data: { user }, error } = await supabase.auth.getUser();
+
+      // If no user or error, redirect to login
+      if (error || !user) {
         router.push('/login');
       }
     };
-    
-    checkSession();
+
+    checkUser();
   }, [router, supabase.auth]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,7 +51,7 @@ export default function UpdatePassword() {
       }
 
       setMessage('Password updated successfully');
-      
+
       // Redirect to dashboard after a short delay
       setTimeout(() => {
         router.push('/dashboard');
@@ -75,7 +75,7 @@ export default function UpdatePassword() {
             Enter your new password below.
           </p>
         </div>
-        
+
         {error && (
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30">
             <div className="flex">
@@ -87,7 +87,7 @@ export default function UpdatePassword() {
             </div>
           </div>
         )}
-        
+
         {message && (
           <div className="rounded-md bg-green-50 p-4 dark:bg-green-900/30">
             <div className="flex">
@@ -99,7 +99,7 @@ export default function UpdatePassword() {
             </div>
           </div>
         )}
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
@@ -118,7 +118,7 @@ export default function UpdatePassword() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            
+
             <div>
               <label htmlFor="confirm-password" className="sr-only">
                 Confirm New Password
@@ -146,7 +146,7 @@ export default function UpdatePassword() {
               {isLoading ? 'Updating...' : 'Update Password'}
             </button>
           </div>
-          
+
           <div className="text-center">
             <Link
               href="/dashboard"

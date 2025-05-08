@@ -9,15 +9,15 @@ export default async function AuthLayout({
 }) {
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
-  
+
   // Check if user is authenticated
-  const { data: { session } } = await supabase.auth.getSession();
-  
+  const { data: { user } } = await supabase.auth.getUser();
+
   // If user is already logged in, redirect to dashboard
-  if (session) {
+  if (user) {
     redirect('/dashboard');
   }
-  
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {children}

@@ -30,10 +30,10 @@ export default function CreateLoad() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Get session
-        const { data: { session } } = await supabase.auth.getSession();
+        // Get authenticated user
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-        if (!session) {
+        if (authError || !user) {
           router.push('/login');
           return;
         }
@@ -42,7 +42,7 @@ export default function CreateLoad() {
         const { data: userData, error: userError } = await supabase
           .from('users')
           .select('company_id')
-          .eq('id', session.user.id)
+          .eq('id', user.id)
           .single();
 
         if (userError) {
@@ -159,10 +159,10 @@ export default function CreateLoad() {
     setError('');
 
     try {
-      // Get session
-      const { data: { session } } = await supabase.auth.getSession();
+      // Get authenticated user
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-      if (!session) {
+      if (authError || !user) {
         router.push('/login');
         return;
       }
@@ -171,7 +171,7 @@ export default function CreateLoad() {
       const { data: userData, error: userError } = await supabase
         .from('users')
         .select('company_id')
-        .eq('id', session.user.id)
+        .eq('id', user.id)
         .single();
 
       if (userError) {
