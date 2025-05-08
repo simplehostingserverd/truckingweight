@@ -5,13 +5,32 @@ import { Menu, Transition } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
-import { UserIcon, BellIcon, Cog6ToothIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
+import {
+  UserIcon,
+  BellIcon,
+  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon,
+  HomeIcon,
+  ScaleIcon,
+  TruckIcon,
+  UserGroupIcon,
+  ChartBarIcon,
+  UsersIcon,
+  BuildingOfficeIcon
+} from '@heroicons/react/24/outline';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { useTheme } from 'next-themes';
+import MobileNav from '@/components/ui/MobileNav';
+import { useIsMobile } from '@/hooks/useMediaQuery';
 
 type User = Database['public']['Tables']['users']['Row'];
 
-export default function DashboardHeader({ user }: { user: User | null }) {
+interface DashboardHeaderProps {
+  user: User | null;
+  isAdmin?: boolean;
+}
+
+export default function DashboardHeader({ user, isAdmin = false }: DashboardHeaderProps) {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
   const { theme, setTheme } = useTheme();
@@ -26,21 +45,50 @@ export default function DashboardHeader({ user }: { user: User | null }) {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
+  const isMobile = useIsMobile();
+
+  // Define navigation items for mobile menu
+  const navigation = [
+    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
+    { name: 'Weights', href: '/weights', icon: ScaleIcon },
+    { name: 'Loads', href: '/loads', icon: TruckIcon },
+    { name: 'Vehicles', href: '/vehicles', icon: TruckIcon },
+    { name: 'Drivers', href: '/drivers', icon: UserGroupIcon },
+    { name: 'Reports', href: '/reports', icon: ChartBarIcon },
+  ];
+
+  const adminNavigation = [
+    { name: 'Users', href: '/admin/users', icon: UsersIcon },
+    { name: 'Companies', href: '/admin/companies', icon: BuildingOfficeIcon },
+    { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
+  ];
+
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm z-10">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
+          <div className="flex items-center">
+            {/* Mobile menu button */}
+            {isMobile && (
+              <MobileNav
+                navigation={navigation}
+                adminNavigation={adminNavigation}
+                isAdmin={isAdmin}
+              />
+            )}
+
+            <div className="flex-shrink-0 flex items-center ml-2 lg:ml-0">
               <span className="text-xl font-bold text-primary-600 dark:text-primary-400">
                 TruckingSemis
               </span>
             </div>
           </div>
+
           <div className="flex items-center">
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none"
+              aria-label="Toggle dark mode"
             >
               {theme === 'dark' ? (
                 <SunIcon className="h-6 w-6" />
@@ -48,11 +96,15 @@ export default function DashboardHeader({ user }: { user: User | null }) {
                 <MoonIcon className="h-6 w-6" />
               )}
             </button>
-            
-            <button className="p-2 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none">
+
+            {/* Hide notifications on mobile */}
+            <button
+              className="hidden sm:block p-2 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none"
+              aria-label="Notifications"
+            >
               <BellIcon className="h-6 w-6" />
             </button>
-            
+
             <Menu as="div" className="ml-3 relative">
               <div>
                 <Menu.Button className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
@@ -76,7 +128,7 @@ export default function DashboardHeader({ user }: { user: User | null }) {
                     <p className="text-sm font-medium text-gray-900 dark:text-white">{user?.name}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email}</p>
                   </div>
-                  
+
                   <Menu.Item>
                     {({ active }) => (
                       <a
@@ -90,7 +142,7 @@ export default function DashboardHeader({ user }: { user: User | null }) {
                       </a>
                     )}
                   </Menu.Item>
-                  
+
                   <Menu.Item>
                     {({ active }) => (
                       <a
@@ -104,7 +156,7 @@ export default function DashboardHeader({ user }: { user: User | null }) {
                       </a>
                     )}
                   </Menu.Item>
-                  
+
                   <Menu.Item>
                     {({ active }) => (
                       <button

@@ -1,20 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { 
-  HomeIcon, 
-  ScaleIcon, 
-  TruckIcon, 
-  UserGroupIcon, 
-  ChartBarIcon, 
+import {
+  HomeIcon,
+  ScaleIcon,
+  TruckIcon,
+  UserGroupIcon,
+  ChartBarIcon,
   Cog6ToothIcon,
   UsersIcon,
   BuildingOfficeIcon
 } from '@heroicons/react/24/outline';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { cn } from '@/lib/utils';
+import { useIsMobile, useIsTablet, useMediaQuery } from '@/hooks/useMediaQuery';
 
 interface SidebarProps {
   isAdmin: boolean;
@@ -23,7 +24,19 @@ interface SidebarProps {
 export default function DashboardSidebar({ isAdmin }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
-  
+  const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
+  const isLargeScreen = useMediaQuery('(min-width: 1280px)');
+
+  // Auto-collapse sidebar on smaller screens
+  useEffect(() => {
+    if (isTablet) {
+      setCollapsed(true);
+    } else if (isLargeScreen) {
+      setCollapsed(false);
+    }
+  }, [isTablet, isLargeScreen]);
+
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
     { name: 'Weights', href: '/weights', icon: ScaleIcon },
@@ -32,18 +45,24 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
     { name: 'Drivers', href: '/drivers', icon: UserGroupIcon },
     { name: 'Reports', href: '/reports', icon: ChartBarIcon },
   ];
-  
+
   const adminNavigation = [
     { name: 'Users', href: '/admin/users', icon: UsersIcon },
     { name: 'Companies', href: '/admin/companies', icon: BuildingOfficeIcon },
     { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
   ];
-  
+
+  // Don't render sidebar on mobile as we use the mobile navigation instead
+  if (isMobile) {
+    return null;
+  }
+
   return (
-    <div 
+    <div
       className={cn(
         "bg-white dark:bg-gray-800 shadow-md transition-all duration-300 flex flex-col",
-        collapsed ? "w-16" : "w-64"
+        collapsed ? "w-16" : "w-64",
+        "hidden md:flex" // Hide on mobile, show on tablet and up
       )}
     >
       <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
@@ -56,6 +75,7 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="p-1 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none"
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {collapsed ? (
               <ChevronRightIcon className="h-5 w-5" />
@@ -89,7 +109,7 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
             </Link>
           ))}
         </nav>
-        
+
         {isAdmin && (
           <>
             <div className={cn(

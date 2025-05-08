@@ -4,6 +4,12 @@ import Link from 'next/link';
 import StatsCard from '@/components/Dashboard/StatsCard';
 import RecentWeightsTable from '@/components/Dashboard/RecentWeightsTable';
 import QuickActions from '@/components/Dashboard/QuickActions';
+import dynamic from 'next/dynamic';
+
+// Dynamically import chart components with no SSR to avoid hydration issues
+const ComplianceChart = dynamic(() => import('@/components/Dashboard/ComplianceChart'), { ssr: false });
+const VehicleWeightChart = dynamic(() => import('@/components/Dashboard/VehicleWeightChart'), { ssr: false });
+const LoadStatusChart = dynamic(() => import('@/components/Dashboard/LoadStatusChart'), { ssr: false });
 
 export default async function Dashboard() {
   const cookieStore = cookies();
@@ -84,6 +90,12 @@ export default async function Dashboard() {
         ))}
       </div>
 
+      {/* Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <ComplianceChart />
+        <VehicleWeightChart />
+      </div>
+
       {/* Recent Weights */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-8">
         <div className="px-6 py-4 bg-primary-700 text-white">
@@ -100,8 +112,14 @@ export default async function Dashboard() {
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <QuickActions />
+      {/* Load Status Chart and Quick Actions Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <LoadStatusChart />
+        <div>
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Quick Actions</h2>
+          <QuickActions />
+        </div>
+      </div>
     </div>
   );
 }
