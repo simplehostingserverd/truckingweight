@@ -15,7 +15,10 @@
     "lint:fix": "eslint --fix . || echo 'Skipping eslint fix'",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\" || echo 'Skipping prettier'",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md,css}\" || echo 'Skipping prettier check'",
-    "postinstall": "npm run prepare || true"
+    "postinstall": "npm run prepare || true",
+    "setup-db": "node scripts/setup-database.js",
+    "create-admin": "node scripts/create-admin.js",
+    "reset-db": "node --experimental-modules scripts/reset-database.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.7",

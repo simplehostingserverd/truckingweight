@@ -8,34 +8,35 @@ import { useState, useEffect } from 'react';
  * @returns boolean indicating if the media query matches
  */
 export function useMediaQuery(query: string): boolean {
-  // Initialize with null to avoid hydration mismatch
-  const [matches, setMatches] = useState<boolean>(false);
-  const [mounted, setMounted] = useState<boolean>(false);
+  // Always return false during SSR to avoid hydration mismatches
+  const [matches, setMatches] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    
-    // Create media query list
-    const mediaQuery = window.matchMedia(query);
-    
-    // Set initial value
-    setMatches(mediaQuery.matches);
-    
-    // Define callback for media query changes
-    const handleChange = (event: MediaQueryListEvent) => {
-      setMatches(event.matches);
-    };
-    
-    // Add event listener
-    mediaQuery.addEventListener('change', handleChange);
-    
-    // Clean up
-    return () => {
-      mediaQuery.removeEventListener('change', handleChange);
-    };
+
+    // Only run in the browser
+    if (typeof window !== 'undefined') {
+      // Initial check
+      const media = window.matchMedia(query);
+      setMatches(media.matches);
+
+      // Setup listener using the more compatible approach
+      const listener = () => setMatches(media.matches);
+
+      // Use the appropriate method based on browser support
+      if (media.addEventListener) {
+        media.addEventListener('change', listener);
+        return () => media.removeEventListener('change', listener);
+      } else {
+        // Fallback for older browsers
+        media.addListener(listener);
+        return () => media.removeListener(listener);
+      }
+    }
   }, [query]);
 
-  // Return false during SSR to avoid hydration mismatch
+  // Don't use media queries until component is mounted
   return mounted ? matches : false;
 }
 

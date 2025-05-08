@@ -12,7 +12,8 @@ import logger from '@/utils/logger';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [supabaseClient] = useState(() => createClientComponentClient<Database>());
-  const [isOnline, setIsOnline] = useState<boolean>(true);
+  // Use undefined as initial state to avoid hydration mismatch
+  const [isOnline, setIsOnline] = useState<boolean | undefined>(undefined);
 
   // Monitor online/offline status
   useEffect(() => {
@@ -69,7 +70,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
         pauseOnHover
         theme="colored"
       />
-      {!isOnline && (
+      {/* Only render offline banner after client-side hydration */}
+      {typeof isOnline === 'boolean' && !isOnline && (
         <div className="fixed bottom-0 left-0 right-0 bg-yellow-500 text-white p-2 text-center z-50">
           You are currently offline. Some features may be limited.
         </div>

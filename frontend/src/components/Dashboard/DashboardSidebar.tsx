@@ -15,27 +15,43 @@ import {
 } from '@heroicons/react/24/outline';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { cn } from '@/lib/utils';
-import { useIsMobile, useIsTablet, useMediaQuery } from '@/hooks/useMediaQuery';
+import { useIsMobile, useIsTablet, useMediaQuery, breakpoints } from '@/hooks/useMediaQuery';
 
 interface SidebarProps {
   isAdmin: boolean;
 }
 
 export default function DashboardSidebar({ isAdmin }: SidebarProps) {
+  // Always initialize with a safe default for SSR
   const [collapsed, setCollapsed] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const isMobile = useIsMobile();
   const isTablet = useIsTablet();
   const isLargeScreen = useMediaQuery('(min-width: 1280px)');
 
-  // Auto-collapse sidebar on smaller screens
+  // Set mounted state after hydration
   useEffect(() => {
+    setMounted(true);
+
+    // Set initial collapsed state based on screen size
+    if (window.matchMedia(breakpoints.md).matches && !window.matchMedia(breakpoints.lg).matches) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+  }, []);
+
+  // Auto-collapse sidebar on smaller screens - only after mounting
+  useEffect(() => {
+    if (!mounted) return;
+
     if (isTablet) {
       setCollapsed(true);
     } else if (isLargeScreen) {
       setCollapsed(false);
     }
-  }, [isTablet, isLargeScreen]);
+  }, [isTablet, isLargeScreen, mounted]);
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
@@ -53,7 +69,8 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
   ];
 
   // Don't render sidebar on mobile as we use the mobile navigation instead
-  if (isMobile) {
+  // Also don't render until after client-side hydration
+  if (!mounted || isMobile) {
     return null;
   }
 

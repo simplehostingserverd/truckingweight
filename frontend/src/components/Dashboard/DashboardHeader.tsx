@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -34,6 +34,12 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Set mounted state after hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -68,8 +74,8 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            {/* Mobile menu button */}
-            {isMobile && (
+            {/* Mobile menu button - only render after hydration */}
+            {mounted && isMobile && (
               <MobileNav
                 navigation={navigation}
                 adminNavigation={adminNavigation}
@@ -90,11 +96,11 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
               className="p-2 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none"
               aria-label="Toggle dark mode"
             >
-              {theme === 'dark' ? (
+              {mounted && (theme === 'dark' ? (
                 <SunIcon className="h-6 w-6" />
               ) : (
                 <MoonIcon className="h-6 w-6" />
-              )}
+              ))}
             </button>
 
             {/* Hide notifications on mobile */}

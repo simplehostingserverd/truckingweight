@@ -34,6 +34,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",
     "react-toastify": "^10.0.4",
+    "recharts": "^2.15.3",
     "server-only": "^0.0.1",
     "sharp": "^0.33.2",
     "tailwind-merge": "^2.2.1",
