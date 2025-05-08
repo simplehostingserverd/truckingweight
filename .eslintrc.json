@@ -1,0 +1,38 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-unused-vars": "warn",
+    "semi": ["error", "always"]
+  },
+  "overrides": [
+    {
+      "files": ["frontend/**/*.{js,jsx,ts,tsx}"],
+      "extends": [
+        "eslint:recommended",
+        "next/core-web-vitals"
+      ]
+    },
+    {
+      "files": ["backend/**/*.js"],
+      "env": {
+        "node": true
+      },
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
+}
