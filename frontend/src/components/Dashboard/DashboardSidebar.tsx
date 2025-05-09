@@ -68,6 +68,7 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
     { name: 'Weights', href: '/weights', icon: ScaleIcon },
+    { name: 'Weight Capture', href: '/weights/capture', icon: ScaleIcon },
     { name: 'Loads', href: '/loads', icon: TruckIcon },
     { name: 'Vehicles', href: '/vehicles', icon: TruckIcon },
     { name: 'Drivers', href: '/drivers', icon: UserGroupIcon },
