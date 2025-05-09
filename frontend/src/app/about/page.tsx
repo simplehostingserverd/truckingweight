@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import Header from '@/components/Layout/Header';
-import Footer from '@/components/Layout/Footer';
+import Layout from '@/components/Layout/Layout';
 
 export const metadata = {
   title: 'About Us | TruckingSemis',
@@ -10,9 +9,8 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-grow">
+    <Layout>
+      <main>
         {/* Hero Section */}
         <section className="bg-primary-700 text-white py-20">
           <div className="container mx-auto px-4">
@@ -33,10 +31,10 @@ export default function AboutPage() {
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="md:w-1/2">
-                <Image 
-                  src="/icons/truck-icon.svg" 
-                  alt="TruckingSemis Mission" 
-                  width={400} 
+                <Image
+                  src="/icons/truck-icon.svg"
+                  alt="TruckingSemis Mission"
+                  width={400}
                   height={400}
                   className="rounded-lg shadow-lg"
                 />
@@ -72,10 +70,10 @@ export default function AboutPage() {
               <div className="bg-white p-8 rounded-lg shadow-sm flex">
                 <div className="mr-6">
                   <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <Image 
-                      src="/icons/scale-icon.svg" 
-                      alt="Weight Management" 
-                      width={40} 
+                    <Image
+                      src="/icons/scale-icon.svg"
+                      alt="Weight Management"
+                      width={40}
                       height={40}
                     />
                   </div>
@@ -92,10 +90,10 @@ export default function AboutPage() {
               <div className="bg-white p-8 rounded-lg shadow-sm flex">
                 <div className="mr-6">
                   <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <Image 
-                      src="/icons/load-icon.svg" 
-                      alt="Load Management" 
-                      width={40} 
+                    <Image
+                      src="/icons/load-icon.svg"
+                      alt="Load Management"
+                      width={40}
                       height={40}
                     />
                   </div>
@@ -112,10 +110,10 @@ export default function AboutPage() {
               <div className="bg-white p-8 rounded-lg shadow-sm flex">
                 <div className="mr-6">
                   <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <Image 
-                      src="/icons/driver-icon.svg" 
-                      alt="Driver Management" 
-                      width={40} 
+                    <Image
+                      src="/icons/driver-icon.svg"
+                      alt="Driver Management"
+                      width={40}
                       height={40}
                     />
                   </div>
@@ -132,10 +130,10 @@ export default function AboutPage() {
               <div className="bg-white p-8 rounded-lg shadow-sm flex">
                 <div className="mr-6">
                   <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <Image 
-                      src="/icons/vehicle-icon.svg" 
-                      alt="Vehicle Management" 
-                      width={40} 
+                    <Image
+                      src="/icons/vehicle-icon.svg"
+                      alt="Vehicle Management"
+                      width={40}
                       height={40}
                     />
                   </div>
@@ -156,7 +154,7 @@ export default function AboutPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Frequently Asked Questions</h2>
-              
+
               <div className="space-y-8">
                 {/* FAQ Item 1 */}
                 <div className="border-b border-gray-200 pb-8">
@@ -165,7 +163,7 @@ export default function AboutPage() {
                     Our system integrates with your existing scales or can work with manual weight entries. It tracks all weight data, compares it against regulatory limits, and alerts you to any compliance issues. The system also provides suggestions for load redistribution to optimize weight distribution.
                   </p>
                 </div>
-                
+
                 {/* FAQ Item 2 */}
                 <div className="border-b border-gray-200 pb-8">
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">Is the system compliant with DOT regulations?</h3>
@@ -173,7 +171,7 @@ export default function AboutPage() {
                     Yes, our system is designed to keep you compliant with all Department of Transportation (DOT) regulations regarding vehicle weights. We regularly update our compliance rules to reflect any changes in federal or state regulations.
                   </p>
                 </div>
-                
+
                 {/* FAQ Item 3 */}
                 <div className="border-b border-gray-200 pb-8">
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">Can I access the system on mobile devices?</h3>
@@ -181,7 +179,7 @@ export default function AboutPage() {
                     Absolutely! Our system is fully responsive and works on desktops, tablets, and smartphones. We also offer dedicated mobile apps for iOS and Android for an optimized mobile experience.
                   </p>
                 </div>
-                
+
                 {/* FAQ Item 4 */}
                 <div className="border-b border-gray-200 pb-8">
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">How secure is my data?</h3>
@@ -189,7 +187,7 @@ export default function AboutPage() {
                     Security is a top priority. We use industry-standard encryption for all data transmission and storage. Our systems are regularly audited for security vulnerabilities, and we maintain strict access controls to protect your data.
                   </p>
                 </div>
-                
+
                 {/* FAQ Item 5 */}
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">Do you offer training and support?</h3>
@@ -210,14 +208,14 @@ export default function AboutPage() {
               Join the hundreds of trucking companies that have improved compliance, reduced costs, and optimized their operations with TruckingSemis.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link 
-                href="/register" 
+              <Link
+                href="/register"
                 className="px-8 py-3 bg-white text-primary-700 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
               >
                 Get Started Today
               </Link>
-              <Link 
-                href="/contact" 
+              <Link
+                href="/contact"
                 className="px-8 py-3 bg-transparent border-2 border-white rounded-lg font-semibold hover:bg-white/10 transition-colors"
               >
                 Contact Sales
@@ -226,7 +224,6 @@ export default function AboutPage() {
           </div>
         </section>
       </main>
-      <Footer />
-    </div>
+    </Layout>
   );
 }

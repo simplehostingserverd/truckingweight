@@ -3,8 +3,7 @@ import Image from 'next/image';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import Header from '@/components/Layout/Header';
-import Footer from '@/components/Layout/Footer';
+import Layout from '@/components/Layout/Layout';
 
 export default async function Home() {
   const cookieStore = cookies();
@@ -18,9 +17,8 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-grow">
+    <Layout>
+      <main>
         {/* Hero Section */}
         <section className="relative bg-gradient-to-r from-primary-700 to-primary-500 text-white overflow-hidden">
           <div className="absolute inset-0 opacity-10">
@@ -232,7 +230,6 @@ export default async function Home() {
           </div>
         </section>
       </main>
-      <Footer />
-    </div>
+    </Layout>
   );
 }
