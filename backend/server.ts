@@ -24,6 +24,8 @@ import vehicleRoutes from './routes/vehicles';
 import driverRoutes from './routes/drivers';
 import adminRoutes from './routes/admin';
 import dashboardRoutes from './routes/dashboard';
+import scaleRoutes from './routes/scaleRoutes';
+import weighTicketRoutes from './routes/weighTicketRoutes';
 
 // Create Express app
 const app = express();
@@ -49,6 +51,8 @@ app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/scales', scaleRoutes);
+app.use('/api/weigh-tickets', weighTicketRoutes);
 
 // Root route
 app.get('/', (req: Request, res: Response) => {

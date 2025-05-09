@@ -1,0 +1,138 @@
+// Add these models to your existing schema.prisma file
+
+// Scales table to store information about physical scales
+model scales {
+  id                   Int                 @id @default(autoincrement())
+  name                 String              @db.VarChar(100)
+  location             String?             @db.VarChar(255)
+  scale_type           String              @db.VarChar(50) // 'full_platform', 'axle', 'portable', etc.
+  manufacturer         String?             @db.VarChar(100)
+  model                String?             @db.VarChar(100)
+  serial_number        String?             @db.VarChar(100)
+  max_capacity         Decimal?            @db.Decimal(10, 2) // in pounds or kg
+  precision            Decimal?            @db.Decimal(5, 2) // precision of the scale
+  calibration_date     DateTime?           @db.Date
+  next_calibration_date DateTime?          @db.Date
+  api_endpoint         String?             @db.VarChar(255) // For IoT scales with API endpoints
+  api_key              String?             @db.VarChar(255) // Encrypted API key for the scale
+  qr_code_uuid         String?             @db.Uuid // Unique identifier for QR code
+  company_id           Int?
+  status               String?             @default("Active") @db.VarChar(50) // 'Active', 'Maintenance', 'Offline'
+  created_at           DateTime?           @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime?           @default(now()) @db.Timestamptz(6)
+  companies            companies?          @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  scale_calibrations   scale_calibrations[]
+  scale_readings       scale_readings[]
+  weigh_tickets        weigh_tickets[]
+}
+
+// Axle configurations table
+model axle_configurations {
+  id                   Int                 @id @default(autoincrement())
+  name                 String              @db.VarChar(100)
+  description          String?
+  axle_count           Int
+  configuration_type   String              @db.VarChar(50) // 'single', 'tandem', 'tridem', 'custom'
+  max_weight_per_axle  Decimal?            @db.Decimal(10, 2) // Maximum legal weight per axle
+  company_id           Int?
+  created_at           DateTime?           @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime?           @default(now()) @db.Timestamptz(6)
+  companies            companies?          @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  vehicles             vehicles[]
+}
+
+// Axle weights table to store individual axle measurements
+model axle_weights {
+  id                   Int                 @id @default(autoincrement())
+  weight_id            Int?
+  axle_number          Int
+  axle_weight          Decimal             @db.Decimal(10, 2) // Weight of this specific axle
+  axle_type            String?             @db.VarChar(50) // 'steering', 'drive', 'trailer', etc.
+  is_compliant         Boolean?            @default(true)
+  created_at           DateTime?           @default(now()) @db.Timestamptz(6)
+  weights              weights?            @relation(fields: [weight_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+// Weigh tickets table to store detailed ticket information
+model weigh_tickets {
+  id                   Int                 @id @default(autoincrement())
+  ticket_number        String              @unique @db.VarChar(50)
+  weight_id            Int?
+  scale_id             Int?
+  gross_weight         Decimal             @db.Decimal(10, 2)
+  tare_weight          Decimal?            @db.Decimal(10, 2)
+  net_weight           Decimal?            @db.Decimal(10, 2)
+  weigh_type           String              @db.VarChar(50) // 'gross_only', 'tare_only', 'gross_tare', 'split_weigh'
+  weigh_method         String              @db.VarChar(50) // 'scale_api', 'manual_entry', 'camera_scan', 'iot_sensor'
+  ticket_image_url     String?             @db.VarChar(255) // URL to the stored ticket image
+  signature_image_url  String?             @db.VarChar(255) // URL to the stored signature image
+  notes                String?
+  is_certified         Boolean?            @default(false)
+  certified_by         String?             @db.VarChar(100)
+  certified_at         DateTime?           @db.Timestamptz(6)
+  company_id           Int?
+  created_at           DateTime?           @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime?           @default(now()) @db.Timestamptz(6)
+  companies            companies?          @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  scales               scales?             @relation(fields: [scale_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  weights              weights?            @relation(fields: [weight_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  compliance_issues    compliance_issues[]
+  load_optimizations   load_optimizations[]
+  ticket_images        ticket_images[]
+  ticket_signatures    ticket_signatures[]
+}
+
+// Scale readings table to store raw data from scales
+model scale_readings {
+  id                   Int                 @id @default(autoincrement())
+  scale_id             Int?
+  reading_value        Decimal             @db.Decimal(10, 2)
+  reading_type         String              @db.VarChar(50) // 'gross', 'tare', 'axle', 'test'
+  reading_timestamp    DateTime?           @default(now()) @db.Timestamptz(6)
+  reading_source       String              @db.VarChar(50) // 'api', 'manual', 'iot', 'camera'
+  raw_data             Json?               @db.Json // Store raw data from the scale for debugging/auditing
+  processed            Boolean?            @default(false)
+  weight_id            Int?
+  company_id           Int?
+  created_at           DateTime?           @default(now()) @db.Timestamptz(6)
+  companies            companies?          @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  scales               scales?             @relation(fields: [scale_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  weights              weights?            @relation(fields: [weight_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+// Scale calibration logs
+model scale_calibrations {
+  id                   Int                 @id @default(autoincrement())
+  scale_id             Int?
+  calibration_date     DateTime            @db.Date
+  performed_by         String              @db.VarChar(100)
+  certification_number String?             @db.VarChar(100)
+  notes                String?
+  passed               Boolean
+  company_id           Int?
+  created_at           DateTime?           @default(now()) @db.Timestamptz(6)
+  companies            companies?          @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  scales               scales?             @relation(fields: [scale_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+// Update the existing models with new relations
+
+model weights {
+  // Add these fields to your existing weights model
+  axle_weights         axle_weights[]
+  scale_readings       scale_readings[]
+  weigh_tickets        weigh_tickets[]
+}
+
+model vehicles {
+  // Add this field to your existing vehicles model
+  axle_configuration_id Int?
+  axle_configurations   axle_configurations? @relation(fields: [axle_configuration_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model companies {
+  // Add these relations to your existing companies model
+  scales               scales[]
+  scale_calibrations   scale_calibrations[]
+  scale_readings       scale_readings[]
+}
