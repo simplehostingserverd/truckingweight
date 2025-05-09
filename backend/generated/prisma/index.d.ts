@@ -3375,33 +3375,33 @@ export namespace Prisma {
    */
 
   export type CompaniesCountOutputType = {
+    api_keys: number
     drivers: number
+    hardware_connections: number
+    integration_connections: number
     loads: number
     scale_facilities: number
     scales: number
     users: number
     vehicles: number
+    webhook_subscriptions: number
     weigh_tickets: number
     weights: number
-    api_keys: number
-    webhook_subscriptions: number
-    integration_connections: number
-    hardware_connections: number
   }
 
   export type CompaniesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    api_keys?: boolean | CompaniesCountOutputTypeCountApi_keysArgs
     drivers?: boolean | CompaniesCountOutputTypeCountDriversArgs
+    hardware_connections?: boolean | CompaniesCountOutputTypeCountHardware_connectionsArgs
+    integration_connections?: boolean | CompaniesCountOutputTypeCountIntegration_connectionsArgs
     loads?: boolean | CompaniesCountOutputTypeCountLoadsArgs
     scale_facilities?: boolean | CompaniesCountOutputTypeCountScale_facilitiesArgs
     scales?: boolean | CompaniesCountOutputTypeCountScalesArgs
     users?: boolean | CompaniesCountOutputTypeCountUsersArgs
     vehicles?: boolean | CompaniesCountOutputTypeCountVehiclesArgs
+    webhook_subscriptions?: boolean | CompaniesCountOutputTypeCountWebhook_subscriptionsArgs
     weigh_tickets?: boolean | CompaniesCountOutputTypeCountWeigh_ticketsArgs
     weights?: boolean | CompaniesCountOutputTypeCountWeightsArgs
-    api_keys?: boolean | CompaniesCountOutputTypeCountApi_keysArgs
-    webhook_subscriptions?: boolean | CompaniesCountOutputTypeCountWebhook_subscriptionsArgs
-    integration_connections?: boolean | CompaniesCountOutputTypeCountIntegration_connectionsArgs
-    hardware_connections?: boolean | CompaniesCountOutputTypeCountHardware_connectionsArgs
   }
 
   // Custom InputTypes
@@ -3418,8 +3418,29 @@ export namespace Prisma {
   /**
    * CompaniesCountOutputType without action
    */
+  export type CompaniesCountOutputTypeCountApi_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: api_keysWhereInput
+  }
+
+  /**
+   * CompaniesCountOutputType without action
+   */
   export type CompaniesCountOutputTypeCountDriversArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: driversWhereInput
+  }
+
+  /**
+   * CompaniesCountOutputType without action
+   */
+  export type CompaniesCountOutputTypeCountHardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: hardware_connectionsWhereInput
+  }
+
+  /**
+   * CompaniesCountOutputType without action
+   */
+  export type CompaniesCountOutputTypeCountIntegration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: integration_connectionsWhereInput
   }
 
   /**
@@ -3460,6 +3481,13 @@ export namespace Prisma {
   /**
    * CompaniesCountOutputType without action
    */
+  export type CompaniesCountOutputTypeCountWebhook_subscriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: webhook_subscriptionsWhereInput
+  }
+
+  /**
+   * CompaniesCountOutputType without action
+   */
   export type CompaniesCountOutputTypeCountWeigh_ticketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: weigh_ticketsWhereInput
   }
@@ -3469,34 +3497,6 @@ export namespace Prisma {
    */
   export type CompaniesCountOutputTypeCountWeightsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: weightsWhereInput
-  }
-
-  /**
-   * CompaniesCountOutputType without action
-   */
-  export type CompaniesCountOutputTypeCountApi_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: api_keysWhereInput
-  }
-
-  /**
-   * CompaniesCountOutputType without action
-   */
-  export type CompaniesCountOutputTypeCountWebhook_subscriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: webhook_subscriptionsWhereInput
-  }
-
-  /**
-   * CompaniesCountOutputType without action
-   */
-  export type CompaniesCountOutputTypeCountIntegration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: integration_connectionsWhereInput
-  }
-
-  /**
-   * CompaniesCountOutputType without action
-   */
-  export type CompaniesCountOutputTypeCountHardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: hardware_connectionsWhereInput
   }
 
 
@@ -3652,23 +3652,23 @@ export namespace Prisma {
    */
 
   export type UsersCountOutputType = {
+    api_keys: number
+    hardware_connections: number
+    integration_connections: number
     predictive_alerts: number
     ticket_images: number
-    weigh_tickets: number
-    api_keys: number
     webhook_subscriptions: number
-    integration_connections: number
-    hardware_connections: number
+    weigh_tickets: number
   }
 
   export type UsersCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    api_keys?: boolean | UsersCountOutputTypeCountApi_keysArgs
+    hardware_connections?: boolean | UsersCountOutputTypeCountHardware_connectionsArgs
+    integration_connections?: boolean | UsersCountOutputTypeCountIntegration_connectionsArgs
     predictive_alerts?: boolean | UsersCountOutputTypeCountPredictive_alertsArgs
     ticket_images?: boolean | UsersCountOutputTypeCountTicket_imagesArgs
-    weigh_tickets?: boolean | UsersCountOutputTypeCountWeigh_ticketsArgs
-    api_keys?: boolean | UsersCountOutputTypeCountApi_keysArgs
     webhook_subscriptions?: boolean | UsersCountOutputTypeCountWebhook_subscriptionsArgs
-    integration_connections?: boolean | UsersCountOutputTypeCountIntegration_connectionsArgs
-    hardware_connections?: boolean | UsersCountOutputTypeCountHardware_connectionsArgs
+    weigh_tickets?: boolean | UsersCountOutputTypeCountWeigh_ticketsArgs
   }
 
   // Custom InputTypes
@@ -3680,6 +3680,27 @@ export namespace Prisma {
      * Select specific fields to fetch from the UsersCountOutputType
      */
     select?: UsersCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeCountApi_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: api_keysWhereInput
+  }
+
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeCountHardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: hardware_connectionsWhereInput
+  }
+
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeCountIntegration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: integration_connectionsWhereInput
   }
 
   /**
@@ -3699,20 +3720,6 @@ export namespace Prisma {
   /**
    * UsersCountOutputType without action
    */
-  export type UsersCountOutputTypeCountWeigh_ticketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: weigh_ticketsWhereInput
-  }
-
-  /**
-   * UsersCountOutputType without action
-   */
-  export type UsersCountOutputTypeCountApi_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: api_keysWhereInput
-  }
-
-  /**
-   * UsersCountOutputType without action
-   */
   export type UsersCountOutputTypeCountWebhook_subscriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: webhook_subscriptionsWhereInput
   }
@@ -3720,15 +3727,8 @@ export namespace Prisma {
   /**
    * UsersCountOutputType without action
    */
-  export type UsersCountOutputTypeCountIntegration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: integration_connectionsWhereInput
-  }
-
-  /**
-   * UsersCountOutputType without action
-   */
-  export type UsersCountOutputTypeCountHardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: hardware_connectionsWhereInput
+  export type UsersCountOutputTypeCountWeigh_ticketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: weigh_ticketsWhereInput
   }
 
 
@@ -8868,18 +8868,18 @@ export namespace Prisma {
     contact_phone?: boolean
     created_at?: boolean
     updated_at?: boolean
+    api_keys?: boolean | companies$api_keysArgs<ExtArgs>
     drivers?: boolean | companies$driversArgs<ExtArgs>
+    hardware_connections?: boolean | companies$hardware_connectionsArgs<ExtArgs>
+    integration_connections?: boolean | companies$integration_connectionsArgs<ExtArgs>
     loads?: boolean | companies$loadsArgs<ExtArgs>
     scale_facilities?: boolean | companies$scale_facilitiesArgs<ExtArgs>
     scales?: boolean | companies$scalesArgs<ExtArgs>
     users?: boolean | companies$usersArgs<ExtArgs>
     vehicles?: boolean | companies$vehiclesArgs<ExtArgs>
+    webhook_subscriptions?: boolean | companies$webhook_subscriptionsArgs<ExtArgs>
     weigh_tickets?: boolean | companies$weigh_ticketsArgs<ExtArgs>
     weights?: boolean | companies$weightsArgs<ExtArgs>
-    api_keys?: boolean | companies$api_keysArgs<ExtArgs>
-    webhook_subscriptions?: boolean | companies$webhook_subscriptionsArgs<ExtArgs>
-    integration_connections?: boolean | companies$integration_connectionsArgs<ExtArgs>
-    hardware_connections?: boolean | companies$hardware_connectionsArgs<ExtArgs>
     _count?: boolean | CompaniesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["companies"]>
 
@@ -8915,18 +8915,18 @@ export namespace Prisma {
 
   export type companiesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "contact_email" | "contact_phone" | "created_at" | "updated_at", ExtArgs["result"]["companies"]>
   export type companiesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    api_keys?: boolean | companies$api_keysArgs<ExtArgs>
     drivers?: boolean | companies$driversArgs<ExtArgs>
+    hardware_connections?: boolean | companies$hardware_connectionsArgs<ExtArgs>
+    integration_connections?: boolean | companies$integration_connectionsArgs<ExtArgs>
     loads?: boolean | companies$loadsArgs<ExtArgs>
     scale_facilities?: boolean | companies$scale_facilitiesArgs<ExtArgs>
     scales?: boolean | companies$scalesArgs<ExtArgs>
     users?: boolean | companies$usersArgs<ExtArgs>
     vehicles?: boolean | companies$vehiclesArgs<ExtArgs>
+    webhook_subscriptions?: boolean | companies$webhook_subscriptionsArgs<ExtArgs>
     weigh_tickets?: boolean | companies$weigh_ticketsArgs<ExtArgs>
     weights?: boolean | companies$weightsArgs<ExtArgs>
-    api_keys?: boolean | companies$api_keysArgs<ExtArgs>
-    webhook_subscriptions?: boolean | companies$webhook_subscriptionsArgs<ExtArgs>
-    integration_connections?: boolean | companies$integration_connectionsArgs<ExtArgs>
-    hardware_connections?: boolean | companies$hardware_connectionsArgs<ExtArgs>
     _count?: boolean | CompaniesCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type companiesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8935,18 +8935,18 @@ export namespace Prisma {
   export type $companiesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "companies"
     objects: {
+      api_keys: Prisma.$api_keysPayload<ExtArgs>[]
       drivers: Prisma.$driversPayload<ExtArgs>[]
+      hardware_connections: Prisma.$hardware_connectionsPayload<ExtArgs>[]
+      integration_connections: Prisma.$integration_connectionsPayload<ExtArgs>[]
       loads: Prisma.$loadsPayload<ExtArgs>[]
       scale_facilities: Prisma.$scale_facilitiesPayload<ExtArgs>[]
       scales: Prisma.$scalesPayload<ExtArgs>[]
       users: Prisma.$usersPayload<ExtArgs>[]
       vehicles: Prisma.$vehiclesPayload<ExtArgs>[]
+      webhook_subscriptions: Prisma.$webhook_subscriptionsPayload<ExtArgs>[]
       weigh_tickets: Prisma.$weigh_ticketsPayload<ExtArgs>[]
       weights: Prisma.$weightsPayload<ExtArgs>[]
-      api_keys: Prisma.$api_keysPayload<ExtArgs>[]
-      webhook_subscriptions: Prisma.$webhook_subscriptionsPayload<ExtArgs>[]
-      integration_connections: Prisma.$integration_connectionsPayload<ExtArgs>[]
-      hardware_connections: Prisma.$hardware_connectionsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -9350,18 +9350,18 @@ export namespace Prisma {
    */
   export interface Prisma__companiesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    api_keys<T extends companies$api_keysArgs<ExtArgs> = {}>(args?: Subset<T, companies$api_keysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     drivers<T extends companies$driversArgs<ExtArgs> = {}>(args?: Subset<T, companies$driversArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$driversPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    hardware_connections<T extends companies$hardware_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, companies$hardware_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    integration_connections<T extends companies$integration_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, companies$integration_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     loads<T extends companies$loadsArgs<ExtArgs> = {}>(args?: Subset<T, companies$loadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$loadsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     scale_facilities<T extends companies$scale_facilitiesArgs<ExtArgs> = {}>(args?: Subset<T, companies$scale_facilitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$scale_facilitiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     scales<T extends companies$scalesArgs<ExtArgs> = {}>(args?: Subset<T, companies$scalesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$scalesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     users<T extends companies$usersArgs<ExtArgs> = {}>(args?: Subset<T, companies$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     vehicles<T extends companies$vehiclesArgs<ExtArgs> = {}>(args?: Subset<T, companies$vehiclesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$vehiclesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    webhook_subscriptions<T extends companies$webhook_subscriptionsArgs<ExtArgs> = {}>(args?: Subset<T, companies$webhook_subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     weigh_tickets<T extends companies$weigh_ticketsArgs<ExtArgs> = {}>(args?: Subset<T, companies$weigh_ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$weigh_ticketsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     weights<T extends companies$weightsArgs<ExtArgs> = {}>(args?: Subset<T, companies$weightsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$weightsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    api_keys<T extends companies$api_keysArgs<ExtArgs> = {}>(args?: Subset<T, companies$api_keysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    webhook_subscriptions<T extends companies$webhook_subscriptionsArgs<ExtArgs> = {}>(args?: Subset<T, companies$webhook_subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    integration_connections<T extends companies$integration_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, companies$integration_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    hardware_connections<T extends companies$hardware_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, companies$hardware_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9786,6 +9786,30 @@ export namespace Prisma {
   }
 
   /**
+   * companies.api_keys
+   */
+  export type companies$api_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    where?: api_keysWhereInput
+    orderBy?: api_keysOrderByWithRelationInput | api_keysOrderByWithRelationInput[]
+    cursor?: api_keysWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Api_keysScalarFieldEnum | Api_keysScalarFieldEnum[]
+  }
+
+  /**
    * companies.drivers
    */
   export type companies$driversArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9807,6 +9831,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DriversScalarFieldEnum | DriversScalarFieldEnum[]
+  }
+
+  /**
+   * companies.hardware_connections
+   */
+  export type companies$hardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    where?: hardware_connectionsWhereInput
+    orderBy?: hardware_connectionsOrderByWithRelationInput | hardware_connectionsOrderByWithRelationInput[]
+    cursor?: hardware_connectionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Hardware_connectionsScalarFieldEnum | Hardware_connectionsScalarFieldEnum[]
+  }
+
+  /**
+   * companies.integration_connections
+   */
+  export type companies$integration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    where?: integration_connectionsWhereInput
+    orderBy?: integration_connectionsOrderByWithRelationInput | integration_connectionsOrderByWithRelationInput[]
+    cursor?: integration_connectionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Integration_connectionsScalarFieldEnum | Integration_connectionsScalarFieldEnum[]
   }
 
   /**
@@ -9930,6 +10002,30 @@ export namespace Prisma {
   }
 
   /**
+   * companies.webhook_subscriptions
+   */
+  export type companies$webhook_subscriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    where?: webhook_subscriptionsWhereInput
+    orderBy?: webhook_subscriptionsOrderByWithRelationInput | webhook_subscriptionsOrderByWithRelationInput[]
+    cursor?: webhook_subscriptionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Webhook_subscriptionsScalarFieldEnum | Webhook_subscriptionsScalarFieldEnum[]
+  }
+
+  /**
    * companies.weigh_tickets
    */
   export type companies$weigh_ticketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9975,102 +10071,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: WeightsScalarFieldEnum | WeightsScalarFieldEnum[]
-  }
-
-  /**
-   * companies.api_keys
-   */
-  export type companies$api_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the api_keys
-     */
-    select?: api_keysSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the api_keys
-     */
-    omit?: api_keysOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: api_keysInclude<ExtArgs> | null
-    where?: api_keysWhereInput
-    orderBy?: api_keysOrderByWithRelationInput | api_keysOrderByWithRelationInput[]
-    cursor?: api_keysWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Api_keysScalarFieldEnum | Api_keysScalarFieldEnum[]
-  }
-
-  /**
-   * companies.webhook_subscriptions
-   */
-  export type companies$webhook_subscriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the webhook_subscriptions
-     */
-    select?: webhook_subscriptionsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the webhook_subscriptions
-     */
-    omit?: webhook_subscriptionsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: webhook_subscriptionsInclude<ExtArgs> | null
-    where?: webhook_subscriptionsWhereInput
-    orderBy?: webhook_subscriptionsOrderByWithRelationInput | webhook_subscriptionsOrderByWithRelationInput[]
-    cursor?: webhook_subscriptionsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Webhook_subscriptionsScalarFieldEnum | Webhook_subscriptionsScalarFieldEnum[]
-  }
-
-  /**
-   * companies.integration_connections
-   */
-  export type companies$integration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the integration_connections
-     */
-    select?: integration_connectionsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the integration_connections
-     */
-    omit?: integration_connectionsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: integration_connectionsInclude<ExtArgs> | null
-    where?: integration_connectionsWhereInput
-    orderBy?: integration_connectionsOrderByWithRelationInput | integration_connectionsOrderByWithRelationInput[]
-    cursor?: integration_connectionsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Integration_connectionsScalarFieldEnum | Integration_connectionsScalarFieldEnum[]
-  }
-
-  /**
-   * companies.hardware_connections
-   */
-  export type companies$hardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the hardware_connections
-     */
-    select?: hardware_connectionsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the hardware_connections
-     */
-    omit?: hardware_connectionsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: hardware_connectionsInclude<ExtArgs> | null
-    where?: hardware_connectionsWhereInput
-    orderBy?: hardware_connectionsOrderByWithRelationInput | hardware_connectionsOrderByWithRelationInput[]
-    cursor?: hardware_connectionsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Hardware_connectionsScalarFieldEnum | Hardware_connectionsScalarFieldEnum[]
   }
 
   /**
@@ -23659,14 +23659,14 @@ export namespace Prisma {
     is_admin?: boolean
     created_at?: boolean
     updated_at?: boolean
+    api_keys?: boolean | users$api_keysArgs<ExtArgs>
+    hardware_connections?: boolean | users$hardware_connectionsArgs<ExtArgs>
+    integration_connections?: boolean | users$integration_connectionsArgs<ExtArgs>
     predictive_alerts?: boolean | users$predictive_alertsArgs<ExtArgs>
     ticket_images?: boolean | users$ticket_imagesArgs<ExtArgs>
     companies?: boolean | users$companiesArgs<ExtArgs>
-    weigh_tickets?: boolean | users$weigh_ticketsArgs<ExtArgs>
-    api_keys?: boolean | users$api_keysArgs<ExtArgs>
     webhook_subscriptions?: boolean | users$webhook_subscriptionsArgs<ExtArgs>
-    integration_connections?: boolean | users$integration_connectionsArgs<ExtArgs>
-    hardware_connections?: boolean | users$hardware_connectionsArgs<ExtArgs>
+    weigh_tickets?: boolean | users$weigh_ticketsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
@@ -23704,14 +23704,14 @@ export namespace Prisma {
 
   export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "company_id" | "is_admin" | "created_at" | "updated_at", ExtArgs["result"]["users"]>
   export type usersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    api_keys?: boolean | users$api_keysArgs<ExtArgs>
+    hardware_connections?: boolean | users$hardware_connectionsArgs<ExtArgs>
+    integration_connections?: boolean | users$integration_connectionsArgs<ExtArgs>
     predictive_alerts?: boolean | users$predictive_alertsArgs<ExtArgs>
     ticket_images?: boolean | users$ticket_imagesArgs<ExtArgs>
     companies?: boolean | users$companiesArgs<ExtArgs>
-    weigh_tickets?: boolean | users$weigh_ticketsArgs<ExtArgs>
-    api_keys?: boolean | users$api_keysArgs<ExtArgs>
     webhook_subscriptions?: boolean | users$webhook_subscriptionsArgs<ExtArgs>
-    integration_connections?: boolean | users$integration_connectionsArgs<ExtArgs>
-    hardware_connections?: boolean | users$hardware_connectionsArgs<ExtArgs>
+    weigh_tickets?: boolean | users$weigh_ticketsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type usersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -23724,14 +23724,14 @@ export namespace Prisma {
   export type $usersPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "users"
     objects: {
+      api_keys: Prisma.$api_keysPayload<ExtArgs>[]
+      hardware_connections: Prisma.$hardware_connectionsPayload<ExtArgs>[]
+      integration_connections: Prisma.$integration_connectionsPayload<ExtArgs>[]
       predictive_alerts: Prisma.$predictive_alertsPayload<ExtArgs>[]
       ticket_images: Prisma.$ticket_imagesPayload<ExtArgs>[]
       companies: Prisma.$companiesPayload<ExtArgs> | null
-      weigh_tickets: Prisma.$weigh_ticketsPayload<ExtArgs>[]
-      api_keys: Prisma.$api_keysPayload<ExtArgs>[]
       webhook_subscriptions: Prisma.$webhook_subscriptionsPayload<ExtArgs>[]
-      integration_connections: Prisma.$integration_connectionsPayload<ExtArgs>[]
-      hardware_connections: Prisma.$hardware_connectionsPayload<ExtArgs>[]
+      weigh_tickets: Prisma.$weigh_ticketsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -24135,14 +24135,14 @@ export namespace Prisma {
    */
   export interface Prisma__usersClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    api_keys<T extends users$api_keysArgs<ExtArgs> = {}>(args?: Subset<T, users$api_keysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    hardware_connections<T extends users$hardware_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, users$hardware_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    integration_connections<T extends users$integration_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, users$integration_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     predictive_alerts<T extends users$predictive_alertsArgs<ExtArgs> = {}>(args?: Subset<T, users$predictive_alertsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$predictive_alertsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ticket_images<T extends users$ticket_imagesArgs<ExtArgs> = {}>(args?: Subset<T, users$ticket_imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ticket_imagesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     companies<T extends users$companiesArgs<ExtArgs> = {}>(args?: Subset<T, users$companiesArgs<ExtArgs>>): Prisma__companiesClient<$Result.GetResult<Prisma.$companiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    weigh_tickets<T extends users$weigh_ticketsArgs<ExtArgs> = {}>(args?: Subset<T, users$weigh_ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$weigh_ticketsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    api_keys<T extends users$api_keysArgs<ExtArgs> = {}>(args?: Subset<T, users$api_keysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     webhook_subscriptions<T extends users$webhook_subscriptionsArgs<ExtArgs> = {}>(args?: Subset<T, users$webhook_subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    integration_connections<T extends users$integration_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, users$integration_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    hardware_connections<T extends users$hardware_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, users$hardware_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    weigh_tickets<T extends users$weigh_ticketsArgs<ExtArgs> = {}>(args?: Subset<T, users$weigh_ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$weigh_ticketsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -24575,6 +24575,78 @@ export namespace Prisma {
   }
 
   /**
+   * users.api_keys
+   */
+  export type users$api_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    where?: api_keysWhereInput
+    orderBy?: api_keysOrderByWithRelationInput | api_keysOrderByWithRelationInput[]
+    cursor?: api_keysWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Api_keysScalarFieldEnum | Api_keysScalarFieldEnum[]
+  }
+
+  /**
+   * users.hardware_connections
+   */
+  export type users$hardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    where?: hardware_connectionsWhereInput
+    orderBy?: hardware_connectionsOrderByWithRelationInput | hardware_connectionsOrderByWithRelationInput[]
+    cursor?: hardware_connectionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Hardware_connectionsScalarFieldEnum | Hardware_connectionsScalarFieldEnum[]
+  }
+
+  /**
+   * users.integration_connections
+   */
+  export type users$integration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    where?: integration_connectionsWhereInput
+    orderBy?: integration_connectionsOrderByWithRelationInput | integration_connectionsOrderByWithRelationInput[]
+    cursor?: integration_connectionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Integration_connectionsScalarFieldEnum | Integration_connectionsScalarFieldEnum[]
+  }
+
+  /**
    * users.predictive_alerts
    */
   export type users$predictive_alertsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -24642,54 +24714,6 @@ export namespace Prisma {
   }
 
   /**
-   * users.weigh_tickets
-   */
-  export type users$weigh_ticketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the weigh_tickets
-     */
-    select?: weigh_ticketsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the weigh_tickets
-     */
-    omit?: weigh_ticketsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: weigh_ticketsInclude<ExtArgs> | null
-    where?: weigh_ticketsWhereInput
-    orderBy?: weigh_ticketsOrderByWithRelationInput | weigh_ticketsOrderByWithRelationInput[]
-    cursor?: weigh_ticketsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Weigh_ticketsScalarFieldEnum | Weigh_ticketsScalarFieldEnum[]
-  }
-
-  /**
-   * users.api_keys
-   */
-  export type users$api_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the api_keys
-     */
-    select?: api_keysSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the api_keys
-     */
-    omit?: api_keysOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: api_keysInclude<ExtArgs> | null
-    where?: api_keysWhereInput
-    orderBy?: api_keysOrderByWithRelationInput | api_keysOrderByWithRelationInput[]
-    cursor?: api_keysWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Api_keysScalarFieldEnum | Api_keysScalarFieldEnum[]
-  }
-
-  /**
    * users.webhook_subscriptions
    */
   export type users$webhook_subscriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -24714,51 +24738,27 @@ export namespace Prisma {
   }
 
   /**
-   * users.integration_connections
+   * users.weigh_tickets
    */
-  export type users$integration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type users$weigh_ticketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the integration_connections
+     * Select specific fields to fetch from the weigh_tickets
      */
-    select?: integration_connectionsSelect<ExtArgs> | null
+    select?: weigh_ticketsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the integration_connections
+     * Omit specific fields from the weigh_tickets
      */
-    omit?: integration_connectionsOmit<ExtArgs> | null
+    omit?: weigh_ticketsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: integration_connectionsInclude<ExtArgs> | null
-    where?: integration_connectionsWhereInput
-    orderBy?: integration_connectionsOrderByWithRelationInput | integration_connectionsOrderByWithRelationInput[]
-    cursor?: integration_connectionsWhereUniqueInput
+    include?: weigh_ticketsInclude<ExtArgs> | null
+    where?: weigh_ticketsWhereInput
+    orderBy?: weigh_ticketsOrderByWithRelationInput | weigh_ticketsOrderByWithRelationInput[]
+    cursor?: weigh_ticketsWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Integration_connectionsScalarFieldEnum | Integration_connectionsScalarFieldEnum[]
-  }
-
-  /**
-   * users.hardware_connections
-   */
-  export type users$hardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the hardware_connections
-     */
-    select?: hardware_connectionsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the hardware_connections
-     */
-    omit?: hardware_connectionsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: hardware_connectionsInclude<ExtArgs> | null
-    where?: hardware_connectionsWhereInput
-    orderBy?: hardware_connectionsOrderByWithRelationInput | hardware_connectionsOrderByWithRelationInput[]
-    cursor?: hardware_connectionsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Hardware_connectionsScalarFieldEnum | Hardware_connectionsScalarFieldEnum[]
+    distinct?: Weigh_ticketsScalarFieldEnum | Weigh_ticketsScalarFieldEnum[]
   }
 
   /**
@@ -31798,9 +31798,9 @@ export namespace Prisma {
     created_by?: boolean
     created_at?: boolean
     updated_at?: boolean
+    webhook_deliveries?: boolean | webhook_subscriptions$webhook_deliveriesArgs<ExtArgs>
     companies?: boolean | webhook_subscriptions$companiesArgs<ExtArgs>
     users?: boolean | webhook_subscriptions$usersArgs<ExtArgs>
-    webhook_deliveries?: boolean | webhook_subscriptions$webhook_deliveriesArgs<ExtArgs>
     _count?: boolean | Webhook_subscriptionsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["webhook_subscriptions"]>
 
@@ -31849,9 +31849,9 @@ export namespace Prisma {
 
   export type webhook_subscriptionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "company_id" | "name" | "event_types" | "target_url" | "secret_key" | "is_active" | "created_by" | "created_at" | "updated_at", ExtArgs["result"]["webhook_subscriptions"]>
   export type webhook_subscriptionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    webhook_deliveries?: boolean | webhook_subscriptions$webhook_deliveriesArgs<ExtArgs>
     companies?: boolean | webhook_subscriptions$companiesArgs<ExtArgs>
     users?: boolean | webhook_subscriptions$usersArgs<ExtArgs>
-    webhook_deliveries?: boolean | webhook_subscriptions$webhook_deliveriesArgs<ExtArgs>
     _count?: boolean | Webhook_subscriptionsCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type webhook_subscriptionsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -31866,9 +31866,9 @@ export namespace Prisma {
   export type $webhook_subscriptionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "webhook_subscriptions"
     objects: {
+      webhook_deliveries: Prisma.$webhook_deliveriesPayload<ExtArgs>[]
       companies: Prisma.$companiesPayload<ExtArgs> | null
       users: Prisma.$usersPayload<ExtArgs> | null
-      webhook_deliveries: Prisma.$webhook_deliveriesPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -32275,9 +32275,9 @@ export namespace Prisma {
    */
   export interface Prisma__webhook_subscriptionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    webhook_deliveries<T extends webhook_subscriptions$webhook_deliveriesArgs<ExtArgs> = {}>(args?: Subset<T, webhook_subscriptions$webhook_deliveriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     companies<T extends webhook_subscriptions$companiesArgs<ExtArgs> = {}>(args?: Subset<T, webhook_subscriptions$companiesArgs<ExtArgs>>): Prisma__companiesClient<$Result.GetResult<Prisma.$companiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     users<T extends webhook_subscriptions$usersArgs<ExtArgs> = {}>(args?: Subset<T, webhook_subscriptions$usersArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    webhook_deliveries<T extends webhook_subscriptions$webhook_deliveriesArgs<ExtArgs> = {}>(args?: Subset<T, webhook_subscriptions$webhook_deliveriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -32713,6 +32713,30 @@ export namespace Prisma {
   }
 
   /**
+   * webhook_subscriptions.webhook_deliveries
+   */
+  export type webhook_subscriptions$webhook_deliveriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    where?: webhook_deliveriesWhereInput
+    orderBy?: webhook_deliveriesOrderByWithRelationInput | webhook_deliveriesOrderByWithRelationInput[]
+    cursor?: webhook_deliveriesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Webhook_deliveriesScalarFieldEnum | Webhook_deliveriesScalarFieldEnum[]
+  }
+
+  /**
    * webhook_subscriptions.companies
    */
   export type webhook_subscriptions$companiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -32748,30 +32772,6 @@ export namespace Prisma {
      */
     include?: usersInclude<ExtArgs> | null
     where?: usersWhereInput
-  }
-
-  /**
-   * webhook_subscriptions.webhook_deliveries
-   */
-  export type webhook_subscriptions$webhook_deliveriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the webhook_deliveries
-     */
-    select?: webhook_deliveriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the webhook_deliveries
-     */
-    omit?: webhook_deliveriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: webhook_deliveriesInclude<ExtArgs> | null
-    where?: webhook_deliveriesWhereInput
-    orderBy?: webhook_deliveriesOrderByWithRelationInput | webhook_deliveriesOrderByWithRelationInput[]
-    cursor?: webhook_deliveriesWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Webhook_deliveriesScalarFieldEnum | Webhook_deliveriesScalarFieldEnum[]
   }
 
   /**
@@ -39488,18 +39488,18 @@ export namespace Prisma {
     contact_phone?: StringNullableFilter<"companies"> | string | null
     created_at?: DateTimeNullableFilter<"companies"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"companies"> | Date | string | null
+    api_keys?: Api_keysListRelationFilter
     drivers?: DriversListRelationFilter
+    hardware_connections?: Hardware_connectionsListRelationFilter
+    integration_connections?: Integration_connectionsListRelationFilter
     loads?: LoadsListRelationFilter
     scale_facilities?: Scale_facilitiesListRelationFilter
     scales?: ScalesListRelationFilter
     users?: UsersListRelationFilter
     vehicles?: VehiclesListRelationFilter
+    webhook_subscriptions?: Webhook_subscriptionsListRelationFilter
     weigh_tickets?: Weigh_ticketsListRelationFilter
     weights?: WeightsListRelationFilter
-    api_keys?: Api_keysListRelationFilter
-    webhook_subscriptions?: Webhook_subscriptionsListRelationFilter
-    integration_connections?: Integration_connectionsListRelationFilter
-    hardware_connections?: Hardware_connectionsListRelationFilter
   }
 
   export type companiesOrderByWithRelationInput = {
@@ -39510,18 +39510,18 @@ export namespace Prisma {
     contact_phone?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
     updated_at?: SortOrderInput | SortOrder
+    api_keys?: api_keysOrderByRelationAggregateInput
     drivers?: driversOrderByRelationAggregateInput
+    hardware_connections?: hardware_connectionsOrderByRelationAggregateInput
+    integration_connections?: integration_connectionsOrderByRelationAggregateInput
     loads?: loadsOrderByRelationAggregateInput
     scale_facilities?: scale_facilitiesOrderByRelationAggregateInput
     scales?: scalesOrderByRelationAggregateInput
     users?: usersOrderByRelationAggregateInput
     vehicles?: vehiclesOrderByRelationAggregateInput
+    webhook_subscriptions?: webhook_subscriptionsOrderByRelationAggregateInput
     weigh_tickets?: weigh_ticketsOrderByRelationAggregateInput
     weights?: weightsOrderByRelationAggregateInput
-    api_keys?: api_keysOrderByRelationAggregateInput
-    webhook_subscriptions?: webhook_subscriptionsOrderByRelationAggregateInput
-    integration_connections?: integration_connectionsOrderByRelationAggregateInput
-    hardware_connections?: hardware_connectionsOrderByRelationAggregateInput
   }
 
   export type companiesWhereUniqueInput = Prisma.AtLeast<{
@@ -39535,18 +39535,18 @@ export namespace Prisma {
     contact_phone?: StringNullableFilter<"companies"> | string | null
     created_at?: DateTimeNullableFilter<"companies"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"companies"> | Date | string | null
+    api_keys?: Api_keysListRelationFilter
     drivers?: DriversListRelationFilter
+    hardware_connections?: Hardware_connectionsListRelationFilter
+    integration_connections?: Integration_connectionsListRelationFilter
     loads?: LoadsListRelationFilter
     scale_facilities?: Scale_facilitiesListRelationFilter
     scales?: ScalesListRelationFilter
     users?: UsersListRelationFilter
     vehicles?: VehiclesListRelationFilter
+    webhook_subscriptions?: Webhook_subscriptionsListRelationFilter
     weigh_tickets?: Weigh_ticketsListRelationFilter
     weights?: WeightsListRelationFilter
-    api_keys?: Api_keysListRelationFilter
-    webhook_subscriptions?: Webhook_subscriptionsListRelationFilter
-    integration_connections?: Integration_connectionsListRelationFilter
-    hardware_connections?: Hardware_connectionsListRelationFilter
   }, "id">
 
   export type companiesOrderByWithAggregationInput = {
@@ -40500,14 +40500,14 @@ export namespace Prisma {
     is_admin?: BoolNullableFilter<"users"> | boolean | null
     created_at?: DateTimeNullableFilter<"users"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"users"> | Date | string | null
+    api_keys?: Api_keysListRelationFilter
+    hardware_connections?: Hardware_connectionsListRelationFilter
+    integration_connections?: Integration_connectionsListRelationFilter
     predictive_alerts?: Predictive_alertsListRelationFilter
     ticket_images?: Ticket_imagesListRelationFilter
     companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
-    weigh_tickets?: Weigh_ticketsListRelationFilter
-    api_keys?: Api_keysListRelationFilter
     webhook_subscriptions?: Webhook_subscriptionsListRelationFilter
-    integration_connections?: Integration_connectionsListRelationFilter
-    hardware_connections?: Hardware_connectionsListRelationFilter
+    weigh_tickets?: Weigh_ticketsListRelationFilter
   }
 
   export type usersOrderByWithRelationInput = {
@@ -40518,14 +40518,14 @@ export namespace Prisma {
     is_admin?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
     updated_at?: SortOrderInput | SortOrder
+    api_keys?: api_keysOrderByRelationAggregateInput
+    hardware_connections?: hardware_connectionsOrderByRelationAggregateInput
+    integration_connections?: integration_connectionsOrderByRelationAggregateInput
     predictive_alerts?: predictive_alertsOrderByRelationAggregateInput
     ticket_images?: ticket_imagesOrderByRelationAggregateInput
     companies?: companiesOrderByWithRelationInput
-    weigh_tickets?: weigh_ticketsOrderByRelationAggregateInput
-    api_keys?: api_keysOrderByRelationAggregateInput
     webhook_subscriptions?: webhook_subscriptionsOrderByRelationAggregateInput
-    integration_connections?: integration_connectionsOrderByRelationAggregateInput
-    hardware_connections?: hardware_connectionsOrderByRelationAggregateInput
+    weigh_tickets?: weigh_ticketsOrderByRelationAggregateInput
   }
 
   export type usersWhereUniqueInput = Prisma.AtLeast<{
@@ -40539,14 +40539,14 @@ export namespace Prisma {
     is_admin?: BoolNullableFilter<"users"> | boolean | null
     created_at?: DateTimeNullableFilter<"users"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"users"> | Date | string | null
+    api_keys?: Api_keysListRelationFilter
+    hardware_connections?: Hardware_connectionsListRelationFilter
+    integration_connections?: Integration_connectionsListRelationFilter
     predictive_alerts?: Predictive_alertsListRelationFilter
     ticket_images?: Ticket_imagesListRelationFilter
     companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
-    weigh_tickets?: Weigh_ticketsListRelationFilter
-    api_keys?: Api_keysListRelationFilter
     webhook_subscriptions?: Webhook_subscriptionsListRelationFilter
-    integration_connections?: Integration_connectionsListRelationFilter
-    hardware_connections?: Hardware_connectionsListRelationFilter
+    weigh_tickets?: Weigh_ticketsListRelationFilter
   }, "id" | "email">
 
   export type usersOrderByWithAggregationInput = {
@@ -41171,9 +41171,9 @@ export namespace Prisma {
     created_by?: UuidNullableFilter<"webhook_subscriptions"> | string | null
     created_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
     updated_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
+    webhook_deliveries?: Webhook_deliveriesListRelationFilter
     companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
     users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
-    webhook_deliveries?: Webhook_deliveriesListRelationFilter
   }
 
   export type webhook_subscriptionsOrderByWithRelationInput = {
@@ -41187,9 +41187,9 @@ export namespace Prisma {
     created_by?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    webhook_deliveries?: webhook_deliveriesOrderByRelationAggregateInput
     companies?: companiesOrderByWithRelationInput
     users?: usersOrderByWithRelationInput
-    webhook_deliveries?: webhook_deliveriesOrderByRelationAggregateInput
   }
 
   export type webhook_subscriptionsWhereUniqueInput = Prisma.AtLeast<{
@@ -41206,9 +41206,9 @@ export namespace Prisma {
     created_by?: UuidNullableFilter<"webhook_subscriptions"> | string | null
     created_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
     updated_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
+    webhook_deliveries?: Webhook_deliveriesListRelationFilter
     companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
     users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
-    webhook_deliveries?: Webhook_deliveriesListRelationFilter
   }, "id">
 
   export type webhook_subscriptionsOrderByWithAggregationInput = {
@@ -41984,18 +41984,18 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateInput = {
@@ -42006,18 +42006,18 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUpdateInput = {
@@ -42027,18 +42027,18 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateInput = {
@@ -42049,18 +42049,18 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesCreateManyInput = {
@@ -43037,14 +43037,14 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
-    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateInput = {
@@ -43055,13 +43055,13 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
-    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersUpdateInput = {
@@ -43071,14 +43071,14 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateInput = {
@@ -43089,13 +43089,13 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type usersCreateManyInput = {
@@ -43766,9 +43766,9 @@ export namespace Prisma {
     is_active?: boolean
     created_at?: Date | string
     updated_at?: Date | string
+    webhook_deliveries?: webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput
     companies?: companiesCreateNestedOneWithoutWebhook_subscriptionsInput
     users?: usersCreateNestedOneWithoutWebhook_subscriptionsInput
-    webhook_deliveries?: webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput
   }
 
   export type webhook_subscriptionsUncheckedCreateInput = {
@@ -43794,9 +43794,9 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhook_deliveries?: webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput
     companies?: companiesUpdateOneWithoutWebhook_subscriptionsNestedInput
     users?: usersUpdateOneWithoutWebhook_subscriptionsNestedInput
-    webhook_deliveries?: webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput
   }
 
   export type webhook_subscriptionsUncheckedUpdateInput = {
@@ -44727,10 +44727,28 @@ export namespace Prisma {
     _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
+  export type Api_keysListRelationFilter = {
+    every?: api_keysWhereInput
+    some?: api_keysWhereInput
+    none?: api_keysWhereInput
+  }
+
   export type DriversListRelationFilter = {
     every?: driversWhereInput
     some?: driversWhereInput
     none?: driversWhereInput
+  }
+
+  export type Hardware_connectionsListRelationFilter = {
+    every?: hardware_connectionsWhereInput
+    some?: hardware_connectionsWhereInput
+    none?: hardware_connectionsWhereInput
+  }
+
+  export type Integration_connectionsListRelationFilter = {
+    every?: integration_connectionsWhereInput
+    some?: integration_connectionsWhereInput
+    none?: integration_connectionsWhereInput
   }
 
   export type LoadsListRelationFilter = {
@@ -44757,6 +44775,12 @@ export namespace Prisma {
     none?: usersWhereInput
   }
 
+  export type Webhook_subscriptionsListRelationFilter = {
+    every?: webhook_subscriptionsWhereInput
+    some?: webhook_subscriptionsWhereInput
+    none?: webhook_subscriptionsWhereInput
+  }
+
   export type Weigh_ticketsListRelationFilter = {
     every?: weigh_ticketsWhereInput
     some?: weigh_ticketsWhereInput
@@ -44769,31 +44793,19 @@ export namespace Prisma {
     none?: weightsWhereInput
   }
 
-  export type Api_keysListRelationFilter = {
-    every?: api_keysWhereInput
-    some?: api_keysWhereInput
-    none?: api_keysWhereInput
-  }
-
-  export type Webhook_subscriptionsListRelationFilter = {
-    every?: webhook_subscriptionsWhereInput
-    some?: webhook_subscriptionsWhereInput
-    none?: webhook_subscriptionsWhereInput
-  }
-
-  export type Integration_connectionsListRelationFilter = {
-    every?: integration_connectionsWhereInput
-    some?: integration_connectionsWhereInput
-    none?: integration_connectionsWhereInput
-  }
-
-  export type Hardware_connectionsListRelationFilter = {
-    every?: hardware_connectionsWhereInput
-    some?: hardware_connectionsWhereInput
-    none?: hardware_connectionsWhereInput
+  export type api_keysOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type driversOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type hardware_connectionsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type integration_connectionsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -44813,27 +44825,15 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type webhook_subscriptionsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type weigh_ticketsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type weightsOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type api_keysOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type webhook_subscriptionsOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type integration_connectionsOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type hardware_connectionsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -46613,11 +46613,32 @@ export namespace Prisma {
     update?: XOR<XOR<weigh_ticketsUpdateToOneWithWhereWithoutCargoInput, weigh_ticketsUpdateWithoutCargoInput>, weigh_ticketsUncheckedUpdateWithoutCargoInput>
   }
 
+  export type api_keysCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput> | api_keysCreateWithoutCompaniesInput[] | api_keysUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutCompaniesInput | api_keysCreateOrConnectWithoutCompaniesInput[]
+    createMany?: api_keysCreateManyCompaniesInputEnvelope
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+  }
+
   export type driversCreateNestedManyWithoutCompaniesInput = {
     create?: XOR<driversCreateWithoutCompaniesInput, driversUncheckedCreateWithoutCompaniesInput> | driversCreateWithoutCompaniesInput[] | driversUncheckedCreateWithoutCompaniesInput[]
     connectOrCreate?: driversCreateOrConnectWithoutCompaniesInput | driversCreateOrConnectWithoutCompaniesInput[]
     createMany?: driversCreateManyCompaniesInputEnvelope
     connect?: driversWhereUniqueInput | driversWhereUniqueInput[]
+  }
+
+  export type hardware_connectionsCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+  }
+
+  export type integration_connectionsCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
   }
 
   export type loadsCreateNestedManyWithoutCompaniesInput = {
@@ -46655,6 +46676,13 @@ export namespace Prisma {
     connect?: vehiclesWhereUniqueInput | vehiclesWhereUniqueInput[]
   }
 
+  export type webhook_subscriptionsCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+  }
+
   export type weigh_ticketsCreateNestedManyWithoutCompaniesInput = {
     create?: XOR<weigh_ticketsCreateWithoutCompaniesInput, weigh_ticketsUncheckedCreateWithoutCompaniesInput> | weigh_ticketsCreateWithoutCompaniesInput[] | weigh_ticketsUncheckedCreateWithoutCompaniesInput[]
     connectOrCreate?: weigh_ticketsCreateOrConnectWithoutCompaniesInput | weigh_ticketsCreateOrConnectWithoutCompaniesInput[]
@@ -46669,32 +46697,11 @@ export namespace Prisma {
     connect?: weightsWhereUniqueInput | weightsWhereUniqueInput[]
   }
 
-  export type api_keysCreateNestedManyWithoutCompaniesInput = {
+  export type api_keysUncheckedCreateNestedManyWithoutCompaniesInput = {
     create?: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput> | api_keysCreateWithoutCompaniesInput[] | api_keysUncheckedCreateWithoutCompaniesInput[]
     connectOrCreate?: api_keysCreateOrConnectWithoutCompaniesInput | api_keysCreateOrConnectWithoutCompaniesInput[]
     createMany?: api_keysCreateManyCompaniesInputEnvelope
     connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-  }
-
-  export type webhook_subscriptionsCreateNestedManyWithoutCompaniesInput = {
-    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
-    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
-    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
-  }
-
-  export type integration_connectionsCreateNestedManyWithoutCompaniesInput = {
-    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
-    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
-    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-  }
-
-  export type hardware_connectionsCreateNestedManyWithoutCompaniesInput = {
-    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
-    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
-    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
   }
 
   export type driversUncheckedCreateNestedManyWithoutCompaniesInput = {
@@ -46702,6 +46709,20 @@ export namespace Prisma {
     connectOrCreate?: driversCreateOrConnectWithoutCompaniesInput | driversCreateOrConnectWithoutCompaniesInput[]
     createMany?: driversCreateManyCompaniesInputEnvelope
     connect?: driversWhereUniqueInput | driversWhereUniqueInput[]
+  }
+
+  export type hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+  }
+
+  export type integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
   }
 
   export type loadsUncheckedCreateNestedManyWithoutCompaniesInput = {
@@ -46739,6 +46760,13 @@ export namespace Prisma {
     connect?: vehiclesWhereUniqueInput | vehiclesWhereUniqueInput[]
   }
 
+  export type webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+  }
+
   export type weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput = {
     create?: XOR<weigh_ticketsCreateWithoutCompaniesInput, weigh_ticketsUncheckedCreateWithoutCompaniesInput> | weigh_ticketsCreateWithoutCompaniesInput[] | weigh_ticketsUncheckedCreateWithoutCompaniesInput[]
     connectOrCreate?: weigh_ticketsCreateOrConnectWithoutCompaniesInput | weigh_ticketsCreateOrConnectWithoutCompaniesInput[]
@@ -46753,32 +46781,18 @@ export namespace Prisma {
     connect?: weightsWhereUniqueInput | weightsWhereUniqueInput[]
   }
 
-  export type api_keysUncheckedCreateNestedManyWithoutCompaniesInput = {
+  export type api_keysUpdateManyWithoutCompaniesNestedInput = {
     create?: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput> | api_keysCreateWithoutCompaniesInput[] | api_keysUncheckedCreateWithoutCompaniesInput[]
     connectOrCreate?: api_keysCreateOrConnectWithoutCompaniesInput | api_keysCreateOrConnectWithoutCompaniesInput[]
+    upsert?: api_keysUpsertWithWhereUniqueWithoutCompaniesInput | api_keysUpsertWithWhereUniqueWithoutCompaniesInput[]
     createMany?: api_keysCreateManyCompaniesInputEnvelope
+    set?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    disconnect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    delete?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
     connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-  }
-
-  export type webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput = {
-    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
-    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
-    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
-  }
-
-  export type integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput = {
-    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
-    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
-    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-  }
-
-  export type hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput = {
-    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
-    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
-    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    update?: api_keysUpdateWithWhereUniqueWithoutCompaniesInput | api_keysUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: api_keysUpdateManyWithWhereWithoutCompaniesInput | api_keysUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
   }
 
   export type driversUpdateManyWithoutCompaniesNestedInput = {
@@ -46793,6 +46807,34 @@ export namespace Prisma {
     update?: driversUpdateWithWhereUniqueWithoutCompaniesInput | driversUpdateWithWhereUniqueWithoutCompaniesInput[]
     updateMany?: driversUpdateManyWithWhereWithoutCompaniesInput | driversUpdateManyWithWhereWithoutCompaniesInput[]
     deleteMany?: driversScalarWhereInput | driversScalarWhereInput[]
+  }
+
+  export type hardware_connectionsUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
+    set?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    disconnect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    delete?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    update?: hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput | hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+  }
+
+  export type integration_connectionsUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
+    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    update?: integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: integration_connectionsUpdateManyWithWhereWithoutCompaniesInput | integration_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
   }
 
   export type loadsUpdateManyWithoutCompaniesNestedInput = {
@@ -46865,6 +46907,20 @@ export namespace Prisma {
     deleteMany?: vehiclesScalarWhereInput | vehiclesScalarWhereInput[]
   }
 
+  export type webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
+    set?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    disconnect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    delete?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    update?: webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput | webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
+  }
+
   export type weigh_ticketsUpdateManyWithoutCompaniesNestedInput = {
     create?: XOR<weigh_ticketsCreateWithoutCompaniesInput, weigh_ticketsUncheckedCreateWithoutCompaniesInput> | weigh_ticketsCreateWithoutCompaniesInput[] | weigh_ticketsUncheckedCreateWithoutCompaniesInput[]
     connectOrCreate?: weigh_ticketsCreateOrConnectWithoutCompaniesInput | weigh_ticketsCreateOrConnectWithoutCompaniesInput[]
@@ -46893,7 +46949,7 @@ export namespace Prisma {
     deleteMany?: weightsScalarWhereInput | weightsScalarWhereInput[]
   }
 
-  export type api_keysUpdateManyWithoutCompaniesNestedInput = {
+  export type api_keysUncheckedUpdateManyWithoutCompaniesNestedInput = {
     create?: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput> | api_keysCreateWithoutCompaniesInput[] | api_keysUncheckedCreateWithoutCompaniesInput[]
     connectOrCreate?: api_keysCreateOrConnectWithoutCompaniesInput | api_keysCreateOrConnectWithoutCompaniesInput[]
     upsert?: api_keysUpsertWithWhereUniqueWithoutCompaniesInput | api_keysUpsertWithWhereUniqueWithoutCompaniesInput[]
@@ -46905,48 +46961,6 @@ export namespace Prisma {
     update?: api_keysUpdateWithWhereUniqueWithoutCompaniesInput | api_keysUpdateWithWhereUniqueWithoutCompaniesInput[]
     updateMany?: api_keysUpdateManyWithWhereWithoutCompaniesInput | api_keysUpdateManyWithWhereWithoutCompaniesInput[]
     deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
-  }
-
-  export type webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput = {
-    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
-    upsert?: webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput[]
-    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
-    set?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
-    disconnect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
-    delete?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
-    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
-    update?: webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput[]
-    updateMany?: webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput | webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput[]
-    deleteMany?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
-  }
-
-  export type integration_connectionsUpdateManyWithoutCompaniesNestedInput = {
-    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
-    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
-    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
-    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    update?: integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
-    updateMany?: integration_connectionsUpdateManyWithWhereWithoutCompaniesInput | integration_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
-    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
-  }
-
-  export type hardware_connectionsUpdateManyWithoutCompaniesNestedInput = {
-    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
-    upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
-    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
-    set?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    disconnect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    delete?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    update?: hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
-    updateMany?: hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput | hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
-    deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
   }
 
   export type driversUncheckedUpdateManyWithoutCompaniesNestedInput = {
@@ -46961,6 +46975,34 @@ export namespace Prisma {
     update?: driversUpdateWithWhereUniqueWithoutCompaniesInput | driversUpdateWithWhereUniqueWithoutCompaniesInput[]
     updateMany?: driversUpdateManyWithWhereWithoutCompaniesInput | driversUpdateManyWithWhereWithoutCompaniesInput[]
     deleteMany?: driversScalarWhereInput | driversScalarWhereInput[]
+  }
+
+  export type hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
+    set?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    disconnect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    delete?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    update?: hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput | hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+  }
+
+  export type integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
+    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    update?: integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: integration_connectionsUpdateManyWithWhereWithoutCompaniesInput | integration_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
   }
 
   export type loadsUncheckedUpdateManyWithoutCompaniesNestedInput = {
@@ -47033,6 +47075,20 @@ export namespace Prisma {
     deleteMany?: vehiclesScalarWhereInput | vehiclesScalarWhereInput[]
   }
 
+  export type webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
+    set?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    disconnect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    delete?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    update?: webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput | webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
+  }
+
   export type weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput = {
     create?: XOR<weigh_ticketsCreateWithoutCompaniesInput, weigh_ticketsUncheckedCreateWithoutCompaniesInput> | weigh_ticketsCreateWithoutCompaniesInput[] | weigh_ticketsUncheckedCreateWithoutCompaniesInput[]
     connectOrCreate?: weigh_ticketsCreateOrConnectWithoutCompaniesInput | weigh_ticketsCreateOrConnectWithoutCompaniesInput[]
@@ -47059,62 +47115,6 @@ export namespace Prisma {
     update?: weightsUpdateWithWhereUniqueWithoutCompaniesInput | weightsUpdateWithWhereUniqueWithoutCompaniesInput[]
     updateMany?: weightsUpdateManyWithWhereWithoutCompaniesInput | weightsUpdateManyWithWhereWithoutCompaniesInput[]
     deleteMany?: weightsScalarWhereInput | weightsScalarWhereInput[]
-  }
-
-  export type api_keysUncheckedUpdateManyWithoutCompaniesNestedInput = {
-    create?: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput> | api_keysCreateWithoutCompaniesInput[] | api_keysUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: api_keysCreateOrConnectWithoutCompaniesInput | api_keysCreateOrConnectWithoutCompaniesInput[]
-    upsert?: api_keysUpsertWithWhereUniqueWithoutCompaniesInput | api_keysUpsertWithWhereUniqueWithoutCompaniesInput[]
-    createMany?: api_keysCreateManyCompaniesInputEnvelope
-    set?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    disconnect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    delete?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    update?: api_keysUpdateWithWhereUniqueWithoutCompaniesInput | api_keysUpdateWithWhereUniqueWithoutCompaniesInput[]
-    updateMany?: api_keysUpdateManyWithWhereWithoutCompaniesInput | api_keysUpdateManyWithWhereWithoutCompaniesInput[]
-    deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
-  }
-
-  export type webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput = {
-    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
-    upsert?: webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput[]
-    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
-    set?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
-    disconnect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
-    delete?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
-    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
-    update?: webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput[]
-    updateMany?: webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput | webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput[]
-    deleteMany?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
-  }
-
-  export type integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput = {
-    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
-    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
-    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
-    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    update?: integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
-    updateMany?: integration_connectionsUpdateManyWithWhereWithoutCompaniesInput | integration_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
-    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
-  }
-
-  export type hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput = {
-    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
-    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
-    upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
-    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
-    set?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    disconnect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    delete?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    update?: hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
-    updateMany?: hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput | hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
-    deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
   }
 
   export type weigh_ticketsCreateNestedOneWithoutCompliance_issuesInput = {
@@ -47779,6 +47779,27 @@ export namespace Prisma {
     update?: XOR<XOR<weigh_ticketsUpdateToOneWithWhereWithoutTicket_signaturesInput, weigh_ticketsUpdateWithoutTicket_signaturesInput>, weigh_ticketsUncheckedUpdateWithoutTicket_signaturesInput>
   }
 
+  export type api_keysCreateNestedManyWithoutUsersInput = {
+    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
+    createMany?: api_keysCreateManyUsersInputEnvelope
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+  }
+
+  export type hardware_connectionsCreateNestedManyWithoutUsersInput = {
+    create?: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput> | hardware_connectionsCreateWithoutUsersInput[] | hardware_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutUsersInput | hardware_connectionsCreateOrConnectWithoutUsersInput[]
+    createMany?: hardware_connectionsCreateManyUsersInputEnvelope
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+  }
+
+  export type integration_connectionsCreateNestedManyWithoutUsersInput = {
+    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
+    createMany?: integration_connectionsCreateManyUsersInputEnvelope
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+  }
+
   export type predictive_alertsCreateNestedManyWithoutUsersInput = {
     create?: XOR<predictive_alertsCreateWithoutUsersInput, predictive_alertsUncheckedCreateWithoutUsersInput> | predictive_alertsCreateWithoutUsersInput[] | predictive_alertsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: predictive_alertsCreateOrConnectWithoutUsersInput | predictive_alertsCreateOrConnectWithoutUsersInput[]
@@ -47799,20 +47820,6 @@ export namespace Prisma {
     connect?: companiesWhereUniqueInput
   }
 
-  export type weigh_ticketsCreateNestedManyWithoutUsersInput = {
-    create?: XOR<weigh_ticketsCreateWithoutUsersInput, weigh_ticketsUncheckedCreateWithoutUsersInput> | weigh_ticketsCreateWithoutUsersInput[] | weigh_ticketsUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: weigh_ticketsCreateOrConnectWithoutUsersInput | weigh_ticketsCreateOrConnectWithoutUsersInput[]
-    createMany?: weigh_ticketsCreateManyUsersInputEnvelope
-    connect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
-  }
-
-  export type api_keysCreateNestedManyWithoutUsersInput = {
-    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
-    createMany?: api_keysCreateManyUsersInputEnvelope
-    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-  }
-
   export type webhook_subscriptionsCreateNestedManyWithoutUsersInput = {
     create?: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput> | webhook_subscriptionsCreateWithoutUsersInput[] | webhook_subscriptionsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutUsersInput | webhook_subscriptionsCreateOrConnectWithoutUsersInput[]
@@ -47820,18 +47827,32 @@ export namespace Prisma {
     connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
   }
 
-  export type integration_connectionsCreateNestedManyWithoutUsersInput = {
-    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
-    createMany?: integration_connectionsCreateManyUsersInputEnvelope
-    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+  export type weigh_ticketsCreateNestedManyWithoutUsersInput = {
+    create?: XOR<weigh_ticketsCreateWithoutUsersInput, weigh_ticketsUncheckedCreateWithoutUsersInput> | weigh_ticketsCreateWithoutUsersInput[] | weigh_ticketsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: weigh_ticketsCreateOrConnectWithoutUsersInput | weigh_ticketsCreateOrConnectWithoutUsersInput[]
+    createMany?: weigh_ticketsCreateManyUsersInputEnvelope
+    connect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
   }
 
-  export type hardware_connectionsCreateNestedManyWithoutUsersInput = {
+  export type api_keysUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
+    createMany?: api_keysCreateManyUsersInputEnvelope
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+  }
+
+  export type hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput = {
     create?: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput> | hardware_connectionsCreateWithoutUsersInput[] | hardware_connectionsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: hardware_connectionsCreateOrConnectWithoutUsersInput | hardware_connectionsCreateOrConnectWithoutUsersInput[]
     createMany?: hardware_connectionsCreateManyUsersInputEnvelope
     connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+  }
+
+  export type integration_connectionsUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
+    createMany?: integration_connectionsCreateManyUsersInputEnvelope
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
   }
 
   export type predictive_alertsUncheckedCreateNestedManyWithoutUsersInput = {
@@ -47848,20 +47869,6 @@ export namespace Prisma {
     connect?: ticket_imagesWhereUniqueInput | ticket_imagesWhereUniqueInput[]
   }
 
-  export type weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput = {
-    create?: XOR<weigh_ticketsCreateWithoutUsersInput, weigh_ticketsUncheckedCreateWithoutUsersInput> | weigh_ticketsCreateWithoutUsersInput[] | weigh_ticketsUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: weigh_ticketsCreateOrConnectWithoutUsersInput | weigh_ticketsCreateOrConnectWithoutUsersInput[]
-    createMany?: weigh_ticketsCreateManyUsersInputEnvelope
-    connect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
-  }
-
-  export type api_keysUncheckedCreateNestedManyWithoutUsersInput = {
-    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
-    createMany?: api_keysCreateManyUsersInputEnvelope
-    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-  }
-
   export type webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput = {
     create?: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput> | webhook_subscriptionsCreateWithoutUsersInput[] | webhook_subscriptionsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutUsersInput | webhook_subscriptionsCreateOrConnectWithoutUsersInput[]
@@ -47869,18 +47876,53 @@ export namespace Prisma {
     connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
   }
 
-  export type integration_connectionsUncheckedCreateNestedManyWithoutUsersInput = {
-    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
-    createMany?: integration_connectionsCreateManyUsersInputEnvelope
-    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+  export type weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<weigh_ticketsCreateWithoutUsersInput, weigh_ticketsUncheckedCreateWithoutUsersInput> | weigh_ticketsCreateWithoutUsersInput[] | weigh_ticketsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: weigh_ticketsCreateOrConnectWithoutUsersInput | weigh_ticketsCreateOrConnectWithoutUsersInput[]
+    createMany?: weigh_ticketsCreateManyUsersInputEnvelope
+    connect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
   }
 
-  export type hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput = {
+  export type api_keysUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
+    upsert?: api_keysUpsertWithWhereUniqueWithoutUsersInput | api_keysUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: api_keysCreateManyUsersInputEnvelope
+    set?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    disconnect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    delete?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    update?: api_keysUpdateWithWhereUniqueWithoutUsersInput | api_keysUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: api_keysUpdateManyWithWhereWithoutUsersInput | api_keysUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
+  }
+
+  export type hardware_connectionsUpdateManyWithoutUsersNestedInput = {
     create?: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput> | hardware_connectionsCreateWithoutUsersInput[] | hardware_connectionsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: hardware_connectionsCreateOrConnectWithoutUsersInput | hardware_connectionsCreateOrConnectWithoutUsersInput[]
+    upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput | hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
     createMany?: hardware_connectionsCreateManyUsersInputEnvelope
+    set?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    disconnect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    delete?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
     connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    update?: hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput | hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: hardware_connectionsUpdateManyWithWhereWithoutUsersInput | hardware_connectionsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+  }
+
+  export type integration_connectionsUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
+    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutUsersInput | integration_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: integration_connectionsCreateManyUsersInputEnvelope
+    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    update?: integration_connectionsUpdateWithWhereUniqueWithoutUsersInput | integration_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: integration_connectionsUpdateManyWithWhereWithoutUsersInput | integration_connectionsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
   }
 
   export type predictive_alertsUpdateManyWithoutUsersNestedInput = {
@@ -47921,34 +47963,6 @@ export namespace Prisma {
     update?: XOR<XOR<companiesUpdateToOneWithWhereWithoutUsersInput, companiesUpdateWithoutUsersInput>, companiesUncheckedUpdateWithoutUsersInput>
   }
 
-  export type weigh_ticketsUpdateManyWithoutUsersNestedInput = {
-    create?: XOR<weigh_ticketsCreateWithoutUsersInput, weigh_ticketsUncheckedCreateWithoutUsersInput> | weigh_ticketsCreateWithoutUsersInput[] | weigh_ticketsUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: weigh_ticketsCreateOrConnectWithoutUsersInput | weigh_ticketsCreateOrConnectWithoutUsersInput[]
-    upsert?: weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput | weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput[]
-    createMany?: weigh_ticketsCreateManyUsersInputEnvelope
-    set?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
-    disconnect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
-    delete?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
-    connect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
-    update?: weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput | weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput[]
-    updateMany?: weigh_ticketsUpdateManyWithWhereWithoutUsersInput | weigh_ticketsUpdateManyWithWhereWithoutUsersInput[]
-    deleteMany?: weigh_ticketsScalarWhereInput | weigh_ticketsScalarWhereInput[]
-  }
-
-  export type api_keysUpdateManyWithoutUsersNestedInput = {
-    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
-    upsert?: api_keysUpsertWithWhereUniqueWithoutUsersInput | api_keysUpsertWithWhereUniqueWithoutUsersInput[]
-    createMany?: api_keysCreateManyUsersInputEnvelope
-    set?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    disconnect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    delete?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    update?: api_keysUpdateWithWhereUniqueWithoutUsersInput | api_keysUpdateWithWhereUniqueWithoutUsersInput[]
-    updateMany?: api_keysUpdateManyWithWhereWithoutUsersInput | api_keysUpdateManyWithWhereWithoutUsersInput[]
-    deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
-  }
-
   export type webhook_subscriptionsUpdateManyWithoutUsersNestedInput = {
     create?: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput> | webhook_subscriptionsCreateWithoutUsersInput[] | webhook_subscriptionsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutUsersInput | webhook_subscriptionsCreateOrConnectWithoutUsersInput[]
@@ -47963,21 +47977,35 @@ export namespace Prisma {
     deleteMany?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
   }
 
-  export type integration_connectionsUpdateManyWithoutUsersNestedInput = {
-    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
-    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutUsersInput | integration_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
-    createMany?: integration_connectionsCreateManyUsersInputEnvelope
-    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    update?: integration_connectionsUpdateWithWhereUniqueWithoutUsersInput | integration_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
-    updateMany?: integration_connectionsUpdateManyWithWhereWithoutUsersInput | integration_connectionsUpdateManyWithWhereWithoutUsersInput[]
-    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
+  export type weigh_ticketsUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<weigh_ticketsCreateWithoutUsersInput, weigh_ticketsUncheckedCreateWithoutUsersInput> | weigh_ticketsCreateWithoutUsersInput[] | weigh_ticketsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: weigh_ticketsCreateOrConnectWithoutUsersInput | weigh_ticketsCreateOrConnectWithoutUsersInput[]
+    upsert?: weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput | weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: weigh_ticketsCreateManyUsersInputEnvelope
+    set?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
+    disconnect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
+    delete?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
+    connect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
+    update?: weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput | weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: weigh_ticketsUpdateManyWithWhereWithoutUsersInput | weigh_ticketsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: weigh_ticketsScalarWhereInput | weigh_ticketsScalarWhereInput[]
   }
 
-  export type hardware_connectionsUpdateManyWithoutUsersNestedInput = {
+  export type api_keysUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
+    upsert?: api_keysUpsertWithWhereUniqueWithoutUsersInput | api_keysUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: api_keysCreateManyUsersInputEnvelope
+    set?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    disconnect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    delete?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    update?: api_keysUpdateWithWhereUniqueWithoutUsersInput | api_keysUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: api_keysUpdateManyWithWhereWithoutUsersInput | api_keysUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
+  }
+
+  export type hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput = {
     create?: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput> | hardware_connectionsCreateWithoutUsersInput[] | hardware_connectionsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: hardware_connectionsCreateOrConnectWithoutUsersInput | hardware_connectionsCreateOrConnectWithoutUsersInput[]
     upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput | hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
@@ -47989,6 +48017,20 @@ export namespace Prisma {
     update?: hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput | hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
     updateMany?: hardware_connectionsUpdateManyWithWhereWithoutUsersInput | hardware_connectionsUpdateManyWithWhereWithoutUsersInput[]
     deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+  }
+
+  export type integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
+    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutUsersInput | integration_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: integration_connectionsCreateManyUsersInputEnvelope
+    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    update?: integration_connectionsUpdateWithWhereUniqueWithoutUsersInput | integration_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: integration_connectionsUpdateManyWithWhereWithoutUsersInput | integration_connectionsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
   }
 
   export type predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput = {
@@ -48019,34 +48061,6 @@ export namespace Prisma {
     deleteMany?: ticket_imagesScalarWhereInput | ticket_imagesScalarWhereInput[]
   }
 
-  export type weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput = {
-    create?: XOR<weigh_ticketsCreateWithoutUsersInput, weigh_ticketsUncheckedCreateWithoutUsersInput> | weigh_ticketsCreateWithoutUsersInput[] | weigh_ticketsUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: weigh_ticketsCreateOrConnectWithoutUsersInput | weigh_ticketsCreateOrConnectWithoutUsersInput[]
-    upsert?: weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput | weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput[]
-    createMany?: weigh_ticketsCreateManyUsersInputEnvelope
-    set?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
-    disconnect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
-    delete?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
-    connect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
-    update?: weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput | weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput[]
-    updateMany?: weigh_ticketsUpdateManyWithWhereWithoutUsersInput | weigh_ticketsUpdateManyWithWhereWithoutUsersInput[]
-    deleteMany?: weigh_ticketsScalarWhereInput | weigh_ticketsScalarWhereInput[]
-  }
-
-  export type api_keysUncheckedUpdateManyWithoutUsersNestedInput = {
-    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
-    upsert?: api_keysUpsertWithWhereUniqueWithoutUsersInput | api_keysUpsertWithWhereUniqueWithoutUsersInput[]
-    createMany?: api_keysCreateManyUsersInputEnvelope
-    set?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    disconnect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    delete?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
-    update?: api_keysUpdateWithWhereUniqueWithoutUsersInput | api_keysUpdateWithWhereUniqueWithoutUsersInput[]
-    updateMany?: api_keysUpdateManyWithWhereWithoutUsersInput | api_keysUpdateManyWithWhereWithoutUsersInput[]
-    deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
-  }
-
   export type webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput = {
     create?: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput> | webhook_subscriptionsCreateWithoutUsersInput[] | webhook_subscriptionsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutUsersInput | webhook_subscriptionsCreateOrConnectWithoutUsersInput[]
@@ -48061,32 +48075,18 @@ export namespace Prisma {
     deleteMany?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
   }
 
-  export type integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput = {
-    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
-    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutUsersInput | integration_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
-    createMany?: integration_connectionsCreateManyUsersInputEnvelope
-    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
-    update?: integration_connectionsUpdateWithWhereUniqueWithoutUsersInput | integration_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
-    updateMany?: integration_connectionsUpdateManyWithWhereWithoutUsersInput | integration_connectionsUpdateManyWithWhereWithoutUsersInput[]
-    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
-  }
-
-  export type hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput = {
-    create?: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput> | hardware_connectionsCreateWithoutUsersInput[] | hardware_connectionsUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutUsersInput | hardware_connectionsCreateOrConnectWithoutUsersInput[]
-    upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput | hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
-    createMany?: hardware_connectionsCreateManyUsersInputEnvelope
-    set?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    disconnect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    delete?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
-    update?: hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput | hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
-    updateMany?: hardware_connectionsUpdateManyWithWhereWithoutUsersInput | hardware_connectionsUpdateManyWithWhereWithoutUsersInput[]
-    deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+  export type weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<weigh_ticketsCreateWithoutUsersInput, weigh_ticketsUncheckedCreateWithoutUsersInput> | weigh_ticketsCreateWithoutUsersInput[] | weigh_ticketsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: weigh_ticketsCreateOrConnectWithoutUsersInput | weigh_ticketsCreateOrConnectWithoutUsersInput[]
+    upsert?: weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput | weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: weigh_ticketsCreateManyUsersInputEnvelope
+    set?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
+    disconnect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
+    delete?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
+    connect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
+    update?: weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput | weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: weigh_ticketsUpdateManyWithWhereWithoutUsersInput | weigh_ticketsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: weigh_ticketsScalarWhereInput | weigh_ticketsScalarWhereInput[]
   }
 
   export type loadsCreateNestedManyWithoutVehiclesInput = {
@@ -48790,6 +48790,13 @@ export namespace Prisma {
     set: string[]
   }
 
+  export type webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput = {
+    create?: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput> | webhook_deliveriesCreateWithoutWebhook_subscriptionsInput[] | webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput[]
+    connectOrCreate?: webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput | webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput[]
+    createMany?: webhook_deliveriesCreateManyWebhook_subscriptionsInputEnvelope
+    connect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+  }
+
   export type companiesCreateNestedOneWithoutWebhook_subscriptionsInput = {
     create?: XOR<companiesCreateWithoutWebhook_subscriptionsInput, companiesUncheckedCreateWithoutWebhook_subscriptionsInput>
     connectOrCreate?: companiesCreateOrConnectWithoutWebhook_subscriptionsInput
@@ -48802,13 +48809,6 @@ export namespace Prisma {
     connect?: usersWhereUniqueInput
   }
 
-  export type webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput = {
-    create?: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput> | webhook_deliveriesCreateWithoutWebhook_subscriptionsInput[] | webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput[]
-    connectOrCreate?: webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput | webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput[]
-    createMany?: webhook_deliveriesCreateManyWebhook_subscriptionsInputEnvelope
-    connect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
-  }
-
   export type webhook_deliveriesUncheckedCreateNestedManyWithoutWebhook_subscriptionsInput = {
     create?: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput> | webhook_deliveriesCreateWithoutWebhook_subscriptionsInput[] | webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput[]
     connectOrCreate?: webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput | webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput[]
@@ -48819,6 +48819,20 @@ export namespace Prisma {
   export type webhook_subscriptionsUpdateevent_typesInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput = {
+    create?: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput> | webhook_deliveriesCreateWithoutWebhook_subscriptionsInput[] | webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput[]
+    connectOrCreate?: webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput | webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput[]
+    upsert?: webhook_deliveriesUpsertWithWhereUniqueWithoutWebhook_subscriptionsInput | webhook_deliveriesUpsertWithWhereUniqueWithoutWebhook_subscriptionsInput[]
+    createMany?: webhook_deliveriesCreateManyWebhook_subscriptionsInputEnvelope
+    set?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    disconnect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    delete?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    connect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    update?: webhook_deliveriesUpdateWithWhereUniqueWithoutWebhook_subscriptionsInput | webhook_deliveriesUpdateWithWhereUniqueWithoutWebhook_subscriptionsInput[]
+    updateMany?: webhook_deliveriesUpdateManyWithWhereWithoutWebhook_subscriptionsInput | webhook_deliveriesUpdateManyWithWhereWithoutWebhook_subscriptionsInput[]
+    deleteMany?: webhook_deliveriesScalarWhereInput | webhook_deliveriesScalarWhereInput[]
   }
 
   export type companiesUpdateOneWithoutWebhook_subscriptionsNestedInput = {
@@ -48839,20 +48853,6 @@ export namespace Prisma {
     delete?: usersWhereInput | boolean
     connect?: usersWhereUniqueInput
     update?: XOR<XOR<usersUpdateToOneWithWhereWithoutWebhook_subscriptionsInput, usersUpdateWithoutWebhook_subscriptionsInput>, usersUncheckedUpdateWithoutWebhook_subscriptionsInput>
-  }
-
-  export type webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput = {
-    create?: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput> | webhook_deliveriesCreateWithoutWebhook_subscriptionsInput[] | webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput[]
-    connectOrCreate?: webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput | webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput[]
-    upsert?: webhook_deliveriesUpsertWithWhereUniqueWithoutWebhook_subscriptionsInput | webhook_deliveriesUpsertWithWhereUniqueWithoutWebhook_subscriptionsInput[]
-    createMany?: webhook_deliveriesCreateManyWebhook_subscriptionsInputEnvelope
-    set?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
-    disconnect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
-    delete?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
-    connect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
-    update?: webhook_deliveriesUpdateWithWhereUniqueWithoutWebhook_subscriptionsInput | webhook_deliveriesUpdateWithWhereUniqueWithoutWebhook_subscriptionsInput[]
-    updateMany?: webhook_deliveriesUpdateManyWithWhereWithoutWebhook_subscriptionsInput | webhook_deliveriesUpdateManyWithWhereWithoutWebhook_subscriptionsInput[]
-    deleteMany?: webhook_deliveriesScalarWhereInput | webhook_deliveriesScalarWhereInput[]
   }
 
   export type webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsNestedInput = {
@@ -49854,6 +49854,44 @@ export namespace Prisma {
     ticket_signatures?: ticket_signaturesUncheckedUpdateManyWithoutWeigh_ticketsNestedInput
   }
 
+  export type api_keysCreateWithoutCompaniesInput = {
+    id?: string
+    name: string
+    key: string
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    users?: usersCreateNestedOneWithoutApi_keysInput
+    api_usage?: api_usageCreateNestedManyWithoutApi_keysInput
+  }
+
+  export type api_keysUncheckedCreateWithoutCompaniesInput = {
+    id?: string
+    name: string
+    key: string
+    created_by?: string | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    api_usage?: api_usageUncheckedCreateNestedManyWithoutApi_keysInput
+  }
+
+  export type api_keysCreateOrConnectWithoutCompaniesInput = {
+    where: api_keysWhereUniqueInput
+    create: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type api_keysCreateManyCompaniesInputEnvelope = {
+    data: api_keysCreateManyCompaniesInput | api_keysCreateManyCompaniesInput[]
+    skipDuplicates?: boolean
+  }
+
   export type driversCreateWithoutCompaniesInput = {
     name: string
     license_number: string
@@ -49892,6 +49930,82 @@ export namespace Prisma {
 
   export type driversCreateManyCompaniesInputEnvelope = {
     data: driversCreateManyCompaniesInput | driversCreateManyCompaniesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type hardware_connectionsCreateWithoutCompaniesInput = {
+    id?: string
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    users?: usersCreateNestedOneWithoutHardware_connectionsInput
+  }
+
+  export type hardware_connectionsUncheckedCreateWithoutCompaniesInput = {
+    id?: string
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type hardware_connectionsCreateOrConnectWithoutCompaniesInput = {
+    where: hardware_connectionsWhereUniqueInput
+    create: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type hardware_connectionsCreateManyCompaniesInputEnvelope = {
+    data: hardware_connectionsCreateManyCompaniesInput | hardware_connectionsCreateManyCompaniesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type integration_connectionsCreateWithoutCompaniesInput = {
+    id?: string
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    users?: usersCreateNestedOneWithoutIntegration_connectionsInput
+    integration_logs?: integration_logsCreateNestedManyWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsUncheckedCreateWithoutCompaniesInput = {
+    id?: string
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    integration_logs?: integration_logsUncheckedCreateNestedManyWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsCreateOrConnectWithoutCompaniesInput = {
+    where: integration_connectionsWhereUniqueInput
+    create: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type integration_connectionsCreateManyCompaniesInputEnvelope = {
+    data: integration_connectionsCreateManyCompaniesInput | integration_connectionsCreateManyCompaniesInput[]
     skipDuplicates?: boolean
   }
 
@@ -50029,13 +50143,13 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
-    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutCompaniesInput = {
@@ -50045,13 +50159,13 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
-    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutCompaniesInput = {
@@ -50126,6 +50240,42 @@ export namespace Prisma {
 
   export type vehiclesCreateManyCompaniesInputEnvelope = {
     data: vehiclesCreateManyCompaniesInput | vehiclesCreateManyCompaniesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type webhook_subscriptionsCreateWithoutCompaniesInput = {
+    id?: string
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    webhook_deliveries?: webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput
+    users?: usersCreateNestedOneWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsUncheckedCreateWithoutCompaniesInput = {
+    id?: string
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    webhook_deliveries?: webhook_deliveriesUncheckedCreateNestedManyWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsCreateOrConnectWithoutCompaniesInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    create: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type webhook_subscriptionsCreateManyCompaniesInputEnvelope = {
+    data: webhook_subscriptionsCreateManyCompaniesInput | webhook_subscriptionsCreateManyCompaniesInput[]
     skipDuplicates?: boolean
   }
 
@@ -50229,154 +50379,37 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type api_keysCreateWithoutCompaniesInput = {
-    id?: string
-    name: string
-    key: string
-    expires_at?: Date | string | null
-    last_used_at?: Date | string | null
-    is_active?: boolean
-    permissions?: api_keysCreatepermissionsInput | string[]
-    created_at?: Date | string
-    updated_at?: Date | string
-    users?: usersCreateNestedOneWithoutApi_keysInput
-    api_usage?: api_usageCreateNestedManyWithoutApi_keysInput
-  }
-
-  export type api_keysUncheckedCreateWithoutCompaniesInput = {
-    id?: string
-    name: string
-    key: string
-    created_by?: string | null
-    expires_at?: Date | string | null
-    last_used_at?: Date | string | null
-    is_active?: boolean
-    permissions?: api_keysCreatepermissionsInput | string[]
-    created_at?: Date | string
-    updated_at?: Date | string
-    api_usage?: api_usageUncheckedCreateNestedManyWithoutApi_keysInput
-  }
-
-  export type api_keysCreateOrConnectWithoutCompaniesInput = {
+  export type api_keysUpsertWithWhereUniqueWithoutCompaniesInput = {
     where: api_keysWhereUniqueInput
+    update: XOR<api_keysUpdateWithoutCompaniesInput, api_keysUncheckedUpdateWithoutCompaniesInput>
     create: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput>
   }
 
-  export type api_keysCreateManyCompaniesInputEnvelope = {
-    data: api_keysCreateManyCompaniesInput | api_keysCreateManyCompaniesInput[]
-    skipDuplicates?: boolean
+  export type api_keysUpdateWithWhereUniqueWithoutCompaniesInput = {
+    where: api_keysWhereUniqueInput
+    data: XOR<api_keysUpdateWithoutCompaniesInput, api_keysUncheckedUpdateWithoutCompaniesInput>
   }
 
-  export type webhook_subscriptionsCreateWithoutCompaniesInput = {
-    id?: string
-    name: string
-    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
-    target_url: string
-    secret_key?: string | null
-    is_active?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    users?: usersCreateNestedOneWithoutWebhook_subscriptionsInput
-    webhook_deliveries?: webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput
+  export type api_keysUpdateManyWithWhereWithoutCompaniesInput = {
+    where: api_keysScalarWhereInput
+    data: XOR<api_keysUpdateManyMutationInput, api_keysUncheckedUpdateManyWithoutCompaniesInput>
   }
 
-  export type webhook_subscriptionsUncheckedCreateWithoutCompaniesInput = {
-    id?: string
-    name: string
-    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
-    target_url: string
-    secret_key?: string | null
-    is_active?: boolean
-    created_by?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    webhook_deliveries?: webhook_deliveriesUncheckedCreateNestedManyWithoutWebhook_subscriptionsInput
-  }
-
-  export type webhook_subscriptionsCreateOrConnectWithoutCompaniesInput = {
-    where: webhook_subscriptionsWhereUniqueInput
-    create: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput>
-  }
-
-  export type webhook_subscriptionsCreateManyCompaniesInputEnvelope = {
-    data: webhook_subscriptionsCreateManyCompaniesInput | webhook_subscriptionsCreateManyCompaniesInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type integration_connectionsCreateWithoutCompaniesInput = {
-    id?: string
-    integration_type: string
-    provider: string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_sync_at?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    users?: usersCreateNestedOneWithoutIntegration_connectionsInput
-    integration_logs?: integration_logsCreateNestedManyWithoutIntegration_connectionsInput
-  }
-
-  export type integration_connectionsUncheckedCreateWithoutCompaniesInput = {
-    id?: string
-    integration_type: string
-    provider: string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_sync_at?: Date | string | null
-    created_by?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    integration_logs?: integration_logsUncheckedCreateNestedManyWithoutIntegration_connectionsInput
-  }
-
-  export type integration_connectionsCreateOrConnectWithoutCompaniesInput = {
-    where: integration_connectionsWhereUniqueInput
-    create: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput>
-  }
-
-  export type integration_connectionsCreateManyCompaniesInputEnvelope = {
-    data: integration_connectionsCreateManyCompaniesInput | integration_connectionsCreateManyCompaniesInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type hardware_connectionsCreateWithoutCompaniesInput = {
-    id?: string
-    hardware_type: string
-    name: string
-    model?: string | null
-    serial_number?: string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_connected_at?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    users?: usersCreateNestedOneWithoutHardware_connectionsInput
-  }
-
-  export type hardware_connectionsUncheckedCreateWithoutCompaniesInput = {
-    id?: string
-    hardware_type: string
-    name: string
-    model?: string | null
-    serial_number?: string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_connected_at?: Date | string | null
-    created_by?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type hardware_connectionsCreateOrConnectWithoutCompaniesInput = {
-    where: hardware_connectionsWhereUniqueInput
-    create: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput>
-  }
-
-  export type hardware_connectionsCreateManyCompaniesInputEnvelope = {
-    data: hardware_connectionsCreateManyCompaniesInput | hardware_connectionsCreateManyCompaniesInput[]
-    skipDuplicates?: boolean
+  export type api_keysScalarWhereInput = {
+    AND?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
+    OR?: api_keysScalarWhereInput[]
+    NOT?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
+    id?: UuidFilter<"api_keys"> | string
+    name?: StringFilter<"api_keys"> | string
+    key?: StringFilter<"api_keys"> | string
+    company_id?: IntNullableFilter<"api_keys"> | number | null
+    created_by?: UuidNullableFilter<"api_keys"> | string | null
+    expires_at?: DateTimeNullableFilter<"api_keys"> | Date | string | null
+    last_used_at?: DateTimeNullableFilter<"api_keys"> | Date | string | null
+    is_active?: BoolFilter<"api_keys"> | boolean
+    permissions?: StringNullableListFilter<"api_keys">
+    created_at?: DateTimeFilter<"api_keys"> | Date | string
+    updated_at?: DateTimeFilter<"api_keys"> | Date | string
   }
 
   export type driversUpsertWithWhereUniqueWithoutCompaniesInput = {
@@ -50409,6 +50442,73 @@ export namespace Prisma {
     company_id?: IntNullableFilter<"drivers"> | number | null
     created_at?: DateTimeNullableFilter<"drivers"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"drivers"> | Date | string | null
+  }
+
+  export type hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput = {
+    where: hardware_connectionsWhereUniqueInput
+    update: XOR<hardware_connectionsUpdateWithoutCompaniesInput, hardware_connectionsUncheckedUpdateWithoutCompaniesInput>
+    create: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput = {
+    where: hardware_connectionsWhereUniqueInput
+    data: XOR<hardware_connectionsUpdateWithoutCompaniesInput, hardware_connectionsUncheckedUpdateWithoutCompaniesInput>
+  }
+
+  export type hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput = {
+    where: hardware_connectionsScalarWhereInput
+    data: XOR<hardware_connectionsUpdateManyMutationInput, hardware_connectionsUncheckedUpdateManyWithoutCompaniesInput>
+  }
+
+  export type hardware_connectionsScalarWhereInput = {
+    AND?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+    OR?: hardware_connectionsScalarWhereInput[]
+    NOT?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+    id?: UuidFilter<"hardware_connections"> | string
+    company_id?: IntNullableFilter<"hardware_connections"> | number | null
+    hardware_type?: StringFilter<"hardware_connections"> | string
+    name?: StringFilter<"hardware_connections"> | string
+    model?: StringNullableFilter<"hardware_connections"> | string | null
+    serial_number?: StringNullableFilter<"hardware_connections"> | string | null
+    connection_details?: JsonNullableFilter<"hardware_connections">
+    is_active?: BoolFilter<"hardware_connections"> | boolean
+    last_connected_at?: DateTimeNullableFilter<"hardware_connections"> | Date | string | null
+    created_by?: UuidNullableFilter<"hardware_connections"> | string | null
+    created_at?: DateTimeFilter<"hardware_connections"> | Date | string
+    updated_at?: DateTimeFilter<"hardware_connections"> | Date | string
+  }
+
+  export type integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput = {
+    where: integration_connectionsWhereUniqueInput
+    update: XOR<integration_connectionsUpdateWithoutCompaniesInput, integration_connectionsUncheckedUpdateWithoutCompaniesInput>
+    create: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput = {
+    where: integration_connectionsWhereUniqueInput
+    data: XOR<integration_connectionsUpdateWithoutCompaniesInput, integration_connectionsUncheckedUpdateWithoutCompaniesInput>
+  }
+
+  export type integration_connectionsUpdateManyWithWhereWithoutCompaniesInput = {
+    where: integration_connectionsScalarWhereInput
+    data: XOR<integration_connectionsUpdateManyMutationInput, integration_connectionsUncheckedUpdateManyWithoutCompaniesInput>
+  }
+
+  export type integration_connectionsScalarWhereInput = {
+    AND?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
+    OR?: integration_connectionsScalarWhereInput[]
+    NOT?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
+    id?: UuidFilter<"integration_connections"> | string
+    company_id?: IntNullableFilter<"integration_connections"> | number | null
+    integration_type?: StringFilter<"integration_connections"> | string
+    provider?: StringFilter<"integration_connections"> | string
+    credentials?: JsonNullableFilter<"integration_connections">
+    settings?: JsonNullableFilter<"integration_connections">
+    is_active?: BoolFilter<"integration_connections"> | boolean
+    last_sync_at?: DateTimeNullableFilter<"integration_connections"> | Date | string | null
+    created_by?: UuidNullableFilter<"integration_connections"> | string | null
+    created_at?: DateTimeFilter<"integration_connections"> | Date | string
+    updated_at?: DateTimeFilter<"integration_connections"> | Date | string
   }
 
   export type loadsUpsertWithWhereUniqueWithoutCompaniesInput = {
@@ -50561,6 +50661,38 @@ export namespace Prisma {
     data: XOR<vehiclesUpdateManyMutationInput, vehiclesUncheckedUpdateManyWithoutCompaniesInput>
   }
 
+  export type webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    update: XOR<webhook_subscriptionsUpdateWithoutCompaniesInput, webhook_subscriptionsUncheckedUpdateWithoutCompaniesInput>
+    create: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    data: XOR<webhook_subscriptionsUpdateWithoutCompaniesInput, webhook_subscriptionsUncheckedUpdateWithoutCompaniesInput>
+  }
+
+  export type webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput = {
+    where: webhook_subscriptionsScalarWhereInput
+    data: XOR<webhook_subscriptionsUpdateManyMutationInput, webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesInput>
+  }
+
+  export type webhook_subscriptionsScalarWhereInput = {
+    AND?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
+    OR?: webhook_subscriptionsScalarWhereInput[]
+    NOT?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
+    id?: UuidFilter<"webhook_subscriptions"> | string
+    company_id?: IntNullableFilter<"webhook_subscriptions"> | number | null
+    name?: StringFilter<"webhook_subscriptions"> | string
+    event_types?: StringNullableListFilter<"webhook_subscriptions">
+    target_url?: StringFilter<"webhook_subscriptions"> | string
+    secret_key?: StringNullableFilter<"webhook_subscriptions"> | string | null
+    is_active?: BoolFilter<"webhook_subscriptions"> | boolean
+    created_by?: UuidNullableFilter<"webhook_subscriptions"> | string | null
+    created_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
+    updated_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
+  }
+
   export type weigh_ticketsUpsertWithWhereUniqueWithoutCompaniesInput = {
     where: weigh_ticketsWhereUniqueInput
     update: XOR<weigh_ticketsUpdateWithoutCompaniesInput, weigh_ticketsUncheckedUpdateWithoutCompaniesInput>
@@ -50634,138 +50766,6 @@ export namespace Prisma {
     company_id?: IntNullableFilter<"weights"> | number | null
     created_at?: DateTimeNullableFilter<"weights"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"weights"> | Date | string | null
-  }
-
-  export type api_keysUpsertWithWhereUniqueWithoutCompaniesInput = {
-    where: api_keysWhereUniqueInput
-    update: XOR<api_keysUpdateWithoutCompaniesInput, api_keysUncheckedUpdateWithoutCompaniesInput>
-    create: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput>
-  }
-
-  export type api_keysUpdateWithWhereUniqueWithoutCompaniesInput = {
-    where: api_keysWhereUniqueInput
-    data: XOR<api_keysUpdateWithoutCompaniesInput, api_keysUncheckedUpdateWithoutCompaniesInput>
-  }
-
-  export type api_keysUpdateManyWithWhereWithoutCompaniesInput = {
-    where: api_keysScalarWhereInput
-    data: XOR<api_keysUpdateManyMutationInput, api_keysUncheckedUpdateManyWithoutCompaniesInput>
-  }
-
-  export type api_keysScalarWhereInput = {
-    AND?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
-    OR?: api_keysScalarWhereInput[]
-    NOT?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
-    id?: UuidFilter<"api_keys"> | string
-    name?: StringFilter<"api_keys"> | string
-    key?: StringFilter<"api_keys"> | string
-    company_id?: IntNullableFilter<"api_keys"> | number | null
-    created_by?: UuidNullableFilter<"api_keys"> | string | null
-    expires_at?: DateTimeNullableFilter<"api_keys"> | Date | string | null
-    last_used_at?: DateTimeNullableFilter<"api_keys"> | Date | string | null
-    is_active?: BoolFilter<"api_keys"> | boolean
-    permissions?: StringNullableListFilter<"api_keys">
-    created_at?: DateTimeFilter<"api_keys"> | Date | string
-    updated_at?: DateTimeFilter<"api_keys"> | Date | string
-  }
-
-  export type webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput = {
-    where: webhook_subscriptionsWhereUniqueInput
-    update: XOR<webhook_subscriptionsUpdateWithoutCompaniesInput, webhook_subscriptionsUncheckedUpdateWithoutCompaniesInput>
-    create: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput>
-  }
-
-  export type webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput = {
-    where: webhook_subscriptionsWhereUniqueInput
-    data: XOR<webhook_subscriptionsUpdateWithoutCompaniesInput, webhook_subscriptionsUncheckedUpdateWithoutCompaniesInput>
-  }
-
-  export type webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput = {
-    where: webhook_subscriptionsScalarWhereInput
-    data: XOR<webhook_subscriptionsUpdateManyMutationInput, webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesInput>
-  }
-
-  export type webhook_subscriptionsScalarWhereInput = {
-    AND?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
-    OR?: webhook_subscriptionsScalarWhereInput[]
-    NOT?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
-    id?: UuidFilter<"webhook_subscriptions"> | string
-    company_id?: IntNullableFilter<"webhook_subscriptions"> | number | null
-    name?: StringFilter<"webhook_subscriptions"> | string
-    event_types?: StringNullableListFilter<"webhook_subscriptions">
-    target_url?: StringFilter<"webhook_subscriptions"> | string
-    secret_key?: StringNullableFilter<"webhook_subscriptions"> | string | null
-    is_active?: BoolFilter<"webhook_subscriptions"> | boolean
-    created_by?: UuidNullableFilter<"webhook_subscriptions"> | string | null
-    created_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
-    updated_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
-  }
-
-  export type integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput = {
-    where: integration_connectionsWhereUniqueInput
-    update: XOR<integration_connectionsUpdateWithoutCompaniesInput, integration_connectionsUncheckedUpdateWithoutCompaniesInput>
-    create: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput>
-  }
-
-  export type integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput = {
-    where: integration_connectionsWhereUniqueInput
-    data: XOR<integration_connectionsUpdateWithoutCompaniesInput, integration_connectionsUncheckedUpdateWithoutCompaniesInput>
-  }
-
-  export type integration_connectionsUpdateManyWithWhereWithoutCompaniesInput = {
-    where: integration_connectionsScalarWhereInput
-    data: XOR<integration_connectionsUpdateManyMutationInput, integration_connectionsUncheckedUpdateManyWithoutCompaniesInput>
-  }
-
-  export type integration_connectionsScalarWhereInput = {
-    AND?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
-    OR?: integration_connectionsScalarWhereInput[]
-    NOT?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
-    id?: UuidFilter<"integration_connections"> | string
-    company_id?: IntNullableFilter<"integration_connections"> | number | null
-    integration_type?: StringFilter<"integration_connections"> | string
-    provider?: StringFilter<"integration_connections"> | string
-    credentials?: JsonNullableFilter<"integration_connections">
-    settings?: JsonNullableFilter<"integration_connections">
-    is_active?: BoolFilter<"integration_connections"> | boolean
-    last_sync_at?: DateTimeNullableFilter<"integration_connections"> | Date | string | null
-    created_by?: UuidNullableFilter<"integration_connections"> | string | null
-    created_at?: DateTimeFilter<"integration_connections"> | Date | string
-    updated_at?: DateTimeFilter<"integration_connections"> | Date | string
-  }
-
-  export type hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput = {
-    where: hardware_connectionsWhereUniqueInput
-    update: XOR<hardware_connectionsUpdateWithoutCompaniesInput, hardware_connectionsUncheckedUpdateWithoutCompaniesInput>
-    create: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput>
-  }
-
-  export type hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput = {
-    where: hardware_connectionsWhereUniqueInput
-    data: XOR<hardware_connectionsUpdateWithoutCompaniesInput, hardware_connectionsUncheckedUpdateWithoutCompaniesInput>
-  }
-
-  export type hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput = {
-    where: hardware_connectionsScalarWhereInput
-    data: XOR<hardware_connectionsUpdateManyMutationInput, hardware_connectionsUncheckedUpdateManyWithoutCompaniesInput>
-  }
-
-  export type hardware_connectionsScalarWhereInput = {
-    AND?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
-    OR?: hardware_connectionsScalarWhereInput[]
-    NOT?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
-    id?: UuidFilter<"hardware_connections"> | string
-    company_id?: IntNullableFilter<"hardware_connections"> | number | null
-    hardware_type?: StringFilter<"hardware_connections"> | string
-    name?: StringFilter<"hardware_connections"> | string
-    model?: StringNullableFilter<"hardware_connections"> | string | null
-    serial_number?: StringNullableFilter<"hardware_connections"> | string | null
-    connection_details?: JsonNullableFilter<"hardware_connections">
-    is_active?: BoolFilter<"hardware_connections"> | boolean
-    last_connected_at?: DateTimeNullableFilter<"hardware_connections"> | Date | string | null
-    created_by?: UuidNullableFilter<"hardware_connections"> | string | null
-    created_at?: DateTimeFilter<"hardware_connections"> | Date | string
-    updated_at?: DateTimeFilter<"hardware_connections"> | Date | string
   }
 
   export type weigh_ticketsCreateWithoutCompliance_issuesInput = {
@@ -50905,17 +50905,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutDriversInput = {
@@ -50926,17 +50926,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutDriversInput = {
@@ -51132,17 +51132,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutDriversInput = {
@@ -51153,17 +51153,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type loadsUpsertWithWhereUniqueWithoutDriversInput = {
@@ -51384,17 +51384,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutLoadsInput = {
@@ -51405,17 +51405,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutLoadsInput = {
@@ -51537,17 +51537,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutLoadsInput = {
@@ -51558,17 +51558,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type driversUpsertWithoutLoadsInput = {
@@ -51686,13 +51686,13 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
-    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutPredictive_alertsInput = {
@@ -51703,12 +51703,12 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
-    ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
-    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
     api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
     hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutPredictive_alertsInput = {
@@ -51830,13 +51830,13 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutPredictive_alertsInput = {
@@ -51847,12 +51847,12 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
     api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
     hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type driversUpsertWithoutPredictive_alertsInput = {
@@ -52080,17 +52080,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutScale_facilitiesInput = {
@@ -52101,17 +52101,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutScale_facilitiesInput = {
@@ -52261,17 +52261,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutScale_facilitiesInput = {
@@ -52282,17 +52282,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type scalesUpsertWithWhereUniqueWithoutScale_facilitiesInput = {
@@ -52500,17 +52500,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutScalesInput = {
@@ -52521,17 +52521,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutScalesInput = {
@@ -52713,17 +52713,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutScalesInput = {
@@ -52734,17 +52734,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type scale_facilitiesUpsertWithoutScalesInput = {
@@ -52806,13 +52806,13 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
-    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutTicket_imagesInput = {
@@ -52823,12 +52823,12 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
-    predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
-    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
     api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
     hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutTicket_imagesInput = {
@@ -52916,13 +52916,13 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutTicket_imagesInput = {
@@ -52933,12 +52933,12 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
     api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
     hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type weigh_ticketsUpsertWithoutTicket_imagesInput = {
@@ -53139,6 +53139,120 @@ export namespace Prisma {
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutWeigh_ticketsNestedInput
   }
 
+  export type api_keysCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    key: string
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutApi_keysInput
+    api_usage?: api_usageCreateNestedManyWithoutApi_keysInput
+  }
+
+  export type api_keysUncheckedCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    key: string
+    company_id?: number | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    api_usage?: api_usageUncheckedCreateNestedManyWithoutApi_keysInput
+  }
+
+  export type api_keysCreateOrConnectWithoutUsersInput = {
+    where: api_keysWhereUniqueInput
+    create: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput>
+  }
+
+  export type api_keysCreateManyUsersInputEnvelope = {
+    data: api_keysCreateManyUsersInput | api_keysCreateManyUsersInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type hardware_connectionsCreateWithoutUsersInput = {
+    id?: string
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutHardware_connectionsInput
+  }
+
+  export type hardware_connectionsUncheckedCreateWithoutUsersInput = {
+    id?: string
+    company_id?: number | null
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type hardware_connectionsCreateOrConnectWithoutUsersInput = {
+    where: hardware_connectionsWhereUniqueInput
+    create: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type hardware_connectionsCreateManyUsersInputEnvelope = {
+    data: hardware_connectionsCreateManyUsersInput | hardware_connectionsCreateManyUsersInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type integration_connectionsCreateWithoutUsersInput = {
+    id?: string
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutIntegration_connectionsInput
+    integration_logs?: integration_logsCreateNestedManyWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsUncheckedCreateWithoutUsersInput = {
+    id?: string
+    company_id?: number | null
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    integration_logs?: integration_logsUncheckedCreateNestedManyWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsCreateOrConnectWithoutUsersInput = {
+    where: integration_connectionsWhereUniqueInput
+    create: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type integration_connectionsCreateManyUsersInputEnvelope = {
+    data: integration_connectionsCreateManyUsersInput | integration_connectionsCreateManyUsersInput[]
+    skipDuplicates?: boolean
+  }
+
   export type predictive_alertsCreateWithoutUsersInput = {
     alert_type: string
     risk_score: Decimal | DecimalJsLike | number | string
@@ -53206,17 +53320,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutUsersInput = {
@@ -53227,22 +53341,58 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutUsersInput = {
     where: companiesWhereUniqueInput
     create: XOR<companiesCreateWithoutUsersInput, companiesUncheckedCreateWithoutUsersInput>
+  }
+
+  export type webhook_subscriptionsCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    webhook_deliveries?: webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput
+    companies?: companiesCreateNestedOneWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsUncheckedCreateWithoutUsersInput = {
+    id?: string
+    company_id?: number | null
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    webhook_deliveries?: webhook_deliveriesUncheckedCreateNestedManyWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsCreateOrConnectWithoutUsersInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    create: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type webhook_subscriptionsCreateManyUsersInputEnvelope = {
+    data: webhook_subscriptionsCreateManyUsersInput | webhook_subscriptionsCreateManyUsersInput[]
+    skipDuplicates?: boolean
   }
 
   export type weigh_ticketsCreateWithoutUsersInput = {
@@ -53312,154 +53462,52 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type api_keysCreateWithoutUsersInput = {
-    id?: string
-    name: string
-    key: string
-    expires_at?: Date | string | null
-    last_used_at?: Date | string | null
-    is_active?: boolean
-    permissions?: api_keysCreatepermissionsInput | string[]
-    created_at?: Date | string
-    updated_at?: Date | string
-    companies?: companiesCreateNestedOneWithoutApi_keysInput
-    api_usage?: api_usageCreateNestedManyWithoutApi_keysInput
-  }
-
-  export type api_keysUncheckedCreateWithoutUsersInput = {
-    id?: string
-    name: string
-    key: string
-    company_id?: number | null
-    expires_at?: Date | string | null
-    last_used_at?: Date | string | null
-    is_active?: boolean
-    permissions?: api_keysCreatepermissionsInput | string[]
-    created_at?: Date | string
-    updated_at?: Date | string
-    api_usage?: api_usageUncheckedCreateNestedManyWithoutApi_keysInput
-  }
-
-  export type api_keysCreateOrConnectWithoutUsersInput = {
+  export type api_keysUpsertWithWhereUniqueWithoutUsersInput = {
     where: api_keysWhereUniqueInput
+    update: XOR<api_keysUpdateWithoutUsersInput, api_keysUncheckedUpdateWithoutUsersInput>
     create: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput>
   }
 
-  export type api_keysCreateManyUsersInputEnvelope = {
-    data: api_keysCreateManyUsersInput | api_keysCreateManyUsersInput[]
-    skipDuplicates?: boolean
+  export type api_keysUpdateWithWhereUniqueWithoutUsersInput = {
+    where: api_keysWhereUniqueInput
+    data: XOR<api_keysUpdateWithoutUsersInput, api_keysUncheckedUpdateWithoutUsersInput>
   }
 
-  export type webhook_subscriptionsCreateWithoutUsersInput = {
-    id?: string
-    name: string
-    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
-    target_url: string
-    secret_key?: string | null
-    is_active?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    companies?: companiesCreateNestedOneWithoutWebhook_subscriptionsInput
-    webhook_deliveries?: webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput
+  export type api_keysUpdateManyWithWhereWithoutUsersInput = {
+    where: api_keysScalarWhereInput
+    data: XOR<api_keysUpdateManyMutationInput, api_keysUncheckedUpdateManyWithoutUsersInput>
   }
 
-  export type webhook_subscriptionsUncheckedCreateWithoutUsersInput = {
-    id?: string
-    company_id?: number | null
-    name: string
-    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
-    target_url: string
-    secret_key?: string | null
-    is_active?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    webhook_deliveries?: webhook_deliveriesUncheckedCreateNestedManyWithoutWebhook_subscriptionsInput
-  }
-
-  export type webhook_subscriptionsCreateOrConnectWithoutUsersInput = {
-    where: webhook_subscriptionsWhereUniqueInput
-    create: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput>
-  }
-
-  export type webhook_subscriptionsCreateManyUsersInputEnvelope = {
-    data: webhook_subscriptionsCreateManyUsersInput | webhook_subscriptionsCreateManyUsersInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type integration_connectionsCreateWithoutUsersInput = {
-    id?: string
-    integration_type: string
-    provider: string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_sync_at?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    companies?: companiesCreateNestedOneWithoutIntegration_connectionsInput
-    integration_logs?: integration_logsCreateNestedManyWithoutIntegration_connectionsInput
-  }
-
-  export type integration_connectionsUncheckedCreateWithoutUsersInput = {
-    id?: string
-    company_id?: number | null
-    integration_type: string
-    provider: string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_sync_at?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    integration_logs?: integration_logsUncheckedCreateNestedManyWithoutIntegration_connectionsInput
-  }
-
-  export type integration_connectionsCreateOrConnectWithoutUsersInput = {
-    where: integration_connectionsWhereUniqueInput
-    create: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput>
-  }
-
-  export type integration_connectionsCreateManyUsersInputEnvelope = {
-    data: integration_connectionsCreateManyUsersInput | integration_connectionsCreateManyUsersInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type hardware_connectionsCreateWithoutUsersInput = {
-    id?: string
-    hardware_type: string
-    name: string
-    model?: string | null
-    serial_number?: string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_connected_at?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    companies?: companiesCreateNestedOneWithoutHardware_connectionsInput
-  }
-
-  export type hardware_connectionsUncheckedCreateWithoutUsersInput = {
-    id?: string
-    company_id?: number | null
-    hardware_type: string
-    name: string
-    model?: string | null
-    serial_number?: string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_connected_at?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type hardware_connectionsCreateOrConnectWithoutUsersInput = {
+  export type hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput = {
     where: hardware_connectionsWhereUniqueInput
+    update: XOR<hardware_connectionsUpdateWithoutUsersInput, hardware_connectionsUncheckedUpdateWithoutUsersInput>
     create: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput>
   }
 
-  export type hardware_connectionsCreateManyUsersInputEnvelope = {
-    data: hardware_connectionsCreateManyUsersInput | hardware_connectionsCreateManyUsersInput[]
-    skipDuplicates?: boolean
+  export type hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput = {
+    where: hardware_connectionsWhereUniqueInput
+    data: XOR<hardware_connectionsUpdateWithoutUsersInput, hardware_connectionsUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type hardware_connectionsUpdateManyWithWhereWithoutUsersInput = {
+    where: hardware_connectionsScalarWhereInput
+    data: XOR<hardware_connectionsUpdateManyMutationInput, hardware_connectionsUncheckedUpdateManyWithoutUsersInput>
+  }
+
+  export type integration_connectionsUpsertWithWhereUniqueWithoutUsersInput = {
+    where: integration_connectionsWhereUniqueInput
+    update: XOR<integration_connectionsUpdateWithoutUsersInput, integration_connectionsUncheckedUpdateWithoutUsersInput>
+    create: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type integration_connectionsUpdateWithWhereUniqueWithoutUsersInput = {
+    where: integration_connectionsWhereUniqueInput
+    data: XOR<integration_connectionsUpdateWithoutUsersInput, integration_connectionsUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type integration_connectionsUpdateManyWithWhereWithoutUsersInput = {
+    where: integration_connectionsScalarWhereInput
+    data: XOR<integration_connectionsUpdateManyMutationInput, integration_connectionsUncheckedUpdateManyWithoutUsersInput>
   }
 
   export type predictive_alertsUpsertWithWhereUniqueWithoutUsersInput = {
@@ -53524,17 +53572,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutUsersInput = {
@@ -53545,49 +53593,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-  }
-
-  export type weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput = {
-    where: weigh_ticketsWhereUniqueInput
-    update: XOR<weigh_ticketsUpdateWithoutUsersInput, weigh_ticketsUncheckedUpdateWithoutUsersInput>
-    create: XOR<weigh_ticketsCreateWithoutUsersInput, weigh_ticketsUncheckedCreateWithoutUsersInput>
-  }
-
-  export type weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput = {
-    where: weigh_ticketsWhereUniqueInput
-    data: XOR<weigh_ticketsUpdateWithoutUsersInput, weigh_ticketsUncheckedUpdateWithoutUsersInput>
-  }
-
-  export type weigh_ticketsUpdateManyWithWhereWithoutUsersInput = {
-    where: weigh_ticketsScalarWhereInput
-    data: XOR<weigh_ticketsUpdateManyMutationInput, weigh_ticketsUncheckedUpdateManyWithoutUsersInput>
-  }
-
-  export type api_keysUpsertWithWhereUniqueWithoutUsersInput = {
-    where: api_keysWhereUniqueInput
-    update: XOR<api_keysUpdateWithoutUsersInput, api_keysUncheckedUpdateWithoutUsersInput>
-    create: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput>
-  }
-
-  export type api_keysUpdateWithWhereUniqueWithoutUsersInput = {
-    where: api_keysWhereUniqueInput
-    data: XOR<api_keysUpdateWithoutUsersInput, api_keysUncheckedUpdateWithoutUsersInput>
-  }
-
-  export type api_keysUpdateManyWithWhereWithoutUsersInput = {
-    where: api_keysScalarWhereInput
-    data: XOR<api_keysUpdateManyMutationInput, api_keysUncheckedUpdateManyWithoutUsersInput>
   }
 
   export type webhook_subscriptionsUpsertWithWhereUniqueWithoutUsersInput = {
@@ -53606,36 +53622,20 @@ export namespace Prisma {
     data: XOR<webhook_subscriptionsUpdateManyMutationInput, webhook_subscriptionsUncheckedUpdateManyWithoutUsersInput>
   }
 
-  export type integration_connectionsUpsertWithWhereUniqueWithoutUsersInput = {
-    where: integration_connectionsWhereUniqueInput
-    update: XOR<integration_connectionsUpdateWithoutUsersInput, integration_connectionsUncheckedUpdateWithoutUsersInput>
-    create: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput>
+  export type weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput = {
+    where: weigh_ticketsWhereUniqueInput
+    update: XOR<weigh_ticketsUpdateWithoutUsersInput, weigh_ticketsUncheckedUpdateWithoutUsersInput>
+    create: XOR<weigh_ticketsCreateWithoutUsersInput, weigh_ticketsUncheckedCreateWithoutUsersInput>
   }
 
-  export type integration_connectionsUpdateWithWhereUniqueWithoutUsersInput = {
-    where: integration_connectionsWhereUniqueInput
-    data: XOR<integration_connectionsUpdateWithoutUsersInput, integration_connectionsUncheckedUpdateWithoutUsersInput>
+  export type weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput = {
+    where: weigh_ticketsWhereUniqueInput
+    data: XOR<weigh_ticketsUpdateWithoutUsersInput, weigh_ticketsUncheckedUpdateWithoutUsersInput>
   }
 
-  export type integration_connectionsUpdateManyWithWhereWithoutUsersInput = {
-    where: integration_connectionsScalarWhereInput
-    data: XOR<integration_connectionsUpdateManyMutationInput, integration_connectionsUncheckedUpdateManyWithoutUsersInput>
-  }
-
-  export type hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput = {
-    where: hardware_connectionsWhereUniqueInput
-    update: XOR<hardware_connectionsUpdateWithoutUsersInput, hardware_connectionsUncheckedUpdateWithoutUsersInput>
-    create: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput>
-  }
-
-  export type hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput = {
-    where: hardware_connectionsWhereUniqueInput
-    data: XOR<hardware_connectionsUpdateWithoutUsersInput, hardware_connectionsUncheckedUpdateWithoutUsersInput>
-  }
-
-  export type hardware_connectionsUpdateManyWithWhereWithoutUsersInput = {
-    where: hardware_connectionsScalarWhereInput
-    data: XOR<hardware_connectionsUpdateManyMutationInput, hardware_connectionsUncheckedUpdateManyWithoutUsersInput>
+  export type weigh_ticketsUpdateManyWithWhereWithoutUsersInput = {
+    where: weigh_ticketsScalarWhereInput
+    data: XOR<weigh_ticketsUpdateManyMutationInput, weigh_ticketsUncheckedUpdateManyWithoutUsersInput>
   }
 
   export type loadsCreateWithoutVehiclesInput = {
@@ -53743,17 +53743,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutVehiclesInput = {
@@ -53764,17 +53764,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutVehiclesInput = {
@@ -53966,17 +53966,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutVehiclesInput = {
@@ -53987,17 +53987,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type weigh_ticketsUpsertWithWhereUniqueWithoutVehiclesInput = {
@@ -54211,17 +54211,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
-    weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    weights?: weightsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutWeigh_ticketsInput = {
@@ -54232,17 +54232,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
-    weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutWeigh_ticketsInput = {
@@ -54257,13 +54257,13 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
-    api_keys?: api_keysCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutWeigh_ticketsInput = {
@@ -54274,12 +54274,12 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutWeigh_ticketsInput = {
@@ -54650,17 +54650,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
-    weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutWeigh_ticketsInput = {
@@ -54671,17 +54671,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
-    weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type usersUpsertWithoutWeigh_ticketsInput = {
@@ -54702,13 +54702,13 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
-    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutWeigh_ticketsInput = {
@@ -54719,12 +54719,12 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type driversUpsertWithoutWeigh_ticketsInput = {
@@ -54936,17 +54936,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
-    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutWeightsInput = {
@@ -54957,17 +54957,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
-    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutWeightsInput = {
@@ -55089,17 +55089,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
-    weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutWeightsInput = {
@@ -55110,17 +55110,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
-    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type driversUpsertWithoutWeightsInput = {
@@ -55239,16 +55239,16 @@ export namespace Prisma {
     created_at?: Date | string | null
     updated_at?: Date | string | null
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutApi_keysInput = {
@@ -55260,16 +55260,16 @@ export namespace Prisma {
     created_at?: Date | string | null
     updated_at?: Date | string | null
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutApi_keysInput = {
@@ -55284,13 +55284,13 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
-    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutApi_keysInput = {
@@ -55301,12 +55301,12 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
-    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutApi_keysInput = {
@@ -55363,16 +55363,16 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutApi_keysInput = {
@@ -55384,16 +55384,16 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type usersUpsertWithoutApi_keysInput = {
@@ -55414,13 +55414,13 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutApi_keysInput = {
@@ -55431,12 +55431,12 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type api_usageUpsertWithWhereUniqueWithoutApi_keysInput = {
@@ -55541,89 +55541,6 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type companiesCreateWithoutWebhook_subscriptionsInput = {
-    name: string
-    address?: string | null
-    contact_email?: string | null
-    contact_phone?: string | null
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
-    drivers?: driversCreateNestedManyWithoutCompaniesInput
-    loads?: loadsCreateNestedManyWithoutCompaniesInput
-    scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
-    scales?: scalesCreateNestedManyWithoutCompaniesInput
-    users?: usersCreateNestedManyWithoutCompaniesInput
-    vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
-    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
-    weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
-  }
-
-  export type companiesUncheckedCreateWithoutWebhook_subscriptionsInput = {
-    id?: number
-    name: string
-    address?: string | null
-    contact_email?: string | null
-    contact_phone?: string | null
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
-    drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
-    loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
-    scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
-    scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
-    users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
-    vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
-    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
-    weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
-  }
-
-  export type companiesCreateOrConnectWithoutWebhook_subscriptionsInput = {
-    where: companiesWhereUniqueInput
-    create: XOR<companiesCreateWithoutWebhook_subscriptionsInput, companiesUncheckedCreateWithoutWebhook_subscriptionsInput>
-  }
-
-  export type usersCreateWithoutWebhook_subscriptionsInput = {
-    id: string
-    name: string
-    email: string
-    is_admin?: boolean | null
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
-    predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
-    ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
-    companies?: companiesCreateNestedOneWithoutUsersInput
-    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
-  }
-
-  export type usersUncheckedCreateWithoutWebhook_subscriptionsInput = {
-    id: string
-    name: string
-    email: string
-    company_id?: number | null
-    is_admin?: boolean | null
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
-    predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
-    ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
-    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
-  }
-
-  export type usersCreateOrConnectWithoutWebhook_subscriptionsInput = {
-    where: usersWhereUniqueInput
-    create: XOR<usersCreateWithoutWebhook_subscriptionsInput, usersUncheckedCreateWithoutWebhook_subscriptionsInput>
-  }
-
   export type webhook_deliveriesCreateWithoutWebhook_subscriptionsInput = {
     id?: string
     event_type: string
@@ -55660,99 +55577,87 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type companiesUpsertWithoutWebhook_subscriptionsInput = {
-    update: XOR<companiesUpdateWithoutWebhook_subscriptionsInput, companiesUncheckedUpdateWithoutWebhook_subscriptionsInput>
+  export type companiesCreateWithoutWebhook_subscriptionsInput = {
+    name: string
+    address?: string | null
+    contact_email?: string | null
+    contact_phone?: string | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    loads?: loadsCreateNestedManyWithoutCompaniesInput
+    scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
+    scales?: scalesCreateNestedManyWithoutCompaniesInput
+    users?: usersCreateNestedManyWithoutCompaniesInput
+    vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
+    weights?: weightsCreateNestedManyWithoutCompaniesInput
+  }
+
+  export type companiesUncheckedCreateWithoutWebhook_subscriptionsInput = {
+    id?: number
+    name: string
+    address?: string | null
+    contact_email?: string | null
+    contact_phone?: string | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
+    scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
+    scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
+    users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
+    vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
+    weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+  }
+
+  export type companiesCreateOrConnectWithoutWebhook_subscriptionsInput = {
+    where: companiesWhereUniqueInput
     create: XOR<companiesCreateWithoutWebhook_subscriptionsInput, companiesUncheckedCreateWithoutWebhook_subscriptionsInput>
-    where?: companiesWhereInput
   }
 
-  export type companiesUpdateToOneWithWhereWithoutWebhook_subscriptionsInput = {
-    where?: companiesWhereInput
-    data: XOR<companiesUpdateWithoutWebhook_subscriptionsInput, companiesUncheckedUpdateWithoutWebhook_subscriptionsInput>
+  export type usersCreateWithoutWebhook_subscriptionsInput = {
+    id: string
+    name: string
+    email: string
+    is_admin?: boolean | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
+    predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
+    companies?: companiesCreateNestedOneWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
   }
 
-  export type companiesUpdateWithoutWebhook_subscriptionsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
-    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    drivers?: driversUpdateManyWithoutCompaniesNestedInput
-    loads?: loadsUpdateManyWithoutCompaniesNestedInput
-    scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
-    scales?: scalesUpdateManyWithoutCompaniesNestedInput
-    users?: usersUpdateManyWithoutCompaniesNestedInput
-    vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
-    weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
-    weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+  export type usersUncheckedCreateWithoutWebhook_subscriptionsInput = {
+    id: string
+    name: string
+    email: string
+    company_id?: number | null
+    is_admin?: boolean | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
   }
 
-  export type companiesUncheckedUpdateWithoutWebhook_subscriptionsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
-    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
-    loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
-    scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
-    scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
-    users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
-    vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
-    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
-    weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
-  }
-
-  export type usersUpsertWithoutWebhook_subscriptionsInput = {
-    update: XOR<usersUpdateWithoutWebhook_subscriptionsInput, usersUncheckedUpdateWithoutWebhook_subscriptionsInput>
+  export type usersCreateOrConnectWithoutWebhook_subscriptionsInput = {
+    where: usersWhereUniqueInput
     create: XOR<usersCreateWithoutWebhook_subscriptionsInput, usersUncheckedCreateWithoutWebhook_subscriptionsInput>
-    where?: usersWhereInput
-  }
-
-  export type usersUpdateToOneWithWhereWithoutWebhook_subscriptionsInput = {
-    where?: usersWhereInput
-    data: XOR<usersUpdateWithoutWebhook_subscriptionsInput, usersUncheckedUpdateWithoutWebhook_subscriptionsInput>
-  }
-
-  export type usersUpdateWithoutWebhook_subscriptionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
-    ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
-    companies?: companiesUpdateOneWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
-  }
-
-  export type usersUncheckedUpdateWithoutWebhook_subscriptionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    company_id?: NullableIntFieldUpdateOperationsInput | number | null
-    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
-    ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type webhook_deliveriesUpsertWithWhereUniqueWithoutWebhook_subscriptionsInput = {
@@ -55786,6 +55691,101 @@ export namespace Prisma {
     next_retry_at?: DateTimeNullableFilter<"webhook_deliveries"> | Date | string | null
     created_at?: DateTimeFilter<"webhook_deliveries"> | Date | string
     updated_at?: DateTimeFilter<"webhook_deliveries"> | Date | string
+  }
+
+  export type companiesUpsertWithoutWebhook_subscriptionsInput = {
+    update: XOR<companiesUpdateWithoutWebhook_subscriptionsInput, companiesUncheckedUpdateWithoutWebhook_subscriptionsInput>
+    create: XOR<companiesCreateWithoutWebhook_subscriptionsInput, companiesUncheckedCreateWithoutWebhook_subscriptionsInput>
+    where?: companiesWhereInput
+  }
+
+  export type companiesUpdateToOneWithWhereWithoutWebhook_subscriptionsInput = {
+    where?: companiesWhereInput
+    data: XOR<companiesUpdateWithoutWebhook_subscriptionsInput, companiesUncheckedUpdateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type companiesUpdateWithoutWebhook_subscriptionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    loads?: loadsUpdateManyWithoutCompaniesNestedInput
+    scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
+    scales?: scalesUpdateManyWithoutCompaniesNestedInput
+    users?: usersUpdateManyWithoutCompaniesNestedInput
+    vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUpdateManyWithoutCompaniesNestedInput
+  }
+
+  export type companiesUncheckedUpdateWithoutWebhook_subscriptionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
+    scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
+    scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
+    users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
+    vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+  }
+
+  export type usersUpsertWithoutWebhook_subscriptionsInput = {
+    update: XOR<usersUpdateWithoutWebhook_subscriptionsInput, usersUncheckedUpdateWithoutWebhook_subscriptionsInput>
+    create: XOR<usersCreateWithoutWebhook_subscriptionsInput, usersUncheckedCreateWithoutWebhook_subscriptionsInput>
+    where?: usersWhereInput
+  }
+
+  export type usersUpdateToOneWithWhereWithoutWebhook_subscriptionsInput = {
+    where?: usersWhereInput
+    data: XOR<usersUpdateWithoutWebhook_subscriptionsInput, usersUncheckedUpdateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type usersUpdateWithoutWebhook_subscriptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
+    predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
+    companies?: companiesUpdateOneWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
+  }
+
+  export type usersUncheckedUpdateWithoutWebhook_subscriptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type webhook_subscriptionsCreateWithoutWebhook_deliveriesInput = {
@@ -55863,17 +55863,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutIntegration_connectionsInput = {
@@ -55884,17 +55884,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutIntegration_connectionsInput = {
@@ -55909,13 +55909,13 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
-    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutIntegration_connectionsInput = {
@@ -55926,12 +55926,12 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
-    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutIntegration_connectionsInput = {
@@ -55985,17 +55985,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutIntegration_connectionsInput = {
@@ -56006,17 +56006,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type usersUpsertWithoutIntegration_connectionsInput = {
@@ -56037,13 +56037,13 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutIntegration_connectionsInput = {
@@ -56054,12 +56054,12 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type integration_logsUpsertWithWhereUniqueWithoutIntegration_connectionsInput = {
@@ -56170,17 +56170,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
     drivers?: driversCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
     loads?: loadsCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
     scales?: scalesCreateNestedManyWithoutCompaniesInput
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutHardware_connectionsInput = {
@@ -56191,17 +56191,17 @@ export namespace Prisma {
     contact_phone?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
     drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
     loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
     scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
     scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutHardware_connectionsInput = {
@@ -56216,13 +56216,13 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
-    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutHardware_connectionsInput = {
@@ -56233,12 +56233,12 @@ export namespace Prisma {
     is_admin?: boolean | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
     predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
-    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
-    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutHardware_connectionsInput = {
@@ -56264,17 +56264,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUpdateManyWithoutCompaniesNestedInput
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutHardware_connectionsInput = {
@@ -56285,17 +56285,17 @@ export namespace Prisma {
     contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
     drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
     loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
     scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
     scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
-    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type usersUpsertWithoutHardware_connectionsInput = {
@@ -56316,13 +56316,13 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutHardware_connectionsInput = {
@@ -56333,12 +56333,12 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type axlesCreateManyAxle_configurationsInput = {
@@ -56479,6 +56479,19 @@ export namespace Prisma {
     last_inspection_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type api_keysCreateManyCompaniesInput = {
+    id?: string
+    name: string
+    key: string
+    created_by?: string | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
   export type driversCreateManyCompaniesInput = {
     id?: number
     name: string
@@ -56489,6 +56502,33 @@ export namespace Prisma {
     status?: string | null
     created_at?: Date | string | null
     updated_at?: Date | string | null
+  }
+
+  export type hardware_connectionsCreateManyCompaniesInput = {
+    id?: string
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type integration_connectionsCreateManyCompaniesInput = {
+    id?: string
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type loadsCreateManyCompaniesInput = {
@@ -56569,6 +56609,18 @@ export namespace Prisma {
     last_inspection_date?: Date | string | null
   }
 
+  export type webhook_subscriptionsCreateManyCompaniesInput = {
+    id?: string
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
   export type weigh_ticketsCreateManyCompaniesInput = {
     id?: number
     ticket_number: string
@@ -56604,56 +56656,45 @@ export namespace Prisma {
     updated_at?: Date | string | null
   }
 
-  export type api_keysCreateManyCompaniesInput = {
-    id?: string
-    name: string
-    key: string
-    created_by?: string | null
-    expires_at?: Date | string | null
-    last_used_at?: Date | string | null
-    is_active?: boolean
-    permissions?: api_keysCreatepermissionsInput | string[]
-    created_at?: Date | string
-    updated_at?: Date | string
+  export type api_keysUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: usersUpdateOneWithoutApi_keysNestedInput
+    api_usage?: api_usageUpdateManyWithoutApi_keysNestedInput
   }
 
-  export type webhook_subscriptionsCreateManyCompaniesInput = {
-    id?: string
-    name: string
-    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
-    target_url: string
-    secret_key?: string | null
-    is_active?: boolean
-    created_by?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
+  export type api_keysUncheckedUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    api_usage?: api_usageUncheckedUpdateManyWithoutApi_keysNestedInput
   }
 
-  export type integration_connectionsCreateManyCompaniesInput = {
-    id?: string
-    integration_type: string
-    provider: string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_sync_at?: Date | string | null
-    created_by?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type hardware_connectionsCreateManyCompaniesInput = {
-    id?: string
-    hardware_type: string
-    name: string
-    model?: string | null
-    serial_number?: string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_connected_at?: Date | string | null
-    created_by?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
+  export type api_keysUncheckedUpdateManyWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type driversUpdateWithoutCompaniesInput = {
@@ -56697,6 +56738,89 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type hardware_connectionsUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: usersUpdateOneWithoutHardware_connectionsNestedInput
+  }
+
+  export type hardware_connectionsUncheckedUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type hardware_connectionsUncheckedUpdateManyWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_connectionsUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: usersUpdateOneWithoutIntegration_connectionsNestedInput
+    integration_logs?: integration_logsUpdateManyWithoutIntegration_connectionsNestedInput
+  }
+
+  export type integration_connectionsUncheckedUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    integration_logs?: integration_logsUncheckedUpdateManyWithoutIntegration_connectionsNestedInput
+  }
+
+  export type integration_connectionsUncheckedUpdateManyWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type loadsUpdateWithoutCompaniesInput = {
@@ -56848,13 +56972,13 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutCompaniesInput = {
@@ -56864,13 +56988,13 @@ export namespace Prisma {
     is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
-    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
-    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
     webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
-    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateManyWithoutCompaniesInput = {
@@ -56959,6 +57083,44 @@ export namespace Prisma {
     telematics_id?: NullableStringFieldUpdateOperationsInput | string | null
     eld_integration?: NullableBoolFieldUpdateOperationsInput | boolean | null
     last_inspection_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type webhook_subscriptionsUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhook_deliveries?: webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput
+    users?: usersUpdateOneWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhook_deliveries?: webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type weigh_ticketsUpdateWithoutCompaniesInput = {
@@ -57074,168 +57236,6 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type api_keysUpdateWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
-    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: api_keysUpdatepermissionsInput | string[]
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: usersUpdateOneWithoutApi_keysNestedInput
-    api_usage?: api_usageUpdateManyWithoutApi_keysNestedInput
-  }
-
-  export type api_keysUncheckedUpdateWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: api_keysUpdatepermissionsInput | string[]
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    api_usage?: api_usageUncheckedUpdateManyWithoutApi_keysNestedInput
-  }
-
-  export type api_keysUncheckedUpdateManyWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: api_keysUpdatepermissionsInput | string[]
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type webhook_subscriptionsUpdateWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
-    target_url?: StringFieldUpdateOperationsInput | string
-    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: usersUpdateOneWithoutWebhook_subscriptionsNestedInput
-    webhook_deliveries?: webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput
-  }
-
-  export type webhook_subscriptionsUncheckedUpdateWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
-    target_url?: StringFieldUpdateOperationsInput | string
-    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    webhook_deliveries?: webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsNestedInput
-  }
-
-  export type webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
-    target_url?: StringFieldUpdateOperationsInput | string
-    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type integration_connectionsUpdateWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    integration_type?: StringFieldUpdateOperationsInput | string
-    provider?: StringFieldUpdateOperationsInput | string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: usersUpdateOneWithoutIntegration_connectionsNestedInput
-    integration_logs?: integration_logsUpdateManyWithoutIntegration_connectionsNestedInput
-  }
-
-  export type integration_connectionsUncheckedUpdateWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    integration_type?: StringFieldUpdateOperationsInput | string
-    provider?: StringFieldUpdateOperationsInput | string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    integration_logs?: integration_logsUncheckedUpdateManyWithoutIntegration_connectionsNestedInput
-  }
-
-  export type integration_connectionsUncheckedUpdateManyWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    integration_type?: StringFieldUpdateOperationsInput | string
-    provider?: StringFieldUpdateOperationsInput | string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type hardware_connectionsUpdateWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    hardware_type?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
-    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: usersUpdateOneWithoutHardware_connectionsNestedInput
-  }
-
-  export type hardware_connectionsUncheckedUpdateWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    hardware_type?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
-    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type hardware_connectionsUncheckedUpdateManyWithoutCompaniesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    hardware_type?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
-    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type loadsCreateManyDriversInput = {
@@ -57859,6 +57859,46 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type api_keysCreateManyUsersInput = {
+    id?: string
+    name: string
+    key: string
+    company_id?: number | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type hardware_connectionsCreateManyUsersInput = {
+    id?: string
+    company_id?: number | null
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type integration_connectionsCreateManyUsersInput = {
+    id?: string
+    company_id?: number | null
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
   export type predictive_alertsCreateManyUsersInput = {
     id?: number
     vehicle_id?: number | null
@@ -57878,6 +57918,18 @@ export namespace Prisma {
     image_url: string
     image_type?: string | null
     created_at?: Date | string | null
+  }
+
+  export type webhook_subscriptionsCreateManyUsersInput = {
+    id?: string
+    company_id?: number | null
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type weigh_ticketsCreateManyUsersInput = {
@@ -57903,56 +57955,128 @@ export namespace Prisma {
     updated_at?: Date | string | null
   }
 
-  export type api_keysCreateManyUsersInput = {
-    id?: string
-    name: string
-    key: string
-    company_id?: number | null
-    expires_at?: Date | string | null
-    last_used_at?: Date | string | null
-    is_active?: boolean
-    permissions?: api_keysCreatepermissionsInput | string[]
-    created_at?: Date | string
-    updated_at?: Date | string
+  export type api_keysUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutApi_keysNestedInput
+    api_usage?: api_usageUpdateManyWithoutApi_keysNestedInput
   }
 
-  export type webhook_subscriptionsCreateManyUsersInput = {
-    id?: string
-    company_id?: number | null
-    name: string
-    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
-    target_url: string
-    secret_key?: string | null
-    is_active?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
+  export type api_keysUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    api_usage?: api_usageUncheckedUpdateManyWithoutApi_keysNestedInput
   }
 
-  export type integration_connectionsCreateManyUsersInput = {
-    id?: string
-    company_id?: number | null
-    integration_type: string
-    provider: string
+  export type api_keysUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type hardware_connectionsUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutHardware_connectionsNestedInput
+  }
+
+  export type hardware_connectionsUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type hardware_connectionsUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_connectionsUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
     credentials?: NullableJsonNullValueInput | InputJsonValue
     settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_sync_at?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutIntegration_connectionsNestedInput
+    integration_logs?: integration_logsUpdateManyWithoutIntegration_connectionsNestedInput
   }
 
-  export type hardware_connectionsCreateManyUsersInput = {
-    id?: string
-    company_id?: number | null
-    hardware_type: string
-    name: string
-    model?: string | null
-    serial_number?: string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: boolean
-    last_connected_at?: Date | string | null
-    created_at?: Date | string
-    updated_at?: Date | string
+  export type integration_connectionsUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    integration_logs?: integration_logsUncheckedUpdateManyWithoutIntegration_connectionsNestedInput
+  }
+
+  export type integration_connectionsUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type predictive_alertsUpdateWithoutUsersInput = {
@@ -58014,6 +58138,44 @@ export namespace Prisma {
     image_url?: StringFieldUpdateOperationsInput | string
     image_type?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type webhook_subscriptionsUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhook_deliveries?: webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput
+    companies?: companiesUpdateOneWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhook_deliveries?: webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type weigh_ticketsUpdateWithoutUsersInput = {
@@ -58094,168 +58256,6 @@ export namespace Prisma {
     company_id?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type api_keysUpdateWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
-    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: api_keysUpdatepermissionsInput | string[]
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    companies?: companiesUpdateOneWithoutApi_keysNestedInput
-    api_usage?: api_usageUpdateManyWithoutApi_keysNestedInput
-  }
-
-  export type api_keysUncheckedUpdateWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
-    company_id?: NullableIntFieldUpdateOperationsInput | number | null
-    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: api_keysUpdatepermissionsInput | string[]
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    api_usage?: api_usageUncheckedUpdateManyWithoutApi_keysNestedInput
-  }
-
-  export type api_keysUncheckedUpdateManyWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    key?: StringFieldUpdateOperationsInput | string
-    company_id?: NullableIntFieldUpdateOperationsInput | number | null
-    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: api_keysUpdatepermissionsInput | string[]
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type webhook_subscriptionsUpdateWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
-    target_url?: StringFieldUpdateOperationsInput | string
-    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    companies?: companiesUpdateOneWithoutWebhook_subscriptionsNestedInput
-    webhook_deliveries?: webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput
-  }
-
-  export type webhook_subscriptionsUncheckedUpdateWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    company_id?: NullableIntFieldUpdateOperationsInput | number | null
-    name?: StringFieldUpdateOperationsInput | string
-    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
-    target_url?: StringFieldUpdateOperationsInput | string
-    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    webhook_deliveries?: webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsNestedInput
-  }
-
-  export type webhook_subscriptionsUncheckedUpdateManyWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    company_id?: NullableIntFieldUpdateOperationsInput | number | null
-    name?: StringFieldUpdateOperationsInput | string
-    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
-    target_url?: StringFieldUpdateOperationsInput | string
-    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type integration_connectionsUpdateWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    integration_type?: StringFieldUpdateOperationsInput | string
-    provider?: StringFieldUpdateOperationsInput | string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    companies?: companiesUpdateOneWithoutIntegration_connectionsNestedInput
-    integration_logs?: integration_logsUpdateManyWithoutIntegration_connectionsNestedInput
-  }
-
-  export type integration_connectionsUncheckedUpdateWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    company_id?: NullableIntFieldUpdateOperationsInput | number | null
-    integration_type?: StringFieldUpdateOperationsInput | string
-    provider?: StringFieldUpdateOperationsInput | string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    integration_logs?: integration_logsUncheckedUpdateManyWithoutIntegration_connectionsNestedInput
-  }
-
-  export type integration_connectionsUncheckedUpdateManyWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    company_id?: NullableIntFieldUpdateOperationsInput | number | null
-    integration_type?: StringFieldUpdateOperationsInput | string
-    provider?: StringFieldUpdateOperationsInput | string
-    credentials?: NullableJsonNullValueInput | InputJsonValue
-    settings?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type hardware_connectionsUpdateWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    hardware_type?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
-    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    companies?: companiesUpdateOneWithoutHardware_connectionsNestedInput
-  }
-
-  export type hardware_connectionsUncheckedUpdateWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    company_id?: NullableIntFieldUpdateOperationsInput | number | null
-    hardware_type?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
-    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type hardware_connectionsUncheckedUpdateManyWithoutUsersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    company_id?: NullableIntFieldUpdateOperationsInput | number | null
-    hardware_type?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
-    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
-    connection_details?: NullableJsonNullValueInput | InputJsonValue
-    is_active?: BoolFieldUpdateOperationsInput | boolean
-    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type loadsCreateManyVehiclesInput = {

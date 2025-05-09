@@ -28,19 +28,19 @@ const getDirectPool = () => {
       console.error('Missing DATABASE_URL environment variable');
       process.exit(1);
     }
-    
+
     directPool = new Pool({
       connectionString: directConnectionUrl,
       ssl: { rejectUnauthorized: false }
     });
-    
+
     // Test the connection
     directPool.on('error', (err) => {
       console.error('Unexpected error on idle client', err);
       process.exit(1);
     });
   }
-  
+
   return directPool;
 };
 
@@ -54,19 +54,19 @@ const getPooledPool = () => {
       console.error('Missing POOL_CONNECTION_URL environment variable');
       process.exit(1);
     }
-    
+
     pooledPool = new Pool({
       connectionString: poolConnectionUrl,
       ssl: { rejectUnauthorized: false }
     });
-    
+
     // Test the connection
     pooledPool.on('error', (err) => {
       console.error('Unexpected error on idle client', err);
       process.exit(1);
     });
   }
-  
+
   return pooledPool;
 };
 
@@ -100,7 +100,7 @@ const closeConnections = async () => {
   if (directPool) {
     await directPool.end();
   }
-  
+
   if (pooledPool) {
     await pooledPool.end();
   }
