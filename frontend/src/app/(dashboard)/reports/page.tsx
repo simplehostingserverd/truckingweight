@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import { 
-  DocumentChartBarIcon, 
-  TruckIcon, 
-  ScaleIcon, 
-  UserGroupIcon, 
+import {
+  DocumentChartBarIcon,
+  TruckIcon,
+  ScaleIcon,
+  UserGroupIcon,
   ExclamationTriangleIcon,
   CalendarIcon,
   ArrowDownTrayIcon,
@@ -104,7 +104,7 @@ export default async function Reports() {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-green-100 dark:bg-green-900 mr-4">
@@ -116,7 +116,7 @@ export default async function Reports() {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-purple-100 dark:bg-purple-900 mr-4">
@@ -128,7 +128,7 @@ export default async function Reports() {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-indigo-100 dark:bg-indigo-900 mr-4">
@@ -140,7 +140,7 @@ export default async function Reports() {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-red-100 dark:bg-red-900 mr-4">
@@ -162,7 +162,7 @@ export default async function Reports() {
           </div>
           <ComplianceChart />
         </div>
-        
+
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
           <div className="px-6 py-4 bg-primary-700 text-white">
             <h2 className="text-xl font-semibold">Vehicle Weight Distribution</h2>
@@ -186,14 +186,14 @@ export default async function Reports() {
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 Detailed analysis of weight measurements and compliance status across your fleet.
               </p>
-              <Link 
-                href="/reports/weight-compliance" 
+              <Link
+                href="/reports/weight-compliance"
                 className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium text-sm"
               >
                 Generate Report →
               </Link>
             </div>
-            
+
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
               <div className="flex items-center mb-4">
                 <DocumentTextIcon className="h-8 w-8 text-primary-600 dark:text-primary-400 mr-3" />
@@ -202,14 +202,14 @@ export default async function Reports() {
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 Analysis of vehicle usage, maintenance status, and weight distribution.
               </p>
-              <Link 
-                href="/reports/vehicle-performance" 
+              <Link
+                href="/reports/vehicle-performance"
                 className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium text-sm"
               >
                 Generate Report →
               </Link>
             </div>
-            
+
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
               <div className="flex items-center mb-4">
                 <DocumentTextIcon className="h-8 w-8 text-primary-600 dark:text-primary-400 mr-3" />
@@ -218,14 +218,22 @@ export default async function Reports() {
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 Summary of driver assignments, loads completed, and compliance records.
               </p>
-              <Link 
-                href="/reports/driver-activity" 
-                className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium text-sm"
-              >
-                Generate Report →
-              </Link>
+              <div className="flex justify-between">
+                <Link
+                  href="/reports/driver-activity"
+                  className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium text-sm"
+                >
+                  Generate Report →
+                </Link>
+                <Link
+                  href="/driver-tracking"
+                  className="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 font-medium text-sm"
+                >
+                  Live Tracking →
+                </Link>
+              </div>
             </div>
-            
+
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
               <div className="flex items-center mb-4">
                 <DocumentTextIcon className="h-8 w-8 text-primary-600 dark:text-primary-400 mr-3" />
@@ -234,14 +242,14 @@ export default async function Reports() {
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 Overview of load statuses, delivery performance, and route efficiency.
               </p>
-              <Link 
-                href="/reports/load-management" 
+              <Link
+                href="/reports/load-management"
                 className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium text-sm"
               >
                 Generate Report →
               </Link>
             </div>
-            
+
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
               <div className="flex items-center mb-4">
                 <DocumentTextIcon className="h-8 w-8 text-primary-600 dark:text-primary-400 mr-3" />
@@ -250,14 +258,14 @@ export default async function Reports() {
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 Historical analysis of compliance trends and potential risk areas.
               </p>
-              <Link 
-                href="/reports/compliance-trends" 
+              <Link
+                href="/reports/compliance-trends"
                 className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium text-sm"
               >
                 Generate Report →
               </Link>
             </div>
-            
+
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
               <div className="flex items-center mb-4">
                 <DocumentTextIcon className="h-8 w-8 text-primary-600 dark:text-primary-400 mr-3" />
@@ -266,8 +274,8 @@ export default async function Reports() {
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 Create a custom report with specific parameters and data points.
               </p>
-              <Link 
-                href="/reports/custom" 
+              <Link
+                href="/reports/custom"
                 className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium text-sm"
               >
                 Create Custom Report →

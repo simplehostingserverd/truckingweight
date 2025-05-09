@@ -72,6 +72,7 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
     { name: 'Loads', href: '/loads', icon: TruckIcon },
     { name: 'Vehicles', href: '/vehicles', icon: TruckIcon },
     { name: 'Drivers', href: '/drivers', icon: UserGroupIcon },
+    { name: 'Driver Tracking', href: '/driver-tracking', icon: TruckIcon },
     { name: 'Reports', href: '/reports', icon: ChartBarIcon },
   ];
 
