@@ -384,6 +384,110 @@ exports.Prisma.WeightsScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.Api_keysScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  key: 'key',
+  company_id: 'company_id',
+  created_by: 'created_by',
+  expires_at: 'expires_at',
+  last_used_at: 'last_used_at',
+  is_active: 'is_active',
+  permissions: 'permissions',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.Api_usageScalarFieldEnum = {
+  id: 'id',
+  api_key_id: 'api_key_id',
+  endpoint: 'endpoint',
+  method: 'method',
+  status: 'status',
+  ip_address: 'ip_address',
+  user_agent: 'user_agent',
+  created_at: 'created_at'
+};
+
+exports.Prisma.Webhook_subscriptionsScalarFieldEnum = {
+  id: 'id',
+  company_id: 'company_id',
+  name: 'name',
+  event_types: 'event_types',
+  target_url: 'target_url',
+  secret_key: 'secret_key',
+  is_active: 'is_active',
+  created_by: 'created_by',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.Webhook_deliveriesScalarFieldEnum = {
+  id: 'id',
+  webhook_subscription_id: 'webhook_subscription_id',
+  event_type: 'event_type',
+  payload: 'payload',
+  response_status: 'response_status',
+  response_body: 'response_body',
+  error_message: 'error_message',
+  attempts: 'attempts',
+  next_retry_at: 'next_retry_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.Integration_connectionsScalarFieldEnum = {
+  id: 'id',
+  company_id: 'company_id',
+  integration_type: 'integration_type',
+  provider: 'provider',
+  credentials: 'credentials',
+  settings: 'settings',
+  is_active: 'is_active',
+  last_sync_at: 'last_sync_at',
+  created_by: 'created_by',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.Integration_logsScalarFieldEnum = {
+  id: 'id',
+  integration_connection_id: 'integration_connection_id',
+  event_type: 'event_type',
+  status: 'status',
+  message: 'message',
+  details: 'details',
+  created_at: 'created_at'
+};
+
+exports.Prisma.Hardware_connectionsScalarFieldEnum = {
+  id: 'id',
+  company_id: 'company_id',
+  hardware_type: 'hardware_type',
+  name: 'name',
+  model: 'model',
+  serial_number: 'serial_number',
+  connection_details: 'connection_details',
+  is_active: 'is_active',
+  last_connected_at: 'last_connected_at',
+  created_by: 'created_by',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.Blockchain_recordsScalarFieldEnum = {
+  id: 'id',
+  record_type: 'record_type',
+  record_id: 'record_id',
+  hash: 'hash',
+  previous_hash: 'previous_hash',
+  blockchain_id: 'blockchain_id',
+  transaction_id: 'transaction_id',
+  verified: 'verified',
+  verification_details: 'verification_details',
+  created_at: 'created_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -391,6 +495,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -431,7 +539,15 @@ exports.Prisma.ModelName = {
   users: 'users',
   vehicles: 'vehicles',
   weigh_tickets: 'weigh_tickets',
-  weights: 'weights'
+  weights: 'weights',
+  api_keys: 'api_keys',
+  api_usage: 'api_usage',
+  webhook_subscriptions: 'webhook_subscriptions',
+  webhook_deliveries: 'webhook_deliveries',
+  integration_connections: 'integration_connections',
+  integration_logs: 'integration_logs',
+  hardware_connections: 'hardware_connections',
+  blockchain_records: 'blockchain_records'
 };
 
 /**

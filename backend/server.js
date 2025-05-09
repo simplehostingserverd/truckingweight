@@ -18,6 +18,11 @@ const vehicleRoutes = require('./routes/vehicles');
 const driverRoutes = require('./routes/drivers');
 const adminRoutes = require('./routes/admin');
 
+// Import integration routes
+const integrationRoutes = require('./routes/integrations');
+const webhookRoutes = require('./routes/webhooks');
+const apiKeyRoutes = require('./routes/apiKeys');
+
 // Create Express app
 const app = express();
 
@@ -34,6 +39,11 @@ app.use('/api/companies', companyRoutes);
 app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use('/api/admin', adminRoutes);
+
+// Integration routes
+app.use('/api/integrations', integrationRoutes);
+app.use('/api/webhooks', webhookRoutes);
+app.use('/api/api-keys', apiKeyRoutes);
 
 // Root route
 app.get('/', (req, res) => {
@@ -55,6 +65,9 @@ const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+// Import Redis service
+const { redisService } = require('./services/redis');
+
 // Handle graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM signal received: closing HTTP server');
@@ -63,6 +76,9 @@ process.on('SIGTERM', () => {
     // Close database connections
     await db.closeConnections();
     console.log('Database connections closed');
+    // Close Redis connection
+    await redisService.close();
+    console.log('Redis connection closed');
     process.exit(0);
   });
 });
@@ -74,6 +90,9 @@ process.on('SIGINT', () => {
     // Close database connections
     await db.closeConnections();
     console.log('Database connections closed');
+    // Close Redis connection
+    await redisService.close();
+    console.log('Redis connection closed');
     process.exit(0);
   });
 });

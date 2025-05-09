@@ -68,21 +68,25 @@ model cargo {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model companies {
-  id               Int                @id @default(autoincrement())
-  name             String             @db.VarChar(255)
-  address          String?
-  contact_email    String?            @db.VarChar(255)
-  contact_phone    String?            @db.VarChar(50)
-  created_at       DateTime?          @default(now()) @db.Timestamptz(6)
-  updated_at       DateTime?          @default(now()) @db.Timestamptz(6)
-  drivers          drivers[]
-  loads            loads[]
-  scale_facilities scale_facilities[]
-  scales           scales[]
-  users            users[]
-  vehicles         vehicles[]
-  weigh_tickets    weigh_tickets[]
-  weights          weights[]
+  id                      Int                       @id @default(autoincrement())
+  name                    String                    @db.VarChar(255)
+  address                 String?
+  contact_email           String?                   @db.VarChar(255)
+  contact_phone           String?                   @db.VarChar(50)
+  created_at              DateTime?                 @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime?                 @default(now()) @db.Timestamptz(6)
+  drivers                 drivers[]
+  loads                   loads[]
+  scale_facilities        scale_facilities[]
+  scales                  scales[]
+  users                   users[]
+  vehicles                vehicles[]
+  weigh_tickets           weigh_tickets[]
+  weights                 weights[]
+  api_keys                api_keys[]
+  webhook_subscriptions   webhook_subscriptions[]
+  integration_connections integration_connections[]
+  hardware_connections    hardware_connections[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -265,17 +269,21 @@ model ticket_signatures {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model users {
-  id                String              @id @db.Uuid
-  name              String              @db.VarChar(255)
-  email             String              @unique @db.VarChar(255)
-  company_id        Int?
-  is_admin          Boolean?            @default(false)
-  created_at        DateTime?           @default(now()) @db.Timestamptz(6)
-  updated_at        DateTime?           @default(now()) @db.Timestamptz(6)
-  predictive_alerts predictive_alerts[]
-  ticket_images     ticket_images[]
-  companies         companies?          @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  weigh_tickets     weigh_tickets[]
+  id                      String                    @id @db.Uuid
+  name                    String                    @db.VarChar(255)
+  email                   String                    @unique @db.VarChar(255)
+  company_id              Int?
+  is_admin                Boolean?                  @default(false)
+  created_at              DateTime?                 @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime?                 @default(now()) @db.Timestamptz(6)
+  predictive_alerts       predictive_alerts[]
+  ticket_images           ticket_images[]
+  companies               companies?                @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  weigh_tickets           weigh_tickets[]
+  api_keys                api_keys[]
+  webhook_subscriptions   webhook_subscriptions[]
+  integration_connections integration_connections[]
+  hardware_connections    hardware_connections[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -365,4 +373,130 @@ model weights {
   companies  companies? @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   drivers    drivers?   @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   vehicles   vehicles?  @relation(fields: [vehicle_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model api_keys {
+  id           String      @id @default(uuid()) @db.Uuid
+  name         String      @db.VarChar(100)
+  key          String      @unique @db.VarChar(255)
+  company_id   Int?
+  created_by   String?     @db.Uuid
+  expires_at   DateTime?   @db.Timestamptz(6)
+  last_used_at DateTime?   @db.Timestamptz(6)
+  is_active    Boolean     @default(true)
+  permissions  String[]    @db.VarChar(50)
+  created_at   DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime    @default(now()) @db.Timestamptz(6)
+  companies    companies?  @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users        users?      @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  api_usage    api_usage[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model api_usage {
+  id         String   @id @default(uuid()) @db.Uuid
+  api_key_id String   @db.Uuid
+  endpoint   String   @db.VarChar(255)
+  method     String   @db.VarChar(10)
+  status     Int
+  ip_address String?  @db.VarChar(45)
+  user_agent String?
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  api_keys   api_keys @relation(fields: [api_key_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model webhook_subscriptions {
+  id                 String               @id @default(uuid()) @db.Uuid
+  company_id         Int?
+  name               String               @db.VarChar(100)
+  event_types        String[]             @db.VarChar(50)
+  target_url         String
+  secret_key         String?              @db.VarChar(255)
+  is_active          Boolean              @default(true)
+  created_by         String?              @db.Uuid
+  created_at         DateTime             @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime             @default(now()) @db.Timestamptz(6)
+  companies          companies?           @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users              users?               @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  webhook_deliveries webhook_deliveries[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model webhook_deliveries {
+  id                      String                @id @default(uuid()) @db.Uuid
+  webhook_subscription_id String                @db.Uuid
+  event_type              String                @db.VarChar(50)
+  payload                 Json                  @db.Json
+  response_status         Int?
+  response_body           String?
+  error_message           String?
+  attempts                Int                   @default(0)
+  next_retry_at           DateTime?             @db.Timestamptz(6)
+  created_at              DateTime              @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime              @default(now()) @db.Timestamptz(6)
+  webhook_subscriptions   webhook_subscriptions @relation(fields: [webhook_subscription_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model integration_connections {
+  id               String             @id @default(uuid()) @db.Uuid
+  company_id       Int?
+  integration_type String             @db.VarChar(50) // e.g., 'telematics', 'eld', 'tms', 'erp', 'gis'
+  provider         String             @db.VarChar(50) // e.g., 'samsara', 'geotab', 'netsuite', 'sap'
+  credentials      Json?              @db.Json
+  settings         Json?              @db.Json
+  is_active        Boolean            @default(true)
+  last_sync_at     DateTime?          @db.Timestamptz(6)
+  created_by       String?            @db.Uuid
+  created_at       DateTime           @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime           @default(now()) @db.Timestamptz(6)
+  companies        companies?         @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users            users?             @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  integration_logs integration_logs[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model integration_logs {
+  id                        String                  @id @default(uuid()) @db.Uuid
+  integration_connection_id String                  @db.Uuid
+  event_type                String                  @db.VarChar(50) // e.g., 'sync', 'error', 'auth'
+  status                    String                  @db.VarChar(50) // e.g., 'success', 'failure', 'pending'
+  message                   String?
+  details                   Json?                   @db.Json
+  created_at                DateTime                @default(now()) @db.Timestamptz(6)
+  integration_connections   integration_connections @relation(fields: [integration_connection_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model hardware_connections {
+  id                 String     @id @default(uuid()) @db.Uuid
+  company_id         Int?
+  hardware_type      String     @db.VarChar(50) // e.g., 'rfid', 'camera', 'scale'
+  name               String     @db.VarChar(100)
+  model              String?    @db.VarChar(100)
+  serial_number      String?    @db.VarChar(100)
+  connection_details Json?      @db.Json
+  is_active          Boolean    @default(true)
+  last_connected_at  DateTime?  @db.Timestamptz(6)
+  created_by         String?    @db.Uuid
+  created_at         DateTime   @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime   @default(now()) @db.Timestamptz(6)
+  companies          companies? @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users              users?     @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model blockchain_records {
+  id                   String   @id @default(uuid()) @db.Uuid
+  record_type          String   @db.VarChar(50) // e.g., 'weight', 'compliance', 'transaction'
+  record_id            String   @db.VarChar(255)
+  hash                 String   @db.VarChar(255)
+  previous_hash        String?  @db.VarChar(255)
+  blockchain_id        String?  @db.VarChar(255)
+  transaction_id       String?  @db.VarChar(255)
+  verified             Boolean  @default(false)
+  verification_details Json?    @db.Json
+  created_at           DateTime @default(now()) @db.Timestamptz(6)
 }

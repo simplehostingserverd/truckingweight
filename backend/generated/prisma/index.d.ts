@@ -122,6 +122,46 @@ export type weigh_tickets = $Result.DefaultSelection<Prisma.$weigh_ticketsPayloa
  * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
  */
 export type weights = $Result.DefaultSelection<Prisma.$weightsPayload>
+/**
+ * Model api_keys
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type api_keys = $Result.DefaultSelection<Prisma.$api_keysPayload>
+/**
+ * Model api_usage
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type api_usage = $Result.DefaultSelection<Prisma.$api_usagePayload>
+/**
+ * Model webhook_subscriptions
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type webhook_subscriptions = $Result.DefaultSelection<Prisma.$webhook_subscriptionsPayload>
+/**
+ * Model webhook_deliveries
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type webhook_deliveries = $Result.DefaultSelection<Prisma.$webhook_deliveriesPayload>
+/**
+ * Model integration_connections
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type integration_connections = $Result.DefaultSelection<Prisma.$integration_connectionsPayload>
+/**
+ * Model integration_logs
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type integration_logs = $Result.DefaultSelection<Prisma.$integration_logsPayload>
+/**
+ * Model hardware_connections
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type hardware_connections = $Result.DefaultSelection<Prisma.$hardware_connectionsPayload>
+/**
+ * Model blockchain_records
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type blockchain_records = $Result.DefaultSelection<Prisma.$blockchain_recordsPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -447,6 +487,86 @@ export class PrismaClient<
     * ```
     */
   get weights(): Prisma.weightsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.api_keys`: Exposes CRUD operations for the **api_keys** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Api_keys
+    * const api_keys = await prisma.api_keys.findMany()
+    * ```
+    */
+  get api_keys(): Prisma.api_keysDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.api_usage`: Exposes CRUD operations for the **api_usage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Api_usages
+    * const api_usages = await prisma.api_usage.findMany()
+    * ```
+    */
+  get api_usage(): Prisma.api_usageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.webhook_subscriptions`: Exposes CRUD operations for the **webhook_subscriptions** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Webhook_subscriptions
+    * const webhook_subscriptions = await prisma.webhook_subscriptions.findMany()
+    * ```
+    */
+  get webhook_subscriptions(): Prisma.webhook_subscriptionsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.webhook_deliveries`: Exposes CRUD operations for the **webhook_deliveries** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Webhook_deliveries
+    * const webhook_deliveries = await prisma.webhook_deliveries.findMany()
+    * ```
+    */
+  get webhook_deliveries(): Prisma.webhook_deliveriesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.integration_connections`: Exposes CRUD operations for the **integration_connections** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Integration_connections
+    * const integration_connections = await prisma.integration_connections.findMany()
+    * ```
+    */
+  get integration_connections(): Prisma.integration_connectionsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.integration_logs`: Exposes CRUD operations for the **integration_logs** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Integration_logs
+    * const integration_logs = await prisma.integration_logs.findMany()
+    * ```
+    */
+  get integration_logs(): Prisma.integration_logsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.hardware_connections`: Exposes CRUD operations for the **hardware_connections** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Hardware_connections
+    * const hardware_connections = await prisma.hardware_connections.findMany()
+    * ```
+    */
+  get hardware_connections(): Prisma.hardware_connectionsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.blockchain_records`: Exposes CRUD operations for the **blockchain_records** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Blockchain_records
+    * const blockchain_records = await prisma.blockchain_records.findMany()
+    * ```
+    */
+  get blockchain_records(): Prisma.blockchain_recordsDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -906,7 +1026,15 @@ export namespace Prisma {
     users: 'users',
     vehicles: 'vehicles',
     weigh_tickets: 'weigh_tickets',
-    weights: 'weights'
+    weights: 'weights',
+    api_keys: 'api_keys',
+    api_usage: 'api_usage',
+    webhook_subscriptions: 'webhook_subscriptions',
+    webhook_deliveries: 'webhook_deliveries',
+    integration_connections: 'integration_connections',
+    integration_logs: 'integration_logs',
+    hardware_connections: 'hardware_connections',
+    blockchain_records: 'blockchain_records'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -925,7 +1053,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "axle_configurations" | "axle_weights" | "axles" | "cargo" | "companies" | "compliance_issues" | "drivers" | "load_optimizations" | "loads" | "predictive_alerts" | "scale_calibrations" | "scale_facilities" | "scale_readings" | "scales" | "ticket_images" | "ticket_signatures" | "users" | "vehicles" | "weigh_tickets" | "weights"
+      modelProps: "axle_configurations" | "axle_weights" | "axles" | "cargo" | "companies" | "compliance_issues" | "drivers" | "load_optimizations" | "loads" | "predictive_alerts" | "scale_calibrations" | "scale_facilities" | "scale_readings" | "scales" | "ticket_images" | "ticket_signatures" | "users" | "vehicles" | "weigh_tickets" | "weights" | "api_keys" | "api_usage" | "webhook_subscriptions" | "webhook_deliveries" | "integration_connections" | "integration_logs" | "hardware_connections" | "blockchain_records"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2409,6 +2537,598 @@ export namespace Prisma {
           }
         }
       }
+      api_keys: {
+        payload: Prisma.$api_keysPayload<ExtArgs>
+        fields: Prisma.api_keysFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.api_keysFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.api_keysFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload>
+          }
+          findFirst: {
+            args: Prisma.api_keysFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.api_keysFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload>
+          }
+          findMany: {
+            args: Prisma.api_keysFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload>[]
+          }
+          create: {
+            args: Prisma.api_keysCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload>
+          }
+          createMany: {
+            args: Prisma.api_keysCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.api_keysCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload>[]
+          }
+          delete: {
+            args: Prisma.api_keysDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload>
+          }
+          update: {
+            args: Prisma.api_keysUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload>
+          }
+          deleteMany: {
+            args: Prisma.api_keysDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.api_keysUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.api_keysUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload>[]
+          }
+          upsert: {
+            args: Prisma.api_keysUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_keysPayload>
+          }
+          aggregate: {
+            args: Prisma.Api_keysAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApi_keys>
+          }
+          groupBy: {
+            args: Prisma.api_keysGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Api_keysGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.api_keysCountArgs<ExtArgs>
+            result: $Utils.Optional<Api_keysCountAggregateOutputType> | number
+          }
+        }
+      }
+      api_usage: {
+        payload: Prisma.$api_usagePayload<ExtArgs>
+        fields: Prisma.api_usageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.api_usageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.api_usageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload>
+          }
+          findFirst: {
+            args: Prisma.api_usageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.api_usageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload>
+          }
+          findMany: {
+            args: Prisma.api_usageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload>[]
+          }
+          create: {
+            args: Prisma.api_usageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload>
+          }
+          createMany: {
+            args: Prisma.api_usageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.api_usageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload>[]
+          }
+          delete: {
+            args: Prisma.api_usageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload>
+          }
+          update: {
+            args: Prisma.api_usageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload>
+          }
+          deleteMany: {
+            args: Prisma.api_usageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.api_usageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.api_usageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload>[]
+          }
+          upsert: {
+            args: Prisma.api_usageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$api_usagePayload>
+          }
+          aggregate: {
+            args: Prisma.Api_usageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApi_usage>
+          }
+          groupBy: {
+            args: Prisma.api_usageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Api_usageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.api_usageCountArgs<ExtArgs>
+            result: $Utils.Optional<Api_usageCountAggregateOutputType> | number
+          }
+        }
+      }
+      webhook_subscriptions: {
+        payload: Prisma.$webhook_subscriptionsPayload<ExtArgs>
+        fields: Prisma.webhook_subscriptionsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.webhook_subscriptionsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.webhook_subscriptionsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload>
+          }
+          findFirst: {
+            args: Prisma.webhook_subscriptionsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.webhook_subscriptionsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload>
+          }
+          findMany: {
+            args: Prisma.webhook_subscriptionsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload>[]
+          }
+          create: {
+            args: Prisma.webhook_subscriptionsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload>
+          }
+          createMany: {
+            args: Prisma.webhook_subscriptionsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.webhook_subscriptionsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload>[]
+          }
+          delete: {
+            args: Prisma.webhook_subscriptionsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload>
+          }
+          update: {
+            args: Prisma.webhook_subscriptionsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload>
+          }
+          deleteMany: {
+            args: Prisma.webhook_subscriptionsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.webhook_subscriptionsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.webhook_subscriptionsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload>[]
+          }
+          upsert: {
+            args: Prisma.webhook_subscriptionsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_subscriptionsPayload>
+          }
+          aggregate: {
+            args: Prisma.Webhook_subscriptionsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWebhook_subscriptions>
+          }
+          groupBy: {
+            args: Prisma.webhook_subscriptionsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Webhook_subscriptionsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.webhook_subscriptionsCountArgs<ExtArgs>
+            result: $Utils.Optional<Webhook_subscriptionsCountAggregateOutputType> | number
+          }
+        }
+      }
+      webhook_deliveries: {
+        payload: Prisma.$webhook_deliveriesPayload<ExtArgs>
+        fields: Prisma.webhook_deliveriesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.webhook_deliveriesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.webhook_deliveriesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload>
+          }
+          findFirst: {
+            args: Prisma.webhook_deliveriesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.webhook_deliveriesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload>
+          }
+          findMany: {
+            args: Prisma.webhook_deliveriesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload>[]
+          }
+          create: {
+            args: Prisma.webhook_deliveriesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload>
+          }
+          createMany: {
+            args: Prisma.webhook_deliveriesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.webhook_deliveriesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload>[]
+          }
+          delete: {
+            args: Prisma.webhook_deliveriesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload>
+          }
+          update: {
+            args: Prisma.webhook_deliveriesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload>
+          }
+          deleteMany: {
+            args: Prisma.webhook_deliveriesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.webhook_deliveriesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.webhook_deliveriesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload>[]
+          }
+          upsert: {
+            args: Prisma.webhook_deliveriesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$webhook_deliveriesPayload>
+          }
+          aggregate: {
+            args: Prisma.Webhook_deliveriesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWebhook_deliveries>
+          }
+          groupBy: {
+            args: Prisma.webhook_deliveriesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Webhook_deliveriesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.webhook_deliveriesCountArgs<ExtArgs>
+            result: $Utils.Optional<Webhook_deliveriesCountAggregateOutputType> | number
+          }
+        }
+      }
+      integration_connections: {
+        payload: Prisma.$integration_connectionsPayload<ExtArgs>
+        fields: Prisma.integration_connectionsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.integration_connectionsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.integration_connectionsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload>
+          }
+          findFirst: {
+            args: Prisma.integration_connectionsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.integration_connectionsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload>
+          }
+          findMany: {
+            args: Prisma.integration_connectionsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload>[]
+          }
+          create: {
+            args: Prisma.integration_connectionsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload>
+          }
+          createMany: {
+            args: Prisma.integration_connectionsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.integration_connectionsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload>[]
+          }
+          delete: {
+            args: Prisma.integration_connectionsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload>
+          }
+          update: {
+            args: Prisma.integration_connectionsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload>
+          }
+          deleteMany: {
+            args: Prisma.integration_connectionsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.integration_connectionsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.integration_connectionsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload>[]
+          }
+          upsert: {
+            args: Prisma.integration_connectionsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_connectionsPayload>
+          }
+          aggregate: {
+            args: Prisma.Integration_connectionsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIntegration_connections>
+          }
+          groupBy: {
+            args: Prisma.integration_connectionsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Integration_connectionsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.integration_connectionsCountArgs<ExtArgs>
+            result: $Utils.Optional<Integration_connectionsCountAggregateOutputType> | number
+          }
+        }
+      }
+      integration_logs: {
+        payload: Prisma.$integration_logsPayload<ExtArgs>
+        fields: Prisma.integration_logsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.integration_logsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.integration_logsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload>
+          }
+          findFirst: {
+            args: Prisma.integration_logsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.integration_logsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload>
+          }
+          findMany: {
+            args: Prisma.integration_logsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload>[]
+          }
+          create: {
+            args: Prisma.integration_logsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload>
+          }
+          createMany: {
+            args: Prisma.integration_logsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.integration_logsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload>[]
+          }
+          delete: {
+            args: Prisma.integration_logsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload>
+          }
+          update: {
+            args: Prisma.integration_logsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload>
+          }
+          deleteMany: {
+            args: Prisma.integration_logsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.integration_logsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.integration_logsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload>[]
+          }
+          upsert: {
+            args: Prisma.integration_logsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$integration_logsPayload>
+          }
+          aggregate: {
+            args: Prisma.Integration_logsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIntegration_logs>
+          }
+          groupBy: {
+            args: Prisma.integration_logsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Integration_logsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.integration_logsCountArgs<ExtArgs>
+            result: $Utils.Optional<Integration_logsCountAggregateOutputType> | number
+          }
+        }
+      }
+      hardware_connections: {
+        payload: Prisma.$hardware_connectionsPayload<ExtArgs>
+        fields: Prisma.hardware_connectionsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.hardware_connectionsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.hardware_connectionsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload>
+          }
+          findFirst: {
+            args: Prisma.hardware_connectionsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.hardware_connectionsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload>
+          }
+          findMany: {
+            args: Prisma.hardware_connectionsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload>[]
+          }
+          create: {
+            args: Prisma.hardware_connectionsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload>
+          }
+          createMany: {
+            args: Prisma.hardware_connectionsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.hardware_connectionsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload>[]
+          }
+          delete: {
+            args: Prisma.hardware_connectionsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload>
+          }
+          update: {
+            args: Prisma.hardware_connectionsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload>
+          }
+          deleteMany: {
+            args: Prisma.hardware_connectionsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.hardware_connectionsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.hardware_connectionsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload>[]
+          }
+          upsert: {
+            args: Prisma.hardware_connectionsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$hardware_connectionsPayload>
+          }
+          aggregate: {
+            args: Prisma.Hardware_connectionsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHardware_connections>
+          }
+          groupBy: {
+            args: Prisma.hardware_connectionsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Hardware_connectionsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.hardware_connectionsCountArgs<ExtArgs>
+            result: $Utils.Optional<Hardware_connectionsCountAggregateOutputType> | number
+          }
+        }
+      }
+      blockchain_records: {
+        payload: Prisma.$blockchain_recordsPayload<ExtArgs>
+        fields: Prisma.blockchain_recordsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.blockchain_recordsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.blockchain_recordsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload>
+          }
+          findFirst: {
+            args: Prisma.blockchain_recordsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.blockchain_recordsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload>
+          }
+          findMany: {
+            args: Prisma.blockchain_recordsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload>[]
+          }
+          create: {
+            args: Prisma.blockchain_recordsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload>
+          }
+          createMany: {
+            args: Prisma.blockchain_recordsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.blockchain_recordsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload>[]
+          }
+          delete: {
+            args: Prisma.blockchain_recordsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload>
+          }
+          update: {
+            args: Prisma.blockchain_recordsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload>
+          }
+          deleteMany: {
+            args: Prisma.blockchain_recordsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.blockchain_recordsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.blockchain_recordsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload>[]
+          }
+          upsert: {
+            args: Prisma.blockchain_recordsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$blockchain_recordsPayload>
+          }
+          aggregate: {
+            args: Prisma.Blockchain_recordsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBlockchain_records>
+          }
+          groupBy: {
+            args: Prisma.blockchain_recordsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Blockchain_recordsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.blockchain_recordsCountArgs<ExtArgs>
+            result: $Utils.Optional<Blockchain_recordsCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2513,6 +3233,14 @@ export namespace Prisma {
     vehicles?: vehiclesOmit
     weigh_tickets?: weigh_ticketsOmit
     weights?: weightsOmit
+    api_keys?: api_keysOmit
+    api_usage?: api_usageOmit
+    webhook_subscriptions?: webhook_subscriptionsOmit
+    webhook_deliveries?: webhook_deliveriesOmit
+    integration_connections?: integration_connectionsOmit
+    integration_logs?: integration_logsOmit
+    hardware_connections?: hardware_connectionsOmit
+    blockchain_records?: blockchain_recordsOmit
   }
 
   /* Types for Logging */
@@ -2655,6 +3383,10 @@ export namespace Prisma {
     vehicles: number
     weigh_tickets: number
     weights: number
+    api_keys: number
+    webhook_subscriptions: number
+    integration_connections: number
+    hardware_connections: number
   }
 
   export type CompaniesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2666,6 +3398,10 @@ export namespace Prisma {
     vehicles?: boolean | CompaniesCountOutputTypeCountVehiclesArgs
     weigh_tickets?: boolean | CompaniesCountOutputTypeCountWeigh_ticketsArgs
     weights?: boolean | CompaniesCountOutputTypeCountWeightsArgs
+    api_keys?: boolean | CompaniesCountOutputTypeCountApi_keysArgs
+    webhook_subscriptions?: boolean | CompaniesCountOutputTypeCountWebhook_subscriptionsArgs
+    integration_connections?: boolean | CompaniesCountOutputTypeCountIntegration_connectionsArgs
+    hardware_connections?: boolean | CompaniesCountOutputTypeCountHardware_connectionsArgs
   }
 
   // Custom InputTypes
@@ -2733,6 +3469,34 @@ export namespace Prisma {
    */
   export type CompaniesCountOutputTypeCountWeightsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: weightsWhereInput
+  }
+
+  /**
+   * CompaniesCountOutputType without action
+   */
+  export type CompaniesCountOutputTypeCountApi_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: api_keysWhereInput
+  }
+
+  /**
+   * CompaniesCountOutputType without action
+   */
+  export type CompaniesCountOutputTypeCountWebhook_subscriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: webhook_subscriptionsWhereInput
+  }
+
+  /**
+   * CompaniesCountOutputType without action
+   */
+  export type CompaniesCountOutputTypeCountIntegration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: integration_connectionsWhereInput
+  }
+
+  /**
+   * CompaniesCountOutputType without action
+   */
+  export type CompaniesCountOutputTypeCountHardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: hardware_connectionsWhereInput
   }
 
 
@@ -2891,12 +3655,20 @@ export namespace Prisma {
     predictive_alerts: number
     ticket_images: number
     weigh_tickets: number
+    api_keys: number
+    webhook_subscriptions: number
+    integration_connections: number
+    hardware_connections: number
   }
 
   export type UsersCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     predictive_alerts?: boolean | UsersCountOutputTypeCountPredictive_alertsArgs
     ticket_images?: boolean | UsersCountOutputTypeCountTicket_imagesArgs
     weigh_tickets?: boolean | UsersCountOutputTypeCountWeigh_ticketsArgs
+    api_keys?: boolean | UsersCountOutputTypeCountApi_keysArgs
+    webhook_subscriptions?: boolean | UsersCountOutputTypeCountWebhook_subscriptionsArgs
+    integration_connections?: boolean | UsersCountOutputTypeCountIntegration_connectionsArgs
+    hardware_connections?: boolean | UsersCountOutputTypeCountHardware_connectionsArgs
   }
 
   // Custom InputTypes
@@ -2929,6 +3701,34 @@ export namespace Prisma {
    */
   export type UsersCountOutputTypeCountWeigh_ticketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: weigh_ticketsWhereInput
+  }
+
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeCountApi_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: api_keysWhereInput
+  }
+
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeCountWebhook_subscriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: webhook_subscriptionsWhereInput
+  }
+
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeCountIntegration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: integration_connectionsWhereInput
+  }
+
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeCountHardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: hardware_connectionsWhereInput
   }
 
 
@@ -3063,6 +3863,99 @@ export namespace Prisma {
    */
   export type Weigh_ticketsCountOutputTypeCountTicket_signaturesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ticket_signaturesWhereInput
+  }
+
+
+  /**
+   * Count Type Api_keysCountOutputType
+   */
+
+  export type Api_keysCountOutputType = {
+    api_usage: number
+  }
+
+  export type Api_keysCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    api_usage?: boolean | Api_keysCountOutputTypeCountApi_usageArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Api_keysCountOutputType without action
+   */
+  export type Api_keysCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Api_keysCountOutputType
+     */
+    select?: Api_keysCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Api_keysCountOutputType without action
+   */
+  export type Api_keysCountOutputTypeCountApi_usageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: api_usageWhereInput
+  }
+
+
+  /**
+   * Count Type Webhook_subscriptionsCountOutputType
+   */
+
+  export type Webhook_subscriptionsCountOutputType = {
+    webhook_deliveries: number
+  }
+
+  export type Webhook_subscriptionsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    webhook_deliveries?: boolean | Webhook_subscriptionsCountOutputTypeCountWebhook_deliveriesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Webhook_subscriptionsCountOutputType without action
+   */
+  export type Webhook_subscriptionsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Webhook_subscriptionsCountOutputType
+     */
+    select?: Webhook_subscriptionsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Webhook_subscriptionsCountOutputType without action
+   */
+  export type Webhook_subscriptionsCountOutputTypeCountWebhook_deliveriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: webhook_deliveriesWhereInput
+  }
+
+
+  /**
+   * Count Type Integration_connectionsCountOutputType
+   */
+
+  export type Integration_connectionsCountOutputType = {
+    integration_logs: number
+  }
+
+  export type Integration_connectionsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    integration_logs?: boolean | Integration_connectionsCountOutputTypeCountIntegration_logsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * Integration_connectionsCountOutputType without action
+   */
+  export type Integration_connectionsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration_connectionsCountOutputType
+     */
+    select?: Integration_connectionsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * Integration_connectionsCountOutputType without action
+   */
+  export type Integration_connectionsCountOutputTypeCountIntegration_logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: integration_logsWhereInput
   }
 
 
@@ -7983,6 +8876,10 @@ export namespace Prisma {
     vehicles?: boolean | companies$vehiclesArgs<ExtArgs>
     weigh_tickets?: boolean | companies$weigh_ticketsArgs<ExtArgs>
     weights?: boolean | companies$weightsArgs<ExtArgs>
+    api_keys?: boolean | companies$api_keysArgs<ExtArgs>
+    webhook_subscriptions?: boolean | companies$webhook_subscriptionsArgs<ExtArgs>
+    integration_connections?: boolean | companies$integration_connectionsArgs<ExtArgs>
+    hardware_connections?: boolean | companies$hardware_connectionsArgs<ExtArgs>
     _count?: boolean | CompaniesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["companies"]>
 
@@ -8026,6 +8923,10 @@ export namespace Prisma {
     vehicles?: boolean | companies$vehiclesArgs<ExtArgs>
     weigh_tickets?: boolean | companies$weigh_ticketsArgs<ExtArgs>
     weights?: boolean | companies$weightsArgs<ExtArgs>
+    api_keys?: boolean | companies$api_keysArgs<ExtArgs>
+    webhook_subscriptions?: boolean | companies$webhook_subscriptionsArgs<ExtArgs>
+    integration_connections?: boolean | companies$integration_connectionsArgs<ExtArgs>
+    hardware_connections?: boolean | companies$hardware_connectionsArgs<ExtArgs>
     _count?: boolean | CompaniesCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type companiesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8042,6 +8943,10 @@ export namespace Prisma {
       vehicles: Prisma.$vehiclesPayload<ExtArgs>[]
       weigh_tickets: Prisma.$weigh_ticketsPayload<ExtArgs>[]
       weights: Prisma.$weightsPayload<ExtArgs>[]
+      api_keys: Prisma.$api_keysPayload<ExtArgs>[]
+      webhook_subscriptions: Prisma.$webhook_subscriptionsPayload<ExtArgs>[]
+      integration_connections: Prisma.$integration_connectionsPayload<ExtArgs>[]
+      hardware_connections: Prisma.$hardware_connectionsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -8453,6 +9358,10 @@ export namespace Prisma {
     vehicles<T extends companies$vehiclesArgs<ExtArgs> = {}>(args?: Subset<T, companies$vehiclesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$vehiclesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     weigh_tickets<T extends companies$weigh_ticketsArgs<ExtArgs> = {}>(args?: Subset<T, companies$weigh_ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$weigh_ticketsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     weights<T extends companies$weightsArgs<ExtArgs> = {}>(args?: Subset<T, companies$weightsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$weightsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    api_keys<T extends companies$api_keysArgs<ExtArgs> = {}>(args?: Subset<T, companies$api_keysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    webhook_subscriptions<T extends companies$webhook_subscriptionsArgs<ExtArgs> = {}>(args?: Subset<T, companies$webhook_subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    integration_connections<T extends companies$integration_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, companies$integration_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    hardware_connections<T extends companies$hardware_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, companies$hardware_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9066,6 +9975,102 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: WeightsScalarFieldEnum | WeightsScalarFieldEnum[]
+  }
+
+  /**
+   * companies.api_keys
+   */
+  export type companies$api_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    where?: api_keysWhereInput
+    orderBy?: api_keysOrderByWithRelationInput | api_keysOrderByWithRelationInput[]
+    cursor?: api_keysWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Api_keysScalarFieldEnum | Api_keysScalarFieldEnum[]
+  }
+
+  /**
+   * companies.webhook_subscriptions
+   */
+  export type companies$webhook_subscriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    where?: webhook_subscriptionsWhereInput
+    orderBy?: webhook_subscriptionsOrderByWithRelationInput | webhook_subscriptionsOrderByWithRelationInput[]
+    cursor?: webhook_subscriptionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Webhook_subscriptionsScalarFieldEnum | Webhook_subscriptionsScalarFieldEnum[]
+  }
+
+  /**
+   * companies.integration_connections
+   */
+  export type companies$integration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    where?: integration_connectionsWhereInput
+    orderBy?: integration_connectionsOrderByWithRelationInput | integration_connectionsOrderByWithRelationInput[]
+    cursor?: integration_connectionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Integration_connectionsScalarFieldEnum | Integration_connectionsScalarFieldEnum[]
+  }
+
+  /**
+   * companies.hardware_connections
+   */
+  export type companies$hardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    where?: hardware_connectionsWhereInput
+    orderBy?: hardware_connectionsOrderByWithRelationInput | hardware_connectionsOrderByWithRelationInput[]
+    cursor?: hardware_connectionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Hardware_connectionsScalarFieldEnum | Hardware_connectionsScalarFieldEnum[]
   }
 
   /**
@@ -22658,6 +23663,10 @@ export namespace Prisma {
     ticket_images?: boolean | users$ticket_imagesArgs<ExtArgs>
     companies?: boolean | users$companiesArgs<ExtArgs>
     weigh_tickets?: boolean | users$weigh_ticketsArgs<ExtArgs>
+    api_keys?: boolean | users$api_keysArgs<ExtArgs>
+    webhook_subscriptions?: boolean | users$webhook_subscriptionsArgs<ExtArgs>
+    integration_connections?: boolean | users$integration_connectionsArgs<ExtArgs>
+    hardware_connections?: boolean | users$hardware_connectionsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
@@ -22699,6 +23708,10 @@ export namespace Prisma {
     ticket_images?: boolean | users$ticket_imagesArgs<ExtArgs>
     companies?: boolean | users$companiesArgs<ExtArgs>
     weigh_tickets?: boolean | users$weigh_ticketsArgs<ExtArgs>
+    api_keys?: boolean | users$api_keysArgs<ExtArgs>
+    webhook_subscriptions?: boolean | users$webhook_subscriptionsArgs<ExtArgs>
+    integration_connections?: boolean | users$integration_connectionsArgs<ExtArgs>
+    hardware_connections?: boolean | users$hardware_connectionsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type usersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -22715,6 +23728,10 @@ export namespace Prisma {
       ticket_images: Prisma.$ticket_imagesPayload<ExtArgs>[]
       companies: Prisma.$companiesPayload<ExtArgs> | null
       weigh_tickets: Prisma.$weigh_ticketsPayload<ExtArgs>[]
+      api_keys: Prisma.$api_keysPayload<ExtArgs>[]
+      webhook_subscriptions: Prisma.$webhook_subscriptionsPayload<ExtArgs>[]
+      integration_connections: Prisma.$integration_connectionsPayload<ExtArgs>[]
+      hardware_connections: Prisma.$hardware_connectionsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -23122,6 +24139,10 @@ export namespace Prisma {
     ticket_images<T extends users$ticket_imagesArgs<ExtArgs> = {}>(args?: Subset<T, users$ticket_imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ticket_imagesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     companies<T extends users$companiesArgs<ExtArgs> = {}>(args?: Subset<T, users$companiesArgs<ExtArgs>>): Prisma__companiesClient<$Result.GetResult<Prisma.$companiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     weigh_tickets<T extends users$weigh_ticketsArgs<ExtArgs> = {}>(args?: Subset<T, users$weigh_ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$weigh_ticketsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    api_keys<T extends users$api_keysArgs<ExtArgs> = {}>(args?: Subset<T, users$api_keysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    webhook_subscriptions<T extends users$webhook_subscriptionsArgs<ExtArgs> = {}>(args?: Subset<T, users$webhook_subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    integration_connections<T extends users$integration_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, users$integration_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    hardware_connections<T extends users$hardware_connectionsArgs<ExtArgs> = {}>(args?: Subset<T, users$hardware_connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23642,6 +24663,102 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Weigh_ticketsScalarFieldEnum | Weigh_ticketsScalarFieldEnum[]
+  }
+
+  /**
+   * users.api_keys
+   */
+  export type users$api_keysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    where?: api_keysWhereInput
+    orderBy?: api_keysOrderByWithRelationInput | api_keysOrderByWithRelationInput[]
+    cursor?: api_keysWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Api_keysScalarFieldEnum | Api_keysScalarFieldEnum[]
+  }
+
+  /**
+   * users.webhook_subscriptions
+   */
+  export type users$webhook_subscriptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    where?: webhook_subscriptionsWhereInput
+    orderBy?: webhook_subscriptionsOrderByWithRelationInput | webhook_subscriptionsOrderByWithRelationInput[]
+    cursor?: webhook_subscriptionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Webhook_subscriptionsScalarFieldEnum | Webhook_subscriptionsScalarFieldEnum[]
+  }
+
+  /**
+   * users.integration_connections
+   */
+  export type users$integration_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    where?: integration_connectionsWhereInput
+    orderBy?: integration_connectionsOrderByWithRelationInput | integration_connectionsOrderByWithRelationInput[]
+    cursor?: integration_connectionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Integration_connectionsScalarFieldEnum | Integration_connectionsScalarFieldEnum[]
+  }
+
+  /**
+   * users.hardware_connections
+   */
+  export type users$hardware_connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    where?: hardware_connectionsWhereInput
+    orderBy?: hardware_connectionsOrderByWithRelationInput | hardware_connectionsOrderByWithRelationInput[]
+    cursor?: hardware_connectionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Hardware_connectionsScalarFieldEnum | Hardware_connectionsScalarFieldEnum[]
   }
 
   /**
@@ -28075,6 +29192,9377 @@ export namespace Prisma {
 
 
   /**
+   * Model api_keys
+   */
+
+  export type AggregateApi_keys = {
+    _count: Api_keysCountAggregateOutputType | null
+    _avg: Api_keysAvgAggregateOutputType | null
+    _sum: Api_keysSumAggregateOutputType | null
+    _min: Api_keysMinAggregateOutputType | null
+    _max: Api_keysMaxAggregateOutputType | null
+  }
+
+  export type Api_keysAvgAggregateOutputType = {
+    company_id: number | null
+  }
+
+  export type Api_keysSumAggregateOutputType = {
+    company_id: number | null
+  }
+
+  export type Api_keysMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    key: string | null
+    company_id: number | null
+    created_by: string | null
+    expires_at: Date | null
+    last_used_at: Date | null
+    is_active: boolean | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Api_keysMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    key: string | null
+    company_id: number | null
+    created_by: string | null
+    expires_at: Date | null
+    last_used_at: Date | null
+    is_active: boolean | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Api_keysCountAggregateOutputType = {
+    id: number
+    name: number
+    key: number
+    company_id: number
+    created_by: number
+    expires_at: number
+    last_used_at: number
+    is_active: number
+    permissions: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type Api_keysAvgAggregateInputType = {
+    company_id?: true
+  }
+
+  export type Api_keysSumAggregateInputType = {
+    company_id?: true
+  }
+
+  export type Api_keysMinAggregateInputType = {
+    id?: true
+    name?: true
+    key?: true
+    company_id?: true
+    created_by?: true
+    expires_at?: true
+    last_used_at?: true
+    is_active?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Api_keysMaxAggregateInputType = {
+    id?: true
+    name?: true
+    key?: true
+    company_id?: true
+    created_by?: true
+    expires_at?: true
+    last_used_at?: true
+    is_active?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Api_keysCountAggregateInputType = {
+    id?: true
+    name?: true
+    key?: true
+    company_id?: true
+    created_by?: true
+    expires_at?: true
+    last_used_at?: true
+    is_active?: true
+    permissions?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type Api_keysAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which api_keys to aggregate.
+     */
+    where?: api_keysWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of api_keys to fetch.
+     */
+    orderBy?: api_keysOrderByWithRelationInput | api_keysOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: api_keysWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` api_keys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` api_keys.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned api_keys
+    **/
+    _count?: true | Api_keysCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Api_keysAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Api_keysSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Api_keysMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Api_keysMaxAggregateInputType
+  }
+
+  export type GetApi_keysAggregateType<T extends Api_keysAggregateArgs> = {
+        [P in keyof T & keyof AggregateApi_keys]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApi_keys[P]>
+      : GetScalarType<T[P], AggregateApi_keys[P]>
+  }
+
+
+
+
+  export type api_keysGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: api_keysWhereInput
+    orderBy?: api_keysOrderByWithAggregationInput | api_keysOrderByWithAggregationInput[]
+    by: Api_keysScalarFieldEnum[] | Api_keysScalarFieldEnum
+    having?: api_keysScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Api_keysCountAggregateInputType | true
+    _avg?: Api_keysAvgAggregateInputType
+    _sum?: Api_keysSumAggregateInputType
+    _min?: Api_keysMinAggregateInputType
+    _max?: Api_keysMaxAggregateInputType
+  }
+
+  export type Api_keysGroupByOutputType = {
+    id: string
+    name: string
+    key: string
+    company_id: number | null
+    created_by: string | null
+    expires_at: Date | null
+    last_used_at: Date | null
+    is_active: boolean
+    permissions: string[]
+    created_at: Date
+    updated_at: Date
+    _count: Api_keysCountAggregateOutputType | null
+    _avg: Api_keysAvgAggregateOutputType | null
+    _sum: Api_keysSumAggregateOutputType | null
+    _min: Api_keysMinAggregateOutputType | null
+    _max: Api_keysMaxAggregateOutputType | null
+  }
+
+  type GetApi_keysGroupByPayload<T extends api_keysGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Api_keysGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Api_keysGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Api_keysGroupByOutputType[P]>
+            : GetScalarType<T[P], Api_keysGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type api_keysSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    key?: boolean
+    company_id?: boolean
+    created_by?: boolean
+    expires_at?: boolean
+    last_used_at?: boolean
+    is_active?: boolean
+    permissions?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | api_keys$companiesArgs<ExtArgs>
+    users?: boolean | api_keys$usersArgs<ExtArgs>
+    api_usage?: boolean | api_keys$api_usageArgs<ExtArgs>
+    _count?: boolean | Api_keysCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["api_keys"]>
+
+  export type api_keysSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    key?: boolean
+    company_id?: boolean
+    created_by?: boolean
+    expires_at?: boolean
+    last_used_at?: boolean
+    is_active?: boolean
+    permissions?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | api_keys$companiesArgs<ExtArgs>
+    users?: boolean | api_keys$usersArgs<ExtArgs>
+  }, ExtArgs["result"]["api_keys"]>
+
+  export type api_keysSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    key?: boolean
+    company_id?: boolean
+    created_by?: boolean
+    expires_at?: boolean
+    last_used_at?: boolean
+    is_active?: boolean
+    permissions?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | api_keys$companiesArgs<ExtArgs>
+    users?: boolean | api_keys$usersArgs<ExtArgs>
+  }, ExtArgs["result"]["api_keys"]>
+
+  export type api_keysSelectScalar = {
+    id?: boolean
+    name?: boolean
+    key?: boolean
+    company_id?: boolean
+    created_by?: boolean
+    expires_at?: boolean
+    last_used_at?: boolean
+    is_active?: boolean
+    permissions?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type api_keysOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "key" | "company_id" | "created_by" | "expires_at" | "last_used_at" | "is_active" | "permissions" | "created_at" | "updated_at", ExtArgs["result"]["api_keys"]>
+  export type api_keysInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | api_keys$companiesArgs<ExtArgs>
+    users?: boolean | api_keys$usersArgs<ExtArgs>
+    api_usage?: boolean | api_keys$api_usageArgs<ExtArgs>
+    _count?: boolean | Api_keysCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type api_keysIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | api_keys$companiesArgs<ExtArgs>
+    users?: boolean | api_keys$usersArgs<ExtArgs>
+  }
+  export type api_keysIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | api_keys$companiesArgs<ExtArgs>
+    users?: boolean | api_keys$usersArgs<ExtArgs>
+  }
+
+  export type $api_keysPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "api_keys"
+    objects: {
+      companies: Prisma.$companiesPayload<ExtArgs> | null
+      users: Prisma.$usersPayload<ExtArgs> | null
+      api_usage: Prisma.$api_usagePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      key: string
+      company_id: number | null
+      created_by: string | null
+      expires_at: Date | null
+      last_used_at: Date | null
+      is_active: boolean
+      permissions: string[]
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["api_keys"]>
+    composites: {}
+  }
+
+  type api_keysGetPayload<S extends boolean | null | undefined | api_keysDefaultArgs> = $Result.GetResult<Prisma.$api_keysPayload, S>
+
+  type api_keysCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<api_keysFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Api_keysCountAggregateInputType | true
+    }
+
+  export interface api_keysDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['api_keys'], meta: { name: 'api_keys' } }
+    /**
+     * Find zero or one Api_keys that matches the filter.
+     * @param {api_keysFindUniqueArgs} args - Arguments to find a Api_keys
+     * @example
+     * // Get one Api_keys
+     * const api_keys = await prisma.api_keys.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends api_keysFindUniqueArgs>(args: SelectSubset<T, api_keysFindUniqueArgs<ExtArgs>>): Prisma__api_keysClient<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Api_keys that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {api_keysFindUniqueOrThrowArgs} args - Arguments to find a Api_keys
+     * @example
+     * // Get one Api_keys
+     * const api_keys = await prisma.api_keys.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends api_keysFindUniqueOrThrowArgs>(args: SelectSubset<T, api_keysFindUniqueOrThrowArgs<ExtArgs>>): Prisma__api_keysClient<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Api_keys that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_keysFindFirstArgs} args - Arguments to find a Api_keys
+     * @example
+     * // Get one Api_keys
+     * const api_keys = await prisma.api_keys.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends api_keysFindFirstArgs>(args?: SelectSubset<T, api_keysFindFirstArgs<ExtArgs>>): Prisma__api_keysClient<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Api_keys that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_keysFindFirstOrThrowArgs} args - Arguments to find a Api_keys
+     * @example
+     * // Get one Api_keys
+     * const api_keys = await prisma.api_keys.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends api_keysFindFirstOrThrowArgs>(args?: SelectSubset<T, api_keysFindFirstOrThrowArgs<ExtArgs>>): Prisma__api_keysClient<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Api_keys that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_keysFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Api_keys
+     * const api_keys = await prisma.api_keys.findMany()
+     * 
+     * // Get first 10 Api_keys
+     * const api_keys = await prisma.api_keys.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const api_keysWithIdOnly = await prisma.api_keys.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends api_keysFindManyArgs>(args?: SelectSubset<T, api_keysFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Api_keys.
+     * @param {api_keysCreateArgs} args - Arguments to create a Api_keys.
+     * @example
+     * // Create one Api_keys
+     * const Api_keys = await prisma.api_keys.create({
+     *   data: {
+     *     // ... data to create a Api_keys
+     *   }
+     * })
+     * 
+     */
+    create<T extends api_keysCreateArgs>(args: SelectSubset<T, api_keysCreateArgs<ExtArgs>>): Prisma__api_keysClient<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Api_keys.
+     * @param {api_keysCreateManyArgs} args - Arguments to create many Api_keys.
+     * @example
+     * // Create many Api_keys
+     * const api_keys = await prisma.api_keys.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends api_keysCreateManyArgs>(args?: SelectSubset<T, api_keysCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Api_keys and returns the data saved in the database.
+     * @param {api_keysCreateManyAndReturnArgs} args - Arguments to create many Api_keys.
+     * @example
+     * // Create many Api_keys
+     * const api_keys = await prisma.api_keys.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Api_keys and only return the `id`
+     * const api_keysWithIdOnly = await prisma.api_keys.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends api_keysCreateManyAndReturnArgs>(args?: SelectSubset<T, api_keysCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Api_keys.
+     * @param {api_keysDeleteArgs} args - Arguments to delete one Api_keys.
+     * @example
+     * // Delete one Api_keys
+     * const Api_keys = await prisma.api_keys.delete({
+     *   where: {
+     *     // ... filter to delete one Api_keys
+     *   }
+     * })
+     * 
+     */
+    delete<T extends api_keysDeleteArgs>(args: SelectSubset<T, api_keysDeleteArgs<ExtArgs>>): Prisma__api_keysClient<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Api_keys.
+     * @param {api_keysUpdateArgs} args - Arguments to update one Api_keys.
+     * @example
+     * // Update one Api_keys
+     * const api_keys = await prisma.api_keys.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends api_keysUpdateArgs>(args: SelectSubset<T, api_keysUpdateArgs<ExtArgs>>): Prisma__api_keysClient<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Api_keys.
+     * @param {api_keysDeleteManyArgs} args - Arguments to filter Api_keys to delete.
+     * @example
+     * // Delete a few Api_keys
+     * const { count } = await prisma.api_keys.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends api_keysDeleteManyArgs>(args?: SelectSubset<T, api_keysDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Api_keys.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_keysUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Api_keys
+     * const api_keys = await prisma.api_keys.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends api_keysUpdateManyArgs>(args: SelectSubset<T, api_keysUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Api_keys and returns the data updated in the database.
+     * @param {api_keysUpdateManyAndReturnArgs} args - Arguments to update many Api_keys.
+     * @example
+     * // Update many Api_keys
+     * const api_keys = await prisma.api_keys.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Api_keys and only return the `id`
+     * const api_keysWithIdOnly = await prisma.api_keys.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends api_keysUpdateManyAndReturnArgs>(args: SelectSubset<T, api_keysUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Api_keys.
+     * @param {api_keysUpsertArgs} args - Arguments to update or create a Api_keys.
+     * @example
+     * // Update or create a Api_keys
+     * const api_keys = await prisma.api_keys.upsert({
+     *   create: {
+     *     // ... data to create a Api_keys
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Api_keys we want to update
+     *   }
+     * })
+     */
+    upsert<T extends api_keysUpsertArgs>(args: SelectSubset<T, api_keysUpsertArgs<ExtArgs>>): Prisma__api_keysClient<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Api_keys.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_keysCountArgs} args - Arguments to filter Api_keys to count.
+     * @example
+     * // Count the number of Api_keys
+     * const count = await prisma.api_keys.count({
+     *   where: {
+     *     // ... the filter for the Api_keys we want to count
+     *   }
+     * })
+    **/
+    count<T extends api_keysCountArgs>(
+      args?: Subset<T, api_keysCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Api_keysCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Api_keys.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Api_keysAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Api_keysAggregateArgs>(args: Subset<T, Api_keysAggregateArgs>): Prisma.PrismaPromise<GetApi_keysAggregateType<T>>
+
+    /**
+     * Group by Api_keys.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_keysGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends api_keysGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: api_keysGroupByArgs['orderBy'] }
+        : { orderBy?: api_keysGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, api_keysGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApi_keysGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the api_keys model
+   */
+  readonly fields: api_keysFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for api_keys.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__api_keysClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    companies<T extends api_keys$companiesArgs<ExtArgs> = {}>(args?: Subset<T, api_keys$companiesArgs<ExtArgs>>): Prisma__companiesClient<$Result.GetResult<Prisma.$companiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    users<T extends api_keys$usersArgs<ExtArgs> = {}>(args?: Subset<T, api_keys$usersArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    api_usage<T extends api_keys$api_usageArgs<ExtArgs> = {}>(args?: Subset<T, api_keys$api_usageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the api_keys model
+   */
+  interface api_keysFieldRefs {
+    readonly id: FieldRef<"api_keys", 'String'>
+    readonly name: FieldRef<"api_keys", 'String'>
+    readonly key: FieldRef<"api_keys", 'String'>
+    readonly company_id: FieldRef<"api_keys", 'Int'>
+    readonly created_by: FieldRef<"api_keys", 'String'>
+    readonly expires_at: FieldRef<"api_keys", 'DateTime'>
+    readonly last_used_at: FieldRef<"api_keys", 'DateTime'>
+    readonly is_active: FieldRef<"api_keys", 'Boolean'>
+    readonly permissions: FieldRef<"api_keys", 'String[]'>
+    readonly created_at: FieldRef<"api_keys", 'DateTime'>
+    readonly updated_at: FieldRef<"api_keys", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * api_keys findUnique
+   */
+  export type api_keysFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    /**
+     * Filter, which api_keys to fetch.
+     */
+    where: api_keysWhereUniqueInput
+  }
+
+  /**
+   * api_keys findUniqueOrThrow
+   */
+  export type api_keysFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    /**
+     * Filter, which api_keys to fetch.
+     */
+    where: api_keysWhereUniqueInput
+  }
+
+  /**
+   * api_keys findFirst
+   */
+  export type api_keysFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    /**
+     * Filter, which api_keys to fetch.
+     */
+    where?: api_keysWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of api_keys to fetch.
+     */
+    orderBy?: api_keysOrderByWithRelationInput | api_keysOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for api_keys.
+     */
+    cursor?: api_keysWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` api_keys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` api_keys.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of api_keys.
+     */
+    distinct?: Api_keysScalarFieldEnum | Api_keysScalarFieldEnum[]
+  }
+
+  /**
+   * api_keys findFirstOrThrow
+   */
+  export type api_keysFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    /**
+     * Filter, which api_keys to fetch.
+     */
+    where?: api_keysWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of api_keys to fetch.
+     */
+    orderBy?: api_keysOrderByWithRelationInput | api_keysOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for api_keys.
+     */
+    cursor?: api_keysWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` api_keys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` api_keys.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of api_keys.
+     */
+    distinct?: Api_keysScalarFieldEnum | Api_keysScalarFieldEnum[]
+  }
+
+  /**
+   * api_keys findMany
+   */
+  export type api_keysFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    /**
+     * Filter, which api_keys to fetch.
+     */
+    where?: api_keysWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of api_keys to fetch.
+     */
+    orderBy?: api_keysOrderByWithRelationInput | api_keysOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing api_keys.
+     */
+    cursor?: api_keysWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` api_keys from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` api_keys.
+     */
+    skip?: number
+    distinct?: Api_keysScalarFieldEnum | Api_keysScalarFieldEnum[]
+  }
+
+  /**
+   * api_keys create
+   */
+  export type api_keysCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    /**
+     * The data needed to create a api_keys.
+     */
+    data: XOR<api_keysCreateInput, api_keysUncheckedCreateInput>
+  }
+
+  /**
+   * api_keys createMany
+   */
+  export type api_keysCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many api_keys.
+     */
+    data: api_keysCreateManyInput | api_keysCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * api_keys createManyAndReturn
+   */
+  export type api_keysCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * The data used to create many api_keys.
+     */
+    data: api_keysCreateManyInput | api_keysCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * api_keys update
+   */
+  export type api_keysUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    /**
+     * The data needed to update a api_keys.
+     */
+    data: XOR<api_keysUpdateInput, api_keysUncheckedUpdateInput>
+    /**
+     * Choose, which api_keys to update.
+     */
+    where: api_keysWhereUniqueInput
+  }
+
+  /**
+   * api_keys updateMany
+   */
+  export type api_keysUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update api_keys.
+     */
+    data: XOR<api_keysUpdateManyMutationInput, api_keysUncheckedUpdateManyInput>
+    /**
+     * Filter which api_keys to update
+     */
+    where?: api_keysWhereInput
+    /**
+     * Limit how many api_keys to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * api_keys updateManyAndReturn
+   */
+  export type api_keysUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * The data used to update api_keys.
+     */
+    data: XOR<api_keysUpdateManyMutationInput, api_keysUncheckedUpdateManyInput>
+    /**
+     * Filter which api_keys to update
+     */
+    where?: api_keysWhereInput
+    /**
+     * Limit how many api_keys to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * api_keys upsert
+   */
+  export type api_keysUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    /**
+     * The filter to search for the api_keys to update in case it exists.
+     */
+    where: api_keysWhereUniqueInput
+    /**
+     * In case the api_keys found by the `where` argument doesn't exist, create a new api_keys with this data.
+     */
+    create: XOR<api_keysCreateInput, api_keysUncheckedCreateInput>
+    /**
+     * In case the api_keys was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<api_keysUpdateInput, api_keysUncheckedUpdateInput>
+  }
+
+  /**
+   * api_keys delete
+   */
+  export type api_keysDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+    /**
+     * Filter which api_keys to delete.
+     */
+    where: api_keysWhereUniqueInput
+  }
+
+  /**
+   * api_keys deleteMany
+   */
+  export type api_keysDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which api_keys to delete
+     */
+    where?: api_keysWhereInput
+    /**
+     * Limit how many api_keys to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * api_keys.companies
+   */
+  export type api_keys$companiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the companies
+     */
+    select?: companiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the companies
+     */
+    omit?: companiesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: companiesInclude<ExtArgs> | null
+    where?: companiesWhereInput
+  }
+
+  /**
+   * api_keys.users
+   */
+  export type api_keys$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the users
+     */
+    select?: usersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the users
+     */
+    omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    where?: usersWhereInput
+  }
+
+  /**
+   * api_keys.api_usage
+   */
+  export type api_keys$api_usageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+    where?: api_usageWhereInput
+    orderBy?: api_usageOrderByWithRelationInput | api_usageOrderByWithRelationInput[]
+    cursor?: api_usageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Api_usageScalarFieldEnum | Api_usageScalarFieldEnum[]
+  }
+
+  /**
+   * api_keys without action
+   */
+  export type api_keysDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_keys
+     */
+    select?: api_keysSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_keys
+     */
+    omit?: api_keysOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_keysInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model api_usage
+   */
+
+  export type AggregateApi_usage = {
+    _count: Api_usageCountAggregateOutputType | null
+    _avg: Api_usageAvgAggregateOutputType | null
+    _sum: Api_usageSumAggregateOutputType | null
+    _min: Api_usageMinAggregateOutputType | null
+    _max: Api_usageMaxAggregateOutputType | null
+  }
+
+  export type Api_usageAvgAggregateOutputType = {
+    status: number | null
+  }
+
+  export type Api_usageSumAggregateOutputType = {
+    status: number | null
+  }
+
+  export type Api_usageMinAggregateOutputType = {
+    id: string | null
+    api_key_id: string | null
+    endpoint: string | null
+    method: string | null
+    status: number | null
+    ip_address: string | null
+    user_agent: string | null
+    created_at: Date | null
+  }
+
+  export type Api_usageMaxAggregateOutputType = {
+    id: string | null
+    api_key_id: string | null
+    endpoint: string | null
+    method: string | null
+    status: number | null
+    ip_address: string | null
+    user_agent: string | null
+    created_at: Date | null
+  }
+
+  export type Api_usageCountAggregateOutputType = {
+    id: number
+    api_key_id: number
+    endpoint: number
+    method: number
+    status: number
+    ip_address: number
+    user_agent: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type Api_usageAvgAggregateInputType = {
+    status?: true
+  }
+
+  export type Api_usageSumAggregateInputType = {
+    status?: true
+  }
+
+  export type Api_usageMinAggregateInputType = {
+    id?: true
+    api_key_id?: true
+    endpoint?: true
+    method?: true
+    status?: true
+    ip_address?: true
+    user_agent?: true
+    created_at?: true
+  }
+
+  export type Api_usageMaxAggregateInputType = {
+    id?: true
+    api_key_id?: true
+    endpoint?: true
+    method?: true
+    status?: true
+    ip_address?: true
+    user_agent?: true
+    created_at?: true
+  }
+
+  export type Api_usageCountAggregateInputType = {
+    id?: true
+    api_key_id?: true
+    endpoint?: true
+    method?: true
+    status?: true
+    ip_address?: true
+    user_agent?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type Api_usageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which api_usage to aggregate.
+     */
+    where?: api_usageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of api_usages to fetch.
+     */
+    orderBy?: api_usageOrderByWithRelationInput | api_usageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: api_usageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` api_usages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` api_usages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned api_usages
+    **/
+    _count?: true | Api_usageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Api_usageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Api_usageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Api_usageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Api_usageMaxAggregateInputType
+  }
+
+  export type GetApi_usageAggregateType<T extends Api_usageAggregateArgs> = {
+        [P in keyof T & keyof AggregateApi_usage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApi_usage[P]>
+      : GetScalarType<T[P], AggregateApi_usage[P]>
+  }
+
+
+
+
+  export type api_usageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: api_usageWhereInput
+    orderBy?: api_usageOrderByWithAggregationInput | api_usageOrderByWithAggregationInput[]
+    by: Api_usageScalarFieldEnum[] | Api_usageScalarFieldEnum
+    having?: api_usageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Api_usageCountAggregateInputType | true
+    _avg?: Api_usageAvgAggregateInputType
+    _sum?: Api_usageSumAggregateInputType
+    _min?: Api_usageMinAggregateInputType
+    _max?: Api_usageMaxAggregateInputType
+  }
+
+  export type Api_usageGroupByOutputType = {
+    id: string
+    api_key_id: string
+    endpoint: string
+    method: string
+    status: number
+    ip_address: string | null
+    user_agent: string | null
+    created_at: Date
+    _count: Api_usageCountAggregateOutputType | null
+    _avg: Api_usageAvgAggregateOutputType | null
+    _sum: Api_usageSumAggregateOutputType | null
+    _min: Api_usageMinAggregateOutputType | null
+    _max: Api_usageMaxAggregateOutputType | null
+  }
+
+  type GetApi_usageGroupByPayload<T extends api_usageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Api_usageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Api_usageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Api_usageGroupByOutputType[P]>
+            : GetScalarType<T[P], Api_usageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type api_usageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    api_key_id?: boolean
+    endpoint?: boolean
+    method?: boolean
+    status?: boolean
+    ip_address?: boolean
+    user_agent?: boolean
+    created_at?: boolean
+    api_keys?: boolean | api_keysDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["api_usage"]>
+
+  export type api_usageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    api_key_id?: boolean
+    endpoint?: boolean
+    method?: boolean
+    status?: boolean
+    ip_address?: boolean
+    user_agent?: boolean
+    created_at?: boolean
+    api_keys?: boolean | api_keysDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["api_usage"]>
+
+  export type api_usageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    api_key_id?: boolean
+    endpoint?: boolean
+    method?: boolean
+    status?: boolean
+    ip_address?: boolean
+    user_agent?: boolean
+    created_at?: boolean
+    api_keys?: boolean | api_keysDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["api_usage"]>
+
+  export type api_usageSelectScalar = {
+    id?: boolean
+    api_key_id?: boolean
+    endpoint?: boolean
+    method?: boolean
+    status?: boolean
+    ip_address?: boolean
+    user_agent?: boolean
+    created_at?: boolean
+  }
+
+  export type api_usageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "api_key_id" | "endpoint" | "method" | "status" | "ip_address" | "user_agent" | "created_at", ExtArgs["result"]["api_usage"]>
+  export type api_usageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    api_keys?: boolean | api_keysDefaultArgs<ExtArgs>
+  }
+  export type api_usageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    api_keys?: boolean | api_keysDefaultArgs<ExtArgs>
+  }
+  export type api_usageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    api_keys?: boolean | api_keysDefaultArgs<ExtArgs>
+  }
+
+  export type $api_usagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "api_usage"
+    objects: {
+      api_keys: Prisma.$api_keysPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      api_key_id: string
+      endpoint: string
+      method: string
+      status: number
+      ip_address: string | null
+      user_agent: string | null
+      created_at: Date
+    }, ExtArgs["result"]["api_usage"]>
+    composites: {}
+  }
+
+  type api_usageGetPayload<S extends boolean | null | undefined | api_usageDefaultArgs> = $Result.GetResult<Prisma.$api_usagePayload, S>
+
+  type api_usageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<api_usageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Api_usageCountAggregateInputType | true
+    }
+
+  export interface api_usageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['api_usage'], meta: { name: 'api_usage' } }
+    /**
+     * Find zero or one Api_usage that matches the filter.
+     * @param {api_usageFindUniqueArgs} args - Arguments to find a Api_usage
+     * @example
+     * // Get one Api_usage
+     * const api_usage = await prisma.api_usage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends api_usageFindUniqueArgs>(args: SelectSubset<T, api_usageFindUniqueArgs<ExtArgs>>): Prisma__api_usageClient<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Api_usage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {api_usageFindUniqueOrThrowArgs} args - Arguments to find a Api_usage
+     * @example
+     * // Get one Api_usage
+     * const api_usage = await prisma.api_usage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends api_usageFindUniqueOrThrowArgs>(args: SelectSubset<T, api_usageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__api_usageClient<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Api_usage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_usageFindFirstArgs} args - Arguments to find a Api_usage
+     * @example
+     * // Get one Api_usage
+     * const api_usage = await prisma.api_usage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends api_usageFindFirstArgs>(args?: SelectSubset<T, api_usageFindFirstArgs<ExtArgs>>): Prisma__api_usageClient<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Api_usage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_usageFindFirstOrThrowArgs} args - Arguments to find a Api_usage
+     * @example
+     * // Get one Api_usage
+     * const api_usage = await prisma.api_usage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends api_usageFindFirstOrThrowArgs>(args?: SelectSubset<T, api_usageFindFirstOrThrowArgs<ExtArgs>>): Prisma__api_usageClient<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Api_usages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_usageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Api_usages
+     * const api_usages = await prisma.api_usage.findMany()
+     * 
+     * // Get first 10 Api_usages
+     * const api_usages = await prisma.api_usage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const api_usageWithIdOnly = await prisma.api_usage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends api_usageFindManyArgs>(args?: SelectSubset<T, api_usageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Api_usage.
+     * @param {api_usageCreateArgs} args - Arguments to create a Api_usage.
+     * @example
+     * // Create one Api_usage
+     * const Api_usage = await prisma.api_usage.create({
+     *   data: {
+     *     // ... data to create a Api_usage
+     *   }
+     * })
+     * 
+     */
+    create<T extends api_usageCreateArgs>(args: SelectSubset<T, api_usageCreateArgs<ExtArgs>>): Prisma__api_usageClient<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Api_usages.
+     * @param {api_usageCreateManyArgs} args - Arguments to create many Api_usages.
+     * @example
+     * // Create many Api_usages
+     * const api_usage = await prisma.api_usage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends api_usageCreateManyArgs>(args?: SelectSubset<T, api_usageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Api_usages and returns the data saved in the database.
+     * @param {api_usageCreateManyAndReturnArgs} args - Arguments to create many Api_usages.
+     * @example
+     * // Create many Api_usages
+     * const api_usage = await prisma.api_usage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Api_usages and only return the `id`
+     * const api_usageWithIdOnly = await prisma.api_usage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends api_usageCreateManyAndReturnArgs>(args?: SelectSubset<T, api_usageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Api_usage.
+     * @param {api_usageDeleteArgs} args - Arguments to delete one Api_usage.
+     * @example
+     * // Delete one Api_usage
+     * const Api_usage = await prisma.api_usage.delete({
+     *   where: {
+     *     // ... filter to delete one Api_usage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends api_usageDeleteArgs>(args: SelectSubset<T, api_usageDeleteArgs<ExtArgs>>): Prisma__api_usageClient<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Api_usage.
+     * @param {api_usageUpdateArgs} args - Arguments to update one Api_usage.
+     * @example
+     * // Update one Api_usage
+     * const api_usage = await prisma.api_usage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends api_usageUpdateArgs>(args: SelectSubset<T, api_usageUpdateArgs<ExtArgs>>): Prisma__api_usageClient<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Api_usages.
+     * @param {api_usageDeleteManyArgs} args - Arguments to filter Api_usages to delete.
+     * @example
+     * // Delete a few Api_usages
+     * const { count } = await prisma.api_usage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends api_usageDeleteManyArgs>(args?: SelectSubset<T, api_usageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Api_usages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_usageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Api_usages
+     * const api_usage = await prisma.api_usage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends api_usageUpdateManyArgs>(args: SelectSubset<T, api_usageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Api_usages and returns the data updated in the database.
+     * @param {api_usageUpdateManyAndReturnArgs} args - Arguments to update many Api_usages.
+     * @example
+     * // Update many Api_usages
+     * const api_usage = await prisma.api_usage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Api_usages and only return the `id`
+     * const api_usageWithIdOnly = await prisma.api_usage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends api_usageUpdateManyAndReturnArgs>(args: SelectSubset<T, api_usageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Api_usage.
+     * @param {api_usageUpsertArgs} args - Arguments to update or create a Api_usage.
+     * @example
+     * // Update or create a Api_usage
+     * const api_usage = await prisma.api_usage.upsert({
+     *   create: {
+     *     // ... data to create a Api_usage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Api_usage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends api_usageUpsertArgs>(args: SelectSubset<T, api_usageUpsertArgs<ExtArgs>>): Prisma__api_usageClient<$Result.GetResult<Prisma.$api_usagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Api_usages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_usageCountArgs} args - Arguments to filter Api_usages to count.
+     * @example
+     * // Count the number of Api_usages
+     * const count = await prisma.api_usage.count({
+     *   where: {
+     *     // ... the filter for the Api_usages we want to count
+     *   }
+     * })
+    **/
+    count<T extends api_usageCountArgs>(
+      args?: Subset<T, api_usageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Api_usageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Api_usage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Api_usageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Api_usageAggregateArgs>(args: Subset<T, Api_usageAggregateArgs>): Prisma.PrismaPromise<GetApi_usageAggregateType<T>>
+
+    /**
+     * Group by Api_usage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {api_usageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends api_usageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: api_usageGroupByArgs['orderBy'] }
+        : { orderBy?: api_usageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, api_usageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApi_usageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the api_usage model
+   */
+  readonly fields: api_usageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for api_usage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__api_usageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    api_keys<T extends api_keysDefaultArgs<ExtArgs> = {}>(args?: Subset<T, api_keysDefaultArgs<ExtArgs>>): Prisma__api_keysClient<$Result.GetResult<Prisma.$api_keysPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the api_usage model
+   */
+  interface api_usageFieldRefs {
+    readonly id: FieldRef<"api_usage", 'String'>
+    readonly api_key_id: FieldRef<"api_usage", 'String'>
+    readonly endpoint: FieldRef<"api_usage", 'String'>
+    readonly method: FieldRef<"api_usage", 'String'>
+    readonly status: FieldRef<"api_usage", 'Int'>
+    readonly ip_address: FieldRef<"api_usage", 'String'>
+    readonly user_agent: FieldRef<"api_usage", 'String'>
+    readonly created_at: FieldRef<"api_usage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * api_usage findUnique
+   */
+  export type api_usageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+    /**
+     * Filter, which api_usage to fetch.
+     */
+    where: api_usageWhereUniqueInput
+  }
+
+  /**
+   * api_usage findUniqueOrThrow
+   */
+  export type api_usageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+    /**
+     * Filter, which api_usage to fetch.
+     */
+    where: api_usageWhereUniqueInput
+  }
+
+  /**
+   * api_usage findFirst
+   */
+  export type api_usageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+    /**
+     * Filter, which api_usage to fetch.
+     */
+    where?: api_usageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of api_usages to fetch.
+     */
+    orderBy?: api_usageOrderByWithRelationInput | api_usageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for api_usages.
+     */
+    cursor?: api_usageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` api_usages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` api_usages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of api_usages.
+     */
+    distinct?: Api_usageScalarFieldEnum | Api_usageScalarFieldEnum[]
+  }
+
+  /**
+   * api_usage findFirstOrThrow
+   */
+  export type api_usageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+    /**
+     * Filter, which api_usage to fetch.
+     */
+    where?: api_usageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of api_usages to fetch.
+     */
+    orderBy?: api_usageOrderByWithRelationInput | api_usageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for api_usages.
+     */
+    cursor?: api_usageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` api_usages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` api_usages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of api_usages.
+     */
+    distinct?: Api_usageScalarFieldEnum | Api_usageScalarFieldEnum[]
+  }
+
+  /**
+   * api_usage findMany
+   */
+  export type api_usageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+    /**
+     * Filter, which api_usages to fetch.
+     */
+    where?: api_usageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of api_usages to fetch.
+     */
+    orderBy?: api_usageOrderByWithRelationInput | api_usageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing api_usages.
+     */
+    cursor?: api_usageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` api_usages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` api_usages.
+     */
+    skip?: number
+    distinct?: Api_usageScalarFieldEnum | Api_usageScalarFieldEnum[]
+  }
+
+  /**
+   * api_usage create
+   */
+  export type api_usageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a api_usage.
+     */
+    data: XOR<api_usageCreateInput, api_usageUncheckedCreateInput>
+  }
+
+  /**
+   * api_usage createMany
+   */
+  export type api_usageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many api_usages.
+     */
+    data: api_usageCreateManyInput | api_usageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * api_usage createManyAndReturn
+   */
+  export type api_usageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * The data used to create many api_usages.
+     */
+    data: api_usageCreateManyInput | api_usageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * api_usage update
+   */
+  export type api_usageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a api_usage.
+     */
+    data: XOR<api_usageUpdateInput, api_usageUncheckedUpdateInput>
+    /**
+     * Choose, which api_usage to update.
+     */
+    where: api_usageWhereUniqueInput
+  }
+
+  /**
+   * api_usage updateMany
+   */
+  export type api_usageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update api_usages.
+     */
+    data: XOR<api_usageUpdateManyMutationInput, api_usageUncheckedUpdateManyInput>
+    /**
+     * Filter which api_usages to update
+     */
+    where?: api_usageWhereInput
+    /**
+     * Limit how many api_usages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * api_usage updateManyAndReturn
+   */
+  export type api_usageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * The data used to update api_usages.
+     */
+    data: XOR<api_usageUpdateManyMutationInput, api_usageUncheckedUpdateManyInput>
+    /**
+     * Filter which api_usages to update
+     */
+    where?: api_usageWhereInput
+    /**
+     * Limit how many api_usages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * api_usage upsert
+   */
+  export type api_usageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the api_usage to update in case it exists.
+     */
+    where: api_usageWhereUniqueInput
+    /**
+     * In case the api_usage found by the `where` argument doesn't exist, create a new api_usage with this data.
+     */
+    create: XOR<api_usageCreateInput, api_usageUncheckedCreateInput>
+    /**
+     * In case the api_usage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<api_usageUpdateInput, api_usageUncheckedUpdateInput>
+  }
+
+  /**
+   * api_usage delete
+   */
+  export type api_usageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+    /**
+     * Filter which api_usage to delete.
+     */
+    where: api_usageWhereUniqueInput
+  }
+
+  /**
+   * api_usage deleteMany
+   */
+  export type api_usageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which api_usages to delete
+     */
+    where?: api_usageWhereInput
+    /**
+     * Limit how many api_usages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * api_usage without action
+   */
+  export type api_usageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the api_usage
+     */
+    select?: api_usageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the api_usage
+     */
+    omit?: api_usageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: api_usageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model webhook_subscriptions
+   */
+
+  export type AggregateWebhook_subscriptions = {
+    _count: Webhook_subscriptionsCountAggregateOutputType | null
+    _avg: Webhook_subscriptionsAvgAggregateOutputType | null
+    _sum: Webhook_subscriptionsSumAggregateOutputType | null
+    _min: Webhook_subscriptionsMinAggregateOutputType | null
+    _max: Webhook_subscriptionsMaxAggregateOutputType | null
+  }
+
+  export type Webhook_subscriptionsAvgAggregateOutputType = {
+    company_id: number | null
+  }
+
+  export type Webhook_subscriptionsSumAggregateOutputType = {
+    company_id: number | null
+  }
+
+  export type Webhook_subscriptionsMinAggregateOutputType = {
+    id: string | null
+    company_id: number | null
+    name: string | null
+    target_url: string | null
+    secret_key: string | null
+    is_active: boolean | null
+    created_by: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Webhook_subscriptionsMaxAggregateOutputType = {
+    id: string | null
+    company_id: number | null
+    name: string | null
+    target_url: string | null
+    secret_key: string | null
+    is_active: boolean | null
+    created_by: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Webhook_subscriptionsCountAggregateOutputType = {
+    id: number
+    company_id: number
+    name: number
+    event_types: number
+    target_url: number
+    secret_key: number
+    is_active: number
+    created_by: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type Webhook_subscriptionsAvgAggregateInputType = {
+    company_id?: true
+  }
+
+  export type Webhook_subscriptionsSumAggregateInputType = {
+    company_id?: true
+  }
+
+  export type Webhook_subscriptionsMinAggregateInputType = {
+    id?: true
+    company_id?: true
+    name?: true
+    target_url?: true
+    secret_key?: true
+    is_active?: true
+    created_by?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Webhook_subscriptionsMaxAggregateInputType = {
+    id?: true
+    company_id?: true
+    name?: true
+    target_url?: true
+    secret_key?: true
+    is_active?: true
+    created_by?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Webhook_subscriptionsCountAggregateInputType = {
+    id?: true
+    company_id?: true
+    name?: true
+    event_types?: true
+    target_url?: true
+    secret_key?: true
+    is_active?: true
+    created_by?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type Webhook_subscriptionsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which webhook_subscriptions to aggregate.
+     */
+    where?: webhook_subscriptionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of webhook_subscriptions to fetch.
+     */
+    orderBy?: webhook_subscriptionsOrderByWithRelationInput | webhook_subscriptionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: webhook_subscriptionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` webhook_subscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` webhook_subscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned webhook_subscriptions
+    **/
+    _count?: true | Webhook_subscriptionsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Webhook_subscriptionsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Webhook_subscriptionsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Webhook_subscriptionsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Webhook_subscriptionsMaxAggregateInputType
+  }
+
+  export type GetWebhook_subscriptionsAggregateType<T extends Webhook_subscriptionsAggregateArgs> = {
+        [P in keyof T & keyof AggregateWebhook_subscriptions]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWebhook_subscriptions[P]>
+      : GetScalarType<T[P], AggregateWebhook_subscriptions[P]>
+  }
+
+
+
+
+  export type webhook_subscriptionsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: webhook_subscriptionsWhereInput
+    orderBy?: webhook_subscriptionsOrderByWithAggregationInput | webhook_subscriptionsOrderByWithAggregationInput[]
+    by: Webhook_subscriptionsScalarFieldEnum[] | Webhook_subscriptionsScalarFieldEnum
+    having?: webhook_subscriptionsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Webhook_subscriptionsCountAggregateInputType | true
+    _avg?: Webhook_subscriptionsAvgAggregateInputType
+    _sum?: Webhook_subscriptionsSumAggregateInputType
+    _min?: Webhook_subscriptionsMinAggregateInputType
+    _max?: Webhook_subscriptionsMaxAggregateInputType
+  }
+
+  export type Webhook_subscriptionsGroupByOutputType = {
+    id: string
+    company_id: number | null
+    name: string
+    event_types: string[]
+    target_url: string
+    secret_key: string | null
+    is_active: boolean
+    created_by: string | null
+    created_at: Date
+    updated_at: Date
+    _count: Webhook_subscriptionsCountAggregateOutputType | null
+    _avg: Webhook_subscriptionsAvgAggregateOutputType | null
+    _sum: Webhook_subscriptionsSumAggregateOutputType | null
+    _min: Webhook_subscriptionsMinAggregateOutputType | null
+    _max: Webhook_subscriptionsMaxAggregateOutputType | null
+  }
+
+  type GetWebhook_subscriptionsGroupByPayload<T extends webhook_subscriptionsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Webhook_subscriptionsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Webhook_subscriptionsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Webhook_subscriptionsGroupByOutputType[P]>
+            : GetScalarType<T[P], Webhook_subscriptionsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type webhook_subscriptionsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_id?: boolean
+    name?: boolean
+    event_types?: boolean
+    target_url?: boolean
+    secret_key?: boolean
+    is_active?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | webhook_subscriptions$companiesArgs<ExtArgs>
+    users?: boolean | webhook_subscriptions$usersArgs<ExtArgs>
+    webhook_deliveries?: boolean | webhook_subscriptions$webhook_deliveriesArgs<ExtArgs>
+    _count?: boolean | Webhook_subscriptionsCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["webhook_subscriptions"]>
+
+  export type webhook_subscriptionsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_id?: boolean
+    name?: boolean
+    event_types?: boolean
+    target_url?: boolean
+    secret_key?: boolean
+    is_active?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | webhook_subscriptions$companiesArgs<ExtArgs>
+    users?: boolean | webhook_subscriptions$usersArgs<ExtArgs>
+  }, ExtArgs["result"]["webhook_subscriptions"]>
+
+  export type webhook_subscriptionsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_id?: boolean
+    name?: boolean
+    event_types?: boolean
+    target_url?: boolean
+    secret_key?: boolean
+    is_active?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | webhook_subscriptions$companiesArgs<ExtArgs>
+    users?: boolean | webhook_subscriptions$usersArgs<ExtArgs>
+  }, ExtArgs["result"]["webhook_subscriptions"]>
+
+  export type webhook_subscriptionsSelectScalar = {
+    id?: boolean
+    company_id?: boolean
+    name?: boolean
+    event_types?: boolean
+    target_url?: boolean
+    secret_key?: boolean
+    is_active?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type webhook_subscriptionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "company_id" | "name" | "event_types" | "target_url" | "secret_key" | "is_active" | "created_by" | "created_at" | "updated_at", ExtArgs["result"]["webhook_subscriptions"]>
+  export type webhook_subscriptionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | webhook_subscriptions$companiesArgs<ExtArgs>
+    users?: boolean | webhook_subscriptions$usersArgs<ExtArgs>
+    webhook_deliveries?: boolean | webhook_subscriptions$webhook_deliveriesArgs<ExtArgs>
+    _count?: boolean | Webhook_subscriptionsCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type webhook_subscriptionsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | webhook_subscriptions$companiesArgs<ExtArgs>
+    users?: boolean | webhook_subscriptions$usersArgs<ExtArgs>
+  }
+  export type webhook_subscriptionsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | webhook_subscriptions$companiesArgs<ExtArgs>
+    users?: boolean | webhook_subscriptions$usersArgs<ExtArgs>
+  }
+
+  export type $webhook_subscriptionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "webhook_subscriptions"
+    objects: {
+      companies: Prisma.$companiesPayload<ExtArgs> | null
+      users: Prisma.$usersPayload<ExtArgs> | null
+      webhook_deliveries: Prisma.$webhook_deliveriesPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      company_id: number | null
+      name: string
+      event_types: string[]
+      target_url: string
+      secret_key: string | null
+      is_active: boolean
+      created_by: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["webhook_subscriptions"]>
+    composites: {}
+  }
+
+  type webhook_subscriptionsGetPayload<S extends boolean | null | undefined | webhook_subscriptionsDefaultArgs> = $Result.GetResult<Prisma.$webhook_subscriptionsPayload, S>
+
+  type webhook_subscriptionsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<webhook_subscriptionsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Webhook_subscriptionsCountAggregateInputType | true
+    }
+
+  export interface webhook_subscriptionsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['webhook_subscriptions'], meta: { name: 'webhook_subscriptions' } }
+    /**
+     * Find zero or one Webhook_subscriptions that matches the filter.
+     * @param {webhook_subscriptionsFindUniqueArgs} args - Arguments to find a Webhook_subscriptions
+     * @example
+     * // Get one Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends webhook_subscriptionsFindUniqueArgs>(args: SelectSubset<T, webhook_subscriptionsFindUniqueArgs<ExtArgs>>): Prisma__webhook_subscriptionsClient<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Webhook_subscriptions that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {webhook_subscriptionsFindUniqueOrThrowArgs} args - Arguments to find a Webhook_subscriptions
+     * @example
+     * // Get one Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends webhook_subscriptionsFindUniqueOrThrowArgs>(args: SelectSubset<T, webhook_subscriptionsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__webhook_subscriptionsClient<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Webhook_subscriptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_subscriptionsFindFirstArgs} args - Arguments to find a Webhook_subscriptions
+     * @example
+     * // Get one Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends webhook_subscriptionsFindFirstArgs>(args?: SelectSubset<T, webhook_subscriptionsFindFirstArgs<ExtArgs>>): Prisma__webhook_subscriptionsClient<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Webhook_subscriptions that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_subscriptionsFindFirstOrThrowArgs} args - Arguments to find a Webhook_subscriptions
+     * @example
+     * // Get one Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends webhook_subscriptionsFindFirstOrThrowArgs>(args?: SelectSubset<T, webhook_subscriptionsFindFirstOrThrowArgs<ExtArgs>>): Prisma__webhook_subscriptionsClient<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Webhook_subscriptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_subscriptionsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.findMany()
+     * 
+     * // Get first 10 Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const webhook_subscriptionsWithIdOnly = await prisma.webhook_subscriptions.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends webhook_subscriptionsFindManyArgs>(args?: SelectSubset<T, webhook_subscriptionsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Webhook_subscriptions.
+     * @param {webhook_subscriptionsCreateArgs} args - Arguments to create a Webhook_subscriptions.
+     * @example
+     * // Create one Webhook_subscriptions
+     * const Webhook_subscriptions = await prisma.webhook_subscriptions.create({
+     *   data: {
+     *     // ... data to create a Webhook_subscriptions
+     *   }
+     * })
+     * 
+     */
+    create<T extends webhook_subscriptionsCreateArgs>(args: SelectSubset<T, webhook_subscriptionsCreateArgs<ExtArgs>>): Prisma__webhook_subscriptionsClient<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Webhook_subscriptions.
+     * @param {webhook_subscriptionsCreateManyArgs} args - Arguments to create many Webhook_subscriptions.
+     * @example
+     * // Create many Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends webhook_subscriptionsCreateManyArgs>(args?: SelectSubset<T, webhook_subscriptionsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Webhook_subscriptions and returns the data saved in the database.
+     * @param {webhook_subscriptionsCreateManyAndReturnArgs} args - Arguments to create many Webhook_subscriptions.
+     * @example
+     * // Create many Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Webhook_subscriptions and only return the `id`
+     * const webhook_subscriptionsWithIdOnly = await prisma.webhook_subscriptions.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends webhook_subscriptionsCreateManyAndReturnArgs>(args?: SelectSubset<T, webhook_subscriptionsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Webhook_subscriptions.
+     * @param {webhook_subscriptionsDeleteArgs} args - Arguments to delete one Webhook_subscriptions.
+     * @example
+     * // Delete one Webhook_subscriptions
+     * const Webhook_subscriptions = await prisma.webhook_subscriptions.delete({
+     *   where: {
+     *     // ... filter to delete one Webhook_subscriptions
+     *   }
+     * })
+     * 
+     */
+    delete<T extends webhook_subscriptionsDeleteArgs>(args: SelectSubset<T, webhook_subscriptionsDeleteArgs<ExtArgs>>): Prisma__webhook_subscriptionsClient<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Webhook_subscriptions.
+     * @param {webhook_subscriptionsUpdateArgs} args - Arguments to update one Webhook_subscriptions.
+     * @example
+     * // Update one Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends webhook_subscriptionsUpdateArgs>(args: SelectSubset<T, webhook_subscriptionsUpdateArgs<ExtArgs>>): Prisma__webhook_subscriptionsClient<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Webhook_subscriptions.
+     * @param {webhook_subscriptionsDeleteManyArgs} args - Arguments to filter Webhook_subscriptions to delete.
+     * @example
+     * // Delete a few Webhook_subscriptions
+     * const { count } = await prisma.webhook_subscriptions.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends webhook_subscriptionsDeleteManyArgs>(args?: SelectSubset<T, webhook_subscriptionsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Webhook_subscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_subscriptionsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends webhook_subscriptionsUpdateManyArgs>(args: SelectSubset<T, webhook_subscriptionsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Webhook_subscriptions and returns the data updated in the database.
+     * @param {webhook_subscriptionsUpdateManyAndReturnArgs} args - Arguments to update many Webhook_subscriptions.
+     * @example
+     * // Update many Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Webhook_subscriptions and only return the `id`
+     * const webhook_subscriptionsWithIdOnly = await prisma.webhook_subscriptions.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends webhook_subscriptionsUpdateManyAndReturnArgs>(args: SelectSubset<T, webhook_subscriptionsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Webhook_subscriptions.
+     * @param {webhook_subscriptionsUpsertArgs} args - Arguments to update or create a Webhook_subscriptions.
+     * @example
+     * // Update or create a Webhook_subscriptions
+     * const webhook_subscriptions = await prisma.webhook_subscriptions.upsert({
+     *   create: {
+     *     // ... data to create a Webhook_subscriptions
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Webhook_subscriptions we want to update
+     *   }
+     * })
+     */
+    upsert<T extends webhook_subscriptionsUpsertArgs>(args: SelectSubset<T, webhook_subscriptionsUpsertArgs<ExtArgs>>): Prisma__webhook_subscriptionsClient<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Webhook_subscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_subscriptionsCountArgs} args - Arguments to filter Webhook_subscriptions to count.
+     * @example
+     * // Count the number of Webhook_subscriptions
+     * const count = await prisma.webhook_subscriptions.count({
+     *   where: {
+     *     // ... the filter for the Webhook_subscriptions we want to count
+     *   }
+     * })
+    **/
+    count<T extends webhook_subscriptionsCountArgs>(
+      args?: Subset<T, webhook_subscriptionsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Webhook_subscriptionsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Webhook_subscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Webhook_subscriptionsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Webhook_subscriptionsAggregateArgs>(args: Subset<T, Webhook_subscriptionsAggregateArgs>): Prisma.PrismaPromise<GetWebhook_subscriptionsAggregateType<T>>
+
+    /**
+     * Group by Webhook_subscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_subscriptionsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends webhook_subscriptionsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: webhook_subscriptionsGroupByArgs['orderBy'] }
+        : { orderBy?: webhook_subscriptionsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, webhook_subscriptionsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWebhook_subscriptionsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the webhook_subscriptions model
+   */
+  readonly fields: webhook_subscriptionsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for webhook_subscriptions.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__webhook_subscriptionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    companies<T extends webhook_subscriptions$companiesArgs<ExtArgs> = {}>(args?: Subset<T, webhook_subscriptions$companiesArgs<ExtArgs>>): Prisma__companiesClient<$Result.GetResult<Prisma.$companiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    users<T extends webhook_subscriptions$usersArgs<ExtArgs> = {}>(args?: Subset<T, webhook_subscriptions$usersArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    webhook_deliveries<T extends webhook_subscriptions$webhook_deliveriesArgs<ExtArgs> = {}>(args?: Subset<T, webhook_subscriptions$webhook_deliveriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the webhook_subscriptions model
+   */
+  interface webhook_subscriptionsFieldRefs {
+    readonly id: FieldRef<"webhook_subscriptions", 'String'>
+    readonly company_id: FieldRef<"webhook_subscriptions", 'Int'>
+    readonly name: FieldRef<"webhook_subscriptions", 'String'>
+    readonly event_types: FieldRef<"webhook_subscriptions", 'String[]'>
+    readonly target_url: FieldRef<"webhook_subscriptions", 'String'>
+    readonly secret_key: FieldRef<"webhook_subscriptions", 'String'>
+    readonly is_active: FieldRef<"webhook_subscriptions", 'Boolean'>
+    readonly created_by: FieldRef<"webhook_subscriptions", 'String'>
+    readonly created_at: FieldRef<"webhook_subscriptions", 'DateTime'>
+    readonly updated_at: FieldRef<"webhook_subscriptions", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * webhook_subscriptions findUnique
+   */
+  export type webhook_subscriptionsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    /**
+     * Filter, which webhook_subscriptions to fetch.
+     */
+    where: webhook_subscriptionsWhereUniqueInput
+  }
+
+  /**
+   * webhook_subscriptions findUniqueOrThrow
+   */
+  export type webhook_subscriptionsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    /**
+     * Filter, which webhook_subscriptions to fetch.
+     */
+    where: webhook_subscriptionsWhereUniqueInput
+  }
+
+  /**
+   * webhook_subscriptions findFirst
+   */
+  export type webhook_subscriptionsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    /**
+     * Filter, which webhook_subscriptions to fetch.
+     */
+    where?: webhook_subscriptionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of webhook_subscriptions to fetch.
+     */
+    orderBy?: webhook_subscriptionsOrderByWithRelationInput | webhook_subscriptionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for webhook_subscriptions.
+     */
+    cursor?: webhook_subscriptionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` webhook_subscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` webhook_subscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of webhook_subscriptions.
+     */
+    distinct?: Webhook_subscriptionsScalarFieldEnum | Webhook_subscriptionsScalarFieldEnum[]
+  }
+
+  /**
+   * webhook_subscriptions findFirstOrThrow
+   */
+  export type webhook_subscriptionsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    /**
+     * Filter, which webhook_subscriptions to fetch.
+     */
+    where?: webhook_subscriptionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of webhook_subscriptions to fetch.
+     */
+    orderBy?: webhook_subscriptionsOrderByWithRelationInput | webhook_subscriptionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for webhook_subscriptions.
+     */
+    cursor?: webhook_subscriptionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` webhook_subscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` webhook_subscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of webhook_subscriptions.
+     */
+    distinct?: Webhook_subscriptionsScalarFieldEnum | Webhook_subscriptionsScalarFieldEnum[]
+  }
+
+  /**
+   * webhook_subscriptions findMany
+   */
+  export type webhook_subscriptionsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    /**
+     * Filter, which webhook_subscriptions to fetch.
+     */
+    where?: webhook_subscriptionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of webhook_subscriptions to fetch.
+     */
+    orderBy?: webhook_subscriptionsOrderByWithRelationInput | webhook_subscriptionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing webhook_subscriptions.
+     */
+    cursor?: webhook_subscriptionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` webhook_subscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` webhook_subscriptions.
+     */
+    skip?: number
+    distinct?: Webhook_subscriptionsScalarFieldEnum | Webhook_subscriptionsScalarFieldEnum[]
+  }
+
+  /**
+   * webhook_subscriptions create
+   */
+  export type webhook_subscriptionsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a webhook_subscriptions.
+     */
+    data: XOR<webhook_subscriptionsCreateInput, webhook_subscriptionsUncheckedCreateInput>
+  }
+
+  /**
+   * webhook_subscriptions createMany
+   */
+  export type webhook_subscriptionsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many webhook_subscriptions.
+     */
+    data: webhook_subscriptionsCreateManyInput | webhook_subscriptionsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * webhook_subscriptions createManyAndReturn
+   */
+  export type webhook_subscriptionsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * The data used to create many webhook_subscriptions.
+     */
+    data: webhook_subscriptionsCreateManyInput | webhook_subscriptionsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * webhook_subscriptions update
+   */
+  export type webhook_subscriptionsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a webhook_subscriptions.
+     */
+    data: XOR<webhook_subscriptionsUpdateInput, webhook_subscriptionsUncheckedUpdateInput>
+    /**
+     * Choose, which webhook_subscriptions to update.
+     */
+    where: webhook_subscriptionsWhereUniqueInput
+  }
+
+  /**
+   * webhook_subscriptions updateMany
+   */
+  export type webhook_subscriptionsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update webhook_subscriptions.
+     */
+    data: XOR<webhook_subscriptionsUpdateManyMutationInput, webhook_subscriptionsUncheckedUpdateManyInput>
+    /**
+     * Filter which webhook_subscriptions to update
+     */
+    where?: webhook_subscriptionsWhereInput
+    /**
+     * Limit how many webhook_subscriptions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * webhook_subscriptions updateManyAndReturn
+   */
+  export type webhook_subscriptionsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * The data used to update webhook_subscriptions.
+     */
+    data: XOR<webhook_subscriptionsUpdateManyMutationInput, webhook_subscriptionsUncheckedUpdateManyInput>
+    /**
+     * Filter which webhook_subscriptions to update
+     */
+    where?: webhook_subscriptionsWhereInput
+    /**
+     * Limit how many webhook_subscriptions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * webhook_subscriptions upsert
+   */
+  export type webhook_subscriptionsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the webhook_subscriptions to update in case it exists.
+     */
+    where: webhook_subscriptionsWhereUniqueInput
+    /**
+     * In case the webhook_subscriptions found by the `where` argument doesn't exist, create a new webhook_subscriptions with this data.
+     */
+    create: XOR<webhook_subscriptionsCreateInput, webhook_subscriptionsUncheckedCreateInput>
+    /**
+     * In case the webhook_subscriptions was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<webhook_subscriptionsUpdateInput, webhook_subscriptionsUncheckedUpdateInput>
+  }
+
+  /**
+   * webhook_subscriptions delete
+   */
+  export type webhook_subscriptionsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+    /**
+     * Filter which webhook_subscriptions to delete.
+     */
+    where: webhook_subscriptionsWhereUniqueInput
+  }
+
+  /**
+   * webhook_subscriptions deleteMany
+   */
+  export type webhook_subscriptionsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which webhook_subscriptions to delete
+     */
+    where?: webhook_subscriptionsWhereInput
+    /**
+     * Limit how many webhook_subscriptions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * webhook_subscriptions.companies
+   */
+  export type webhook_subscriptions$companiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the companies
+     */
+    select?: companiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the companies
+     */
+    omit?: companiesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: companiesInclude<ExtArgs> | null
+    where?: companiesWhereInput
+  }
+
+  /**
+   * webhook_subscriptions.users
+   */
+  export type webhook_subscriptions$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the users
+     */
+    select?: usersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the users
+     */
+    omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    where?: usersWhereInput
+  }
+
+  /**
+   * webhook_subscriptions.webhook_deliveries
+   */
+  export type webhook_subscriptions$webhook_deliveriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    where?: webhook_deliveriesWhereInput
+    orderBy?: webhook_deliveriesOrderByWithRelationInput | webhook_deliveriesOrderByWithRelationInput[]
+    cursor?: webhook_deliveriesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Webhook_deliveriesScalarFieldEnum | Webhook_deliveriesScalarFieldEnum[]
+  }
+
+  /**
+   * webhook_subscriptions without action
+   */
+  export type webhook_subscriptionsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_subscriptions
+     */
+    select?: webhook_subscriptionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_subscriptions
+     */
+    omit?: webhook_subscriptionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_subscriptionsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model webhook_deliveries
+   */
+
+  export type AggregateWebhook_deliveries = {
+    _count: Webhook_deliveriesCountAggregateOutputType | null
+    _avg: Webhook_deliveriesAvgAggregateOutputType | null
+    _sum: Webhook_deliveriesSumAggregateOutputType | null
+    _min: Webhook_deliveriesMinAggregateOutputType | null
+    _max: Webhook_deliveriesMaxAggregateOutputType | null
+  }
+
+  export type Webhook_deliveriesAvgAggregateOutputType = {
+    response_status: number | null
+    attempts: number | null
+  }
+
+  export type Webhook_deliveriesSumAggregateOutputType = {
+    response_status: number | null
+    attempts: number | null
+  }
+
+  export type Webhook_deliveriesMinAggregateOutputType = {
+    id: string | null
+    webhook_subscription_id: string | null
+    event_type: string | null
+    response_status: number | null
+    response_body: string | null
+    error_message: string | null
+    attempts: number | null
+    next_retry_at: Date | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Webhook_deliveriesMaxAggregateOutputType = {
+    id: string | null
+    webhook_subscription_id: string | null
+    event_type: string | null
+    response_status: number | null
+    response_body: string | null
+    error_message: string | null
+    attempts: number | null
+    next_retry_at: Date | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Webhook_deliveriesCountAggregateOutputType = {
+    id: number
+    webhook_subscription_id: number
+    event_type: number
+    payload: number
+    response_status: number
+    response_body: number
+    error_message: number
+    attempts: number
+    next_retry_at: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type Webhook_deliveriesAvgAggregateInputType = {
+    response_status?: true
+    attempts?: true
+  }
+
+  export type Webhook_deliveriesSumAggregateInputType = {
+    response_status?: true
+    attempts?: true
+  }
+
+  export type Webhook_deliveriesMinAggregateInputType = {
+    id?: true
+    webhook_subscription_id?: true
+    event_type?: true
+    response_status?: true
+    response_body?: true
+    error_message?: true
+    attempts?: true
+    next_retry_at?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Webhook_deliveriesMaxAggregateInputType = {
+    id?: true
+    webhook_subscription_id?: true
+    event_type?: true
+    response_status?: true
+    response_body?: true
+    error_message?: true
+    attempts?: true
+    next_retry_at?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Webhook_deliveriesCountAggregateInputType = {
+    id?: true
+    webhook_subscription_id?: true
+    event_type?: true
+    payload?: true
+    response_status?: true
+    response_body?: true
+    error_message?: true
+    attempts?: true
+    next_retry_at?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type Webhook_deliveriesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which webhook_deliveries to aggregate.
+     */
+    where?: webhook_deliveriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of webhook_deliveries to fetch.
+     */
+    orderBy?: webhook_deliveriesOrderByWithRelationInput | webhook_deliveriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: webhook_deliveriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` webhook_deliveries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` webhook_deliveries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned webhook_deliveries
+    **/
+    _count?: true | Webhook_deliveriesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Webhook_deliveriesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Webhook_deliveriesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Webhook_deliveriesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Webhook_deliveriesMaxAggregateInputType
+  }
+
+  export type GetWebhook_deliveriesAggregateType<T extends Webhook_deliveriesAggregateArgs> = {
+        [P in keyof T & keyof AggregateWebhook_deliveries]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWebhook_deliveries[P]>
+      : GetScalarType<T[P], AggregateWebhook_deliveries[P]>
+  }
+
+
+
+
+  export type webhook_deliveriesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: webhook_deliveriesWhereInput
+    orderBy?: webhook_deliveriesOrderByWithAggregationInput | webhook_deliveriesOrderByWithAggregationInput[]
+    by: Webhook_deliveriesScalarFieldEnum[] | Webhook_deliveriesScalarFieldEnum
+    having?: webhook_deliveriesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Webhook_deliveriesCountAggregateInputType | true
+    _avg?: Webhook_deliveriesAvgAggregateInputType
+    _sum?: Webhook_deliveriesSumAggregateInputType
+    _min?: Webhook_deliveriesMinAggregateInputType
+    _max?: Webhook_deliveriesMaxAggregateInputType
+  }
+
+  export type Webhook_deliveriesGroupByOutputType = {
+    id: string
+    webhook_subscription_id: string
+    event_type: string
+    payload: JsonValue
+    response_status: number | null
+    response_body: string | null
+    error_message: string | null
+    attempts: number
+    next_retry_at: Date | null
+    created_at: Date
+    updated_at: Date
+    _count: Webhook_deliveriesCountAggregateOutputType | null
+    _avg: Webhook_deliveriesAvgAggregateOutputType | null
+    _sum: Webhook_deliveriesSumAggregateOutputType | null
+    _min: Webhook_deliveriesMinAggregateOutputType | null
+    _max: Webhook_deliveriesMaxAggregateOutputType | null
+  }
+
+  type GetWebhook_deliveriesGroupByPayload<T extends webhook_deliveriesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Webhook_deliveriesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Webhook_deliveriesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Webhook_deliveriesGroupByOutputType[P]>
+            : GetScalarType<T[P], Webhook_deliveriesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type webhook_deliveriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    webhook_subscription_id?: boolean
+    event_type?: boolean
+    payload?: boolean
+    response_status?: boolean
+    response_body?: boolean
+    error_message?: boolean
+    attempts?: boolean
+    next_retry_at?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    webhook_subscriptions?: boolean | webhook_subscriptionsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["webhook_deliveries"]>
+
+  export type webhook_deliveriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    webhook_subscription_id?: boolean
+    event_type?: boolean
+    payload?: boolean
+    response_status?: boolean
+    response_body?: boolean
+    error_message?: boolean
+    attempts?: boolean
+    next_retry_at?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    webhook_subscriptions?: boolean | webhook_subscriptionsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["webhook_deliveries"]>
+
+  export type webhook_deliveriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    webhook_subscription_id?: boolean
+    event_type?: boolean
+    payload?: boolean
+    response_status?: boolean
+    response_body?: boolean
+    error_message?: boolean
+    attempts?: boolean
+    next_retry_at?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    webhook_subscriptions?: boolean | webhook_subscriptionsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["webhook_deliveries"]>
+
+  export type webhook_deliveriesSelectScalar = {
+    id?: boolean
+    webhook_subscription_id?: boolean
+    event_type?: boolean
+    payload?: boolean
+    response_status?: boolean
+    response_body?: boolean
+    error_message?: boolean
+    attempts?: boolean
+    next_retry_at?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type webhook_deliveriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "webhook_subscription_id" | "event_type" | "payload" | "response_status" | "response_body" | "error_message" | "attempts" | "next_retry_at" | "created_at" | "updated_at", ExtArgs["result"]["webhook_deliveries"]>
+  export type webhook_deliveriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    webhook_subscriptions?: boolean | webhook_subscriptionsDefaultArgs<ExtArgs>
+  }
+  export type webhook_deliveriesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    webhook_subscriptions?: boolean | webhook_subscriptionsDefaultArgs<ExtArgs>
+  }
+  export type webhook_deliveriesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    webhook_subscriptions?: boolean | webhook_subscriptionsDefaultArgs<ExtArgs>
+  }
+
+  export type $webhook_deliveriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "webhook_deliveries"
+    objects: {
+      webhook_subscriptions: Prisma.$webhook_subscriptionsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      webhook_subscription_id: string
+      event_type: string
+      payload: Prisma.JsonValue
+      response_status: number | null
+      response_body: string | null
+      error_message: string | null
+      attempts: number
+      next_retry_at: Date | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["webhook_deliveries"]>
+    composites: {}
+  }
+
+  type webhook_deliveriesGetPayload<S extends boolean | null | undefined | webhook_deliveriesDefaultArgs> = $Result.GetResult<Prisma.$webhook_deliveriesPayload, S>
+
+  type webhook_deliveriesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<webhook_deliveriesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Webhook_deliveriesCountAggregateInputType | true
+    }
+
+  export interface webhook_deliveriesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['webhook_deliveries'], meta: { name: 'webhook_deliveries' } }
+    /**
+     * Find zero or one Webhook_deliveries that matches the filter.
+     * @param {webhook_deliveriesFindUniqueArgs} args - Arguments to find a Webhook_deliveries
+     * @example
+     * // Get one Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends webhook_deliveriesFindUniqueArgs>(args: SelectSubset<T, webhook_deliveriesFindUniqueArgs<ExtArgs>>): Prisma__webhook_deliveriesClient<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Webhook_deliveries that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {webhook_deliveriesFindUniqueOrThrowArgs} args - Arguments to find a Webhook_deliveries
+     * @example
+     * // Get one Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends webhook_deliveriesFindUniqueOrThrowArgs>(args: SelectSubset<T, webhook_deliveriesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__webhook_deliveriesClient<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Webhook_deliveries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_deliveriesFindFirstArgs} args - Arguments to find a Webhook_deliveries
+     * @example
+     * // Get one Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends webhook_deliveriesFindFirstArgs>(args?: SelectSubset<T, webhook_deliveriesFindFirstArgs<ExtArgs>>): Prisma__webhook_deliveriesClient<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Webhook_deliveries that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_deliveriesFindFirstOrThrowArgs} args - Arguments to find a Webhook_deliveries
+     * @example
+     * // Get one Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends webhook_deliveriesFindFirstOrThrowArgs>(args?: SelectSubset<T, webhook_deliveriesFindFirstOrThrowArgs<ExtArgs>>): Prisma__webhook_deliveriesClient<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Webhook_deliveries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_deliveriesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.findMany()
+     * 
+     * // Get first 10 Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const webhook_deliveriesWithIdOnly = await prisma.webhook_deliveries.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends webhook_deliveriesFindManyArgs>(args?: SelectSubset<T, webhook_deliveriesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Webhook_deliveries.
+     * @param {webhook_deliveriesCreateArgs} args - Arguments to create a Webhook_deliveries.
+     * @example
+     * // Create one Webhook_deliveries
+     * const Webhook_deliveries = await prisma.webhook_deliveries.create({
+     *   data: {
+     *     // ... data to create a Webhook_deliveries
+     *   }
+     * })
+     * 
+     */
+    create<T extends webhook_deliveriesCreateArgs>(args: SelectSubset<T, webhook_deliveriesCreateArgs<ExtArgs>>): Prisma__webhook_deliveriesClient<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Webhook_deliveries.
+     * @param {webhook_deliveriesCreateManyArgs} args - Arguments to create many Webhook_deliveries.
+     * @example
+     * // Create many Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends webhook_deliveriesCreateManyArgs>(args?: SelectSubset<T, webhook_deliveriesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Webhook_deliveries and returns the data saved in the database.
+     * @param {webhook_deliveriesCreateManyAndReturnArgs} args - Arguments to create many Webhook_deliveries.
+     * @example
+     * // Create many Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Webhook_deliveries and only return the `id`
+     * const webhook_deliveriesWithIdOnly = await prisma.webhook_deliveries.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends webhook_deliveriesCreateManyAndReturnArgs>(args?: SelectSubset<T, webhook_deliveriesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Webhook_deliveries.
+     * @param {webhook_deliveriesDeleteArgs} args - Arguments to delete one Webhook_deliveries.
+     * @example
+     * // Delete one Webhook_deliveries
+     * const Webhook_deliveries = await prisma.webhook_deliveries.delete({
+     *   where: {
+     *     // ... filter to delete one Webhook_deliveries
+     *   }
+     * })
+     * 
+     */
+    delete<T extends webhook_deliveriesDeleteArgs>(args: SelectSubset<T, webhook_deliveriesDeleteArgs<ExtArgs>>): Prisma__webhook_deliveriesClient<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Webhook_deliveries.
+     * @param {webhook_deliveriesUpdateArgs} args - Arguments to update one Webhook_deliveries.
+     * @example
+     * // Update one Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends webhook_deliveriesUpdateArgs>(args: SelectSubset<T, webhook_deliveriesUpdateArgs<ExtArgs>>): Prisma__webhook_deliveriesClient<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Webhook_deliveries.
+     * @param {webhook_deliveriesDeleteManyArgs} args - Arguments to filter Webhook_deliveries to delete.
+     * @example
+     * // Delete a few Webhook_deliveries
+     * const { count } = await prisma.webhook_deliveries.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends webhook_deliveriesDeleteManyArgs>(args?: SelectSubset<T, webhook_deliveriesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Webhook_deliveries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_deliveriesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends webhook_deliveriesUpdateManyArgs>(args: SelectSubset<T, webhook_deliveriesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Webhook_deliveries and returns the data updated in the database.
+     * @param {webhook_deliveriesUpdateManyAndReturnArgs} args - Arguments to update many Webhook_deliveries.
+     * @example
+     * // Update many Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Webhook_deliveries and only return the `id`
+     * const webhook_deliveriesWithIdOnly = await prisma.webhook_deliveries.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends webhook_deliveriesUpdateManyAndReturnArgs>(args: SelectSubset<T, webhook_deliveriesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Webhook_deliveries.
+     * @param {webhook_deliveriesUpsertArgs} args - Arguments to update or create a Webhook_deliveries.
+     * @example
+     * // Update or create a Webhook_deliveries
+     * const webhook_deliveries = await prisma.webhook_deliveries.upsert({
+     *   create: {
+     *     // ... data to create a Webhook_deliveries
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Webhook_deliveries we want to update
+     *   }
+     * })
+     */
+    upsert<T extends webhook_deliveriesUpsertArgs>(args: SelectSubset<T, webhook_deliveriesUpsertArgs<ExtArgs>>): Prisma__webhook_deliveriesClient<$Result.GetResult<Prisma.$webhook_deliveriesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Webhook_deliveries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_deliveriesCountArgs} args - Arguments to filter Webhook_deliveries to count.
+     * @example
+     * // Count the number of Webhook_deliveries
+     * const count = await prisma.webhook_deliveries.count({
+     *   where: {
+     *     // ... the filter for the Webhook_deliveries we want to count
+     *   }
+     * })
+    **/
+    count<T extends webhook_deliveriesCountArgs>(
+      args?: Subset<T, webhook_deliveriesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Webhook_deliveriesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Webhook_deliveries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Webhook_deliveriesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Webhook_deliveriesAggregateArgs>(args: Subset<T, Webhook_deliveriesAggregateArgs>): Prisma.PrismaPromise<GetWebhook_deliveriesAggregateType<T>>
+
+    /**
+     * Group by Webhook_deliveries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {webhook_deliveriesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends webhook_deliveriesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: webhook_deliveriesGroupByArgs['orderBy'] }
+        : { orderBy?: webhook_deliveriesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, webhook_deliveriesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWebhook_deliveriesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the webhook_deliveries model
+   */
+  readonly fields: webhook_deliveriesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for webhook_deliveries.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__webhook_deliveriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    webhook_subscriptions<T extends webhook_subscriptionsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, webhook_subscriptionsDefaultArgs<ExtArgs>>): Prisma__webhook_subscriptionsClient<$Result.GetResult<Prisma.$webhook_subscriptionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the webhook_deliveries model
+   */
+  interface webhook_deliveriesFieldRefs {
+    readonly id: FieldRef<"webhook_deliveries", 'String'>
+    readonly webhook_subscription_id: FieldRef<"webhook_deliveries", 'String'>
+    readonly event_type: FieldRef<"webhook_deliveries", 'String'>
+    readonly payload: FieldRef<"webhook_deliveries", 'Json'>
+    readonly response_status: FieldRef<"webhook_deliveries", 'Int'>
+    readonly response_body: FieldRef<"webhook_deliveries", 'String'>
+    readonly error_message: FieldRef<"webhook_deliveries", 'String'>
+    readonly attempts: FieldRef<"webhook_deliveries", 'Int'>
+    readonly next_retry_at: FieldRef<"webhook_deliveries", 'DateTime'>
+    readonly created_at: FieldRef<"webhook_deliveries", 'DateTime'>
+    readonly updated_at: FieldRef<"webhook_deliveries", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * webhook_deliveries findUnique
+   */
+  export type webhook_deliveriesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    /**
+     * Filter, which webhook_deliveries to fetch.
+     */
+    where: webhook_deliveriesWhereUniqueInput
+  }
+
+  /**
+   * webhook_deliveries findUniqueOrThrow
+   */
+  export type webhook_deliveriesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    /**
+     * Filter, which webhook_deliveries to fetch.
+     */
+    where: webhook_deliveriesWhereUniqueInput
+  }
+
+  /**
+   * webhook_deliveries findFirst
+   */
+  export type webhook_deliveriesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    /**
+     * Filter, which webhook_deliveries to fetch.
+     */
+    where?: webhook_deliveriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of webhook_deliveries to fetch.
+     */
+    orderBy?: webhook_deliveriesOrderByWithRelationInput | webhook_deliveriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for webhook_deliveries.
+     */
+    cursor?: webhook_deliveriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` webhook_deliveries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` webhook_deliveries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of webhook_deliveries.
+     */
+    distinct?: Webhook_deliveriesScalarFieldEnum | Webhook_deliveriesScalarFieldEnum[]
+  }
+
+  /**
+   * webhook_deliveries findFirstOrThrow
+   */
+  export type webhook_deliveriesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    /**
+     * Filter, which webhook_deliveries to fetch.
+     */
+    where?: webhook_deliveriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of webhook_deliveries to fetch.
+     */
+    orderBy?: webhook_deliveriesOrderByWithRelationInput | webhook_deliveriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for webhook_deliveries.
+     */
+    cursor?: webhook_deliveriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` webhook_deliveries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` webhook_deliveries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of webhook_deliveries.
+     */
+    distinct?: Webhook_deliveriesScalarFieldEnum | Webhook_deliveriesScalarFieldEnum[]
+  }
+
+  /**
+   * webhook_deliveries findMany
+   */
+  export type webhook_deliveriesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    /**
+     * Filter, which webhook_deliveries to fetch.
+     */
+    where?: webhook_deliveriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of webhook_deliveries to fetch.
+     */
+    orderBy?: webhook_deliveriesOrderByWithRelationInput | webhook_deliveriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing webhook_deliveries.
+     */
+    cursor?: webhook_deliveriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` webhook_deliveries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` webhook_deliveries.
+     */
+    skip?: number
+    distinct?: Webhook_deliveriesScalarFieldEnum | Webhook_deliveriesScalarFieldEnum[]
+  }
+
+  /**
+   * webhook_deliveries create
+   */
+  export type webhook_deliveriesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a webhook_deliveries.
+     */
+    data: XOR<webhook_deliveriesCreateInput, webhook_deliveriesUncheckedCreateInput>
+  }
+
+  /**
+   * webhook_deliveries createMany
+   */
+  export type webhook_deliveriesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many webhook_deliveries.
+     */
+    data: webhook_deliveriesCreateManyInput | webhook_deliveriesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * webhook_deliveries createManyAndReturn
+   */
+  export type webhook_deliveriesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * The data used to create many webhook_deliveries.
+     */
+    data: webhook_deliveriesCreateManyInput | webhook_deliveriesCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * webhook_deliveries update
+   */
+  export type webhook_deliveriesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a webhook_deliveries.
+     */
+    data: XOR<webhook_deliveriesUpdateInput, webhook_deliveriesUncheckedUpdateInput>
+    /**
+     * Choose, which webhook_deliveries to update.
+     */
+    where: webhook_deliveriesWhereUniqueInput
+  }
+
+  /**
+   * webhook_deliveries updateMany
+   */
+  export type webhook_deliveriesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update webhook_deliveries.
+     */
+    data: XOR<webhook_deliveriesUpdateManyMutationInput, webhook_deliveriesUncheckedUpdateManyInput>
+    /**
+     * Filter which webhook_deliveries to update
+     */
+    where?: webhook_deliveriesWhereInput
+    /**
+     * Limit how many webhook_deliveries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * webhook_deliveries updateManyAndReturn
+   */
+  export type webhook_deliveriesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * The data used to update webhook_deliveries.
+     */
+    data: XOR<webhook_deliveriesUpdateManyMutationInput, webhook_deliveriesUncheckedUpdateManyInput>
+    /**
+     * Filter which webhook_deliveries to update
+     */
+    where?: webhook_deliveriesWhereInput
+    /**
+     * Limit how many webhook_deliveries to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * webhook_deliveries upsert
+   */
+  export type webhook_deliveriesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the webhook_deliveries to update in case it exists.
+     */
+    where: webhook_deliveriesWhereUniqueInput
+    /**
+     * In case the webhook_deliveries found by the `where` argument doesn't exist, create a new webhook_deliveries with this data.
+     */
+    create: XOR<webhook_deliveriesCreateInput, webhook_deliveriesUncheckedCreateInput>
+    /**
+     * In case the webhook_deliveries was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<webhook_deliveriesUpdateInput, webhook_deliveriesUncheckedUpdateInput>
+  }
+
+  /**
+   * webhook_deliveries delete
+   */
+  export type webhook_deliveriesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+    /**
+     * Filter which webhook_deliveries to delete.
+     */
+    where: webhook_deliveriesWhereUniqueInput
+  }
+
+  /**
+   * webhook_deliveries deleteMany
+   */
+  export type webhook_deliveriesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which webhook_deliveries to delete
+     */
+    where?: webhook_deliveriesWhereInput
+    /**
+     * Limit how many webhook_deliveries to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * webhook_deliveries without action
+   */
+  export type webhook_deliveriesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the webhook_deliveries
+     */
+    select?: webhook_deliveriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the webhook_deliveries
+     */
+    omit?: webhook_deliveriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: webhook_deliveriesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model integration_connections
+   */
+
+  export type AggregateIntegration_connections = {
+    _count: Integration_connectionsCountAggregateOutputType | null
+    _avg: Integration_connectionsAvgAggregateOutputType | null
+    _sum: Integration_connectionsSumAggregateOutputType | null
+    _min: Integration_connectionsMinAggregateOutputType | null
+    _max: Integration_connectionsMaxAggregateOutputType | null
+  }
+
+  export type Integration_connectionsAvgAggregateOutputType = {
+    company_id: number | null
+  }
+
+  export type Integration_connectionsSumAggregateOutputType = {
+    company_id: number | null
+  }
+
+  export type Integration_connectionsMinAggregateOutputType = {
+    id: string | null
+    company_id: number | null
+    integration_type: string | null
+    provider: string | null
+    is_active: boolean | null
+    last_sync_at: Date | null
+    created_by: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Integration_connectionsMaxAggregateOutputType = {
+    id: string | null
+    company_id: number | null
+    integration_type: string | null
+    provider: string | null
+    is_active: boolean | null
+    last_sync_at: Date | null
+    created_by: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Integration_connectionsCountAggregateOutputType = {
+    id: number
+    company_id: number
+    integration_type: number
+    provider: number
+    credentials: number
+    settings: number
+    is_active: number
+    last_sync_at: number
+    created_by: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type Integration_connectionsAvgAggregateInputType = {
+    company_id?: true
+  }
+
+  export type Integration_connectionsSumAggregateInputType = {
+    company_id?: true
+  }
+
+  export type Integration_connectionsMinAggregateInputType = {
+    id?: true
+    company_id?: true
+    integration_type?: true
+    provider?: true
+    is_active?: true
+    last_sync_at?: true
+    created_by?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Integration_connectionsMaxAggregateInputType = {
+    id?: true
+    company_id?: true
+    integration_type?: true
+    provider?: true
+    is_active?: true
+    last_sync_at?: true
+    created_by?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Integration_connectionsCountAggregateInputType = {
+    id?: true
+    company_id?: true
+    integration_type?: true
+    provider?: true
+    credentials?: true
+    settings?: true
+    is_active?: true
+    last_sync_at?: true
+    created_by?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type Integration_connectionsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which integration_connections to aggregate.
+     */
+    where?: integration_connectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of integration_connections to fetch.
+     */
+    orderBy?: integration_connectionsOrderByWithRelationInput | integration_connectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: integration_connectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` integration_connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` integration_connections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned integration_connections
+    **/
+    _count?: true | Integration_connectionsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Integration_connectionsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Integration_connectionsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Integration_connectionsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Integration_connectionsMaxAggregateInputType
+  }
+
+  export type GetIntegration_connectionsAggregateType<T extends Integration_connectionsAggregateArgs> = {
+        [P in keyof T & keyof AggregateIntegration_connections]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIntegration_connections[P]>
+      : GetScalarType<T[P], AggregateIntegration_connections[P]>
+  }
+
+
+
+
+  export type integration_connectionsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: integration_connectionsWhereInput
+    orderBy?: integration_connectionsOrderByWithAggregationInput | integration_connectionsOrderByWithAggregationInput[]
+    by: Integration_connectionsScalarFieldEnum[] | Integration_connectionsScalarFieldEnum
+    having?: integration_connectionsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Integration_connectionsCountAggregateInputType | true
+    _avg?: Integration_connectionsAvgAggregateInputType
+    _sum?: Integration_connectionsSumAggregateInputType
+    _min?: Integration_connectionsMinAggregateInputType
+    _max?: Integration_connectionsMaxAggregateInputType
+  }
+
+  export type Integration_connectionsGroupByOutputType = {
+    id: string
+    company_id: number | null
+    integration_type: string
+    provider: string
+    credentials: JsonValue | null
+    settings: JsonValue | null
+    is_active: boolean
+    last_sync_at: Date | null
+    created_by: string | null
+    created_at: Date
+    updated_at: Date
+    _count: Integration_connectionsCountAggregateOutputType | null
+    _avg: Integration_connectionsAvgAggregateOutputType | null
+    _sum: Integration_connectionsSumAggregateOutputType | null
+    _min: Integration_connectionsMinAggregateOutputType | null
+    _max: Integration_connectionsMaxAggregateOutputType | null
+  }
+
+  type GetIntegration_connectionsGroupByPayload<T extends integration_connectionsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Integration_connectionsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Integration_connectionsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Integration_connectionsGroupByOutputType[P]>
+            : GetScalarType<T[P], Integration_connectionsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type integration_connectionsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_id?: boolean
+    integration_type?: boolean
+    provider?: boolean
+    credentials?: boolean
+    settings?: boolean
+    is_active?: boolean
+    last_sync_at?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | integration_connections$companiesArgs<ExtArgs>
+    users?: boolean | integration_connections$usersArgs<ExtArgs>
+    integration_logs?: boolean | integration_connections$integration_logsArgs<ExtArgs>
+    _count?: boolean | Integration_connectionsCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["integration_connections"]>
+
+  export type integration_connectionsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_id?: boolean
+    integration_type?: boolean
+    provider?: boolean
+    credentials?: boolean
+    settings?: boolean
+    is_active?: boolean
+    last_sync_at?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | integration_connections$companiesArgs<ExtArgs>
+    users?: boolean | integration_connections$usersArgs<ExtArgs>
+  }, ExtArgs["result"]["integration_connections"]>
+
+  export type integration_connectionsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_id?: boolean
+    integration_type?: boolean
+    provider?: boolean
+    credentials?: boolean
+    settings?: boolean
+    is_active?: boolean
+    last_sync_at?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | integration_connections$companiesArgs<ExtArgs>
+    users?: boolean | integration_connections$usersArgs<ExtArgs>
+  }, ExtArgs["result"]["integration_connections"]>
+
+  export type integration_connectionsSelectScalar = {
+    id?: boolean
+    company_id?: boolean
+    integration_type?: boolean
+    provider?: boolean
+    credentials?: boolean
+    settings?: boolean
+    is_active?: boolean
+    last_sync_at?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type integration_connectionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "company_id" | "integration_type" | "provider" | "credentials" | "settings" | "is_active" | "last_sync_at" | "created_by" | "created_at" | "updated_at", ExtArgs["result"]["integration_connections"]>
+  export type integration_connectionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | integration_connections$companiesArgs<ExtArgs>
+    users?: boolean | integration_connections$usersArgs<ExtArgs>
+    integration_logs?: boolean | integration_connections$integration_logsArgs<ExtArgs>
+    _count?: boolean | Integration_connectionsCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type integration_connectionsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | integration_connections$companiesArgs<ExtArgs>
+    users?: boolean | integration_connections$usersArgs<ExtArgs>
+  }
+  export type integration_connectionsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | integration_connections$companiesArgs<ExtArgs>
+    users?: boolean | integration_connections$usersArgs<ExtArgs>
+  }
+
+  export type $integration_connectionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "integration_connections"
+    objects: {
+      companies: Prisma.$companiesPayload<ExtArgs> | null
+      users: Prisma.$usersPayload<ExtArgs> | null
+      integration_logs: Prisma.$integration_logsPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      company_id: number | null
+      integration_type: string
+      provider: string
+      credentials: Prisma.JsonValue | null
+      settings: Prisma.JsonValue | null
+      is_active: boolean
+      last_sync_at: Date | null
+      created_by: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["integration_connections"]>
+    composites: {}
+  }
+
+  type integration_connectionsGetPayload<S extends boolean | null | undefined | integration_connectionsDefaultArgs> = $Result.GetResult<Prisma.$integration_connectionsPayload, S>
+
+  type integration_connectionsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<integration_connectionsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Integration_connectionsCountAggregateInputType | true
+    }
+
+  export interface integration_connectionsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['integration_connections'], meta: { name: 'integration_connections' } }
+    /**
+     * Find zero or one Integration_connections that matches the filter.
+     * @param {integration_connectionsFindUniqueArgs} args - Arguments to find a Integration_connections
+     * @example
+     * // Get one Integration_connections
+     * const integration_connections = await prisma.integration_connections.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends integration_connectionsFindUniqueArgs>(args: SelectSubset<T, integration_connectionsFindUniqueArgs<ExtArgs>>): Prisma__integration_connectionsClient<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Integration_connections that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {integration_connectionsFindUniqueOrThrowArgs} args - Arguments to find a Integration_connections
+     * @example
+     * // Get one Integration_connections
+     * const integration_connections = await prisma.integration_connections.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends integration_connectionsFindUniqueOrThrowArgs>(args: SelectSubset<T, integration_connectionsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__integration_connectionsClient<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Integration_connections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_connectionsFindFirstArgs} args - Arguments to find a Integration_connections
+     * @example
+     * // Get one Integration_connections
+     * const integration_connections = await prisma.integration_connections.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends integration_connectionsFindFirstArgs>(args?: SelectSubset<T, integration_connectionsFindFirstArgs<ExtArgs>>): Prisma__integration_connectionsClient<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Integration_connections that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_connectionsFindFirstOrThrowArgs} args - Arguments to find a Integration_connections
+     * @example
+     * // Get one Integration_connections
+     * const integration_connections = await prisma.integration_connections.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends integration_connectionsFindFirstOrThrowArgs>(args?: SelectSubset<T, integration_connectionsFindFirstOrThrowArgs<ExtArgs>>): Prisma__integration_connectionsClient<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Integration_connections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_connectionsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Integration_connections
+     * const integration_connections = await prisma.integration_connections.findMany()
+     * 
+     * // Get first 10 Integration_connections
+     * const integration_connections = await prisma.integration_connections.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const integration_connectionsWithIdOnly = await prisma.integration_connections.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends integration_connectionsFindManyArgs>(args?: SelectSubset<T, integration_connectionsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Integration_connections.
+     * @param {integration_connectionsCreateArgs} args - Arguments to create a Integration_connections.
+     * @example
+     * // Create one Integration_connections
+     * const Integration_connections = await prisma.integration_connections.create({
+     *   data: {
+     *     // ... data to create a Integration_connections
+     *   }
+     * })
+     * 
+     */
+    create<T extends integration_connectionsCreateArgs>(args: SelectSubset<T, integration_connectionsCreateArgs<ExtArgs>>): Prisma__integration_connectionsClient<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Integration_connections.
+     * @param {integration_connectionsCreateManyArgs} args - Arguments to create many Integration_connections.
+     * @example
+     * // Create many Integration_connections
+     * const integration_connections = await prisma.integration_connections.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends integration_connectionsCreateManyArgs>(args?: SelectSubset<T, integration_connectionsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Integration_connections and returns the data saved in the database.
+     * @param {integration_connectionsCreateManyAndReturnArgs} args - Arguments to create many Integration_connections.
+     * @example
+     * // Create many Integration_connections
+     * const integration_connections = await prisma.integration_connections.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Integration_connections and only return the `id`
+     * const integration_connectionsWithIdOnly = await prisma.integration_connections.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends integration_connectionsCreateManyAndReturnArgs>(args?: SelectSubset<T, integration_connectionsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Integration_connections.
+     * @param {integration_connectionsDeleteArgs} args - Arguments to delete one Integration_connections.
+     * @example
+     * // Delete one Integration_connections
+     * const Integration_connections = await prisma.integration_connections.delete({
+     *   where: {
+     *     // ... filter to delete one Integration_connections
+     *   }
+     * })
+     * 
+     */
+    delete<T extends integration_connectionsDeleteArgs>(args: SelectSubset<T, integration_connectionsDeleteArgs<ExtArgs>>): Prisma__integration_connectionsClient<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Integration_connections.
+     * @param {integration_connectionsUpdateArgs} args - Arguments to update one Integration_connections.
+     * @example
+     * // Update one Integration_connections
+     * const integration_connections = await prisma.integration_connections.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends integration_connectionsUpdateArgs>(args: SelectSubset<T, integration_connectionsUpdateArgs<ExtArgs>>): Prisma__integration_connectionsClient<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Integration_connections.
+     * @param {integration_connectionsDeleteManyArgs} args - Arguments to filter Integration_connections to delete.
+     * @example
+     * // Delete a few Integration_connections
+     * const { count } = await prisma.integration_connections.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends integration_connectionsDeleteManyArgs>(args?: SelectSubset<T, integration_connectionsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Integration_connections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_connectionsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Integration_connections
+     * const integration_connections = await prisma.integration_connections.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends integration_connectionsUpdateManyArgs>(args: SelectSubset<T, integration_connectionsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Integration_connections and returns the data updated in the database.
+     * @param {integration_connectionsUpdateManyAndReturnArgs} args - Arguments to update many Integration_connections.
+     * @example
+     * // Update many Integration_connections
+     * const integration_connections = await prisma.integration_connections.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Integration_connections and only return the `id`
+     * const integration_connectionsWithIdOnly = await prisma.integration_connections.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends integration_connectionsUpdateManyAndReturnArgs>(args: SelectSubset<T, integration_connectionsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Integration_connections.
+     * @param {integration_connectionsUpsertArgs} args - Arguments to update or create a Integration_connections.
+     * @example
+     * // Update or create a Integration_connections
+     * const integration_connections = await prisma.integration_connections.upsert({
+     *   create: {
+     *     // ... data to create a Integration_connections
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Integration_connections we want to update
+     *   }
+     * })
+     */
+    upsert<T extends integration_connectionsUpsertArgs>(args: SelectSubset<T, integration_connectionsUpsertArgs<ExtArgs>>): Prisma__integration_connectionsClient<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Integration_connections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_connectionsCountArgs} args - Arguments to filter Integration_connections to count.
+     * @example
+     * // Count the number of Integration_connections
+     * const count = await prisma.integration_connections.count({
+     *   where: {
+     *     // ... the filter for the Integration_connections we want to count
+     *   }
+     * })
+    **/
+    count<T extends integration_connectionsCountArgs>(
+      args?: Subset<T, integration_connectionsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Integration_connectionsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Integration_connections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Integration_connectionsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Integration_connectionsAggregateArgs>(args: Subset<T, Integration_connectionsAggregateArgs>): Prisma.PrismaPromise<GetIntegration_connectionsAggregateType<T>>
+
+    /**
+     * Group by Integration_connections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_connectionsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends integration_connectionsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: integration_connectionsGroupByArgs['orderBy'] }
+        : { orderBy?: integration_connectionsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, integration_connectionsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIntegration_connectionsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the integration_connections model
+   */
+  readonly fields: integration_connectionsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for integration_connections.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__integration_connectionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    companies<T extends integration_connections$companiesArgs<ExtArgs> = {}>(args?: Subset<T, integration_connections$companiesArgs<ExtArgs>>): Prisma__companiesClient<$Result.GetResult<Prisma.$companiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    users<T extends integration_connections$usersArgs<ExtArgs> = {}>(args?: Subset<T, integration_connections$usersArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    integration_logs<T extends integration_connections$integration_logsArgs<ExtArgs> = {}>(args?: Subset<T, integration_connections$integration_logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the integration_connections model
+   */
+  interface integration_connectionsFieldRefs {
+    readonly id: FieldRef<"integration_connections", 'String'>
+    readonly company_id: FieldRef<"integration_connections", 'Int'>
+    readonly integration_type: FieldRef<"integration_connections", 'String'>
+    readonly provider: FieldRef<"integration_connections", 'String'>
+    readonly credentials: FieldRef<"integration_connections", 'Json'>
+    readonly settings: FieldRef<"integration_connections", 'Json'>
+    readonly is_active: FieldRef<"integration_connections", 'Boolean'>
+    readonly last_sync_at: FieldRef<"integration_connections", 'DateTime'>
+    readonly created_by: FieldRef<"integration_connections", 'String'>
+    readonly created_at: FieldRef<"integration_connections", 'DateTime'>
+    readonly updated_at: FieldRef<"integration_connections", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * integration_connections findUnique
+   */
+  export type integration_connectionsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which integration_connections to fetch.
+     */
+    where: integration_connectionsWhereUniqueInput
+  }
+
+  /**
+   * integration_connections findUniqueOrThrow
+   */
+  export type integration_connectionsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which integration_connections to fetch.
+     */
+    where: integration_connectionsWhereUniqueInput
+  }
+
+  /**
+   * integration_connections findFirst
+   */
+  export type integration_connectionsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which integration_connections to fetch.
+     */
+    where?: integration_connectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of integration_connections to fetch.
+     */
+    orderBy?: integration_connectionsOrderByWithRelationInput | integration_connectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for integration_connections.
+     */
+    cursor?: integration_connectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` integration_connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` integration_connections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of integration_connections.
+     */
+    distinct?: Integration_connectionsScalarFieldEnum | Integration_connectionsScalarFieldEnum[]
+  }
+
+  /**
+   * integration_connections findFirstOrThrow
+   */
+  export type integration_connectionsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which integration_connections to fetch.
+     */
+    where?: integration_connectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of integration_connections to fetch.
+     */
+    orderBy?: integration_connectionsOrderByWithRelationInput | integration_connectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for integration_connections.
+     */
+    cursor?: integration_connectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` integration_connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` integration_connections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of integration_connections.
+     */
+    distinct?: Integration_connectionsScalarFieldEnum | Integration_connectionsScalarFieldEnum[]
+  }
+
+  /**
+   * integration_connections findMany
+   */
+  export type integration_connectionsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which integration_connections to fetch.
+     */
+    where?: integration_connectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of integration_connections to fetch.
+     */
+    orderBy?: integration_connectionsOrderByWithRelationInput | integration_connectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing integration_connections.
+     */
+    cursor?: integration_connectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` integration_connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` integration_connections.
+     */
+    skip?: number
+    distinct?: Integration_connectionsScalarFieldEnum | Integration_connectionsScalarFieldEnum[]
+  }
+
+  /**
+   * integration_connections create
+   */
+  export type integration_connectionsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a integration_connections.
+     */
+    data: XOR<integration_connectionsCreateInput, integration_connectionsUncheckedCreateInput>
+  }
+
+  /**
+   * integration_connections createMany
+   */
+  export type integration_connectionsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many integration_connections.
+     */
+    data: integration_connectionsCreateManyInput | integration_connectionsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * integration_connections createManyAndReturn
+   */
+  export type integration_connectionsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * The data used to create many integration_connections.
+     */
+    data: integration_connectionsCreateManyInput | integration_connectionsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * integration_connections update
+   */
+  export type integration_connectionsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a integration_connections.
+     */
+    data: XOR<integration_connectionsUpdateInput, integration_connectionsUncheckedUpdateInput>
+    /**
+     * Choose, which integration_connections to update.
+     */
+    where: integration_connectionsWhereUniqueInput
+  }
+
+  /**
+   * integration_connections updateMany
+   */
+  export type integration_connectionsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update integration_connections.
+     */
+    data: XOR<integration_connectionsUpdateManyMutationInput, integration_connectionsUncheckedUpdateManyInput>
+    /**
+     * Filter which integration_connections to update
+     */
+    where?: integration_connectionsWhereInput
+    /**
+     * Limit how many integration_connections to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * integration_connections updateManyAndReturn
+   */
+  export type integration_connectionsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * The data used to update integration_connections.
+     */
+    data: XOR<integration_connectionsUpdateManyMutationInput, integration_connectionsUncheckedUpdateManyInput>
+    /**
+     * Filter which integration_connections to update
+     */
+    where?: integration_connectionsWhereInput
+    /**
+     * Limit how many integration_connections to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * integration_connections upsert
+   */
+  export type integration_connectionsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the integration_connections to update in case it exists.
+     */
+    where: integration_connectionsWhereUniqueInput
+    /**
+     * In case the integration_connections found by the `where` argument doesn't exist, create a new integration_connections with this data.
+     */
+    create: XOR<integration_connectionsCreateInput, integration_connectionsUncheckedCreateInput>
+    /**
+     * In case the integration_connections was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<integration_connectionsUpdateInput, integration_connectionsUncheckedUpdateInput>
+  }
+
+  /**
+   * integration_connections delete
+   */
+  export type integration_connectionsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter which integration_connections to delete.
+     */
+    where: integration_connectionsWhereUniqueInput
+  }
+
+  /**
+   * integration_connections deleteMany
+   */
+  export type integration_connectionsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which integration_connections to delete
+     */
+    where?: integration_connectionsWhereInput
+    /**
+     * Limit how many integration_connections to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * integration_connections.companies
+   */
+  export type integration_connections$companiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the companies
+     */
+    select?: companiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the companies
+     */
+    omit?: companiesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: companiesInclude<ExtArgs> | null
+    where?: companiesWhereInput
+  }
+
+  /**
+   * integration_connections.users
+   */
+  export type integration_connections$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the users
+     */
+    select?: usersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the users
+     */
+    omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    where?: usersWhereInput
+  }
+
+  /**
+   * integration_connections.integration_logs
+   */
+  export type integration_connections$integration_logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+    where?: integration_logsWhereInput
+    orderBy?: integration_logsOrderByWithRelationInput | integration_logsOrderByWithRelationInput[]
+    cursor?: integration_logsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Integration_logsScalarFieldEnum | Integration_logsScalarFieldEnum[]
+  }
+
+  /**
+   * integration_connections without action
+   */
+  export type integration_connectionsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_connections
+     */
+    select?: integration_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_connections
+     */
+    omit?: integration_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_connectionsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model integration_logs
+   */
+
+  export type AggregateIntegration_logs = {
+    _count: Integration_logsCountAggregateOutputType | null
+    _min: Integration_logsMinAggregateOutputType | null
+    _max: Integration_logsMaxAggregateOutputType | null
+  }
+
+  export type Integration_logsMinAggregateOutputType = {
+    id: string | null
+    integration_connection_id: string | null
+    event_type: string | null
+    status: string | null
+    message: string | null
+    created_at: Date | null
+  }
+
+  export type Integration_logsMaxAggregateOutputType = {
+    id: string | null
+    integration_connection_id: string | null
+    event_type: string | null
+    status: string | null
+    message: string | null
+    created_at: Date | null
+  }
+
+  export type Integration_logsCountAggregateOutputType = {
+    id: number
+    integration_connection_id: number
+    event_type: number
+    status: number
+    message: number
+    details: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type Integration_logsMinAggregateInputType = {
+    id?: true
+    integration_connection_id?: true
+    event_type?: true
+    status?: true
+    message?: true
+    created_at?: true
+  }
+
+  export type Integration_logsMaxAggregateInputType = {
+    id?: true
+    integration_connection_id?: true
+    event_type?: true
+    status?: true
+    message?: true
+    created_at?: true
+  }
+
+  export type Integration_logsCountAggregateInputType = {
+    id?: true
+    integration_connection_id?: true
+    event_type?: true
+    status?: true
+    message?: true
+    details?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type Integration_logsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which integration_logs to aggregate.
+     */
+    where?: integration_logsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of integration_logs to fetch.
+     */
+    orderBy?: integration_logsOrderByWithRelationInput | integration_logsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: integration_logsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` integration_logs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` integration_logs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned integration_logs
+    **/
+    _count?: true | Integration_logsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Integration_logsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Integration_logsMaxAggregateInputType
+  }
+
+  export type GetIntegration_logsAggregateType<T extends Integration_logsAggregateArgs> = {
+        [P in keyof T & keyof AggregateIntegration_logs]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIntegration_logs[P]>
+      : GetScalarType<T[P], AggregateIntegration_logs[P]>
+  }
+
+
+
+
+  export type integration_logsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: integration_logsWhereInput
+    orderBy?: integration_logsOrderByWithAggregationInput | integration_logsOrderByWithAggregationInput[]
+    by: Integration_logsScalarFieldEnum[] | Integration_logsScalarFieldEnum
+    having?: integration_logsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Integration_logsCountAggregateInputType | true
+    _min?: Integration_logsMinAggregateInputType
+    _max?: Integration_logsMaxAggregateInputType
+  }
+
+  export type Integration_logsGroupByOutputType = {
+    id: string
+    integration_connection_id: string
+    event_type: string
+    status: string
+    message: string | null
+    details: JsonValue | null
+    created_at: Date
+    _count: Integration_logsCountAggregateOutputType | null
+    _min: Integration_logsMinAggregateOutputType | null
+    _max: Integration_logsMaxAggregateOutputType | null
+  }
+
+  type GetIntegration_logsGroupByPayload<T extends integration_logsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Integration_logsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Integration_logsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Integration_logsGroupByOutputType[P]>
+            : GetScalarType<T[P], Integration_logsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type integration_logsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    integration_connection_id?: boolean
+    event_type?: boolean
+    status?: boolean
+    message?: boolean
+    details?: boolean
+    created_at?: boolean
+    integration_connections?: boolean | integration_connectionsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["integration_logs"]>
+
+  export type integration_logsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    integration_connection_id?: boolean
+    event_type?: boolean
+    status?: boolean
+    message?: boolean
+    details?: boolean
+    created_at?: boolean
+    integration_connections?: boolean | integration_connectionsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["integration_logs"]>
+
+  export type integration_logsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    integration_connection_id?: boolean
+    event_type?: boolean
+    status?: boolean
+    message?: boolean
+    details?: boolean
+    created_at?: boolean
+    integration_connections?: boolean | integration_connectionsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["integration_logs"]>
+
+  export type integration_logsSelectScalar = {
+    id?: boolean
+    integration_connection_id?: boolean
+    event_type?: boolean
+    status?: boolean
+    message?: boolean
+    details?: boolean
+    created_at?: boolean
+  }
+
+  export type integration_logsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "integration_connection_id" | "event_type" | "status" | "message" | "details" | "created_at", ExtArgs["result"]["integration_logs"]>
+  export type integration_logsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    integration_connections?: boolean | integration_connectionsDefaultArgs<ExtArgs>
+  }
+  export type integration_logsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    integration_connections?: boolean | integration_connectionsDefaultArgs<ExtArgs>
+  }
+  export type integration_logsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    integration_connections?: boolean | integration_connectionsDefaultArgs<ExtArgs>
+  }
+
+  export type $integration_logsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "integration_logs"
+    objects: {
+      integration_connections: Prisma.$integration_connectionsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      integration_connection_id: string
+      event_type: string
+      status: string
+      message: string | null
+      details: Prisma.JsonValue | null
+      created_at: Date
+    }, ExtArgs["result"]["integration_logs"]>
+    composites: {}
+  }
+
+  type integration_logsGetPayload<S extends boolean | null | undefined | integration_logsDefaultArgs> = $Result.GetResult<Prisma.$integration_logsPayload, S>
+
+  type integration_logsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<integration_logsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Integration_logsCountAggregateInputType | true
+    }
+
+  export interface integration_logsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['integration_logs'], meta: { name: 'integration_logs' } }
+    /**
+     * Find zero or one Integration_logs that matches the filter.
+     * @param {integration_logsFindUniqueArgs} args - Arguments to find a Integration_logs
+     * @example
+     * // Get one Integration_logs
+     * const integration_logs = await prisma.integration_logs.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends integration_logsFindUniqueArgs>(args: SelectSubset<T, integration_logsFindUniqueArgs<ExtArgs>>): Prisma__integration_logsClient<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Integration_logs that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {integration_logsFindUniqueOrThrowArgs} args - Arguments to find a Integration_logs
+     * @example
+     * // Get one Integration_logs
+     * const integration_logs = await prisma.integration_logs.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends integration_logsFindUniqueOrThrowArgs>(args: SelectSubset<T, integration_logsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__integration_logsClient<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Integration_logs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_logsFindFirstArgs} args - Arguments to find a Integration_logs
+     * @example
+     * // Get one Integration_logs
+     * const integration_logs = await prisma.integration_logs.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends integration_logsFindFirstArgs>(args?: SelectSubset<T, integration_logsFindFirstArgs<ExtArgs>>): Prisma__integration_logsClient<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Integration_logs that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_logsFindFirstOrThrowArgs} args - Arguments to find a Integration_logs
+     * @example
+     * // Get one Integration_logs
+     * const integration_logs = await prisma.integration_logs.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends integration_logsFindFirstOrThrowArgs>(args?: SelectSubset<T, integration_logsFindFirstOrThrowArgs<ExtArgs>>): Prisma__integration_logsClient<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Integration_logs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_logsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Integration_logs
+     * const integration_logs = await prisma.integration_logs.findMany()
+     * 
+     * // Get first 10 Integration_logs
+     * const integration_logs = await prisma.integration_logs.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const integration_logsWithIdOnly = await prisma.integration_logs.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends integration_logsFindManyArgs>(args?: SelectSubset<T, integration_logsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Integration_logs.
+     * @param {integration_logsCreateArgs} args - Arguments to create a Integration_logs.
+     * @example
+     * // Create one Integration_logs
+     * const Integration_logs = await prisma.integration_logs.create({
+     *   data: {
+     *     // ... data to create a Integration_logs
+     *   }
+     * })
+     * 
+     */
+    create<T extends integration_logsCreateArgs>(args: SelectSubset<T, integration_logsCreateArgs<ExtArgs>>): Prisma__integration_logsClient<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Integration_logs.
+     * @param {integration_logsCreateManyArgs} args - Arguments to create many Integration_logs.
+     * @example
+     * // Create many Integration_logs
+     * const integration_logs = await prisma.integration_logs.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends integration_logsCreateManyArgs>(args?: SelectSubset<T, integration_logsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Integration_logs and returns the data saved in the database.
+     * @param {integration_logsCreateManyAndReturnArgs} args - Arguments to create many Integration_logs.
+     * @example
+     * // Create many Integration_logs
+     * const integration_logs = await prisma.integration_logs.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Integration_logs and only return the `id`
+     * const integration_logsWithIdOnly = await prisma.integration_logs.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends integration_logsCreateManyAndReturnArgs>(args?: SelectSubset<T, integration_logsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Integration_logs.
+     * @param {integration_logsDeleteArgs} args - Arguments to delete one Integration_logs.
+     * @example
+     * // Delete one Integration_logs
+     * const Integration_logs = await prisma.integration_logs.delete({
+     *   where: {
+     *     // ... filter to delete one Integration_logs
+     *   }
+     * })
+     * 
+     */
+    delete<T extends integration_logsDeleteArgs>(args: SelectSubset<T, integration_logsDeleteArgs<ExtArgs>>): Prisma__integration_logsClient<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Integration_logs.
+     * @param {integration_logsUpdateArgs} args - Arguments to update one Integration_logs.
+     * @example
+     * // Update one Integration_logs
+     * const integration_logs = await prisma.integration_logs.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends integration_logsUpdateArgs>(args: SelectSubset<T, integration_logsUpdateArgs<ExtArgs>>): Prisma__integration_logsClient<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Integration_logs.
+     * @param {integration_logsDeleteManyArgs} args - Arguments to filter Integration_logs to delete.
+     * @example
+     * // Delete a few Integration_logs
+     * const { count } = await prisma.integration_logs.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends integration_logsDeleteManyArgs>(args?: SelectSubset<T, integration_logsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Integration_logs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_logsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Integration_logs
+     * const integration_logs = await prisma.integration_logs.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends integration_logsUpdateManyArgs>(args: SelectSubset<T, integration_logsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Integration_logs and returns the data updated in the database.
+     * @param {integration_logsUpdateManyAndReturnArgs} args - Arguments to update many Integration_logs.
+     * @example
+     * // Update many Integration_logs
+     * const integration_logs = await prisma.integration_logs.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Integration_logs and only return the `id`
+     * const integration_logsWithIdOnly = await prisma.integration_logs.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends integration_logsUpdateManyAndReturnArgs>(args: SelectSubset<T, integration_logsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Integration_logs.
+     * @param {integration_logsUpsertArgs} args - Arguments to update or create a Integration_logs.
+     * @example
+     * // Update or create a Integration_logs
+     * const integration_logs = await prisma.integration_logs.upsert({
+     *   create: {
+     *     // ... data to create a Integration_logs
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Integration_logs we want to update
+     *   }
+     * })
+     */
+    upsert<T extends integration_logsUpsertArgs>(args: SelectSubset<T, integration_logsUpsertArgs<ExtArgs>>): Prisma__integration_logsClient<$Result.GetResult<Prisma.$integration_logsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Integration_logs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_logsCountArgs} args - Arguments to filter Integration_logs to count.
+     * @example
+     * // Count the number of Integration_logs
+     * const count = await prisma.integration_logs.count({
+     *   where: {
+     *     // ... the filter for the Integration_logs we want to count
+     *   }
+     * })
+    **/
+    count<T extends integration_logsCountArgs>(
+      args?: Subset<T, integration_logsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Integration_logsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Integration_logs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Integration_logsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Integration_logsAggregateArgs>(args: Subset<T, Integration_logsAggregateArgs>): Prisma.PrismaPromise<GetIntegration_logsAggregateType<T>>
+
+    /**
+     * Group by Integration_logs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {integration_logsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends integration_logsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: integration_logsGroupByArgs['orderBy'] }
+        : { orderBy?: integration_logsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, integration_logsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIntegration_logsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the integration_logs model
+   */
+  readonly fields: integration_logsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for integration_logs.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__integration_logsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    integration_connections<T extends integration_connectionsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, integration_connectionsDefaultArgs<ExtArgs>>): Prisma__integration_connectionsClient<$Result.GetResult<Prisma.$integration_connectionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the integration_logs model
+   */
+  interface integration_logsFieldRefs {
+    readonly id: FieldRef<"integration_logs", 'String'>
+    readonly integration_connection_id: FieldRef<"integration_logs", 'String'>
+    readonly event_type: FieldRef<"integration_logs", 'String'>
+    readonly status: FieldRef<"integration_logs", 'String'>
+    readonly message: FieldRef<"integration_logs", 'String'>
+    readonly details: FieldRef<"integration_logs", 'Json'>
+    readonly created_at: FieldRef<"integration_logs", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * integration_logs findUnique
+   */
+  export type integration_logsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+    /**
+     * Filter, which integration_logs to fetch.
+     */
+    where: integration_logsWhereUniqueInput
+  }
+
+  /**
+   * integration_logs findUniqueOrThrow
+   */
+  export type integration_logsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+    /**
+     * Filter, which integration_logs to fetch.
+     */
+    where: integration_logsWhereUniqueInput
+  }
+
+  /**
+   * integration_logs findFirst
+   */
+  export type integration_logsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+    /**
+     * Filter, which integration_logs to fetch.
+     */
+    where?: integration_logsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of integration_logs to fetch.
+     */
+    orderBy?: integration_logsOrderByWithRelationInput | integration_logsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for integration_logs.
+     */
+    cursor?: integration_logsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` integration_logs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` integration_logs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of integration_logs.
+     */
+    distinct?: Integration_logsScalarFieldEnum | Integration_logsScalarFieldEnum[]
+  }
+
+  /**
+   * integration_logs findFirstOrThrow
+   */
+  export type integration_logsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+    /**
+     * Filter, which integration_logs to fetch.
+     */
+    where?: integration_logsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of integration_logs to fetch.
+     */
+    orderBy?: integration_logsOrderByWithRelationInput | integration_logsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for integration_logs.
+     */
+    cursor?: integration_logsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` integration_logs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` integration_logs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of integration_logs.
+     */
+    distinct?: Integration_logsScalarFieldEnum | Integration_logsScalarFieldEnum[]
+  }
+
+  /**
+   * integration_logs findMany
+   */
+  export type integration_logsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+    /**
+     * Filter, which integration_logs to fetch.
+     */
+    where?: integration_logsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of integration_logs to fetch.
+     */
+    orderBy?: integration_logsOrderByWithRelationInput | integration_logsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing integration_logs.
+     */
+    cursor?: integration_logsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` integration_logs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` integration_logs.
+     */
+    skip?: number
+    distinct?: Integration_logsScalarFieldEnum | Integration_logsScalarFieldEnum[]
+  }
+
+  /**
+   * integration_logs create
+   */
+  export type integration_logsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a integration_logs.
+     */
+    data: XOR<integration_logsCreateInput, integration_logsUncheckedCreateInput>
+  }
+
+  /**
+   * integration_logs createMany
+   */
+  export type integration_logsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many integration_logs.
+     */
+    data: integration_logsCreateManyInput | integration_logsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * integration_logs createManyAndReturn
+   */
+  export type integration_logsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * The data used to create many integration_logs.
+     */
+    data: integration_logsCreateManyInput | integration_logsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * integration_logs update
+   */
+  export type integration_logsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a integration_logs.
+     */
+    data: XOR<integration_logsUpdateInput, integration_logsUncheckedUpdateInput>
+    /**
+     * Choose, which integration_logs to update.
+     */
+    where: integration_logsWhereUniqueInput
+  }
+
+  /**
+   * integration_logs updateMany
+   */
+  export type integration_logsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update integration_logs.
+     */
+    data: XOR<integration_logsUpdateManyMutationInput, integration_logsUncheckedUpdateManyInput>
+    /**
+     * Filter which integration_logs to update
+     */
+    where?: integration_logsWhereInput
+    /**
+     * Limit how many integration_logs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * integration_logs updateManyAndReturn
+   */
+  export type integration_logsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * The data used to update integration_logs.
+     */
+    data: XOR<integration_logsUpdateManyMutationInput, integration_logsUncheckedUpdateManyInput>
+    /**
+     * Filter which integration_logs to update
+     */
+    where?: integration_logsWhereInput
+    /**
+     * Limit how many integration_logs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * integration_logs upsert
+   */
+  export type integration_logsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the integration_logs to update in case it exists.
+     */
+    where: integration_logsWhereUniqueInput
+    /**
+     * In case the integration_logs found by the `where` argument doesn't exist, create a new integration_logs with this data.
+     */
+    create: XOR<integration_logsCreateInput, integration_logsUncheckedCreateInput>
+    /**
+     * In case the integration_logs was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<integration_logsUpdateInput, integration_logsUncheckedUpdateInput>
+  }
+
+  /**
+   * integration_logs delete
+   */
+  export type integration_logsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+    /**
+     * Filter which integration_logs to delete.
+     */
+    where: integration_logsWhereUniqueInput
+  }
+
+  /**
+   * integration_logs deleteMany
+   */
+  export type integration_logsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which integration_logs to delete
+     */
+    where?: integration_logsWhereInput
+    /**
+     * Limit how many integration_logs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * integration_logs without action
+   */
+  export type integration_logsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the integration_logs
+     */
+    select?: integration_logsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the integration_logs
+     */
+    omit?: integration_logsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: integration_logsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model hardware_connections
+   */
+
+  export type AggregateHardware_connections = {
+    _count: Hardware_connectionsCountAggregateOutputType | null
+    _avg: Hardware_connectionsAvgAggregateOutputType | null
+    _sum: Hardware_connectionsSumAggregateOutputType | null
+    _min: Hardware_connectionsMinAggregateOutputType | null
+    _max: Hardware_connectionsMaxAggregateOutputType | null
+  }
+
+  export type Hardware_connectionsAvgAggregateOutputType = {
+    company_id: number | null
+  }
+
+  export type Hardware_connectionsSumAggregateOutputType = {
+    company_id: number | null
+  }
+
+  export type Hardware_connectionsMinAggregateOutputType = {
+    id: string | null
+    company_id: number | null
+    hardware_type: string | null
+    name: string | null
+    model: string | null
+    serial_number: string | null
+    is_active: boolean | null
+    last_connected_at: Date | null
+    created_by: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Hardware_connectionsMaxAggregateOutputType = {
+    id: string | null
+    company_id: number | null
+    hardware_type: string | null
+    name: string | null
+    model: string | null
+    serial_number: string | null
+    is_active: boolean | null
+    last_connected_at: Date | null
+    created_by: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type Hardware_connectionsCountAggregateOutputType = {
+    id: number
+    company_id: number
+    hardware_type: number
+    name: number
+    model: number
+    serial_number: number
+    connection_details: number
+    is_active: number
+    last_connected_at: number
+    created_by: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type Hardware_connectionsAvgAggregateInputType = {
+    company_id?: true
+  }
+
+  export type Hardware_connectionsSumAggregateInputType = {
+    company_id?: true
+  }
+
+  export type Hardware_connectionsMinAggregateInputType = {
+    id?: true
+    company_id?: true
+    hardware_type?: true
+    name?: true
+    model?: true
+    serial_number?: true
+    is_active?: true
+    last_connected_at?: true
+    created_by?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Hardware_connectionsMaxAggregateInputType = {
+    id?: true
+    company_id?: true
+    hardware_type?: true
+    name?: true
+    model?: true
+    serial_number?: true
+    is_active?: true
+    last_connected_at?: true
+    created_by?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type Hardware_connectionsCountAggregateInputType = {
+    id?: true
+    company_id?: true
+    hardware_type?: true
+    name?: true
+    model?: true
+    serial_number?: true
+    connection_details?: true
+    is_active?: true
+    last_connected_at?: true
+    created_by?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type Hardware_connectionsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which hardware_connections to aggregate.
+     */
+    where?: hardware_connectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of hardware_connections to fetch.
+     */
+    orderBy?: hardware_connectionsOrderByWithRelationInput | hardware_connectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: hardware_connectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` hardware_connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` hardware_connections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned hardware_connections
+    **/
+    _count?: true | Hardware_connectionsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Hardware_connectionsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Hardware_connectionsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Hardware_connectionsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Hardware_connectionsMaxAggregateInputType
+  }
+
+  export type GetHardware_connectionsAggregateType<T extends Hardware_connectionsAggregateArgs> = {
+        [P in keyof T & keyof AggregateHardware_connections]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHardware_connections[P]>
+      : GetScalarType<T[P], AggregateHardware_connections[P]>
+  }
+
+
+
+
+  export type hardware_connectionsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: hardware_connectionsWhereInput
+    orderBy?: hardware_connectionsOrderByWithAggregationInput | hardware_connectionsOrderByWithAggregationInput[]
+    by: Hardware_connectionsScalarFieldEnum[] | Hardware_connectionsScalarFieldEnum
+    having?: hardware_connectionsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Hardware_connectionsCountAggregateInputType | true
+    _avg?: Hardware_connectionsAvgAggregateInputType
+    _sum?: Hardware_connectionsSumAggregateInputType
+    _min?: Hardware_connectionsMinAggregateInputType
+    _max?: Hardware_connectionsMaxAggregateInputType
+  }
+
+  export type Hardware_connectionsGroupByOutputType = {
+    id: string
+    company_id: number | null
+    hardware_type: string
+    name: string
+    model: string | null
+    serial_number: string | null
+    connection_details: JsonValue | null
+    is_active: boolean
+    last_connected_at: Date | null
+    created_by: string | null
+    created_at: Date
+    updated_at: Date
+    _count: Hardware_connectionsCountAggregateOutputType | null
+    _avg: Hardware_connectionsAvgAggregateOutputType | null
+    _sum: Hardware_connectionsSumAggregateOutputType | null
+    _min: Hardware_connectionsMinAggregateOutputType | null
+    _max: Hardware_connectionsMaxAggregateOutputType | null
+  }
+
+  type GetHardware_connectionsGroupByPayload<T extends hardware_connectionsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Hardware_connectionsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Hardware_connectionsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Hardware_connectionsGroupByOutputType[P]>
+            : GetScalarType<T[P], Hardware_connectionsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type hardware_connectionsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_id?: boolean
+    hardware_type?: boolean
+    name?: boolean
+    model?: boolean
+    serial_number?: boolean
+    connection_details?: boolean
+    is_active?: boolean
+    last_connected_at?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | hardware_connections$companiesArgs<ExtArgs>
+    users?: boolean | hardware_connections$usersArgs<ExtArgs>
+  }, ExtArgs["result"]["hardware_connections"]>
+
+  export type hardware_connectionsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_id?: boolean
+    hardware_type?: boolean
+    name?: boolean
+    model?: boolean
+    serial_number?: boolean
+    connection_details?: boolean
+    is_active?: boolean
+    last_connected_at?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | hardware_connections$companiesArgs<ExtArgs>
+    users?: boolean | hardware_connections$usersArgs<ExtArgs>
+  }, ExtArgs["result"]["hardware_connections"]>
+
+  export type hardware_connectionsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_id?: boolean
+    hardware_type?: boolean
+    name?: boolean
+    model?: boolean
+    serial_number?: boolean
+    connection_details?: boolean
+    is_active?: boolean
+    last_connected_at?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    companies?: boolean | hardware_connections$companiesArgs<ExtArgs>
+    users?: boolean | hardware_connections$usersArgs<ExtArgs>
+  }, ExtArgs["result"]["hardware_connections"]>
+
+  export type hardware_connectionsSelectScalar = {
+    id?: boolean
+    company_id?: boolean
+    hardware_type?: boolean
+    name?: boolean
+    model?: boolean
+    serial_number?: boolean
+    connection_details?: boolean
+    is_active?: boolean
+    last_connected_at?: boolean
+    created_by?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type hardware_connectionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "company_id" | "hardware_type" | "name" | "model" | "serial_number" | "connection_details" | "is_active" | "last_connected_at" | "created_by" | "created_at" | "updated_at", ExtArgs["result"]["hardware_connections"]>
+  export type hardware_connectionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | hardware_connections$companiesArgs<ExtArgs>
+    users?: boolean | hardware_connections$usersArgs<ExtArgs>
+  }
+  export type hardware_connectionsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | hardware_connections$companiesArgs<ExtArgs>
+    users?: boolean | hardware_connections$usersArgs<ExtArgs>
+  }
+  export type hardware_connectionsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companies?: boolean | hardware_connections$companiesArgs<ExtArgs>
+    users?: boolean | hardware_connections$usersArgs<ExtArgs>
+  }
+
+  export type $hardware_connectionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "hardware_connections"
+    objects: {
+      companies: Prisma.$companiesPayload<ExtArgs> | null
+      users: Prisma.$usersPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      company_id: number | null
+      hardware_type: string
+      name: string
+      model: string | null
+      serial_number: string | null
+      connection_details: Prisma.JsonValue | null
+      is_active: boolean
+      last_connected_at: Date | null
+      created_by: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["hardware_connections"]>
+    composites: {}
+  }
+
+  type hardware_connectionsGetPayload<S extends boolean | null | undefined | hardware_connectionsDefaultArgs> = $Result.GetResult<Prisma.$hardware_connectionsPayload, S>
+
+  type hardware_connectionsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<hardware_connectionsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Hardware_connectionsCountAggregateInputType | true
+    }
+
+  export interface hardware_connectionsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['hardware_connections'], meta: { name: 'hardware_connections' } }
+    /**
+     * Find zero or one Hardware_connections that matches the filter.
+     * @param {hardware_connectionsFindUniqueArgs} args - Arguments to find a Hardware_connections
+     * @example
+     * // Get one Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends hardware_connectionsFindUniqueArgs>(args: SelectSubset<T, hardware_connectionsFindUniqueArgs<ExtArgs>>): Prisma__hardware_connectionsClient<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Hardware_connections that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {hardware_connectionsFindUniqueOrThrowArgs} args - Arguments to find a Hardware_connections
+     * @example
+     * // Get one Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends hardware_connectionsFindUniqueOrThrowArgs>(args: SelectSubset<T, hardware_connectionsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__hardware_connectionsClient<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Hardware_connections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {hardware_connectionsFindFirstArgs} args - Arguments to find a Hardware_connections
+     * @example
+     * // Get one Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends hardware_connectionsFindFirstArgs>(args?: SelectSubset<T, hardware_connectionsFindFirstArgs<ExtArgs>>): Prisma__hardware_connectionsClient<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Hardware_connections that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {hardware_connectionsFindFirstOrThrowArgs} args - Arguments to find a Hardware_connections
+     * @example
+     * // Get one Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends hardware_connectionsFindFirstOrThrowArgs>(args?: SelectSubset<T, hardware_connectionsFindFirstOrThrowArgs<ExtArgs>>): Prisma__hardware_connectionsClient<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Hardware_connections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {hardware_connectionsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.findMany()
+     * 
+     * // Get first 10 Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const hardware_connectionsWithIdOnly = await prisma.hardware_connections.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends hardware_connectionsFindManyArgs>(args?: SelectSubset<T, hardware_connectionsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Hardware_connections.
+     * @param {hardware_connectionsCreateArgs} args - Arguments to create a Hardware_connections.
+     * @example
+     * // Create one Hardware_connections
+     * const Hardware_connections = await prisma.hardware_connections.create({
+     *   data: {
+     *     // ... data to create a Hardware_connections
+     *   }
+     * })
+     * 
+     */
+    create<T extends hardware_connectionsCreateArgs>(args: SelectSubset<T, hardware_connectionsCreateArgs<ExtArgs>>): Prisma__hardware_connectionsClient<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Hardware_connections.
+     * @param {hardware_connectionsCreateManyArgs} args - Arguments to create many Hardware_connections.
+     * @example
+     * // Create many Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends hardware_connectionsCreateManyArgs>(args?: SelectSubset<T, hardware_connectionsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Hardware_connections and returns the data saved in the database.
+     * @param {hardware_connectionsCreateManyAndReturnArgs} args - Arguments to create many Hardware_connections.
+     * @example
+     * // Create many Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Hardware_connections and only return the `id`
+     * const hardware_connectionsWithIdOnly = await prisma.hardware_connections.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends hardware_connectionsCreateManyAndReturnArgs>(args?: SelectSubset<T, hardware_connectionsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Hardware_connections.
+     * @param {hardware_connectionsDeleteArgs} args - Arguments to delete one Hardware_connections.
+     * @example
+     * // Delete one Hardware_connections
+     * const Hardware_connections = await prisma.hardware_connections.delete({
+     *   where: {
+     *     // ... filter to delete one Hardware_connections
+     *   }
+     * })
+     * 
+     */
+    delete<T extends hardware_connectionsDeleteArgs>(args: SelectSubset<T, hardware_connectionsDeleteArgs<ExtArgs>>): Prisma__hardware_connectionsClient<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Hardware_connections.
+     * @param {hardware_connectionsUpdateArgs} args - Arguments to update one Hardware_connections.
+     * @example
+     * // Update one Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends hardware_connectionsUpdateArgs>(args: SelectSubset<T, hardware_connectionsUpdateArgs<ExtArgs>>): Prisma__hardware_connectionsClient<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Hardware_connections.
+     * @param {hardware_connectionsDeleteManyArgs} args - Arguments to filter Hardware_connections to delete.
+     * @example
+     * // Delete a few Hardware_connections
+     * const { count } = await prisma.hardware_connections.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends hardware_connectionsDeleteManyArgs>(args?: SelectSubset<T, hardware_connectionsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Hardware_connections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {hardware_connectionsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends hardware_connectionsUpdateManyArgs>(args: SelectSubset<T, hardware_connectionsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Hardware_connections and returns the data updated in the database.
+     * @param {hardware_connectionsUpdateManyAndReturnArgs} args - Arguments to update many Hardware_connections.
+     * @example
+     * // Update many Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Hardware_connections and only return the `id`
+     * const hardware_connectionsWithIdOnly = await prisma.hardware_connections.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends hardware_connectionsUpdateManyAndReturnArgs>(args: SelectSubset<T, hardware_connectionsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Hardware_connections.
+     * @param {hardware_connectionsUpsertArgs} args - Arguments to update or create a Hardware_connections.
+     * @example
+     * // Update or create a Hardware_connections
+     * const hardware_connections = await prisma.hardware_connections.upsert({
+     *   create: {
+     *     // ... data to create a Hardware_connections
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Hardware_connections we want to update
+     *   }
+     * })
+     */
+    upsert<T extends hardware_connectionsUpsertArgs>(args: SelectSubset<T, hardware_connectionsUpsertArgs<ExtArgs>>): Prisma__hardware_connectionsClient<$Result.GetResult<Prisma.$hardware_connectionsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Hardware_connections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {hardware_connectionsCountArgs} args - Arguments to filter Hardware_connections to count.
+     * @example
+     * // Count the number of Hardware_connections
+     * const count = await prisma.hardware_connections.count({
+     *   where: {
+     *     // ... the filter for the Hardware_connections we want to count
+     *   }
+     * })
+    **/
+    count<T extends hardware_connectionsCountArgs>(
+      args?: Subset<T, hardware_connectionsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Hardware_connectionsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Hardware_connections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Hardware_connectionsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Hardware_connectionsAggregateArgs>(args: Subset<T, Hardware_connectionsAggregateArgs>): Prisma.PrismaPromise<GetHardware_connectionsAggregateType<T>>
+
+    /**
+     * Group by Hardware_connections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {hardware_connectionsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends hardware_connectionsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: hardware_connectionsGroupByArgs['orderBy'] }
+        : { orderBy?: hardware_connectionsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, hardware_connectionsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHardware_connectionsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the hardware_connections model
+   */
+  readonly fields: hardware_connectionsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for hardware_connections.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__hardware_connectionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    companies<T extends hardware_connections$companiesArgs<ExtArgs> = {}>(args?: Subset<T, hardware_connections$companiesArgs<ExtArgs>>): Prisma__companiesClient<$Result.GetResult<Prisma.$companiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    users<T extends hardware_connections$usersArgs<ExtArgs> = {}>(args?: Subset<T, hardware_connections$usersArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the hardware_connections model
+   */
+  interface hardware_connectionsFieldRefs {
+    readonly id: FieldRef<"hardware_connections", 'String'>
+    readonly company_id: FieldRef<"hardware_connections", 'Int'>
+    readonly hardware_type: FieldRef<"hardware_connections", 'String'>
+    readonly name: FieldRef<"hardware_connections", 'String'>
+    readonly model: FieldRef<"hardware_connections", 'String'>
+    readonly serial_number: FieldRef<"hardware_connections", 'String'>
+    readonly connection_details: FieldRef<"hardware_connections", 'Json'>
+    readonly is_active: FieldRef<"hardware_connections", 'Boolean'>
+    readonly last_connected_at: FieldRef<"hardware_connections", 'DateTime'>
+    readonly created_by: FieldRef<"hardware_connections", 'String'>
+    readonly created_at: FieldRef<"hardware_connections", 'DateTime'>
+    readonly updated_at: FieldRef<"hardware_connections", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * hardware_connections findUnique
+   */
+  export type hardware_connectionsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which hardware_connections to fetch.
+     */
+    where: hardware_connectionsWhereUniqueInput
+  }
+
+  /**
+   * hardware_connections findUniqueOrThrow
+   */
+  export type hardware_connectionsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which hardware_connections to fetch.
+     */
+    where: hardware_connectionsWhereUniqueInput
+  }
+
+  /**
+   * hardware_connections findFirst
+   */
+  export type hardware_connectionsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which hardware_connections to fetch.
+     */
+    where?: hardware_connectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of hardware_connections to fetch.
+     */
+    orderBy?: hardware_connectionsOrderByWithRelationInput | hardware_connectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for hardware_connections.
+     */
+    cursor?: hardware_connectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` hardware_connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` hardware_connections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of hardware_connections.
+     */
+    distinct?: Hardware_connectionsScalarFieldEnum | Hardware_connectionsScalarFieldEnum[]
+  }
+
+  /**
+   * hardware_connections findFirstOrThrow
+   */
+  export type hardware_connectionsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which hardware_connections to fetch.
+     */
+    where?: hardware_connectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of hardware_connections to fetch.
+     */
+    orderBy?: hardware_connectionsOrderByWithRelationInput | hardware_connectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for hardware_connections.
+     */
+    cursor?: hardware_connectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` hardware_connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` hardware_connections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of hardware_connections.
+     */
+    distinct?: Hardware_connectionsScalarFieldEnum | Hardware_connectionsScalarFieldEnum[]
+  }
+
+  /**
+   * hardware_connections findMany
+   */
+  export type hardware_connectionsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which hardware_connections to fetch.
+     */
+    where?: hardware_connectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of hardware_connections to fetch.
+     */
+    orderBy?: hardware_connectionsOrderByWithRelationInput | hardware_connectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing hardware_connections.
+     */
+    cursor?: hardware_connectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` hardware_connections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` hardware_connections.
+     */
+    skip?: number
+    distinct?: Hardware_connectionsScalarFieldEnum | Hardware_connectionsScalarFieldEnum[]
+  }
+
+  /**
+   * hardware_connections create
+   */
+  export type hardware_connectionsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a hardware_connections.
+     */
+    data: XOR<hardware_connectionsCreateInput, hardware_connectionsUncheckedCreateInput>
+  }
+
+  /**
+   * hardware_connections createMany
+   */
+  export type hardware_connectionsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many hardware_connections.
+     */
+    data: hardware_connectionsCreateManyInput | hardware_connectionsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * hardware_connections createManyAndReturn
+   */
+  export type hardware_connectionsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * The data used to create many hardware_connections.
+     */
+    data: hardware_connectionsCreateManyInput | hardware_connectionsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * hardware_connections update
+   */
+  export type hardware_connectionsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a hardware_connections.
+     */
+    data: XOR<hardware_connectionsUpdateInput, hardware_connectionsUncheckedUpdateInput>
+    /**
+     * Choose, which hardware_connections to update.
+     */
+    where: hardware_connectionsWhereUniqueInput
+  }
+
+  /**
+   * hardware_connections updateMany
+   */
+  export type hardware_connectionsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update hardware_connections.
+     */
+    data: XOR<hardware_connectionsUpdateManyMutationInput, hardware_connectionsUncheckedUpdateManyInput>
+    /**
+     * Filter which hardware_connections to update
+     */
+    where?: hardware_connectionsWhereInput
+    /**
+     * Limit how many hardware_connections to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * hardware_connections updateManyAndReturn
+   */
+  export type hardware_connectionsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * The data used to update hardware_connections.
+     */
+    data: XOR<hardware_connectionsUpdateManyMutationInput, hardware_connectionsUncheckedUpdateManyInput>
+    /**
+     * Filter which hardware_connections to update
+     */
+    where?: hardware_connectionsWhereInput
+    /**
+     * Limit how many hardware_connections to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * hardware_connections upsert
+   */
+  export type hardware_connectionsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the hardware_connections to update in case it exists.
+     */
+    where: hardware_connectionsWhereUniqueInput
+    /**
+     * In case the hardware_connections found by the `where` argument doesn't exist, create a new hardware_connections with this data.
+     */
+    create: XOR<hardware_connectionsCreateInput, hardware_connectionsUncheckedCreateInput>
+    /**
+     * In case the hardware_connections was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<hardware_connectionsUpdateInput, hardware_connectionsUncheckedUpdateInput>
+  }
+
+  /**
+   * hardware_connections delete
+   */
+  export type hardware_connectionsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+    /**
+     * Filter which hardware_connections to delete.
+     */
+    where: hardware_connectionsWhereUniqueInput
+  }
+
+  /**
+   * hardware_connections deleteMany
+   */
+  export type hardware_connectionsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which hardware_connections to delete
+     */
+    where?: hardware_connectionsWhereInput
+    /**
+     * Limit how many hardware_connections to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * hardware_connections.companies
+   */
+  export type hardware_connections$companiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the companies
+     */
+    select?: companiesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the companies
+     */
+    omit?: companiesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: companiesInclude<ExtArgs> | null
+    where?: companiesWhereInput
+  }
+
+  /**
+   * hardware_connections.users
+   */
+  export type hardware_connections$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the users
+     */
+    select?: usersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the users
+     */
+    omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    where?: usersWhereInput
+  }
+
+  /**
+   * hardware_connections without action
+   */
+  export type hardware_connectionsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the hardware_connections
+     */
+    select?: hardware_connectionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the hardware_connections
+     */
+    omit?: hardware_connectionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: hardware_connectionsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model blockchain_records
+   */
+
+  export type AggregateBlockchain_records = {
+    _count: Blockchain_recordsCountAggregateOutputType | null
+    _min: Blockchain_recordsMinAggregateOutputType | null
+    _max: Blockchain_recordsMaxAggregateOutputType | null
+  }
+
+  export type Blockchain_recordsMinAggregateOutputType = {
+    id: string | null
+    record_type: string | null
+    record_id: string | null
+    hash: string | null
+    previous_hash: string | null
+    blockchain_id: string | null
+    transaction_id: string | null
+    verified: boolean | null
+    created_at: Date | null
+  }
+
+  export type Blockchain_recordsMaxAggregateOutputType = {
+    id: string | null
+    record_type: string | null
+    record_id: string | null
+    hash: string | null
+    previous_hash: string | null
+    blockchain_id: string | null
+    transaction_id: string | null
+    verified: boolean | null
+    created_at: Date | null
+  }
+
+  export type Blockchain_recordsCountAggregateOutputType = {
+    id: number
+    record_type: number
+    record_id: number
+    hash: number
+    previous_hash: number
+    blockchain_id: number
+    transaction_id: number
+    verified: number
+    verification_details: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type Blockchain_recordsMinAggregateInputType = {
+    id?: true
+    record_type?: true
+    record_id?: true
+    hash?: true
+    previous_hash?: true
+    blockchain_id?: true
+    transaction_id?: true
+    verified?: true
+    created_at?: true
+  }
+
+  export type Blockchain_recordsMaxAggregateInputType = {
+    id?: true
+    record_type?: true
+    record_id?: true
+    hash?: true
+    previous_hash?: true
+    blockchain_id?: true
+    transaction_id?: true
+    verified?: true
+    created_at?: true
+  }
+
+  export type Blockchain_recordsCountAggregateInputType = {
+    id?: true
+    record_type?: true
+    record_id?: true
+    hash?: true
+    previous_hash?: true
+    blockchain_id?: true
+    transaction_id?: true
+    verified?: true
+    verification_details?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type Blockchain_recordsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which blockchain_records to aggregate.
+     */
+    where?: blockchain_recordsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of blockchain_records to fetch.
+     */
+    orderBy?: blockchain_recordsOrderByWithRelationInput | blockchain_recordsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: blockchain_recordsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` blockchain_records from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` blockchain_records.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned blockchain_records
+    **/
+    _count?: true | Blockchain_recordsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Blockchain_recordsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Blockchain_recordsMaxAggregateInputType
+  }
+
+  export type GetBlockchain_recordsAggregateType<T extends Blockchain_recordsAggregateArgs> = {
+        [P in keyof T & keyof AggregateBlockchain_records]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBlockchain_records[P]>
+      : GetScalarType<T[P], AggregateBlockchain_records[P]>
+  }
+
+
+
+
+  export type blockchain_recordsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: blockchain_recordsWhereInput
+    orderBy?: blockchain_recordsOrderByWithAggregationInput | blockchain_recordsOrderByWithAggregationInput[]
+    by: Blockchain_recordsScalarFieldEnum[] | Blockchain_recordsScalarFieldEnum
+    having?: blockchain_recordsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Blockchain_recordsCountAggregateInputType | true
+    _min?: Blockchain_recordsMinAggregateInputType
+    _max?: Blockchain_recordsMaxAggregateInputType
+  }
+
+  export type Blockchain_recordsGroupByOutputType = {
+    id: string
+    record_type: string
+    record_id: string
+    hash: string
+    previous_hash: string | null
+    blockchain_id: string | null
+    transaction_id: string | null
+    verified: boolean
+    verification_details: JsonValue | null
+    created_at: Date
+    _count: Blockchain_recordsCountAggregateOutputType | null
+    _min: Blockchain_recordsMinAggregateOutputType | null
+    _max: Blockchain_recordsMaxAggregateOutputType | null
+  }
+
+  type GetBlockchain_recordsGroupByPayload<T extends blockchain_recordsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Blockchain_recordsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Blockchain_recordsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Blockchain_recordsGroupByOutputType[P]>
+            : GetScalarType<T[P], Blockchain_recordsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type blockchain_recordsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    record_type?: boolean
+    record_id?: boolean
+    hash?: boolean
+    previous_hash?: boolean
+    blockchain_id?: boolean
+    transaction_id?: boolean
+    verified?: boolean
+    verification_details?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["blockchain_records"]>
+
+  export type blockchain_recordsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    record_type?: boolean
+    record_id?: boolean
+    hash?: boolean
+    previous_hash?: boolean
+    blockchain_id?: boolean
+    transaction_id?: boolean
+    verified?: boolean
+    verification_details?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["blockchain_records"]>
+
+  export type blockchain_recordsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    record_type?: boolean
+    record_id?: boolean
+    hash?: boolean
+    previous_hash?: boolean
+    blockchain_id?: boolean
+    transaction_id?: boolean
+    verified?: boolean
+    verification_details?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["blockchain_records"]>
+
+  export type blockchain_recordsSelectScalar = {
+    id?: boolean
+    record_type?: boolean
+    record_id?: boolean
+    hash?: boolean
+    previous_hash?: boolean
+    blockchain_id?: boolean
+    transaction_id?: boolean
+    verified?: boolean
+    verification_details?: boolean
+    created_at?: boolean
+  }
+
+  export type blockchain_recordsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "record_type" | "record_id" | "hash" | "previous_hash" | "blockchain_id" | "transaction_id" | "verified" | "verification_details" | "created_at", ExtArgs["result"]["blockchain_records"]>
+
+  export type $blockchain_recordsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "blockchain_records"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      record_type: string
+      record_id: string
+      hash: string
+      previous_hash: string | null
+      blockchain_id: string | null
+      transaction_id: string | null
+      verified: boolean
+      verification_details: Prisma.JsonValue | null
+      created_at: Date
+    }, ExtArgs["result"]["blockchain_records"]>
+    composites: {}
+  }
+
+  type blockchain_recordsGetPayload<S extends boolean | null | undefined | blockchain_recordsDefaultArgs> = $Result.GetResult<Prisma.$blockchain_recordsPayload, S>
+
+  type blockchain_recordsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<blockchain_recordsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Blockchain_recordsCountAggregateInputType | true
+    }
+
+  export interface blockchain_recordsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['blockchain_records'], meta: { name: 'blockchain_records' } }
+    /**
+     * Find zero or one Blockchain_records that matches the filter.
+     * @param {blockchain_recordsFindUniqueArgs} args - Arguments to find a Blockchain_records
+     * @example
+     * // Get one Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends blockchain_recordsFindUniqueArgs>(args: SelectSubset<T, blockchain_recordsFindUniqueArgs<ExtArgs>>): Prisma__blockchain_recordsClient<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Blockchain_records that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {blockchain_recordsFindUniqueOrThrowArgs} args - Arguments to find a Blockchain_records
+     * @example
+     * // Get one Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends blockchain_recordsFindUniqueOrThrowArgs>(args: SelectSubset<T, blockchain_recordsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__blockchain_recordsClient<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Blockchain_records that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockchain_recordsFindFirstArgs} args - Arguments to find a Blockchain_records
+     * @example
+     * // Get one Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends blockchain_recordsFindFirstArgs>(args?: SelectSubset<T, blockchain_recordsFindFirstArgs<ExtArgs>>): Prisma__blockchain_recordsClient<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Blockchain_records that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockchain_recordsFindFirstOrThrowArgs} args - Arguments to find a Blockchain_records
+     * @example
+     * // Get one Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends blockchain_recordsFindFirstOrThrowArgs>(args?: SelectSubset<T, blockchain_recordsFindFirstOrThrowArgs<ExtArgs>>): Prisma__blockchain_recordsClient<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Blockchain_records that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockchain_recordsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.findMany()
+     * 
+     * // Get first 10 Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const blockchain_recordsWithIdOnly = await prisma.blockchain_records.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends blockchain_recordsFindManyArgs>(args?: SelectSubset<T, blockchain_recordsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Blockchain_records.
+     * @param {blockchain_recordsCreateArgs} args - Arguments to create a Blockchain_records.
+     * @example
+     * // Create one Blockchain_records
+     * const Blockchain_records = await prisma.blockchain_records.create({
+     *   data: {
+     *     // ... data to create a Blockchain_records
+     *   }
+     * })
+     * 
+     */
+    create<T extends blockchain_recordsCreateArgs>(args: SelectSubset<T, blockchain_recordsCreateArgs<ExtArgs>>): Prisma__blockchain_recordsClient<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Blockchain_records.
+     * @param {blockchain_recordsCreateManyArgs} args - Arguments to create many Blockchain_records.
+     * @example
+     * // Create many Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends blockchain_recordsCreateManyArgs>(args?: SelectSubset<T, blockchain_recordsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Blockchain_records and returns the data saved in the database.
+     * @param {blockchain_recordsCreateManyAndReturnArgs} args - Arguments to create many Blockchain_records.
+     * @example
+     * // Create many Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Blockchain_records and only return the `id`
+     * const blockchain_recordsWithIdOnly = await prisma.blockchain_records.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends blockchain_recordsCreateManyAndReturnArgs>(args?: SelectSubset<T, blockchain_recordsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Blockchain_records.
+     * @param {blockchain_recordsDeleteArgs} args - Arguments to delete one Blockchain_records.
+     * @example
+     * // Delete one Blockchain_records
+     * const Blockchain_records = await prisma.blockchain_records.delete({
+     *   where: {
+     *     // ... filter to delete one Blockchain_records
+     *   }
+     * })
+     * 
+     */
+    delete<T extends blockchain_recordsDeleteArgs>(args: SelectSubset<T, blockchain_recordsDeleteArgs<ExtArgs>>): Prisma__blockchain_recordsClient<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Blockchain_records.
+     * @param {blockchain_recordsUpdateArgs} args - Arguments to update one Blockchain_records.
+     * @example
+     * // Update one Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends blockchain_recordsUpdateArgs>(args: SelectSubset<T, blockchain_recordsUpdateArgs<ExtArgs>>): Prisma__blockchain_recordsClient<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Blockchain_records.
+     * @param {blockchain_recordsDeleteManyArgs} args - Arguments to filter Blockchain_records to delete.
+     * @example
+     * // Delete a few Blockchain_records
+     * const { count } = await prisma.blockchain_records.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends blockchain_recordsDeleteManyArgs>(args?: SelectSubset<T, blockchain_recordsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Blockchain_records.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockchain_recordsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends blockchain_recordsUpdateManyArgs>(args: SelectSubset<T, blockchain_recordsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Blockchain_records and returns the data updated in the database.
+     * @param {blockchain_recordsUpdateManyAndReturnArgs} args - Arguments to update many Blockchain_records.
+     * @example
+     * // Update many Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Blockchain_records and only return the `id`
+     * const blockchain_recordsWithIdOnly = await prisma.blockchain_records.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends blockchain_recordsUpdateManyAndReturnArgs>(args: SelectSubset<T, blockchain_recordsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Blockchain_records.
+     * @param {blockchain_recordsUpsertArgs} args - Arguments to update or create a Blockchain_records.
+     * @example
+     * // Update or create a Blockchain_records
+     * const blockchain_records = await prisma.blockchain_records.upsert({
+     *   create: {
+     *     // ... data to create a Blockchain_records
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Blockchain_records we want to update
+     *   }
+     * })
+     */
+    upsert<T extends blockchain_recordsUpsertArgs>(args: SelectSubset<T, blockchain_recordsUpsertArgs<ExtArgs>>): Prisma__blockchain_recordsClient<$Result.GetResult<Prisma.$blockchain_recordsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Blockchain_records.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockchain_recordsCountArgs} args - Arguments to filter Blockchain_records to count.
+     * @example
+     * // Count the number of Blockchain_records
+     * const count = await prisma.blockchain_records.count({
+     *   where: {
+     *     // ... the filter for the Blockchain_records we want to count
+     *   }
+     * })
+    **/
+    count<T extends blockchain_recordsCountArgs>(
+      args?: Subset<T, blockchain_recordsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Blockchain_recordsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Blockchain_records.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Blockchain_recordsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Blockchain_recordsAggregateArgs>(args: Subset<T, Blockchain_recordsAggregateArgs>): Prisma.PrismaPromise<GetBlockchain_recordsAggregateType<T>>
+
+    /**
+     * Group by Blockchain_records.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {blockchain_recordsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends blockchain_recordsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: blockchain_recordsGroupByArgs['orderBy'] }
+        : { orderBy?: blockchain_recordsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, blockchain_recordsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBlockchain_recordsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the blockchain_records model
+   */
+  readonly fields: blockchain_recordsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for blockchain_records.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__blockchain_recordsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the blockchain_records model
+   */
+  interface blockchain_recordsFieldRefs {
+    readonly id: FieldRef<"blockchain_records", 'String'>
+    readonly record_type: FieldRef<"blockchain_records", 'String'>
+    readonly record_id: FieldRef<"blockchain_records", 'String'>
+    readonly hash: FieldRef<"blockchain_records", 'String'>
+    readonly previous_hash: FieldRef<"blockchain_records", 'String'>
+    readonly blockchain_id: FieldRef<"blockchain_records", 'String'>
+    readonly transaction_id: FieldRef<"blockchain_records", 'String'>
+    readonly verified: FieldRef<"blockchain_records", 'Boolean'>
+    readonly verification_details: FieldRef<"blockchain_records", 'Json'>
+    readonly created_at: FieldRef<"blockchain_records", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * blockchain_records findUnique
+   */
+  export type blockchain_recordsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * Filter, which blockchain_records to fetch.
+     */
+    where: blockchain_recordsWhereUniqueInput
+  }
+
+  /**
+   * blockchain_records findUniqueOrThrow
+   */
+  export type blockchain_recordsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * Filter, which blockchain_records to fetch.
+     */
+    where: blockchain_recordsWhereUniqueInput
+  }
+
+  /**
+   * blockchain_records findFirst
+   */
+  export type blockchain_recordsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * Filter, which blockchain_records to fetch.
+     */
+    where?: blockchain_recordsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of blockchain_records to fetch.
+     */
+    orderBy?: blockchain_recordsOrderByWithRelationInput | blockchain_recordsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for blockchain_records.
+     */
+    cursor?: blockchain_recordsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` blockchain_records from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` blockchain_records.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of blockchain_records.
+     */
+    distinct?: Blockchain_recordsScalarFieldEnum | Blockchain_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * blockchain_records findFirstOrThrow
+   */
+  export type blockchain_recordsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * Filter, which blockchain_records to fetch.
+     */
+    where?: blockchain_recordsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of blockchain_records to fetch.
+     */
+    orderBy?: blockchain_recordsOrderByWithRelationInput | blockchain_recordsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for blockchain_records.
+     */
+    cursor?: blockchain_recordsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` blockchain_records from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` blockchain_records.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of blockchain_records.
+     */
+    distinct?: Blockchain_recordsScalarFieldEnum | Blockchain_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * blockchain_records findMany
+   */
+  export type blockchain_recordsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * Filter, which blockchain_records to fetch.
+     */
+    where?: blockchain_recordsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of blockchain_records to fetch.
+     */
+    orderBy?: blockchain_recordsOrderByWithRelationInput | blockchain_recordsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing blockchain_records.
+     */
+    cursor?: blockchain_recordsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` blockchain_records from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` blockchain_records.
+     */
+    skip?: number
+    distinct?: Blockchain_recordsScalarFieldEnum | Blockchain_recordsScalarFieldEnum[]
+  }
+
+  /**
+   * blockchain_records create
+   */
+  export type blockchain_recordsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a blockchain_records.
+     */
+    data: XOR<blockchain_recordsCreateInput, blockchain_recordsUncheckedCreateInput>
+  }
+
+  /**
+   * blockchain_records createMany
+   */
+  export type blockchain_recordsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many blockchain_records.
+     */
+    data: blockchain_recordsCreateManyInput | blockchain_recordsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * blockchain_records createManyAndReturn
+   */
+  export type blockchain_recordsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * The data used to create many blockchain_records.
+     */
+    data: blockchain_recordsCreateManyInput | blockchain_recordsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * blockchain_records update
+   */
+  export type blockchain_recordsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a blockchain_records.
+     */
+    data: XOR<blockchain_recordsUpdateInput, blockchain_recordsUncheckedUpdateInput>
+    /**
+     * Choose, which blockchain_records to update.
+     */
+    where: blockchain_recordsWhereUniqueInput
+  }
+
+  /**
+   * blockchain_records updateMany
+   */
+  export type blockchain_recordsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update blockchain_records.
+     */
+    data: XOR<blockchain_recordsUpdateManyMutationInput, blockchain_recordsUncheckedUpdateManyInput>
+    /**
+     * Filter which blockchain_records to update
+     */
+    where?: blockchain_recordsWhereInput
+    /**
+     * Limit how many blockchain_records to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * blockchain_records updateManyAndReturn
+   */
+  export type blockchain_recordsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * The data used to update blockchain_records.
+     */
+    data: XOR<blockchain_recordsUpdateManyMutationInput, blockchain_recordsUncheckedUpdateManyInput>
+    /**
+     * Filter which blockchain_records to update
+     */
+    where?: blockchain_recordsWhereInput
+    /**
+     * Limit how many blockchain_records to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * blockchain_records upsert
+   */
+  export type blockchain_recordsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the blockchain_records to update in case it exists.
+     */
+    where: blockchain_recordsWhereUniqueInput
+    /**
+     * In case the blockchain_records found by the `where` argument doesn't exist, create a new blockchain_records with this data.
+     */
+    create: XOR<blockchain_recordsCreateInput, blockchain_recordsUncheckedCreateInput>
+    /**
+     * In case the blockchain_records was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<blockchain_recordsUpdateInput, blockchain_recordsUncheckedUpdateInput>
+  }
+
+  /**
+   * blockchain_records delete
+   */
+  export type blockchain_recordsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+    /**
+     * Filter which blockchain_records to delete.
+     */
+    where: blockchain_recordsWhereUniqueInput
+  }
+
+  /**
+   * blockchain_records deleteMany
+   */
+  export type blockchain_recordsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which blockchain_records to delete
+     */
+    where?: blockchain_recordsWhereInput
+    /**
+     * Limit how many blockchain_records to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * blockchain_records without action
+   */
+  export type blockchain_recordsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the blockchain_records
+     */
+    select?: blockchain_recordsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the blockchain_records
+     */
+    omit?: blockchain_recordsOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -28412,6 +38900,134 @@ export namespace Prisma {
   export type WeightsScalarFieldEnum = (typeof WeightsScalarFieldEnum)[keyof typeof WeightsScalarFieldEnum]
 
 
+  export const Api_keysScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    key: 'key',
+    company_id: 'company_id',
+    created_by: 'created_by',
+    expires_at: 'expires_at',
+    last_used_at: 'last_used_at',
+    is_active: 'is_active',
+    permissions: 'permissions',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type Api_keysScalarFieldEnum = (typeof Api_keysScalarFieldEnum)[keyof typeof Api_keysScalarFieldEnum]
+
+
+  export const Api_usageScalarFieldEnum: {
+    id: 'id',
+    api_key_id: 'api_key_id',
+    endpoint: 'endpoint',
+    method: 'method',
+    status: 'status',
+    ip_address: 'ip_address',
+    user_agent: 'user_agent',
+    created_at: 'created_at'
+  };
+
+  export type Api_usageScalarFieldEnum = (typeof Api_usageScalarFieldEnum)[keyof typeof Api_usageScalarFieldEnum]
+
+
+  export const Webhook_subscriptionsScalarFieldEnum: {
+    id: 'id',
+    company_id: 'company_id',
+    name: 'name',
+    event_types: 'event_types',
+    target_url: 'target_url',
+    secret_key: 'secret_key',
+    is_active: 'is_active',
+    created_by: 'created_by',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type Webhook_subscriptionsScalarFieldEnum = (typeof Webhook_subscriptionsScalarFieldEnum)[keyof typeof Webhook_subscriptionsScalarFieldEnum]
+
+
+  export const Webhook_deliveriesScalarFieldEnum: {
+    id: 'id',
+    webhook_subscription_id: 'webhook_subscription_id',
+    event_type: 'event_type',
+    payload: 'payload',
+    response_status: 'response_status',
+    response_body: 'response_body',
+    error_message: 'error_message',
+    attempts: 'attempts',
+    next_retry_at: 'next_retry_at',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type Webhook_deliveriesScalarFieldEnum = (typeof Webhook_deliveriesScalarFieldEnum)[keyof typeof Webhook_deliveriesScalarFieldEnum]
+
+
+  export const Integration_connectionsScalarFieldEnum: {
+    id: 'id',
+    company_id: 'company_id',
+    integration_type: 'integration_type',
+    provider: 'provider',
+    credentials: 'credentials',
+    settings: 'settings',
+    is_active: 'is_active',
+    last_sync_at: 'last_sync_at',
+    created_by: 'created_by',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type Integration_connectionsScalarFieldEnum = (typeof Integration_connectionsScalarFieldEnum)[keyof typeof Integration_connectionsScalarFieldEnum]
+
+
+  export const Integration_logsScalarFieldEnum: {
+    id: 'id',
+    integration_connection_id: 'integration_connection_id',
+    event_type: 'event_type',
+    status: 'status',
+    message: 'message',
+    details: 'details',
+    created_at: 'created_at'
+  };
+
+  export type Integration_logsScalarFieldEnum = (typeof Integration_logsScalarFieldEnum)[keyof typeof Integration_logsScalarFieldEnum]
+
+
+  export const Hardware_connectionsScalarFieldEnum: {
+    id: 'id',
+    company_id: 'company_id',
+    hardware_type: 'hardware_type',
+    name: 'name',
+    model: 'model',
+    serial_number: 'serial_number',
+    connection_details: 'connection_details',
+    is_active: 'is_active',
+    last_connected_at: 'last_connected_at',
+    created_by: 'created_by',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type Hardware_connectionsScalarFieldEnum = (typeof Hardware_connectionsScalarFieldEnum)[keyof typeof Hardware_connectionsScalarFieldEnum]
+
+
+  export const Blockchain_recordsScalarFieldEnum: {
+    id: 'id',
+    record_type: 'record_type',
+    record_id: 'record_id',
+    hash: 'hash',
+    previous_hash: 'previous_hash',
+    blockchain_id: 'blockchain_id',
+    transaction_id: 'transaction_id',
+    verified: 'verified',
+    verification_details: 'verification_details',
+    created_at: 'created_at'
+  };
+
+  export type Blockchain_recordsScalarFieldEnum = (typeof Blockchain_recordsScalarFieldEnum)[keyof typeof Blockchain_recordsScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -28426,6 +39042,13 @@ export namespace Prisma {
   };
 
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -28873,6 +39496,10 @@ export namespace Prisma {
     vehicles?: VehiclesListRelationFilter
     weigh_tickets?: Weigh_ticketsListRelationFilter
     weights?: WeightsListRelationFilter
+    api_keys?: Api_keysListRelationFilter
+    webhook_subscriptions?: Webhook_subscriptionsListRelationFilter
+    integration_connections?: Integration_connectionsListRelationFilter
+    hardware_connections?: Hardware_connectionsListRelationFilter
   }
 
   export type companiesOrderByWithRelationInput = {
@@ -28891,6 +39518,10 @@ export namespace Prisma {
     vehicles?: vehiclesOrderByRelationAggregateInput
     weigh_tickets?: weigh_ticketsOrderByRelationAggregateInput
     weights?: weightsOrderByRelationAggregateInput
+    api_keys?: api_keysOrderByRelationAggregateInput
+    webhook_subscriptions?: webhook_subscriptionsOrderByRelationAggregateInput
+    integration_connections?: integration_connectionsOrderByRelationAggregateInput
+    hardware_connections?: hardware_connectionsOrderByRelationAggregateInput
   }
 
   export type companiesWhereUniqueInput = Prisma.AtLeast<{
@@ -28912,6 +39543,10 @@ export namespace Prisma {
     vehicles?: VehiclesListRelationFilter
     weigh_tickets?: Weigh_ticketsListRelationFilter
     weights?: WeightsListRelationFilter
+    api_keys?: Api_keysListRelationFilter
+    webhook_subscriptions?: Webhook_subscriptionsListRelationFilter
+    integration_connections?: Integration_connectionsListRelationFilter
+    hardware_connections?: Hardware_connectionsListRelationFilter
   }, "id">
 
   export type companiesOrderByWithAggregationInput = {
@@ -29869,6 +40504,10 @@ export namespace Prisma {
     ticket_images?: Ticket_imagesListRelationFilter
     companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
     weigh_tickets?: Weigh_ticketsListRelationFilter
+    api_keys?: Api_keysListRelationFilter
+    webhook_subscriptions?: Webhook_subscriptionsListRelationFilter
+    integration_connections?: Integration_connectionsListRelationFilter
+    hardware_connections?: Hardware_connectionsListRelationFilter
   }
 
   export type usersOrderByWithRelationInput = {
@@ -29883,6 +40522,10 @@ export namespace Prisma {
     ticket_images?: ticket_imagesOrderByRelationAggregateInput
     companies?: companiesOrderByWithRelationInput
     weigh_tickets?: weigh_ticketsOrderByRelationAggregateInput
+    api_keys?: api_keysOrderByRelationAggregateInput
+    webhook_subscriptions?: webhook_subscriptionsOrderByRelationAggregateInput
+    integration_connections?: integration_connectionsOrderByRelationAggregateInput
+    hardware_connections?: hardware_connectionsOrderByRelationAggregateInput
   }
 
   export type usersWhereUniqueInput = Prisma.AtLeast<{
@@ -29900,6 +40543,10 @@ export namespace Prisma {
     ticket_images?: Ticket_imagesListRelationFilter
     companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
     weigh_tickets?: Weigh_ticketsListRelationFilter
+    api_keys?: Api_keysListRelationFilter
+    webhook_subscriptions?: Webhook_subscriptionsListRelationFilter
+    integration_connections?: Integration_connectionsListRelationFilter
+    hardware_connections?: Hardware_connectionsListRelationFilter
   }, "id" | "email">
 
   export type usersOrderByWithAggregationInput = {
@@ -30345,6 +40992,676 @@ export namespace Prisma {
     updated_at?: DateTimeNullableWithAggregatesFilter<"weights"> | Date | string | null
   }
 
+  export type api_keysWhereInput = {
+    AND?: api_keysWhereInput | api_keysWhereInput[]
+    OR?: api_keysWhereInput[]
+    NOT?: api_keysWhereInput | api_keysWhereInput[]
+    id?: UuidFilter<"api_keys"> | string
+    name?: StringFilter<"api_keys"> | string
+    key?: StringFilter<"api_keys"> | string
+    company_id?: IntNullableFilter<"api_keys"> | number | null
+    created_by?: UuidNullableFilter<"api_keys"> | string | null
+    expires_at?: DateTimeNullableFilter<"api_keys"> | Date | string | null
+    last_used_at?: DateTimeNullableFilter<"api_keys"> | Date | string | null
+    is_active?: BoolFilter<"api_keys"> | boolean
+    permissions?: StringNullableListFilter<"api_keys">
+    created_at?: DateTimeFilter<"api_keys"> | Date | string
+    updated_at?: DateTimeFilter<"api_keys"> | Date | string
+    companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
+    users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    api_usage?: Api_usageListRelationFilter
+  }
+
+  export type api_keysOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    company_id?: SortOrderInput | SortOrder
+    created_by?: SortOrderInput | SortOrder
+    expires_at?: SortOrderInput | SortOrder
+    last_used_at?: SortOrderInput | SortOrder
+    is_active?: SortOrder
+    permissions?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    companies?: companiesOrderByWithRelationInput
+    users?: usersOrderByWithRelationInput
+    api_usage?: api_usageOrderByRelationAggregateInput
+  }
+
+  export type api_keysWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    key?: string
+    AND?: api_keysWhereInput | api_keysWhereInput[]
+    OR?: api_keysWhereInput[]
+    NOT?: api_keysWhereInput | api_keysWhereInput[]
+    name?: StringFilter<"api_keys"> | string
+    company_id?: IntNullableFilter<"api_keys"> | number | null
+    created_by?: UuidNullableFilter<"api_keys"> | string | null
+    expires_at?: DateTimeNullableFilter<"api_keys"> | Date | string | null
+    last_used_at?: DateTimeNullableFilter<"api_keys"> | Date | string | null
+    is_active?: BoolFilter<"api_keys"> | boolean
+    permissions?: StringNullableListFilter<"api_keys">
+    created_at?: DateTimeFilter<"api_keys"> | Date | string
+    updated_at?: DateTimeFilter<"api_keys"> | Date | string
+    companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
+    users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    api_usage?: Api_usageListRelationFilter
+  }, "id" | "key">
+
+  export type api_keysOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    company_id?: SortOrderInput | SortOrder
+    created_by?: SortOrderInput | SortOrder
+    expires_at?: SortOrderInput | SortOrder
+    last_used_at?: SortOrderInput | SortOrder
+    is_active?: SortOrder
+    permissions?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: api_keysCountOrderByAggregateInput
+    _avg?: api_keysAvgOrderByAggregateInput
+    _max?: api_keysMaxOrderByAggregateInput
+    _min?: api_keysMinOrderByAggregateInput
+    _sum?: api_keysSumOrderByAggregateInput
+  }
+
+  export type api_keysScalarWhereWithAggregatesInput = {
+    AND?: api_keysScalarWhereWithAggregatesInput | api_keysScalarWhereWithAggregatesInput[]
+    OR?: api_keysScalarWhereWithAggregatesInput[]
+    NOT?: api_keysScalarWhereWithAggregatesInput | api_keysScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"api_keys"> | string
+    name?: StringWithAggregatesFilter<"api_keys"> | string
+    key?: StringWithAggregatesFilter<"api_keys"> | string
+    company_id?: IntNullableWithAggregatesFilter<"api_keys"> | number | null
+    created_by?: UuidNullableWithAggregatesFilter<"api_keys"> | string | null
+    expires_at?: DateTimeNullableWithAggregatesFilter<"api_keys"> | Date | string | null
+    last_used_at?: DateTimeNullableWithAggregatesFilter<"api_keys"> | Date | string | null
+    is_active?: BoolWithAggregatesFilter<"api_keys"> | boolean
+    permissions?: StringNullableListFilter<"api_keys">
+    created_at?: DateTimeWithAggregatesFilter<"api_keys"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"api_keys"> | Date | string
+  }
+
+  export type api_usageWhereInput = {
+    AND?: api_usageWhereInput | api_usageWhereInput[]
+    OR?: api_usageWhereInput[]
+    NOT?: api_usageWhereInput | api_usageWhereInput[]
+    id?: UuidFilter<"api_usage"> | string
+    api_key_id?: UuidFilter<"api_usage"> | string
+    endpoint?: StringFilter<"api_usage"> | string
+    method?: StringFilter<"api_usage"> | string
+    status?: IntFilter<"api_usage"> | number
+    ip_address?: StringNullableFilter<"api_usage"> | string | null
+    user_agent?: StringNullableFilter<"api_usage"> | string | null
+    created_at?: DateTimeFilter<"api_usage"> | Date | string
+    api_keys?: XOR<Api_keysScalarRelationFilter, api_keysWhereInput>
+  }
+
+  export type api_usageOrderByWithRelationInput = {
+    id?: SortOrder
+    api_key_id?: SortOrder
+    endpoint?: SortOrder
+    method?: SortOrder
+    status?: SortOrder
+    ip_address?: SortOrderInput | SortOrder
+    user_agent?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    api_keys?: api_keysOrderByWithRelationInput
+  }
+
+  export type api_usageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: api_usageWhereInput | api_usageWhereInput[]
+    OR?: api_usageWhereInput[]
+    NOT?: api_usageWhereInput | api_usageWhereInput[]
+    api_key_id?: UuidFilter<"api_usage"> | string
+    endpoint?: StringFilter<"api_usage"> | string
+    method?: StringFilter<"api_usage"> | string
+    status?: IntFilter<"api_usage"> | number
+    ip_address?: StringNullableFilter<"api_usage"> | string | null
+    user_agent?: StringNullableFilter<"api_usage"> | string | null
+    created_at?: DateTimeFilter<"api_usage"> | Date | string
+    api_keys?: XOR<Api_keysScalarRelationFilter, api_keysWhereInput>
+  }, "id">
+
+  export type api_usageOrderByWithAggregationInput = {
+    id?: SortOrder
+    api_key_id?: SortOrder
+    endpoint?: SortOrder
+    method?: SortOrder
+    status?: SortOrder
+    ip_address?: SortOrderInput | SortOrder
+    user_agent?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    _count?: api_usageCountOrderByAggregateInput
+    _avg?: api_usageAvgOrderByAggregateInput
+    _max?: api_usageMaxOrderByAggregateInput
+    _min?: api_usageMinOrderByAggregateInput
+    _sum?: api_usageSumOrderByAggregateInput
+  }
+
+  export type api_usageScalarWhereWithAggregatesInput = {
+    AND?: api_usageScalarWhereWithAggregatesInput | api_usageScalarWhereWithAggregatesInput[]
+    OR?: api_usageScalarWhereWithAggregatesInput[]
+    NOT?: api_usageScalarWhereWithAggregatesInput | api_usageScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"api_usage"> | string
+    api_key_id?: UuidWithAggregatesFilter<"api_usage"> | string
+    endpoint?: StringWithAggregatesFilter<"api_usage"> | string
+    method?: StringWithAggregatesFilter<"api_usage"> | string
+    status?: IntWithAggregatesFilter<"api_usage"> | number
+    ip_address?: StringNullableWithAggregatesFilter<"api_usage"> | string | null
+    user_agent?: StringNullableWithAggregatesFilter<"api_usage"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"api_usage"> | Date | string
+  }
+
+  export type webhook_subscriptionsWhereInput = {
+    AND?: webhook_subscriptionsWhereInput | webhook_subscriptionsWhereInput[]
+    OR?: webhook_subscriptionsWhereInput[]
+    NOT?: webhook_subscriptionsWhereInput | webhook_subscriptionsWhereInput[]
+    id?: UuidFilter<"webhook_subscriptions"> | string
+    company_id?: IntNullableFilter<"webhook_subscriptions"> | number | null
+    name?: StringFilter<"webhook_subscriptions"> | string
+    event_types?: StringNullableListFilter<"webhook_subscriptions">
+    target_url?: StringFilter<"webhook_subscriptions"> | string
+    secret_key?: StringNullableFilter<"webhook_subscriptions"> | string | null
+    is_active?: BoolFilter<"webhook_subscriptions"> | boolean
+    created_by?: UuidNullableFilter<"webhook_subscriptions"> | string | null
+    created_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
+    updated_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
+    companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
+    users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    webhook_deliveries?: Webhook_deliveriesListRelationFilter
+  }
+
+  export type webhook_subscriptionsOrderByWithRelationInput = {
+    id?: SortOrder
+    company_id?: SortOrderInput | SortOrder
+    name?: SortOrder
+    event_types?: SortOrder
+    target_url?: SortOrder
+    secret_key?: SortOrderInput | SortOrder
+    is_active?: SortOrder
+    created_by?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    companies?: companiesOrderByWithRelationInput
+    users?: usersOrderByWithRelationInput
+    webhook_deliveries?: webhook_deliveriesOrderByRelationAggregateInput
+  }
+
+  export type webhook_subscriptionsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: webhook_subscriptionsWhereInput | webhook_subscriptionsWhereInput[]
+    OR?: webhook_subscriptionsWhereInput[]
+    NOT?: webhook_subscriptionsWhereInput | webhook_subscriptionsWhereInput[]
+    company_id?: IntNullableFilter<"webhook_subscriptions"> | number | null
+    name?: StringFilter<"webhook_subscriptions"> | string
+    event_types?: StringNullableListFilter<"webhook_subscriptions">
+    target_url?: StringFilter<"webhook_subscriptions"> | string
+    secret_key?: StringNullableFilter<"webhook_subscriptions"> | string | null
+    is_active?: BoolFilter<"webhook_subscriptions"> | boolean
+    created_by?: UuidNullableFilter<"webhook_subscriptions"> | string | null
+    created_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
+    updated_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
+    companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
+    users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    webhook_deliveries?: Webhook_deliveriesListRelationFilter
+  }, "id">
+
+  export type webhook_subscriptionsOrderByWithAggregationInput = {
+    id?: SortOrder
+    company_id?: SortOrderInput | SortOrder
+    name?: SortOrder
+    event_types?: SortOrder
+    target_url?: SortOrder
+    secret_key?: SortOrderInput | SortOrder
+    is_active?: SortOrder
+    created_by?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: webhook_subscriptionsCountOrderByAggregateInput
+    _avg?: webhook_subscriptionsAvgOrderByAggregateInput
+    _max?: webhook_subscriptionsMaxOrderByAggregateInput
+    _min?: webhook_subscriptionsMinOrderByAggregateInput
+    _sum?: webhook_subscriptionsSumOrderByAggregateInput
+  }
+
+  export type webhook_subscriptionsScalarWhereWithAggregatesInput = {
+    AND?: webhook_subscriptionsScalarWhereWithAggregatesInput | webhook_subscriptionsScalarWhereWithAggregatesInput[]
+    OR?: webhook_subscriptionsScalarWhereWithAggregatesInput[]
+    NOT?: webhook_subscriptionsScalarWhereWithAggregatesInput | webhook_subscriptionsScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"webhook_subscriptions"> | string
+    company_id?: IntNullableWithAggregatesFilter<"webhook_subscriptions"> | number | null
+    name?: StringWithAggregatesFilter<"webhook_subscriptions"> | string
+    event_types?: StringNullableListFilter<"webhook_subscriptions">
+    target_url?: StringWithAggregatesFilter<"webhook_subscriptions"> | string
+    secret_key?: StringNullableWithAggregatesFilter<"webhook_subscriptions"> | string | null
+    is_active?: BoolWithAggregatesFilter<"webhook_subscriptions"> | boolean
+    created_by?: UuidNullableWithAggregatesFilter<"webhook_subscriptions"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"webhook_subscriptions"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"webhook_subscriptions"> | Date | string
+  }
+
+  export type webhook_deliveriesWhereInput = {
+    AND?: webhook_deliveriesWhereInput | webhook_deliveriesWhereInput[]
+    OR?: webhook_deliveriesWhereInput[]
+    NOT?: webhook_deliveriesWhereInput | webhook_deliveriesWhereInput[]
+    id?: UuidFilter<"webhook_deliveries"> | string
+    webhook_subscription_id?: UuidFilter<"webhook_deliveries"> | string
+    event_type?: StringFilter<"webhook_deliveries"> | string
+    payload?: JsonFilter<"webhook_deliveries">
+    response_status?: IntNullableFilter<"webhook_deliveries"> | number | null
+    response_body?: StringNullableFilter<"webhook_deliveries"> | string | null
+    error_message?: StringNullableFilter<"webhook_deliveries"> | string | null
+    attempts?: IntFilter<"webhook_deliveries"> | number
+    next_retry_at?: DateTimeNullableFilter<"webhook_deliveries"> | Date | string | null
+    created_at?: DateTimeFilter<"webhook_deliveries"> | Date | string
+    updated_at?: DateTimeFilter<"webhook_deliveries"> | Date | string
+    webhook_subscriptions?: XOR<Webhook_subscriptionsScalarRelationFilter, webhook_subscriptionsWhereInput>
+  }
+
+  export type webhook_deliveriesOrderByWithRelationInput = {
+    id?: SortOrder
+    webhook_subscription_id?: SortOrder
+    event_type?: SortOrder
+    payload?: SortOrder
+    response_status?: SortOrderInput | SortOrder
+    response_body?: SortOrderInput | SortOrder
+    error_message?: SortOrderInput | SortOrder
+    attempts?: SortOrder
+    next_retry_at?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    webhook_subscriptions?: webhook_subscriptionsOrderByWithRelationInput
+  }
+
+  export type webhook_deliveriesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: webhook_deliveriesWhereInput | webhook_deliveriesWhereInput[]
+    OR?: webhook_deliveriesWhereInput[]
+    NOT?: webhook_deliveriesWhereInput | webhook_deliveriesWhereInput[]
+    webhook_subscription_id?: UuidFilter<"webhook_deliveries"> | string
+    event_type?: StringFilter<"webhook_deliveries"> | string
+    payload?: JsonFilter<"webhook_deliveries">
+    response_status?: IntNullableFilter<"webhook_deliveries"> | number | null
+    response_body?: StringNullableFilter<"webhook_deliveries"> | string | null
+    error_message?: StringNullableFilter<"webhook_deliveries"> | string | null
+    attempts?: IntFilter<"webhook_deliveries"> | number
+    next_retry_at?: DateTimeNullableFilter<"webhook_deliveries"> | Date | string | null
+    created_at?: DateTimeFilter<"webhook_deliveries"> | Date | string
+    updated_at?: DateTimeFilter<"webhook_deliveries"> | Date | string
+    webhook_subscriptions?: XOR<Webhook_subscriptionsScalarRelationFilter, webhook_subscriptionsWhereInput>
+  }, "id">
+
+  export type webhook_deliveriesOrderByWithAggregationInput = {
+    id?: SortOrder
+    webhook_subscription_id?: SortOrder
+    event_type?: SortOrder
+    payload?: SortOrder
+    response_status?: SortOrderInput | SortOrder
+    response_body?: SortOrderInput | SortOrder
+    error_message?: SortOrderInput | SortOrder
+    attempts?: SortOrder
+    next_retry_at?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: webhook_deliveriesCountOrderByAggregateInput
+    _avg?: webhook_deliveriesAvgOrderByAggregateInput
+    _max?: webhook_deliveriesMaxOrderByAggregateInput
+    _min?: webhook_deliveriesMinOrderByAggregateInput
+    _sum?: webhook_deliveriesSumOrderByAggregateInput
+  }
+
+  export type webhook_deliveriesScalarWhereWithAggregatesInput = {
+    AND?: webhook_deliveriesScalarWhereWithAggregatesInput | webhook_deliveriesScalarWhereWithAggregatesInput[]
+    OR?: webhook_deliveriesScalarWhereWithAggregatesInput[]
+    NOT?: webhook_deliveriesScalarWhereWithAggregatesInput | webhook_deliveriesScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"webhook_deliveries"> | string
+    webhook_subscription_id?: UuidWithAggregatesFilter<"webhook_deliveries"> | string
+    event_type?: StringWithAggregatesFilter<"webhook_deliveries"> | string
+    payload?: JsonWithAggregatesFilter<"webhook_deliveries">
+    response_status?: IntNullableWithAggregatesFilter<"webhook_deliveries"> | number | null
+    response_body?: StringNullableWithAggregatesFilter<"webhook_deliveries"> | string | null
+    error_message?: StringNullableWithAggregatesFilter<"webhook_deliveries"> | string | null
+    attempts?: IntWithAggregatesFilter<"webhook_deliveries"> | number
+    next_retry_at?: DateTimeNullableWithAggregatesFilter<"webhook_deliveries"> | Date | string | null
+    created_at?: DateTimeWithAggregatesFilter<"webhook_deliveries"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"webhook_deliveries"> | Date | string
+  }
+
+  export type integration_connectionsWhereInput = {
+    AND?: integration_connectionsWhereInput | integration_connectionsWhereInput[]
+    OR?: integration_connectionsWhereInput[]
+    NOT?: integration_connectionsWhereInput | integration_connectionsWhereInput[]
+    id?: UuidFilter<"integration_connections"> | string
+    company_id?: IntNullableFilter<"integration_connections"> | number | null
+    integration_type?: StringFilter<"integration_connections"> | string
+    provider?: StringFilter<"integration_connections"> | string
+    credentials?: JsonNullableFilter<"integration_connections">
+    settings?: JsonNullableFilter<"integration_connections">
+    is_active?: BoolFilter<"integration_connections"> | boolean
+    last_sync_at?: DateTimeNullableFilter<"integration_connections"> | Date | string | null
+    created_by?: UuidNullableFilter<"integration_connections"> | string | null
+    created_at?: DateTimeFilter<"integration_connections"> | Date | string
+    updated_at?: DateTimeFilter<"integration_connections"> | Date | string
+    companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
+    users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    integration_logs?: Integration_logsListRelationFilter
+  }
+
+  export type integration_connectionsOrderByWithRelationInput = {
+    id?: SortOrder
+    company_id?: SortOrderInput | SortOrder
+    integration_type?: SortOrder
+    provider?: SortOrder
+    credentials?: SortOrderInput | SortOrder
+    settings?: SortOrderInput | SortOrder
+    is_active?: SortOrder
+    last_sync_at?: SortOrderInput | SortOrder
+    created_by?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    companies?: companiesOrderByWithRelationInput
+    users?: usersOrderByWithRelationInput
+    integration_logs?: integration_logsOrderByRelationAggregateInput
+  }
+
+  export type integration_connectionsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: integration_connectionsWhereInput | integration_connectionsWhereInput[]
+    OR?: integration_connectionsWhereInput[]
+    NOT?: integration_connectionsWhereInput | integration_connectionsWhereInput[]
+    company_id?: IntNullableFilter<"integration_connections"> | number | null
+    integration_type?: StringFilter<"integration_connections"> | string
+    provider?: StringFilter<"integration_connections"> | string
+    credentials?: JsonNullableFilter<"integration_connections">
+    settings?: JsonNullableFilter<"integration_connections">
+    is_active?: BoolFilter<"integration_connections"> | boolean
+    last_sync_at?: DateTimeNullableFilter<"integration_connections"> | Date | string | null
+    created_by?: UuidNullableFilter<"integration_connections"> | string | null
+    created_at?: DateTimeFilter<"integration_connections"> | Date | string
+    updated_at?: DateTimeFilter<"integration_connections"> | Date | string
+    companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
+    users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    integration_logs?: Integration_logsListRelationFilter
+  }, "id">
+
+  export type integration_connectionsOrderByWithAggregationInput = {
+    id?: SortOrder
+    company_id?: SortOrderInput | SortOrder
+    integration_type?: SortOrder
+    provider?: SortOrder
+    credentials?: SortOrderInput | SortOrder
+    settings?: SortOrderInput | SortOrder
+    is_active?: SortOrder
+    last_sync_at?: SortOrderInput | SortOrder
+    created_by?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: integration_connectionsCountOrderByAggregateInput
+    _avg?: integration_connectionsAvgOrderByAggregateInput
+    _max?: integration_connectionsMaxOrderByAggregateInput
+    _min?: integration_connectionsMinOrderByAggregateInput
+    _sum?: integration_connectionsSumOrderByAggregateInput
+  }
+
+  export type integration_connectionsScalarWhereWithAggregatesInput = {
+    AND?: integration_connectionsScalarWhereWithAggregatesInput | integration_connectionsScalarWhereWithAggregatesInput[]
+    OR?: integration_connectionsScalarWhereWithAggregatesInput[]
+    NOT?: integration_connectionsScalarWhereWithAggregatesInput | integration_connectionsScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"integration_connections"> | string
+    company_id?: IntNullableWithAggregatesFilter<"integration_connections"> | number | null
+    integration_type?: StringWithAggregatesFilter<"integration_connections"> | string
+    provider?: StringWithAggregatesFilter<"integration_connections"> | string
+    credentials?: JsonNullableWithAggregatesFilter<"integration_connections">
+    settings?: JsonNullableWithAggregatesFilter<"integration_connections">
+    is_active?: BoolWithAggregatesFilter<"integration_connections"> | boolean
+    last_sync_at?: DateTimeNullableWithAggregatesFilter<"integration_connections"> | Date | string | null
+    created_by?: UuidNullableWithAggregatesFilter<"integration_connections"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"integration_connections"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"integration_connections"> | Date | string
+  }
+
+  export type integration_logsWhereInput = {
+    AND?: integration_logsWhereInput | integration_logsWhereInput[]
+    OR?: integration_logsWhereInput[]
+    NOT?: integration_logsWhereInput | integration_logsWhereInput[]
+    id?: UuidFilter<"integration_logs"> | string
+    integration_connection_id?: UuidFilter<"integration_logs"> | string
+    event_type?: StringFilter<"integration_logs"> | string
+    status?: StringFilter<"integration_logs"> | string
+    message?: StringNullableFilter<"integration_logs"> | string | null
+    details?: JsonNullableFilter<"integration_logs">
+    created_at?: DateTimeFilter<"integration_logs"> | Date | string
+    integration_connections?: XOR<Integration_connectionsScalarRelationFilter, integration_connectionsWhereInput>
+  }
+
+  export type integration_logsOrderByWithRelationInput = {
+    id?: SortOrder
+    integration_connection_id?: SortOrder
+    event_type?: SortOrder
+    status?: SortOrder
+    message?: SortOrderInput | SortOrder
+    details?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    integration_connections?: integration_connectionsOrderByWithRelationInput
+  }
+
+  export type integration_logsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: integration_logsWhereInput | integration_logsWhereInput[]
+    OR?: integration_logsWhereInput[]
+    NOT?: integration_logsWhereInput | integration_logsWhereInput[]
+    integration_connection_id?: UuidFilter<"integration_logs"> | string
+    event_type?: StringFilter<"integration_logs"> | string
+    status?: StringFilter<"integration_logs"> | string
+    message?: StringNullableFilter<"integration_logs"> | string | null
+    details?: JsonNullableFilter<"integration_logs">
+    created_at?: DateTimeFilter<"integration_logs"> | Date | string
+    integration_connections?: XOR<Integration_connectionsScalarRelationFilter, integration_connectionsWhereInput>
+  }, "id">
+
+  export type integration_logsOrderByWithAggregationInput = {
+    id?: SortOrder
+    integration_connection_id?: SortOrder
+    event_type?: SortOrder
+    status?: SortOrder
+    message?: SortOrderInput | SortOrder
+    details?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    _count?: integration_logsCountOrderByAggregateInput
+    _max?: integration_logsMaxOrderByAggregateInput
+    _min?: integration_logsMinOrderByAggregateInput
+  }
+
+  export type integration_logsScalarWhereWithAggregatesInput = {
+    AND?: integration_logsScalarWhereWithAggregatesInput | integration_logsScalarWhereWithAggregatesInput[]
+    OR?: integration_logsScalarWhereWithAggregatesInput[]
+    NOT?: integration_logsScalarWhereWithAggregatesInput | integration_logsScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"integration_logs"> | string
+    integration_connection_id?: UuidWithAggregatesFilter<"integration_logs"> | string
+    event_type?: StringWithAggregatesFilter<"integration_logs"> | string
+    status?: StringWithAggregatesFilter<"integration_logs"> | string
+    message?: StringNullableWithAggregatesFilter<"integration_logs"> | string | null
+    details?: JsonNullableWithAggregatesFilter<"integration_logs">
+    created_at?: DateTimeWithAggregatesFilter<"integration_logs"> | Date | string
+  }
+
+  export type hardware_connectionsWhereInput = {
+    AND?: hardware_connectionsWhereInput | hardware_connectionsWhereInput[]
+    OR?: hardware_connectionsWhereInput[]
+    NOT?: hardware_connectionsWhereInput | hardware_connectionsWhereInput[]
+    id?: UuidFilter<"hardware_connections"> | string
+    company_id?: IntNullableFilter<"hardware_connections"> | number | null
+    hardware_type?: StringFilter<"hardware_connections"> | string
+    name?: StringFilter<"hardware_connections"> | string
+    model?: StringNullableFilter<"hardware_connections"> | string | null
+    serial_number?: StringNullableFilter<"hardware_connections"> | string | null
+    connection_details?: JsonNullableFilter<"hardware_connections">
+    is_active?: BoolFilter<"hardware_connections"> | boolean
+    last_connected_at?: DateTimeNullableFilter<"hardware_connections"> | Date | string | null
+    created_by?: UuidNullableFilter<"hardware_connections"> | string | null
+    created_at?: DateTimeFilter<"hardware_connections"> | Date | string
+    updated_at?: DateTimeFilter<"hardware_connections"> | Date | string
+    companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
+    users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+  }
+
+  export type hardware_connectionsOrderByWithRelationInput = {
+    id?: SortOrder
+    company_id?: SortOrderInput | SortOrder
+    hardware_type?: SortOrder
+    name?: SortOrder
+    model?: SortOrderInput | SortOrder
+    serial_number?: SortOrderInput | SortOrder
+    connection_details?: SortOrderInput | SortOrder
+    is_active?: SortOrder
+    last_connected_at?: SortOrderInput | SortOrder
+    created_by?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    companies?: companiesOrderByWithRelationInput
+    users?: usersOrderByWithRelationInput
+  }
+
+  export type hardware_connectionsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: hardware_connectionsWhereInput | hardware_connectionsWhereInput[]
+    OR?: hardware_connectionsWhereInput[]
+    NOT?: hardware_connectionsWhereInput | hardware_connectionsWhereInput[]
+    company_id?: IntNullableFilter<"hardware_connections"> | number | null
+    hardware_type?: StringFilter<"hardware_connections"> | string
+    name?: StringFilter<"hardware_connections"> | string
+    model?: StringNullableFilter<"hardware_connections"> | string | null
+    serial_number?: StringNullableFilter<"hardware_connections"> | string | null
+    connection_details?: JsonNullableFilter<"hardware_connections">
+    is_active?: BoolFilter<"hardware_connections"> | boolean
+    last_connected_at?: DateTimeNullableFilter<"hardware_connections"> | Date | string | null
+    created_by?: UuidNullableFilter<"hardware_connections"> | string | null
+    created_at?: DateTimeFilter<"hardware_connections"> | Date | string
+    updated_at?: DateTimeFilter<"hardware_connections"> | Date | string
+    companies?: XOR<CompaniesNullableScalarRelationFilter, companiesWhereInput> | null
+    users?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+  }, "id">
+
+  export type hardware_connectionsOrderByWithAggregationInput = {
+    id?: SortOrder
+    company_id?: SortOrderInput | SortOrder
+    hardware_type?: SortOrder
+    name?: SortOrder
+    model?: SortOrderInput | SortOrder
+    serial_number?: SortOrderInput | SortOrder
+    connection_details?: SortOrderInput | SortOrder
+    is_active?: SortOrder
+    last_connected_at?: SortOrderInput | SortOrder
+    created_by?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: hardware_connectionsCountOrderByAggregateInput
+    _avg?: hardware_connectionsAvgOrderByAggregateInput
+    _max?: hardware_connectionsMaxOrderByAggregateInput
+    _min?: hardware_connectionsMinOrderByAggregateInput
+    _sum?: hardware_connectionsSumOrderByAggregateInput
+  }
+
+  export type hardware_connectionsScalarWhereWithAggregatesInput = {
+    AND?: hardware_connectionsScalarWhereWithAggregatesInput | hardware_connectionsScalarWhereWithAggregatesInput[]
+    OR?: hardware_connectionsScalarWhereWithAggregatesInput[]
+    NOT?: hardware_connectionsScalarWhereWithAggregatesInput | hardware_connectionsScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"hardware_connections"> | string
+    company_id?: IntNullableWithAggregatesFilter<"hardware_connections"> | number | null
+    hardware_type?: StringWithAggregatesFilter<"hardware_connections"> | string
+    name?: StringWithAggregatesFilter<"hardware_connections"> | string
+    model?: StringNullableWithAggregatesFilter<"hardware_connections"> | string | null
+    serial_number?: StringNullableWithAggregatesFilter<"hardware_connections"> | string | null
+    connection_details?: JsonNullableWithAggregatesFilter<"hardware_connections">
+    is_active?: BoolWithAggregatesFilter<"hardware_connections"> | boolean
+    last_connected_at?: DateTimeNullableWithAggregatesFilter<"hardware_connections"> | Date | string | null
+    created_by?: UuidNullableWithAggregatesFilter<"hardware_connections"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"hardware_connections"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"hardware_connections"> | Date | string
+  }
+
+  export type blockchain_recordsWhereInput = {
+    AND?: blockchain_recordsWhereInput | blockchain_recordsWhereInput[]
+    OR?: blockchain_recordsWhereInput[]
+    NOT?: blockchain_recordsWhereInput | blockchain_recordsWhereInput[]
+    id?: UuidFilter<"blockchain_records"> | string
+    record_type?: StringFilter<"blockchain_records"> | string
+    record_id?: StringFilter<"blockchain_records"> | string
+    hash?: StringFilter<"blockchain_records"> | string
+    previous_hash?: StringNullableFilter<"blockchain_records"> | string | null
+    blockchain_id?: StringNullableFilter<"blockchain_records"> | string | null
+    transaction_id?: StringNullableFilter<"blockchain_records"> | string | null
+    verified?: BoolFilter<"blockchain_records"> | boolean
+    verification_details?: JsonNullableFilter<"blockchain_records">
+    created_at?: DateTimeFilter<"blockchain_records"> | Date | string
+  }
+
+  export type blockchain_recordsOrderByWithRelationInput = {
+    id?: SortOrder
+    record_type?: SortOrder
+    record_id?: SortOrder
+    hash?: SortOrder
+    previous_hash?: SortOrderInput | SortOrder
+    blockchain_id?: SortOrderInput | SortOrder
+    transaction_id?: SortOrderInput | SortOrder
+    verified?: SortOrder
+    verification_details?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+  }
+
+  export type blockchain_recordsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: blockchain_recordsWhereInput | blockchain_recordsWhereInput[]
+    OR?: blockchain_recordsWhereInput[]
+    NOT?: blockchain_recordsWhereInput | blockchain_recordsWhereInput[]
+    record_type?: StringFilter<"blockchain_records"> | string
+    record_id?: StringFilter<"blockchain_records"> | string
+    hash?: StringFilter<"blockchain_records"> | string
+    previous_hash?: StringNullableFilter<"blockchain_records"> | string | null
+    blockchain_id?: StringNullableFilter<"blockchain_records"> | string | null
+    transaction_id?: StringNullableFilter<"blockchain_records"> | string | null
+    verified?: BoolFilter<"blockchain_records"> | boolean
+    verification_details?: JsonNullableFilter<"blockchain_records">
+    created_at?: DateTimeFilter<"blockchain_records"> | Date | string
+  }, "id">
+
+  export type blockchain_recordsOrderByWithAggregationInput = {
+    id?: SortOrder
+    record_type?: SortOrder
+    record_id?: SortOrder
+    hash?: SortOrder
+    previous_hash?: SortOrderInput | SortOrder
+    blockchain_id?: SortOrderInput | SortOrder
+    transaction_id?: SortOrderInput | SortOrder
+    verified?: SortOrder
+    verification_details?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    _count?: blockchain_recordsCountOrderByAggregateInput
+    _max?: blockchain_recordsMaxOrderByAggregateInput
+    _min?: blockchain_recordsMinOrderByAggregateInput
+  }
+
+  export type blockchain_recordsScalarWhereWithAggregatesInput = {
+    AND?: blockchain_recordsScalarWhereWithAggregatesInput | blockchain_recordsScalarWhereWithAggregatesInput[]
+    OR?: blockchain_recordsScalarWhereWithAggregatesInput[]
+    NOT?: blockchain_recordsScalarWhereWithAggregatesInput | blockchain_recordsScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"blockchain_records"> | string
+    record_type?: StringWithAggregatesFilter<"blockchain_records"> | string
+    record_id?: StringWithAggregatesFilter<"blockchain_records"> | string
+    hash?: StringWithAggregatesFilter<"blockchain_records"> | string
+    previous_hash?: StringNullableWithAggregatesFilter<"blockchain_records"> | string | null
+    blockchain_id?: StringNullableWithAggregatesFilter<"blockchain_records"> | string | null
+    transaction_id?: StringNullableWithAggregatesFilter<"blockchain_records"> | string | null
+    verified?: BoolWithAggregatesFilter<"blockchain_records"> | boolean
+    verification_details?: JsonNullableWithAggregatesFilter<"blockchain_records">
+    created_at?: DateTimeWithAggregatesFilter<"blockchain_records"> | Date | string
+  }
+
   export type axle_configurationsCreateInput = {
     name: string
     description?: string | null
@@ -30675,6 +41992,10 @@ export namespace Prisma {
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateInput = {
@@ -30693,6 +42014,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUpdateInput = {
@@ -30710,6 +42035,10 @@ export namespace Prisma {
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateInput = {
@@ -30728,6 +42057,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesCreateManyInput = {
@@ -31708,6 +43041,10 @@ export namespace Prisma {
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateInput = {
@@ -31721,6 +43058,10 @@ export namespace Prisma {
     predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersUpdateInput = {
@@ -31734,6 +43075,10 @@ export namespace Prisma {
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateInput = {
@@ -31747,6 +43092,10 @@ export namespace Prisma {
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type usersCreateManyInput = {
@@ -32232,6 +43581,735 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type api_keysCreateInput = {
+    id?: string
+    name: string
+    key: string
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutApi_keysInput
+    users?: usersCreateNestedOneWithoutApi_keysInput
+    api_usage?: api_usageCreateNestedManyWithoutApi_keysInput
+  }
+
+  export type api_keysUncheckedCreateInput = {
+    id?: string
+    name: string
+    key: string
+    company_id?: number | null
+    created_by?: string | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    api_usage?: api_usageUncheckedCreateNestedManyWithoutApi_keysInput
+  }
+
+  export type api_keysUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutApi_keysNestedInput
+    users?: usersUpdateOneWithoutApi_keysNestedInput
+    api_usage?: api_usageUpdateManyWithoutApi_keysNestedInput
+  }
+
+  export type api_keysUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    api_usage?: api_usageUncheckedUpdateManyWithoutApi_keysNestedInput
+  }
+
+  export type api_keysCreateManyInput = {
+    id?: string
+    name: string
+    key: string
+    company_id?: number | null
+    created_by?: string | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type api_keysUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type api_keysUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type api_usageCreateInput = {
+    id?: string
+    endpoint: string
+    method: string
+    status: number
+    ip_address?: string | null
+    user_agent?: string | null
+    created_at?: Date | string
+    api_keys: api_keysCreateNestedOneWithoutApi_usageInput
+  }
+
+  export type api_usageUncheckedCreateInput = {
+    id?: string
+    api_key_id: string
+    endpoint: string
+    method: string
+    status: number
+    ip_address?: string | null
+    user_agent?: string | null
+    created_at?: Date | string
+  }
+
+  export type api_usageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    api_keys?: api_keysUpdateOneRequiredWithoutApi_usageNestedInput
+  }
+
+  export type api_usageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    api_key_id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type api_usageCreateManyInput = {
+    id?: string
+    api_key_id: string
+    endpoint: string
+    method: string
+    status: number
+    ip_address?: string | null
+    user_agent?: string | null
+    created_at?: Date | string
+  }
+
+  export type api_usageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type api_usageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    api_key_id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type webhook_subscriptionsCreateInput = {
+    id?: string
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutWebhook_subscriptionsInput
+    users?: usersCreateNestedOneWithoutWebhook_subscriptionsInput
+    webhook_deliveries?: webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsUncheckedCreateInput = {
+    id?: string
+    company_id?: number | null
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    webhook_deliveries?: webhook_deliveriesUncheckedCreateNestedManyWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutWebhook_subscriptionsNestedInput
+    users?: usersUpdateOneWithoutWebhook_subscriptionsNestedInput
+    webhook_deliveries?: webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhook_deliveries?: webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsCreateManyInput = {
+    id?: string
+    company_id?: number | null
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type webhook_subscriptionsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type webhook_deliveriesCreateInput = {
+    id?: string
+    event_type: string
+    payload: JsonNullValueInput | InputJsonValue
+    response_status?: number | null
+    response_body?: string | null
+    error_message?: string | null
+    attempts?: number
+    next_retry_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    webhook_subscriptions: webhook_subscriptionsCreateNestedOneWithoutWebhook_deliveriesInput
+  }
+
+  export type webhook_deliveriesUncheckedCreateInput = {
+    id?: string
+    webhook_subscription_id: string
+    event_type: string
+    payload: JsonNullValueInput | InputJsonValue
+    response_status?: number | null
+    response_body?: string | null
+    error_message?: string | null
+    attempts?: number
+    next_retry_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type webhook_deliveriesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    response_status?: NullableIntFieldUpdateOperationsInput | number | null
+    response_body?: NullableStringFieldUpdateOperationsInput | string | null
+    error_message?: NullableStringFieldUpdateOperationsInput | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    next_retry_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhook_subscriptions?: webhook_subscriptionsUpdateOneRequiredWithoutWebhook_deliveriesNestedInput
+  }
+
+  export type webhook_deliveriesUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    webhook_subscription_id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    response_status?: NullableIntFieldUpdateOperationsInput | number | null
+    response_body?: NullableStringFieldUpdateOperationsInput | string | null
+    error_message?: NullableStringFieldUpdateOperationsInput | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    next_retry_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type webhook_deliveriesCreateManyInput = {
+    id?: string
+    webhook_subscription_id: string
+    event_type: string
+    payload: JsonNullValueInput | InputJsonValue
+    response_status?: number | null
+    response_body?: string | null
+    error_message?: string | null
+    attempts?: number
+    next_retry_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type webhook_deliveriesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    response_status?: NullableIntFieldUpdateOperationsInput | number | null
+    response_body?: NullableStringFieldUpdateOperationsInput | string | null
+    error_message?: NullableStringFieldUpdateOperationsInput | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    next_retry_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type webhook_deliveriesUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    webhook_subscription_id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    response_status?: NullableIntFieldUpdateOperationsInput | number | null
+    response_body?: NullableStringFieldUpdateOperationsInput | string | null
+    error_message?: NullableStringFieldUpdateOperationsInput | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    next_retry_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_connectionsCreateInput = {
+    id?: string
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutIntegration_connectionsInput
+    users?: usersCreateNestedOneWithoutIntegration_connectionsInput
+    integration_logs?: integration_logsCreateNestedManyWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsUncheckedCreateInput = {
+    id?: string
+    company_id?: number | null
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    integration_logs?: integration_logsUncheckedCreateNestedManyWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutIntegration_connectionsNestedInput
+    users?: usersUpdateOneWithoutIntegration_connectionsNestedInput
+    integration_logs?: integration_logsUpdateManyWithoutIntegration_connectionsNestedInput
+  }
+
+  export type integration_connectionsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    integration_logs?: integration_logsUncheckedUpdateManyWithoutIntegration_connectionsNestedInput
+  }
+
+  export type integration_connectionsCreateManyInput = {
+    id?: string
+    company_id?: number | null
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type integration_connectionsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_connectionsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_logsCreateInput = {
+    id?: string
+    event_type: string
+    status: string
+    message?: string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: Date | string
+    integration_connections: integration_connectionsCreateNestedOneWithoutIntegration_logsInput
+  }
+
+  export type integration_logsUncheckedCreateInput = {
+    id?: string
+    integration_connection_id: string
+    event_type: string
+    status: string
+    message?: string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: Date | string
+  }
+
+  export type integration_logsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    integration_connections?: integration_connectionsUpdateOneRequiredWithoutIntegration_logsNestedInput
+  }
+
+  export type integration_logsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_connection_id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_logsCreateManyInput = {
+    id?: string
+    integration_connection_id: string
+    event_type: string
+    status: string
+    message?: string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: Date | string
+  }
+
+  export type integration_logsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_logsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_connection_id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type hardware_connectionsCreateInput = {
+    id?: string
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutHardware_connectionsInput
+    users?: usersCreateNestedOneWithoutHardware_connectionsInput
+  }
+
+  export type hardware_connectionsUncheckedCreateInput = {
+    id?: string
+    company_id?: number | null
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type hardware_connectionsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutHardware_connectionsNestedInput
+    users?: usersUpdateOneWithoutHardware_connectionsNestedInput
+  }
+
+  export type hardware_connectionsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type hardware_connectionsCreateManyInput = {
+    id?: string
+    company_id?: number | null
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type hardware_connectionsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type hardware_connectionsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type blockchain_recordsCreateInput = {
+    id?: string
+    record_type: string
+    record_id: string
+    hash: string
+    previous_hash?: string | null
+    blockchain_id?: string | null
+    transaction_id?: string | null
+    verified?: boolean
+    verification_details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: Date | string
+  }
+
+  export type blockchain_recordsUncheckedCreateInput = {
+    id?: string
+    record_type: string
+    record_id: string
+    hash: string
+    previous_hash?: string | null
+    blockchain_id?: string | null
+    transaction_id?: string | null
+    verified?: boolean
+    verification_details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: Date | string
+  }
+
+  export type blockchain_recordsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    record_type?: StringFieldUpdateOperationsInput | string
+    record_id?: StringFieldUpdateOperationsInput | string
+    hash?: StringFieldUpdateOperationsInput | string
+    previous_hash?: NullableStringFieldUpdateOperationsInput | string | null
+    blockchain_id?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verification_details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type blockchain_recordsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    record_type?: StringFieldUpdateOperationsInput | string
+    record_id?: StringFieldUpdateOperationsInput | string
+    hash?: StringFieldUpdateOperationsInput | string
+    previous_hash?: NullableStringFieldUpdateOperationsInput | string | null
+    blockchain_id?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verification_details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type blockchain_recordsCreateManyInput = {
+    id?: string
+    record_type: string
+    record_id: string
+    hash: string
+    previous_hash?: string | null
+    blockchain_id?: string | null
+    transaction_id?: string | null
+    verified?: boolean
+    verification_details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: Date | string
+  }
+
+  export type blockchain_recordsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    record_type?: StringFieldUpdateOperationsInput | string
+    record_id?: StringFieldUpdateOperationsInput | string
+    hash?: StringFieldUpdateOperationsInput | string
+    previous_hash?: NullableStringFieldUpdateOperationsInput | string | null
+    blockchain_id?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verification_details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type blockchain_recordsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    record_type?: StringFieldUpdateOperationsInput | string
+    record_id?: StringFieldUpdateOperationsInput | string
+    hash?: StringFieldUpdateOperationsInput | string
+    previous_hash?: NullableStringFieldUpdateOperationsInput | string | null
+    blockchain_id?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verification_details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -32691,6 +44769,30 @@ export namespace Prisma {
     none?: weightsWhereInput
   }
 
+  export type Api_keysListRelationFilter = {
+    every?: api_keysWhereInput
+    some?: api_keysWhereInput
+    none?: api_keysWhereInput
+  }
+
+  export type Webhook_subscriptionsListRelationFilter = {
+    every?: webhook_subscriptionsWhereInput
+    some?: webhook_subscriptionsWhereInput
+    none?: webhook_subscriptionsWhereInput
+  }
+
+  export type Integration_connectionsListRelationFilter = {
+    every?: integration_connectionsWhereInput
+    some?: integration_connectionsWhereInput
+    none?: integration_connectionsWhereInput
+  }
+
+  export type Hardware_connectionsListRelationFilter = {
+    every?: hardware_connectionsWhereInput
+    some?: hardware_connectionsWhereInput
+    none?: hardware_connectionsWhereInput
+  }
+
   export type driversOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -32716,6 +44818,22 @@ export namespace Prisma {
   }
 
   export type weightsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type api_keysOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type webhook_subscriptionsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type integration_connectionsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type hardware_connectionsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -33862,6 +45980,467 @@ export namespace Prisma {
     company_id?: SortOrder
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type Api_usageListRelationFilter = {
+    every?: api_usageWhereInput
+    some?: api_usageWhereInput
+    none?: api_usageWhereInput
+  }
+
+  export type api_usageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type api_keysCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    company_id?: SortOrder
+    created_by?: SortOrder
+    expires_at?: SortOrder
+    last_used_at?: SortOrder
+    is_active?: SortOrder
+    permissions?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type api_keysAvgOrderByAggregateInput = {
+    company_id?: SortOrder
+  }
+
+  export type api_keysMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    company_id?: SortOrder
+    created_by?: SortOrder
+    expires_at?: SortOrder
+    last_used_at?: SortOrder
+    is_active?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type api_keysMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    company_id?: SortOrder
+    created_by?: SortOrder
+    expires_at?: SortOrder
+    last_used_at?: SortOrder
+    is_active?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type api_keysSumOrderByAggregateInput = {
+    company_id?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type Api_keysScalarRelationFilter = {
+    is?: api_keysWhereInput
+    isNot?: api_keysWhereInput
+  }
+
+  export type api_usageCountOrderByAggregateInput = {
+    id?: SortOrder
+    api_key_id?: SortOrder
+    endpoint?: SortOrder
+    method?: SortOrder
+    status?: SortOrder
+    ip_address?: SortOrder
+    user_agent?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type api_usageAvgOrderByAggregateInput = {
+    status?: SortOrder
+  }
+
+  export type api_usageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    api_key_id?: SortOrder
+    endpoint?: SortOrder
+    method?: SortOrder
+    status?: SortOrder
+    ip_address?: SortOrder
+    user_agent?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type api_usageMinOrderByAggregateInput = {
+    id?: SortOrder
+    api_key_id?: SortOrder
+    endpoint?: SortOrder
+    method?: SortOrder
+    status?: SortOrder
+    ip_address?: SortOrder
+    user_agent?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type api_usageSumOrderByAggregateInput = {
+    status?: SortOrder
+  }
+
+  export type Webhook_deliveriesListRelationFilter = {
+    every?: webhook_deliveriesWhereInput
+    some?: webhook_deliveriesWhereInput
+    none?: webhook_deliveriesWhereInput
+  }
+
+  export type webhook_deliveriesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type webhook_subscriptionsCountOrderByAggregateInput = {
+    id?: SortOrder
+    company_id?: SortOrder
+    name?: SortOrder
+    event_types?: SortOrder
+    target_url?: SortOrder
+    secret_key?: SortOrder
+    is_active?: SortOrder
+    created_by?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type webhook_subscriptionsAvgOrderByAggregateInput = {
+    company_id?: SortOrder
+  }
+
+  export type webhook_subscriptionsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    company_id?: SortOrder
+    name?: SortOrder
+    target_url?: SortOrder
+    secret_key?: SortOrder
+    is_active?: SortOrder
+    created_by?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type webhook_subscriptionsMinOrderByAggregateInput = {
+    id?: SortOrder
+    company_id?: SortOrder
+    name?: SortOrder
+    target_url?: SortOrder
+    secret_key?: SortOrder
+    is_active?: SortOrder
+    created_by?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type webhook_subscriptionsSumOrderByAggregateInput = {
+    company_id?: SortOrder
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type Webhook_subscriptionsScalarRelationFilter = {
+    is?: webhook_subscriptionsWhereInput
+    isNot?: webhook_subscriptionsWhereInput
+  }
+
+  export type webhook_deliveriesCountOrderByAggregateInput = {
+    id?: SortOrder
+    webhook_subscription_id?: SortOrder
+    event_type?: SortOrder
+    payload?: SortOrder
+    response_status?: SortOrder
+    response_body?: SortOrder
+    error_message?: SortOrder
+    attempts?: SortOrder
+    next_retry_at?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type webhook_deliveriesAvgOrderByAggregateInput = {
+    response_status?: SortOrder
+    attempts?: SortOrder
+  }
+
+  export type webhook_deliveriesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    webhook_subscription_id?: SortOrder
+    event_type?: SortOrder
+    response_status?: SortOrder
+    response_body?: SortOrder
+    error_message?: SortOrder
+    attempts?: SortOrder
+    next_retry_at?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type webhook_deliveriesMinOrderByAggregateInput = {
+    id?: SortOrder
+    webhook_subscription_id?: SortOrder
+    event_type?: SortOrder
+    response_status?: SortOrder
+    response_body?: SortOrder
+    error_message?: SortOrder
+    attempts?: SortOrder
+    next_retry_at?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type webhook_deliveriesSumOrderByAggregateInput = {
+    response_status?: SortOrder
+    attempts?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type Integration_logsListRelationFilter = {
+    every?: integration_logsWhereInput
+    some?: integration_logsWhereInput
+    none?: integration_logsWhereInput
+  }
+
+  export type integration_logsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type integration_connectionsCountOrderByAggregateInput = {
+    id?: SortOrder
+    company_id?: SortOrder
+    integration_type?: SortOrder
+    provider?: SortOrder
+    credentials?: SortOrder
+    settings?: SortOrder
+    is_active?: SortOrder
+    last_sync_at?: SortOrder
+    created_by?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type integration_connectionsAvgOrderByAggregateInput = {
+    company_id?: SortOrder
+  }
+
+  export type integration_connectionsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    company_id?: SortOrder
+    integration_type?: SortOrder
+    provider?: SortOrder
+    is_active?: SortOrder
+    last_sync_at?: SortOrder
+    created_by?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type integration_connectionsMinOrderByAggregateInput = {
+    id?: SortOrder
+    company_id?: SortOrder
+    integration_type?: SortOrder
+    provider?: SortOrder
+    is_active?: SortOrder
+    last_sync_at?: SortOrder
+    created_by?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type integration_connectionsSumOrderByAggregateInput = {
+    company_id?: SortOrder
+  }
+
+  export type Integration_connectionsScalarRelationFilter = {
+    is?: integration_connectionsWhereInput
+    isNot?: integration_connectionsWhereInput
+  }
+
+  export type integration_logsCountOrderByAggregateInput = {
+    id?: SortOrder
+    integration_connection_id?: SortOrder
+    event_type?: SortOrder
+    status?: SortOrder
+    message?: SortOrder
+    details?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type integration_logsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    integration_connection_id?: SortOrder
+    event_type?: SortOrder
+    status?: SortOrder
+    message?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type integration_logsMinOrderByAggregateInput = {
+    id?: SortOrder
+    integration_connection_id?: SortOrder
+    event_type?: SortOrder
+    status?: SortOrder
+    message?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type hardware_connectionsCountOrderByAggregateInput = {
+    id?: SortOrder
+    company_id?: SortOrder
+    hardware_type?: SortOrder
+    name?: SortOrder
+    model?: SortOrder
+    serial_number?: SortOrder
+    connection_details?: SortOrder
+    is_active?: SortOrder
+    last_connected_at?: SortOrder
+    created_by?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type hardware_connectionsAvgOrderByAggregateInput = {
+    company_id?: SortOrder
+  }
+
+  export type hardware_connectionsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    company_id?: SortOrder
+    hardware_type?: SortOrder
+    name?: SortOrder
+    model?: SortOrder
+    serial_number?: SortOrder
+    is_active?: SortOrder
+    last_connected_at?: SortOrder
+    created_by?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type hardware_connectionsMinOrderByAggregateInput = {
+    id?: SortOrder
+    company_id?: SortOrder
+    hardware_type?: SortOrder
+    name?: SortOrder
+    model?: SortOrder
+    serial_number?: SortOrder
+    is_active?: SortOrder
+    last_connected_at?: SortOrder
+    created_by?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type hardware_connectionsSumOrderByAggregateInput = {
+    company_id?: SortOrder
+  }
+
+  export type blockchain_recordsCountOrderByAggregateInput = {
+    id?: SortOrder
+    record_type?: SortOrder
+    record_id?: SortOrder
+    hash?: SortOrder
+    previous_hash?: SortOrder
+    blockchain_id?: SortOrder
+    transaction_id?: SortOrder
+    verified?: SortOrder
+    verification_details?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type blockchain_recordsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    record_type?: SortOrder
+    record_id?: SortOrder
+    hash?: SortOrder
+    previous_hash?: SortOrder
+    blockchain_id?: SortOrder
+    transaction_id?: SortOrder
+    verified?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type blockchain_recordsMinOrderByAggregateInput = {
+    id?: SortOrder
+    record_type?: SortOrder
+    record_id?: SortOrder
+    hash?: SortOrder
+    previous_hash?: SortOrder
+    blockchain_id?: SortOrder
+    transaction_id?: SortOrder
+    verified?: SortOrder
+    created_at?: SortOrder
+  }
+
   export type axlesCreateNestedManyWithoutAxle_configurationsInput = {
     create?: XOR<axlesCreateWithoutAxle_configurationsInput, axlesUncheckedCreateWithoutAxle_configurationsInput> | axlesCreateWithoutAxle_configurationsInput[] | axlesUncheckedCreateWithoutAxle_configurationsInput[]
     connectOrCreate?: axlesCreateOrConnectWithoutAxle_configurationsInput | axlesCreateOrConnectWithoutAxle_configurationsInput[]
@@ -34090,6 +46669,34 @@ export namespace Prisma {
     connect?: weightsWhereUniqueInput | weightsWhereUniqueInput[]
   }
 
+  export type api_keysCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput> | api_keysCreateWithoutCompaniesInput[] | api_keysUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutCompaniesInput | api_keysCreateOrConnectWithoutCompaniesInput[]
+    createMany?: api_keysCreateManyCompaniesInputEnvelope
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+  }
+
+  export type webhook_subscriptionsCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+  }
+
+  export type integration_connectionsCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+  }
+
+  export type hardware_connectionsCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+  }
+
   export type driversUncheckedCreateNestedManyWithoutCompaniesInput = {
     create?: XOR<driversCreateWithoutCompaniesInput, driversUncheckedCreateWithoutCompaniesInput> | driversCreateWithoutCompaniesInput[] | driversUncheckedCreateWithoutCompaniesInput[]
     connectOrCreate?: driversCreateOrConnectWithoutCompaniesInput | driversCreateOrConnectWithoutCompaniesInput[]
@@ -34144,6 +46751,34 @@ export namespace Prisma {
     connectOrCreate?: weightsCreateOrConnectWithoutCompaniesInput | weightsCreateOrConnectWithoutCompaniesInput[]
     createMany?: weightsCreateManyCompaniesInputEnvelope
     connect?: weightsWhereUniqueInput | weightsWhereUniqueInput[]
+  }
+
+  export type api_keysUncheckedCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput> | api_keysCreateWithoutCompaniesInput[] | api_keysUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutCompaniesInput | api_keysCreateOrConnectWithoutCompaniesInput[]
+    createMany?: api_keysCreateManyCompaniesInputEnvelope
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+  }
+
+  export type webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+  }
+
+  export type integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+  }
+
+  export type hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput = {
+    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
+    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
   }
 
   export type driversUpdateManyWithoutCompaniesNestedInput = {
@@ -34258,6 +46893,62 @@ export namespace Prisma {
     deleteMany?: weightsScalarWhereInput | weightsScalarWhereInput[]
   }
 
+  export type api_keysUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput> | api_keysCreateWithoutCompaniesInput[] | api_keysUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutCompaniesInput | api_keysCreateOrConnectWithoutCompaniesInput[]
+    upsert?: api_keysUpsertWithWhereUniqueWithoutCompaniesInput | api_keysUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: api_keysCreateManyCompaniesInputEnvelope
+    set?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    disconnect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    delete?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    update?: api_keysUpdateWithWhereUniqueWithoutCompaniesInput | api_keysUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: api_keysUpdateManyWithWhereWithoutCompaniesInput | api_keysUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
+  }
+
+  export type webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
+    set?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    disconnect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    delete?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    update?: webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput | webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
+  }
+
+  export type integration_connectionsUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
+    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    update?: integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: integration_connectionsUpdateManyWithWhereWithoutCompaniesInput | integration_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
+  }
+
+  export type hardware_connectionsUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
+    set?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    disconnect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    delete?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    update?: hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput | hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+  }
+
   export type driversUncheckedUpdateManyWithoutCompaniesNestedInput = {
     create?: XOR<driversCreateWithoutCompaniesInput, driversUncheckedCreateWithoutCompaniesInput> | driversCreateWithoutCompaniesInput[] | driversUncheckedCreateWithoutCompaniesInput[]
     connectOrCreate?: driversCreateOrConnectWithoutCompaniesInput | driversCreateOrConnectWithoutCompaniesInput[]
@@ -34368,6 +47059,62 @@ export namespace Prisma {
     update?: weightsUpdateWithWhereUniqueWithoutCompaniesInput | weightsUpdateWithWhereUniqueWithoutCompaniesInput[]
     updateMany?: weightsUpdateManyWithWhereWithoutCompaniesInput | weightsUpdateManyWithWhereWithoutCompaniesInput[]
     deleteMany?: weightsScalarWhereInput | weightsScalarWhereInput[]
+  }
+
+  export type api_keysUncheckedUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput> | api_keysCreateWithoutCompaniesInput[] | api_keysUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutCompaniesInput | api_keysCreateOrConnectWithoutCompaniesInput[]
+    upsert?: api_keysUpsertWithWhereUniqueWithoutCompaniesInput | api_keysUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: api_keysCreateManyCompaniesInputEnvelope
+    set?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    disconnect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    delete?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    update?: api_keysUpdateWithWhereUniqueWithoutCompaniesInput | api_keysUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: api_keysUpdateManyWithWhereWithoutCompaniesInput | api_keysUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput> | webhook_subscriptionsCreateWithoutCompaniesInput[] | webhook_subscriptionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutCompaniesInput | webhook_subscriptionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: webhook_subscriptionsCreateManyCompaniesInputEnvelope
+    set?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    disconnect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    delete?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    update?: webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput | webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput | webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
+  }
+
+  export type integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput> | integration_connectionsCreateWithoutCompaniesInput[] | integration_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutCompaniesInput | integration_connectionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: integration_connectionsCreateManyCompaniesInputEnvelope
+    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    update?: integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: integration_connectionsUpdateManyWithWhereWithoutCompaniesInput | integration_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
+  }
+
+  export type hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput = {
+    create?: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput> | hardware_connectionsCreateWithoutCompaniesInput[] | hardware_connectionsUncheckedCreateWithoutCompaniesInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutCompaniesInput | hardware_connectionsCreateOrConnectWithoutCompaniesInput[]
+    upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput[]
+    createMany?: hardware_connectionsCreateManyCompaniesInputEnvelope
+    set?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    disconnect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    delete?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    update?: hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput | hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput[]
+    updateMany?: hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput | hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput[]
+    deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
   }
 
   export type weigh_ticketsCreateNestedOneWithoutCompliance_issuesInput = {
@@ -35059,6 +47806,34 @@ export namespace Prisma {
     connect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
   }
 
+  export type api_keysCreateNestedManyWithoutUsersInput = {
+    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
+    createMany?: api_keysCreateManyUsersInputEnvelope
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+  }
+
+  export type webhook_subscriptionsCreateNestedManyWithoutUsersInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput> | webhook_subscriptionsCreateWithoutUsersInput[] | webhook_subscriptionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutUsersInput | webhook_subscriptionsCreateOrConnectWithoutUsersInput[]
+    createMany?: webhook_subscriptionsCreateManyUsersInputEnvelope
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+  }
+
+  export type integration_connectionsCreateNestedManyWithoutUsersInput = {
+    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
+    createMany?: integration_connectionsCreateManyUsersInputEnvelope
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+  }
+
+  export type hardware_connectionsCreateNestedManyWithoutUsersInput = {
+    create?: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput> | hardware_connectionsCreateWithoutUsersInput[] | hardware_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutUsersInput | hardware_connectionsCreateOrConnectWithoutUsersInput[]
+    createMany?: hardware_connectionsCreateManyUsersInputEnvelope
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+  }
+
   export type predictive_alertsUncheckedCreateNestedManyWithoutUsersInput = {
     create?: XOR<predictive_alertsCreateWithoutUsersInput, predictive_alertsUncheckedCreateWithoutUsersInput> | predictive_alertsCreateWithoutUsersInput[] | predictive_alertsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: predictive_alertsCreateOrConnectWithoutUsersInput | predictive_alertsCreateOrConnectWithoutUsersInput[]
@@ -35078,6 +47853,34 @@ export namespace Prisma {
     connectOrCreate?: weigh_ticketsCreateOrConnectWithoutUsersInput | weigh_ticketsCreateOrConnectWithoutUsersInput[]
     createMany?: weigh_ticketsCreateManyUsersInputEnvelope
     connect?: weigh_ticketsWhereUniqueInput | weigh_ticketsWhereUniqueInput[]
+  }
+
+  export type api_keysUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
+    createMany?: api_keysCreateManyUsersInputEnvelope
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+  }
+
+  export type webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput> | webhook_subscriptionsCreateWithoutUsersInput[] | webhook_subscriptionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutUsersInput | webhook_subscriptionsCreateOrConnectWithoutUsersInput[]
+    createMany?: webhook_subscriptionsCreateManyUsersInputEnvelope
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+  }
+
+  export type integration_connectionsUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
+    createMany?: integration_connectionsCreateManyUsersInputEnvelope
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+  }
+
+  export type hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput> | hardware_connectionsCreateWithoutUsersInput[] | hardware_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutUsersInput | hardware_connectionsCreateOrConnectWithoutUsersInput[]
+    createMany?: hardware_connectionsCreateManyUsersInputEnvelope
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
   }
 
   export type predictive_alertsUpdateManyWithoutUsersNestedInput = {
@@ -35132,6 +47935,62 @@ export namespace Prisma {
     deleteMany?: weigh_ticketsScalarWhereInput | weigh_ticketsScalarWhereInput[]
   }
 
+  export type api_keysUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
+    upsert?: api_keysUpsertWithWhereUniqueWithoutUsersInput | api_keysUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: api_keysCreateManyUsersInputEnvelope
+    set?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    disconnect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    delete?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    update?: api_keysUpdateWithWhereUniqueWithoutUsersInput | api_keysUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: api_keysUpdateManyWithWhereWithoutUsersInput | api_keysUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
+  }
+
+  export type webhook_subscriptionsUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput> | webhook_subscriptionsCreateWithoutUsersInput[] | webhook_subscriptionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutUsersInput | webhook_subscriptionsCreateOrConnectWithoutUsersInput[]
+    upsert?: webhook_subscriptionsUpsertWithWhereUniqueWithoutUsersInput | webhook_subscriptionsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: webhook_subscriptionsCreateManyUsersInputEnvelope
+    set?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    disconnect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    delete?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    update?: webhook_subscriptionsUpdateWithWhereUniqueWithoutUsersInput | webhook_subscriptionsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: webhook_subscriptionsUpdateManyWithWhereWithoutUsersInput | webhook_subscriptionsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
+  }
+
+  export type integration_connectionsUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
+    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutUsersInput | integration_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: integration_connectionsCreateManyUsersInputEnvelope
+    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    update?: integration_connectionsUpdateWithWhereUniqueWithoutUsersInput | integration_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: integration_connectionsUpdateManyWithWhereWithoutUsersInput | integration_connectionsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
+  }
+
+  export type hardware_connectionsUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput> | hardware_connectionsCreateWithoutUsersInput[] | hardware_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutUsersInput | hardware_connectionsCreateOrConnectWithoutUsersInput[]
+    upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput | hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: hardware_connectionsCreateManyUsersInputEnvelope
+    set?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    disconnect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    delete?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    update?: hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput | hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: hardware_connectionsUpdateManyWithWhereWithoutUsersInput | hardware_connectionsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+  }
+
   export type predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput = {
     create?: XOR<predictive_alertsCreateWithoutUsersInput, predictive_alertsUncheckedCreateWithoutUsersInput> | predictive_alertsCreateWithoutUsersInput[] | predictive_alertsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: predictive_alertsCreateOrConnectWithoutUsersInput | predictive_alertsCreateOrConnectWithoutUsersInput[]
@@ -35172,6 +48031,62 @@ export namespace Prisma {
     update?: weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput | weigh_ticketsUpdateWithWhereUniqueWithoutUsersInput[]
     updateMany?: weigh_ticketsUpdateManyWithWhereWithoutUsersInput | weigh_ticketsUpdateManyWithWhereWithoutUsersInput[]
     deleteMany?: weigh_ticketsScalarWhereInput | weigh_ticketsScalarWhereInput[]
+  }
+
+  export type api_keysUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput> | api_keysCreateWithoutUsersInput[] | api_keysUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: api_keysCreateOrConnectWithoutUsersInput | api_keysCreateOrConnectWithoutUsersInput[]
+    upsert?: api_keysUpsertWithWhereUniqueWithoutUsersInput | api_keysUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: api_keysCreateManyUsersInputEnvelope
+    set?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    disconnect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    delete?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    connect?: api_keysWhereUniqueInput | api_keysWhereUniqueInput[]
+    update?: api_keysUpdateWithWhereUniqueWithoutUsersInput | api_keysUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: api_keysUpdateManyWithWhereWithoutUsersInput | api_keysUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput> | webhook_subscriptionsCreateWithoutUsersInput[] | webhook_subscriptionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutUsersInput | webhook_subscriptionsCreateOrConnectWithoutUsersInput[]
+    upsert?: webhook_subscriptionsUpsertWithWhereUniqueWithoutUsersInput | webhook_subscriptionsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: webhook_subscriptionsCreateManyUsersInputEnvelope
+    set?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    disconnect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    delete?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    connect?: webhook_subscriptionsWhereUniqueInput | webhook_subscriptionsWhereUniqueInput[]
+    update?: webhook_subscriptionsUpdateWithWhereUniqueWithoutUsersInput | webhook_subscriptionsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: webhook_subscriptionsUpdateManyWithWhereWithoutUsersInput | webhook_subscriptionsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
+  }
+
+  export type integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput> | integration_connectionsCreateWithoutUsersInput[] | integration_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutUsersInput | integration_connectionsCreateOrConnectWithoutUsersInput[]
+    upsert?: integration_connectionsUpsertWithWhereUniqueWithoutUsersInput | integration_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: integration_connectionsCreateManyUsersInputEnvelope
+    set?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    disconnect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    delete?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    connect?: integration_connectionsWhereUniqueInput | integration_connectionsWhereUniqueInput[]
+    update?: integration_connectionsUpdateWithWhereUniqueWithoutUsersInput | integration_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: integration_connectionsUpdateManyWithWhereWithoutUsersInput | integration_connectionsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
+  }
+
+  export type hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput> | hardware_connectionsCreateWithoutUsersInput[] | hardware_connectionsUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: hardware_connectionsCreateOrConnectWithoutUsersInput | hardware_connectionsCreateOrConnectWithoutUsersInput[]
+    upsert?: hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput | hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: hardware_connectionsCreateManyUsersInputEnvelope
+    set?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    disconnect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    delete?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    connect?: hardware_connectionsWhereUniqueInput | hardware_connectionsWhereUniqueInput[]
+    update?: hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput | hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: hardware_connectionsUpdateManyWithWhereWithoutUsersInput | hardware_connectionsUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
   }
 
   export type loadsCreateNestedManyWithoutVehiclesInput = {
@@ -35770,6 +48685,324 @@ export namespace Prisma {
     update?: XOR<XOR<vehiclesUpdateToOneWithWhereWithoutWeightsInput, vehiclesUpdateWithoutWeightsInput>, vehiclesUncheckedUpdateWithoutWeightsInput>
   }
 
+  export type api_keysCreatepermissionsInput = {
+    set: string[]
+  }
+
+  export type companiesCreateNestedOneWithoutApi_keysInput = {
+    create?: XOR<companiesCreateWithoutApi_keysInput, companiesUncheckedCreateWithoutApi_keysInput>
+    connectOrCreate?: companiesCreateOrConnectWithoutApi_keysInput
+    connect?: companiesWhereUniqueInput
+  }
+
+  export type usersCreateNestedOneWithoutApi_keysInput = {
+    create?: XOR<usersCreateWithoutApi_keysInput, usersUncheckedCreateWithoutApi_keysInput>
+    connectOrCreate?: usersCreateOrConnectWithoutApi_keysInput
+    connect?: usersWhereUniqueInput
+  }
+
+  export type api_usageCreateNestedManyWithoutApi_keysInput = {
+    create?: XOR<api_usageCreateWithoutApi_keysInput, api_usageUncheckedCreateWithoutApi_keysInput> | api_usageCreateWithoutApi_keysInput[] | api_usageUncheckedCreateWithoutApi_keysInput[]
+    connectOrCreate?: api_usageCreateOrConnectWithoutApi_keysInput | api_usageCreateOrConnectWithoutApi_keysInput[]
+    createMany?: api_usageCreateManyApi_keysInputEnvelope
+    connect?: api_usageWhereUniqueInput | api_usageWhereUniqueInput[]
+  }
+
+  export type api_usageUncheckedCreateNestedManyWithoutApi_keysInput = {
+    create?: XOR<api_usageCreateWithoutApi_keysInput, api_usageUncheckedCreateWithoutApi_keysInput> | api_usageCreateWithoutApi_keysInput[] | api_usageUncheckedCreateWithoutApi_keysInput[]
+    connectOrCreate?: api_usageCreateOrConnectWithoutApi_keysInput | api_usageCreateOrConnectWithoutApi_keysInput[]
+    createMany?: api_usageCreateManyApi_keysInputEnvelope
+    connect?: api_usageWhereUniqueInput | api_usageWhereUniqueInput[]
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type api_keysUpdatepermissionsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type companiesUpdateOneWithoutApi_keysNestedInput = {
+    create?: XOR<companiesCreateWithoutApi_keysInput, companiesUncheckedCreateWithoutApi_keysInput>
+    connectOrCreate?: companiesCreateOrConnectWithoutApi_keysInput
+    upsert?: companiesUpsertWithoutApi_keysInput
+    disconnect?: companiesWhereInput | boolean
+    delete?: companiesWhereInput | boolean
+    connect?: companiesWhereUniqueInput
+    update?: XOR<XOR<companiesUpdateToOneWithWhereWithoutApi_keysInput, companiesUpdateWithoutApi_keysInput>, companiesUncheckedUpdateWithoutApi_keysInput>
+  }
+
+  export type usersUpdateOneWithoutApi_keysNestedInput = {
+    create?: XOR<usersCreateWithoutApi_keysInput, usersUncheckedCreateWithoutApi_keysInput>
+    connectOrCreate?: usersCreateOrConnectWithoutApi_keysInput
+    upsert?: usersUpsertWithoutApi_keysInput
+    disconnect?: usersWhereInput | boolean
+    delete?: usersWhereInput | boolean
+    connect?: usersWhereUniqueInput
+    update?: XOR<XOR<usersUpdateToOneWithWhereWithoutApi_keysInput, usersUpdateWithoutApi_keysInput>, usersUncheckedUpdateWithoutApi_keysInput>
+  }
+
+  export type api_usageUpdateManyWithoutApi_keysNestedInput = {
+    create?: XOR<api_usageCreateWithoutApi_keysInput, api_usageUncheckedCreateWithoutApi_keysInput> | api_usageCreateWithoutApi_keysInput[] | api_usageUncheckedCreateWithoutApi_keysInput[]
+    connectOrCreate?: api_usageCreateOrConnectWithoutApi_keysInput | api_usageCreateOrConnectWithoutApi_keysInput[]
+    upsert?: api_usageUpsertWithWhereUniqueWithoutApi_keysInput | api_usageUpsertWithWhereUniqueWithoutApi_keysInput[]
+    createMany?: api_usageCreateManyApi_keysInputEnvelope
+    set?: api_usageWhereUniqueInput | api_usageWhereUniqueInput[]
+    disconnect?: api_usageWhereUniqueInput | api_usageWhereUniqueInput[]
+    delete?: api_usageWhereUniqueInput | api_usageWhereUniqueInput[]
+    connect?: api_usageWhereUniqueInput | api_usageWhereUniqueInput[]
+    update?: api_usageUpdateWithWhereUniqueWithoutApi_keysInput | api_usageUpdateWithWhereUniqueWithoutApi_keysInput[]
+    updateMany?: api_usageUpdateManyWithWhereWithoutApi_keysInput | api_usageUpdateManyWithWhereWithoutApi_keysInput[]
+    deleteMany?: api_usageScalarWhereInput | api_usageScalarWhereInput[]
+  }
+
+  export type api_usageUncheckedUpdateManyWithoutApi_keysNestedInput = {
+    create?: XOR<api_usageCreateWithoutApi_keysInput, api_usageUncheckedCreateWithoutApi_keysInput> | api_usageCreateWithoutApi_keysInput[] | api_usageUncheckedCreateWithoutApi_keysInput[]
+    connectOrCreate?: api_usageCreateOrConnectWithoutApi_keysInput | api_usageCreateOrConnectWithoutApi_keysInput[]
+    upsert?: api_usageUpsertWithWhereUniqueWithoutApi_keysInput | api_usageUpsertWithWhereUniqueWithoutApi_keysInput[]
+    createMany?: api_usageCreateManyApi_keysInputEnvelope
+    set?: api_usageWhereUniqueInput | api_usageWhereUniqueInput[]
+    disconnect?: api_usageWhereUniqueInput | api_usageWhereUniqueInput[]
+    delete?: api_usageWhereUniqueInput | api_usageWhereUniqueInput[]
+    connect?: api_usageWhereUniqueInput | api_usageWhereUniqueInput[]
+    update?: api_usageUpdateWithWhereUniqueWithoutApi_keysInput | api_usageUpdateWithWhereUniqueWithoutApi_keysInput[]
+    updateMany?: api_usageUpdateManyWithWhereWithoutApi_keysInput | api_usageUpdateManyWithWhereWithoutApi_keysInput[]
+    deleteMany?: api_usageScalarWhereInput | api_usageScalarWhereInput[]
+  }
+
+  export type api_keysCreateNestedOneWithoutApi_usageInput = {
+    create?: XOR<api_keysCreateWithoutApi_usageInput, api_keysUncheckedCreateWithoutApi_usageInput>
+    connectOrCreate?: api_keysCreateOrConnectWithoutApi_usageInput
+    connect?: api_keysWhereUniqueInput
+  }
+
+  export type api_keysUpdateOneRequiredWithoutApi_usageNestedInput = {
+    create?: XOR<api_keysCreateWithoutApi_usageInput, api_keysUncheckedCreateWithoutApi_usageInput>
+    connectOrCreate?: api_keysCreateOrConnectWithoutApi_usageInput
+    upsert?: api_keysUpsertWithoutApi_usageInput
+    connect?: api_keysWhereUniqueInput
+    update?: XOR<XOR<api_keysUpdateToOneWithWhereWithoutApi_usageInput, api_keysUpdateWithoutApi_usageInput>, api_keysUncheckedUpdateWithoutApi_usageInput>
+  }
+
+  export type webhook_subscriptionsCreateevent_typesInput = {
+    set: string[]
+  }
+
+  export type companiesCreateNestedOneWithoutWebhook_subscriptionsInput = {
+    create?: XOR<companiesCreateWithoutWebhook_subscriptionsInput, companiesUncheckedCreateWithoutWebhook_subscriptionsInput>
+    connectOrCreate?: companiesCreateOrConnectWithoutWebhook_subscriptionsInput
+    connect?: companiesWhereUniqueInput
+  }
+
+  export type usersCreateNestedOneWithoutWebhook_subscriptionsInput = {
+    create?: XOR<usersCreateWithoutWebhook_subscriptionsInput, usersUncheckedCreateWithoutWebhook_subscriptionsInput>
+    connectOrCreate?: usersCreateOrConnectWithoutWebhook_subscriptionsInput
+    connect?: usersWhereUniqueInput
+  }
+
+  export type webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput = {
+    create?: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput> | webhook_deliveriesCreateWithoutWebhook_subscriptionsInput[] | webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput[]
+    connectOrCreate?: webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput | webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput[]
+    createMany?: webhook_deliveriesCreateManyWebhook_subscriptionsInputEnvelope
+    connect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+  }
+
+  export type webhook_deliveriesUncheckedCreateNestedManyWithoutWebhook_subscriptionsInput = {
+    create?: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput> | webhook_deliveriesCreateWithoutWebhook_subscriptionsInput[] | webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput[]
+    connectOrCreate?: webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput | webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput[]
+    createMany?: webhook_deliveriesCreateManyWebhook_subscriptionsInputEnvelope
+    connect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+  }
+
+  export type webhook_subscriptionsUpdateevent_typesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type companiesUpdateOneWithoutWebhook_subscriptionsNestedInput = {
+    create?: XOR<companiesCreateWithoutWebhook_subscriptionsInput, companiesUncheckedCreateWithoutWebhook_subscriptionsInput>
+    connectOrCreate?: companiesCreateOrConnectWithoutWebhook_subscriptionsInput
+    upsert?: companiesUpsertWithoutWebhook_subscriptionsInput
+    disconnect?: companiesWhereInput | boolean
+    delete?: companiesWhereInput | boolean
+    connect?: companiesWhereUniqueInput
+    update?: XOR<XOR<companiesUpdateToOneWithWhereWithoutWebhook_subscriptionsInput, companiesUpdateWithoutWebhook_subscriptionsInput>, companiesUncheckedUpdateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type usersUpdateOneWithoutWebhook_subscriptionsNestedInput = {
+    create?: XOR<usersCreateWithoutWebhook_subscriptionsInput, usersUncheckedCreateWithoutWebhook_subscriptionsInput>
+    connectOrCreate?: usersCreateOrConnectWithoutWebhook_subscriptionsInput
+    upsert?: usersUpsertWithoutWebhook_subscriptionsInput
+    disconnect?: usersWhereInput | boolean
+    delete?: usersWhereInput | boolean
+    connect?: usersWhereUniqueInput
+    update?: XOR<XOR<usersUpdateToOneWithWhereWithoutWebhook_subscriptionsInput, usersUpdateWithoutWebhook_subscriptionsInput>, usersUncheckedUpdateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput = {
+    create?: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput> | webhook_deliveriesCreateWithoutWebhook_subscriptionsInput[] | webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput[]
+    connectOrCreate?: webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput | webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput[]
+    upsert?: webhook_deliveriesUpsertWithWhereUniqueWithoutWebhook_subscriptionsInput | webhook_deliveriesUpsertWithWhereUniqueWithoutWebhook_subscriptionsInput[]
+    createMany?: webhook_deliveriesCreateManyWebhook_subscriptionsInputEnvelope
+    set?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    disconnect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    delete?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    connect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    update?: webhook_deliveriesUpdateWithWhereUniqueWithoutWebhook_subscriptionsInput | webhook_deliveriesUpdateWithWhereUniqueWithoutWebhook_subscriptionsInput[]
+    updateMany?: webhook_deliveriesUpdateManyWithWhereWithoutWebhook_subscriptionsInput | webhook_deliveriesUpdateManyWithWhereWithoutWebhook_subscriptionsInput[]
+    deleteMany?: webhook_deliveriesScalarWhereInput | webhook_deliveriesScalarWhereInput[]
+  }
+
+  export type webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsNestedInput = {
+    create?: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput> | webhook_deliveriesCreateWithoutWebhook_subscriptionsInput[] | webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput[]
+    connectOrCreate?: webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput | webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput[]
+    upsert?: webhook_deliveriesUpsertWithWhereUniqueWithoutWebhook_subscriptionsInput | webhook_deliveriesUpsertWithWhereUniqueWithoutWebhook_subscriptionsInput[]
+    createMany?: webhook_deliveriesCreateManyWebhook_subscriptionsInputEnvelope
+    set?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    disconnect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    delete?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    connect?: webhook_deliveriesWhereUniqueInput | webhook_deliveriesWhereUniqueInput[]
+    update?: webhook_deliveriesUpdateWithWhereUniqueWithoutWebhook_subscriptionsInput | webhook_deliveriesUpdateWithWhereUniqueWithoutWebhook_subscriptionsInput[]
+    updateMany?: webhook_deliveriesUpdateManyWithWhereWithoutWebhook_subscriptionsInput | webhook_deliveriesUpdateManyWithWhereWithoutWebhook_subscriptionsInput[]
+    deleteMany?: webhook_deliveriesScalarWhereInput | webhook_deliveriesScalarWhereInput[]
+  }
+
+  export type webhook_subscriptionsCreateNestedOneWithoutWebhook_deliveriesInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutWebhook_deliveriesInput, webhook_subscriptionsUncheckedCreateWithoutWebhook_deliveriesInput>
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutWebhook_deliveriesInput
+    connect?: webhook_subscriptionsWhereUniqueInput
+  }
+
+  export type webhook_subscriptionsUpdateOneRequiredWithoutWebhook_deliveriesNestedInput = {
+    create?: XOR<webhook_subscriptionsCreateWithoutWebhook_deliveriesInput, webhook_subscriptionsUncheckedCreateWithoutWebhook_deliveriesInput>
+    connectOrCreate?: webhook_subscriptionsCreateOrConnectWithoutWebhook_deliveriesInput
+    upsert?: webhook_subscriptionsUpsertWithoutWebhook_deliveriesInput
+    connect?: webhook_subscriptionsWhereUniqueInput
+    update?: XOR<XOR<webhook_subscriptionsUpdateToOneWithWhereWithoutWebhook_deliveriesInput, webhook_subscriptionsUpdateWithoutWebhook_deliveriesInput>, webhook_subscriptionsUncheckedUpdateWithoutWebhook_deliveriesInput>
+  }
+
+  export type companiesCreateNestedOneWithoutIntegration_connectionsInput = {
+    create?: XOR<companiesCreateWithoutIntegration_connectionsInput, companiesUncheckedCreateWithoutIntegration_connectionsInput>
+    connectOrCreate?: companiesCreateOrConnectWithoutIntegration_connectionsInput
+    connect?: companiesWhereUniqueInput
+  }
+
+  export type usersCreateNestedOneWithoutIntegration_connectionsInput = {
+    create?: XOR<usersCreateWithoutIntegration_connectionsInput, usersUncheckedCreateWithoutIntegration_connectionsInput>
+    connectOrCreate?: usersCreateOrConnectWithoutIntegration_connectionsInput
+    connect?: usersWhereUniqueInput
+  }
+
+  export type integration_logsCreateNestedManyWithoutIntegration_connectionsInput = {
+    create?: XOR<integration_logsCreateWithoutIntegration_connectionsInput, integration_logsUncheckedCreateWithoutIntegration_connectionsInput> | integration_logsCreateWithoutIntegration_connectionsInput[] | integration_logsUncheckedCreateWithoutIntegration_connectionsInput[]
+    connectOrCreate?: integration_logsCreateOrConnectWithoutIntegration_connectionsInput | integration_logsCreateOrConnectWithoutIntegration_connectionsInput[]
+    createMany?: integration_logsCreateManyIntegration_connectionsInputEnvelope
+    connect?: integration_logsWhereUniqueInput | integration_logsWhereUniqueInput[]
+  }
+
+  export type integration_logsUncheckedCreateNestedManyWithoutIntegration_connectionsInput = {
+    create?: XOR<integration_logsCreateWithoutIntegration_connectionsInput, integration_logsUncheckedCreateWithoutIntegration_connectionsInput> | integration_logsCreateWithoutIntegration_connectionsInput[] | integration_logsUncheckedCreateWithoutIntegration_connectionsInput[]
+    connectOrCreate?: integration_logsCreateOrConnectWithoutIntegration_connectionsInput | integration_logsCreateOrConnectWithoutIntegration_connectionsInput[]
+    createMany?: integration_logsCreateManyIntegration_connectionsInputEnvelope
+    connect?: integration_logsWhereUniqueInput | integration_logsWhereUniqueInput[]
+  }
+
+  export type companiesUpdateOneWithoutIntegration_connectionsNestedInput = {
+    create?: XOR<companiesCreateWithoutIntegration_connectionsInput, companiesUncheckedCreateWithoutIntegration_connectionsInput>
+    connectOrCreate?: companiesCreateOrConnectWithoutIntegration_connectionsInput
+    upsert?: companiesUpsertWithoutIntegration_connectionsInput
+    disconnect?: companiesWhereInput | boolean
+    delete?: companiesWhereInput | boolean
+    connect?: companiesWhereUniqueInput
+    update?: XOR<XOR<companiesUpdateToOneWithWhereWithoutIntegration_connectionsInput, companiesUpdateWithoutIntegration_connectionsInput>, companiesUncheckedUpdateWithoutIntegration_connectionsInput>
+  }
+
+  export type usersUpdateOneWithoutIntegration_connectionsNestedInput = {
+    create?: XOR<usersCreateWithoutIntegration_connectionsInput, usersUncheckedCreateWithoutIntegration_connectionsInput>
+    connectOrCreate?: usersCreateOrConnectWithoutIntegration_connectionsInput
+    upsert?: usersUpsertWithoutIntegration_connectionsInput
+    disconnect?: usersWhereInput | boolean
+    delete?: usersWhereInput | boolean
+    connect?: usersWhereUniqueInput
+    update?: XOR<XOR<usersUpdateToOneWithWhereWithoutIntegration_connectionsInput, usersUpdateWithoutIntegration_connectionsInput>, usersUncheckedUpdateWithoutIntegration_connectionsInput>
+  }
+
+  export type integration_logsUpdateManyWithoutIntegration_connectionsNestedInput = {
+    create?: XOR<integration_logsCreateWithoutIntegration_connectionsInput, integration_logsUncheckedCreateWithoutIntegration_connectionsInput> | integration_logsCreateWithoutIntegration_connectionsInput[] | integration_logsUncheckedCreateWithoutIntegration_connectionsInput[]
+    connectOrCreate?: integration_logsCreateOrConnectWithoutIntegration_connectionsInput | integration_logsCreateOrConnectWithoutIntegration_connectionsInput[]
+    upsert?: integration_logsUpsertWithWhereUniqueWithoutIntegration_connectionsInput | integration_logsUpsertWithWhereUniqueWithoutIntegration_connectionsInput[]
+    createMany?: integration_logsCreateManyIntegration_connectionsInputEnvelope
+    set?: integration_logsWhereUniqueInput | integration_logsWhereUniqueInput[]
+    disconnect?: integration_logsWhereUniqueInput | integration_logsWhereUniqueInput[]
+    delete?: integration_logsWhereUniqueInput | integration_logsWhereUniqueInput[]
+    connect?: integration_logsWhereUniqueInput | integration_logsWhereUniqueInput[]
+    update?: integration_logsUpdateWithWhereUniqueWithoutIntegration_connectionsInput | integration_logsUpdateWithWhereUniqueWithoutIntegration_connectionsInput[]
+    updateMany?: integration_logsUpdateManyWithWhereWithoutIntegration_connectionsInput | integration_logsUpdateManyWithWhereWithoutIntegration_connectionsInput[]
+    deleteMany?: integration_logsScalarWhereInput | integration_logsScalarWhereInput[]
+  }
+
+  export type integration_logsUncheckedUpdateManyWithoutIntegration_connectionsNestedInput = {
+    create?: XOR<integration_logsCreateWithoutIntegration_connectionsInput, integration_logsUncheckedCreateWithoutIntegration_connectionsInput> | integration_logsCreateWithoutIntegration_connectionsInput[] | integration_logsUncheckedCreateWithoutIntegration_connectionsInput[]
+    connectOrCreate?: integration_logsCreateOrConnectWithoutIntegration_connectionsInput | integration_logsCreateOrConnectWithoutIntegration_connectionsInput[]
+    upsert?: integration_logsUpsertWithWhereUniqueWithoutIntegration_connectionsInput | integration_logsUpsertWithWhereUniqueWithoutIntegration_connectionsInput[]
+    createMany?: integration_logsCreateManyIntegration_connectionsInputEnvelope
+    set?: integration_logsWhereUniqueInput | integration_logsWhereUniqueInput[]
+    disconnect?: integration_logsWhereUniqueInput | integration_logsWhereUniqueInput[]
+    delete?: integration_logsWhereUniqueInput | integration_logsWhereUniqueInput[]
+    connect?: integration_logsWhereUniqueInput | integration_logsWhereUniqueInput[]
+    update?: integration_logsUpdateWithWhereUniqueWithoutIntegration_connectionsInput | integration_logsUpdateWithWhereUniqueWithoutIntegration_connectionsInput[]
+    updateMany?: integration_logsUpdateManyWithWhereWithoutIntegration_connectionsInput | integration_logsUpdateManyWithWhereWithoutIntegration_connectionsInput[]
+    deleteMany?: integration_logsScalarWhereInput | integration_logsScalarWhereInput[]
+  }
+
+  export type integration_connectionsCreateNestedOneWithoutIntegration_logsInput = {
+    create?: XOR<integration_connectionsCreateWithoutIntegration_logsInput, integration_connectionsUncheckedCreateWithoutIntegration_logsInput>
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutIntegration_logsInput
+    connect?: integration_connectionsWhereUniqueInput
+  }
+
+  export type integration_connectionsUpdateOneRequiredWithoutIntegration_logsNestedInput = {
+    create?: XOR<integration_connectionsCreateWithoutIntegration_logsInput, integration_connectionsUncheckedCreateWithoutIntegration_logsInput>
+    connectOrCreate?: integration_connectionsCreateOrConnectWithoutIntegration_logsInput
+    upsert?: integration_connectionsUpsertWithoutIntegration_logsInput
+    connect?: integration_connectionsWhereUniqueInput
+    update?: XOR<XOR<integration_connectionsUpdateToOneWithWhereWithoutIntegration_logsInput, integration_connectionsUpdateWithoutIntegration_logsInput>, integration_connectionsUncheckedUpdateWithoutIntegration_logsInput>
+  }
+
+  export type companiesCreateNestedOneWithoutHardware_connectionsInput = {
+    create?: XOR<companiesCreateWithoutHardware_connectionsInput, companiesUncheckedCreateWithoutHardware_connectionsInput>
+    connectOrCreate?: companiesCreateOrConnectWithoutHardware_connectionsInput
+    connect?: companiesWhereUniqueInput
+  }
+
+  export type usersCreateNestedOneWithoutHardware_connectionsInput = {
+    create?: XOR<usersCreateWithoutHardware_connectionsInput, usersUncheckedCreateWithoutHardware_connectionsInput>
+    connectOrCreate?: usersCreateOrConnectWithoutHardware_connectionsInput
+    connect?: usersWhereUniqueInput
+  }
+
+  export type companiesUpdateOneWithoutHardware_connectionsNestedInput = {
+    create?: XOR<companiesCreateWithoutHardware_connectionsInput, companiesUncheckedCreateWithoutHardware_connectionsInput>
+    connectOrCreate?: companiesCreateOrConnectWithoutHardware_connectionsInput
+    upsert?: companiesUpsertWithoutHardware_connectionsInput
+    disconnect?: companiesWhereInput | boolean
+    delete?: companiesWhereInput | boolean
+    connect?: companiesWhereUniqueInput
+    update?: XOR<XOR<companiesUpdateToOneWithWhereWithoutHardware_connectionsInput, companiesUpdateWithoutHardware_connectionsInput>, companiesUncheckedUpdateWithoutHardware_connectionsInput>
+  }
+
+  export type usersUpdateOneWithoutHardware_connectionsNestedInput = {
+    create?: XOR<usersCreateWithoutHardware_connectionsInput, usersUncheckedCreateWithoutHardware_connectionsInput>
+    connectOrCreate?: usersCreateOrConnectWithoutHardware_connectionsInput
+    upsert?: usersUpsertWithoutHardware_connectionsInput
+    disconnect?: usersWhereInput | boolean
+    delete?: usersWhereInput | boolean
+    connect?: usersWhereUniqueInput
+    update?: XOR<XOR<usersUpdateToOneWithWhereWithoutHardware_connectionsInput, usersUpdateWithoutHardware_connectionsInput>, usersUncheckedUpdateWithoutHardware_connectionsInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -36096,6 +49329,42 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type axlesCreateWithoutAxle_configurationsInput = {
@@ -36763,6 +50032,10 @@ export namespace Prisma {
     predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutCompaniesInput = {
@@ -36775,6 +50048,10 @@ export namespace Prisma {
     predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutCompaniesInput = {
@@ -36949,6 +50226,156 @@ export namespace Prisma {
 
   export type weightsCreateManyCompaniesInputEnvelope = {
     data: weightsCreateManyCompaniesInput | weightsCreateManyCompaniesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type api_keysCreateWithoutCompaniesInput = {
+    id?: string
+    name: string
+    key: string
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    users?: usersCreateNestedOneWithoutApi_keysInput
+    api_usage?: api_usageCreateNestedManyWithoutApi_keysInput
+  }
+
+  export type api_keysUncheckedCreateWithoutCompaniesInput = {
+    id?: string
+    name: string
+    key: string
+    created_by?: string | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    api_usage?: api_usageUncheckedCreateNestedManyWithoutApi_keysInput
+  }
+
+  export type api_keysCreateOrConnectWithoutCompaniesInput = {
+    where: api_keysWhereUniqueInput
+    create: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type api_keysCreateManyCompaniesInputEnvelope = {
+    data: api_keysCreateManyCompaniesInput | api_keysCreateManyCompaniesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type webhook_subscriptionsCreateWithoutCompaniesInput = {
+    id?: string
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    users?: usersCreateNestedOneWithoutWebhook_subscriptionsInput
+    webhook_deliveries?: webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsUncheckedCreateWithoutCompaniesInput = {
+    id?: string
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    webhook_deliveries?: webhook_deliveriesUncheckedCreateNestedManyWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsCreateOrConnectWithoutCompaniesInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    create: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type webhook_subscriptionsCreateManyCompaniesInputEnvelope = {
+    data: webhook_subscriptionsCreateManyCompaniesInput | webhook_subscriptionsCreateManyCompaniesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type integration_connectionsCreateWithoutCompaniesInput = {
+    id?: string
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    users?: usersCreateNestedOneWithoutIntegration_connectionsInput
+    integration_logs?: integration_logsCreateNestedManyWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsUncheckedCreateWithoutCompaniesInput = {
+    id?: string
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    integration_logs?: integration_logsUncheckedCreateNestedManyWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsCreateOrConnectWithoutCompaniesInput = {
+    where: integration_connectionsWhereUniqueInput
+    create: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type integration_connectionsCreateManyCompaniesInputEnvelope = {
+    data: integration_connectionsCreateManyCompaniesInput | integration_connectionsCreateManyCompaniesInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type hardware_connectionsCreateWithoutCompaniesInput = {
+    id?: string
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    users?: usersCreateNestedOneWithoutHardware_connectionsInput
+  }
+
+  export type hardware_connectionsUncheckedCreateWithoutCompaniesInput = {
+    id?: string
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type hardware_connectionsCreateOrConnectWithoutCompaniesInput = {
+    where: hardware_connectionsWhereUniqueInput
+    create: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type hardware_connectionsCreateManyCompaniesInputEnvelope = {
+    data: hardware_connectionsCreateManyCompaniesInput | hardware_connectionsCreateManyCompaniesInput[]
     skipDuplicates?: boolean
   }
 
@@ -37209,6 +50636,138 @@ export namespace Prisma {
     updated_at?: DateTimeNullableFilter<"weights"> | Date | string | null
   }
 
+  export type api_keysUpsertWithWhereUniqueWithoutCompaniesInput = {
+    where: api_keysWhereUniqueInput
+    update: XOR<api_keysUpdateWithoutCompaniesInput, api_keysUncheckedUpdateWithoutCompaniesInput>
+    create: XOR<api_keysCreateWithoutCompaniesInput, api_keysUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type api_keysUpdateWithWhereUniqueWithoutCompaniesInput = {
+    where: api_keysWhereUniqueInput
+    data: XOR<api_keysUpdateWithoutCompaniesInput, api_keysUncheckedUpdateWithoutCompaniesInput>
+  }
+
+  export type api_keysUpdateManyWithWhereWithoutCompaniesInput = {
+    where: api_keysScalarWhereInput
+    data: XOR<api_keysUpdateManyMutationInput, api_keysUncheckedUpdateManyWithoutCompaniesInput>
+  }
+
+  export type api_keysScalarWhereInput = {
+    AND?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
+    OR?: api_keysScalarWhereInput[]
+    NOT?: api_keysScalarWhereInput | api_keysScalarWhereInput[]
+    id?: UuidFilter<"api_keys"> | string
+    name?: StringFilter<"api_keys"> | string
+    key?: StringFilter<"api_keys"> | string
+    company_id?: IntNullableFilter<"api_keys"> | number | null
+    created_by?: UuidNullableFilter<"api_keys"> | string | null
+    expires_at?: DateTimeNullableFilter<"api_keys"> | Date | string | null
+    last_used_at?: DateTimeNullableFilter<"api_keys"> | Date | string | null
+    is_active?: BoolFilter<"api_keys"> | boolean
+    permissions?: StringNullableListFilter<"api_keys">
+    created_at?: DateTimeFilter<"api_keys"> | Date | string
+    updated_at?: DateTimeFilter<"api_keys"> | Date | string
+  }
+
+  export type webhook_subscriptionsUpsertWithWhereUniqueWithoutCompaniesInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    update: XOR<webhook_subscriptionsUpdateWithoutCompaniesInput, webhook_subscriptionsUncheckedUpdateWithoutCompaniesInput>
+    create: XOR<webhook_subscriptionsCreateWithoutCompaniesInput, webhook_subscriptionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type webhook_subscriptionsUpdateWithWhereUniqueWithoutCompaniesInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    data: XOR<webhook_subscriptionsUpdateWithoutCompaniesInput, webhook_subscriptionsUncheckedUpdateWithoutCompaniesInput>
+  }
+
+  export type webhook_subscriptionsUpdateManyWithWhereWithoutCompaniesInput = {
+    where: webhook_subscriptionsScalarWhereInput
+    data: XOR<webhook_subscriptionsUpdateManyMutationInput, webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesInput>
+  }
+
+  export type webhook_subscriptionsScalarWhereInput = {
+    AND?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
+    OR?: webhook_subscriptionsScalarWhereInput[]
+    NOT?: webhook_subscriptionsScalarWhereInput | webhook_subscriptionsScalarWhereInput[]
+    id?: UuidFilter<"webhook_subscriptions"> | string
+    company_id?: IntNullableFilter<"webhook_subscriptions"> | number | null
+    name?: StringFilter<"webhook_subscriptions"> | string
+    event_types?: StringNullableListFilter<"webhook_subscriptions">
+    target_url?: StringFilter<"webhook_subscriptions"> | string
+    secret_key?: StringNullableFilter<"webhook_subscriptions"> | string | null
+    is_active?: BoolFilter<"webhook_subscriptions"> | boolean
+    created_by?: UuidNullableFilter<"webhook_subscriptions"> | string | null
+    created_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
+    updated_at?: DateTimeFilter<"webhook_subscriptions"> | Date | string
+  }
+
+  export type integration_connectionsUpsertWithWhereUniqueWithoutCompaniesInput = {
+    where: integration_connectionsWhereUniqueInput
+    update: XOR<integration_connectionsUpdateWithoutCompaniesInput, integration_connectionsUncheckedUpdateWithoutCompaniesInput>
+    create: XOR<integration_connectionsCreateWithoutCompaniesInput, integration_connectionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type integration_connectionsUpdateWithWhereUniqueWithoutCompaniesInput = {
+    where: integration_connectionsWhereUniqueInput
+    data: XOR<integration_connectionsUpdateWithoutCompaniesInput, integration_connectionsUncheckedUpdateWithoutCompaniesInput>
+  }
+
+  export type integration_connectionsUpdateManyWithWhereWithoutCompaniesInput = {
+    where: integration_connectionsScalarWhereInput
+    data: XOR<integration_connectionsUpdateManyMutationInput, integration_connectionsUncheckedUpdateManyWithoutCompaniesInput>
+  }
+
+  export type integration_connectionsScalarWhereInput = {
+    AND?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
+    OR?: integration_connectionsScalarWhereInput[]
+    NOT?: integration_connectionsScalarWhereInput | integration_connectionsScalarWhereInput[]
+    id?: UuidFilter<"integration_connections"> | string
+    company_id?: IntNullableFilter<"integration_connections"> | number | null
+    integration_type?: StringFilter<"integration_connections"> | string
+    provider?: StringFilter<"integration_connections"> | string
+    credentials?: JsonNullableFilter<"integration_connections">
+    settings?: JsonNullableFilter<"integration_connections">
+    is_active?: BoolFilter<"integration_connections"> | boolean
+    last_sync_at?: DateTimeNullableFilter<"integration_connections"> | Date | string | null
+    created_by?: UuidNullableFilter<"integration_connections"> | string | null
+    created_at?: DateTimeFilter<"integration_connections"> | Date | string
+    updated_at?: DateTimeFilter<"integration_connections"> | Date | string
+  }
+
+  export type hardware_connectionsUpsertWithWhereUniqueWithoutCompaniesInput = {
+    where: hardware_connectionsWhereUniqueInput
+    update: XOR<hardware_connectionsUpdateWithoutCompaniesInput, hardware_connectionsUncheckedUpdateWithoutCompaniesInput>
+    create: XOR<hardware_connectionsCreateWithoutCompaniesInput, hardware_connectionsUncheckedCreateWithoutCompaniesInput>
+  }
+
+  export type hardware_connectionsUpdateWithWhereUniqueWithoutCompaniesInput = {
+    where: hardware_connectionsWhereUniqueInput
+    data: XOR<hardware_connectionsUpdateWithoutCompaniesInput, hardware_connectionsUncheckedUpdateWithoutCompaniesInput>
+  }
+
+  export type hardware_connectionsUpdateManyWithWhereWithoutCompaniesInput = {
+    where: hardware_connectionsScalarWhereInput
+    data: XOR<hardware_connectionsUpdateManyMutationInput, hardware_connectionsUncheckedUpdateManyWithoutCompaniesInput>
+  }
+
+  export type hardware_connectionsScalarWhereInput = {
+    AND?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+    OR?: hardware_connectionsScalarWhereInput[]
+    NOT?: hardware_connectionsScalarWhereInput | hardware_connectionsScalarWhereInput[]
+    id?: UuidFilter<"hardware_connections"> | string
+    company_id?: IntNullableFilter<"hardware_connections"> | number | null
+    hardware_type?: StringFilter<"hardware_connections"> | string
+    name?: StringFilter<"hardware_connections"> | string
+    model?: StringNullableFilter<"hardware_connections"> | string | null
+    serial_number?: StringNullableFilter<"hardware_connections"> | string | null
+    connection_details?: JsonNullableFilter<"hardware_connections">
+    is_active?: BoolFilter<"hardware_connections"> | boolean
+    last_connected_at?: DateTimeNullableFilter<"hardware_connections"> | Date | string | null
+    created_by?: UuidNullableFilter<"hardware_connections"> | string | null
+    created_at?: DateTimeFilter<"hardware_connections"> | Date | string
+    updated_at?: DateTimeFilter<"hardware_connections"> | Date | string
+  }
+
   export type weigh_ticketsCreateWithoutCompliance_issuesInput = {
     ticket_number: string
     gross_weight?: number | null
@@ -37353,6 +50912,10 @@ export namespace Prisma {
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutDriversInput = {
@@ -37370,6 +50933,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutDriversInput = {
@@ -37572,6 +51139,10 @@ export namespace Prisma {
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutDriversInput = {
@@ -37589,6 +51160,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type loadsUpsertWithWhereUniqueWithoutDriversInput = {
@@ -37816,6 +51391,10 @@ export namespace Prisma {
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutLoadsInput = {
@@ -37833,6 +51412,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutLoadsInput = {
@@ -37961,6 +51544,10 @@ export namespace Prisma {
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutLoadsInput = {
@@ -37978,6 +51565,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type driversUpsertWithoutLoadsInput = {
@@ -38098,6 +51689,10 @@ export namespace Prisma {
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutPredictive_alertsInput = {
@@ -38110,6 +51705,10 @@ export namespace Prisma {
     updated_at?: Date | string | null
     ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutPredictive_alertsInput = {
@@ -38234,6 +51833,10 @@ export namespace Prisma {
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutPredictive_alertsInput = {
@@ -38246,6 +51849,10 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type driversUpsertWithoutPredictive_alertsInput = {
@@ -38480,6 +52087,10 @@ export namespace Prisma {
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutScale_facilitiesInput = {
@@ -38497,6 +52108,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutScale_facilitiesInput = {
@@ -38653,6 +52268,10 @@ export namespace Prisma {
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutScale_facilitiesInput = {
@@ -38670,6 +52289,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type scalesUpsertWithWhereUniqueWithoutScale_facilitiesInput = {
@@ -38884,6 +52507,10 @@ export namespace Prisma {
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutScalesInput = {
@@ -38901,6 +52528,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutScalesInput = {
@@ -39089,6 +52720,10 @@ export namespace Prisma {
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutScalesInput = {
@@ -39106,6 +52741,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type scale_facilitiesUpsertWithoutScalesInput = {
@@ -39170,6 +52809,10 @@ export namespace Prisma {
     predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutTicket_imagesInput = {
@@ -39182,6 +52825,10 @@ export namespace Prisma {
     updated_at?: Date | string | null
     predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutTicket_imagesInput = {
@@ -39272,6 +52919,10 @@ export namespace Prisma {
     predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutTicket_imagesInput = {
@@ -39284,6 +52935,10 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type weigh_ticketsUpsertWithoutTicket_imagesInput = {
@@ -39558,6 +53213,10 @@ export namespace Prisma {
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutUsersInput = {
@@ -39575,6 +53234,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutUsersInput = {
@@ -39649,6 +53312,156 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type api_keysCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    key: string
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutApi_keysInput
+    api_usage?: api_usageCreateNestedManyWithoutApi_keysInput
+  }
+
+  export type api_keysUncheckedCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    key: string
+    company_id?: number | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    api_usage?: api_usageUncheckedCreateNestedManyWithoutApi_keysInput
+  }
+
+  export type api_keysCreateOrConnectWithoutUsersInput = {
+    where: api_keysWhereUniqueInput
+    create: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput>
+  }
+
+  export type api_keysCreateManyUsersInputEnvelope = {
+    data: api_keysCreateManyUsersInput | api_keysCreateManyUsersInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type webhook_subscriptionsCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutWebhook_subscriptionsInput
+    webhook_deliveries?: webhook_deliveriesCreateNestedManyWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsUncheckedCreateWithoutUsersInput = {
+    id?: string
+    company_id?: number | null
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    webhook_deliveries?: webhook_deliveriesUncheckedCreateNestedManyWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsCreateOrConnectWithoutUsersInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    create: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type webhook_subscriptionsCreateManyUsersInputEnvelope = {
+    data: webhook_subscriptionsCreateManyUsersInput | webhook_subscriptionsCreateManyUsersInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type integration_connectionsCreateWithoutUsersInput = {
+    id?: string
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutIntegration_connectionsInput
+    integration_logs?: integration_logsCreateNestedManyWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsUncheckedCreateWithoutUsersInput = {
+    id?: string
+    company_id?: number | null
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    integration_logs?: integration_logsUncheckedCreateNestedManyWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsCreateOrConnectWithoutUsersInput = {
+    where: integration_connectionsWhereUniqueInput
+    create: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type integration_connectionsCreateManyUsersInputEnvelope = {
+    data: integration_connectionsCreateManyUsersInput | integration_connectionsCreateManyUsersInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type hardware_connectionsCreateWithoutUsersInput = {
+    id?: string
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutHardware_connectionsInput
+  }
+
+  export type hardware_connectionsUncheckedCreateWithoutUsersInput = {
+    id?: string
+    company_id?: number | null
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type hardware_connectionsCreateOrConnectWithoutUsersInput = {
+    where: hardware_connectionsWhereUniqueInput
+    create: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type hardware_connectionsCreateManyUsersInputEnvelope = {
+    data: hardware_connectionsCreateManyUsersInput | hardware_connectionsCreateManyUsersInput[]
+    skipDuplicates?: boolean
+  }
+
   export type predictive_alertsUpsertWithWhereUniqueWithoutUsersInput = {
     where: predictive_alertsWhereUniqueInput
     update: XOR<predictive_alertsUpdateWithoutUsersInput, predictive_alertsUncheckedUpdateWithoutUsersInput>
@@ -39718,6 +53531,10 @@ export namespace Prisma {
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutUsersInput = {
@@ -39735,6 +53552,10 @@ export namespace Prisma {
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type weigh_ticketsUpsertWithWhereUniqueWithoutUsersInput = {
@@ -39751,6 +53572,70 @@ export namespace Prisma {
   export type weigh_ticketsUpdateManyWithWhereWithoutUsersInput = {
     where: weigh_ticketsScalarWhereInput
     data: XOR<weigh_ticketsUpdateManyMutationInput, weigh_ticketsUncheckedUpdateManyWithoutUsersInput>
+  }
+
+  export type api_keysUpsertWithWhereUniqueWithoutUsersInput = {
+    where: api_keysWhereUniqueInput
+    update: XOR<api_keysUpdateWithoutUsersInput, api_keysUncheckedUpdateWithoutUsersInput>
+    create: XOR<api_keysCreateWithoutUsersInput, api_keysUncheckedCreateWithoutUsersInput>
+  }
+
+  export type api_keysUpdateWithWhereUniqueWithoutUsersInput = {
+    where: api_keysWhereUniqueInput
+    data: XOR<api_keysUpdateWithoutUsersInput, api_keysUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type api_keysUpdateManyWithWhereWithoutUsersInput = {
+    where: api_keysScalarWhereInput
+    data: XOR<api_keysUpdateManyMutationInput, api_keysUncheckedUpdateManyWithoutUsersInput>
+  }
+
+  export type webhook_subscriptionsUpsertWithWhereUniqueWithoutUsersInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    update: XOR<webhook_subscriptionsUpdateWithoutUsersInput, webhook_subscriptionsUncheckedUpdateWithoutUsersInput>
+    create: XOR<webhook_subscriptionsCreateWithoutUsersInput, webhook_subscriptionsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type webhook_subscriptionsUpdateWithWhereUniqueWithoutUsersInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    data: XOR<webhook_subscriptionsUpdateWithoutUsersInput, webhook_subscriptionsUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type webhook_subscriptionsUpdateManyWithWhereWithoutUsersInput = {
+    where: webhook_subscriptionsScalarWhereInput
+    data: XOR<webhook_subscriptionsUpdateManyMutationInput, webhook_subscriptionsUncheckedUpdateManyWithoutUsersInput>
+  }
+
+  export type integration_connectionsUpsertWithWhereUniqueWithoutUsersInput = {
+    where: integration_connectionsWhereUniqueInput
+    update: XOR<integration_connectionsUpdateWithoutUsersInput, integration_connectionsUncheckedUpdateWithoutUsersInput>
+    create: XOR<integration_connectionsCreateWithoutUsersInput, integration_connectionsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type integration_connectionsUpdateWithWhereUniqueWithoutUsersInput = {
+    where: integration_connectionsWhereUniqueInput
+    data: XOR<integration_connectionsUpdateWithoutUsersInput, integration_connectionsUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type integration_connectionsUpdateManyWithWhereWithoutUsersInput = {
+    where: integration_connectionsScalarWhereInput
+    data: XOR<integration_connectionsUpdateManyMutationInput, integration_connectionsUncheckedUpdateManyWithoutUsersInput>
+  }
+
+  export type hardware_connectionsUpsertWithWhereUniqueWithoutUsersInput = {
+    where: hardware_connectionsWhereUniqueInput
+    update: XOR<hardware_connectionsUpdateWithoutUsersInput, hardware_connectionsUncheckedUpdateWithoutUsersInput>
+    create: XOR<hardware_connectionsCreateWithoutUsersInput, hardware_connectionsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type hardware_connectionsUpdateWithWhereUniqueWithoutUsersInput = {
+    where: hardware_connectionsWhereUniqueInput
+    data: XOR<hardware_connectionsUpdateWithoutUsersInput, hardware_connectionsUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type hardware_connectionsUpdateManyWithWhereWithoutUsersInput = {
+    where: hardware_connectionsScalarWhereInput
+    data: XOR<hardware_connectionsUpdateManyMutationInput, hardware_connectionsUncheckedUpdateManyWithoutUsersInput>
   }
 
   export type loadsCreateWithoutVehiclesInput = {
@@ -39865,6 +53750,10 @@ export namespace Prisma {
     users?: usersCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutVehiclesInput = {
@@ -39882,6 +53771,10 @@ export namespace Prisma {
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutVehiclesInput = {
@@ -40080,6 +53973,10 @@ export namespace Prisma {
     users?: usersUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutVehiclesInput = {
@@ -40097,6 +53994,10 @@ export namespace Prisma {
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type weigh_ticketsUpsertWithWhereUniqueWithoutVehiclesInput = {
@@ -40317,6 +54218,10 @@ export namespace Prisma {
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
     weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutWeigh_ticketsInput = {
@@ -40334,6 +54239,10 @@ export namespace Prisma {
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
     weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutWeigh_ticketsInput = {
@@ -40351,6 +54260,10 @@ export namespace Prisma {
     predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
     companies?: companiesCreateNestedOneWithoutUsersInput
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateWithoutWeigh_ticketsInput = {
@@ -40363,6 +54276,10 @@ export namespace Prisma {
     updated_at?: Date | string | null
     predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
     ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersCreateOrConnectWithoutWeigh_ticketsInput = {
@@ -40740,6 +54657,10 @@ export namespace Prisma {
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutWeigh_ticketsInput = {
@@ -40757,6 +54678,10 @@ export namespace Prisma {
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
     weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type usersUpsertWithoutWeigh_ticketsInput = {
@@ -40780,6 +54705,10 @@ export namespace Prisma {
     predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
     companies?: companiesUpdateOneWithoutUsersNestedInput
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutWeigh_ticketsInput = {
@@ -40792,6 +54721,10 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type driversUpsertWithoutWeigh_ticketsInput = {
@@ -41010,6 +54943,10 @@ export namespace Prisma {
     users?: usersCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesUncheckedCreateWithoutWeightsInput = {
@@ -41027,6 +54964,10 @@ export namespace Prisma {
     users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
     vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
     weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
   }
 
   export type companiesCreateOrConnectWithoutWeightsInput = {
@@ -41155,6 +55096,10 @@ export namespace Prisma {
     users?: usersUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
   }
 
   export type companiesUncheckedUpdateWithoutWeightsInput = {
@@ -41172,6 +55117,10 @@ export namespace Prisma {
     users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
     vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
   }
 
   export type driversUpsertWithoutWeightsInput = {
@@ -41280,6 +55229,1116 @@ export namespace Prisma {
     loads?: loadsUncheckedUpdateManyWithoutVehiclesNestedInput
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutVehiclesNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutVehiclesNestedInput
+  }
+
+  export type companiesCreateWithoutApi_keysInput = {
+    name: string
+    address?: string | null
+    contact_email?: string | null
+    contact_phone?: string | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    drivers?: driversCreateNestedManyWithoutCompaniesInput
+    loads?: loadsCreateNestedManyWithoutCompaniesInput
+    scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
+    scales?: scalesCreateNestedManyWithoutCompaniesInput
+    users?: usersCreateNestedManyWithoutCompaniesInput
+    vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
+    weights?: weightsCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+  }
+
+  export type companiesUncheckedCreateWithoutApi_keysInput = {
+    id?: number
+    name: string
+    address?: string | null
+    contact_email?: string | null
+    contact_phone?: string | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
+    scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
+    scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
+    users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
+    vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
+    weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+  }
+
+  export type companiesCreateOrConnectWithoutApi_keysInput = {
+    where: companiesWhereUniqueInput
+    create: XOR<companiesCreateWithoutApi_keysInput, companiesUncheckedCreateWithoutApi_keysInput>
+  }
+
+  export type usersCreateWithoutApi_keysInput = {
+    id: string
+    name: string
+    email: string
+    is_admin?: boolean | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
+    companies?: companiesCreateNestedOneWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+  }
+
+  export type usersUncheckedCreateWithoutApi_keysInput = {
+    id: string
+    name: string
+    email: string
+    company_id?: number | null
+    is_admin?: boolean | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+  }
+
+  export type usersCreateOrConnectWithoutApi_keysInput = {
+    where: usersWhereUniqueInput
+    create: XOR<usersCreateWithoutApi_keysInput, usersUncheckedCreateWithoutApi_keysInput>
+  }
+
+  export type api_usageCreateWithoutApi_keysInput = {
+    id?: string
+    endpoint: string
+    method: string
+    status: number
+    ip_address?: string | null
+    user_agent?: string | null
+    created_at?: Date | string
+  }
+
+  export type api_usageUncheckedCreateWithoutApi_keysInput = {
+    id?: string
+    endpoint: string
+    method: string
+    status: number
+    ip_address?: string | null
+    user_agent?: string | null
+    created_at?: Date | string
+  }
+
+  export type api_usageCreateOrConnectWithoutApi_keysInput = {
+    where: api_usageWhereUniqueInput
+    create: XOR<api_usageCreateWithoutApi_keysInput, api_usageUncheckedCreateWithoutApi_keysInput>
+  }
+
+  export type api_usageCreateManyApi_keysInputEnvelope = {
+    data: api_usageCreateManyApi_keysInput | api_usageCreateManyApi_keysInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type companiesUpsertWithoutApi_keysInput = {
+    update: XOR<companiesUpdateWithoutApi_keysInput, companiesUncheckedUpdateWithoutApi_keysInput>
+    create: XOR<companiesCreateWithoutApi_keysInput, companiesUncheckedCreateWithoutApi_keysInput>
+    where?: companiesWhereInput
+  }
+
+  export type companiesUpdateToOneWithWhereWithoutApi_keysInput = {
+    where?: companiesWhereInput
+    data: XOR<companiesUpdateWithoutApi_keysInput, companiesUncheckedUpdateWithoutApi_keysInput>
+  }
+
+  export type companiesUpdateWithoutApi_keysInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    loads?: loadsUpdateManyWithoutCompaniesNestedInput
+    scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
+    scales?: scalesUpdateManyWithoutCompaniesNestedInput
+    users?: usersUpdateManyWithoutCompaniesNestedInput
+    vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+  }
+
+  export type companiesUncheckedUpdateWithoutApi_keysInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
+    scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
+    scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
+    users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
+    vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+  }
+
+  export type usersUpsertWithoutApi_keysInput = {
+    update: XOR<usersUpdateWithoutApi_keysInput, usersUncheckedUpdateWithoutApi_keysInput>
+    create: XOR<usersCreateWithoutApi_keysInput, usersUncheckedCreateWithoutApi_keysInput>
+    where?: usersWhereInput
+  }
+
+  export type usersUpdateToOneWithWhereWithoutApi_keysInput = {
+    where?: usersWhereInput
+    data: XOR<usersUpdateWithoutApi_keysInput, usersUncheckedUpdateWithoutApi_keysInput>
+  }
+
+  export type usersUpdateWithoutApi_keysInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
+    companies?: companiesUpdateOneWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+  }
+
+  export type usersUncheckedUpdateWithoutApi_keysInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+  }
+
+  export type api_usageUpsertWithWhereUniqueWithoutApi_keysInput = {
+    where: api_usageWhereUniqueInput
+    update: XOR<api_usageUpdateWithoutApi_keysInput, api_usageUncheckedUpdateWithoutApi_keysInput>
+    create: XOR<api_usageCreateWithoutApi_keysInput, api_usageUncheckedCreateWithoutApi_keysInput>
+  }
+
+  export type api_usageUpdateWithWhereUniqueWithoutApi_keysInput = {
+    where: api_usageWhereUniqueInput
+    data: XOR<api_usageUpdateWithoutApi_keysInput, api_usageUncheckedUpdateWithoutApi_keysInput>
+  }
+
+  export type api_usageUpdateManyWithWhereWithoutApi_keysInput = {
+    where: api_usageScalarWhereInput
+    data: XOR<api_usageUpdateManyMutationInput, api_usageUncheckedUpdateManyWithoutApi_keysInput>
+  }
+
+  export type api_usageScalarWhereInput = {
+    AND?: api_usageScalarWhereInput | api_usageScalarWhereInput[]
+    OR?: api_usageScalarWhereInput[]
+    NOT?: api_usageScalarWhereInput | api_usageScalarWhereInput[]
+    id?: UuidFilter<"api_usage"> | string
+    api_key_id?: UuidFilter<"api_usage"> | string
+    endpoint?: StringFilter<"api_usage"> | string
+    method?: StringFilter<"api_usage"> | string
+    status?: IntFilter<"api_usage"> | number
+    ip_address?: StringNullableFilter<"api_usage"> | string | null
+    user_agent?: StringNullableFilter<"api_usage"> | string | null
+    created_at?: DateTimeFilter<"api_usage"> | Date | string
+  }
+
+  export type api_keysCreateWithoutApi_usageInput = {
+    id?: string
+    name: string
+    key: string
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutApi_keysInput
+    users?: usersCreateNestedOneWithoutApi_keysInput
+  }
+
+  export type api_keysUncheckedCreateWithoutApi_usageInput = {
+    id?: string
+    name: string
+    key: string
+    company_id?: number | null
+    created_by?: string | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type api_keysCreateOrConnectWithoutApi_usageInput = {
+    where: api_keysWhereUniqueInput
+    create: XOR<api_keysCreateWithoutApi_usageInput, api_keysUncheckedCreateWithoutApi_usageInput>
+  }
+
+  export type api_keysUpsertWithoutApi_usageInput = {
+    update: XOR<api_keysUpdateWithoutApi_usageInput, api_keysUncheckedUpdateWithoutApi_usageInput>
+    create: XOR<api_keysCreateWithoutApi_usageInput, api_keysUncheckedCreateWithoutApi_usageInput>
+    where?: api_keysWhereInput
+  }
+
+  export type api_keysUpdateToOneWithWhereWithoutApi_usageInput = {
+    where?: api_keysWhereInput
+    data: XOR<api_keysUpdateWithoutApi_usageInput, api_keysUncheckedUpdateWithoutApi_usageInput>
+  }
+
+  export type api_keysUpdateWithoutApi_usageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutApi_keysNestedInput
+    users?: usersUpdateOneWithoutApi_keysNestedInput
+  }
+
+  export type api_keysUncheckedUpdateWithoutApi_usageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type companiesCreateWithoutWebhook_subscriptionsInput = {
+    name: string
+    address?: string | null
+    contact_email?: string | null
+    contact_phone?: string | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    drivers?: driversCreateNestedManyWithoutCompaniesInput
+    loads?: loadsCreateNestedManyWithoutCompaniesInput
+    scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
+    scales?: scalesCreateNestedManyWithoutCompaniesInput
+    users?: usersCreateNestedManyWithoutCompaniesInput
+    vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
+    weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+  }
+
+  export type companiesUncheckedCreateWithoutWebhook_subscriptionsInput = {
+    id?: number
+    name: string
+    address?: string | null
+    contact_email?: string | null
+    contact_phone?: string | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
+    scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
+    scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
+    users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
+    vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
+    weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+  }
+
+  export type companiesCreateOrConnectWithoutWebhook_subscriptionsInput = {
+    where: companiesWhereUniqueInput
+    create: XOR<companiesCreateWithoutWebhook_subscriptionsInput, companiesUncheckedCreateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type usersCreateWithoutWebhook_subscriptionsInput = {
+    id: string
+    name: string
+    email: string
+    is_admin?: boolean | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
+    companies?: companiesCreateNestedOneWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+  }
+
+  export type usersUncheckedCreateWithoutWebhook_subscriptionsInput = {
+    id: string
+    name: string
+    email: string
+    company_id?: number | null
+    is_admin?: boolean | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+  }
+
+  export type usersCreateOrConnectWithoutWebhook_subscriptionsInput = {
+    where: usersWhereUniqueInput
+    create: XOR<usersCreateWithoutWebhook_subscriptionsInput, usersUncheckedCreateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type webhook_deliveriesCreateWithoutWebhook_subscriptionsInput = {
+    id?: string
+    event_type: string
+    payload: JsonNullValueInput | InputJsonValue
+    response_status?: number | null
+    response_body?: string | null
+    error_message?: string | null
+    attempts?: number
+    next_retry_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput = {
+    id?: string
+    event_type: string
+    payload: JsonNullValueInput | InputJsonValue
+    response_status?: number | null
+    response_body?: string | null
+    error_message?: string | null
+    attempts?: number
+    next_retry_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type webhook_deliveriesCreateOrConnectWithoutWebhook_subscriptionsInput = {
+    where: webhook_deliveriesWhereUniqueInput
+    create: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type webhook_deliveriesCreateManyWebhook_subscriptionsInputEnvelope = {
+    data: webhook_deliveriesCreateManyWebhook_subscriptionsInput | webhook_deliveriesCreateManyWebhook_subscriptionsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type companiesUpsertWithoutWebhook_subscriptionsInput = {
+    update: XOR<companiesUpdateWithoutWebhook_subscriptionsInput, companiesUncheckedUpdateWithoutWebhook_subscriptionsInput>
+    create: XOR<companiesCreateWithoutWebhook_subscriptionsInput, companiesUncheckedCreateWithoutWebhook_subscriptionsInput>
+    where?: companiesWhereInput
+  }
+
+  export type companiesUpdateToOneWithWhereWithoutWebhook_subscriptionsInput = {
+    where?: companiesWhereInput
+    data: XOR<companiesUpdateWithoutWebhook_subscriptionsInput, companiesUncheckedUpdateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type companiesUpdateWithoutWebhook_subscriptionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    loads?: loadsUpdateManyWithoutCompaniesNestedInput
+    scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
+    scales?: scalesUpdateManyWithoutCompaniesNestedInput
+    users?: usersUpdateManyWithoutCompaniesNestedInput
+    vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+  }
+
+  export type companiesUncheckedUpdateWithoutWebhook_subscriptionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
+    scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
+    scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
+    users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
+    vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+  }
+
+  export type usersUpsertWithoutWebhook_subscriptionsInput = {
+    update: XOR<usersUpdateWithoutWebhook_subscriptionsInput, usersUncheckedUpdateWithoutWebhook_subscriptionsInput>
+    create: XOR<usersCreateWithoutWebhook_subscriptionsInput, usersUncheckedCreateWithoutWebhook_subscriptionsInput>
+    where?: usersWhereInput
+  }
+
+  export type usersUpdateToOneWithWhereWithoutWebhook_subscriptionsInput = {
+    where?: usersWhereInput
+    data: XOR<usersUpdateWithoutWebhook_subscriptionsInput, usersUncheckedUpdateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type usersUpdateWithoutWebhook_subscriptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
+    companies?: companiesUpdateOneWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+  }
+
+  export type usersUncheckedUpdateWithoutWebhook_subscriptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+  }
+
+  export type webhook_deliveriesUpsertWithWhereUniqueWithoutWebhook_subscriptionsInput = {
+    where: webhook_deliveriesWhereUniqueInput
+    update: XOR<webhook_deliveriesUpdateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedUpdateWithoutWebhook_subscriptionsInput>
+    create: XOR<webhook_deliveriesCreateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedCreateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type webhook_deliveriesUpdateWithWhereUniqueWithoutWebhook_subscriptionsInput = {
+    where: webhook_deliveriesWhereUniqueInput
+    data: XOR<webhook_deliveriesUpdateWithoutWebhook_subscriptionsInput, webhook_deliveriesUncheckedUpdateWithoutWebhook_subscriptionsInput>
+  }
+
+  export type webhook_deliveriesUpdateManyWithWhereWithoutWebhook_subscriptionsInput = {
+    where: webhook_deliveriesScalarWhereInput
+    data: XOR<webhook_deliveriesUpdateManyMutationInput, webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsInput>
+  }
+
+  export type webhook_deliveriesScalarWhereInput = {
+    AND?: webhook_deliveriesScalarWhereInput | webhook_deliveriesScalarWhereInput[]
+    OR?: webhook_deliveriesScalarWhereInput[]
+    NOT?: webhook_deliveriesScalarWhereInput | webhook_deliveriesScalarWhereInput[]
+    id?: UuidFilter<"webhook_deliveries"> | string
+    webhook_subscription_id?: UuidFilter<"webhook_deliveries"> | string
+    event_type?: StringFilter<"webhook_deliveries"> | string
+    payload?: JsonFilter<"webhook_deliveries">
+    response_status?: IntNullableFilter<"webhook_deliveries"> | number | null
+    response_body?: StringNullableFilter<"webhook_deliveries"> | string | null
+    error_message?: StringNullableFilter<"webhook_deliveries"> | string | null
+    attempts?: IntFilter<"webhook_deliveries"> | number
+    next_retry_at?: DateTimeNullableFilter<"webhook_deliveries"> | Date | string | null
+    created_at?: DateTimeFilter<"webhook_deliveries"> | Date | string
+    updated_at?: DateTimeFilter<"webhook_deliveries"> | Date | string
+  }
+
+  export type webhook_subscriptionsCreateWithoutWebhook_deliveriesInput = {
+    id?: string
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutWebhook_subscriptionsInput
+    users?: usersCreateNestedOneWithoutWebhook_subscriptionsInput
+  }
+
+  export type webhook_subscriptionsUncheckedCreateWithoutWebhook_deliveriesInput = {
+    id?: string
+    company_id?: number | null
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type webhook_subscriptionsCreateOrConnectWithoutWebhook_deliveriesInput = {
+    where: webhook_subscriptionsWhereUniqueInput
+    create: XOR<webhook_subscriptionsCreateWithoutWebhook_deliveriesInput, webhook_subscriptionsUncheckedCreateWithoutWebhook_deliveriesInput>
+  }
+
+  export type webhook_subscriptionsUpsertWithoutWebhook_deliveriesInput = {
+    update: XOR<webhook_subscriptionsUpdateWithoutWebhook_deliveriesInput, webhook_subscriptionsUncheckedUpdateWithoutWebhook_deliveriesInput>
+    create: XOR<webhook_subscriptionsCreateWithoutWebhook_deliveriesInput, webhook_subscriptionsUncheckedCreateWithoutWebhook_deliveriesInput>
+    where?: webhook_subscriptionsWhereInput
+  }
+
+  export type webhook_subscriptionsUpdateToOneWithWhereWithoutWebhook_deliveriesInput = {
+    where?: webhook_subscriptionsWhereInput
+    data: XOR<webhook_subscriptionsUpdateWithoutWebhook_deliveriesInput, webhook_subscriptionsUncheckedUpdateWithoutWebhook_deliveriesInput>
+  }
+
+  export type webhook_subscriptionsUpdateWithoutWebhook_deliveriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutWebhook_subscriptionsNestedInput
+    users?: usersUpdateOneWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateWithoutWebhook_deliveriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type companiesCreateWithoutIntegration_connectionsInput = {
+    name: string
+    address?: string | null
+    contact_email?: string | null
+    contact_phone?: string | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    drivers?: driversCreateNestedManyWithoutCompaniesInput
+    loads?: loadsCreateNestedManyWithoutCompaniesInput
+    scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
+    scales?: scalesCreateNestedManyWithoutCompaniesInput
+    users?: usersCreateNestedManyWithoutCompaniesInput
+    vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
+    weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutCompaniesInput
+  }
+
+  export type companiesUncheckedCreateWithoutIntegration_connectionsInput = {
+    id?: number
+    name: string
+    address?: string | null
+    contact_email?: string | null
+    contact_phone?: string | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
+    scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
+    scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
+    users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
+    vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
+    weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+  }
+
+  export type companiesCreateOrConnectWithoutIntegration_connectionsInput = {
+    where: companiesWhereUniqueInput
+    create: XOR<companiesCreateWithoutIntegration_connectionsInput, companiesUncheckedCreateWithoutIntegration_connectionsInput>
+  }
+
+  export type usersCreateWithoutIntegration_connectionsInput = {
+    id: string
+    name: string
+    email: string
+    is_admin?: boolean | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
+    companies?: companiesCreateNestedOneWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsCreateNestedManyWithoutUsersInput
+  }
+
+  export type usersUncheckedCreateWithoutIntegration_connectionsInput = {
+    id: string
+    name: string
+    email: string
+    company_id?: number | null
+    is_admin?: boolean | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+    hardware_connections?: hardware_connectionsUncheckedCreateNestedManyWithoutUsersInput
+  }
+
+  export type usersCreateOrConnectWithoutIntegration_connectionsInput = {
+    where: usersWhereUniqueInput
+    create: XOR<usersCreateWithoutIntegration_connectionsInput, usersUncheckedCreateWithoutIntegration_connectionsInput>
+  }
+
+  export type integration_logsCreateWithoutIntegration_connectionsInput = {
+    id?: string
+    event_type: string
+    status: string
+    message?: string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: Date | string
+  }
+
+  export type integration_logsUncheckedCreateWithoutIntegration_connectionsInput = {
+    id?: string
+    event_type: string
+    status: string
+    message?: string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: Date | string
+  }
+
+  export type integration_logsCreateOrConnectWithoutIntegration_connectionsInput = {
+    where: integration_logsWhereUniqueInput
+    create: XOR<integration_logsCreateWithoutIntegration_connectionsInput, integration_logsUncheckedCreateWithoutIntegration_connectionsInput>
+  }
+
+  export type integration_logsCreateManyIntegration_connectionsInputEnvelope = {
+    data: integration_logsCreateManyIntegration_connectionsInput | integration_logsCreateManyIntegration_connectionsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type companiesUpsertWithoutIntegration_connectionsInput = {
+    update: XOR<companiesUpdateWithoutIntegration_connectionsInput, companiesUncheckedUpdateWithoutIntegration_connectionsInput>
+    create: XOR<companiesCreateWithoutIntegration_connectionsInput, companiesUncheckedCreateWithoutIntegration_connectionsInput>
+    where?: companiesWhereInput
+  }
+
+  export type companiesUpdateToOneWithWhereWithoutIntegration_connectionsInput = {
+    where?: companiesWhereInput
+    data: XOR<companiesUpdateWithoutIntegration_connectionsInput, companiesUncheckedUpdateWithoutIntegration_connectionsInput>
+  }
+
+  export type companiesUpdateWithoutIntegration_connectionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    loads?: loadsUpdateManyWithoutCompaniesNestedInput
+    scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
+    scales?: scalesUpdateManyWithoutCompaniesNestedInput
+    users?: usersUpdateManyWithoutCompaniesNestedInput
+    vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutCompaniesNestedInput
+  }
+
+  export type companiesUncheckedUpdateWithoutIntegration_connectionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
+    scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
+    scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
+    users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
+    vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+  }
+
+  export type usersUpsertWithoutIntegration_connectionsInput = {
+    update: XOR<usersUpdateWithoutIntegration_connectionsInput, usersUncheckedUpdateWithoutIntegration_connectionsInput>
+    create: XOR<usersCreateWithoutIntegration_connectionsInput, usersUncheckedCreateWithoutIntegration_connectionsInput>
+    where?: usersWhereInput
+  }
+
+  export type usersUpdateToOneWithWhereWithoutIntegration_connectionsInput = {
+    where?: usersWhereInput
+    data: XOR<usersUpdateWithoutIntegration_connectionsInput, usersUncheckedUpdateWithoutIntegration_connectionsInput>
+  }
+
+  export type usersUpdateWithoutIntegration_connectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
+    companies?: companiesUpdateOneWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
+  }
+
+  export type usersUncheckedUpdateWithoutIntegration_connectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+  }
+
+  export type integration_logsUpsertWithWhereUniqueWithoutIntegration_connectionsInput = {
+    where: integration_logsWhereUniqueInput
+    update: XOR<integration_logsUpdateWithoutIntegration_connectionsInput, integration_logsUncheckedUpdateWithoutIntegration_connectionsInput>
+    create: XOR<integration_logsCreateWithoutIntegration_connectionsInput, integration_logsUncheckedCreateWithoutIntegration_connectionsInput>
+  }
+
+  export type integration_logsUpdateWithWhereUniqueWithoutIntegration_connectionsInput = {
+    where: integration_logsWhereUniqueInput
+    data: XOR<integration_logsUpdateWithoutIntegration_connectionsInput, integration_logsUncheckedUpdateWithoutIntegration_connectionsInput>
+  }
+
+  export type integration_logsUpdateManyWithWhereWithoutIntegration_connectionsInput = {
+    where: integration_logsScalarWhereInput
+    data: XOR<integration_logsUpdateManyMutationInput, integration_logsUncheckedUpdateManyWithoutIntegration_connectionsInput>
+  }
+
+  export type integration_logsScalarWhereInput = {
+    AND?: integration_logsScalarWhereInput | integration_logsScalarWhereInput[]
+    OR?: integration_logsScalarWhereInput[]
+    NOT?: integration_logsScalarWhereInput | integration_logsScalarWhereInput[]
+    id?: UuidFilter<"integration_logs"> | string
+    integration_connection_id?: UuidFilter<"integration_logs"> | string
+    event_type?: StringFilter<"integration_logs"> | string
+    status?: StringFilter<"integration_logs"> | string
+    message?: StringNullableFilter<"integration_logs"> | string | null
+    details?: JsonNullableFilter<"integration_logs">
+    created_at?: DateTimeFilter<"integration_logs"> | Date | string
+  }
+
+  export type integration_connectionsCreateWithoutIntegration_logsInput = {
+    id?: string
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    companies?: companiesCreateNestedOneWithoutIntegration_connectionsInput
+    users?: usersCreateNestedOneWithoutIntegration_connectionsInput
+  }
+
+  export type integration_connectionsUncheckedCreateWithoutIntegration_logsInput = {
+    id?: string
+    company_id?: number | null
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type integration_connectionsCreateOrConnectWithoutIntegration_logsInput = {
+    where: integration_connectionsWhereUniqueInput
+    create: XOR<integration_connectionsCreateWithoutIntegration_logsInput, integration_connectionsUncheckedCreateWithoutIntegration_logsInput>
+  }
+
+  export type integration_connectionsUpsertWithoutIntegration_logsInput = {
+    update: XOR<integration_connectionsUpdateWithoutIntegration_logsInput, integration_connectionsUncheckedUpdateWithoutIntegration_logsInput>
+    create: XOR<integration_connectionsCreateWithoutIntegration_logsInput, integration_connectionsUncheckedCreateWithoutIntegration_logsInput>
+    where?: integration_connectionsWhereInput
+  }
+
+  export type integration_connectionsUpdateToOneWithWhereWithoutIntegration_logsInput = {
+    where?: integration_connectionsWhereInput
+    data: XOR<integration_connectionsUpdateWithoutIntegration_logsInput, integration_connectionsUncheckedUpdateWithoutIntegration_logsInput>
+  }
+
+  export type integration_connectionsUpdateWithoutIntegration_logsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutIntegration_connectionsNestedInput
+    users?: usersUpdateOneWithoutIntegration_connectionsNestedInput
+  }
+
+  export type integration_connectionsUncheckedUpdateWithoutIntegration_logsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type companiesCreateWithoutHardware_connectionsInput = {
+    name: string
+    address?: string | null
+    contact_email?: string | null
+    contact_phone?: string | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    drivers?: driversCreateNestedManyWithoutCompaniesInput
+    loads?: loadsCreateNestedManyWithoutCompaniesInput
+    scale_facilities?: scale_facilitiesCreateNestedManyWithoutCompaniesInput
+    scales?: scalesCreateNestedManyWithoutCompaniesInput
+    users?: usersCreateNestedManyWithoutCompaniesInput
+    vehicles?: vehiclesCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutCompaniesInput
+    weights?: weightsCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutCompaniesInput
+  }
+
+  export type companiesUncheckedCreateWithoutHardware_connectionsInput = {
+    id?: number
+    name: string
+    address?: string | null
+    contact_email?: string | null
+    contact_phone?: string | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    drivers?: driversUncheckedCreateNestedManyWithoutCompaniesInput
+    loads?: loadsUncheckedCreateNestedManyWithoutCompaniesInput
+    scale_facilities?: scale_facilitiesUncheckedCreateNestedManyWithoutCompaniesInput
+    scales?: scalesUncheckedCreateNestedManyWithoutCompaniesInput
+    users?: usersUncheckedCreateNestedManyWithoutCompaniesInput
+    vehicles?: vehiclesUncheckedCreateNestedManyWithoutCompaniesInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutCompaniesInput
+    weights?: weightsUncheckedCreateNestedManyWithoutCompaniesInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutCompaniesInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutCompaniesInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutCompaniesInput
+  }
+
+  export type companiesCreateOrConnectWithoutHardware_connectionsInput = {
+    where: companiesWhereUniqueInput
+    create: XOR<companiesCreateWithoutHardware_connectionsInput, companiesUncheckedCreateWithoutHardware_connectionsInput>
+  }
+
+  export type usersCreateWithoutHardware_connectionsInput = {
+    id: string
+    name: string
+    email: string
+    is_admin?: boolean | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    predictive_alerts?: predictive_alertsCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesCreateNestedManyWithoutUsersInput
+    companies?: companiesCreateNestedOneWithoutUsersInput
+    weigh_tickets?: weigh_ticketsCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsCreateNestedManyWithoutUsersInput
+  }
+
+  export type usersUncheckedCreateWithoutHardware_connectionsInput = {
+    id: string
+    name: string
+    email: string
+    company_id?: number | null
+    is_admin?: boolean | null
+    created_at?: Date | string | null
+    updated_at?: Date | string | null
+    predictive_alerts?: predictive_alertsUncheckedCreateNestedManyWithoutUsersInput
+    ticket_images?: ticket_imagesUncheckedCreateNestedManyWithoutUsersInput
+    weigh_tickets?: weigh_ticketsUncheckedCreateNestedManyWithoutUsersInput
+    api_keys?: api_keysUncheckedCreateNestedManyWithoutUsersInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+    integration_connections?: integration_connectionsUncheckedCreateNestedManyWithoutUsersInput
+  }
+
+  export type usersCreateOrConnectWithoutHardware_connectionsInput = {
+    where: usersWhereUniqueInput
+    create: XOR<usersCreateWithoutHardware_connectionsInput, usersUncheckedCreateWithoutHardware_connectionsInput>
+  }
+
+  export type companiesUpsertWithoutHardware_connectionsInput = {
+    update: XOR<companiesUpdateWithoutHardware_connectionsInput, companiesUncheckedUpdateWithoutHardware_connectionsInput>
+    create: XOR<companiesCreateWithoutHardware_connectionsInput, companiesUncheckedCreateWithoutHardware_connectionsInput>
+    where?: companiesWhereInput
+  }
+
+  export type companiesUpdateToOneWithWhereWithoutHardware_connectionsInput = {
+    where?: companiesWhereInput
+    data: XOR<companiesUpdateWithoutHardware_connectionsInput, companiesUncheckedUpdateWithoutHardware_connectionsInput>
+  }
+
+  export type companiesUpdateWithoutHardware_connectionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    drivers?: driversUpdateManyWithoutCompaniesNestedInput
+    loads?: loadsUpdateManyWithoutCompaniesNestedInput
+    scale_facilities?: scale_facilitiesUpdateManyWithoutCompaniesNestedInput
+    scales?: scalesUpdateManyWithoutCompaniesNestedInput
+    users?: usersUpdateManyWithoutCompaniesNestedInput
+    vehicles?: vehiclesUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutCompaniesNestedInput
+  }
+
+  export type companiesUncheckedUpdateWithoutHardware_connectionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_email?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_phone?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    drivers?: driversUncheckedUpdateManyWithoutCompaniesNestedInput
+    loads?: loadsUncheckedUpdateManyWithoutCompaniesNestedInput
+    scale_facilities?: scale_facilitiesUncheckedUpdateManyWithoutCompaniesNestedInput
+    scales?: scalesUncheckedUpdateManyWithoutCompaniesNestedInput
+    users?: usersUncheckedUpdateManyWithoutCompaniesNestedInput
+    vehicles?: vehiclesUncheckedUpdateManyWithoutCompaniesNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutCompaniesNestedInput
+    weights?: weightsUncheckedUpdateManyWithoutCompaniesNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutCompaniesNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutCompaniesNestedInput
+  }
+
+  export type usersUpsertWithoutHardware_connectionsInput = {
+    update: XOR<usersUpdateWithoutHardware_connectionsInput, usersUncheckedUpdateWithoutHardware_connectionsInput>
+    create: XOR<usersCreateWithoutHardware_connectionsInput, usersUncheckedCreateWithoutHardware_connectionsInput>
+    where?: usersWhereInput
+  }
+
+  export type usersUpdateToOneWithWhereWithoutHardware_connectionsInput = {
+    where?: usersWhereInput
+    data: XOR<usersUpdateWithoutHardware_connectionsInput, usersUncheckedUpdateWithoutHardware_connectionsInput>
+  }
+
+  export type usersUpdateWithoutHardware_connectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
+    companies?: companiesUpdateOneWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
+  }
+
+  export type usersUncheckedUpdateWithoutHardware_connectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    is_admin?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
+    ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
+    weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type axlesCreateManyAxle_configurationsInput = {
@@ -41545,6 +56604,58 @@ export namespace Prisma {
     updated_at?: Date | string | null
   }
 
+  export type api_keysCreateManyCompaniesInput = {
+    id?: string
+    name: string
+    key: string
+    created_by?: string | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type webhook_subscriptionsCreateManyCompaniesInput = {
+    id?: string
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type integration_connectionsCreateManyCompaniesInput = {
+    id?: string
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type hardware_connectionsCreateManyCompaniesInput = {
+    id?: string
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
   export type driversUpdateWithoutCompaniesInput = {
     name?: StringFieldUpdateOperationsInput | string
     license_number?: StringFieldUpdateOperationsInput | string
@@ -41740,6 +56851,10 @@ export namespace Prisma {
     predictive_alerts?: predictive_alertsUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUpdateManyWithoutUsersNestedInput
     weigh_tickets?: weigh_ticketsUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateWithoutCompaniesInput = {
@@ -41752,6 +56867,10 @@ export namespace Prisma {
     predictive_alerts?: predictive_alertsUncheckedUpdateManyWithoutUsersNestedInput
     ticket_images?: ticket_imagesUncheckedUpdateManyWithoutUsersNestedInput
     weigh_tickets?: weigh_ticketsUncheckedUpdateManyWithoutUsersNestedInput
+    api_keys?: api_keysUncheckedUpdateManyWithoutUsersNestedInput
+    webhook_subscriptions?: webhook_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+    integration_connections?: integration_connectionsUncheckedUpdateManyWithoutUsersNestedInput
+    hardware_connections?: hardware_connectionsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateManyWithoutCompaniesInput = {
@@ -41955,6 +57074,168 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type api_keysUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: usersUpdateOneWithoutApi_keysNestedInput
+    api_usage?: api_usageUpdateManyWithoutApi_keysNestedInput
+  }
+
+  export type api_keysUncheckedUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    api_usage?: api_usageUncheckedUpdateManyWithoutApi_keysNestedInput
+  }
+
+  export type api_keysUncheckedUpdateManyWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type webhook_subscriptionsUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: usersUpdateOneWithoutWebhook_subscriptionsNestedInput
+    webhook_deliveries?: webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhook_deliveries?: webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateManyWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_connectionsUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: usersUpdateOneWithoutIntegration_connectionsNestedInput
+    integration_logs?: integration_logsUpdateManyWithoutIntegration_connectionsNestedInput
+  }
+
+  export type integration_connectionsUncheckedUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    integration_logs?: integration_logsUncheckedUpdateManyWithoutIntegration_connectionsNestedInput
+  }
+
+  export type integration_connectionsUncheckedUpdateManyWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type hardware_connectionsUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: usersUpdateOneWithoutHardware_connectionsNestedInput
+  }
+
+  export type hardware_connectionsUncheckedUpdateWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type hardware_connectionsUncheckedUpdateManyWithoutCompaniesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type loadsCreateManyDriversInput = {
@@ -42622,6 +57903,58 @@ export namespace Prisma {
     updated_at?: Date | string | null
   }
 
+  export type api_keysCreateManyUsersInput = {
+    id?: string
+    name: string
+    key: string
+    company_id?: number | null
+    expires_at?: Date | string | null
+    last_used_at?: Date | string | null
+    is_active?: boolean
+    permissions?: api_keysCreatepermissionsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type webhook_subscriptionsCreateManyUsersInput = {
+    id?: string
+    company_id?: number | null
+    name: string
+    event_types?: webhook_subscriptionsCreateevent_typesInput | string[]
+    target_url: string
+    secret_key?: string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type integration_connectionsCreateManyUsersInput = {
+    id?: string
+    company_id?: number | null
+    integration_type: string
+    provider: string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type hardware_connectionsCreateManyUsersInput = {
+    id?: string
+    company_id?: number | null
+    hardware_type: string
+    name: string
+    model?: string | null
+    serial_number?: string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: boolean
+    last_connected_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
   export type predictive_alertsUpdateWithoutUsersInput = {
     alert_type?: StringFieldUpdateOperationsInput | string
     risk_score?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
@@ -42761,6 +58094,168 @@ export namespace Prisma {
     company_id?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type api_keysUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutApi_keysNestedInput
+    api_usage?: api_usageUpdateManyWithoutApi_keysNestedInput
+  }
+
+  export type api_keysUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    api_usage?: api_usageUncheckedUpdateManyWithoutApi_keysNestedInput
+  }
+
+  export type api_keysUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    expires_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_used_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: api_keysUpdatepermissionsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type webhook_subscriptionsUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutWebhook_subscriptionsNestedInput
+    webhook_deliveries?: webhook_deliveriesUpdateManyWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    webhook_deliveries?: webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsNestedInput
+  }
+
+  export type webhook_subscriptionsUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    event_types?: webhook_subscriptionsUpdateevent_typesInput | string[]
+    target_url?: StringFieldUpdateOperationsInput | string
+    secret_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_connectionsUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutIntegration_connectionsNestedInput
+    integration_logs?: integration_logsUpdateManyWithoutIntegration_connectionsNestedInput
+  }
+
+  export type integration_connectionsUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    integration_logs?: integration_logsUncheckedUpdateManyWithoutIntegration_connectionsNestedInput
+  }
+
+  export type integration_connectionsUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    integration_type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    credentials?: NullableJsonNullValueInput | InputJsonValue
+    settings?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type hardware_connectionsUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    companies?: companiesUpdateOneWithoutHardware_connectionsNestedInput
+  }
+
+  export type hardware_connectionsUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type hardware_connectionsUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_id?: NullableIntFieldUpdateOperationsInput | number | null
+    hardware_type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    serial_number?: NullableStringFieldUpdateOperationsInput | string | null
+    connection_details?: NullableJsonNullValueInput | InputJsonValue
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    last_connected_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type loadsCreateManyVehiclesInput = {
@@ -43243,6 +58738,134 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     ip_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type api_usageCreateManyApi_keysInput = {
+    id?: string
+    endpoint: string
+    method: string
+    status: number
+    ip_address?: string | null
+    user_agent?: string | null
+    created_at?: Date | string
+  }
+
+  export type api_usageUpdateWithoutApi_keysInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type api_usageUncheckedUpdateWithoutApi_keysInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type api_usageUncheckedUpdateManyWithoutApi_keysInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    status?: IntFieldUpdateOperationsInput | number
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    user_agent?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type webhook_deliveriesCreateManyWebhook_subscriptionsInput = {
+    id?: string
+    event_type: string
+    payload: JsonNullValueInput | InputJsonValue
+    response_status?: number | null
+    response_body?: string | null
+    error_message?: string | null
+    attempts?: number
+    next_retry_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type webhook_deliveriesUpdateWithoutWebhook_subscriptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    response_status?: NullableIntFieldUpdateOperationsInput | number | null
+    response_body?: NullableStringFieldUpdateOperationsInput | string | null
+    error_message?: NullableStringFieldUpdateOperationsInput | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    next_retry_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type webhook_deliveriesUncheckedUpdateWithoutWebhook_subscriptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    response_status?: NullableIntFieldUpdateOperationsInput | number | null
+    response_body?: NullableStringFieldUpdateOperationsInput | string | null
+    error_message?: NullableStringFieldUpdateOperationsInput | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    next_retry_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type webhook_deliveriesUncheckedUpdateManyWithoutWebhook_subscriptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    response_status?: NullableIntFieldUpdateOperationsInput | number | null
+    response_body?: NullableStringFieldUpdateOperationsInput | string | null
+    error_message?: NullableStringFieldUpdateOperationsInput | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    next_retry_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_logsCreateManyIntegration_connectionsInput = {
+    id?: string
+    event_type: string
+    status: string
+    message?: string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: Date | string
+  }
+
+  export type integration_logsUpdateWithoutIntegration_connectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_logsUncheckedUpdateWithoutIntegration_connectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type integration_logsUncheckedUpdateManyWithoutIntegration_connectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
