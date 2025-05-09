@@ -12,7 +12,11 @@ import {
   Legend
 } from 'recharts';
 
-export default function LoadStatusChart() {
+interface LoadStatusChartProps {
+  companyId?: number | null;
+}
+
+export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
   const supabase = createClientComponentClient<Database>();
   const [loadData, setLoadData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +43,11 @@ export default function LoadStatusChart() {
         }
 
         // Use the new API endpoint to get load status data
-        const response = await fetch('/api/dashboard/load-status', {
+        const url = companyId
+          ? `/api/dashboard/load-status?companyId=${companyId}`
+          : '/api/dashboard/load-status';
+
+        const response = await fetch(url, {
           headers: {
             'x-auth-token': session.access_token
           }
@@ -64,7 +72,7 @@ export default function LoadStatusChart() {
     };
 
     fetchData();
-  }, [supabase]);
+  }, [supabase, companyId]);
 
   if (isLoading) {
     return (

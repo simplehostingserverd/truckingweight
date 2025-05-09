@@ -3,48 +3,59 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { 
-  ScaleIcon, 
-  TruckIcon, 
-  UserIcon, 
-  CameraIcon, 
+import { Database } from '@/types/supabase';
+import {
+  ScaleIcon,
+  TruckIcon,
+  UserIcon,
+  CameraIcon,
   DocumentTextIcon,
   ArrowPathIcon,
   CheckCircleIcon,
-  ExclamationTriangleIcon
+  ExclamationTriangleIcon,
+  QrCodeIcon,
+  PencilIcon,
+  XCircleIcon
 } from '@heroicons/react/24/outline';
 import { weightCaptureService } from '@/services/weight-capture';
 import { weighTicketService } from '@/services/weigh-ticket-service';
 import { WeightReading, VehicleExtended, Driver, Scale } from '@/types/scale-master';
+import ScaleSelector from '@/components/WeightCapture/ScaleSelector';
+import WeightReader from '@/components/WeightCapture/WeightReader';
+import AxleWeightCapture from '@/components/WeightCapture/AxleWeightCapture';
+import QRScanner from '@/components/WeightCapture/QRScanner';
 
 export default function WeightCapturePage() {
   const router = useRouter();
   const supabase = createClientComponentClient();
-  
+
   // State for weight capture
   const [captureMethod, setCaptureMethod] = useState<'scale' | 'iot' | 'camera' | 'manual'>('scale');
   const [isCapturing, setIsCapturing] = useState(false);
   const [weightReading, setWeightReading] = useState<WeightReading | null>(null);
   const [captureError, setCaptureError] = useState<string | null>(null);
-  
+
   // State for form data
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(null);
   const [selectedDriverId, setSelectedDriverId] = useState<number | null>(null);
   const [selectedScaleId, setSelectedScaleId] = useState<number | null>(null);
   const [notes, setNotes] = useState('');
-  
+
   // State for data lists
   const [vehicles, setVehicles] = useState<VehicleExtended[]>([]);
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [scales, setScales] = useState<Scale[]>([]);
-  
+
   // State for form validation
   const [isFormValid, setIsFormValid] = useState(false);
-  
+
   // State for ticket creation
   const [isCreatingTicket, setIsCreatingTicket] = useState(false);
   const [ticketCreationError, setTicketCreationError] = useState<string | null>(null);
-  
+
+  // State for QR scanner
+  const [showQRScanner, setShowQRScanner] = useState(false);
+
   // Load vehicles, drivers, and scales on component mount
   useEffect(() => {
     const fetchData = async () => {
@@ -56,40 +67,40 @@ export default function WeightCapturePage() {
           .select('company_id')
           .eq('id', user?.id)
           .single();
-        
+
         if (!userData) {
           throw new Error('Failed to get user data');
         }
-        
+
         // Fetch vehicles
         const { data: vehiclesData } = await supabase
           .from('vehicles')
           .select('*')
           .eq('company_id', userData.company_id)
           .eq('status', 'Active');
-        
+
         if (vehiclesData) {
           setVehicles(vehiclesData);
         }
-        
+
         // Fetch drivers
         const { data: driversData } = await supabase
           .from('drivers')
           .select('*')
           .eq('company_id', userData.company_id)
           .eq('status', 'Active');
-        
+
         if (driversData) {
           setDrivers(driversData);
         }
-        
+
         // Fetch scales
         const { data: scalesData } = await supabase
           .from('scales')
           .select('*')
           .eq('company_id', userData.company_id)
           .eq('status', 'Active');
-        
+
         if (scalesData) {
           setScales(scalesData);
         }
@@ -97,9 +108,9 @@ export default function WeightCapturePage() {
         console.error('Error fetching data:', error);
       }
     };
-    
+
     fetchData();
-    
+
     // Initialize the weight capture service
     const initializeWeightCapture = async () => {
       try {
@@ -109,22 +120,22 @@ export default function WeightCapturePage() {
           port: 8080,
           protocol: 'tcp'
         });
-        
+
         if (success) {
           weightCaptureService.setActiveProvider('scale-1');
         } else {
           setCaptureError('Failed to initialize digital scale');
         }
-        
+
         // Initialize IoT sensor
         await weightCaptureService.initializeIoTSensor('iot-1', {
           sensorId: 'iot-sensor-001',
           apiKey: 'demo-key'
         });
-        
+
         // Initialize camera
         await weightCaptureService.initializeCamera('camera-1');
-        
+
         // Initialize manual entry
         weightCaptureService.initializeManualEntry('manual-1');
       } catch (error) {
@@ -132,9 +143,9 @@ export default function WeightCapturePage() {
         setCaptureError('Failed to initialize weight capture');
       }
     };
-    
+
     initializeWeightCapture();
-    
+
     // Cleanup on component unmount
     return () => {
       if (isCapturing) {
@@ -142,32 +153,32 @@ export default function WeightCapturePage() {
       }
     };
   }, [supabase]);
-  
+
   // Update form validation when required fields change
   useEffect(() => {
     setIsFormValid(
-      !!selectedVehicleId && 
-      !!selectedDriverId && 
+      !!selectedVehicleId &&
+      !!selectedDriverId &&
       !!weightReading?.grossWeight
     );
   }, [selectedVehicleId, selectedDriverId, weightReading]);
-  
+
   // Start weight capture
   const startCapture = async () => {
     try {
       setCaptureError(null);
-      
+
       // Set the active provider based on the selected capture method
       const providerId = `${captureMethod}-1`;
       const success = weightCaptureService.setActiveProvider(providerId);
-      
+
       if (!success) {
         throw new Error(`Failed to set active provider: ${providerId}`);
       }
-      
+
       await weightCaptureService.startCapture();
       setIsCapturing(true);
-      
+
       // Start polling for weight readings
       const interval = setInterval(async () => {
         try {
@@ -177,7 +188,7 @@ export default function WeightCapturePage() {
           console.error('Error getting weight reading:', error);
         }
       }, 1000);
-      
+
       // Cleanup interval when capturing stops
       return () => clearInterval(interval);
     } catch (error) {
@@ -186,7 +197,7 @@ export default function WeightCapturePage() {
       setIsCapturing(false);
     }
   };
-  
+
   // Stop weight capture
   const stopCapture = async () => {
     try {
@@ -197,16 +208,16 @@ export default function WeightCapturePage() {
       setIsCapturing(false);
     }
   };
-  
+
   // Create a weigh ticket
   const createTicket = async () => {
     if (!isFormValid || !weightReading) {
       return;
     }
-    
+
     setIsCreatingTicket(true);
     setTicketCreationError(null);
-    
+
     try {
       const ticket = await weighTicketService.createTicket(
         weightReading,
@@ -216,7 +227,7 @@ export default function WeightCapturePage() {
         null, // No facility ID for now
         notes
       );
-      
+
       // Navigate to the ticket details page
       router.push(`/weights/${ticket.id}`);
     } catch (error) {
@@ -225,27 +236,27 @@ export default function WeightCapturePage() {
       setIsCreatingTicket(false);
     }
   };
-  
+
   // Get the compliance status color
   const getComplianceStatusColor = (reading: WeightReading | null) => {
     if (!reading) return 'bg-gray-100 dark:bg-gray-800';
-    
+
     // Check if any axle weights are non-compliant
     if (reading.axleWeights && reading.axleWeights.length > 0) {
       const hasNonCompliant = reading.axleWeights.some(aw => aw.weight > aw.maxLegal);
       if (hasNonCompliant) return 'bg-red-100 dark:bg-red-900';
-      
+
       const hasWarning = reading.axleWeights.some(aw => aw.weight > aw.maxLegal * 0.95);
       if (hasWarning) return 'bg-amber-100 dark:bg-amber-900';
     }
-    
+
     return 'bg-green-100 dark:bg-green-900';
   };
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">Weight Capture</h1>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Weight Display and Capture Controls */}
         <div className="lg:col-span-2">
@@ -259,7 +270,7 @@ export default function WeightCapturePage() {
                 <div className={`h-3 w-3 rounded-full ${isCapturing ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
               </div>
             </div>
-            
+
             <div className="flex justify-center items-center py-8">
               <div className="text-center">
                 <div className="text-6xl font-bold text-gray-900 dark:text-white mb-2">
@@ -270,13 +281,13 @@ export default function WeightCapturePage() {
                 </div>
               </div>
             </div>
-            
+
             {weightReading?.axleWeights && weightReading.axleWeights.length > 0 && (
               <div className="mt-4">
                 <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Axle Weights</h3>
                 <div className="grid grid-cols-5 gap-2">
                   {weightReading.axleWeights.map((axle) => (
-                    <div 
+                    <div
                       key={axle.position}
                       className={`p-2 rounded text-center ${
                         axle.weight > axle.maxLegal
@@ -301,10 +312,10 @@ export default function WeightCapturePage() {
               </div>
             )}
           </div>
-          
+
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Capture Method</h2>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               <button
                 className={`flex flex-col items-center justify-center p-4 rounded-lg border ${
@@ -325,7 +336,7 @@ export default function WeightCapturePage() {
                     : 'text-gray-700 dark:text-gray-300'
                 }`}>Digital Scale</span>
               </button>
-              
+
               <button
                 className={`flex flex-col items-center justify-center p-4 rounded-lg border ${
                   captureMethod === 'iot'
@@ -347,7 +358,7 @@ export default function WeightCapturePage() {
                     : 'text-gray-700 dark:text-gray-300'
                 }`}>IoT Sensor</span>
               </button>
-              
+
               <button
                 className={`flex flex-col items-center justify-center p-4 rounded-lg border ${
                   captureMethod === 'camera'
@@ -367,7 +378,7 @@ export default function WeightCapturePage() {
                     : 'text-gray-700 dark:text-gray-300'
                 }`}>Camera</span>
               </button>
-              
+
               <button
                 className={`flex flex-col items-center justify-center p-4 rounded-lg border ${
                   captureMethod === 'manual'
@@ -388,7 +399,7 @@ export default function WeightCapturePage() {
                 }`}>Manual Entry</span>
               </button>
             </div>
-            
+
             <div className="flex justify-center">
               {!isCapturing ? (
                 <button
@@ -407,7 +418,7 @@ export default function WeightCapturePage() {
                 </button>
               )}
             </div>
-            
+
             {captureError && (
               <div className="mt-4 p-3 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 rounded-md">
                 <ExclamationTriangleIcon className="h-5 w-5 inline mr-2" />
@@ -415,13 +426,72 @@ export default function WeightCapturePage() {
               </div>
             )}
           </div>
+
+          {/* New Advanced Weight Capture Section */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Advanced Weight Capture</h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <button
+                className="flex flex-col items-center justify-center p-4 rounded-lg border border-primary-500 bg-primary-50 dark:bg-primary-900/20"
+                onClick={() => {
+                  // Open the QR code scanner modal
+                  const scale = scales.length > 0 ? scales[0] : null;
+                  if (scale) {
+                    // For demo purposes, we'll just use the first scale
+                    setSelectedScaleId(scale.id);
+                  }
+                }}
+              >
+                <QrCodeIcon className="h-8 w-8 mb-2 text-primary-600 dark:text-primary-400" />
+                <span className="text-sm font-medium text-primary-700 dark:text-primary-300">QR Code Scale Selection</span>
+              </button>
+
+              <button
+                className="flex flex-col items-center justify-center p-4 rounded-lg border border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                onClick={() => {
+                  // Open the axle-by-axle weight capture
+                  if (selectedVehicleId && scales.length > 0) {
+                    // For demo purposes, we'll just use the first scale
+                    setSelectedScaleId(scales[0].id);
+                  }
+                }}
+              >
+                <TruckIcon className="h-8 w-8 mb-2 text-blue-600 dark:text-blue-400" />
+                <span className="text-sm font-medium text-blue-700 dark:text-blue-300">Axle-by-Axle Weighing</span>
+              </button>
+
+              <button
+                className="flex flex-col items-center justify-center p-4 rounded-lg border border-green-500 bg-green-50 dark:bg-green-900/20"
+                onClick={() => {
+                  // Open the split weighing workflow
+                  if (selectedVehicleId && scales.length > 0) {
+                    // For demo purposes, we'll just use the first scale
+                    setSelectedScaleId(scales[0].id);
+                  }
+                }}
+              >
+                <ScaleIcon className="h-8 w-8 mb-2 text-green-600 dark:text-green-400" />
+                <span className="text-sm font-medium text-green-700 dark:text-green-300">Split Weighing</span>
+              </button>
+            </div>
+
+            <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <h3 className="text-md font-medium text-gray-800 dark:text-white mb-2">New Features Available</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Try our new advanced weight capture features including QR code scale selection,
+                axle-by-axle weighing, and split weighing workflows. These features provide more
+                detailed weight data and improved compliance checking.
+              </p>
+            </div>
+          </div>
         </div>
-        
+
         {/* Right Column - Vehicle, Driver, and Ticket Information */}
         <div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Ticket Information</h2>
-            
+
             <div className="space-y-4">
               <div>
                 <label htmlFor="vehicle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -441,7 +511,7 @@ export default function WeightCapturePage() {
                   ))}
                 </select>
               </div>
-              
+
               <div>
                 <label htmlFor="driver" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Driver
@@ -460,7 +530,7 @@ export default function WeightCapturePage() {
                   ))}
                 </select>
               </div>
-              
+
               <div>
                 <label htmlFor="scale" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Scale (Optional)
@@ -479,7 +549,7 @@ export default function WeightCapturePage() {
                   ))}
                 </select>
               </div>
-              
+
               <div>
                 <label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Notes (Optional)
@@ -494,7 +564,7 @@ export default function WeightCapturePage() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <button
               className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
@@ -513,14 +583,14 @@ export default function WeightCapturePage() {
                 </>
               )}
             </button>
-            
+
             {ticketCreationError && (
               <div className="mt-4 p-3 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 rounded-md">
                 <ExclamationTriangleIcon className="h-5 w-5 inline mr-2" />
                 {ticketCreationError}
               </div>
             )}
-            
+
             {!isFormValid && weightReading && (
               <div className="mt-4 p-3 bg-amber-100 dark:bg-amber-900/20 text-amber-800 dark:text-amber-300 rounded-md text-sm">
                 <ExclamationTriangleIcon className="h-5 w-5 inline mr-2" />

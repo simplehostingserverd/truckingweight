@@ -12,7 +12,11 @@ import {
   Legend
 } from 'recharts';
 
-export default function ComplianceChart() {
+interface ComplianceChartProps {
+  companyId?: number | null;
+}
+
+export default function ComplianceChart({ companyId }: ComplianceChartProps) {
   const supabase = createClientComponentClient<Database>();
   const [complianceData, setComplianceData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -56,7 +60,11 @@ export default function ComplianceChart() {
         }
 
         // Use the new API endpoint to get compliance data
-        const response = await fetch(`/api/dashboard/compliance?dateRange=${dateRange}`, {
+        const url = companyId
+          ? `/api/dashboard/compliance?dateRange=${dateRange}&companyId=${companyId}`
+          : `/api/dashboard/compliance?dateRange=${dateRange}`;
+
+        const response = await fetch(url, {
           headers: {
             'x-auth-token': session.access_token
           }
@@ -88,7 +96,7 @@ export default function ComplianceChart() {
     };
 
     fetchData();
-  }, [supabase, dateRange]);
+  }, [supabase, dateRange, companyId]);
 
   const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDateRange(e.target.value);

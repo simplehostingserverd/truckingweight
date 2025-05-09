@@ -15,7 +15,11 @@ import {
 } from 'recharts';
 import { parseWeight } from '@/utils/compliance';
 
-export default function VehicleWeightChart() {
+interface VehicleWeightChartProps {
+  companyId?: number | null;
+}
+
+export default function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
   const supabase = createClientComponentClient<Database>();
   const [weightData, setWeightData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,7 +54,11 @@ export default function VehicleWeightChart() {
         }
 
         // Use the new API endpoint to get vehicle weight data
-        const response = await fetch(`/api/dashboard/vehicle-weights?dateRange=${dateRange}`, {
+        const url = companyId
+          ? `/api/dashboard/vehicle-weights?dateRange=${dateRange}&companyId=${companyId}`
+          : `/api/dashboard/vehicle-weights?dateRange=${dateRange}`;
+
+        const response = await fetch(url, {
           headers: {
             'x-auth-token': session.access_token
           }
@@ -82,7 +90,7 @@ export default function VehicleWeightChart() {
     };
 
     fetchData();
-  }, [supabase, dateRange]);
+  }, [supabase, dateRange, companyId]);
 
   const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDateRange(e.target.value);

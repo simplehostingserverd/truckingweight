@@ -14,9 +14,10 @@ import {
 
 interface DashboardStatsProps {
   initialUserName: string;
+  companyId?: number | null;
 }
 
-export default function DashboardStats({ initialUserName }: DashboardStatsProps) {
+export default function DashboardStats({ initialUserName, companyId }: DashboardStatsProps) {
   const supabase = createClientComponentClient<Database>();
   const [stats, setStats] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,42 +30,50 @@ export default function DashboardStats({ initialUserName }: DashboardStatsProps)
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        
+
         // Get auth token from supabase
         const { data: { session } } = await supabase.auth.getSession();
-        
+
         if (!session) {
           throw new Error('No active session');
         }
-        
+
         // Use the new API endpoint to get dashboard stats
-        const response = await fetch('/api/dashboard/stats', {
+        const url = companyId
+          ? `/api/dashboard/stats?companyId=${companyId}`
+          : '/api/dashboard/stats';
+
+        const response = await fetch(url, {
           headers: {
             'x-auth-token': session.access_token
           }
         });
-        
+
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.message || 'Failed to fetch dashboard stats');
         }
-        
+
         const statsData = await response.json();
-        
+
         // Get recent weights
-        const weightsResponse = await fetch('/api/dashboard/recent-weights', {
+        const weightsUrl = companyId
+          ? `/api/dashboard/recent-weights?companyId=${companyId}`
+          : '/api/dashboard/recent-weights';
+
+        const weightsResponse = await fetch(weightsUrl, {
           headers: {
             'x-auth-token': session.access_token
           }
         });
-        
+
         if (!weightsResponse.ok) {
           throw new Error('Failed to fetch recent weights');
         }
-        
+
         const weightsData = await weightsResponse.json();
         setRecentWeights(weightsData);
-        
+
         // Get user data
         const { data: userData } = await supabase.auth.getUser();
         if (userData?.user) {
@@ -73,25 +82,25 @@ export default function DashboardStats({ initialUserName }: DashboardStatsProps)
             .select('name')
             .eq('id', userData.user.id)
             .single();
-            
+
           if (userDetails?.name) {
             setUserName(userDetails.name);
           }
         }
-        
+
         // Get expiring licenses
         const today = new Date();
         const thirtyDaysFromNow = new Date();
         thirtyDaysFromNow.setDate(today.getDate() + 30);
-        
+
         const { data: licenses } = await supabase
           .from('drivers')
           .select('*', { count: 'exact', head: true })
           .gte('license_expiry', today.toISOString())
           .lte('license_expiry', thirtyDaysFromNow.toISOString());
-          
+
         setExpiringLicenses(licenses?.count || 0);
-        
+
         // Format stats for display
         const formattedStats = [
           {
@@ -131,9 +140,9 @@ export default function DashboardStats({ initialUserName }: DashboardStatsProps)
             color: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
           },
         ];
-        
+
         setStats(formattedStats);
-        
+
       } catch (error: any) {
         console.error('Error fetching dashboard stats:', error);
         setError(error.message);
@@ -141,10 +150,10 @@ export default function DashboardStats({ initialUserName }: DashboardStatsProps)
         setIsLoading(false);
       }
     };
-    
+
     fetchData();
-  }, [supabase, initialUserName]);
-  
+  }, [supabase, initialUserName, companyId]);
+
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -162,7 +171,7 @@ export default function DashboardStats({ initialUserName }: DashboardStatsProps)
       </div>
     );
   }
-  
+
   if (error) {
     return (
       <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-md mb-8">
@@ -170,7 +179,7 @@ export default function DashboardStats({ initialUserName }: DashboardStatsProps)
       </div>
     );
   }
-  
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
       {stats.map((stat, index) => (
