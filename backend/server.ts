@@ -23,6 +23,7 @@ import companyRoutes from './routes/companies';
 import vehicleRoutes from './routes/vehicles';
 import driverRoutes from './routes/drivers';
 import adminRoutes from './routes/admin';
+import dashboardRoutes from './routes/dashboard';
 
 // Create Express app
 const app = express();
@@ -47,6 +48,7 @@ app.use('/api/companies', companyRoutes);
 app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Root route
 app.get('/', (req: Request, res: Response) => {
@@ -73,11 +75,11 @@ process.on('SIGTERM', () => {
   console.log('SIGTERM signal received: closing HTTP server');
   server.close(async () => {
     console.log('HTTP server closed');
-    
+
     // Close database connections
     await db.closeConnections();
     await prisma.$disconnect();
-    
+
     console.log('Database connections closed');
     process.exit(0);
   });
@@ -87,11 +89,11 @@ process.on('SIGINT', () => {
   console.log('SIGINT signal received: closing HTTP server');
   server.close(async () => {
     console.log('HTTP server closed');
-    
+
     // Close database connections
     await db.closeConnections();
     await prisma.$disconnect();
-    
+
     console.log('Database connections closed');
     process.exit(0);
   });

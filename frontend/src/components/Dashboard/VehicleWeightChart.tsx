@@ -3,15 +3,15 @@
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  Legend, 
-  ResponsiveContainer 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
 } from 'recharts';
 import { parseWeight } from '@/utils/compliance';
 
@@ -21,101 +21,58 @@ export default function VehicleWeightChart() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [dateRange, setDateRange] = useState('week'); // 'week', 'month', 'year'
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [companyData, setCompanyData] = useState<any[]>([]);
+  const [selectedCompany, setSelectedCompany] = useState<string>('overall');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        
-        // Get current user
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
-        
-        if (userError) {
-          throw userError;
+
+        // Get auth token from supabase
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (!session) {
+          throw new Error('No active session');
         }
-        
-        if (!user) {
-          throw new Error('User not found');
+
+        // Check if user is admin
+        const { data: userData } = await supabase.auth.getUser();
+        if (userData?.user) {
+          const { data: userDetails } = await supabase
+            .from('users')
+            .select('is_admin')
+            .eq('id', userData.user.id)
+            .single();
+
+          setIsAdmin(userDetails?.is_admin === true);
         }
-        
-        // Get user details including company_id
-        const { data: userData, error: userDataError } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', user.id)
-          .single();
-          
-        if (userDataError) {
-          throw userDataError;
-        }
-        
-        // Get date range for filtering
-        const today = new Date();
-        let startDate = new Date();
-        
-        switch (dateRange) {
-          case 'week':
-            startDate.setDate(today.getDate() - 7);
-            break;
-          case 'month':
-            startDate.setMonth(today.getMonth() - 1);
-            break;
-          case 'year':
-            startDate.setFullYear(today.getFullYear() - 1);
-            break;
-          default:
-            startDate.setDate(today.getDate() - 7);
-        }
-        
-        const formattedStartDate = startDate.toISOString().split('T')[0];
-        const formattedEndDate = today.toISOString().split('T')[0];
-        
-        // Fetch weights for the company within date range
-        const { data: weightsData, error: weightsError } = await supabase
-          .from('weights')
-          .select('weight, vehicle_id')
-          .eq('company_id', userData.company_id)
-          .gte('date', formattedStartDate)
-          .lte('date', formattedEndDate);
-          
-        if (weightsError) {
-          throw weightsError;
-        }
-        
-        // Fetch vehicles for the company
-        const { data: vehiclesData, error: vehiclesError } = await supabase
-          .from('vehicles')
-          .select('id, name')
-          .eq('company_id', userData.company_id);
-          
-        if (vehiclesError) {
-          throw vehiclesError;
-        }
-        
-        // Calculate weights by vehicle
-        const weightsByVehicleMap = new Map();
-        
-        weightsData?.forEach(weight => {
-          const vehicle = vehiclesData?.find(v => v.id === weight.vehicle_id);
-          if (vehicle) {
-            const vehicleName = vehicle.name;
-            const weightValue = parseWeight(weight.weight);
-            
-            if (weightsByVehicleMap.has(vehicleName)) {
-              weightsByVehicleMap.set(vehicleName, weightsByVehicleMap.get(vehicleName) + weightValue);
-            } else {
-              weightsByVehicleMap.set(vehicleName, weightValue);
-            }
+
+        // Use the new API endpoint to get vehicle weight data
+        const response = await fetch(`/api/dashboard/vehicle-weights?dateRange=${dateRange}`, {
+          headers: {
+            'x-auth-token': session.access_token
           }
         });
-        
-        const weightsByVehicleArray = Array.from(weightsByVehicleMap.entries()).map(([name, weight]) => ({
-          name,
-          weight: Math.round(weight as number)
-        }));
-        
-        setWeightData(weightsByVehicleArray.sort((a, b) => b.weight - a.weight).slice(0, 5));
-        
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to fetch vehicle weight data');
+        }
+
+        const data = await response.json();
+
+        // Handle different data formats based on admin status
+        if (data.overall && data.byCompany) {
+          // Admin view with company breakdown
+          setCompanyData(data.byCompany);
+          setWeightData(data.overall);
+        } else {
+          // Regular user view or admin with specific company filter
+          setWeightData(data);
+        }
+
       } catch (error: any) {
         console.error('Error fetching vehicle weight data:', error);
         setError(error.message);
@@ -123,14 +80,30 @@ export default function VehicleWeightChart() {
         setIsLoading(false);
       }
     };
-    
+
     fetchData();
   }, [supabase, dateRange]);
-  
+
   const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDateRange(e.target.value);
   };
-  
+
+  const handleCompanyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const companyId = e.target.value;
+    setSelectedCompany(companyId);
+
+    if (companyId === 'overall') {
+      // Show overall data
+      setWeightData(companyData.overall);
+    } else {
+      // Find the selected company data
+      const company = companyData.find(c => c.companyId.toString() === companyId);
+      if (company) {
+        setWeightData(company.data);
+      }
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -138,7 +111,7 @@ export default function VehicleWeightChart() {
       </div>
     );
   }
-  
+
   if (error) {
     return (
       <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-md">
@@ -146,22 +119,38 @@ export default function VehicleWeightChart() {
       </div>
     );
   }
-  
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
       <div className="px-6 py-4 bg-primary-700 text-white flex justify-between items-center">
         <h2 className="text-xl font-semibold">Top 5 Vehicles by Weight</h2>
-        <select
-          className="bg-primary-800 text-white border border-primary-600 rounded px-2 py-1 text-sm"
-          value={dateRange}
-          onChange={handleDateRangeChange}
-        >
-          <option value="week">Last 7 Days</option>
-          <option value="month">Last 30 Days</option>
-          <option value="year">Last Year</option>
-        </select>
+        <div className="flex space-x-2">
+          {isAdmin && companyData.length > 0 && (
+            <select
+              className="bg-primary-800 text-white border border-primary-600 rounded px-2 py-1 text-sm"
+              value={selectedCompany}
+              onChange={handleCompanyChange}
+            >
+              <option value="overall">All Companies</option>
+              {companyData.map(company => (
+                <option key={company.companyId} value={company.companyId.toString()}>
+                  {company.companyName}
+                </option>
+              ))}
+            </select>
+          )}
+          <select
+            className="bg-primary-800 text-white border border-primary-600 rounded px-2 py-1 text-sm"
+            value={dateRange}
+            onChange={handleDateRangeChange}
+          >
+            <option value="week">Last 7 Days</option>
+            <option value="month">Last 30 Days</option>
+            <option value="year">Last Year</option>
+          </select>
+        </div>
       </div>
-      
+
       <div className="p-6">
         {weightData.length > 0 ? (
           <div className="h-64">

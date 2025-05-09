@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
-import { 
-  PieChart, 
-  Pie, 
-  Cell, 
+import {
+  PieChart,
+  Pie,
+  Cell,
   ResponsiveContainer,
   Tooltip,
   Legend
@@ -30,59 +30,31 @@ export default function LoadStatusChart() {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        
-        // Get current user
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
-        
-        if (userError) {
-          throw userError;
+
+        // Get auth token from supabase
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (!session) {
+          throw new Error('No active session');
         }
-        
-        if (!user) {
-          throw new Error('User not found');
-        }
-        
-        // Get user details including company_id
-        const { data: userData, error: userDataError } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', user.id)
-          .single();
-          
-        if (userDataError) {
-          throw userDataError;
-        }
-        
-        // Fetch loads for the company
-        const { data: loadsData, error: loadsError } = await supabase
-          .from('loads')
-          .select('status')
-          .eq('company_id', userData.company_id);
-          
-        if (loadsError) {
-          throw loadsError;
-        }
-        
-        // Calculate loads by status
-        const loadsByStatusMap = new Map();
-        
-        loadsData?.forEach(load => {
-          const status = load.status;
-          
-          if (loadsByStatusMap.has(status)) {
-            loadsByStatusMap.set(status, loadsByStatusMap.get(status) + 1);
-          } else {
-            loadsByStatusMap.set(status, 1);
+
+        // Use the new API endpoint to get load status data
+        const response = await fetch('/api/dashboard/load-status', {
+          headers: {
+            'x-auth-token': session.access_token
           }
         });
-        
-        const loadsByStatusArray = Array.from(loadsByStatusMap.entries()).map(([name, count]) => ({
-          name,
-          value: count
-        }));
-        
-        setLoadData(loadsByStatusArray);
-        
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to fetch load status data');
+        }
+
+        const loadData = await response.json();
+
+        // Set the load data
+        setLoadData(loadData);
+
       } catch (error: any) {
         console.error('Error fetching load status data:', error);
         setError(error.message);
@@ -90,10 +62,10 @@ export default function LoadStatusChart() {
         setIsLoading(false);
       }
     };
-    
+
     fetchData();
   }, [supabase]);
-  
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -101,7 +73,7 @@ export default function LoadStatusChart() {
       </div>
     );
   }
-  
+
   if (error) {
     return (
       <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-md">
@@ -109,13 +81,13 @@ export default function LoadStatusChart() {
       </div>
     );
   }
-  
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
       <div className="px-6 py-4 bg-primary-700 text-white">
         <h2 className="text-xl font-semibold">Loads by Status</h2>
       </div>
-      
+
       <div className="p-6">
         {loadData.length > 0 ? (
           <div className="h-64">

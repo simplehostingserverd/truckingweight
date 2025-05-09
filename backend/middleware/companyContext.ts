@@ -23,14 +23,26 @@ export const setCompanyContextMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  // If user is authenticated, set the company context
-  if (req.user && req.user.companyId) {
-    setCompanyContext(req.user.companyId);
+  // If user is authenticated
+  if (req.user) {
+    // Check if user is admin
+    const isAdmin = req.user.isAdmin === true;
+
+    // Set company context with admin flag
+    if (req.user.companyId) {
+      setCompanyContext(req.user.companyId, isAdmin);
+    } else if (isAdmin) {
+      // Admin without company ID can still see all data
+      setCompanyContext(undefined, true);
+    } else {
+      // Clear the context if not admin and no company ID
+      setCompanyContext(undefined, false);
+    }
   } else {
-    // Clear the company context if no user or no company ID
-    setCompanyContext(undefined);
+    // Clear the company context if no user
+    setCompanyContext(undefined, false);
   }
-  
+
   next();
 };
 
