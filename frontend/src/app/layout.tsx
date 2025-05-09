@@ -3,11 +3,16 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
 
-const inter = Inter({ subsets: ['latin'] });
+// Load Inter font from Google Fonts
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
-  title: 'TruckingSemis - Weight Management System',
-  description: 'A modern web application for trucking companies to manage weight checking and load management',
+  title: 'TruckingWeight - Precision Weighing for Modern Trucking',
+  description: 'An advanced trucking weight management system with real-time weight capture, AI analytics, and compliance features',
   manifest: '/manifest.json',
   icons: {
     apple: [
@@ -18,17 +23,17 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'TruckingSemis',
+    title: 'TruckingWeight',
   },
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5,
+  userScalable: true,
   viewportFit: 'cover',
-  themeColor: '#0284c7',
+  themeColor: '#0D2B4B', // Deep Blue from our design system
 };
 
 export default function RootLayout({
@@ -39,15 +44,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="application-name" content="TruckingSemis" />
+        <meta name="application-name" content="TruckingWeight" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="TruckingSemis" />
+        <meta name="apple-mobile-web-app-title" content="TruckingWeight" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="theme-color" content="#0284c7" />
+        <meta name="theme-color" content="#0D2B4B" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.variable} font-sans`}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,5 +1,9 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { formatDate, getStatusColor } from '@/lib/utils';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 interface Weight {
   id: number;
@@ -20,11 +24,12 @@ interface Weight {
 }
 
 interface RecentWeightsTableProps {
-  weights: Weight[];
+  weights?: Weight[];
+  companyId?: number | null;
 }
 
-export default function RecentWeightsTable({ weights }: RecentWeightsTableProps) {
-  if (weights.length === 0) {
+export default function RecentWeightsTable({ weights = [], companyId }: RecentWeightsTableProps) {
+  if (!weights || weights.length === 0) {
     return (
       <div className="p-6 text-center text-gray-500 dark:text-gray-400">
         No weight measurements found.

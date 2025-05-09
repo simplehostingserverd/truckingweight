@@ -4,48 +4,70 @@
 
 @layer base {
   :root {
+    /* TruckingWeight Design System - Light Theme */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 217 33% 17%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 217 33% 17%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    --popover-foreground: 217 33% 17%;
+
+    /* Primary - Deep Blue */
+    --primary: 210 70% 17%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Steel Gray */
+    --secondary: 200 13% 46%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Accent - Highway Yellow */
+    --accent: 45 100% 51%;
+    --accent-foreground: 217 33% 17%;
+
+    /* Destructive - Brick Red */
+    --destructive: 0 65% 47%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* UI Elements */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 210 70% 17%;
+    --radius: 0.25rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    /* TruckingWeight Design System - Dark Theme */
+    --background: 217 33% 17%;
     --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
+    --card: 217 33% 17%;
     --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
+    --popover: 217 33% 17%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+
+    /* Primary - Deep Blue (lighter in dark mode) */
+    --primary: 210 70% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Steel Gray (lighter in dark mode) */
+    --secondary: 200 13% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Accent - Highway Yellow */
+    --accent: 45 100% 51%;
+    --accent-foreground: 217 33% 17%;
+
+    /* Destructive - Brick Red (lighter in dark mode) */
+    --destructive: 0 65% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* UI Elements */
+    --muted: 217 33% 25%;
+    --muted-foreground: 215 20% 65%;
+    --border: 217 33% 25%;
+    --input: 217 33% 25%;
+    --ring: 210 70% 40%;
   }
 }
 
@@ -55,5 +77,163 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Typography */
+  h1, .h1 {
+    @apply text-3xl font-bold tracking-tight;
+  }
+  h2, .h2 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  h3, .h3 {
+    @apply text-xl font-semibold tracking-tight;
+  }
+  h4, .h4 {
+    @apply text-lg font-semibold tracking-tight;
+  }
+
+  /* Add custom fonts */
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/fonts/Inter-Regular.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/fonts/Inter-Medium.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/fonts/Inter-Bold.woff2') format('woff2');
+  }
+}
+
+@layer components {
+  /* Button Variants */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+    disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  }
+
+  .btn-outline {
+    @apply btn border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .btn-ghost {
+    @apply btn hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .btn-link {
+    @apply btn underline-offset-4 hover:underline text-primary;
+  }
+
+  .btn-sm {
+    @apply h-8 px-3 text-xs;
+  }
+
+  .btn-md {
+    @apply h-10 px-4 py-2;
+  }
+
+  .btn-lg {
+    @apply h-12 px-6 text-base;
+  }
+
+  /* Form Elements */
+  .form-input {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
+    placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2
+    focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .form-select {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed
+    disabled:opacity-50;
+  }
+
+  .form-checkbox {
+    @apply h-4 w-4 rounded border border-input bg-background focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .form-radio {
+    @apply h-4 w-4 rounded-full border border-input bg-background focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+  }
+
+  .card-header {
+    @apply flex flex-col space-y-1.5 p-6;
+  }
+
+  .card-title {
+    @apply text-xl font-semibold leading-none tracking-tight;
+  }
+
+  .card-description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .card-content {
+    @apply p-6 pt-0;
+  }
+
+  .card-footer {
+    @apply flex items-center p-6 pt-0;
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors
+    focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary text-primary-foreground hover:bg-primary/80;
+  }
+
+  .badge-secondary {
+    @apply badge bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  }
+
+  .badge-outline {
+    @apply badge bg-transparent text-foreground hover:bg-muted/15;
+  }
+
+  .badge-success {
+    @apply badge bg-success-DEFAULT text-white hover:bg-success-dark;
+  }
+
+  .badge-warning {
+    @apply badge bg-warning-DEFAULT text-black hover:bg-warning-dark;
+  }
+
+  .badge-alert {
+    @apply badge bg-alert-DEFAULT text-white hover:bg-alert-dark;
   }
 }

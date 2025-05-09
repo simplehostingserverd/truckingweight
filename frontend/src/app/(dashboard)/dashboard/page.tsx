@@ -5,6 +5,7 @@ import RecentWeightsTable from '@/components/Dashboard/RecentWeightsTable';
 import QuickActions from '@/components/Dashboard/QuickActions';
 import dynamic from 'next/dynamic';
 import { ScaleIcon } from '@heroicons/react/24/outline';
+import DashboardClient from './client';
 
 // Dynamically import chart components with no SSR to avoid hydration issues
 const ComplianceChart = dynamic(() => import('@/components/Dashboard/ComplianceChart'), { ssr: false });
@@ -24,9 +25,6 @@ export default async function Dashboard() {
     .select('name, is_admin')
     .eq('id', user?.id)
     .single();
-
-  // Import the client component
-  import DashboardClient from './client';
 
   return <DashboardClient userName={userData?.name || 'User'} isAdmin={userData?.is_admin || false} />;
 }

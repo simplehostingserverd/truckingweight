@@ -1,11 +1,11 @@
 {
-  "name": "TruckingSemis - Weight Management System",
-  "short_name": "TruckingSemis",
-  "description": "A modern web application for trucking companies to manage weight checking and load management",
+  "name": "TruckingWeight - Precision Weighing for Modern Trucking",
+  "short_name": "TruckingWeight",
+  "description": "An advanced trucking weight management system with real-time weight capture, AI analytics, and compliance features",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0284c7",
+  "theme_color": "#0D2B4B",
   "orientation": "portrait-primary",
   "icons": [
     {
