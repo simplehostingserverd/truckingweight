@@ -93,30 +93,7 @@
     @apply text-lg font-semibold tracking-tight;
   }
 
-  /* Add custom fonts */
-  @font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url('/fonts/Inter-Regular.woff2') format('woff2');
-  }
-
-  @font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: url('/fonts/Inter-Medium.woff2') format('woff2');
-  }
-
-  @font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url('/fonts/Inter-Bold.woff2') format('woff2');
-  }
+  /* Fonts are loaded via next/font/google in layout.tsx */
 }
 
 @layer components {
@@ -226,14 +203,14 @@
   }
 
   .badge-success {
-    @apply badge bg-success-DEFAULT text-white hover:bg-success-dark;
+    @apply badge bg-success text-white hover:bg-success/80;
   }
 
   .badge-warning {
-    @apply badge bg-warning-DEFAULT text-black hover:bg-warning-dark;
+    @apply badge bg-warning text-black hover:bg-warning/80;
   }
 
   .badge-alert {
-    @apply badge bg-alert-DEFAULT text-white hover:bg-alert-dark;
+    @apply badge bg-alert text-white hover:bg-alert/80;
   }
 }

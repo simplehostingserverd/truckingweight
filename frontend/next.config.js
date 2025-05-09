@@ -70,17 +70,19 @@ const nextConfig = {
     ],
     // Optimize image formats
     formats: ['image/avif', 'image/webp'],
+    // Add sizes for fill images
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
 
-  // API rewrites
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://localhost:5000/api/:path*',
-      },
-    ];
-  },
+  // API rewrites - commented out to use local API routes
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/api/:path*',
+  //       destination: 'http://localhost:5000/api/:path*',
+  //     },
+  //   ];
+  // },
 
   // Compiler optimizations
   compiler: {

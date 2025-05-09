@@ -17,11 +17,61 @@ export default async function Vehicles() {
     .single();
 
   // Get vehicles
-  const { data: vehicles, error } = await supabase
-    .from('vehicles')
-    .select('*')
-    .eq('company_id', userData?.company_id)
-    .order('created_at', { ascending: false });
+  let vehicles = [];
+  let error = null;
+
+  // Only fetch if we have a company_id
+  if (userData?.company_id) {
+    const response = await supabase
+      .from('vehicles')
+      .select('*')
+      .eq('company_id', userData.company_id)
+      .order('created_at', { ascending: false });
+
+    vehicles = response.data || [];
+    error = response.error;
+  } else {
+    console.warn('No company_id found for user, using mock data');
+    // Use mock data if no company_id
+    vehicles = [
+      {
+        id: 1,
+        name: 'Truck 101',
+        type: 'Semi',
+        license_plate: 'ABC-1234',
+        make: 'Freightliner',
+        model: 'Cascadia',
+        year: 2022,
+        status: 'Active',
+        max_weight: '80,000 lbs',
+        created_at: '2023-10-01T10:00:00Z'
+      },
+      {
+        id: 2,
+        name: 'Truck 102',
+        type: 'Box Truck',
+        license_plate: 'XYZ-5678',
+        make: 'International',
+        model: 'MV Series',
+        year: 2021,
+        status: 'Maintenance',
+        max_weight: '33,000 lbs',
+        created_at: '2023-10-05T14:30:00Z'
+      },
+      {
+        id: 3,
+        name: 'Truck 103',
+        type: 'Flatbed',
+        license_plate: 'DEF-9012',
+        make: 'Peterbilt',
+        model: '579',
+        year: 2023,
+        status: 'Active',
+        max_weight: '80,000 lbs',
+        created_at: '2023-10-10T09:15:00Z'
+      }
+    ];
+  }
 
   if (error) {
     console.error('Error fetching vehicles:', error);
@@ -29,7 +79,7 @@ export default async function Vehicles() {
 
   // Get count of active vehicles
   const activeVehicles = vehicles?.filter(vehicle => vehicle.status === 'Active').length || 0;
-  
+
   // Get count of maintenance vehicles
   const maintenanceVehicles = vehicles?.filter(vehicle => vehicle.status === 'Maintenance').length || 0;
 
@@ -100,9 +150,9 @@ export default async function Vehicles() {
               <option value="Maintenance">Maintenance</option>
               <option value="Out of Service">Out of Service</option>
             </select>
-            <input 
-              type="text" 
-              placeholder="Search vehicles..." 
+            <input
+              type="text"
+              placeholder="Search vehicles..."
               className="rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm"
             />
           </div>
@@ -159,8 +209,8 @@ export default async function Vehicles() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        vehicle.status === 'Active' 
-                          ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                        vehicle.status === 'Active'
+                          ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                           : vehicle.status === 'Maintenance'
                           ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
                           : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'

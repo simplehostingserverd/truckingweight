@@ -17,11 +17,55 @@ export default async function Drivers() {
     .single();
 
   // Get drivers
-  const { data: drivers, error } = await supabase
-    .from('drivers')
-    .select('*')
-    .eq('company_id', userData?.company_id)
-    .order('name', { ascending: true });
+  let drivers = [];
+  let error = null;
+
+  // Only fetch if we have a company_id
+  if (userData?.company_id) {
+    const response = await supabase
+      .from('drivers')
+      .select('*')
+      .eq('company_id', userData.company_id)
+      .order('name', { ascending: true });
+
+    drivers = response.data || [];
+    error = response.error;
+  } else {
+    console.warn('No company_id found for user, using mock data');
+    // Use mock data if no company_id
+    drivers = [
+      {
+        id: 1,
+        name: 'John Driver',
+        license_number: 'DL12345678',
+        license_expiry: '2024-06-15',
+        phone: '(555) 123-4567',
+        email: 'john.driver@example.com',
+        status: 'Active',
+        created_at: '2023-01-15T10:00:00Z'
+      },
+      {
+        id: 2,
+        name: 'Sarah Smith',
+        license_number: 'DL87654321',
+        license_expiry: '2023-12-30',
+        phone: '(555) 987-6543',
+        email: 'sarah.smith@example.com',
+        status: 'Active',
+        created_at: '2023-02-20T14:30:00Z'
+      },
+      {
+        id: 3,
+        name: 'Michael Johnson',
+        license_number: 'DL55667788',
+        license_expiry: '2024-03-10',
+        phone: '(555) 456-7890',
+        email: 'michael.johnson@example.com',
+        status: 'On Leave',
+        created_at: '2023-03-05T09:15:00Z'
+      }
+    ];
+  }
 
   if (error) {
     console.error('Error fetching drivers:', error);
@@ -29,10 +73,10 @@ export default async function Drivers() {
 
   // Get count of active drivers
   const activeDrivers = drivers?.filter(driver => driver.status === 'Active').length || 0;
-  
+
   // Get count of on leave drivers
   const onLeaveDrivers = drivers?.filter(driver => driver.status === 'On Leave').length || 0;
-  
+
   // Get count of inactive drivers
   const inactiveDrivers = drivers?.filter(driver => driver.status === 'Inactive').length || 0;
 
@@ -40,7 +84,7 @@ export default async function Drivers() {
   const today = new Date();
   const thirtyDaysFromNow = new Date();
   thirtyDaysFromNow.setDate(today.getDate() + 30);
-  
+
   const expiringLicenses = drivers?.filter(driver => {
     if (!driver.license_expiry) return false;
     const expiryDate = new Date(driver.license_expiry);
@@ -117,9 +161,9 @@ export default async function Drivers() {
               <option value="30days">Expires in 30 days</option>
               <option value="90days">Expires in 90 days</option>
             </select>
-            <input 
-              type="text" 
-              placeholder="Search drivers..." 
+            <input
+              type="text"
+              placeholder="Search drivers..."
               className="rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm"
             />
           </div>
@@ -159,7 +203,7 @@ export default async function Drivers() {
                   const licenseExpiry = driver.license_expiry ? new Date(driver.license_expiry) : null;
                   const isExpired = licenseExpiry && licenseExpiry < today;
                   const isExpiringSoon = licenseExpiry && !isExpired && licenseExpiry <= thirtyDaysFromNow;
-                  
+
                   return (
                     <tr key={driver.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
@@ -171,8 +215,8 @@ export default async function Drivers() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         {driver.license_expiry ? (
                           <span className={`${
-                            isExpired 
-                              ? 'text-red-600 dark:text-red-400' 
+                            isExpired
+                              ? 'text-red-600 dark:text-red-400'
                               : isExpiringSoon
                               ? 'text-amber-600 dark:text-amber-400'
                               : 'text-gray-500 dark:text-gray-400'
@@ -191,8 +235,8 @@ export default async function Drivers() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          driver.status === 'Active' 
-                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                          driver.status === 'Active'
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                             : driver.status === 'On Leave'
                             ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
                             : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'

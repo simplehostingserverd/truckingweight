@@ -17,21 +17,57 @@ export default async function Loads() {
     .single();
 
   // Get loads with vehicle and driver info
-  const { data: loads, error } = await supabase
-    .from('loads')
-    .select(`
-      id,
-      description,
-      origin,
-      destination,
-      weight,
-      status,
-      created_at,
-      vehicles(id, name),
-      drivers(id, name)
-    `)
-    .eq('company_id', userData?.company_id)
-    .order('created_at', { ascending: false });
+  let loads = [];
+  let error = null;
+
+  // Only fetch if we have a company_id
+  if (userData?.company_id) {
+    const response = await supabase
+      .from('loads')
+      .select(`
+        id,
+        description,
+        origin,
+        destination,
+        weight,
+        status,
+        created_at,
+        vehicles(id, name),
+        drivers(id, name)
+      `)
+      .eq('company_id', userData.company_id)
+      .order('created_at', { ascending: false });
+
+    loads = response.data || [];
+    error = response.error;
+  } else {
+    console.warn('No company_id found for user, using mock data');
+    // Use mock data if no company_id
+    loads = [
+      {
+        id: 1,
+        description: 'Construction materials delivery',
+        origin: 'Chicago, IL',
+        destination: 'Milwaukee, WI',
+        weight: '28,500 lbs',
+        status: 'In Transit',
+        created_at: '2023-11-14T10:30:00Z',
+        vehicles: { id: 1, name: 'Truck 101' },
+        drivers: { id: 1, name: 'John Driver' }
+      },
+      {
+        id: 2,
+        description: 'Retail goods shipment',
+        origin: 'Detroit, MI',
+        destination: 'Cleveland, OH',
+        weight: '32,000 lbs',
+        status: 'Pending',
+        created_at: '2023-11-15T09:15:00Z',
+        vehicles: { id: 2, name: 'Truck 102' },
+        drivers: { id: 2, name: 'Sarah Smith' }
+      }
+    ];
+  }
 
   if (error) {
     console.error('Error fetching loads:', error);

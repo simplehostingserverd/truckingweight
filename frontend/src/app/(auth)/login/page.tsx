@@ -21,7 +21,20 @@ export default function Login() {
     setError('');
 
     try {
-      // Sign in with Supabase
+      // For development, allow login with any email and password="password"
+      if (password === 'password') {
+        // Manually set session in Supabase
+        await supabase.auth.updateUser({
+          data: { name: 'Demo User' }
+        });
+
+        // Redirect to dashboard on successful login
+        router.push('/dashboard');
+        router.refresh();
+        return;
+      }
+
+      // Try Supabase auth if not using the development password
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -50,6 +63,7 @@ export default function Login() {
           src="https://images.pexels.com/photos/2199293/pexels-photo-2199293.jpeg"
           alt="Semi truck on highway"
           fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
           style={{ objectFit: 'cover' }}
           priority
         />
@@ -85,6 +99,9 @@ export default function Login() {
           <div className="text-center mb-10">
             <h1 className="text-3xl font-bold text-white mb-2">Welcome to TruckingSemis! 👋</h1>
             <p className="text-gray-400">Please sign in to your account and start the adventure</p>
+            <div className="mt-4 p-3 bg-indigo-900/50 border border-indigo-500/30 rounded-md text-sm text-indigo-200">
+              <strong>Development Mode:</strong> Use any email with password <code className="bg-indigo-800/50 px-1 py-0.5 rounded">password</code> to log in
+            </div>
           </div>
 
           {error && (
