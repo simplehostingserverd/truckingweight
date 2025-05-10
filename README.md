@@ -261,6 +261,66 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+## 🛡️ Development Guidelines
+
+### Pre-Push Hooks: Your First Line of Defense
+
+This project uses Git hooks (specifically pre-push hooks) to maintain code quality and prevent issues from reaching the CI/CD pipeline. **Never bypass these hooks** as they are critical for maintaining project quality.
+
+<div align="center">
+  <img src="frontend/public/images/pre-push-hooks.svg" alt="Pre-Push Hooks Workflow" width="80%">
+  <p><em>Pre-push hooks catch issues before they reach the CI/CD pipeline</em></p>
+</div>
+
+#### ⚠️ Why You Should Never Bypass Pre-Push Hooks
+
+| Bypassing Hooks | Following Hooks |
+|-----------------|-----------------|
+| ❌ Introduces bugs and issues to the codebase | ✅ Catches issues before they reach the repository |
+| ❌ Breaks the CI/CD pipeline for everyone | ✅ Ensures CI/CD runs smoothly |
+| ❌ Creates technical debt | ✅ Maintains code quality standards |
+| ❌ Wastes team resources on fixing preventable issues | ✅ Saves time and resources |
+| ❌ Undermines team trust | ✅ Builds team confidence |
+
+#### 🚫 Never Use These Commands
+
+```bash
+# DON'T use these commands to bypass hooks
+git commit --no-verify
+git push --no-verify
+
+# DON'T temporarily disable hooks
+git config --local hooks.enabled false
+```
+
+#### ✅ Instead, Fix the Issues
+
+When pre-push hooks fail, they provide valuable feedback about what needs to be fixed:
+
+1. **Linting Issues**: Run `npm run lint:fix` to automatically fix many common issues
+2. **Formatting Issues**: Run `npm run format` to apply consistent formatting
+3. **Type Errors**: Address TypeScript errors highlighted in the output
+4. **Test Failures**: Fix failing tests or update tests to match new functionality
+
+#### 🔄 Cross-Platform Compatibility
+
+Our pre-push hooks are designed to work across all development environments:
+
+- Windows, macOS, and Linux support
+- Automatic OS detection
+- Graceful fallbacks for different environments
+- Clear, colorful output with helpful emojis
+
+#### 🚀 Benefits of Our Pre-Push System
+
+- **Fast Feedback**: Get immediate feedback on your code quality
+- **Consistent Standards**: Ensures all code meets the same quality bar
+- **Reduced CI/CD Failures**: Prevents common issues from reaching CI/CD
+- **Time Savings**: Catch issues early when they're easier to fix
+- **Better Collaboration**: Maintains high-quality code for everyone
+
+Remember: Pre-push hooks aren't obstacles—they're guardrails that keep our codebase clean and our development process efficient.
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

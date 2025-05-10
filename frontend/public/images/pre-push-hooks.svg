@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="300" fill="#f8f9fa" rx="10" ry="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#0D2B4B">Pre-Push Hooks Workflow</text>
+  
+  <!-- Developer Box -->
+  <rect x="50" y="80" width="120" height="60" rx="10" ry="10" fill="#607D8B" stroke="#0D2B4B" stroke-width="2"/>
+  <text x="110" y="115" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Developer</text>
+  
+  <!-- Git Commit Box -->
+  <rect x="240" y="80" width="120" height="60" rx="10" ry="10" fill="#607D8B" stroke="#0D2B4B" stroke-width="2"/>
+  <text x="300" y="115" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Git Commit</text>
+  
+  <!-- Pre-Push Hook Box -->
+  <rect x="430" y="80" width="140" height="60" rx="10" ry="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"/>
+  <text x="500" y="115" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#0D2B4B">Pre-Push Hook</text>
+  
+  <!-- GitHub Box -->
+  <rect x="640" y="80" width="120" height="60" rx="10" ry="10" fill="#607D8B" stroke="#0D2B4B" stroke-width="2"/>
+  <text x="700" y="115" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">GitHub</text>
+  
+  <!-- Arrows -->
+  <line x1="170" y1="110" x2="240" y2="110" stroke="#0D2B4B" stroke-width="2"/>
+  <polygon points="235,105 245,110 235,115" fill="#0D2B4B"/>
+  
+  <line x1="360" y1="110" x2="430" y2="110" stroke="#0D2B4B" stroke-width="2"/>
+  <polygon points="425,105 435,110 425,115" fill="#0D2B4B"/>
+  
+  <line x1="570" y1="110" x2="640" y2="110" stroke="#0D2B4B" stroke-width="2"/>
+  <polygon points="635,105 645,110 635,115" fill="#0D2B4B"/>
+  
+  <!-- Success Path -->
+  <line x1="500" y1="140" x2="500" y2="170" stroke="#4CAF50" stroke-width="2" stroke-dasharray="5,5"/>
+  <rect x="430" y="170" width="140" height="40" rx="5" ry="5" fill="#4CAF50" stroke="#0D2B4B" stroke-width="2"/>
+  <text x="500" y="195" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Checks Pass ✓</text>
+  
+  <!-- Failure Path -->
+  <line x1="500" y1="140" x2="300" y2="170" stroke="#F44336" stroke-width="2" stroke-dasharray="5,5"/>
+  <rect x="230" y="170" width="140" height="40" rx="5" ry="5" fill="#F44336" stroke="#0D2B4B" stroke-width="2"/>
+  <text x="300" y="195" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Checks Fail ✗</text>
+  
+  <!-- Return to Developer -->
+  <line x1="230" y1="190" x2="110" y2="190" stroke="#F44336" stroke-width="2"/>
+  <line x1="110" y1="190" x2="110" y2="140" stroke="#F44336" stroke-width="2"/>
+  <polygon points="105,145 110,140 115,145" fill="#F44336"/>
+  <text x="170" y="180" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#F44336">Fix Issues</text>
+  
+  <!-- Success to GitHub -->
+  <line x1="570" y1="190" x2="700" y2="190" stroke="#4CAF50" stroke-width="2"/>
+  <line x1="700" y1="190" x2="700" y2="140" stroke="#4CAF50" stroke-width="2"/>
+  <polygon points="695,145 700,140 705,145" fill="#4CAF50"/>
+  <text x="635" y="180" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4CAF50">Push to Remote</text>
+  
+  <!-- CI/CD Pipeline -->
+  <rect x="640" y="220" width="120" height="40" rx="5" ry="5" fill="#0D2B4B" stroke="#0D2B4B" stroke-width="2"/>
+  <text x="700" y="245" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">CI/CD Pipeline</text>
+  <line x1="700" y1="140" x2="700" y2="220" stroke="#0D2B4B" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Legend -->
+  <rect x="50" y="240" width="15" height="15" fill="#FFC107"/>
+  <text x="75" y="252" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#0D2B4B">Pre-Push Hook</text>
+  
+  <rect x="180" y="240" width="15" height="15" fill="#4CAF50"/>
+  <text x="205" y="252" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#0D2B4B">Success Path</text>
+  
+  <rect x="310" y="240" width="15" height="15" fill="#F44336"/>
+  <text x="335" y="252" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#0D2B4B">Failure Path</text>
+</svg>
