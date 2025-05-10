@@ -9,10 +9,10 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { route: string[] } }
 ) {
-  // In Next.js App Router, params is already resolved, but we need to handle it properly
-  // to avoid the "params should be awaited" error
-  const routeParams = params.route;
-  const route = Array.isArray(routeParams) ? routeParams.join('/') : '';
+  // In Next.js 15.3.2, we need to handle params differently to avoid the
+  // "params should be awaited" error
+  const routeParams = Array.isArray(params.route) ? [...params.route] : [];
+  const route = routeParams.join('/');
 
   // Extract query parameters
   const url = new URL(request.url);

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as Cesium from 'cesium';
+import { createWorldTerrain } from '@cesium/engine';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 
 interface RoutePoint {
@@ -39,7 +40,7 @@ export default function CesiumTruckVisualization({
 
       // Create Cesium viewer
       const cesiumViewer = new Cesium.Viewer(cesiumContainer.current, {
-        terrainProvider: Cesium.createWorldTerrain(),
+        terrainProvider: createWorldTerrain(),
         imageryProvider: new Cesium.IonImageryProvider({
           assetId: 3, // Sentinel-2 imagery
         }),
@@ -181,10 +182,13 @@ export default function CesiumTruckVisualization({
         Cesium.Cartesian3.fromDegrees(truckPos.lng, truckPos.lat, 100),
         new Cesium.HeadingPitchRoll(heading, 0, 0)
       ),
-      // Use a simple box instead of a 3D model
-      box: {
-        dimensions: new Cesium.Cartesian3(20, 10, 40),
-        material: Cesium.Color.RED
+      // Use a billboard with truck image
+      billboard: {
+        image: '/images/truck_PNG16270.png',
+        width: 64,
+        height: 64,
+        scale: 0.5,
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       },
       label: {
         text: 'Truck',
