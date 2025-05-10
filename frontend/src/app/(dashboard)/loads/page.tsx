@@ -20,53 +20,63 @@ export default async function Loads() {
   let loads = [];
   let error = null;
 
-  // Only fetch if we have a company_id
-  if (userData?.company_id) {
-    const response = await supabase
-      .from('loads')
-      .select(`
-        id,
-        description,
-        origin,
-        destination,
-        weight,
-        status,
-        created_at,
-        vehicles(id, name),
-        drivers(id, name)
-      `)
-      .eq('company_id', userData.company_id)
-      .order('created_at', { ascending: false });
+  try {
+    // Check if user is admin
+    const { data: adminCheck } = await supabase
+      .from('users')
+      .select('is_admin')
+      .eq('id', user?.id)
+      .single();
 
-    loads = response.data || [];
-    error = response.error;
-  } else {
-    console.warn('No company_id found for user, using mock data');
-    // Use mock data if no company_id
-    loads = [
-      {
-        id: 1,
-        description: 'Construction materials delivery',
-        origin: 'Chicago, IL',
-        destination: 'Milwaukee, WI',
-        weight: '28,500 lbs',
-        status: 'In Transit',
-        created_at: '2023-11-14T10:30:00Z',
-        vehicles: { id: 1, name: 'Truck 101' },
-        drivers: { id: 1, name: 'John Driver' }
-      },
-      {
-        id: 2,
-        description: 'Retail goods shipment',
-        origin: 'Detroit, MI',
-        destination: 'Cleveland, OH',
-        weight: '32,000 lbs',
-        status: 'Pending',
-        created_at: '2023-11-15T09:15:00Z',
-        vehicles: { id: 2, name: 'Truck 102' },
-        drivers: { id: 2, name: 'Sarah Smith' }
-      }
-    ];
+    const isAdmin = adminCheck?.is_admin || false;
+
+    if (isAdmin) {
+      // Admin can see all loads from all companies
+      const response = await supabase
+        .from('loads')
+        .select(`
+          id,
+          description,
+          origin,
+          destination,
+          weight,
+          status,
+          created_at,
+          company_id,
+          companies(name),
+          vehicles(id, name),
+          drivers(id, name)
+        `)
+        .order('created_at', { ascending: false });
+
+      loads = response.data || [];
+      error = response.error;
+    } else if (userData?.company_id) {
+      // Regular user can only see loads from their company
+      const response = await supabase
+        .from('loads')
+        .select(`
+          id,
+          description,
+          origin,
+          destination,
+          weight,
+          status,
+          created_at,
+          vehicles(id, name),
+          drivers(id, name)
+        `)
+        .eq('company_id', userData.company_id)
+        .order('created_at', { ascending: false });
+
+      loads = response.data || [];
+      error = response.error;
+    } else {
+      console.warn('No company_id found for user and not an admin');
+    }
+  } catch (err) {
+    console.error('Error fetching loads:', err);
+    error = err;
   }
 
   if (error) {

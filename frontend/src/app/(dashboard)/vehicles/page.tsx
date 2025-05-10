@@ -20,57 +20,41 @@ export default async function Vehicles() {
   let vehicles = [];
   let error = null;
 
-  // Only fetch if we have a company_id
-  if (userData?.company_id) {
-    const response = await supabase
-      .from('vehicles')
-      .select('*')
-      .eq('company_id', userData.company_id)
-      .order('created_at', { ascending: false });
+  try {
+    // Check if user is admin
+    const { data: adminCheck } = await supabase
+      .from('users')
+      .select('is_admin')
+      .eq('id', user?.id)
+      .single();
 
-    vehicles = response.data || [];
-    error = response.error;
-  } else {
-    console.warn('No company_id found for user, using mock data');
-    // Use mock data if no company_id
-    vehicles = [
-      {
-        id: 1,
-        name: 'Truck 101',
-        type: 'Semi',
-        license_plate: 'ABC-1234',
-        make: 'Freightliner',
-        model: 'Cascadia',
-        year: 2022,
-        status: 'Active',
-        max_weight: '80,000 lbs',
-        created_at: '2023-10-01T10:00:00Z'
-      },
-      {
-        id: 2,
-        name: 'Truck 102',
-        type: 'Box Truck',
-        license_plate: 'XYZ-5678',
-        make: 'International',
-        model: 'MV Series',
-        year: 2021,
-        status: 'Maintenance',
-        max_weight: '33,000 lbs',
-        created_at: '2023-10-05T14:30:00Z'
-      },
-      {
-        id: 3,
-        name: 'Truck 103',
-        type: 'Flatbed',
-        license_plate: 'DEF-9012',
-        make: 'Peterbilt',
-        model: '579',
-        year: 2023,
-        status: 'Active',
-        max_weight: '80,000 lbs',
-        created_at: '2023-10-10T09:15:00Z'
-      }
-    ];
+    const isAdmin = adminCheck?.is_admin || false;
+
+    if (isAdmin) {
+      // Admin can see all vehicles from all companies
+      const response = await supabase
+        .from('vehicles')
+        .select('*, companies(name)')
+        .order('created_at', { ascending: false });
+
+      vehicles = response.data || [];
+      error = response.error;
+    } else if (userData?.company_id) {
+      // Regular user can only see vehicles from their company
+      const response = await supabase
+        .from('vehicles')
+        .select('*')
+        .eq('company_id', userData.company_id)
+        .order('created_at', { ascending: false });
+
+      vehicles = response.data || [];
+      error = response.error;
+    } else {
+      console.warn('No company_id found for user and not an admin');
+    }
+  } catch (err) {
+    console.error('Error fetching vehicles:', err);
+    error = err;
   }
 
   if (error) {

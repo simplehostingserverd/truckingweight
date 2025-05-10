@@ -20,51 +20,41 @@ export default async function Drivers() {
   let drivers = [];
   let error = null;
 
-  // Only fetch if we have a company_id
-  if (userData?.company_id) {
-    const response = await supabase
-      .from('drivers')
-      .select('*')
-      .eq('company_id', userData.company_id)
-      .order('name', { ascending: true });
+  try {
+    // Check if user is admin
+    const { data: adminCheck } = await supabase
+      .from('users')
+      .select('is_admin')
+      .eq('id', user?.id)
+      .single();
 
-    drivers = response.data || [];
-    error = response.error;
-  } else {
-    console.warn('No company_id found for user, using mock data');
-    // Use mock data if no company_id
-    drivers = [
-      {
-        id: 1,
-        name: 'John Driver',
-        license_number: 'DL12345678',
-        license_expiry: '2024-06-15',
-        phone: '(555) 123-4567',
-        email: 'john.driver@example.com',
-        status: 'Active',
-        created_at: '2023-01-15T10:00:00Z'
-      },
-      {
-        id: 2,
-        name: 'Sarah Smith',
-        license_number: 'DL87654321',
-        license_expiry: '2023-12-30',
-        phone: '(555) 987-6543',
-        email: 'sarah.smith@example.com',
-        status: 'Active',
-        created_at: '2023-02-20T14:30:00Z'
-      },
-      {
-        id: 3,
-        name: 'Michael Johnson',
-        license_number: 'DL55667788',
-        license_expiry: '2024-03-10',
-        phone: '(555) 456-7890',
-        email: 'michael.johnson@example.com',
-        status: 'On Leave',
-        created_at: '2023-03-05T09:15:00Z'
-      }
-    ];
+    const isAdmin = adminCheck?.is_admin || false;
+
+    if (isAdmin) {
+      // Admin can see all drivers from all companies
+      const response = await supabase
+        .from('drivers')
+        .select('*, companies(name)')
+        .order('name', { ascending: true });
+
+      drivers = response.data || [];
+      error = response.error;
+    } else if (userData?.company_id) {
+      // Regular user can only see drivers from their company
+      const response = await supabase
+        .from('drivers')
+        .select('*')
+        .eq('company_id', userData.company_id)
+        .order('name', { ascending: true });
+
+      drivers = response.data || [];
+      error = response.error;
+    } else {
+      console.warn('No company_id found for user and not an admin');
+    }
+  } catch (err) {
+    console.error('Error fetching drivers:', err);
+    error = err;
   }
 
   if (error) {

@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Truck body -->
-  <rect x="96" y="256" width="320" height="128" rx="16" fill="#FF0000"/>
-  
-  <!-- Truck cabin -->
-  <rect x="32" y="288" width="96" height="96" rx="16" fill="#333333"/>
-  
-  <!-- Windows -->
-  <rect x="48" y="304" width="64" height="48" rx="8" fill="#87CEFA"/>
-  
+  <!-- Simple truck icon with brand colors -->
+
+  <!-- Truck Body -->
+  <rect x="100" y="240" width="280" height="100" rx="10" fill="#0D2B4B"/>
+
+  <!-- Truck Cabin -->
+  <rect x="40" y="260" width="80" height="80" rx="10" fill="#0D2B4B"/>
+
+  <!-- Windshield -->
+  <rect x="50" y="270" width="60" height="40" rx="5" fill="#e0f2fe"/>
+
   <!-- Wheels -->
-  <circle cx="80" cy="400" r="32" fill="#000000"/>
-  <circle cx="80" cy="400" r="16" fill="#333333"/>
-  
-  <circle cx="192" cy="400" r="32" fill="#000000"/>
-  <circle cx="192" cy="400" r="16" fill="#333333"/>
-  
-  <circle cx="320" cy="400" r="32" fill="#000000"/>
-  <circle cx="320" cy="400" r="16" fill="#333333"/>
-  
-  <circle cx="416" cy="400" r="32" fill="#000000"/>
-  <circle cx="416" cy="400" r="16" fill="#333333"/>
-  
-  <!-- Lights -->
-  <rect x="32" y="272" width="16" height="8" rx="4" fill="#FFFF00"/>
-  <rect x="112" y="272" width="16" height="8" rx="4" fill="#FFFF00"/>
-  
-  <rect x="400" y="240" width="16" height="8" rx="4" fill="#FF0000"/>
-  <rect x="400" y="392" width="16" height="8" rx="4" fill="#FF0000"/>
+  <circle cx="80" cy="360" r="25" fill="#333333"/>
+  <circle cx="80" cy="360" r="12" fill="#666666"/>
+
+  <circle cx="200" cy="360" r="25" fill="#333333"/>
+  <circle cx="200" cy="360" r="12" fill="#666666"/>
+
+  <circle cx="320" cy="360" r="25" fill="#333333"/>
+  <circle cx="320" cy="360" r="12" fill="#666666"/>
+
+  <!-- Headlights -->
+  <rect x="40" y="280" width="10" height="10" rx="5" fill="#FFC107"/>
+
+  <!-- Details -->
+  <rect x="100" y="260" width="260" height="5" fill="#FFC107"/>
+  <rect x="100" y="280" width="260" height="5" fill="#FFC107"/>
+  <rect x="100" y="300" width="260" height="5" fill="#FFC107"/>
+
+  <!-- Door -->
+  <rect x="110" y="260" width="2" height="80" fill="#607D8B"/>
 </svg>

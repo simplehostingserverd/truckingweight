@@ -12,25 +12,9 @@ function createTruckMarkerElement() {
   element.className = 'truck-marker';
   element.style.width = '30px';
   element.style.height = '30px';
-  element.style.backgroundImage = 'url(/images/truck-icon.png)';
+  element.style.backgroundImage = 'url(/icons/truck-icon.svg)';
   element.style.backgroundSize = 'contain';
   element.style.backgroundRepeat = 'no-repeat';
-
-  // Fallback if image doesn't load
-  element.innerHTML = `
-    <div style="
-      width: 100%;
-      height: 100%;
-      background-color: #ff0000;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 12px;
-    ">🚚</div>
-  `;
 
   return element;
 }
@@ -198,79 +182,68 @@ export default function MapboxTruckVisualization({
 
         // Set up animation
         this.animationProgress = 0;
-        this.animationSpeed = 0.001; // Speed of animation along route
+        this.animationSpeed = 0.0005; // Slower speed for more realistic movement
         this.lastFrameTime = Date.now();
+        this.routeCompleted = false; // Track if route is completed
       },
 
       createFallbackTruck: function() {
         // Create a simple truck shape if the model fails to load
-        const truckGeometry = new THREE.BoxGeometry(1, 0.5, 2);
-        const cabinGeometry = new THREE.BoxGeometry(1, 0.7, 0.8);
+        const truckGeometry = new THREE.BoxGeometry(1, 0.4, 2);
+        const cabinGeometry = new THREE.BoxGeometry(0.9, 0.6, 0.7);
 
         const truckMaterial = new THREE.MeshStandardMaterial({
-          color: 0xff0000,
-          emissive: 0x330000,
-          metalness: 0.7,
-          roughness: 0.3
+          color: 0x0D2B4B, // Deep blue from the design system
+          metalness: 0.5,
+          roughness: 0.5
         });
 
         const cabinMaterial = new THREE.MeshStandardMaterial({
-          color: 0x333333,
-          metalness: 0.5,
-          roughness: 0.5
+          color: 0x0D2B4B, // Deep blue from the design system
+          metalness: 0.6,
+          roughness: 0.4
         });
 
         const truckBody = new THREE.Mesh(truckGeometry, truckMaterial);
         const cabin = new THREE.Mesh(cabinGeometry, cabinMaterial);
 
-        cabin.position.z = -0.6;
+        cabin.position.z = -0.7;
         cabin.position.y = 0.1;
 
         this.truck = new THREE.Group();
         this.truck.add(truckBody);
         this.truck.add(cabin);
 
-        // Add wheels
-        const wheelGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 16);
-        const wheelMaterial = new THREE.MeshStandardMaterial({ color: 0x111111 });
+        // Add wheels - smaller and less prominent
+        const wheelGeometry = new THREE.CylinderGeometry(0.2, 0.2, 0.15, 16);
+        const wheelMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
 
         // Front wheels
         const frontLeftWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
         frontLeftWheel.rotation.x = Math.PI / 2;
-        frontLeftWheel.position.set(-0.7, -0.3, -0.5);
+        frontLeftWheel.position.set(-0.6, -0.25, -0.6);
         this.truck.add(frontLeftWheel);
 
         const frontRightWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
         frontRightWheel.rotation.x = Math.PI / 2;
-        frontRightWheel.position.set(0.7, -0.3, -0.5);
+        frontRightWheel.position.set(0.6, -0.25, -0.6);
         this.truck.add(frontRightWheel);
 
         // Rear wheels
         const rearLeftWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
         rearLeftWheel.rotation.x = Math.PI / 2;
-        rearLeftWheel.position.set(-0.7, -0.3, 0.5);
+        rearLeftWheel.position.set(-0.6, -0.25, 0.6);
         this.truck.add(rearLeftWheel);
 
         const rearRightWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
         rearRightWheel.rotation.x = Math.PI / 2;
-        rearRightWheel.position.set(0.7, -0.3, 0.5);
+        rearRightWheel.position.set(0.6, -0.25, 0.6);
         this.truck.add(rearRightWheel);
 
-        // Add a point light to make the truck more visible
-        const pointLight = new THREE.PointLight(0xff0000, 2, 100);
-        pointLight.position.set(0, 2, 0);
+        // Add a subtle light to make the truck visible without the glow effect
+        const pointLight = new THREE.PointLight(0xFFC107, 0.8, 50); // Highway yellow from design system
+        pointLight.position.set(0, 1, 0);
         this.truck.add(pointLight);
-
-        // Add a glow effect
-        const glowGeometry = new THREE.SphereGeometry(1.5, 16, 16);
-        const glowMaterial = new THREE.MeshBasicMaterial({
-          color: 0xff0000,
-          transparent: true,
-          opacity: 0.2,
-          blending: THREE.AdditiveBlending
-        });
-        const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-        this.truck.add(glow);
 
         this.scene.add(this.truck);
 
@@ -320,12 +293,26 @@ export default function MapboxTruckVisualization({
         const delta = (now - this.lastFrameTime) / 1000; // Convert to seconds
         this.lastFrameTime = now;
 
-        // Update animation progress
-        this.animationProgress += this.animationSpeed * delta * 60; // Normalize for 60fps
+        // If we have a fixed current position and not animating, just show that
+        if (currentPosition && !this.isAnimating) {
+          this.updateTruckPosition(currentPosition.lng, currentPosition.lat);
+          if (this.truckMarker) {
+            this.truckMarker.setLngLat([currentPosition.lng, currentPosition.lat]);
+          }
+          this.renderer.resetState();
+          this.renderer.render(this.scene, this.camera);
+          return;
+        }
 
-        // Loop animation when it reaches the end
+        // Update animation progress
+        if (!this.routeCompleted) {
+          this.animationProgress += this.animationSpeed * delta * 60; // Normalize for 60fps
+        }
+
+        // Check if route is completed
         if (this.animationProgress >= 1) {
-          this.animationProgress = 0;
+          this.routeCompleted = true;
+          this.animationProgress = 1; // Stay at the end
         }
 
         // Calculate position along the route
@@ -343,17 +330,14 @@ export default function MapboxTruckVisualization({
         // Update marker position
         if (this.truckMarker) {
           this.truckMarker.setLngLat([currentLng, currentLat]);
-        }
 
-        // Update truck position if current position changes (for live tracking)
-        if (currentPosition) {
-          // Only update if we're not in animation mode or if explicitly told to use live position
-          if (route.length <= 2) {
-            this.updateTruckPosition(currentPosition.lng, currentPosition.lat);
-
-            if (this.truckMarker) {
-              this.truckMarker.setLngLat([currentPosition.lng, currentPosition.lat]);
-            }
+          // If we've reached the end, add a popup
+          if (this.routeCompleted && !this.endPopupShown) {
+            this.endPopupShown = true;
+            new mapboxgl.Popup()
+              .setLngLat([currentLng, currentLat])
+              .setHTML(`<h3>Destination Reached</h3><p>${route[route.length - 1].name}</p>`)
+              .addTo(map);
           }
         }
 
