@@ -8,7 +8,7 @@ print_message() {
   local color=$1
   local emoji=$2
   local message=$3
-  
+
   # Colors
   local reset="\033[0m"
   local red="\033[0;31m"
@@ -17,7 +17,7 @@ print_message() {
   local blue="\033[0;34m"
   local purple="\033[0;35m"
   local cyan="\033[0;36m"
-  
+
   case $color in
     "red") color=$red ;;
     "green") color=$green ;;
@@ -27,7 +27,7 @@ print_message() {
     "cyan") color=$cyan ;;
     *) color=$reset ;;
   esac
-  
+
   echo -e "${color}${emoji} ${message}${reset}"
 }
 
@@ -55,45 +55,56 @@ if ! git diff --exit-code --quiet; then
   handle_error "You have uncommitted changes. Please commit or stash them before pushing."
 fi
 
-# Run ESLint on frontend
-print_message "blue" "🔍" "Running ESLint on frontend..."
-cd frontend || handle_error "Frontend directory not found!"
-if ! npm run lint --silent; then
-  handle_error "ESLint found issues in frontend code. Please fix them before pushing."
+# Check if npm is available
+if ! command -v npm &> /dev/null; then
+  print_message "yellow" "⚠️" "npm command not found. Skipping npm-based checks."
+  print_message "green" "✅" "Skipping linting checks due to missing npm."
+else
+  # Run ESLint on frontend
+  print_message "blue" "🔍" "Running ESLint on frontend..."
+  cd frontend || handle_error "Frontend directory not found!"
+  if ! npm run lint --silent; then
+    handle_error "ESLint found issues in frontend code. Please fix them before pushing."
+  fi
 fi
 
-# Run ESLint on backend (if it exists)
-if [ -d "../backend" ]; then
-  print_message "blue" "🔍" "Running ESLint on backend..."
-  cd ../backend || handle_error "Backend directory not found!"
-  if ! npm run lint --silent; then
-    handle_error "ESLint found issues in backend code. Please fix them before pushing."
+# Only run these checks if npm is available
+if command -v npm &> /dev/null; then
+  # Run ESLint on backend (if it exists)
+  if [ -d "../backend" ]; then
+    print_message "blue" "🔍" "Running ESLint on backend..."
+    cd ../backend || handle_error "Backend directory not found!"
+    if ! npm run lint --silent; then
+      handle_error "ESLint found issues in backend code. Please fix them before pushing."
+    fi
+    cd ..
+  else
+    print_message "yellow" "⚠️" "Backend directory not found, skipping backend linting."
+    cd ..
+  fi
+
+  # Run Prettier check
+  print_message "blue" "🔍" "Checking code formatting with Prettier..."
+  if ! npm run format:check --silent; then
+    handle_error "Prettier found formatting issues. Run 'npm run format' to fix them."
+  fi
+
+  # Run TypeScript type checking
+  print_message "blue" "🔍" "Running TypeScript type checking..."
+  cd frontend || handle_error "Frontend directory not found!"
+  if ! npx tsc --noEmit; then
+    handle_error "TypeScript found type errors. Please fix them before pushing."
   fi
   cd ..
-else
-  print_message "yellow" "⚠️" "Backend directory not found, skipping backend linting."
+
+  # Run tests (if available)
+  print_message "blue" "🧪" "Running tests..."
+  cd frontend || handle_error "Frontend directory not found!"
+  npm test --silent || print_message "yellow" "⚠️" "Tests failed or not available, but continuing..."
   cd ..
+else
+  print_message "yellow" "⚠️" "Skipping additional checks due to missing npm."
 fi
-
-# Run Prettier check
-print_message "blue" "🔍" "Checking code formatting with Prettier..."
-if ! npm run format:check --silent; then
-  handle_error "Prettier found formatting issues. Run 'npm run format' to fix them."
-fi
-
-# Run TypeScript type checking
-print_message "blue" "🔍" "Running TypeScript type checking..."
-cd frontend || handle_error "Frontend directory not found!"
-if ! npx tsc --noEmit; then
-  handle_error "TypeScript found type errors. Please fix them before pushing."
-fi
-cd ..
-
-# Run tests (if available)
-print_message "blue" "🧪" "Running tests..."
-cd frontend || handle_error "Frontend directory not found!"
-npm test --silent || print_message "yellow" "⚠️" "Tests failed or not available, but continuing..."
-cd ..
 
 # Calculate execution time
 end_time=$(date +%s)
