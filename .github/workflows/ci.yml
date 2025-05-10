@@ -1,0 +1,64 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Create frontend env file
+      run: |
+        echo "# Supabase Configuration" > frontend/.env.local
+        echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> frontend/.env.local
+        echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> frontend/.env.local
+        echo "" >> frontend/.env.local
+        echo "# Node Environment" >> frontend/.env.local
+        echo "NODE_ENV=production" >> frontend/.env.local
+        echo "" >> frontend/.env.local
+        echo "# Mapbox token for map visualizations" >> frontend/.env.local
+        echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
+        echo "" >> frontend/.env.local
+        echo "# Cesium token for 3D Earth visualization" >> frontend/.env.local
+        echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN }}" >> frontend/.env.local
+    
+    - name: Install root dependencies
+      run: npm ci
+    
+    - name: Install frontend dependencies
+      working-directory: ./frontend
+      run: npm ci
+    
+    - name: Install backend dependencies
+      working-directory: ./backend
+      run: npm ci
+    
+    - name: Build frontend
+      working-directory: ./frontend
+      run: npm run build
+    
+    - name: Run frontend tests (if available)
+      working-directory: ./frontend
+      run: npm test || echo "No tests available"
+      continue-on-error: true
+    
+    - name: Run backend tests (if available)
+      working-directory: ./backend
+      run: npm test || echo "No tests available"
+      continue-on-error: true

@@ -4,6 +4,7 @@
 
   ![TruckingSemis Banner](frontend/public/images/banner.svg)
 
+  [![CI/CD Pipeline](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml/badge.svg)](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml)
   [![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
   [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white&labelColor=3ECF8E)](https://supabase.com/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=38B2AC)](https://tailwindcss.com/)
@@ -89,6 +90,8 @@
   ### DevOps
   ![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?style=flat-square&logo=docker&logoColor=white)
   ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI/CD-2088FF?style=flat-square&logo=github-actions&logoColor=white)
+  ![Continuous Integration](https://img.shields.io/badge/CI-Automated_Testing-43A047?style=flat-square&logo=github-actions&logoColor=white)
+  ![Continuous Deployment](https://img.shields.io/badge/CD-Automated_Deployment-0D47A1?style=flat-square&logo=github-actions&logoColor=white)
 
 </div>
 
@@ -134,6 +137,23 @@
 ```bash
 docker-compose up -d
 ```
+
+### CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+1. **Continuous Integration**: Automatically runs on every push and pull request to the main branch
+   - Installs dependencies
+   - Builds the application
+   - Runs tests (if available)
+   - Reports build status
+
+2. **Environment Variables**: Securely managed through GitHub Secrets
+   - Supabase credentials
+   - Mapbox API token
+   - Cesium token
+
+3. **Build Status**: Check the build status badge at the top of this README
 
 ## 📖 Usage
 

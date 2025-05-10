@@ -9,7 +9,7 @@
     "update-schema": "node scripts/update-schema.js",
     "update-deps": "node scripts/update-dependencies.js",
     "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
-    "install-deps": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "install-deps": "node scripts/install-deps.js",
     "prepare": "husky install || echo 'Skipping husky install'",
     "lint": "eslint . || echo 'Skipping eslint'",
     "lint:fix": "eslint --fix . || echo 'Skipping eslint fix'",
