@@ -182,7 +182,7 @@ export default function CesiumTruckVisualization({
         new Cesium.HeadingPitchRoll(heading, 0, 0)
       ),
       model: {
-        uri: '/models/truck.glb',
+        uri: '/models/truck.gltf',
         minimumPixelSize: 128,
         maximumScale: 20000,
         scale: 0.05,

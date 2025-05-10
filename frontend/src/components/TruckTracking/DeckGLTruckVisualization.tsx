@@ -149,7 +149,7 @@ export default function DeckGLTruckVisualization({
                   name: 'Truck'
                 }
               ],
-              scenegraph: '/models/truck.glb',
+              scenegraph: '/models/truck.gltf',
               sizeScale: 30,
               getPosition: d => d.position,
               getOrientation: d => d.orientation,
@@ -231,7 +231,7 @@ export default function DeckGLTruckVisualization({
             name: 'Truck'
           }
         ],
-        scenegraph: '/models/truck.glb',
+        scenegraph: '/models/truck.gltf',
         sizeScale: 30,
         getPosition: d => d.position,
         getOrientation: d => d.orientation,
@@ -244,9 +244,12 @@ export default function DeckGLTruckVisualization({
       const currentLayers = deckRef.current.props.layers || [];
 
       // Create new layers array with updated truck layer
-      const newLayers = currentLayers.map(layer =>
-        layer.id === 'truck-layer' ? truckLayer : layer
-      );
+      const newLayers = Array.isArray(currentLayers) ? currentLayers.map(layer => {
+        if (layer && typeof layer === 'object' && 'id' in layer && layer.id === 'truck-layer') {
+          return truckLayer;
+        }
+        return layer;
+      }) : [truckLayer];
 
       // Update the deck.gl layers
       deckRef.current.setProps({
