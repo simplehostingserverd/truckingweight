@@ -5,7 +5,7 @@ import { formatDate } from '@/lib/utils';
 import { PlusIcon, ArrowDownTrayIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
 
 export default async function Drivers() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   // Get user data

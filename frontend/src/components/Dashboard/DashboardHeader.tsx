@@ -84,7 +84,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
   ];
 
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-sm z-10">
+    <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 z-10">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -98,40 +98,44 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
             )}
 
             <div className="flex-shrink-0 flex items-center ml-2 lg:ml-0">
-              <span className="text-xl font-bold text-primary-600 dark:text-primary-400">
+              <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400 text-transparent bg-clip-text">
                 TruckingSemis
               </span>
             </div>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center space-x-3">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none"
+              className="p-2 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-700 focus:outline-none transition-colors duration-200"
               aria-label="Toggle dark mode"
             >
               {mounted && (theme === 'dark' ? (
-                <SunIcon className="h-6 w-6" />
+                <SunIcon className="h-5 w-5" />
               ) : (
-                <MoonIcon className="h-6 w-6" />
+                <MoonIcon className="h-5 w-5" />
               ))}
             </button>
 
             {/* Hide notifications on mobile */}
             <button
-              className="hidden sm:block p-2 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none"
+              className="hidden sm:flex p-2 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-700 focus:outline-none transition-colors duration-200 relative"
               aria-label="Notifications"
             >
-              <BellIcon className="h-6 w-6" />
+              <BellIcon className="h-5 w-5" />
+              <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500"></span>
             </button>
 
-            <Menu as="div" className="ml-3 relative">
+            <Menu as="div" className="relative">
               <div>
-                <Menu.Button className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                <Menu.Button className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200">
                   <span className="sr-only">Open user menu</span>
-                  <div className="h-8 w-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-300">
-                    <UserIcon className="h-5 w-5" />
+                  <div className="h-8 w-8 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 flex items-center justify-center text-white">
+                    {user?.name?.charAt(0)?.toUpperCase() || <UserIcon className="h-4 w-4" />}
                   </div>
+                  <span className="hidden md:flex ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {user?.name?.split(' ')[0] || 'User'}
+                  </span>
                 </Menu.Button>
               </div>
               <Transition
@@ -143,10 +147,10 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">{user?.name}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email}</p>
+                <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-lg shadow-floating dark:shadow-floating-lg py-1 bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white">{user?.name}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-1">{user?.email}</p>
                   </div>
 
                   <Menu.Item>
@@ -154,10 +158,10 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
                       <a
                         href="/profile"
                         className={`${
-                          active ? 'bg-gray-100 dark:bg-gray-700' : ''
-                        } flex px-4 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                          active ? 'bg-gray-50 dark:bg-gray-700' : ''
+                        } flex px-4 py-2 text-sm text-gray-700 dark:text-gray-300 transition-colors duration-150`}
                       >
-                        <UserIcon className="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500" />
+                        <UserIcon className="mr-3 h-5 w-5 text-indigo-500 dark:text-indigo-400" />
                         Your Profile
                       </a>
                     )}
@@ -168,28 +172,30 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
                       <a
                         href="/settings"
                         className={`${
-                          active ? 'bg-gray-100 dark:bg-gray-700' : ''
-                        } flex px-4 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                          active ? 'bg-gray-50 dark:bg-gray-700' : ''
+                        } flex px-4 py-2 text-sm text-gray-700 dark:text-gray-300 transition-colors duration-150`}
                       >
-                        <Cog6ToothIcon className="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500" />
+                        <Cog6ToothIcon className="mr-3 h-5 w-5 text-indigo-500 dark:text-indigo-400" />
                         Settings
                       </a>
                     )}
                   </Menu.Item>
 
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={handleSignOut}
-                        className={`${
-                          active ? 'bg-gray-100 dark:bg-gray-700' : ''
-                        } flex w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300`}
-                      >
-                        <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500" />
-                        Sign out
-                      </button>
-                    )}
-                  </Menu.Item>
+                  <div className="px-2 py-2 border-t border-gray-100 dark:border-gray-700">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          onClick={handleSignOut}
+                          className={`${
+                            active ? 'bg-gray-50 dark:bg-gray-700' : ''
+                          } flex w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 rounded-md transition-colors duration-150`}
+                        >
+                          <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 text-indigo-500 dark:text-indigo-400" />
+                          Sign out
+                        </button>
+                      )}
+                    </Menu.Item>
+                  </div>
                 </Menu.Items>
               </Transition>
             </Menu>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as Cesium from 'cesium';
+import { createWorldTerrain } from '@cesium/engine';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 
 interface RoutePoint {
@@ -39,7 +40,7 @@ export default function CesiumTruckVisualization({
 
       // Create Cesium viewer
       const cesiumViewer = new Cesium.Viewer(cesiumContainer.current, {
-        terrainProvider: Cesium.createWorldTerrain(),
+        terrainProvider: createWorldTerrain(),
         imageryProvider: new Cesium.IonImageryProvider({
           assetId: 3, // Sentinel-2 imagery
         }),

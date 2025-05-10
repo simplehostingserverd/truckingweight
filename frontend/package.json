@@ -10,6 +10,7 @@
     "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
+    "@cesium/engine": "^17.0.0",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@loaders.gl/core": "^4.3.3",
