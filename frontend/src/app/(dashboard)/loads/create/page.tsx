@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
+import RoutePlanner from '@/components/Loads/RoutePlanner';
 
 export default function CreateLoad() {
   const [description, setDescription] = useState('');
@@ -227,21 +228,21 @@ export default function CreateLoad() {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Create New Load</h1>
+          <h1 className="text-3xl font-bold text-white">Create New Load</h1>
 
           <Link
             href="/loads"
-            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+            className="px-4 py-2 border border-gray-700 rounded-md shadow-sm text-sm font-medium text-gray-200 bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Cancel
           </Link>
         </div>
 
         {error && (
-          <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30 mb-6">
+          <div className="rounded-md bg-red-900/30 p-4 mb-6 border border-red-800">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
+                <h3 className="text-sm font-medium text-red-200">
                   {error}
                 </h3>
               </div>
@@ -249,14 +250,15 @@ export default function CreateLoad() {
           </div>
         )}
 
-        <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
-          <div className="px-6 py-4 bg-primary-700 text-white">
-            <h2 className="text-xl font-semibold">Load Information</h2>
+        <div className="bg-[#1A1A1A] shadow-lg rounded-lg overflow-hidden border border-gray-800">
+          <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-white">Load Information</h2>
+            <div className="h-2 w-2 rounded-full bg-blue-500"></div>
           </div>
 
           <form className="p-6 space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label htmlFor="description" className="block text-sm font-medium text-white">
                 Description
               </label>
               <input
@@ -264,101 +266,38 @@ export default function CreateLoad() {
                 name="description"
                 type="text"
                 required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="origin" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Origin
-                </label>
-                <input
-                  id="origin"
-                  name="origin"
-                  type="text"
-                  required
-                  placeholder="e.g. New York, NY"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  value={origin}
-                  onChange={(e) => setOrigin(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="destination" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Destination
-                </label>
-                <input
-                  id="destination"
-                  name="destination"
-                  type="text"
-                  required
-                  placeholder="e.g. Los Angeles, CA"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={calculateRoute}
-                disabled={isCalculatingRoute || !origin || !destination}
-                className="px-4 py-2 bg-secondary-600 text-white rounded-md hover:bg-secondary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500 disabled:bg-secondary-400"
-              >
-                {isCalculatingRoute ? 'Calculating...' : 'Calculate Route'}
-              </button>
-            </div>
-
-            {routeDetails && (
-              <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-md">
-                <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">Route Details</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-700 dark:text-gray-300">Distance: {distance}</p>
-                    <p className="text-sm text-gray-700 dark:text-gray-300">Duration: {duration}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="estimatedDeparture" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Estimated Departure
-                </label>
-                <input
-                  id="estimatedDeparture"
-                  name="estimatedDeparture"
-                  type="datetime-local"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  value={estimatedDeparture}
-                  onChange={(e) => setEstimatedDeparture(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="estimatedArrival" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Estimated Arrival
-                </label>
-                <input
-                  id="estimatedArrival"
-                  name="estimatedArrival"
-                  type="datetime-local"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  value={estimatedArrival}
-                  onChange={(e) => setEstimatedArrival(e.target.value)}
-                />
-              </div>
-            </div>
+            {/* Route Planner Component */}
+            <RoutePlanner
+              initialOrigin={origin}
+              initialDestination={destination}
+              onRouteChange={(routeData) => {
+                setOrigin(routeData.waypoints[0].address || '');
+                setDestination(routeData.waypoints[routeData.waypoints.length - 1].address || '');
+                setDistance(routeData.distance);
+                setDuration(routeData.duration);
+                setEstimatedDeparture(routeData.estimatedDeparture);
+                setEstimatedArrival(routeData.estimatedArrival);
+                setRouteDetails({
+                  distance: parseFloat(routeData.distance.replace(/[^0-9.]/g, '')),
+                  duration: routeData.route?.duration || 0,
+                  waypoints: routeData.waypoints.map(wp => ({
+                    lat: wp.coordinates[1],
+                    lng: wp.coordinates[0],
+                    name: wp.name,
+                    address: wp.address
+                  }))
+                });
+              }}
+            />
 
             <div>
-              <label htmlFor="weight" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label htmlFor="weight" className="block text-sm font-medium text-white">
                 Weight
               </label>
               <input
@@ -367,20 +306,20 @@ export default function CreateLoad() {
                 type="text"
                 required
                 placeholder="e.g. 32,500 lbs"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500"
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
               />
             </div>
 
             <div>
-              <label htmlFor="vehicle" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label htmlFor="vehicle" className="block text-sm font-medium text-white">
                 Vehicle (optional)
               </label>
               <select
                 id="vehicle"
                 name="vehicle"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500"
                 value={vehicleId}
                 onChange={(e) => setVehicleId(e.target.value)}
               >
@@ -394,13 +333,13 @@ export default function CreateLoad() {
             </div>
 
             <div>
-              <label htmlFor="driver" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label htmlFor="driver" className="block text-sm font-medium text-white">
                 Driver (optional)
               </label>
               <select
                 id="driver"
                 name="driver"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500"
                 value={driverId}
                 onChange={(e) => setDriverId(e.target.value)}
               >
@@ -417,7 +356,7 @@ export default function CreateLoad() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-primary-400"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400"
               >
                 {isLoading ? 'Creating...' : 'Create Load'}
               </button>

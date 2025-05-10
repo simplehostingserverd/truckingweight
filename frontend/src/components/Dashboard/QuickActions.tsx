@@ -5,40 +5,42 @@ import { PlusIcon, DocumentTextIcon, ArrowPathIcon, ScaleIcon, TruckIcon } from 
 
 export default function QuickActions() {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Quick Actions</h2>
+    <div className="p-6">
+      <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Link
           href="/weights/new"
-          className="flex items-center justify-center bg-primary-600 text-white py-2 px-4 rounded hover:bg-primary-700 transition-colors"
+          className="flex items-center justify-center bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors"
         >
           <PlusIcon className="h-5 w-5 mr-2" />
           New Weight Entry
         </Link>
         <Link
           href="/weights/capture"
-          className="flex items-center justify-center bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition-colors"
+          className="flex items-center justify-center bg-orange-500 text-white py-3 px-4 rounded-lg hover:bg-orange-600 transition-colors"
         >
           <ScaleIcon className="h-5 w-5 mr-2" />
           Weight Capture
         </Link>
         <Link
           href="/loads/new"
-          className="flex items-center justify-center bg-primary-600 text-white py-2 px-4 rounded hover:bg-primary-700 transition-colors"
+          className="flex items-center justify-center bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors"
         >
           <PlusIcon className="h-5 w-5 mr-2" />
           Create Load
         </Link>
         <Link
-          href="/driver-tracking"
-          className="flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
+          href="/weights/compliance"
+          className="flex items-center justify-center bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors"
         >
-          <TruckIcon className="h-5 w-5 mr-2" />
-          3D Truck Tracking
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Compliance Check
         </Link>
         <Link
           href="/reports"
-          className="flex items-center justify-center bg-primary-600 text-white py-2 px-4 rounded hover:bg-primary-700 transition-colors col-span-1 md:col-span-2"
+          className="flex items-center justify-center bg-gray-700 text-white py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors col-span-1 md:col-span-2"
         >
           <DocumentTextIcon className="h-5 w-5 mr-2" />
           Generate Report

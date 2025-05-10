@@ -27,22 +27,22 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
     <div className="container mx-auto px-4 py-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Dashboard</h1>
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+          <p className="mt-1 text-sm text-gray-400">
             Welcome back, {userName || 'User'}! Here's what's happening with your fleet.
           </p>
         </div>
         <div className="flex space-x-2">
           <Link
             href="/weights/new"
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             <ScaleIcon className="h-4 w-4 mr-2" />
             New Weight
           </Link>
           <Link
             href="/weights/capture"
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
           >
             <ScaleIcon className="h-4 w-4 mr-2" />
             Weight Capture
@@ -52,30 +52,32 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
 
       {/* Admin Company Selector */}
       {isAdmin && (
-        <AdminCompanySelector 
-          onCompanyChange={handleCompanyChange} 
-          selectedCompanyId={selectedCompanyId} 
+        <AdminCompanySelector
+          onCompanyChange={handleCompanyChange}
+          selectedCompanyId={selectedCompanyId}
         />
       )}
 
       {/* Stats Cards */}
-      <DashboardStats 
-        initialUserName={userName || 'User'} 
-        companyId={selectedCompanyId} 
+      <DashboardStats
+        initialUserName={userName || 'User'}
+        companyId={selectedCompanyId}
       />
 
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-green-600 to-green-800 text-white">
-            <h2 className="text-xl font-semibold">Weight Compliance</h2>
+        <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
+          <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-white">Weight Compliance</h2>
+            <div className="h-2 w-2 rounded-full bg-blue-500"></div>
           </div>
           <ComplianceChart companyId={selectedCompanyId} />
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-purple-600 to-purple-800 text-white">
-            <h2 className="text-xl font-semibold">Vehicle Weight Distribution</h2>
+        <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
+          <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-white">Vehicle Weight Distribution</h2>
+            <div className="h-2 w-2 rounded-full bg-orange-500"></div>
           </div>
           <VehicleWeightChart companyId={selectedCompanyId} />
         </div>
@@ -83,32 +85,34 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
 
       {/* Recent Weights and Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-primary-600 to-primary-800 text-white">
-            <h2 className="text-xl font-semibold">Recent Weight Measurements</h2>
+        <div className="lg:col-span-2 bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
+          <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-white">Recent Weight Measurements</h2>
+            <div className="h-2 w-2 rounded-full bg-blue-500"></div>
           </div>
           <RecentWeightsTable companyId={selectedCompanyId} />
-          <div className="px-6 py-3 bg-gray-50 dark:bg-gray-900">
+          <div className="px-6 py-3 border-t border-gray-800">
             <Link
               href="/weights"
-              className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium"
+              className="text-blue-500 hover:text-blue-400 font-medium"
             >
               View all weights →
             </Link>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-amber-600 to-amber-800 text-white">
-            <h2 className="text-xl font-semibold">Alerts & Notifications</h2>
+        <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
+          <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-white">Alerts & Notifications</h2>
+            <div className="h-2 w-2 rounded-full bg-red-500"></div>
           </div>
           <div className="p-6">
             <div className="space-y-4">
-              <div className="flex items-start p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                <div className="h-5 w-5 bg-blue-200 dark:bg-blue-700 rounded-full mt-0.5 mr-3 flex-shrink-0 animate-pulse"></div>
+              <div className="flex items-start p-3 bg-gray-800/50 rounded-lg border border-gray-700">
+                <div className="h-5 w-5 bg-blue-600 rounded-full mt-0.5 mr-3 flex-shrink-0 animate-pulse"></div>
                 <div>
-                  <h3 className="text-sm font-medium text-blue-800 dark:text-blue-300">Loading alerts...</h3>
-                  <p className="mt-1 text-sm text-blue-700 dark:text-blue-400">
+                  <h3 className="text-sm font-medium text-blue-400">Loading alerts...</h3>
+                  <p className="mt-1 text-sm text-gray-400">
                     Please wait while we fetch your notifications.
                   </p>
                 </div>
@@ -120,16 +124,18 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
 
       {/* Load Status Chart and Quick Actions Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white">
-            <h2 className="text-xl font-semibold">Load Status Distribution</h2>
+        <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
+          <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-white">Load Status Distribution</h2>
+            <div className="h-2 w-2 rounded-full bg-green-500"></div>
           </div>
           <LoadStatusChart companyId={selectedCompanyId} />
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-primary-600 to-primary-800 text-white">
-            <h2 className="text-xl font-semibold">Quick Actions</h2>
+        <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
+          <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-white">Quick Actions</h2>
+            <div className="h-2 w-2 rounded-full bg-purple-500"></div>
           </div>
           <div className="p-6">
             <QuickActions />

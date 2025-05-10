@@ -51,33 +51,33 @@ export function getInitials(name: string) {
  * Get the appropriate color class for a status
  */
 export function getStatusColor(status: string) {
-  if (!status) return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+  if (!status) return 'bg-gray-800 text-gray-300';
 
   switch (status.toLowerCase()) {
     case 'compliant':
     case 'completed':
     case 'active':
     case 'delivered':
-      return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300';
+      return 'bg-green-900/30 text-green-400 border border-green-800';
 
     case 'warning':
     case 'pending':
     case 'in progress':
     case 'maintenance':
     case 'on leave':
-      return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300';
+      return 'bg-yellow-900/30 text-yellow-400 border border-yellow-800';
 
     case 'non-compliant':
     case 'cancelled':
     case 'inactive':
     case 'out of service':
-      return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300';
+      return 'bg-red-900/30 text-red-400 border border-red-800';
 
     case 'in transit':
-      return 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300';
+      return 'bg-purple-900/30 text-purple-400 border border-purple-800';
 
     default:
-      return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+      return 'bg-gray-800 text-gray-300 border border-gray-700';
   }
 }
 

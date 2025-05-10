@@ -24,10 +24,10 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
 
   // Colors for load status
   const COLORS = {
-    Pending: '#6366F1',   // indigo
-    'In Transit': '#8B5CF6', // purple
-    Delivered: '#10B981', // green
-    Cancelled: '#6B7280'  // gray
+    Pending: '#3b82f6',   // blue
+    'In Transit': '#8b5cf6', // purple
+    Delivered: '#22c55e', // green
+    Cancelled: '#6b7280'  // gray
   };
 
   useEffect(() => {
@@ -77,23 +77,24 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-500"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-md">
-        <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+      <div className="bg-red-900/20 p-4 rounded-md border border-red-800">
+        <p className="text-red-400 text-sm">{error}</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-      <div className="px-6 py-4 bg-primary-700 text-white">
-        <h2 className="text-xl font-semibold">Loads by Status</h2>
+    <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
+      <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-white">Loads by Status</h2>
+        <div className="h-2 w-2 rounded-full bg-green-500"></div>
       </div>
 
       <div className="p-6">
@@ -115,14 +116,19 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
                     <Cell key={`cell-${index}`} fill={COLORS[entry.name as keyof typeof COLORS] || '#8884d8'} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value) => [`${value} loads`, 'Count']} />
-                <Legend />
+                <Tooltip
+                  formatter={(value) => [`${value} loads`, 'Count']}
+                  contentStyle={{ backgroundColor: '#1E1E1E', border: '1px solid #333', borderRadius: '4px' }}
+                  itemStyle={{ color: '#fff' }}
+                  labelStyle={{ color: '#aaa' }}
+                />
+                <Legend formatter={(value) => <span style={{ color: '#fff' }}>{value}</span>} />
               </PieChart>
             </ResponsiveContainer>
           </div>
         ) : (
           <div className="flex justify-center items-center h-64">
-            <p className="text-gray-500 dark:text-gray-400">No load data available</p>
+            <p className="text-gray-400">No load data available</p>
           </div>
         )}
       </div>

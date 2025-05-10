@@ -56,7 +56,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       {children}
       <ToastContainer
         position="top-right"
@@ -68,7 +68,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="dark"
       />
       {/* Only render offline banner after client-side hydration */}
       {typeof isOnline === 'boolean' && !isOnline && (

@@ -25,9 +25,9 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
 
   // Colors for compliance status
   const COLORS = {
-    Compliant: '#10B981', // green
-    Warning: '#F59E0B',   // amber
-    'Non-Compliant': '#EF4444', // red
+    Compliant: '#22c55e', // bright green
+    Warning: '#f59e0b',   // amber
+    'Non-Compliant': '#ef4444', // red
   };
 
   // Add state for admin view
@@ -121,27 +121,27 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-500"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-md">
-        <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+      <div className="bg-red-900/20 p-4 rounded-md border border-red-800">
+        <p className="text-red-400 text-sm">{error}</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-      <div className="px-6 py-4 bg-primary-700 text-white flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Weight Compliance</h2>
+    <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
+      <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-white">Weight Compliance</h2>
         <div className="flex space-x-2">
           {isAdmin && companyData.length > 0 && (
             <select
-              className="bg-primary-800 text-white border border-primary-600 rounded px-2 py-1 text-sm"
+              className="bg-gray-800 text-white border border-gray-700 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={selectedCompany}
               onChange={handleCompanyChange}
             >
@@ -154,7 +154,7 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
             </select>
           )}
           <select
-            className="bg-primary-800 text-white border border-primary-600 rounded px-2 py-1 text-sm"
+            className="bg-gray-800 text-white border border-gray-700 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={dateRange}
             onChange={handleDateRangeChange}
           >
@@ -184,14 +184,21 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
                     <Cell key={`cell-${index}`} fill={COLORS[entry.name as keyof typeof COLORS] || '#8884d8'} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value) => [`${value} weights`, 'Count']} />
-                <Legend />
+                <Tooltip
+                  formatter={(value) => [`${value} weights`, 'Count']}
+                  contentStyle={{ backgroundColor: '#1E1E1E', border: '1px solid #333', borderRadius: '4px' }}
+                  itemStyle={{ color: '#fff' }}
+                  labelStyle={{ color: '#aaa' }}
+                />
+                <Legend
+                  formatter={(value) => <span style={{ color: '#fff' }}>{value}</span>}
+                />
               </PieChart>
             </ResponsiveContainer>
           </div>
         ) : (
           <div className="flex justify-center items-center h-64">
-            <p className="text-gray-500 dark:text-gray-400">No compliance data available for this period</p>
+            <p className="text-gray-400">No compliance data available for this period</p>
           </div>
         )}
       </div>
