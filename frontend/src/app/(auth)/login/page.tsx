@@ -21,20 +21,7 @@ export default function Login() {
     setError('');
 
     try {
-      // For development, allow login with any email and password="password"
-      if (password === 'password') {
-        // Manually set session in Supabase
-        await supabase.auth.updateUser({
-          data: { name: 'Demo User' }
-        });
-
-        // Redirect to dashboard on successful login
-        router.push('/dashboard');
-        router.refresh();
-        return;
-      }
-
-      // Try Supabase auth if not using the development password
+      // Authenticate with Supabase
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -97,11 +84,8 @@ export default function Login() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-white mb-2">Welcome to TruckingSemis! 👋</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">Welcome to ScaleMasterAI! 👋</h1>
             <p className="text-gray-400">Please sign in to your account and start the adventure</p>
-            <div className="mt-4 p-3 bg-indigo-900/50 border border-indigo-500/30 rounded-md text-sm text-indigo-200">
-              <strong>Development Mode:</strong> Use any email with password <code className="bg-indigo-800/50 px-1 py-0.5 rounded">password</code> to log in
-            </div>
           </div>
 
           {error && (

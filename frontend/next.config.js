@@ -11,8 +11,23 @@ const withPWA = (config) => config;
 // Configure webpack for Cesium
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
+const fs = require('fs');
+
+// Check if SSL certificates exist
+const sslCertPath = path.join(__dirname, '../ssl/localhost.crt');
+const sslKeyPath = path.join(__dirname, '../ssl/localhost.key');
+const sslEnabled = fs.existsSync(sslCertPath) && fs.existsSync(sslKeyPath);
 
 const nextConfig = {
+  // HTTPS configuration for development
+  ...(process.env.NODE_ENV === 'development' && sslEnabled ? {
+    server: {
+      https: {
+        key: fs.readFileSync(sslKeyPath),
+        cert: fs.readFileSync(sslCertPath),
+      },
+    },
+  } : {}),
   // Webpack configuration for Cesium
   webpack: (config, { isServer }) => {
     if (!isServer) {

@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import type { Database } from '@/types/supabase';
 import { getSupabaseConfig } from './config';
+import { cookies } from 'next/headers';
 
 // This middleware refreshes the user's session and must be run
 // for any Server Component route that uses a Supabase client
@@ -14,7 +15,7 @@ export async function middleware(req: NextRequest) {
   // Content-Security-Policy - Helps prevent XSS attacks
   res.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co; connect-src 'self' https://*.supabase.co; img-src 'self' data: https://images.pexels.com https://*.supabase.co; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; frame-src 'self';"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co; img-src 'self' data: https://images.pexels.com https://*.supabase.co; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; frame-src 'self';"
   );
 
   // X-XSS-Protection - Stops pages from loading when they detect reflected XSS attacks
@@ -47,9 +48,11 @@ export async function middleware(req: NextRequest) {
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
   // Create the client with explicit URL and key
+  const cookieStore = cookies();
   const supabase = createMiddlewareClient<Database>({
     req,
     res,
+    cookies: () => cookieStore,
     supabaseUrl,
     supabaseKey,
   });
