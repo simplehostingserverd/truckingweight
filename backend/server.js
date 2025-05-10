@@ -17,6 +17,7 @@ const companyRoutes = require('./routes/companies');
 const vehicleRoutes = require('./routes/vehicles');
 const driverRoutes = require('./routes/drivers');
 const adminRoutes = require('./routes/admin');
+const syncRoutes = require('./routes/syncRoutes');
 
 // Import integration routes
 const integrationRoutes = require('./routes/integrations');
@@ -39,6 +40,7 @@ app.use('/api/companies', companyRoutes);
 app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/sync', syncRoutes);
 
 // Integration routes
 app.use('/api/integrations', integrationRoutes);
