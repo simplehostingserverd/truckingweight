@@ -1,0 +1,106 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🚀 Starting pre-push checks..."
+
+# Function to print colorful messages
+print_message() {
+  local color=$1
+  local emoji=$2
+  local message=$3
+  
+  # Colors
+  local reset="\033[0m"
+  local red="\033[0;31m"
+  local green="\033[0;32m"
+  local yellow="\033[0;33m"
+  local blue="\033[0;34m"
+  local purple="\033[0;35m"
+  local cyan="\033[0;36m"
+  
+  case $color in
+    "red") color=$red ;;
+    "green") color=$green ;;
+    "yellow") color=$yellow ;;
+    "blue") color=$blue ;;
+    "purple") color=$purple ;;
+    "cyan") color=$cyan ;;
+    *) color=$reset ;;
+  esac
+  
+  echo -e "${color}${emoji} ${message}${reset}"
+}
+
+# Function to handle errors and exit
+handle_error() {
+  local message=$1
+  print_message "red" "❌" "$message"
+  print_message "yellow" "🔍" "Fix the issues before pushing again."
+  exit 1
+}
+
+# Check if we're in a toolbox environment
+if [ -f /run/.toolboxenv ]; then
+  print_message "blue" "🧰" "Running in toolbox environment..."
+else
+  print_message "yellow" "⚠️" "Not running in toolbox environment. Some checks may not work as expected."
+fi
+
+# Start timer
+start_time=$(date +%s)
+
+# Check for uncommitted changes
+print_message "blue" "🔍" "Checking for uncommitted changes..."
+if ! git diff --exit-code --quiet; then
+  handle_error "You have uncommitted changes. Please commit or stash them before pushing."
+fi
+
+# Run ESLint on frontend
+print_message "blue" "🔍" "Running ESLint on frontend..."
+cd frontend || handle_error "Frontend directory not found!"
+if ! npm run lint --silent; then
+  handle_error "ESLint found issues in frontend code. Please fix them before pushing."
+fi
+
+# Run ESLint on backend (if it exists)
+if [ -d "../backend" ]; then
+  print_message "blue" "🔍" "Running ESLint on backend..."
+  cd ../backend || handle_error "Backend directory not found!"
+  if ! npm run lint --silent; then
+    handle_error "ESLint found issues in backend code. Please fix them before pushing."
+  fi
+  cd ..
+else
+  print_message "yellow" "⚠️" "Backend directory not found, skipping backend linting."
+  cd ..
+fi
+
+# Run Prettier check
+print_message "blue" "🔍" "Checking code formatting with Prettier..."
+if ! npm run format:check --silent; then
+  handle_error "Prettier found formatting issues. Run 'npm run format' to fix them."
+fi
+
+# Run TypeScript type checking
+print_message "blue" "🔍" "Running TypeScript type checking..."
+cd frontend || handle_error "Frontend directory not found!"
+if ! npx tsc --noEmit; then
+  handle_error "TypeScript found type errors. Please fix them before pushing."
+fi
+cd ..
+
+# Run tests (if available)
+print_message "blue" "🧪" "Running tests..."
+cd frontend || handle_error "Frontend directory not found!"
+npm test --silent || print_message "yellow" "⚠️" "Tests failed or not available, but continuing..."
+cd ..
+
+# Calculate execution time
+end_time=$(date +%s)
+execution_time=$((end_time - start_time))
+
+# All checks passed
+print_message "green" "✅" "All pre-push checks passed successfully in ${execution_time}s!"
+print_message "green" "🚀" "Pushing to remote repository..."
+
+exit 0

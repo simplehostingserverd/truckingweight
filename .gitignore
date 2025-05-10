@@ -4,6 +4,7 @@ node_modules
 .pnp.js
 
 # Husky
+# Keep pre-push hook but ignore pre-commit
 .husky/pre-commit
 
 # Environment variables
