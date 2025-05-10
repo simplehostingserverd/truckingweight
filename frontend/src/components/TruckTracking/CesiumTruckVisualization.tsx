@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as Cesium from 'cesium';
-import { createWorldTerrain } from '@cesium/engine';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 
 interface RoutePoint {
@@ -38,12 +37,8 @@ export default function CesiumTruckVisualization({
       // Set Cesium ion access token
       Cesium.Ion.defaultAccessToken = cesiumToken;
 
-      // Create Cesium viewer
+      // Create Cesium viewer with basic options first
       const cesiumViewer = new Cesium.Viewer(cesiumContainer.current, {
-        terrainProvider: createWorldTerrain(),
-        imageryProvider: new Cesium.IonImageryProvider({
-          assetId: 3, // Sentinel-2 imagery
-        }),
         timeline: false,
         animation: false,
         baseLayerPicker: false,
@@ -56,6 +51,16 @@ export default function CesiumTruckVisualization({
         fullscreenButton: false,
         shouldAnimate: true,
       });
+
+      // Set the terrain provider asynchronously
+      (async () => {
+        try {
+          const worldTerrain = await Cesium.createWorldTerrainAsync();
+          cesiumViewer.terrainProvider = worldTerrain;
+        } catch (error) {
+          console.error('Failed to load world terrain:', error);
+        }
+      })();
 
       viewer.current = cesiumViewer;
 
