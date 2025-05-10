@@ -6,6 +6,7 @@
   cursor: pointer;
   filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7));
   animation: pulse 1.5s infinite;
+  /* Added comment to force Git to recognize changes */
 }
 
 @keyframes pulse {
