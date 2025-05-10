@@ -16,13 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    
+
     - name: Create frontend env file
       run: |
         echo "# Supabase Configuration" > frontend/.env.local
@@ -33,31 +33,31 @@ jobs:
         echo "NODE_ENV=production" >> frontend/.env.local
         echo "" >> frontend/.env.local
         echo "# Mapbox token for map visualizations" >> frontend/.env.local
-        echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
+        echo "NEXT_PUBLIC_MAPBOX_TOKEN=pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY21haTl1dXhpMGJ2bzJ1cTVlY2p4ajhzZCJ9.AUS7RZCMk1vnR4yQR5RAEQ" >> frontend/.env.local
         echo "" >> frontend/.env.local
         echo "# Cesium token for 3D Earth visualization" >> frontend/.env.local
         echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN }}" >> frontend/.env.local
-    
+
     - name: Install root dependencies
       run: npm ci
-    
+
     - name: Install frontend dependencies
       working-directory: ./frontend
       run: npm ci
-    
+
     - name: Install backend dependencies
       working-directory: ./backend
       run: npm ci
-    
+
     - name: Build frontend
       working-directory: ./frontend
       run: npm run build
-    
+
     - name: Run frontend tests (if available)
       working-directory: ./frontend
       run: npm test || echo "No tests available"
       continue-on-error: true
-    
+
     - name: Run backend tests (if available)
       working-directory: ./backend
       run: npm test || echo "No tests available"

@@ -189,7 +189,7 @@ export default function DriverTrackingPage() {
                   <TruckVisualizationTabs
                     route={activeDriverLocation.route || []}
                     currentPosition={activeDriverLocation.currentPosition}
-                    mapboxToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x0MnRxZnRsMDFnMzJqbzRnZnRqZnRsZCJ9.Ys0-aPUONRGZRpzK6wdCFw'}
+                    mapboxToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY21haTl1dXhpMGJ2bzJ1cTVlY2p4ajhzZCJ9.AUS7RZCMk1vnR4yQR5RAEQ'}
                     cesiumToken={process.env.NEXT_PUBLIC_CESIUM_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0YzMxZTQ1My1lODMwLTRlZTAtYmQwMC0zNzFhMzVjZjFkYWQiLCJpZCI6MTg3MzI0LCJpYXQiOjE3MDI0OTg5NTl9.U_qVSBPVJvFG5vNu7j7jgOA9jBNjqP_ZwCNIl3Xjmtw'}
                   />
                 </CardContent>
