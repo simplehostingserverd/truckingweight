@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { toSearchParamString } from '@/utils/searchParams';
 
 /**
  * Mock API handler for driver activity reports
@@ -6,10 +7,10 @@ import { NextRequest, NextResponse } from 'next/server';
  */
 
 export async function GET(request: NextRequest) {
-  // Extract query parameters
+  // Extract query parameters safely using our utility function
   const url = new URL(request.url);
-  const driverId = url.searchParams.get('driverId') || '1';
-  const dateRange = url.searchParams.get('dateRange') || 'week';
+  const driverId = toSearchParamString(url.searchParams.get('driverId'), '1');
+  const dateRange = toSearchParamString(url.searchParams.get('dateRange'), 'week');
 
   try {
     return NextResponse.json(getMockDriverActivity(driverId, dateRange));

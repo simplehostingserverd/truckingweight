@@ -8,6 +8,7 @@ import { Database } from '@/types/supabase';
 import { getStatusColor } from '@/lib/utils';
 import { PencilIcon, TrashIcon, ArrowLeftIcon, TruckIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
+import { toSearchParamString } from '@/utils/searchParams';
 
 // Dynamically import the LoadStatusUpdater component
 const LoadStatusUpdater = dynamic(() => import('@/components/Loads/LoadStatusUpdater'), { ssr: false });
@@ -21,7 +22,8 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
   const [statusUpdated, setStatusUpdated] = useState(false);
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
-  const { id } = params;
+  // Safely convert the ID parameter to a string
+  const id = toSearchParamString(params.id, '');
 
   useEffect(() => {
     const fetchLoad = async () => {
@@ -262,7 +264,7 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
 
           {/* Status Updater */}
           <LoadStatusUpdater
-            loadId={parseInt(id)}
+            loadId={parseInt(id) || 0}
             currentStatus={load.status}
             onStatusUpdate={() => setStatusUpdated(true)}
           />

@@ -2,9 +2,9 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { 
-  UserIcon, 
-  PencilIcon, 
+import {
+  UserIcon,
+  PencilIcon,
   ArrowLeftIcon,
   IdentificationIcon,
   CalendarIcon,
@@ -13,12 +13,14 @@ import {
   TruckIcon
 } from '@heroicons/react/24/outline';
 import { formatDate } from '@/lib/utils';
+import { toSearchParamString } from '@/utils/searchParams';
 
 export default async function DriverDetail({ params }: { params: { id: string } }) {
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
-  const { id } = params;
-  
+  // Safely convert the ID parameter to a string
+  const id = toSearchParamString(params.id, '');
+
   // Get user data
   const { data: { user } } = await supabase.auth.getUser();
   const { data: userData } = await supabase
@@ -26,7 +28,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
     .select('company_id')
     .eq('id', user?.id)
     .single();
-  
+
   // Get driver data
   const { data: driver, error } = await supabase
     .from('drivers')
@@ -51,37 +53,37 @@ export default async function DriverDetail({ params }: { params: { id: string } 
     .eq('id', id)
     .eq('company_id', userData?.company_id)
     .single();
-  
+
   if (error || !driver) {
     console.error('Error fetching driver:', error);
     notFound();
   }
-  
+
   // Get recent weights
   const recentWeights = driver.weights?.slice(0, 5) || [];
-  
+
   // Get active loads
   const activeLoads = driver.loads?.filter(load => load.status === 'In Transit' || load.status === 'Pending') || [];
-  
+
   // Get vehicle data for weights
   const vehicleIds = recentWeights.map(weight => weight.vehicle_id).filter(Boolean);
   let vehicles: any[] = [];
-  
+
   if (vehicleIds.length > 0) {
     const { data: vehiclesData } = await supabase
       .from('vehicles')
       .select('id, name')
       .in('id', vehicleIds);
-    
+
     vehicles = vehiclesData || [];
   }
-  
+
   // Get vehicle name by ID
   const getVehicleName = (vehicleId: number) => {
     const vehicle = vehicles.find(v => v.id === vehicleId);
     return vehicle ? vehicle.name : 'Unknown';
   };
-  
+
   // Get status badge color
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
@@ -95,7 +97,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
     }
   };
-  
+
   // Get weight status badge color
   const getWeightStatusBadgeColor = (status: string) => {
     switch (status) {
@@ -109,7 +111,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
     }
   };
-  
+
   // Get load status badge color
   const getLoadStatusBadgeColor = (status: string) => {
     switch (status) {
@@ -125,16 +127,16 @@ export default async function DriverDetail({ params }: { params: { id: string } 
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
     }
   };
-  
+
   // Check if license is expired
   const isLicenseExpired = driver.license_expiry ? new Date(driver.license_expiry) < new Date() : false;
-  
+
   // Check if license is expiring soon (within 30 days)
   const isLicenseExpiringSoon = driver.license_expiry ? (
-    !isLicenseExpired && 
+    !isLicenseExpired &&
     new Date(driver.license_expiry) <= new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
   ) : false;
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
@@ -150,7 +152,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
             {driver.status}
           </span>
         </div>
-        
+
         <Link
           href={`/drivers/${id}/edit`}
           className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
@@ -159,7 +161,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
           Edit Driver
         </Link>
       </div>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Driver Details */}
         <div className="lg:col-span-2">
@@ -178,7 +180,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                     <p className="text-base font-medium text-gray-900 dark:text-white">{driver.name}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
                     <IdentificationIcon className="h-6 w-6 text-gray-400" />
@@ -188,7 +190,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                     <p className="text-base font-medium text-gray-900 dark:text-white">{driver.license_number}</p>
                   </div>
                 </div>
-                
+
                 {driver.license_expiry && (
                   <div className="flex items-start">
                     <div className="flex-shrink-0">
@@ -197,8 +199,8 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                     <div className="ml-3">
                       <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">License Expiry</h3>
                       <p className={`text-base font-medium ${
-                        isLicenseExpired 
-                          ? 'text-red-600 dark:text-red-400' 
+                        isLicenseExpired
+                          ? 'text-red-600 dark:text-red-400'
                           : isLicenseExpiringSoon
                           ? 'text-amber-600 dark:text-amber-400'
                           : 'text-gray-900 dark:text-white'
@@ -210,7 +212,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                     </div>
                   </div>
                 )}
-                
+
                 {driver.phone && (
                   <div className="flex items-start">
                     <div className="flex-shrink-0">
@@ -222,7 +224,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                     </div>
                   </div>
                 )}
-                
+
                 {driver.email && (
                   <div className="flex items-start">
                     <div className="flex-shrink-0">
@@ -237,7 +239,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
               </div>
             </div>
           </div>
-          
+
           {/* Recent Weights */}
           <div className="mt-6 bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
             <div className="px-6 py-4 bg-primary-700 text-white">
@@ -309,7 +311,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
             </div>
           </div>
         </div>
-        
+
         {/* Active Loads */}
         <div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
@@ -355,7 +357,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
               )}
             </div>
           </div>
-          
+
           {/* Quick Actions */}
           <div className="mt-6 bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
             <div className="px-6 py-4 bg-primary-700 text-white">

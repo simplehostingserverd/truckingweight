@@ -1,0 +1,119 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { toSearchParamString, toSearchParamNumber, createSearchParams } from '@/utils/searchParams';
+
+/**
+ * Example component demonstrating safe search parameter handling
+ * 
+ * This component shows how to safely handle search parameters in client components
+ * to avoid common bugs with string[] parameters.
+ */
+export default function SearchParamsExample() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // Safely extract search parameters
+  const query = toSearchParamString(searchParams.get('query'), '');
+  const page = toSearchParamNumber(searchParams.get('page'), 1);
+  const category = toSearchParamString(searchParams.get('category'), 'all');
+  
+  // Local state
+  const [searchQuery, setSearchQuery] = useState(query);
+  const [currentPage, setCurrentPage] = useState(page);
+  const [selectedCategory, setSelectedCategory] = useState(category);
+  
+  // Update URL when filters change
+  const updateFilters = () => {
+    const params = createSearchParams({
+      query: searchQuery,
+      page: currentPage,
+      category: selectedCategory !== 'all' ? selectedCategory : undefined,
+    });
+    
+    router.push(`?${params.toString()}`);
+  };
+  
+  // Handle search form submission
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    setCurrentPage(1); // Reset to page 1 on new search
+    updateFilters();
+  };
+  
+  // Handle pagination
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    updateFilters();
+  };
+  
+  // Handle category change
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value);
+    setCurrentPage(1); // Reset to page 1 on category change
+    updateFilters();
+  };
+  
+  return (
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Search Example</h1>
+      
+      <form onSubmit={handleSearch} className="mb-6">
+        <div className="flex gap-2 mb-4">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search..."
+            className="flex-1 p-2 border rounded"
+          />
+          
+          <select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className="p-2 border rounded"
+          >
+            <option value="all">All Categories</option>
+            <option value="vehicles">Vehicles</option>
+            <option value="drivers">Drivers</option>
+            <option value="weights">Weights</option>
+          </select>
+          
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+      
+      <div className="mb-4">
+        <p>Current Filters:</p>
+        <ul className="list-disc pl-5">
+          <li>Query: {query || '(none)'}</li>
+          <li>Page: {page}</li>
+          <li>Category: {category}</li>
+        </ul>
+      </div>
+      
+      <div className="flex justify-center gap-2">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage <= 1}
+          className="px-3 py-1 border rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <span className="px-3 py-1">Page {currentPage}</span>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          className="px-3 py-1 border rounded"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+}

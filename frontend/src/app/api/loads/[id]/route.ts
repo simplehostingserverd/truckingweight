@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { toSearchParamString } from '@/utils/searchParams';
 
 /**
  * Mock API handler for load details
@@ -9,8 +10,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const id = params.id;
-  
+  // Safely convert the ID parameter to a string
+  const id = toSearchParamString(params.id, '1');
+
   try {
     // Return mock load data
     return NextResponse.json({

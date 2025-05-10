@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { toSearchParamString } from '@/utils/searchParams';
 
 /**
  * Mock API handler for dashboard endpoints
@@ -14,9 +15,9 @@ export async function GET(
   const routeParams = Array.isArray(params.route) ? [...params.route] : [];
   const route = routeParams.join('/');
 
-  // Extract query parameters
+  // Extract query parameters safely using our utility function
   const url = new URL(request.url);
-  const dateRange = url.searchParams.get('dateRange') || 'week';
+  const dateRange = toSearchParamString(url.searchParams.get('dateRange'), 'week');
 
   try {
     // Route to appropriate mock data handler
