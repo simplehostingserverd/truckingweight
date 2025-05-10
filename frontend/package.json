@@ -15,7 +15,6 @@
     "@heroicons/react": "^2.1.1",
     "@loaders.gl/core": "^4.3.3",
     "@loaders.gl/gltf": "^4.3.3",
-    "@next/swc-win32-x64-msvc": "^15.3.2",
     "@supabase/auth-helpers-nextjs": "^0.9.0",
     "@supabase/supabase-js": "^2.39.7",
     "@types/react-datepicker": "^6.0.1",
