@@ -1,21 +1,10 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import Link from 'next/link';
-import RecentWeightsTable from '@/components/Dashboard/RecentWeightsTable';
-import QuickActions from '@/components/Dashboard/QuickActions';
-import dynamic from 'next/dynamic';
-import { ScaleIcon } from '@heroicons/react/24/outline';
 import DashboardClient from './client';
 
-// Dynamically import chart components with no SSR to avoid hydration issues
-const ComplianceChart = dynamic(() => import('@/components/Dashboard/ComplianceChart'), { ssr: false });
-const VehicleWeightChart = dynamic(() => import('@/components/Dashboard/VehicleWeightChart'), { ssr: false });
-const LoadStatusChart = dynamic(() => import('@/components/Dashboard/LoadStatusChart'), { ssr: false });
-const DashboardStats = dynamic(() => import('@/components/Dashboard/DashboardStats'), { ssr: false });
-const AdminCompanySelector = dynamic(() => import('@/components/Dashboard/AdminCompanySelector'), { ssr: false });
-
 export default async function Dashboard() {
-  const cookieStore = cookies();
+  // Await cookies to fix the "cookies() should be awaited" error
+  const cookieStore = await cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   // Get minimal user data for initial rendering

@@ -9,12 +9,14 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { route: string[] } }
 ) {
-  const route = params.route.join('/');
-  
+  // Await params to fix the "params should be awaited" error
+  const routeParams = await Promise.resolve(params.route);
+  const route = routeParams.join('/');
+
   // Extract query parameters
   const url = new URL(request.url);
   const dateRange = url.searchParams.get('dateRange') || 'week';
-  
+
   try {
     // Route to appropriate mock data handler
     switch (route) {
@@ -64,7 +66,7 @@ function getMockLoadStatus() {
 function getMockComplianceData(dateRange: string) {
   // Adjust data slightly based on date range
   const multiplier = dateRange === 'week' ? 1 : dateRange === 'month' ? 4 : 12;
-  
+
   return [
     { name: 'Compliant', value: 42 * multiplier },
     { name: 'Warning', value: 5 * multiplier },
@@ -75,7 +77,7 @@ function getMockComplianceData(dateRange: string) {
 function getMockVehicleWeights(dateRange: string) {
   // Adjust data slightly based on date range
   const multiplier = dateRange === 'week' ? 1 : dateRange === 'month' ? 1.5 : 2;
-  
+
   return [
     { name: 'Truck 101', weight: Math.round(32500 * multiplier) },
     { name: 'Truck 102', weight: Math.round(29800 * multiplier) },

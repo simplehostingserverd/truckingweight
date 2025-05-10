@@ -21,6 +21,14 @@ export {
   CardFooter,
 } from './Card';
 
+// Export Tabs components
+export {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent
+} from './Tabs';
+
 // Re-export existing components
 export { default as MobileNav } from './MobileNav';
 export { default as ServiceWorkerRegistration } from './ServiceWorkerRegistration';

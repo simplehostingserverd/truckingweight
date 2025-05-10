@@ -6,7 +6,8 @@ import { redirect } from 'next/navigation';
 import Layout from '@/components/Layout/Layout';
 
 export default async function Home() {
-  const cookieStore = cookies();
+  // Await cookies to fix the "cookies() should be awaited" error
+  const cookieStore = await cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   const { data: { user } } = await supabase.auth.getUser();

@@ -8,7 +8,7 @@ import {
   CardTitle,
   CardFooter
 } from '@/components/ui';
-import RouteMap3D from '@/components/driver-activity/RouteMap3D';
+import TruckVisualizationTabs from '@/components/TruckTracking/TruckVisualizationTabs';
 
 interface DriverLocation {
   driverId: string;
@@ -55,13 +55,13 @@ export default function DriverTrackingPage() {
       try {
         // In a real app, this would fetch from a real-time API
         const response = await fetch('/api/reports/driver-activity');
-        
+
         if (!response.ok) {
           throw new Error(`Error fetching driver locations: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        
+
         // In a real app, this would be an array of driver locations
         // For now, we'll create a mock array with the single driver data
         const mockDriverLocations = [
@@ -82,9 +82,9 @@ export default function DriverTrackingPage() {
             }
           }
         ];
-        
+
         setDriverLocations(mockDriverLocations);
-        
+
         // Set the first driver as selected if none is selected
         if (!selectedDriver && mockDriverLocations.length > 0) {
           setSelectedDriver(mockDriverLocations[0].driverId);
@@ -102,13 +102,13 @@ export default function DriverTrackingPage() {
         setLoading(false);
       }
     };
-    
+
     // Initial fetch
     fetchDriverLocations();
-    
+
     // Set up interval for periodic updates
     const intervalId = setInterval(fetchDriverLocations, refreshInterval * 1000);
-    
+
     // Clean up interval on unmount
     return () => clearInterval(intervalId);
   }, [selectedDriver, refreshInterval]);
@@ -131,7 +131,7 @@ export default function DriverTrackingPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Live Driver Tracking</h1>
-        
+
         <div className="flex space-x-4">
           <div>
             <select
@@ -147,7 +147,7 @@ export default function DriverTrackingPage() {
               ))}
             </select>
           </div>
-          
+
           <div>
             <select
               className="w-[180px] rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -162,7 +162,7 @@ export default function DriverTrackingPage() {
           </div>
         </div>
       </div>
-      
+
       {loading && !activeDriverLocation ? (
         <div className="flex justify-center items-center h-64">
           <p className="text-lg">Loading driver location data...</p>
@@ -186,9 +186,11 @@ export default function DriverTrackingPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <RouteMap3D 
-                    route={activeDriverLocation.route || []} 
-                    currentPosition={activeDriverLocation.currentPosition} 
+                  <TruckVisualizationTabs
+                    route={activeDriverLocation.route || []}
+                    currentPosition={activeDriverLocation.currentPosition}
+                    mapboxToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x0MnRxZnRsMDFnMzJqbzRnZnRqZnRsZCJ9.Ys0-aPUONRGZRpzK6wdCFw'}
+                    cesiumToken={process.env.NEXT_PUBLIC_CESIUM_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0YzMxZTQ1My1lODMwLTRlZTAtYmQwMC0zNzFhMzVjZjFkYWQiLCJpZCI6MTg3MzI0LCJpYXQiOjE3MDI0OTg5NTl9.U_qVSBPVJvFG5vNu7j7jgOA9jBNjqP_ZwCNIl3Xjmtw'}
                   />
                 </CardContent>
                 <CardFooter>
@@ -205,7 +207,7 @@ export default function DriverTrackingPage() {
                   </div>
                 </CardFooter>
               </Card>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
@@ -228,7 +230,7 @@ export default function DriverTrackingPage() {
                     </div>
                   </CardContent>
                 </Card>
-                
+
                 <Card>
                   <CardHeader>
                     <CardTitle>Vehicle Information</CardTitle>

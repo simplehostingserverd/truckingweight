@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { PlusIcon, DocumentTextIcon, ArrowPathIcon, ScaleIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, DocumentTextIcon, ArrowPathIcon, ScaleIcon, TruckIcon } from '@heroicons/react/24/outline';
 
 export default function QuickActions() {
   return (
@@ -30,8 +30,15 @@ export default function QuickActions() {
           Create Load
         </Link>
         <Link
+          href="/driver-tracking"
+          className="flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
+        >
+          <TruckIcon className="h-5 w-5 mr-2" />
+          3D Truck Tracking
+        </Link>
+        <Link
           href="/reports"
-          className="flex items-center justify-center bg-primary-600 text-white py-2 px-4 rounded hover:bg-primary-700 transition-colors"
+          className="flex items-center justify-center bg-primary-600 text-white py-2 px-4 rounded hover:bg-primary-700 transition-colors col-span-1 md:col-span-2"
         >
           <DocumentTextIcon className="h-5 w-5 mr-2" />
           Generate Report

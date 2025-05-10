@@ -1,0 +1,231 @@
+{
+  "asset": {
+    "generator": "TruckingWeight App",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [0]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [1, 2, 3, 4, 5, 6],
+      "name": "Truck"
+    },
+    {
+      "mesh": 0,
+      "name": "TruckBody",
+      "translation": [0, 0.5, 0]
+    },
+    {
+      "mesh": 1,
+      "name": "TruckCabin",
+      "translation": [0, 0.75, -1.25]
+    },
+    {
+      "mesh": 2,
+      "name": "WheelFrontLeft",
+      "rotation": [0, 0, 0.7071068, 0.7071068],
+      "translation": [-1, 0.5, -1.5]
+    },
+    {
+      "mesh": 2,
+      "name": "WheelFrontRight",
+      "rotation": [0, 0, 0.7071068, 0.7071068],
+      "translation": [1, 0.5, -1.5]
+    },
+    {
+      "mesh": 2,
+      "name": "WheelRearLeft",
+      "rotation": [0, 0, 0.7071068, 0.7071068],
+      "translation": [-1, 0.5, 1.5]
+    },
+    {
+      "mesh": 2,
+      "name": "WheelRearRight",
+      "rotation": [0, 0, 0.7071068, 0.7071068],
+      "translation": [1, 0.5, 1.5]
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1
+          },
+          "indices": 2,
+          "material": 0
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 3,
+            "NORMAL": 4
+          },
+          "indices": 5,
+          "material": 1
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 6,
+            "NORMAL": 7
+          },
+          "indices": 8,
+          "material": 2
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "TruckBodyMaterial",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.8, 0.0, 0.0, 1.0],
+        "metallicFactor": 0.5,
+        "roughnessFactor": 0.5
+      }
+    },
+    {
+      "name": "TruckCabinMaterial",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.9, 0.9, 0.9, 1.0],
+        "metallicFactor": 0.8,
+        "roughnessFactor": 0.2
+      }
+    },
+    {
+      "name": "WheelMaterial",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.1, 0.1, 0.1, 1.0],
+        "metallicFactor": 0.1,
+        "roughnessFactor": 0.9
+      }
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 24,
+      "max": [1, 0.5, 2],
+      "min": [-1, -0.5, -2],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5123,
+      "count": 36,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 24,
+      "max": [1, 0.5, 0.75],
+      "min": [-1, -0.5, -0.75],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5123,
+      "count": 36,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 360,
+      "max": [0.25, 0.25, 0.25],
+      "min": [-0.25, -0.25, -0.25],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 360,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5123,
+      "count": 540,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 0
+    },
+    {
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 288
+    },
+    {
+      "buffer": 0,
+      "byteLength": 72,
+      "byteOffset": 576
+    },
+    {
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 648
+    },
+    {
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 936
+    },
+    {
+      "buffer": 0,
+      "byteLength": 72,
+      "byteOffset": 1224
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4320,
+      "byteOffset": 1296
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4320,
+      "byteOffset": 5616
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1080,
+      "byteOffset": 9936
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 11016,
+      "uri": "truck.bin"
+    }
+  ]
+}
