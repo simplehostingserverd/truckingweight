@@ -4,70 +4,102 @@
 
 @layer base {
   :root {
-    /* TruckingWeight Design System - Light Theme */
+    /* Modern 2024 Design System - Light Theme */
     --background: 0 0% 100%;
-    --foreground: 217 33% 17%;
+    --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
-    --card-foreground: 217 33% 17%;
+    --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 217 33% 17%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    /* Primary - Deep Blue */
-    --primary: 210 70% 17%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary - Modern Indigo */
+    --primary: 226 70% 55.5%;
+    --primary-foreground: 210 40% 98%;
 
-    /* Secondary - Steel Gray */
-    --secondary: 200 13% 46%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary - Modern Slate */
+    --secondary: 215 27% 47%;
+    --secondary-foreground: 210 40% 98%;
 
-    /* Accent - Highway Yellow */
-    --accent: 45 100% 51%;
-    --accent-foreground: 217 33% 17%;
+    /* Accent - Modern Amber */
+    --accent: 38 92% 50%;
+    --accent-foreground: 210 40% 98%;
 
-    /* Destructive - Brick Red */
-    --destructive: 0 65% 47%;
-    --destructive-foreground: 0 0% 100%;
+    /* Destructive - Modern Red */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Success - Modern Emerald */
+    --success: 160 84% 39%;
+    --success-foreground: 210 40% 98%;
+
+    /* Warning - Modern Amber */
+    --warning: 38 92% 50%;
+    --warning-foreground: 210 40% 98%;
 
     /* UI Elements */
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 210 70% 17%;
-    --radius: 0.25rem;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 226 70% 55.5%;
+
+    /* Radius */
+    --radius: 0.5rem;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.1), 0 1px 2px rgba(16, 24, 40, 0.06);
+    --shadow: 0 4px 8px -2px rgba(16, 24, 40, 0.1), 0 2px 4px -2px rgba(16, 24, 40, 0.06);
+    --shadow-md: 0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03);
+    --shadow-lg: 0 20px 24px -4px rgba(16, 24, 40, 0.08), 0 8px 8px -4px rgba(16, 24, 40, 0.03);
+    --shadow-xl: 0 24px 48px -12px rgba(16, 24, 40, 0.18);
   }
 
   .dark {
-    /* TruckingWeight Design System - Dark Theme */
-    --background: 217 33% 17%;
+    /* Modern 2024 Design System - Dark Theme */
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-    --card: 217 33% 17%;
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-    --popover: 217 33% 17%;
+    --popover: 222.2 47.4% 11.2%;
     --popover-foreground: 210 40% 98%;
 
-    /* Primary - Deep Blue (lighter in dark mode) */
-    --primary: 210 70% 40%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary - Modern Indigo (lighter in dark mode) */
+    --primary: 226 70% 65.5%;
+    --primary-foreground: 222.2 47.4% 11.2%;
 
-    /* Secondary - Steel Gray (lighter in dark mode) */
-    --secondary: 200 13% 60%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary - Modern Slate (lighter in dark mode) */
+    --secondary: 215 27% 57%;
+    --secondary-foreground: 210 40% 98%;
 
-    /* Accent - Highway Yellow */
-    --accent: 45 100% 51%;
-    --accent-foreground: 217 33% 17%;
+    /* Accent - Modern Amber */
+    --accent: 38 92% 50%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
-    /* Destructive - Brick Red (lighter in dark mode) */
-    --destructive: 0 65% 60%;
-    --destructive-foreground: 0 0% 100%;
+    /* Destructive - Modern Red (lighter in dark mode) */
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Success - Modern Emerald (lighter in dark mode) */
+    --success: 160 84% 49%;
+    --success-foreground: 222.2 47.4% 11.2%;
+
+    /* Warning - Modern Amber (lighter in dark mode) */
+    --warning: 38 92% 55%;
+    --warning-foreground: 222.2 47.4% 11.2%;
 
     /* UI Elements */
-    --muted: 217 33% 25%;
-    --muted-foreground: 215 20% 65%;
-    --border: 217 33% 25%;
-    --input: 217 33% 25%;
-    --ring: 210 70% 40%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 226 70% 65.5%;
+
+    /* Shadows for dark mode */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.36);
+    --shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.36);
+    --shadow-md: 0 12px 16px -4px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 20px 24px -4px rgba(0, 0, 0, 0.3), 0 8px 8px -4px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 24px 48px -12px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -79,89 +111,121 @@
     @apply bg-background text-foreground;
   }
 
-  /* Typography */
+  /* Modern Typography */
   h1, .h1 {
-    @apply text-3xl font-bold tracking-tight;
+    @apply text-4xl font-bold tracking-tight leading-tight;
   }
   h2, .h2 {
-    @apply text-2xl font-semibold tracking-tight;
+    @apply text-3xl font-semibold tracking-tight leading-tight;
   }
   h3, .h3 {
-    @apply text-xl font-semibold tracking-tight;
+    @apply text-2xl font-semibold tracking-tight;
   }
   h4, .h4 {
-    @apply text-lg font-semibold tracking-tight;
+    @apply text-xl font-semibold tracking-tight;
+  }
+  h5, .h5 {
+    @apply text-lg font-medium;
+  }
+
+  /* Text styles */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400;
+  }
+
+  .text-body-lg {
+    @apply text-lg leading-relaxed;
+  }
+
+  .text-body {
+    @apply text-base leading-relaxed;
+  }
+
+  .text-body-sm {
+    @apply text-sm leading-relaxed;
+  }
+
+  .text-caption {
+    @apply text-sm text-muted-foreground;
   }
 
   /* Fonts are loaded via next/font/google in layout.tsx */
 }
 
 @layer components {
-  /* Button Variants */
+  /* Modern Button Variants */
   .btn {
-    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-200
     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
     disabled:opacity-50 disabled:pointer-events-none;
   }
 
   .btn-primary {
-    @apply btn bg-primary text-primary-foreground hover:bg-primary/90;
+    @apply btn bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow;
   }
 
   .btn-secondary {
-    @apply btn bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    @apply btn bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm hover:shadow;
   }
 
   .btn-outline {
-    @apply btn border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+    @apply btn border border-input bg-background hover:bg-accent/10 hover:text-accent-foreground;
   }
 
   .btn-ghost {
-    @apply btn hover:bg-accent hover:text-accent-foreground;
+    @apply btn hover:bg-muted/50 hover:text-foreground;
   }
 
   .btn-link {
     @apply btn underline-offset-4 hover:underline text-primary;
   }
 
+  .btn-gradient {
+    @apply btn bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700
+    text-white shadow-md hover:shadow-lg dark:from-indigo-500 dark:to-violet-500 dark:hover:from-indigo-600 dark:hover:to-violet-600;
+  }
+
   .btn-sm {
-    @apply h-8 px-3 text-xs;
+    @apply h-8 px-3 text-xs rounded;
   }
 
   .btn-md {
-    @apply h-10 px-4 py-2;
+    @apply h-10 px-4 py-2 rounded-md;
   }
 
   .btn-lg {
-    @apply h-12 px-6 text-base;
+    @apply h-12 px-6 text-base rounded-lg;
   }
 
-  /* Form Elements */
+  /* Modern Form Elements */
   .form-input {
     @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
     placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2
-    focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+    focus-visible:ring-ring focus-visible:border-primary/50 disabled:cursor-not-allowed disabled:opacity-50
+    transition-colors duration-200;
   }
 
   .form-select {
     @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed
-    disabled:opacity-50;
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-primary/50
+    disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-200;
   }
 
   .form-checkbox {
     @apply h-4 w-4 rounded border border-input bg-background focus-visible:outline-none
-    focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+    focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50
+    text-primary transition-colors duration-200;
   }
 
   .form-radio {
     @apply h-4 w-4 rounded-full border border-input bg-background focus-visible:outline-none
-    focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+    focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50
+    text-primary transition-colors duration-200;
   }
 
-  /* Card Styles */
+  /* Modern Card Styles */
   .card {
-    @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+    @apply rounded-xl border bg-card text-card-foreground shadow-md hover:shadow-lg transition-all duration-200;
   }
 
   .card-header {
@@ -184,18 +248,26 @@
     @apply flex items-center p-6 pt-0;
   }
 
-  /* Badge Styles */
+  .card-hover {
+    @apply hover:-translate-y-1 cursor-pointer;
+  }
+
+  .card-glass {
+    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-white/20 dark:border-gray-800/20;
+  }
+
+  /* Modern Badge Styles */
   .badge {
     @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors
     focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
   }
 
   .badge-primary {
-    @apply badge bg-primary text-primary-foreground hover:bg-primary/80;
+    @apply badge bg-primary/10 text-primary border-primary/20 hover:bg-primary/20;
   }
 
   .badge-secondary {
-    @apply badge bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    @apply badge bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/20;
   }
 
   .badge-outline {
@@ -203,14 +275,44 @@
   }
 
   .badge-success {
-    @apply badge bg-success text-white hover:bg-success/80;
+    @apply badge bg-success/10 text-success border-success/20 hover:bg-success/20;
   }
 
   .badge-warning {
-    @apply badge bg-warning text-black hover:bg-warning/80;
+    @apply badge bg-warning/10 text-warning-foreground border-warning/20 hover:bg-warning/20;
   }
 
-  .badge-alert {
-    @apply badge bg-alert text-white hover:bg-alert/80;
+  .badge-destructive {
+    @apply badge bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/20;
+  }
+
+  /* Modern Layout Components */
+  .sidebar {
+    @apply bg-card border-r border-border shadow-sm;
+  }
+
+  .header {
+    @apply bg-card border-b border-border shadow-sm;
+  }
+
+  .footer {
+    @apply bg-muted/50 border-t border-border;
+  }
+
+  /* Modern Effects */
+  .shadow-card {
+    @apply shadow-md hover:shadow-lg transition-all duration-200;
+  }
+
+  .shadow-button {
+    @apply shadow-sm hover:shadow transition-all duration-200;
+  }
+
+  .shadow-dropdown {
+    @apply shadow-lg;
+  }
+
+  .animate-hover {
+    @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-md;
   }
 }
