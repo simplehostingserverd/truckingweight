@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Deck } from '@deck.gl/core';
 import { ScenegraphLayer } from '@deck.gl/mesh-layers';
-import { PathLayer, IconLayer } from '@deck.gl/layers';
+import { PathLayer, IconLayer, PolygonLayer } from '@deck.gl/layers';
 import { MapView } from '@deck.gl/core';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -29,7 +29,7 @@ export default function DeckGLTruckVisualization({
 }: DeckGLTruckVisualizationProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
-  const deckRef = useRef<Deck | null>(null);
+  const deckRef = useRef<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -139,24 +139,34 @@ export default function DeckGLTruckVisualization({
               pickable: true
             }),
 
-            // 3D truck layer
-            new ScenegraphLayer({
-              id: 'truck-layer',
-              data: [
-                {
-                  position: [truckPosition.lng, truckPosition.lat],
-                  orientation: calculateTruckOrientation(truckPosition, route),
-                  name: 'Truck'
-                }
-              ],
-              scenegraph: '/models/truck.gltf',
-              sizeScale: 30,
-              getPosition: d => d.position,
-              getOrientation: d => d.orientation,
-              getTranslation: [0, 0, 0],
-              getScale: [1, 1, 1],
-              pickable: true
-            })
+            // 3D truck layer - with fallback
+            (() => {
+              try {
+                return new ScenegraphLayer({
+                  id: 'truck-layer',
+                  data: [
+                    {
+                      position: [truckPosition.lng, truckPosition.lat],
+                      orientation: calculateTruckOrientation(truckPosition, route),
+                      name: 'Truck'
+                    }
+                  ],
+                  scenegraph: '/models/simple-truck.json',
+                  sizeScale: 30,
+                  getPosition: d => d.position,
+                  getOrientation: d => d.orientation,
+                  getTranslation: [0, 0, 0],
+                  getScale: [1, 1, 1],
+                  pickable: true
+                });
+              } catch (modelError) {
+                console.error('Failed to load 3D truck model, using fallback:', modelError);
+                return createFallbackTruckLayer(
+                  [truckPosition.lng, truckPosition.lat],
+                  calculateTruckOrientation(truckPosition, route)
+                );
+              }
+            })()
           ],
           onLoad: () => {
             setLoading(false);
@@ -216,32 +226,70 @@ export default function DeckGLTruckVisualization({
     return [0, 0, 0];
   };
 
+  // Create a fallback truck layer using simple shapes
+  const createFallbackTruckLayer = (position: [number, number], _orientation: [number, number, number]) => {
+    // Create a simple truck shape using a polygon layer
+    return new PolygonLayer({
+      id: 'fallback-truck-layer',
+      data: [
+        {
+          // Truck body
+          contour: [
+            [position[0] - 0.0005, position[1] - 0.0005],
+            [position[0] + 0.0005, position[1] - 0.0005],
+            [position[0] + 0.0005, position[1] + 0.0005],
+            [position[0] - 0.0005, position[1] + 0.0005]
+          ],
+          position: position,
+          name: 'Truck'
+        }
+      ],
+      getPolygon: d => d.contour,
+      getFillColor: [255, 0, 0, 200],
+      getLineColor: [0, 0, 0],
+      getLineWidth: 1,
+      extruded: true,
+      getElevation: 100,
+      pickable: true
+    });
+  };
+
   // Update truck position when currentPosition changes
   useEffect(() => {
     if (!deckRef.current || !currentPosition || !mapRef.current) return;
 
     try {
-      // Update truck layer with new position
-      const truckLayer = new ScenegraphLayer({
-        id: 'truck-layer',
-        data: [
-          {
-            position: [currentPosition.lng, currentPosition.lat],
-            orientation: calculateTruckOrientation(currentPosition, route),
-            name: 'Truck'
-          }
-        ],
-        scenegraph: '/models/truck.gltf',
-        sizeScale: 30,
-        getPosition: d => d.position,
-        getOrientation: d => d.orientation,
-        getTranslation: [0, 0, 0],
-        getScale: [1, 1, 1],
-        pickable: true
-      });
+      // Try to create a 3D truck layer, but fall back to a simple shape if it fails
+      let truckLayer;
+
+      try {
+        truckLayer = new ScenegraphLayer({
+          id: 'truck-layer',
+          data: [
+            {
+              position: [currentPosition.lng, currentPosition.lat],
+              orientation: calculateTruckOrientation(currentPosition, route),
+              name: 'Truck'
+            }
+          ],
+          scenegraph: '/models/simple-truck.json',
+          sizeScale: 30,
+          getPosition: d => d.position,
+          getOrientation: d => d.orientation,
+          getTranslation: [0, 0, 0],
+          getScale: [1, 1, 1],
+          pickable: true
+        });
+      } catch (modelError) {
+        console.error('Failed to load 3D truck model, using fallback:', modelError);
+        truckLayer = createFallbackTruckLayer(
+          [currentPosition.lng, currentPosition.lat],
+          calculateTruckOrientation(currentPosition, route)
+        );
+      }
 
       // Get current layers
-      const currentLayers = deckRef.current.props.layers || [];
+      const currentLayers = deckRef.current.props.layers;
 
       // Create new layers array with updated truck layer
       const newLayers = Array.isArray(currentLayers) ? currentLayers.map(layer => {

@@ -181,12 +181,10 @@ export default function CesiumTruckVisualization({
         Cesium.Cartesian3.fromDegrees(truckPos.lng, truckPos.lat, 100),
         new Cesium.HeadingPitchRoll(heading, 0, 0)
       ),
-      model: {
-        uri: '/models/truck.gltf',
-        minimumPixelSize: 128,
-        maximumScale: 20000,
-        scale: 0.05,
-        shadows: Cesium.ShadowMode.ENABLED,
+      // Use a simple box instead of a 3D model
+      box: {
+        dimensions: new Cesium.Cartesian3(20, 10, 40),
+        material: Cesium.Color.RED
       },
       label: {
         text: 'Truck',
