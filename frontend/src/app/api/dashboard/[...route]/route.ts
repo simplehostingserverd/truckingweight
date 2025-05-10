@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { toSearchParamString } from '@/utils/searchParams';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 
 /**
- * Mock API handler for dashboard endpoints
- * This provides temporary mock data while the backend is being developed
+ * API handler for dashboard endpoints
+ * This provides real data from the database with fallback to mock data
  */
 
 export async function GET(
@@ -20,31 +22,370 @@ export async function GET(
   const dateRange = toSearchParamString(url.searchParams.get('dateRange'), 'week');
 
   try {
-    // Route to appropriate mock data handler
+    // Initialize Supabase client
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+
+    // Get user data
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Get user's company_id and admin status
+    const { data: userData, error: userError } = await supabase
+      .from('users')
+      .select('company_id, is_admin')
+      .eq('id', user.id)
+      .single();
+
+    if (userError) {
+      console.error('Error fetching user data:', userError);
+      return NextResponse.json({ error: 'Error fetching user data' }, { status: 500 });
+    }
+
+    const isAdmin = userData?.is_admin || false;
+    const companyId = userData?.company_id;
+
+    // Route to appropriate data handler
     switch (route) {
       case 'stats':
-        return NextResponse.json(getMockStats());
+        return NextResponse.json(await getStats(supabase, isAdmin, companyId));
       case 'load-status':
-        return NextResponse.json(getMockLoadStatus());
+        return NextResponse.json(await getLoadStatus(supabase, isAdmin, companyId));
       case 'compliance':
-        return NextResponse.json(getMockComplianceData(dateRange));
+        return NextResponse.json(await getComplianceData(supabase, isAdmin, companyId, dateRange));
       case 'vehicle-weights':
-        return NextResponse.json(getMockVehicleWeights(dateRange));
+        return NextResponse.json(await getVehicleWeights(supabase, isAdmin, companyId, dateRange));
       case 'recent-weights':
-        return NextResponse.json(getMockRecentWeights());
+        return NextResponse.json(await getRecentWeights(supabase, isAdmin, companyId));
       default:
         return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 });
     }
   } catch (error) {
-    console.error(`Error in mock API (${route}):`, error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    console.error(`Error in dashboard API (${route}):`, error);
+
+    // Fall back to mock data if there's an error
+    try {
+      switch (route) {
+        case 'stats':
+          return NextResponse.json(getMockStats());
+        case 'load-status':
+          return NextResponse.json(getMockLoadStatus());
+        case 'compliance':
+          return NextResponse.json(getMockComplianceData(dateRange));
+        case 'vehicle-weights':
+          return NextResponse.json(getMockVehicleWeights(dateRange));
+        case 'recent-weights':
+          return NextResponse.json(getMockRecentWeights());
+        default:
+          return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 });
+      }
+    } catch (fallbackError) {
+      return NextResponse.json(
+        { error: 'Internal server error' },
+        { status: 500 }
+      );
+    }
   }
 }
 
-// Mock data generators
+// Live data functions
+async function getStats(supabase, isAdmin, companyId) {
+  // Get counts for various entities
+  let vehicleQuery = supabase.from('vehicles').select('*', { count: 'exact', head: true });
+  let driverQuery = supabase.from('drivers').select('*', { count: 'exact', head: true });
+  let loadQuery = supabase.from('loads').select('*', { count: 'exact', head: true }).eq('status', 'In Transit');
+
+  // If not admin, filter by company_id
+  if (!isAdmin && companyId) {
+    vehicleQuery = vehicleQuery.eq('company_id', companyId);
+    driverQuery = driverQuery.eq('company_id', companyId);
+    loadQuery = loadQuery.eq('company_id', companyId);
+  }
+
+  // Get today's date in ISO format (YYYY-MM-DD)
+  const today = new Date().toISOString().split('T')[0];
+
+  // Get weights created today
+  let weightQuery = supabase
+    .from('weights')
+    .select('*', { count: 'exact', head: true })
+    .gte('created_at', `${today}T00:00:00Z`)
+    .lte('created_at', `${today}T23:59:59Z`);
+
+  // Get non-compliant weights
+  let nonCompliantQuery = supabase
+    .from('weights')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'Non-Compliant');
+
+  // Get all weights for compliance rate calculation
+  let allWeightsQuery = supabase
+    .from('weights')
+    .select('*', { count: 'exact', head: true });
+
+  // If not admin, filter by company_id
+  if (!isAdmin && companyId) {
+    weightQuery = weightQuery.eq('company_id', companyId);
+    nonCompliantQuery = nonCompliantQuery.eq('company_id', companyId);
+    allWeightsQuery = allWeightsQuery.eq('company_id', companyId);
+  }
+
+  // Execute all queries in parallel
+  const [
+    { count: vehicleCount },
+    { count: driverCount },
+    { count: activeLoads },
+    { count: weightsToday },
+    { count: nonCompliantWeights },
+    { count: totalWeights }
+  ] = await Promise.all([
+    vehicleQuery,
+    driverQuery,
+    loadQuery,
+    weightQuery,
+    nonCompliantQuery,
+    allWeightsQuery
+  ]);
+
+  // Calculate compliance rate
+  const complianceRate = totalWeights > 0
+    ? Math.round(((totalWeights - nonCompliantWeights) / totalWeights) * 100)
+    : 100;
+
+  return {
+    vehicleCount: vehicleCount || 0,
+    driverCount: driverCount || 0,
+    activeLoads: activeLoads || 0,
+    weightsToday: weightsToday || 0,
+    complianceRate,
+    nonCompliantWeights: nonCompliantWeights || 0
+  };
+}
+
+async function getLoadStatus(supabase, isAdmin, companyId) {
+  // Query to get load counts by status
+  let query = supabase.from('loads').select('status');
+
+  // If not admin, filter by company_id
+  if (!isAdmin && companyId) {
+    query = query.eq('company_id', companyId);
+  }
+
+  const { data: loads, error } = await query;
+
+  if (error) {
+    console.error('Error fetching load status:', error);
+    throw error;
+  }
+
+  // Count loads by status
+  const statusCounts = {
+    'Pending': 0,
+    'In Transit': 0,
+    'Delivered': 0,
+    'Cancelled': 0
+  };
+
+  loads.forEach(load => {
+    const status = load.status || 'Pending';
+    if (statusCounts[status] !== undefined) {
+      statusCounts[status]++;
+    }
+  });
+
+  // Convert to array format
+  return Object.entries(statusCounts).map(([name, value]) => ({ name, value }));
+}
+
+async function getComplianceData(supabase, isAdmin, companyId, dateRange) {
+  // Determine date range
+  const now = new Date();
+  let startDate;
+
+  if (dateRange === 'week') {
+    // Last 7 days
+    startDate = new Date(now);
+    startDate.setDate(now.getDate() - 7);
+  } else if (dateRange === 'month') {
+    // Last 30 days
+    startDate = new Date(now);
+    startDate.setDate(now.getDate() - 30);
+  } else {
+    // Last 365 days (year)
+    startDate = new Date(now);
+    startDate.setDate(now.getDate() - 365);
+  }
+
+  // Format dates for query
+  const startDateStr = startDate.toISOString();
+  const endDateStr = now.toISOString();
+
+  // Query to get weights by status in the date range
+  let query = supabase
+    .from('weights')
+    .select('status')
+    .gte('created_at', startDateStr)
+    .lte('created_at', endDateStr);
+
+  // If not admin, filter by company_id
+  if (!isAdmin && companyId) {
+    query = query.eq('company_id', companyId);
+  }
+
+  const { data: weights, error } = await query;
+
+  if (error) {
+    console.error('Error fetching compliance data:', error);
+    throw error;
+  }
+
+  // Count weights by status
+  const statusCounts = {
+    'Compliant': 0,
+    'Warning': 0,
+    'Non-Compliant': 0
+  };
+
+  weights.forEach(weight => {
+    const status = weight.status || 'Compliant';
+    if (statusCounts[status] !== undefined) {
+      statusCounts[status]++;
+    }
+  });
+
+  // Convert to array format
+  return Object.entries(statusCounts).map(([name, value]) => ({ name, value }));
+}
+
+async function getVehicleWeights(supabase, isAdmin, companyId, dateRange) {
+  // Determine date range
+  const now = new Date();
+  let startDate;
+
+  if (dateRange === 'week') {
+    // Last 7 days
+    startDate = new Date(now);
+    startDate.setDate(now.getDate() - 7);
+  } else if (dateRange === 'month') {
+    // Last 30 days
+    startDate = new Date(now);
+    startDate.setDate(now.getDate() - 30);
+  } else {
+    // Last 365 days (year)
+    startDate = new Date(now);
+    startDate.setDate(now.getDate() - 365);
+  }
+
+  // Format dates for query
+  const startDateStr = startDate.toISOString();
+  const endDateStr = now.toISOString();
+
+  // Query to get weights with vehicle info
+  let query = supabase
+    .from('weights')
+    .select(`
+      weight,
+      vehicles(id, name)
+    `)
+    .gte('created_at', startDateStr)
+    .lte('created_at', endDateStr);
+
+  // If not admin, filter by company_id
+  if (!isAdmin && companyId) {
+    query = query.eq('company_id', companyId);
+  }
+
+  const { data: weights, error } = await query;
+
+  if (error) {
+    console.error('Error fetching vehicle weights:', error);
+    throw error;
+  }
+
+  // Group weights by vehicle and calculate average
+  const vehicleWeights = {};
+
+  weights.forEach(weight => {
+    if (!weight.vehicles) return;
+
+    const vehicleName = weight.vehicles.name;
+    const weightValue = parseFloat(weight.weight.replace(/[^\d.-]/g, ''));
+
+    if (!isNaN(weightValue)) {
+      if (!vehicleWeights[vehicleName]) {
+        vehicleWeights[vehicleName] = {
+          total: 0,
+          count: 0
+        };
+      }
+
+      vehicleWeights[vehicleName].total += weightValue;
+      vehicleWeights[vehicleName].count++;
+    }
+  });
+
+  // Calculate average weights and format for chart
+  return Object.entries(vehicleWeights)
+    .map(([name, data]) => ({
+      name,
+      weight: Math.round(data.total / data.count)
+    }))
+    .sort((a, b) => b.weight - a.weight)
+    .slice(0, 5); // Top 5 vehicles by weight
+}
+
+async function getRecentWeights(supabase, isAdmin, companyId) {
+  // Query to get recent weights with vehicle and driver info
+  let query = supabase
+    .from('weights')
+    .select(`
+      id,
+      weight,
+      date,
+      time,
+      status,
+      created_at,
+      vehicles(id, name),
+      drivers(id, name)
+    `)
+    .order('created_at', { ascending: false })
+    .limit(10);
+
+  // If not admin, filter by company_id
+  if (!isAdmin && companyId) {
+    query = query.eq('company_id', companyId);
+  } else if (isAdmin) {
+    // For admin, include company info
+    query = supabase
+      .from('weights')
+      .select(`
+        id,
+        weight,
+        date,
+        time,
+        status,
+        created_at,
+        vehicles(id, name),
+        drivers(id, name),
+        companies(id, name)
+      `)
+      .order('created_at', { ascending: false })
+      .limit(10);
+  }
+
+  const { data: weights, error } = await query;
+
+  if (error) {
+    console.error('Error fetching recent weights:', error);
+    throw error;
+  }
+
+  return weights;
+}
+
+// Mock data generators (fallback)
 function getMockStats() {
   return {
     vehicleCount: 12,
