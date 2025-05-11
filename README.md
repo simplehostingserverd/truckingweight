@@ -83,7 +83,7 @@
 
 ### Backend
 
-![Node.js](https://img.shields.io/badge/Node.js-18-339933?style=flat-square&logo=node.js&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=flat-square&logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-4.18-000000?style=flat-square&logo=express&logoColor=white)
 
 ### Database
@@ -103,7 +103,7 @@
 
 ### Prerequisites
 
-- Node.js 18 or higher
+- Node.js 20 or higher
 - npm or yarn
 - Docker (optional, for containerized deployment)
 - Supabase account (for database)
