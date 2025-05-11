@@ -7,8 +7,25 @@ class CustomRedisTransport extends Transport {
     super(options);
     this.name = 'redis';
 
-    const redisUrl = options.redis?.url || 'redis://localhost:6379';
-    this.client = new Redis(redisUrl);
+    const redisUrl = options.redis?.url || process.env.REDIS_URL || 'redis://localhost:6379';
+    const redisPassword = process.env.REDIS_PASSWORD || '';
+
+    // Configure Redis client options
+    const redisOptions = {
+      maxRetriesPerRequest: 3,
+      retryStrategy: times => {
+        const delay = Math.min(times * 50, 2000);
+        return delay;
+      },
+    };
+
+    // Add password if provided
+    if (redisPassword) {
+      redisOptions.password = redisPassword;
+    }
+
+    // Create Redis client
+    this.client = new Redis(redisUrl, redisOptions);
     this.key = options.key || 'winston_logs';
 
     // Handle connection
@@ -42,7 +59,7 @@ const logger = winston.createLogger({
     new winston.transports.Console(),
     new CustomRedisTransport({
       redis: {
-        url: 'redis://localhost:6379',
+        url: process.env.REDIS_URL || 'redis://localhost:6379',
       },
       key: 'app_logs',
     }),

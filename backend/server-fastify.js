@@ -67,6 +67,7 @@ async function registerRoutes() {
   const integrationRoutes = require('./routes/fastify/integrations');
   const webhookRoutes = require('./routes/fastify/webhooks');
   const apiKeyRoutes = require('./routes/fastify/apiKeys');
+  const healthRoutes = require('./routes/fastify/health');
 
   // Register routes
   fastify.register(authRoutes, { prefix: '/api/auth' });
@@ -80,6 +81,7 @@ async function registerRoutes() {
   fastify.register(integrationRoutes, { prefix: '/api/integrations' });
   fastify.register(webhookRoutes, { prefix: '/api/webhooks' });
   fastify.register(apiKeyRoutes, { prefix: '/api/api-keys' });
+  fastify.register(healthRoutes, { prefix: '/health' });
 
   // Root route
   fastify.get('/', async (request, reply) => {
@@ -116,15 +118,15 @@ process.on('SIGTERM', async () => {
   fastify.log.info('SIGTERM signal received: closing HTTP server');
   await fastify.close();
   fastify.log.info('HTTP server closed');
-  
+
   // Close database connections
   await db.closeConnections();
   fastify.log.info('Database connections closed');
-  
+
   // Close Redis connection
   await redisService.close();
   fastify.log.info('Redis connection closed');
-  
+
   process.exit(0);
 });
 
@@ -132,15 +134,15 @@ process.on('SIGINT', async () => {
   fastify.log.info('SIGINT signal received: closing HTTP server');
   await fastify.close();
   fastify.log.info('HTTP server closed');
-  
+
   // Close database connections
   await db.closeConnections();
   fastify.log.info('Database connections closed');
-  
+
   // Close Redis connection
   await redisService.close();
   fastify.log.info('Redis connection closed');
-  
+
   process.exit(0);
 });
 

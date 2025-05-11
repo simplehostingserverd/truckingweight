@@ -53,13 +53,24 @@ class RedisService {
   constructor() {
     try {
       const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
-      this.client = new Redis(redisUrl, {
+      const redisPassword = process.env.REDIS_PASSWORD || '';
+
+      // Configure Redis client options
+      const redisOptions = {
         maxRetriesPerRequest: 3,
         retryStrategy: times => {
           const delay = Math.min(times * 50, 2000);
           return delay;
         },
-      });
+      };
+
+      // Add password if provided
+      if (redisPassword) {
+        redisOptions.password = redisPassword;
+      }
+
+      // Create Redis client
+      this.client = new Redis(redisUrl, redisOptions);
 
       this.client.on('connect', () => {
         this.isConnected = true;

@@ -106,10 +106,30 @@ const closeConnections = async () => {
   }
 };
 
+/**
+ * Test database connection
+ * @returns {Promise<Object>} Connection test result
+ */
+const testConnection = async () => {
+  try {
+    // Try to use the direct pool first
+    const pool = directConnectionUrl ? getDirectPool() : getPooledPool();
+    const result = await pool.query('SELECT version()');
+    return {
+      connected: true,
+      version: result.rows[0].version,
+    };
+  } catch (err) {
+    console.error('Database connection test failed:', err);
+    throw err;
+  }
+};
+
 module.exports = {
   getDirectPool,
   getPooledPool,
   queryDirect,
   queryPooled,
   closeConnections,
+  testConnection,
 };
