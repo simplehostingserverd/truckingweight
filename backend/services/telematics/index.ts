@@ -217,7 +217,7 @@ export class TelematicsService {
     eventType: string,
     status: 'success' | 'error' | 'warning',
     details: any
-  ): Promise<void> => {
+  ): Promise<void> {
     try {
       await prisma.integration_logs.create({
         data: {

@@ -337,7 +337,7 @@ export const configureIoTHardware = async (
 // Implementation of scale-specific reading functions
 // These would be implemented based on each manufacturer's API specifications
 
-async function getRiceLakeReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
+async function getRiceLakeReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> => {
   try {
     // Mock implementation - would be replaced with actual API call
     const response = await axios.get(`${scale.api_endpoint}/weight`, {
@@ -357,7 +357,7 @@ async function getRiceLakeReading(scale: any, readingType: string): Promise<{ re
   }
 }
 
-async function getMettlerToledoReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
+async function getMettlerToledoReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> => {
   // Mock implementation
   return {
     reading: 32500,
@@ -365,7 +365,7 @@ async function getMettlerToledoReading(scale: any, readingType: string): Promise
   };
 }
 
-async function getAveryWeighTronixReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
+async function getAveryWeighTronixReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> => {
   // Mock implementation
   return {
     reading: 32500,
@@ -373,7 +373,7 @@ async function getAveryWeighTronixReading(scale: any, readingType: string): Prom
   };
 }
 
-async function getFairbanksReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
+async function getFairbanksReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> => {
   // Mock implementation
   return {
     reading: 32500,
@@ -381,7 +381,7 @@ async function getFairbanksReading(scale: any, readingType: string): Promise<{ r
   };
 }
 
-async function getCardinalReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
+async function getCardinalReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> => {
   // Mock implementation
   return {
     reading: 32500,
@@ -389,7 +389,7 @@ async function getCardinalReading(scale: any, readingType: string): Promise<{ re
   };
 }
 
-async function getGenericHttpReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
+async function getGenericHttpReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> => {
   try {
     const response = await axios.get(scale.api_endpoint, {
       headers: {
@@ -411,7 +411,7 @@ async function getGenericHttpReading(scale: any, readingType: string): Promise<{
   }
 }
 
-async function getGenericModbusReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
+async function getGenericModbusReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> => {
   // Mock implementation - would require a Modbus TCP/IP client library
   return {
     reading: 32500,

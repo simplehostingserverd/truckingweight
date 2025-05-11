@@ -40,7 +40,7 @@ export class ErpService {
   /**
    * Fetch customers from an ERP provider
    */
-  async fetchCustomers(connectionId: string): Promise<ErpData[] | null> {
+  async fetchCustomers(connectionId: string): Promise<ErpData[] | null> => {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
@@ -92,7 +92,7 @@ export class ErpService {
   /**
    * Fetch invoices from an ERP provider
    */
-  async fetchInvoices(connectionId: string, customerId?: string): Promise<ErpData[] | null> {
+  async fetchInvoices(connectionId: string, customerId?: string): Promise<ErpData[] | null> => {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
