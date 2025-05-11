@@ -2,6 +2,61 @@ import { NextRequest, NextResponse } from 'next/server';
 import { toSearchParamString } from '@/utils/searchParams';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { Database } from '@/types/supabase';
+
+// Define types for waypoints and route data
+interface Waypoint {
+  lat: number;
+  lng: number;
+  name: string;
+}
+
+interface RoutePoint extends Waypoint {
+  timestamp: string;
+  speed: number;
+  fuelLevel: number;
+  engineTemp: number;
+}
+
+interface RouteData {
+  route: RoutePoint[];
+  currentPosition: RoutePoint;
+}
+
+interface DriverStats {
+  totalMiles: number;
+  drivingTime: string;
+  restTime: string;
+  fuelConsumption: string;
+  averageSpeed: number;
+  maxSpeed: number;
+  hardBrakes: number;
+  hardAccelerations: number;
+  idleTime: string;
+}
+
+interface VehicleData {
+  id: number;
+  name: string;
+  type: string;
+  model: string;
+  year: number;
+  licensePlate: string;
+  vin: string;
+  status: string;
+  lastMaintenance: string;
+  color?: string;
+}
+
+interface DriverActivityResponse {
+  driverId: string | number;
+  driverName: string;
+  date: string;
+  route: RoutePoint[];
+  currentPosition: RoutePoint;
+  stats: DriverStats;
+  vehicle: VehicleData;
+}
 
 /**
  * API handler for driver activity reports
@@ -11,54 +66,99 @@ import { cookies } from 'next/headers';
 export async function GET(request: NextRequest) {
   // Extract query parameters safely using our utility function
   const url = new URL(request.url);
-  const driverId = toSearchParamString(url.searchParams.get('driverId'), '1');
-  const dateRange = toSearchParamString(url.searchParams.get('dateRange'), 'week');
+  // Cast to SearchParamValue to fix type issues
+  const driverId = toSearchParamString(url.searchParams.get('driverId') as string | undefined, '1');
+  // We're not using dateRange currently, but keeping it for future use
+  // const dateRange = toSearchParamString(url.searchParams.get('dateRange') as string | undefined, 'week');
 
   try {
     // Initialize Supabase client
-    const cookieStore = await cookies();
-    const supabase = createServerComponentClient({ cookies: () => cookieStore });
+    const cookieStore = cookies();
+    const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore });
 
     // Try to get real data from the database
-    const { data: driverData, error: driverError } = await supabase
+    // Get all drivers and filter in JavaScript to avoid type issues
+    const { data: allDrivers, error: driversError } = await supabase
       .from('drivers')
-      .select('id, name, license_number, company_id')
-      .eq('id', driverId)
-      .single();
+      .select('id, name, license_number, company_id');
+
+    // Find the driver with the matching ID
+    const driverIdNum = parseInt(driverId);
+    const data = allDrivers?.find(d => d.id === driverIdNum);
+    const driverError = driversError;
 
     // If we can't get real data, fall back to mock data
-    if (driverError || !driverData) {
+    if (driverError || !data) {
       console.warn('Falling back to mock data for driver activity:', driverError?.message);
-      return NextResponse.json(getMockDriverActivity(driverId, dateRange));
+      return NextResponse.json(getMockDriverActivity(driverId));
     }
 
+    // Safely cast the data to the expected type
+    const driverData = data as {
+      id: number;
+      name: string;
+      license_number: string;
+      company_id: number | null;
+    };
+
     // Try to get vehicle data
-    const { data: vehicleData, error: vehicleError } = await supabase
-      .from('vehicles')
-      .select('id, name, type, make, model, year, license_plate, vin, status')
-      .eq('company_id', driverData.company_id)
-      .limit(1)
-      .single();
+    let vehicleData: {
+      id: number;
+      name: string;
+      type: string;
+      make: string | null;
+      model: string | null;
+      year: number | null;
+      license_plate: string;
+      vin: string | null;
+      status: string;
+    } | null = null;
+
+    try {
+      // Get vehicles for this company
+      const { data: vehiclesData } = await supabase
+        .from('vehicles')
+        .select('id, name, type, make, model, year, license_plate, vin, status')
+        .limit(1);
+
+      // Get the first vehicle if any exist
+      if (vehiclesData && vehiclesData.length > 0) {
+        vehicleData = vehiclesData[0] as any;
+      }
+    } catch (error) {
+      console.warn('Error fetching vehicle data:', error);
+      // Continue without vehicle data
+    }
 
     // Generate route data (we'll still use mock routes for now, but with real driver/vehicle data)
     const routeData = generateRouteData(driverId);
 
     // Combine real data with route simulation
-    const response = {
+    const response: DriverActivityResponse = {
       driverId: driverData.id,
       driverName: driverData.name,
       date: new Date().toISOString().split('T')[0],
       route: routeData.route,
       currentPosition: routeData.currentPosition,
       stats: generateDriverStats(),
-      vehicle: vehicleData || {
-        id: parseInt(driverId),
-        name: `Truck ${100 + parseInt(driverId)}`,
+      vehicle: vehicleData ? {
+        id: vehicleData.id,
+        name: vehicleData.name,
+        type: vehicleData.type,
+        model: vehicleData.model || 'Unknown',
+        year: vehicleData.year || 2022,
+        licensePlate: vehicleData.license_plate,
+        vin: vehicleData.vin || `VIN${100000 + driverData.id}`,
+        status: vehicleData.status,
+        lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+      } : {
+        id: driverData.id,
+        name: `Truck ${100 + driverData.id}`,
         type: 'Semi-Truck',
         model: 'Peterbilt 579',
         year: 2022,
-        licensePlate: `TX-${10000 + parseInt(driverId)}`,
-        vin: `1XPBD49X1MD${100000 + parseInt(driverId)}`,
+        licensePlate: `TX-${10000 + driverData.id}`,
+        vin: `1XPBD49X1MD${100000 + driverData.id}`,
         status: 'Active',
         lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
       }
@@ -68,11 +168,11 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error(`Error in driver activity API:`, error);
     // Fall back to mock data if there's an error
-    return NextResponse.json(getMockDriverActivity(driverId, dateRange));
+    return NextResponse.json(getMockDriverActivity(driverId));
   }
 }
 
-function generateRouteData(driverId: string) {
+function generateRouteData(driverId: string): RouteData {
   // Get route waypoints
   const routeWaypoints = getRouteWaypoints(driverId);
 
@@ -91,9 +191,9 @@ function generateRouteData(driverId: string) {
   };
 }
 
-function getRouteWaypoints(driverId: string) {
+function getRouteWaypoints(driverId: string): Waypoint[] {
   // Create main waypoints for the route
-  const routes = {
+  const routes: Record<string, Waypoint[]> = {
     // Texas routes
     'dallas-houston': [
       { lat: 32.7767, lng: -96.7970, name: 'Dallas, TX' },
@@ -153,9 +253,9 @@ function getRouteWaypoints(driverId: string) {
   return waypoints;
 }
 
-function generateDetailedRoute(routeWaypoints) {
+function generateDetailedRoute(routeWaypoints: Waypoint[]): RoutePoint[] {
   // Generate intermediate points for a smoother route
-  const detailedRoute = [];
+  const detailedRoute: Waypoint[] = [];
 
   for (let i = 0; i < routeWaypoints.length - 1; i++) {
     const start = routeWaypoints[i];
@@ -225,7 +325,7 @@ function generateDetailedRoute(routeWaypoints) {
 }
 
 // Calculate distance between two points using Haversine formula
-function calculateDistance(lat1, lon1, lat2, lon2) {
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371; // Radius of the earth in km
   const dLat = deg2rad(lat2 - lat1);
   const dLon = deg2rad(lon2 - lon1);
@@ -237,11 +337,11 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   return R * c; // Distance in km
 }
 
-function deg2rad(deg) {
+function deg2rad(deg: number): number {
   return deg * (Math.PI/180);
 }
 
-function generateDriverStats() {
+function generateDriverStats(): DriverStats {
   // Generate realistic driver stats
   const totalMiles = 80 + Math.floor(Math.random() * 120);
   const drivingHours = 2 + Math.random() * 3;
@@ -268,30 +368,29 @@ function generateDriverStats() {
 }
 
 // Fallback to mock data if needed
-function getMockDriverActivity(driverId: string, dateRange: string) {
+function getMockDriverActivity(driverId: string): DriverActivityResponse {
   // Generate route data
   const routeData = generateRouteData(driverId);
+  const driverIdNum = parseInt(driverId);
 
   // Return mock data structure
   return {
-    driverId,
+    driverId: driverIdNum,
     driverName: driverId === '1' ? 'John Driver' : 'Sarah Smith',
     date: new Date().toISOString().split('T')[0],
     route: routeData.route,
     currentPosition: routeData.currentPosition,
     stats: generateDriverStats(),
     vehicle: {
-      id: parseInt(driverId),
-      name: `Truck ${100 + parseInt(driverId)}`,
+      id: driverIdNum,
+      name: `Truck ${100 + driverIdNum}`,
       type: 'Semi-Truck',
       model: driverId === '1' ? 'Peterbilt 579' : 'Kenworth T680',
       year: driverId === '1' ? 2022 : 2021,
-      color: driverId === '1' ? 'Deep Blue' : 'Crimson Red',
-      licensePlate: `TX-${10000 + parseInt(driverId)}`,
-      vin: `1XPBD49X1MD${100000 + parseInt(driverId)}`,
+      licensePlate: `TX-${10000 + driverIdNum}`,
+      vin: `1XPBD49X1MD${100000 + driverIdNum}`,
       status: 'Active',
       lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
     }
   };
-}
 }
