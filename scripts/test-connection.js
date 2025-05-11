@@ -1,6 +1,12 @@
-const { createClient } = require('@supabase/supabase-js');
-const dotenv = require('dotenv');
-const path = require('path');
+import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Get current file path
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Load environment variables from the root .env file
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
@@ -21,86 +27,68 @@ async function testConnection() {
   try {
     console.log('Testing Supabase connection...');
 
-    // Test a simple query
-    const { data, error } = await supabase.from('health_check').select('*').limit(1);
+    // Try to access the companies table
+    console.log('\nTrying to access companies table...');
+    const { data: companiesData, error: companiesError } = await supabase
+      .from('companies')
+      .select('*')
+      .limit(5);
 
-    if (error) {
-      if (error.code === 'PGRST116') {
-        console.log('Connection successful, but health_check table does not exist yet.');
-        console.log('This is expected if you have not set up the database yet.');
-
-        // Try to create the health_check table
-        console.log('Creating health_check table...');
-        const { error: createError } = await supabase.rpc('pgmoon.query', {
-          query: `
-            CREATE TABLE IF NOT EXISTS health_check (
-              id SERIAL PRIMARY KEY,
-              status TEXT NOT NULL,
-              created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-            );
-            
-            INSERT INTO health_check (status) VALUES ('ok');
-          `,
-        });
-
-        if (createError) {
-          console.error('Error creating health_check table:', createError);
-
-          if (createError.message.includes('function pgmoon.query() does not exist')) {
-            console.log('\nThe pgmoon extension is not enabled in your Supabase project.');
-            console.log(
-              'You can still use the database, but some schema management scripts may not work.'
-            );
-            console.log('Testing a simple insert instead...');
-
-            // Try a simple insert into a new table
-            const { error: createTableError } = await supabase.rpc('create_health_check_table');
-
-            if (createTableError) {
-              console.error('Error creating health_check table via RPC:', createTableError);
-              console.log('\nTrying direct SQL via REST API...');
-
-              // Try direct SQL via REST API
-              const { error: sqlError } = await supabase
-                .from('_health_check')
-                .insert([{ status: 'ok' }]);
-
-              if (sqlError) {
-                console.error('Error inserting into _health_check table:', sqlError);
-                console.error('Database connection test failed.');
-              } else {
-                console.log('Successfully inserted into _health_check table!');
-                console.log('Database connection is working!');
-              }
-            } else {
-              console.log('Successfully created health_check table via RPC!');
-              console.log('Database connection is working!');
-            }
-          }
-        } else {
-          console.log('Successfully created health_check table!');
-          console.log('Database connection is working!');
-        }
+    if (companiesError) {
+      console.error('Error accessing companies table:', companiesError);
+    } else {
+      console.log('Successfully accessed companies table!');
+      console.log('Number of companies:', companiesData.length);
+      if (companiesData.length > 0) {
+        console.log('First company:', companiesData[0]);
       } else {
-        console.error('Error testing database connection:', error);
+        console.log('No companies found in the database.');
+      }
+    }
+
+    // Try to access the database schema
+    console.log('\nTrying to access database schema information...');
+    const { data: tablesData, error: tablesError } = await supabase
+      .from('pg_tables')
+      .select('schemaname, tablename')
+      .eq('schemaname', 'public')
+      .limit(10);
+
+    if (tablesError) {
+      console.error('Error accessing schema information:', tablesError);
+
+      // Try another approach to list tables
+      console.log('\nTrying alternative approach to list tables...');
+      const { data: schemasData, error: schemasError } = await supabase.rpc('get_schemas');
+
+      if (schemasError) {
+        console.error('Error accessing schemas via RPC:', schemasError);
+      } else {
+        console.log('Successfully retrieved schema information!');
+        console.log('Schemas:', schemasData);
       }
     } else {
-      console.log('Database connection successful!');
-      console.log('Retrieved data:', data);
+      console.log('Successfully accessed database schema!');
+      console.log('Tables in public schema:', tablesData);
     }
 
     // Test auth connection
-    const { data: authData, error: authError } = await supabase.auth.getUser();
+    console.log('\nTesting auth connection...');
+    try {
+      const { data: authData, error: authError } = await supabase.auth.getSession();
 
-    if (authError) {
-      console.error('Error testing auth connection:', authError);
-    } else {
-      console.log('Auth connection successful!');
-      if (authData.user) {
-        console.log('Current user:', authData.user.email);
+      if (authError) {
+        console.error('Error testing auth connection:', authError);
       } else {
-        console.log('No user is currently authenticated (this is expected)');
+        console.log('Auth connection successful!');
+        if (authData.session) {
+          console.log('Current session:', authData.session.user.email);
+        } else {
+          console.log('No active session (this is expected)');
+        }
       }
+    } catch (authError) {
+      console.error('Error testing auth connection:', authError);
     }
   } catch (error) {
     console.error('Unexpected error testing connection:', error);
