@@ -1,10 +1,10 @@
 import express from 'express';
-import { 
+import {
   getIntegrationConnections,
   getIntegrationConnection,
   createIntegrationConnection,
   updateIntegrationConnection,
-  deleteIntegrationConnection
+  deleteIntegrationConnection,
 } from '../controllers/integrations';
 import { authenticateJWT } from '../middleware/auth';
 

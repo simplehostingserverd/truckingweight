@@ -2,14 +2,20 @@ import Link from 'next/link';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { formatDate } from '@/lib/utils';
-import { PlusIcon, ArrowDownTrayIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
+import {
+  PlusIcon,
+  ArrowDownTrayIcon,
+  AdjustmentsHorizontalIcon,
+} from '@heroicons/react/24/outline';
 
 export default async function Drivers() {
   const cookieStore = await cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   // Get user data
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { data: userData } = await supabase
     .from('users')
     .select('company_id')
@@ -75,11 +81,12 @@ export default async function Drivers() {
   const thirtyDaysFromNow = new Date();
   thirtyDaysFromNow.setDate(today.getDate() + 30);
 
-  const expiringLicenses = drivers?.filter(driver => {
-    if (!driver.license_expiry) return false;
-    const expiryDate = new Date(driver.license_expiry);
-    return expiryDate > today && expiryDate <= thirtyDaysFromNow;
-  }).length || 0;
+  const expiringLicenses =
+    drivers?.filter(driver => {
+      if (!driver.license_expiry) return false;
+      const expiryDate = new Date(driver.license_expiry);
+      return expiryDate > today && expiryDate <= thirtyDaysFromNow;
+    }).length || 0;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -114,19 +121,29 @@ export default async function Drivers() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400">Total Drivers</h3>
-          <p className="text-3xl font-bold text-primary-600 dark:text-primary-400 mt-2">{drivers?.length || 0}</p>
+          <p className="text-3xl font-bold text-primary-600 dark:text-primary-400 mt-2">
+            {drivers?.length || 0}
+          </p>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400">Active Drivers</h3>
-          <p className="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">{activeDrivers}</p>
+          <p className="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">
+            {activeDrivers}
+          </p>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400">On Leave</h3>
-          <p className="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-2">{onLeaveDrivers}</p>
+          <p className="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-2">
+            {onLeaveDrivers}
+          </p>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400">Expiring Licenses</h3>
-          <p className="text-3xl font-bold text-red-600 dark:text-red-400 mt-2">{expiringLicenses}</p>
+          <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400">
+            Expiring Licenses
+          </h3>
+          <p className="text-3xl font-bold text-red-600 dark:text-red-400 mt-2">
+            {expiringLicenses}
+          </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Next 30 days</p>
         </div>
       </div>
@@ -188,11 +205,14 @@ export default async function Drivers() {
             </thead>
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
               {drivers && drivers.length > 0 ? (
-                drivers.map((driver) => {
+                drivers.map(driver => {
                   // Check if license is expired or expiring soon
-                  const licenseExpiry = driver.license_expiry ? new Date(driver.license_expiry) : null;
+                  const licenseExpiry = driver.license_expiry
+                    ? new Date(driver.license_expiry)
+                    : null;
                   const isExpired = licenseExpiry && licenseExpiry < today;
-                  const isExpiringSoon = licenseExpiry && !isExpired && licenseExpiry <= thirtyDaysFromNow;
+                  const isExpiringSoon =
+                    licenseExpiry && !isExpired && licenseExpiry <= thirtyDaysFromNow;
 
                   return (
                     <tr key={driver.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -204,13 +224,15 @@ export default async function Drivers() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         {driver.license_expiry ? (
-                          <span className={`${
-                            isExpired
-                              ? 'text-red-600 dark:text-red-400'
-                              : isExpiringSoon
-                              ? 'text-amber-600 dark:text-amber-400'
-                              : 'text-gray-500 dark:text-gray-400'
-                          }`}>
+                          <span
+                            className={`${
+                              isExpired
+                                ? 'text-red-600 dark:text-red-400'
+                                : isExpiringSoon
+                                  ? 'text-amber-600 dark:text-amber-400'
+                                  : 'text-gray-500 dark:text-gray-400'
+                            }`}
+                          >
                             {formatDate(driver.license_expiry)}
                             {isExpired && ' (Expired)'}
                             {isExpiringSoon && ' (Expiring soon)'}
@@ -221,24 +243,36 @@ export default async function Drivers() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                         {driver.phone && <div>{driver.phone}</div>}
-                        {driver.email && <div className="text-primary-600 dark:text-primary-400">{driver.email}</div>}
+                        {driver.email && (
+                          <div className="text-primary-600 dark:text-primary-400">
+                            {driver.email}
+                          </div>
+                        )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          driver.status === 'Active'
-                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                            : driver.status === 'On Leave'
-                            ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
-                            : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
-                        }`}>
+                        <span
+                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            driver.status === 'Active'
+                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                              : driver.status === 'On Leave'
+                                ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
+                                : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+                          }`}
+                        >
                           {driver.status}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        <Link href={`/drivers/${driver.id}`} className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                        <Link
+                          href={`/drivers/${driver.id}`}
+                          className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3"
+                        >
                           View
                         </Link>
-                        <Link href={`/drivers/${driver.id}/edit`} className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
+                        <Link
+                          href={`/drivers/${driver.id}/edit`}
+                          className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300"
+                        >
                           Edit
                         </Link>
                       </td>
@@ -247,7 +281,10 @@ export default async function Drivers() {
                 })
               ) : (
                 <tr>
-                  <td colSpan={6} className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                  <td
+                    colSpan={6}
+                    className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400"
+                  >
                     No drivers found
                   </td>
                 </tr>

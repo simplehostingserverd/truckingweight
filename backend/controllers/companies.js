@@ -13,10 +13,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
  */
 exports.getAllCompanies = async (req, res) => {
   try {
-    const { data: companies, error } = await supabase
-      .from('companies')
-      .select('*')
-      .order('name');
+    const { data: companies, error } = await supabase.from('companies').select('*').order('name');
 
     if (error) {
       return res.status(500).json({ message: 'Server error', error: error.message });
@@ -95,7 +92,7 @@ exports.createCompany = async (req, res) => {
     contactEmail,
     contactPhone,
     logo,
-    status = 'active'
+    status = 'active',
   } = req.body;
 
   try {
@@ -114,8 +111,8 @@ exports.createCompany = async (req, res) => {
           contact_email: contactEmail,
           contact_phone: contactPhone,
           logo,
-          status
-        }
+          status,
+        },
       ])
       .select()
       .single();
@@ -148,7 +145,7 @@ exports.updateCompany = async (req, res) => {
     contactEmail,
     contactPhone,
     logo,
-    status
+    status,
   } = req.body;
 
   try {
@@ -178,7 +175,7 @@ exports.updateCompany = async (req, res) => {
         contact_phone: contactPhone,
         logo,
         status,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', req.params.id)
       .select()
@@ -214,10 +211,7 @@ exports.deleteCompany = async (req, res) => {
     }
 
     // Delete company
-    const { error } = await supabase
-      .from('companies')
-      .delete()
-      .eq('id', req.params.id);
+    const { error } = await supabase.from('companies').delete().eq('id', req.params.id);
 
     if (error) {
       return res.status(500).json({ message: 'Server error', error: error.message });

@@ -1,6 +1,6 @@
 /**
  * Mapbox Service
- * 
+ *
  * This service provides integration with the Mapbox API for route planning,
  * geocoding, and other location-based services.
  */
@@ -19,7 +19,7 @@ export enum MapboxProfile {
   DRIVING_TRAFFIC = 'driving-traffic',
   WALKING = 'walking',
   CYCLING = 'cycling',
-  TRUCKING = 'driving-traffic' // Use driving-traffic for trucking as it's the most appropriate
+  TRUCKING = 'driving-traffic', // Use driving-traffic for trucking as it's the most appropriate
 }
 
 // Waypoint interface
@@ -81,7 +81,7 @@ const getMapboxToken = async (): Promise<string> => {
   if (process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
     return process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   }
-  
+
   // If not available, try to get from Supabase
   const supabase = createClientComponentClient<Database>();
   const { data, error } = await supabase
@@ -89,11 +89,11 @@ const getMapboxToken = async (): Promise<string> => {
     .select('value')
     .eq('key', 'mapbox_access_token')
     .single();
-    
+
   if (error || !data) {
     throw new Error('Mapbox access token not found');
   }
-  
+
   return data.value;
 };
 
@@ -112,14 +112,12 @@ export const getDirections = async (
   if (waypoints.length < 2) {
     throw new Error('At least 2 waypoints are required');
   }
-  
+
   const token = await getMapboxToken();
-  
+
   // Format coordinates for the API
-  const coordinates = waypoints
-    .map(wp => wp.coordinates.join(','))
-    .join(';');
-  
+  const coordinates = waypoints.map(wp => wp.coordinates.join(',')).join(';');
+
   // Build query parameters
   const queryParams = new URLSearchParams({
     access_token: token,
@@ -128,22 +126,22 @@ export const getDirections = async (
     geometries: options.geometries || 'geojson',
     overview: options.overview || 'full',
   });
-  
+
   if (options.annotations) {
     queryParams.append('annotations', options.annotations.join(','));
   }
-  
+
   // Make API request
   const response = await fetch(
     `${DIRECTIONS_API}/${profile}/${coordinates}?${queryParams.toString()}`,
     { method: 'GET' }
   );
-  
+
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(`Mapbox API error: ${errorData.message || 'Unknown error'}`);
   }
-  
+
   const data = await response.json();
   return data.routes[0];
 };
@@ -155,28 +153,28 @@ export const getDirections = async (
  */
 export const geocodeAddress = async (address: string): Promise<[number, number]> => {
   const token = await getMapboxToken();
-  
+
   const queryParams = new URLSearchParams({
     access_token: token,
     limit: '1',
   });
-  
+
   const response = await fetch(
     `${GEOCODING_API}/${encodeURIComponent(address)}.json?${queryParams.toString()}`,
     { method: 'GET' }
   );
-  
+
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(`Geocoding error: ${errorData.message || 'Unknown error'}`);
   }
-  
+
   const data = await response.json();
-  
+
   if (!data.features || data.features.length === 0) {
     throw new Error('No results found for the address');
   }
-  
+
   return data.features[0].center as [number, number];
 };
 
@@ -186,10 +184,7 @@ export const geocodeAddress = async (address: string): Promise<[number, number]>
  * @param departureTime Departure time (default: now)
  * @returns Estimated arrival time
  */
-export const calculateETA = (
-  route: Route,
-  departureTime: Date = new Date()
-): Date => {
+export const calculateETA = (route: Route, departureTime: Date = new Date()): Date => {
   const arrivalTime = new Date(departureTime);
   arrivalTime.setSeconds(arrivalTime.getSeconds() + route.duration);
   return arrivalTime;
@@ -199,5 +194,5 @@ export default {
   getDirections,
   geocodeAddress,
   calculateETA,
-  MapboxProfile
+  MapboxProfile,
 };

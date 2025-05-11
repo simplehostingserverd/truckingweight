@@ -13,16 +13,13 @@ export async function GET(request: NextRequest) {
       email: 'user@example.com',
       name: 'Demo User',
       company_id: 1,
-      is_admin: false
+      is_admin: false,
     };
 
     // Return success response with mock user
     return NextResponse.json({ user });
   } catch (error) {
     console.error('Error in mock user API:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

@@ -64,17 +64,7 @@ exports.createVehicle = async (req, res) => {
   }
 
   try {
-    const {
-      name,
-      type,
-      license_plate,
-      vin,
-      make,
-      model,
-      year,
-      status,
-      max_weight
-    } = req.body;
+    const { name, type, license_plate, vin, make, model, year, status, max_weight } = req.body;
 
     // Create new vehicle
     const { data: newVehicle, error } = await supabase
@@ -91,8 +81,8 @@ exports.createVehicle = async (req, res) => {
           status: status || 'Active',
           max_weight,
           company_id: req.user.companyId,
-          created_at: new Date().toISOString()
-        }
+          created_at: new Date().toISOString(),
+        },
       ])
       .select()
       .single();
@@ -136,7 +126,7 @@ exports.updateVehicle = async (req, res) => {
       .from('vehicles')
       .update({
         ...req.body,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', req.params.id)
       .eq('company_id', req.user.companyId)

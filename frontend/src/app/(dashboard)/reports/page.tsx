@@ -8,7 +8,9 @@ export default async function Reports() {
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   // Get user data
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { data: userData } = await supabase
     .from('users')
     .select('company_id')

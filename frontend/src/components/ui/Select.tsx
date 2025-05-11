@@ -9,32 +9,33 @@ export interface SelectOption {
   disabled?: boolean;
 }
 
-export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
+export interface SelectProps
+  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
   /**
    * Label for the select
    */
   label?: string;
-  
+
   /**
    * Helper text to display below the select
    */
   helperText?: string;
-  
+
   /**
    * Error message to display
    */
   error?: string;
-  
+
   /**
    * Options for the select
    */
   options: SelectOption[];
-  
+
   /**
    * Placeholder text
    */
   placeholder?: string;
-  
+
   /**
    * Callback when the value changes
    */
@@ -46,41 +47,27 @@ export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectE
  */
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   (
-    {
-      className,
-      label,
-      helperText,
-      error,
-      options,
-      placeholder,
-      onChange,
-      id,
-      disabled,
-      ...props
-    },
+    { className, label, helperText, error, options, placeholder, onChange, id, disabled, ...props },
     ref
   ) => {
     // Generate a unique ID if one is not provided
     const selectId = id || `select-${Math.random().toString(36).substring(2, 9)}`;
-    
+
     // Handle change event
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       if (onChange) {
         onChange(e.target.value);
       }
     };
-    
+
     return (
       <div className="space-y-2">
         {label && (
-          <label
-            htmlFor={selectId}
-            className="block text-sm font-medium text-foreground"
-          >
+          <label htmlFor={selectId} className="block text-sm font-medium text-foreground">
             {label}
           </label>
         )}
-        
+
         <select
           ref={ref}
           id={selectId}
@@ -98,25 +85,16 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
               {placeholder}
             </option>
           )}
-          
-          {options.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-              disabled={option.disabled}
-            >
+
+          {options.map(option => (
+            <option key={option.value} value={option.value} disabled={option.disabled}>
               {option.label}
             </option>
           ))}
         </select>
-        
+
         {(helperText || error) && (
-          <p
-            className={cn(
-              'text-xs',
-              error ? 'text-alert-DEFAULT' : 'text-muted-foreground'
-            )}
-          >
+          <p className={cn('text-xs', error ? 'text-alert-DEFAULT' : 'text-muted-foreground')}>
             {error || helperText}
           </p>
         )}

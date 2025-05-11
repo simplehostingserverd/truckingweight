@@ -42,7 +42,7 @@ export function getInitials(name: string) {
   if (!name) return '';
   return name
     .split(' ')
-    .map((n) => n[0])
+    .map(n => n[0])
     .join('')
     .toUpperCase();
 }
@@ -135,7 +135,7 @@ export function debounce<T extends (...args: any[]) => any>(
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout | null = null;
 
-  return function(...args: Parameters<T>): void {
+  return function (...args: Parameters<T>): void {
     const later = () => {
       timeout = null;
       func(...args);

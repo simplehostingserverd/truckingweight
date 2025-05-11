@@ -219,24 +219,40 @@ const colors = {
 // Typography - Modern 2024 Design System
 const typography = {
   fontFamily: {
-    sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+    sans: [
+      'Inter',
+      'system-ui',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      'Segoe UI',
+      'Roboto',
+      'sans-serif',
+    ],
     brand: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
-    mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+    mono: [
+      'JetBrains Mono',
+      'Menlo',
+      'Monaco',
+      'Consolas',
+      'Liberation Mono',
+      'Courier New',
+      'monospace',
+    ],
   },
   fontSize: {
-    display1: '3.5rem',   // 56px
-    display2: '3rem',     // 48px
-    display3: '2.25rem',  // 36px
-    h1: '2rem',           // 32px
-    h2: '1.75rem',        // 28px
-    h3: '1.5rem',         // 24px
-    h4: '1.25rem',        // 20px
-    h5: '1.125rem',       // 18px
+    display1: '3.5rem', // 56px
+    display2: '3rem', // 48px
+    display3: '2.25rem', // 36px
+    h1: '2rem', // 32px
+    h2: '1.75rem', // 28px
+    h3: '1.5rem', // 24px
+    h4: '1.25rem', // 20px
+    h5: '1.125rem', // 18px
     bodyLarge: '1.125rem', // 18px
-    body: '1rem',         // 16px
+    body: '1rem', // 16px
     bodySmall: '0.875rem', // 14px
-    caption: '0.75rem',   // 12px
-    small: '0.625rem',    // 10px
+    caption: '0.75rem', // 12px
+    small: '0.625rem', // 10px
   },
   fontWeight: {
     thin: 100,
@@ -273,40 +289,40 @@ const typography = {
 const spacing = {
   // Base unit: 4px
   0: '0',
-  1: '0.25rem',  // 4px
-  2: '0.5rem',   // 8px
-  3: '0.75rem',  // 12px
-  4: '1rem',     // 16px
-  5: '1.25rem',  // 20px
-  6: '1.5rem',   // 24px
-  8: '2rem',     // 32px
-  10: '2.5rem',  // 40px
-  12: '3rem',    // 48px
-  16: '4rem',    // 64px
-  20: '5rem',    // 80px
-  24: '6rem',    // 96px
-  32: '8rem',    // 128px
-  40: '10rem',   // 160px
-  48: '12rem',   // 192px
-  56: '14rem',   // 224px
-  64: '16rem',   // 256px
+  1: '0.25rem', // 4px
+  2: '0.5rem', // 8px
+  3: '0.75rem', // 12px
+  4: '1rem', // 16px
+  5: '1.25rem', // 20px
+  6: '1.5rem', // 24px
+  8: '2rem', // 32px
+  10: '2.5rem', // 40px
+  12: '3rem', // 48px
+  16: '4rem', // 64px
+  20: '5rem', // 80px
+  24: '6rem', // 96px
+  32: '8rem', // 128px
+  40: '10rem', // 160px
+  48: '12rem', // 192px
+  56: '14rem', // 224px
+  64: '16rem', // 256px
 };
 
 // Border Radius - Modern 2024 Design System
 const borderRadius = {
   none: '0',
-  xs: '0.125rem',     // 2px
-  sm: '0.25rem',      // 4px
+  xs: '0.125rem', // 2px
+  sm: '0.25rem', // 4px
   DEFAULT: '0.375rem', // 6px
-  md: '0.5rem',       // 8px
-  lg: '0.75rem',      // 12px
-  xl: '1rem',         // 16px
-  '2xl': '1.5rem',    // 24px
-  '3xl': '2rem',      // 32px
+  md: '0.5rem', // 8px
+  lg: '0.75rem', // 12px
+  xl: '1rem', // 16px
+  '2xl': '1.5rem', // 24px
+  '3xl': '2rem', // 32px
   full: '9999px',
   // Special cases
-  'pill': '999px',
-  'circle': '50%',
+  pill: '999px',
+  circle: '50%',
 };
 
 // Shadows - Modern 2024 Design System
@@ -322,13 +338,15 @@ const shadows = {
   '3xl': '0 48px 100px -12px rgba(16, 24, 40, 0.25)',
   inner: 'inset 0 2px 4px rgba(16, 24, 40, 0.06)',
   // Modern colored shadows
-  'blue': '0 8px 16px rgba(37, 99, 235, 0.12)',
-  'green': '0 8px 16px rgba(16, 185, 129, 0.12)',
-  'red': '0 8px 16px rgba(239, 68, 68, 0.12)',
-  'amber': '0 8px 16px rgba(245, 158, 11, 0.12)',
+  blue: '0 8px 16px rgba(37, 99, 235, 0.12)',
+  green: '0 8px 16px rgba(16, 185, 129, 0.12)',
+  red: '0 8px 16px rgba(239, 68, 68, 0.12)',
+  amber: '0 8px 16px rgba(245, 158, 11, 0.12)',
   // Floating elements
-  'floating': '0 8px 16px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.03), 0 0 1px rgba(0, 0, 0, 0.3)',
-  'floating-lg': '0 24px 48px rgba(0, 0, 0, 0.08), 0 12px 24px rgba(0, 0, 0, 0.03), 0 0 1px rgba(0, 0, 0, 0.3)',
+  floating:
+    '0 8px 16px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.03), 0 0 1px rgba(0, 0, 0, 0.3)',
+  'floating-lg':
+    '0 24px 48px rgba(0, 0, 0, 0.08), 0 12px 24px rgba(0, 0, 0, 0.03), 0 0 1px rgba(0, 0, 0, 0.3)',
 };
 
 // Z-index

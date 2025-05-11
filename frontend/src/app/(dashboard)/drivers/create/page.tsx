@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
-import { 
-  UserIcon, 
-  IdentificationIcon, 
-  CalendarIcon, 
-  PhoneIcon, 
+import {
+  UserIcon,
+  IdentificationIcon,
+  CalendarIcon,
+  PhoneIcon,
   EnvelopeIcon,
   CheckCircleIcon,
-  ExclamationCircleIcon
+  ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -25,29 +25,31 @@ export default function CreateDriver() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  
+
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
     setIsSuccess(false);
-    
+
     try {
       // Get user's company ID
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const { data: userData, error: userError } = await supabase
         .from('users')
         .select('company_id')
         .eq('id', user?.id)
         .single();
-      
+
       if (userError) {
         throw userError;
       }
-      
+
       // Create driver record
       const { data: driver, error: driverError } = await supabase
         .from('drivers')
@@ -62,13 +64,13 @@ export default function CreateDriver() {
         })
         .select()
         .single();
-      
+
       if (driverError) {
         throw driverError;
       }
-      
+
       setIsSuccess(true);
-      
+
       // Reset form after successful submission
       setName('');
       setLicenseNumber('');
@@ -76,13 +78,12 @@ export default function CreateDriver() {
       setPhone('');
       setEmail('');
       setStatus('Active');
-      
+
       // Redirect to driver list after a short delay
       setTimeout(() => {
         router.push('/drivers');
         router.refresh();
       }, 1500);
-      
     } catch (err: any) {
       setError(err.message || 'An error occurred while creating the driver');
       console.error('Create driver error:', err);
@@ -90,7 +91,7 @@ export default function CreateDriver() {
       setIsLoading(false);
     }
   };
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
@@ -102,30 +103,33 @@ export default function CreateDriver() {
           Back to Drivers
         </Link>
       </div>
-      
+
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
         <div className="px-6 py-4 bg-primary-700 text-white">
           <h2 className="text-xl font-semibold">Driver Information</h2>
         </div>
-        
+
         {isSuccess && (
           <div className="p-4 m-6 bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 rounded-md flex items-center">
             <CheckCircleIcon className="h-5 w-5 mr-2" />
             Driver created successfully! Redirecting...
           </div>
         )}
-        
+
         {error && (
           <div className="p-4 m-6 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 rounded-md flex items-center">
             <ExclamationCircleIcon className="h-5 w-5 mr-2" />
             {error}
           </div>
         )}
-        
+
         <form className="p-6 space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Driver Name *
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -139,13 +143,16 @@ export default function CreateDriver() {
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   placeholder="John Doe"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="licenseNumber" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="licenseNumber"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 License Number *
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -159,13 +166,16 @@ export default function CreateDriver() {
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   placeholder="DL12345678"
                   value={licenseNumber}
-                  onChange={(e) => setLicenseNumber(e.target.value)}
+                  onChange={e => setLicenseNumber(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="licenseExpiry" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="licenseExpiry"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 License Expiry Date
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -177,29 +187,35 @@ export default function CreateDriver() {
                   id="licenseExpiry"
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   value={licenseExpiry}
-                  onChange={(e) => setLicenseExpiry(e.target.value)}
+                  onChange={e => setLicenseExpiry(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Status
               </label>
               <select
                 id="status"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}
+                onChange={e => setStatus(e.target.value)}
               >
                 <option value="Active">Active</option>
                 <option value="On Leave">On Leave</option>
                 <option value="Inactive">Inactive</option>
               </select>
             </div>
-            
+
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Phone Number
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -212,13 +228,16 @@ export default function CreateDriver() {
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   placeholder="(555) 123-4567"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={e => setPhone(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Email Address
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -231,12 +250,12 @@ export default function CreateDriver() {
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   placeholder="driver@example.com"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                 />
               </div>
             </div>
           </div>
-          
+
           <div className="flex justify-end space-x-3">
             <Link
               href="/drivers"

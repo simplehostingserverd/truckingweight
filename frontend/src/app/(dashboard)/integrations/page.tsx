@@ -1,8 +1,8 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
-import { 
-  ArrowRightIcon, 
+import {
+  ArrowRightIcon,
   PuzzlePieceIcon,
   ServerIcon,
   BellIcon,
@@ -11,7 +11,7 @@ import {
   TruckIcon,
   BuildingLibraryIcon,
   ScaleIcon,
-  DocumentTextIcon
+  DocumentTextIcon,
 } from '@heroicons/react/24/outline';
 
 export default async function IntegrationsPage() {
@@ -19,7 +19,9 @@ export default async function IntegrationsPage() {
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   // Get user data
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { data: userData } = await supabase
     .from('users')
     .select('company_id, is_admin')
@@ -66,12 +68,16 @@ export default async function IntegrationsPage() {
               <PuzzlePieceIcon className="h-6 w-6" />
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Integrations</p>
-              <p className="text-2xl font-semibold text-gray-800 dark:text-white">{activeIntegrations || 0}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Active Integrations
+              </p>
+              <p className="text-2xl font-semibold text-gray-800 dark:text-white">
+                {activeIntegrations || 0}
+              </p>
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 mr-4">
@@ -79,19 +85,25 @@ export default async function IntegrationsPage() {
             </div>
             <div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">API Keys</p>
-              <p className="text-2xl font-semibold text-gray-800 dark:text-white">{apiKeysCount || 0}</p>
+              <p className="text-2xl font-semibold text-gray-800 dark:text-white">
+                {apiKeysCount || 0}
+              </p>
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 mr-4">
               <BellIcon className="h-6 w-6" />
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Webhook Subscriptions</p>
-              <p className="text-2xl font-semibold text-gray-800 dark:text-white">{webhooksCount || 0}</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Webhook Subscriptions
+              </p>
+              <p className="text-2xl font-semibold text-gray-800 dark:text-white">
+                {webhooksCount || 0}
+              </p>
             </div>
           </div>
         </div>
@@ -100,8 +112,8 @@ export default async function IntegrationsPage() {
       {/* Integration Categories */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {/* API Management */}
-        <Link 
-          href="/integrations/api-keys" 
+        <Link
+          href="/integrations/api-keys"
           className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
         >
           <div className="flex items-center mb-4">
@@ -119,8 +131,8 @@ export default async function IntegrationsPage() {
         </Link>
 
         {/* Webhooks */}
-        <Link 
-          href="/integrations/webhooks" 
+        <Link
+          href="/integrations/webhooks"
           className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
         >
           <div className="flex items-center mb-4">
@@ -138,8 +150,8 @@ export default async function IntegrationsPage() {
         </Link>
 
         {/* Security & Authentication */}
-        <Link 
-          href="/integrations/security" 
+        <Link
+          href="/integrations/security"
           className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
         >
           <div className="flex items-center mb-4">
@@ -157,8 +169,8 @@ export default async function IntegrationsPage() {
         </Link>
 
         {/* Telematics Integration */}
-        <Link 
-          href="/integrations/telematics" 
+        <Link
+          href="/integrations/telematics"
           className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
         >
           <div className="flex items-center mb-4">
@@ -176,15 +188,17 @@ export default async function IntegrationsPage() {
         </Link>
 
         {/* ERP & Accounting */}
-        <Link 
-          href="/integrations/erp" 
+        <Link
+          href="/integrations/erp"
           className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
         >
           <div className="flex items-center mb-4">
             <div className="p-3 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-300 mr-4">
               <BuildingLibraryIcon className="h-6 w-6" />
             </div>
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">ERP & Accounting</h2>
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+              ERP & Accounting
+            </h2>
           </div>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             Integrate with SAP, NetSuite, QuickBooks, and other systems
@@ -195,15 +209,17 @@ export default async function IntegrationsPage() {
         </Link>
 
         {/* Scale & Hardware */}
-        <Link 
-          href="/integrations/hardware" 
+        <Link
+          href="/integrations/hardware"
           className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
         >
           <div className="flex items-center mb-4">
             <div className="p-3 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 mr-4">
               <ScaleIcon className="h-6 w-6" />
             </div>
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Scale & Hardware</h2>
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+              Scale & Hardware
+            </h2>
           </div>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             Connect with weighing equipment, sensors, and IoT devices
@@ -220,14 +236,17 @@ export default async function IntegrationsPage() {
           <div className="p-3 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 mr-4">
             <DocumentTextIcon className="h-6 w-6" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Integration Documentation</h2>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+            Integration Documentation
+          </h2>
         </div>
         <p className="text-gray-600 dark:text-gray-400 mb-4">
-          Comprehensive guides and API documentation to help you connect your systems with ScaleMasterAI.
+          Comprehensive guides and API documentation to help you connect your systems with
+          ScaleMasterAI.
         </p>
         <div className="mt-4">
-          <Link 
-            href="/integrations/docs" 
+          <Link
+            href="/integrations/docs"
             className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
           >
             View Documentation

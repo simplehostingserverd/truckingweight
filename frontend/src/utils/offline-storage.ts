@@ -177,14 +177,14 @@ export async function processSyncQueue(
   const db = await getDB();
   const tx = db.transaction('sync_queue', 'readwrite');
   const items = await tx.store.getAll();
-  
+
   for (const item of items) {
     const success = await processFn(item);
     if (success) {
       await tx.store.delete(item.id);
     }
   }
-  
+
   await tx.done;
 }
 

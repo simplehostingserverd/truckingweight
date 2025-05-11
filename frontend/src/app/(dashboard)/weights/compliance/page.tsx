@@ -8,11 +8,11 @@ import { formatWeight } from '@/utils/formatters';
 
 export default function WeightCompliancePage() {
   const [complianceResult, setComplianceResult] = useState<ComplianceResult | null>(null);
-  
+
   const handleComplianceChange = (result: ComplianceResult) => {
     setComplianceResult(result);
   };
-  
+
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
@@ -31,55 +31,67 @@ export default function WeightCompliancePage() {
           </Link>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <ComplianceChecker onComplianceChange={handleComplianceChange} />
         </div>
-        
+
         <div>
           <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800 sticky top-4">
             <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
               <h2 className="text-xl font-semibold text-white">Compliance Summary</h2>
               <div className="h-2 w-2 rounded-full bg-green-500"></div>
             </div>
-            
+
             <div className="p-6">
               {complianceResult ? (
                 <div className="space-y-6">
-                  <div className={`p-4 rounded-lg ${complianceResult.isCompliant ? 'bg-green-900/20 border border-green-800' : 'bg-red-900/20 border border-red-800'}`}>
-                    <h3 className={`text-lg font-medium ${complianceResult.isCompliant ? 'text-green-400' : 'text-red-400'}`}>
+                  <div
+                    className={`p-4 rounded-lg ${complianceResult.isCompliant ? 'bg-green-900/20 border border-green-800' : 'bg-red-900/20 border border-red-800'}`}
+                  >
+                    <h3
+                      className={`text-lg font-medium ${complianceResult.isCompliant ? 'text-green-400' : 'text-red-400'}`}
+                    >
                       {complianceResult.isCompliant ? 'Compliant' : 'Non-Compliant'}
                     </h3>
                     <p className="mt-1 text-sm text-gray-300">
-                      {complianceResult.isCompliant 
+                      {complianceResult.isCompliant
                         ? 'Your vehicle configuration complies with all weight regulations.'
-                        : `Your vehicle configuration has ${complianceResult.violations.length} weight violation(s).`
-                      }
+                        : `Your vehicle configuration has ${complianceResult.violations.length} weight violation(s).`}
                     </p>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div>
                       <h3 className="text-sm font-medium text-gray-400">Maximum Allowed Weight</h3>
-                      <p className="text-xl font-semibold text-white">{formatWeight(complianceResult.maxAllowedWeight)}</p>
-                    </div>
-                    
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-400">Current Gross Weight</h3>
-                      <p className={`text-xl font-semibold ${complianceResult.overWeight > 0 ? 'text-red-400' : 'text-white'}`}>
-                        {formatWeight(complianceResult.violations.find(v => v.type === 'Gross Weight')?.actual || 0)}
+                      <p className="text-xl font-semibold text-white">
+                        {formatWeight(complianceResult.maxAllowedWeight)}
                       </p>
                     </div>
-                    
+
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-400">Current Gross Weight</h3>
+                      <p
+                        className={`text-xl font-semibold ${complianceResult.overWeight > 0 ? 'text-red-400' : 'text-white'}`}
+                      >
+                        {formatWeight(
+                          complianceResult.violations.find(v => v.type === 'Gross Weight')
+                            ?.actual || 0
+                        )}
+                      </p>
+                    </div>
+
                     {complianceResult.overWeight > 0 && (
                       <div>
                         <h3 className="text-sm font-medium text-gray-400">Overweight Amount</h3>
-                        <p className="text-xl font-semibold text-red-400">{formatWeight(complianceResult.overWeight)}</p>
+                        <p className="text-xl font-semibold text-red-400">
+                          {formatWeight(complianceResult.overWeight)}
+                        </p>
                       </div>
                     )}
                   </div>
-                  
+
                   {!complianceResult.isCompliant && (
                     <div className="space-y-2">
                       <h3 className="text-sm font-medium text-gray-400">Violation Summary</h3>
@@ -95,7 +107,7 @@ export default function WeightCompliancePage() {
                       </ul>
                     </div>
                   )}
-                  
+
                   <div className="pt-4 border-t border-gray-800">
                     <h3 className="text-sm font-medium text-gray-400 mb-2">Compliance Tips</h3>
                     <ul className="space-y-2 text-sm text-gray-300">
@@ -116,23 +128,21 @@ export default function WeightCompliancePage() {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-gray-400">
-                    Use the compliance checker to see results
-                  </p>
+                  <p className="text-gray-400">Use the compliance checker to see results</p>
                 </div>
               )}
             </div>
           </div>
         </div>
       </div>
-      
+
       <div className="mt-8">
         <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
           <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center">
             <h2 className="text-xl font-semibold text-white">Weight Regulations Information</h2>
             <div className="h-2 w-2 rounded-full bg-blue-500"></div>
           </div>
-          
+
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -156,38 +166,50 @@ export default function WeightCompliancePage() {
                   </li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-white mb-2">Bridge Formula</h3>
                 <p className="text-gray-300 mb-2">
-                  The Bridge Formula establishes the maximum weight any set of axles on a motor vehicle may carry on the Interstate highway system.
+                  The Bridge Formula establishes the maximum weight any set of axles on a motor
+                  vehicle may carry on the Interstate highway system.
                 </p>
                 <div className="bg-gray-800 p-3 rounded-lg border border-gray-700">
                   <p className="text-white font-mono">W = 500(LN/(N-1) + 12N + 36)</p>
                   <p className="text-sm text-gray-400 mt-2">
-                    Where:<br />
-                    W = maximum weight in pounds<br />
-                    L = distance in feet between axles<br />
-                    N = number of axles being considered
+                    Where:
+                    <br />
+                    W = maximum weight in pounds
+                    <br />
+                    L = distance in feet between axles
+                    <br />N = number of axles being considered
                   </p>
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-6">
               <h3 className="text-lg font-medium text-white mb-2">State Variations</h3>
               <p className="text-gray-300 mb-4">
-                Weight limits can vary by state. Always check the specific regulations for the states you'll be traveling through.
+                Weight limits can vary by state. Always check the specific regulations for the
+                states you'll be traveling through.
               </p>
-              
+
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-700">
                   <thead>
                     <tr>
-                      <th className="px-4 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">State</th>
-                      <th className="px-4 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Single Axle</th>
-                      <th className="px-4 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Tandem Axle</th>
-                      <th className="px-4 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Gross Weight</th>
+                      <th className="px-4 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        State
+                      </th>
+                      <th className="px-4 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Single Axle
+                      </th>
+                      <th className="px-4 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Tandem Axle
+                      </th>
+                      <th className="px-4 py-3 bg-gray-800 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Gross Weight
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-700">

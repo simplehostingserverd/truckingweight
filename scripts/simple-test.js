@@ -15,7 +15,10 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 console.log('Supabase URL:', supabaseUrl);
-console.log('Supabase Key (first 10 chars):', supabaseKey ? supabaseKey.substring(0, 10) + '...' : 'undefined');
+console.log(
+  'Supabase Key (first 10 chars):',
+  supabaseKey ? supabaseKey.substring(0, 10) + '...' : 'undefined'
+);
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('Error: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env file');
@@ -59,7 +62,6 @@ async function testConnection() {
       console.log('Successfully created test record!');
       console.log('Database connection is fully working!');
     }
-
   } catch (error) {
     console.error('Unexpected error testing connection:', error);
   }

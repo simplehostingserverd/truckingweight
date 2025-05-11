@@ -26,12 +26,7 @@ interface TabsProps {
   children: React.ReactNode;
 }
 
-export const Tabs: React.FC<TabsProps> = ({
-  value,
-  onValueChange,
-  className,
-  children,
-}) => {
+export const Tabs: React.FC<TabsProps> = ({ value, onValueChange, className, children }) => {
   return (
     <TabsContext.Provider value={{ value, onValueChange }}>
       <div className={cn('w-full', className)}>{children}</div>
@@ -65,11 +60,7 @@ interface TabsTriggerProps {
   children: React.ReactNode;
 }
 
-export const TabsTrigger: React.FC<TabsTriggerProps> = ({
-  value,
-  className,
-  children,
-}) => {
+export const TabsTrigger: React.FC<TabsTriggerProps> = ({ value, className, children }) => {
   const { value: selectedValue, onValueChange } = useTabsContext();
   const isSelected = selectedValue === value;
 
@@ -100,11 +91,7 @@ interface TabsContentProps {
   children: React.ReactNode;
 }
 
-export const TabsContent: React.FC<TabsContentProps> = ({
-  value,
-  className,
-  children,
-}) => {
+export const TabsContent: React.FC<TabsContentProps> = ({ value, className, children }) => {
   const { value: selectedValue } = useTabsContext();
   const isSelected = selectedValue === value;
 

@@ -3,7 +3,7 @@ import {
   toSearchParamNumber,
   toSearchParamBoolean,
   parseSearchParams,
-  createSearchParams
+  createSearchParams,
 } from '../searchParams';
 
 describe('searchParams utilities', () => {
@@ -77,15 +77,15 @@ describe('searchParams utilities', () => {
       const params = {
         a: 'string',
         b: ['array', 'of', 'strings'],
-        c: undefined
+        c: undefined,
       };
 
       const result = parseSearchParams(params);
-      
+
       expect(result).toEqual({
         a: 'string',
         b: 'array,of,strings',
-        c: ''
+        c: '',
       });
     });
   });
@@ -96,11 +96,11 @@ describe('searchParams utilities', () => {
         query: 'test',
         page: 2,
         active: true,
-        empty: undefined
+        empty: undefined,
       };
 
       const searchParams = createSearchParams(params);
-      
+
       expect(searchParams.toString()).toBe('query=test&page=2&active=true');
       expect(searchParams.has('empty')).toBe(false);
     });

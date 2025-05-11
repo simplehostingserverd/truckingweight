@@ -24,10 +24,10 @@ const colors = {
 function runCommand(command, cwd) {
   try {
     console.log(`${colors.bright}${colors.blue}> ${command}${colors.reset}`);
-    execSync(command, { 
-      cwd, 
+    execSync(command, {
+      cwd,
       stdio: 'inherit',
-      shell: process.platform === 'win32' ? 'powershell.exe' : '/bin/bash'
+      shell: process.platform === 'win32' ? 'powershell.exe' : '/bin/bash',
     });
     return true;
   } catch (error) {
@@ -42,42 +42,48 @@ async function main() {
   const rootDir = path.resolve(__dirname, '..');
   const frontendDir = path.join(rootDir, 'frontend');
   const backendDir = path.join(rootDir, 'backend');
-  
+
   console.log(`\n${colors.bright}${colors.green}=== Installing Dependencies ===${colors.reset}\n`);
-  
+
   // Check if directories exist
   if (!fs.existsSync(frontendDir)) {
     console.error(`${colors.red}Frontend directory not found: ${frontendDir}${colors.reset}`);
     process.exit(1);
   }
-  
+
   if (!fs.existsSync(backendDir)) {
     console.error(`${colors.red}Backend directory not found: ${backendDir}${colors.reset}`);
     process.exit(1);
   }
-  
+
   // Install root dependencies
   console.log(`\n${colors.bright}${colors.yellow}Installing root dependencies...${colors.reset}`);
   if (!runCommand('npm ci', rootDir)) {
     console.error(`${colors.red}Failed to install root dependencies${colors.reset}`);
     process.exit(1);
   }
-  
+
   // Install frontend dependencies
-  console.log(`\n${colors.bright}${colors.yellow}Installing frontend dependencies...${colors.reset}`);
+  console.log(
+    `\n${colors.bright}${colors.yellow}Installing frontend dependencies...${colors.reset}`
+  );
   if (!runCommand('npm ci', frontendDir)) {
     console.error(`${colors.red}Failed to install frontend dependencies${colors.reset}`);
     process.exit(1);
   }
-  
+
   // Install backend dependencies
-  console.log(`\n${colors.bright}${colors.yellow}Installing backend dependencies...${colors.reset}`);
+  console.log(
+    `\n${colors.bright}${colors.yellow}Installing backend dependencies...${colors.reset}`
+  );
   if (!runCommand('npm ci', backendDir)) {
     console.error(`${colors.red}Failed to install backend dependencies${colors.reset}`);
     process.exit(1);
   }
-  
-  console.log(`\n${colors.bright}${colors.green}All dependencies installed successfully!${colors.reset}\n`);
+
+  console.log(
+    `\n${colors.bright}${colors.green}All dependencies installed successfully!${colors.reset}\n`
+  );
 }
 
 // Run the script

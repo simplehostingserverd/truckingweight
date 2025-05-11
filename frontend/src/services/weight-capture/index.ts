@@ -3,11 +3,11 @@
  * This service provides a unified interface for capturing weight data from various sources
  */
 
-import { 
-  WeightCaptureProvider, 
-  WeightReading, 
+import {
+  WeightCaptureProvider,
+  WeightReading,
   CalibrationResult,
-  ScaleConfig
+  ScaleConfig,
 } from '@/types/scale-master';
 import { DigitalScaleProvider } from './providers/digital-scale-provider';
 import { IoTSensorProvider } from './providers/iot-sensor-provider';
@@ -47,11 +47,11 @@ export class WeightCaptureService {
   async initializeDigitalScale(id: string, config: ScaleConfig): Promise<boolean> {
     const provider = new DigitalScaleProvider(config);
     const success = await provider.initialize();
-    
+
     if (success) {
       this.registerProvider(id, provider);
     }
-    
+
     return success;
   }
 
@@ -64,11 +64,11 @@ export class WeightCaptureService {
   async initializeIoTSensor(id: string, config: any): Promise<boolean> {
     const provider = new IoTSensorProvider(config);
     const success = await provider.initialize();
-    
+
     if (success) {
       this.registerProvider(id, provider);
     }
-    
+
     return success;
   }
 
@@ -80,11 +80,11 @@ export class WeightCaptureService {
   async initializeCamera(id: string): Promise<boolean> {
     const provider = new CameraProvider();
     const success = await provider.initialize();
-    
+
     if (success) {
       this.registerProvider(id, provider);
     }
-    
+
     return success;
   }
 
@@ -106,11 +106,11 @@ export class WeightCaptureService {
    */
   setActiveProvider(id: string): boolean {
     const provider = this.providers.get(id);
-    
+
     if (!provider) {
       return false;
     }
-    
+
     this.activeProvider = provider;
     this.activeProviderId = id;
     return true;
@@ -132,7 +132,7 @@ export class WeightCaptureService {
     if (!this.activeProvider) {
       throw new Error('No active weight capture provider set');
     }
-    
+
     await this.activeProvider.startCapture();
   }
 
@@ -145,7 +145,7 @@ export class WeightCaptureService {
     if (!this.activeProvider) {
       throw new Error('No active weight capture provider set');
     }
-    
+
     return await this.activeProvider.getCurrentReading();
   }
 
@@ -157,7 +157,7 @@ export class WeightCaptureService {
     if (!this.activeProvider) {
       throw new Error('No active weight capture provider set');
     }
-    
+
     await this.activeProvider.stopCapture();
   }
 
@@ -170,7 +170,7 @@ export class WeightCaptureService {
     if (!this.activeProvider) {
       throw new Error('No active weight capture provider set');
     }
-    
+
     return await this.activeProvider.calibrate();
   }
 }

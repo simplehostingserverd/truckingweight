@@ -10,7 +10,7 @@ const crypto = require('crypto');
  */
 router.get('/', async (req, res) => {
   try {
-    res.json({ 
+    res.json({
       message: 'API Keys endpoint',
       data: [
         {
@@ -19,9 +19,9 @@ router.get('/', async (req, res) => {
           key: '••••••••' + crypto.randomBytes(4).toString('hex'),
           created_at: new Date(),
           last_used_at: null,
-          permissions: ['read', 'write']
-        }
-      ]
+          permissions: ['read', 'write'],
+        },
+      ],
     });
   } catch (err) {
     console.error(err.message);
@@ -37,16 +37,16 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const apiKey = crypto.randomBytes(24).toString('hex');
-    
-    res.json({ 
+
+    res.json({
       message: 'API Key created successfully',
       data: {
         id: uuidv4(),
         name: req.body.name || 'New API Key',
         key: apiKey,
         created_at: new Date(),
-        permissions: req.body.permissions || ['read']
-      }
+        permissions: req.body.permissions || ['read'],
+      },
     });
   } catch (err) {
     console.error(err.message);
@@ -61,7 +61,7 @@ router.post('/', async (req, res) => {
  */
 router.get('/:id', async (req, res) => {
   try {
-    res.json({ 
+    res.json({
       message: `API Key ${req.params.id}`,
       data: {
         id: req.params.id,
@@ -69,8 +69,8 @@ router.get('/:id', async (req, res) => {
         key: '••••••••' + crypto.randomBytes(4).toString('hex'),
         created_at: new Date(),
         last_used_at: null,
-        permissions: ['read', 'write']
-      }
+        permissions: ['read', 'write'],
+      },
     });
   } catch (err) {
     console.error(err.message);
@@ -85,7 +85,7 @@ router.get('/:id', async (req, res) => {
  */
 router.put('/:id', async (req, res) => {
   try {
-    res.json({ 
+    res.json({
       message: `API Key ${req.params.id} updated`,
       data: {
         id: req.params.id,
@@ -93,8 +93,8 @@ router.put('/:id', async (req, res) => {
         key: '••••••••' + crypto.randomBytes(4).toString('hex'),
         created_at: new Date(),
         updated_at: new Date(),
-        permissions: req.body.permissions || ['read', 'write']
-      }
+        permissions: req.body.permissions || ['read', 'write'],
+      },
     });
   } catch (err) {
     console.error(err.message);
@@ -109,9 +109,9 @@ router.put('/:id', async (req, res) => {
  */
 router.delete('/:id', async (req, res) => {
   try {
-    res.json({ 
+    res.json({
       message: `API Key ${req.params.id} deleted`,
-      success: true
+      success: true,
     });
   } catch (err) {
     console.error(err.message);

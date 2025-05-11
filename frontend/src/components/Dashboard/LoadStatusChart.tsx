@@ -3,14 +3,7 @@
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Legend
-} from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface LoadStatusChartProps {
   companyId?: number | null;
@@ -24,10 +17,10 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
 
   // Colors for load status
   const COLORS = {
-    Pending: '#3b82f6',   // blue
+    Pending: '#3b82f6', // blue
     'In Transit': '#8b5cf6', // purple
     Delivered: '#22c55e', // green
-    Cancelled: '#6b7280'  // gray
+    Cancelled: '#6b7280', // gray
   };
 
   useEffect(() => {
@@ -36,7 +29,9 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
         setIsLoading(true);
 
         // Get auth token from supabase
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
         if (!session) {
           throw new Error('No active session');
@@ -49,8 +44,8 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
 
         const response = await fetch(url, {
           headers: {
-            'x-auth-token': session.access_token
-          }
+            'x-auth-token': session.access_token,
+          },
         });
 
         if (!response.ok) {
@@ -62,7 +57,6 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
 
         // Set the load data
         setLoadData(loadData);
-
       } catch (error: any) {
         console.error('Error fetching load status data:', error);
         setError(error.message);
@@ -113,16 +107,23 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
                   dataKey="value"
                 >
                   {loadData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[entry.name as keyof typeof COLORS] || '#8884d8'} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[entry.name as keyof typeof COLORS] || '#8884d8'}
+                    />
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(value) => [`${value} loads`, 'Count']}
-                  contentStyle={{ backgroundColor: '#1E1E1E', border: '1px solid #333', borderRadius: '4px' }}
+                  formatter={value => [`${value} loads`, 'Count']}
+                  contentStyle={{
+                    backgroundColor: '#1E1E1E',
+                    border: '1px solid #333',
+                    borderRadius: '4px',
+                  }}
                   itemStyle={{ color: '#fff' }}
                   labelStyle={{ color: '#aaa' }}
                 />
-                <Legend formatter={(value) => <span style={{ color: '#fff' }}>{value}</span>} />
+                <Legend formatter={value => <span style={{ color: '#fff' }}>{value}</span>} />
               </PieChart>
             </ResponsiveContainer>
           </div>

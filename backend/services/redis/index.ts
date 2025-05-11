@@ -8,13 +8,13 @@ class RedisService {
 
   constructor() {
     const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
-    
+
     this.client = new Redis(redisUrl, {
       maxRetriesPerRequest: 3,
-      retryStrategy: (times) => {
+      retryStrategy: times => {
         const delay = Math.min(times * 50, 2000);
         return delay;
-      }
+      },
     });
 
     this.client.on('connect', () => {
@@ -22,7 +22,7 @@ class RedisService {
       logger.info('Redis client connected');
     });
 
-    this.client.on('error', (err) => {
+    this.client.on('error', err => {
       this.isConnected = false;
       logger.error('Redis client error:', err);
     });
@@ -64,13 +64,13 @@ class RedisService {
   public async set(key: string, value: any, ttl?: number): Promise<boolean> {
     try {
       const serializedValue = JSON.stringify(value);
-      
+
       if (ttl) {
         await this.client.set(key, serializedValue, 'EX', ttl);
       } else {
         await this.client.set(key, serializedValue, 'EX', this.defaultTTL);
       }
-      
+
       return true;
     } catch (error) {
       logger.error(`Error setting key ${key} in Redis:`, error);
@@ -167,12 +167,12 @@ class RedisService {
     try {
       const data = await this.client.hgetall(key);
       if (!data || Object.keys(data).length === 0) return null;
-      
+
       const result: Record<string, T> = {};
       for (const field in data) {
         result[field] = JSON.parse(data[field]) as T;
       }
-      
+
       return result;
     } catch (error) {
       logger.error(`Error getting all hash fields for key ${key} from Redis:`, error);

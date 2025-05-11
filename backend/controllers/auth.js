@@ -44,8 +44,8 @@ exports.register = async (req, res) => {
           email,
           password: hashedPassword,
           company_id: companyId,
-          is_admin: false
-        }
+          is_admin: false,
+        },
       ])
       .select()
       .single();
@@ -60,20 +60,15 @@ exports.register = async (req, res) => {
       user: {
         id: newUser.id,
         companyId: newUser.company_id,
-        isAdmin: newUser.is_admin
-      }
+        isAdmin: newUser.is_admin,
+      },
     };
 
     // Sign token
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET || 'secret',
-      { expiresIn: '24h' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
+    jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: '24h' }, (err, token) => {
+      if (err) throw err;
+      res.json({ token });
+    });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -119,20 +114,15 @@ exports.login = async (req, res) => {
       user: {
         id: user.id,
         companyId: user.company_id,
-        isAdmin: user.is_admin
-      }
+        isAdmin: user.is_admin,
+      },
     };
 
     // Sign token
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET || 'secret',
-      { expiresIn: '24h' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
+    jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: '24h' }, (err, token) => {
+      if (err) throw err;
+      res.json({ token });
+    });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

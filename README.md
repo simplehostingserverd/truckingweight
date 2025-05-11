@@ -2,13 +2,13 @@
 
 <div align="center">
 
-  ![TruckingSemis Banner](frontend/public/images/banner.svg)
+![TruckingSemis Banner](frontend/public/images/banner.svg)
 
-  [![CI/CD Pipeline](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml/badge.svg)](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml)
-  [![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
-  [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white&labelColor=3ECF8E)](https://supabase.com/)
-  [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=38B2AC)](https://tailwindcss.com/)
-  [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![CI/CD Pipeline](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml/badge.svg)](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml)
+[![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white&labelColor=3ECF8E)](https://supabase.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=38B2AC)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
   <p align="center">
     <a href="#demo">View Demo</a>
@@ -75,23 +75,27 @@
 
 <div align="center">
 
-  ### Frontend
-  ![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=flat-square&logo=next.js&logoColor=white)
-  ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)
-  ![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
+### Frontend
 
-  ### Backend
-  ![Node.js](https://img.shields.io/badge/Node.js-18-339933?style=flat-square&logo=node.js&logoColor=white)
-  ![Express](https://img.shields.io/badge/Express-4.18-000000?style=flat-square&logo=express&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=flat-square&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 
-  ### Database
-  ![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
+### Backend
 
-  ### DevOps
-  ![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?style=flat-square&logo=docker&logoColor=white)
-  ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI/CD-2088FF?style=flat-square&logo=github-actions&logoColor=white)
-  ![Continuous Integration](https://img.shields.io/badge/CI-Automated_Testing-43A047?style=flat-square&logo=github-actions&logoColor=white)
-  ![Continuous Deployment](https://img.shields.io/badge/CD-Automated_Deployment-0D47A1?style=flat-square&logo=github-actions&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-18-339933?style=flat-square&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.18-000000?style=flat-square&logo=express&logoColor=white)
+
+### Database
+
+![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
+
+### DevOps
+
+![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?style=flat-square&logo=docker&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI/CD-2088FF?style=flat-square&logo=github-actions&logoColor=white)
+![Continuous Integration](https://img.shields.io/badge/CI-Automated_Testing-43A047?style=flat-square&logo=github-actions&logoColor=white)
+![Continuous Deployment](https://img.shields.io/badge/CD-Automated_Deployment-0D47A1?style=flat-square&logo=github-actions&logoColor=white)
 
 </div>
 
@@ -107,17 +111,20 @@
 ### Development Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/simplehostingserverd/truckingweight.git
    cd truckingweight
    ```
 
 2. Install dependencies:
+
    ```bash
    npm run install-deps
    ```
 
 3. Set up environment variables:
+
    ```bash
    cp frontend/.env.example frontend/.env.local
    cp backend/.env.example backend/.env
@@ -126,6 +133,7 @@
    Update the environment files with your Supabase credentials.
 
 4. Run the development server:
+
    ```bash
    npm run dev
    ```
@@ -143,12 +151,14 @@ docker-compose up -d
 This project uses GitHub Actions for continuous integration and deployment:
 
 1. **Continuous Integration**: Automatically runs on every push and pull request to the main branch
+
    - Installs dependencies
    - Builds the application
    - Runs tests (if available)
    - Reports build status
 
 2. **Environment Variables**: Securely managed through GitHub Secrets
+
    - Supabase credentials
    - Mapbox API token
    - Cesium token
@@ -163,7 +173,7 @@ Record and track weight information for your vehicles:
 
 ```javascript
 // Example API call to create a new weight record
-const createWeight = async (weightData) => {
+const createWeight = async weightData => {
   const { data, error } = await supabase
     .from('weights')
     .insert([
@@ -177,7 +187,7 @@ const createWeight = async (weightData) => {
         company_id: userData.company_id,
         axle_type: weightData.axleType,
         state_code: weightData.stateCode || null,
-      }
+      },
     ])
     .select();
 
@@ -202,7 +212,7 @@ const checkCompliance = (weight, axleType, stateCode) => {
     isCompliant,
     maxAllowed: limits.maxWeight,
     overageAmount: isCompliant ? 0 : weight - limits.maxWeight,
-    regulationReference: limits.reference
+    regulationReference: limits.reference,
   };
 };
 ```
@@ -232,16 +242,19 @@ truckingweight/
 ## 🗺️ Roadmap
 
 - [x] Phase 1: Core Functionality
+
   - [x] User authentication
   - [x] Basic weight management
   - [x] Company management
 
 - [x] Phase 2: Enhanced Features
+
   - [x] Vehicle and driver management
   - [x] Load tracking
   - [x] Basic reporting
 
 - [ ] Phase 3: Advanced Features
+
   - [ ] Weight compliance checking with federal regulations
   - [ ] Enhanced dashboard with data visualization
   - [ ] Complete load management with route planning
@@ -274,13 +287,13 @@ This project uses Git hooks (specifically pre-push hooks) to maintain code quali
 
 #### ⚠️ Why You Should Never Bypass Pre-Push Hooks
 
-| Bypassing Hooks | Following Hooks |
-|-----------------|-----------------|
-| ❌ Introduces bugs and issues to the codebase | ✅ Catches issues before they reach the repository |
-| ❌ Breaks the CI/CD pipeline for everyone | ✅ Ensures CI/CD runs smoothly |
-| ❌ Creates technical debt | ✅ Maintains code quality standards |
-| ❌ Wastes team resources on fixing preventable issues | ✅ Saves time and resources |
-| ❌ Undermines team trust | ✅ Builds team confidence |
+| Bypassing Hooks                                       | Following Hooks                                    |
+| ----------------------------------------------------- | -------------------------------------------------- |
+| ❌ Introduces bugs and issues to the codebase         | ✅ Catches issues before they reach the repository |
+| ❌ Breaks the CI/CD pipeline for everyone             | ✅ Ensures CI/CD runs smoothly                     |
+| ❌ Creates technical debt                             | ✅ Maintains code quality standards                |
+| ❌ Wastes team resources on fixing preventable issues | ✅ Saves time and resources                        |
+| ❌ Undermines team trust                              | ✅ Builds team confidence                          |
 
 #### 🚫 Never Use These Commands
 

@@ -37,10 +37,7 @@ const auth = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
 
   try {
     // Verify token
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET || 'secret'
-    ) as JwtPayload;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as JwtPayload;
 
     // Set user data in request
     req.user = decoded.user;

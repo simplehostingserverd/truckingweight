@@ -20,7 +20,9 @@ export default function NewWeight() {
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [complianceDetails, setComplianceDetails] = useState<any>(null);
   const [stateCode, setStateCode] = useState('');
-  const [axleType, setAxleType] = useState<'SINGLE_AXLE' | 'TANDEM_AXLE' | 'GROSS_VEHICLE_WEIGHT'>('GROSS_VEHICLE_WEIGHT');
+  const [axleType, setAxleType] = useState<'SINGLE_AXLE' | 'TANDEM_AXLE' | 'GROSS_VEHICLE_WEIGHT'>(
+    'GROSS_VEHICLE_WEIGHT'
+  );
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
@@ -28,7 +30,9 @@ export default function NewWeight() {
     const fetchData = async () => {
       try {
         // Get session
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
         if (!session) {
           router.push('/login');
@@ -76,7 +80,6 @@ export default function NewWeight() {
         // Set default date to today
         const today = new Date().toISOString().split('T')[0];
         setDate(today);
-
       } catch (err: any) {
         console.error('Error fetching data:', err);
         setError('Failed to load data');
@@ -105,7 +108,9 @@ export default function NewWeight() {
 
     try {
       // Get session
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
       if (!session) {
         router.push('/login');
@@ -124,7 +129,9 @@ export default function NewWeight() {
       }
 
       // Get compliance status
-      const status = complianceDetails ? complianceDetails.status : determineComplianceStatus(weight, axleType, stateCode);
+      const status = complianceDetails
+        ? complianceDetails.status
+        : determineComplianceStatus(weight, axleType, stateCode);
 
       // Create weight record
       const { data: newWeight, error: weightError } = await supabase
@@ -141,7 +148,7 @@ export default function NewWeight() {
             axle_type: axleType,
             state_code: stateCode || null,
             compliance_details: complianceDetails ? JSON.stringify(complianceDetails) : null,
-          }
+          },
         ])
         .select()
         .single();
@@ -172,7 +179,9 @@ export default function NewWeight() {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">New Weight Measurement</h1>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
+            New Weight Measurement
+          </h1>
 
           <Link
             href="/weights"
@@ -186,9 +195,7 @@ export default function NewWeight() {
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30 mb-6">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
-                  {error}
-                </h3>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{error}</h3>
               </div>
             </div>
           </div>
@@ -201,7 +208,10 @@ export default function NewWeight() {
 
           <form className="p-6 space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="vehicle" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="vehicle"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Vehicle
               </label>
               <select
@@ -210,10 +220,10 @@ export default function NewWeight() {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={vehicleId}
-                onChange={(e) => setVehicleId(e.target.value)}
+                onChange={e => setVehicleId(e.target.value)}
               >
                 <option value="">Select a vehicle</option>
-                {vehicles.map((vehicle) => (
+                {vehicles.map(vehicle => (
                   <option key={vehicle.id} value={vehicle.id}>
                     {vehicle.name} ({vehicle.license_plate})
                   </option>
@@ -222,7 +232,10 @@ export default function NewWeight() {
             </div>
 
             <div>
-              <label htmlFor="driver" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="driver"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Driver
               </label>
               <select
@@ -231,10 +244,10 @@ export default function NewWeight() {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={driverId}
-                onChange={(e) => setDriverId(e.target.value)}
+                onChange={e => setDriverId(e.target.value)}
               >
                 <option value="">Select a driver</option>
-                {drivers.map((driver) => (
+                {drivers.map(driver => (
                   <option key={driver.id} value={driver.id}>
                     {driver.name} ({driver.license_number})
                   </option>
@@ -243,7 +256,10 @@ export default function NewWeight() {
             </div>
 
             <div>
-              <label htmlFor="weight" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="weight"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Weight
               </label>
               <input
@@ -254,12 +270,15 @@ export default function NewWeight() {
                 placeholder="e.g. 32,500 lbs"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={weight}
-                onChange={(e) => setWeight(e.target.value)}
+                onChange={e => setWeight(e.target.value)}
               />
             </div>
 
             <div>
-              <label htmlFor="axleType" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="axleType"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Axle Type
               </label>
               <select
@@ -268,7 +287,7 @@ export default function NewWeight() {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={axleType}
-                onChange={(e) => setAxleType(e.target.value as any)}
+                onChange={e => setAxleType(e.target.value as any)}
               >
                 <option value="GROSS_VEHICLE_WEIGHT">Gross Vehicle Weight</option>
                 <option value="SINGLE_AXLE">Single Axle</option>
@@ -277,7 +296,10 @@ export default function NewWeight() {
             </div>
 
             <div>
-              <label htmlFor="stateCode" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="stateCode"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 State (optional)
               </label>
               <select
@@ -285,7 +307,7 @@ export default function NewWeight() {
                 name="stateCode"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={stateCode}
-                onChange={(e) => setStateCode(e.target.value)}
+                onChange={e => setStateCode(e.target.value)}
               >
                 <option value="">Federal Regulations Only</option>
                 <option value="CA">California</option>
@@ -297,20 +319,24 @@ export default function NewWeight() {
             </div>
 
             {complianceDetails && (
-              <div className={`p-4 rounded-md ${
-                complianceDetails.status === 'Compliant'
-                  ? 'bg-green-50 dark:bg-green-900/30'
-                  : complianceDetails.status === 'Warning'
-                    ? 'bg-yellow-50 dark:bg-yellow-900/30'
-                    : 'bg-red-50 dark:bg-red-900/30'
-              }`}>
-                <h3 className={`text-sm font-medium ${
+              <div
+                className={`p-4 rounded-md ${
                   complianceDetails.status === 'Compliant'
-                    ? 'text-green-800 dark:text-green-200'
+                    ? 'bg-green-50 dark:bg-green-900/30'
                     : complianceDetails.status === 'Warning'
-                      ? 'text-yellow-800 dark:text-yellow-200'
-                      : 'text-red-800 dark:text-red-200'
-                }`}>
+                      ? 'bg-yellow-50 dark:bg-yellow-900/30'
+                      : 'bg-red-50 dark:bg-red-900/30'
+                }`}
+              >
+                <h3
+                  className={`text-sm font-medium ${
+                    complianceDetails.status === 'Compliant'
+                      ? 'text-green-800 dark:text-green-200'
+                      : complianceDetails.status === 'Warning'
+                        ? 'text-yellow-800 dark:text-yellow-200'
+                        : 'text-red-800 dark:text-red-200'
+                  }`}
+                >
                   {complianceDetails.status}: {complianceDetails.message}
                 </h3>
                 <div className="mt-2 text-sm">
@@ -330,7 +356,10 @@ export default function NewWeight() {
             )}
 
             <div>
-              <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="date"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Date
               </label>
               <input
@@ -340,12 +369,15 @@ export default function NewWeight() {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={e => setDate(e.target.value)}
               />
             </div>
 
             <div>
-              <label htmlFor="time" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="time"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Time (optional)
               </label>
               <input
@@ -354,7 +386,7 @@ export default function NewWeight() {
                 type="time"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={time}
-                onChange={(e) => setTime(e.target.value)}
+                onChange={e => setTime(e.target.value)}
               />
             </div>
 

@@ -79,7 +79,7 @@ function formatData(data: any): string {
  */
 function addToMemoryLogs(entry: LogEntry): void {
   memoryLogs.push(entry);
-  
+
   // Keep memory logs under the maximum size
   if (memoryLogs.length > MAX_MEMORY_LOGS) {
     memoryLogs.shift();
@@ -93,12 +93,7 @@ function addToMemoryLogs(entry: LogEntry): void {
  * @param data - Optional data to log
  * @param context - Optional context (e.g., component name)
  */
-function createLogEntry(
-  level: LogLevel,
-  message: string,
-  data?: any,
-  context?: string
-): LogEntry {
+function createLogEntry(level: LogLevel, message: string, data?: any, context?: string): LogEntry {
   return {
     timestamp: new Date().toISOString(),
     level,
@@ -115,12 +110,7 @@ function createLogEntry(
  * @param data - Optional data to log
  * @param context - Optional context (e.g., component name)
  */
-function log(
-  level: LogLevel,
-  message: string,
-  data?: any,
-  context?: string
-): void {
+function log(level: LogLevel, message: string, data?: any, context?: string): void {
   if (!shouldLog(level)) {
     return;
   }
@@ -175,14 +165,10 @@ export function exportLogs(): string {
 
 // Public logging methods
 export const logger = {
-  debug: (message: string, data?: any, context?: string) =>
-    log('debug', message, data, context),
-  info: (message: string, data?: any, context?: string) =>
-    log('info', message, data, context),
-  warn: (message: string, data?: any, context?: string) =>
-    log('warn', message, data, context),
-  error: (message: string, data?: any, context?: string) =>
-    log('error', message, data, context),
+  debug: (message: string, data?: any, context?: string) => log('debug', message, data, context),
+  info: (message: string, data?: any, context?: string) => log('info', message, data, context),
+  warn: (message: string, data?: any, context?: string) => log('warn', message, data, context),
+  error: (message: string, data?: any, context?: string) => log('error', message, data, context),
   getLogs,
   clearLogs,
   exportLogs,

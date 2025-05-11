@@ -11,7 +11,7 @@ import {
   ChartBarIcon,
   Cog6ToothIcon,
   UsersIcon,
-  BuildingOfficeIcon
+  BuildingOfficeIcon,
 } from '@heroicons/react/24/outline';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { cn } from '@/lib/utils';
@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils';
 const BREAKPOINTS = {
   md: 768,
   lg: 1024,
-  xl: 1280
+  xl: 1280,
 };
 
 interface SidebarProps {
@@ -91,22 +91,18 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
   return (
     <div
       className={cn(
-        "bg-[#0A0A0A] border-r border-gray-800 transition-all duration-300 flex flex-col",
-        collapsed ? "w-20" : "w-64",
-        "hidden md:flex" // Hide on mobile, show on tablet and up
+        'bg-[#0A0A0A] border-r border-gray-800 transition-all duration-300 flex flex-col',
+        collapsed ? 'w-20' : 'w-64',
+        'hidden md:flex' // Hide on mobile, show on tablet and up
       )}
     >
       <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
         <div className="flex items-center justify-between px-4 mb-6">
-          {!collapsed && (
-            <div className="text-xl font-bold text-white">
-              CargoFlex
-            </div>
-          )}
+          {!collapsed && <div className="text-xl font-bold text-white">CargoFlex</div>}
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="p-1.5 rounded-full bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none transition-colors duration-200"
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed ? (
               <ChevronRightIcon className="h-5 w-5" />
@@ -121,7 +117,7 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
         </div>
 
         <nav className="mt-2 flex-1 px-3 space-y-1">
-          {navigation.map((item) => {
+          {navigation.map(item => {
             const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
@@ -136,18 +132,14 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
               >
                 <item.icon
                   className={cn(
-                    isActive
-                      ? 'text-white'
-                      : 'text-gray-400 group-hover:text-white',
+                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
                     'flex-shrink-0 h-5 w-5',
                     collapsed ? 'mx-auto' : 'mr-3'
                   )}
                   aria-hidden="true"
                 />
                 {!collapsed && <span>{item.name}</span>}
-                {collapsed && (
-                  <span className="sr-only">{item.name}</span>
-                )}
+                {collapsed && <span className="sr-only">{item.name}</span>}
               </Link>
             );
           })}
@@ -168,7 +160,7 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
               )}
             </div>
             <nav className="mt-2 flex-1 px-3 space-y-1">
-              {adminNavigation.map((item) => {
+              {adminNavigation.map(item => {
                 const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
                 return (
                   <Link
@@ -183,18 +175,14 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
                   >
                     <item.icon
                       className={cn(
-                        isActive
-                          ? 'text-white'
-                          : 'text-gray-400 group-hover:text-white',
+                        isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
                         'flex-shrink-0 h-5 w-5',
                         collapsed ? 'mx-auto' : 'mr-3'
                       )}
                       aria-hidden="true"
                     />
                     {!collapsed && <span>{item.name}</span>}
-                    {collapsed && (
-                      <span className="sr-only">{item.name}</span>
-                    )}
+                    {collapsed && <span className="sr-only">{item.name}</span>}
                   </Link>
                 );
               })}

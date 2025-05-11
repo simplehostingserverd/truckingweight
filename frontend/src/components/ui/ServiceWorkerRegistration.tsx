@@ -27,7 +27,7 @@ export default function ServiceWorkerRegistration({
       const wb = new Workbox('/service-worker.js');
 
       // Successful registration
-      wb.addEventListener('installed', (event) => {
+      wb.addEventListener('installed', event => {
         logger.info('Service Worker installed successfully', { event }, 'ServiceWorker');
 
         if (event.isUpdate) {
@@ -41,7 +41,7 @@ export default function ServiceWorkerRegistration({
       });
 
       // Registration error
-      wb.addEventListener('error', (event) => {
+      wb.addEventListener('error', event => {
         const error = new Error('Service worker registration failed');
         logger.error('Service Worker registration failed', { event }, 'ServiceWorker');
         onError?.(error);
@@ -55,10 +55,10 @@ export default function ServiceWorkerRegistration({
 
       // Register the service worker
       wb.register()
-        .then((registration) => {
+        .then(registration => {
           logger.info('Service Worker registered', { scope: registration.scope }, 'ServiceWorker');
         })
-        .catch((error) => {
+        .catch(error => {
           logger.error('Service Worker registration failed', { error }, 'ServiceWorker');
           onError?.(error);
         });

@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
 import { QrScanner } from '@yudiel/react-qr-scanner';
-import { 
-  ScaleIcon, 
-  QrCodeIcon, 
-  ArrowPathIcon, 
+import {
+  ScaleIcon,
+  QrCodeIcon,
+  ArrowPathIcon,
   CheckCircleIcon,
-  XCircleIcon
+  XCircleIcon,
 } from '@heroicons/react/24/outline';
 
 interface ScaleSelectorProps {
@@ -28,31 +28,33 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
     const fetchScales = async () => {
       try {
         setLoading(true);
-        
+
         // Get auth token from supabase
-        const { data: { session } } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
         if (!session) {
           throw new Error('No active session');
         }
-        
+
         // Fetch scales from API
         const response = await fetch('/api/scales', {
           headers: {
-            'x-auth-token': session.access_token
-          }
+            'x-auth-token': session.access_token,
+          },
         });
-        
+
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.message || 'Failed to fetch scales');
         }
-        
+
         const scalesData = await response.json();
-        
+
         // Filter only active scales
         const activeScales = scalesData.filter((scale: any) => scale.status === 'Active');
-        
+
         setScales(activeScales);
       } catch (error: any) {
         console.error('Error fetching scales:', error);
@@ -61,7 +63,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
         setLoading(false);
       }
     };
-    
+
     fetchScales();
   }, [supabase]);
 
@@ -69,43 +71,51 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
     try {
       // Parse QR code data
       const qrData = JSON.parse(result);
-      
+
       // Validate QR code format
       if (qrData.type !== 'scale') {
-        setScanResult({ success: false, message: 'Invalid QR code format. This is not a scale QR code.' });
+        setScanResult({
+          success: false,
+          message: 'Invalid QR code format. This is not a scale QR code.',
+        });
         return;
       }
-      
+
       // Get auth token from supabase
-      const { data: { session } } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (!session) {
         throw new Error('No active session');
       }
-      
+
       // Validate QR code with backend
       const response = await fetch('/api/scales/validate-qrcode', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-auth-token': session.access_token
+          'x-auth-token': session.access_token,
         },
-        body: JSON.stringify({ qrCodeData: result })
+        body: JSON.stringify({ qrCodeData: result }),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to validate QR code');
       }
-      
+
       const validationResult = await response.json();
-      
+
       if (validationResult.valid && validationResult.scale) {
-        setScanResult({ success: true, message: `Successfully connected to scale: ${validationResult.scale.name}` });
-        
+        setScanResult({
+          success: true,
+          message: `Successfully connected to scale: ${validationResult.scale.name}`,
+        });
+
         // Select the scale
         onScaleSelect(validationResult.scale);
-        
+
         // Close QR scanner after successful scan
         setTimeout(() => {
           setShowQrScanner(false);
@@ -169,27 +179,31 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
           {showQrScanner ? 'Close Scanner' : 'Scan QR Code'}
         </button>
       </div>
-      
+
       {showQrScanner ? (
         <div className="mb-6">
           <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
             <QrScanner
               onDecode={handleQrCodeScan}
-              onError={(error) => console.error(error)}
+              onError={error => console.error(error)}
               containerStyle={{ borderRadius: '0.5rem', overflow: 'hidden' }}
               scanDelay={500}
             />
           </div>
-          
+
           {scanResult && (
-            <div className={`mt-4 p-3 rounded-md ${scanResult.success ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}>
+            <div
+              className={`mt-4 p-3 rounded-md ${scanResult.success ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}
+            >
               <div className="flex items-start">
                 {scanResult.success ? (
                   <CheckCircleIcon className="h-5 w-5 text-green-500 dark:text-green-400 mt-0.5 mr-3 flex-shrink-0" />
                 ) : (
                   <XCircleIcon className="h-5 w-5 text-red-500 dark:text-red-400 mt-0.5 mr-3 flex-shrink-0" />
                 )}
-                <p className={`text-sm ${scanResult.success ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'}`}>
+                <p
+                  className={`text-sm ${scanResult.success ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'}`}
+                >
                   {scanResult.message}
                 </p>
               </div>
@@ -199,7 +213,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
       ) : (
         <div className="space-y-3">
           {scales.length > 0 ? (
-            scales.map((scale) => (
+            scales.map(scale => (
               <button
                 key={scale.id}
                 onClick={() => onScaleSelect(scale)}

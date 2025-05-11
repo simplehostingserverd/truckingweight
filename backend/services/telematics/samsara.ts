@@ -23,9 +23,9 @@ export class SamsaraService implements TelematicsProvider {
    */
   private getHeaders(): Record<string, string> {
     return {
-      'Authorization': `Bearer ${this.apiKey}`,
+      Authorization: `Bearer ${this.apiKey}`,
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      Accept: 'application/json',
     };
   }
 
@@ -60,13 +60,13 @@ export class SamsaraService implements TelematicsProvider {
         timestamp: new Date(),
         location: {
           latitude: location.latitude,
-          longitude: location.longitude
+          longitude: location.longitude,
         },
         speed: stats.speed,
         engineStatus: stats.engineState === 'Running' ? 'on' : 'off',
         fuelLevel: stats.fuelLevelPercent,
         odometer: stats.odometerMeters / 1609.34, // Convert meters to miles
-        diagnosticCodes: stats.faultCodes?.map(code => code.faultCode) || []
+        diagnosticCodes: stats.faultCodes?.map(code => code.faultCode) || [],
       };
     } catch (error) {
       logger.error('Error fetching vehicle data from Samsara:', error);
@@ -85,10 +85,9 @@ export class SamsaraService implements TelematicsProvider {
       }
 
       // Fetch driver details
-      const driverResponse = await axios.get(
-        `${SAMSARA_API_BASE_URL}/fleet/drivers/${driverId}`,
-        { headers: this.getHeaders() }
-      );
+      const driverResponse = await axios.get(`${SAMSARA_API_BASE_URL}/fleet/drivers/${driverId}`, {
+        headers: this.getHeaders(),
+      });
 
       // Fetch driver HOS (Hours of Service)
       const hosResponse = await axios.get(
@@ -113,8 +112,8 @@ export class SamsaraService implements TelematicsProvider {
           dutyTime: hos.onDutyMs / 3600000,
           restTime: hos.restMs / 3600000,
           cycleRemaining: hos.cycleRemainingMs / 3600000,
-          status: hos.status
-        }
+          status: hos.status,
+        },
       };
     } catch (error) {
       logger.error('Error fetching driver data from Samsara:', error);
@@ -137,17 +136,14 @@ export class SamsaraService implements TelematicsProvider {
       const endMs = endTime.getTime();
 
       // Fetch events
-      const response = await axios.get(
-        `${SAMSARA_API_BASE_URL}/events`,
-        {
-          headers: this.getHeaders(),
-          params: {
-            types: 'harsh_event,safety_event,driver_safety_score',
-            startMs,
-            endMs
-          }
-        }
-      );
+      const response = await axios.get(`${SAMSARA_API_BASE_URL}/events`, {
+        headers: this.getHeaders(),
+        params: {
+          types: 'harsh_event,safety_event,driver_safety_score',
+          startMs,
+          endMs,
+        },
+      });
 
       return response.data.events.map(event => ({
         type: event.type,
@@ -158,8 +154,8 @@ export class SamsaraService implements TelematicsProvider {
           location: event.location,
           severity: event.severity,
           eventType: event.eventType,
-          description: event.description
-        }
+          description: event.description,
+        },
       }));
     } catch (error) {
       logger.error('Error fetching events from Samsara:', error);
@@ -199,7 +195,7 @@ export class SamsaraService implements TelematicsProvider {
         {
           name: 'ScaleMasterAI Integration',
           url: callbackUrl,
-          eventTypes: samsaraEventTypes
+          eventTypes: samsaraEventTypes,
         },
         { headers: this.getHeaders() }
       );
@@ -207,7 +203,7 @@ export class SamsaraService implements TelematicsProvider {
       return {
         subscriptionId: response.data.id,
         status: response.data.status,
-        eventTypes: response.data.eventTypes
+        eventTypes: response.data.eventTypes,
       };
     } catch (error) {
       logger.error('Error subscribing to Samsara events:', error);

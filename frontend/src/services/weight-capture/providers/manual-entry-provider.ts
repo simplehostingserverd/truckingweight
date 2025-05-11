@@ -3,12 +3,12 @@
  * This provider implements the WeightCaptureProvider interface for manual weight entry
  */
 
-import { 
-  WeightCaptureProvider, 
-  WeightReading, 
+import {
+  WeightCaptureProvider,
+  WeightReading,
   CalibrationResult,
   AxleWeightReading,
-  GeoLocation
+  GeoLocation,
 } from '@/types/scale-master';
 
 export class ManualEntryProvider implements WeightCaptureProvider {
@@ -16,30 +16,30 @@ export class ManualEntryProvider implements WeightCaptureProvider {
   private manualTareWeight: number | null = null;
   private manualAxleWeights: AxleWeightReading[] = [];
   private lastReading: WeightReading | null = null;
-  
+
   async initialize(): Promise<boolean> {
     // No initialization needed for manual entry
     return true;
   }
-  
+
   async startCapture(): Promise<void> {
     // No continuous capture for manual entry
     // We'll just create a reading based on the manually entered values
     this.updateReading();
   }
-  
+
   async getCurrentReading(): Promise<WeightReading> {
     if (!this.lastReading) {
       throw new Error('No manual weight reading available');
     }
-    
+
     return this.lastReading;
   }
-  
+
   async stopCapture(): Promise<void> {
     // No continuous capture to stop for manual entry
   }
-  
+
   async calibrate(): Promise<CalibrationResult> {
     // Calibration doesn't apply to manual entry
     return {
@@ -47,10 +47,10 @@ export class ManualEntryProvider implements WeightCaptureProvider {
       previousOffset: 0,
       newOffset: 0,
       timestamp: new Date(),
-      performedBy: 'System'
+      performedBy: 'System',
     };
   }
-  
+
   /**
    * Set the manually entered gross weight
    * @param weight The gross weight value
@@ -59,7 +59,7 @@ export class ManualEntryProvider implements WeightCaptureProvider {
     this.manualWeight = weight;
     this.updateReading();
   }
-  
+
   /**
    * Set the manually entered tare weight
    * @param weight The tare weight value
@@ -68,7 +68,7 @@ export class ManualEntryProvider implements WeightCaptureProvider {
     this.manualTareWeight = weight;
     this.updateReading();
   }
-  
+
   /**
    * Set the manually entered axle weights
    * @param axleWeights Array of axle weights
@@ -77,7 +77,7 @@ export class ManualEntryProvider implements WeightCaptureProvider {
     this.manualAxleWeights = axleWeights;
     this.updateReading();
   }
-  
+
   /**
    * Update the weight reading based on manually entered values
    */
@@ -87,7 +87,7 @@ export class ManualEntryProvider implements WeightCaptureProvider {
     if (this.manualWeight !== null && this.manualTareWeight !== null) {
       netWeight = this.manualWeight - this.manualTareWeight;
     }
-    
+
     this.lastReading = {
       timestamp: new Date(),
       grossWeight: this.manualWeight || 0,
@@ -98,7 +98,7 @@ export class ManualEntryProvider implements WeightCaptureProvider {
       confidence: 0.5, // Lower confidence for manual entry
       deviceId: 'manual-entry',
       captureMethod: 'manual',
-      locationData: undefined // No location data for manual entry
+      locationData: undefined, // No location data for manual entry
     };
   }
 }

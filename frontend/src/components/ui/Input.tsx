@@ -8,27 +8,27 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
    * Label for the input
    */
   label?: string;
-  
+
   /**
    * Helper text to display below the input
    */
   helperText?: string;
-  
+
   /**
    * Error message to display
    */
   error?: string;
-  
+
   /**
    * Icon to display at the start of the input
    */
   startIcon?: React.ReactNode;
-  
+
   /**
    * Icon to display at the end of the input
    */
   endIcon?: React.ReactNode;
-  
+
   /**
    * Whether the input is in a loading state
    */
@@ -56,25 +56,22 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     // Generate a unique ID if one is not provided
     const inputId = id || `input-${Math.random().toString(36).substring(2, 9)}`;
-    
+
     return (
       <div className="space-y-2">
         {label && (
-          <label
-            htmlFor={inputId}
-            className="block text-sm font-medium text-foreground"
-          >
+          <label htmlFor={inputId} className="block text-sm font-medium text-foreground">
             {label}
           </label>
         )}
-        
+
         <div className="relative">
           {startIcon && (
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               {startIcon}
             </div>
           )}
-          
+
           <input
             ref={ref}
             id={inputId}
@@ -88,13 +85,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled || isLoading}
             {...props}
           />
-          
+
           {endIcon && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               {endIcon}
             </div>
           )}
-          
+
           {isLoading && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <svg
@@ -120,14 +117,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
         </div>
-        
+
         {(helperText || error) && (
-          <p
-            className={cn(
-              'text-xs',
-              error ? 'text-alert-DEFAULT' : 'text-muted-foreground'
-            )}
-          >
+          <p className={cn('text-xs', error ? 'text-alert-DEFAULT' : 'text-muted-foreground')}>
             {error || helperText}
           </p>
         )}

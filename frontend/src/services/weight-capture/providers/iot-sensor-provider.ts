@@ -3,12 +3,12 @@
  * This provider implements the WeightCaptureProvider interface for IoT weight sensors
  */
 
-import { 
-  WeightCaptureProvider, 
-  WeightReading, 
+import {
+  WeightCaptureProvider,
+  WeightReading,
   CalibrationResult,
   AxleWeightReading,
-  GeoLocation
+  GeoLocation,
 } from '@/types/scale-master';
 
 // Mock IoT sensor client for development
@@ -16,19 +16,19 @@ class IoTSensorClient {
   private config: any;
   private connected: boolean = false;
   private mockData: any = {};
-  
+
   constructor(config: any) {
     this.config = config;
-    
+
     // Initialize mock data
     this.mockData = {
       sensorId: config.sensorId || 'iot-sensor-001',
       batteryLevel: 87,
       signalStrength: 4,
-      lastCalibration: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) // 30 days ago
+      lastCalibration: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
     };
   }
-  
+
   async connect(): Promise<boolean> {
     console.log('Connecting to IoT sensor:', this.config);
     // Simulate connection delay
@@ -36,23 +36,23 @@ class IoTSensorClient {
     this.connected = true;
     return true;
   }
-  
+
   isConnected(): boolean {
     return this.connected;
   }
-  
+
   async readSensor(): Promise<any> {
     if (!this.connected) {
       throw new Error('Not connected to IoT sensor');
     }
-    
+
     // Simulate sensor reading delay
     await new Promise(resolve => setTimeout(resolve, 500));
-    
+
     // Generate random weight data
     const baseWeight = Math.floor(Math.random() * 20000) + 20000;
     const noise = Math.random() * 200 - 100; // +/- 100 lbs of noise
-    
+
     return {
       weight: baseWeight + noise,
       timestamp: new Date(),
@@ -66,30 +66,30 @@ class IoTSensorClient {
         { id: 2, weight: Math.floor(Math.random() * 2000) + 8000 },
         { id: 3, weight: Math.floor(Math.random() * 2000) + 8000 },
         { id: 4, weight: Math.floor(Math.random() * 2000) + 8000 },
-        { id: 5, weight: Math.floor(Math.random() * 2000) + 8000 }
-      ]
+        { id: 5, weight: Math.floor(Math.random() * 2000) + 8000 },
+      ],
     };
   }
-  
+
   async calibrate(): Promise<any> {
     if (!this.connected) {
       throw new Error('Not connected to IoT sensor');
     }
-    
+
     // Simulate calibration delay
     await new Promise(resolve => setTimeout(resolve, 3000));
-    
+
     this.mockData.lastCalibration = new Date();
-    
+
     return {
       success: true,
       oldOffset: 135.7,
       newOffset: 0,
       calibrationId: `cal-${Date.now()}`,
-      sensorId: this.mockData.sensorId
+      sensorId: this.mockData.sensorId,
     };
   }
-  
+
   async disconnect(): Promise<void> {
     if (this.connected) {
       // Simulate disconnection delay
@@ -105,11 +105,11 @@ export class IoTSensorProvider implements WeightCaptureProvider {
   private isCapturing: boolean = false;
   private captureInterval: NodeJS.Timeout | null = null;
   private lastReading: WeightReading | null = null;
-  
+
   constructor(config: any) {
     this.config = config;
   }
-  
+
   async initialize(): Promise<boolean> {
     try {
       this.client = new IoTSensorClient(this.config);
@@ -120,30 +120,30 @@ export class IoTSensorProvider implements WeightCaptureProvider {
       return false;
     }
   }
-  
+
   async startCapture(): Promise<void> {
     if (!this.client || !this.client.isConnected()) {
       throw new Error('IoT sensor not initialized or not connected');
     }
-    
+
     if (this.isCapturing) {
       return;
     }
-    
+
     this.isCapturing = true;
-    
+
     // Start capturing weight readings at regular intervals
     this.captureInterval = setInterval(async () => {
       try {
         const sensorData = await this.client!.readSensor();
-        
+
         // Convert axle data to the expected format
         const axleWeights: AxleWeightReading[] = sensorData.axleData.map((axle: any) => ({
           position: axle.id,
           weight: axle.weight,
-          maxLegal: this.getMaxLegalWeight(axle.id)
+          maxLegal: this.getMaxLegalWeight(axle.id),
         }));
-        
+
         // Create a new weight reading
         this.lastReading = {
           timestamp: new Date(),
@@ -160,48 +160,48 @@ export class IoTSensorProvider implements WeightCaptureProvider {
             batteryLevel: sensorData.batteryLevel,
             signalStrength: sensorData.signalStrength,
             temperature: sensorData.temperature,
-            humidity: sensorData.humidity
-          }
+            humidity: sensorData.humidity,
+          },
         };
       } catch (error) {
         console.error('Error capturing IoT sensor reading:', error);
       }
     }, 2000); // Capture every 2 seconds
   }
-  
+
   async getCurrentReading(): Promise<WeightReading> {
     if (!this.isCapturing || !this.lastReading) {
       throw new Error('Weight capture not started or no reading available');
     }
-    
+
     return this.lastReading;
   }
-  
+
   async stopCapture(): Promise<void> {
     if (this.captureInterval) {
       clearInterval(this.captureInterval);
       this.captureInterval = null;
     }
-    
+
     this.isCapturing = false;
   }
-  
+
   async calibrate(): Promise<CalibrationResult> {
     if (!this.client || !this.client.isConnected()) {
       throw new Error('IoT sensor not initialized or not connected');
     }
-    
+
     const result = await this.client.calibrate();
-    
+
     return {
       success: result.success,
       previousOffset: result.oldOffset,
       newOffset: result.newOffset,
       timestamp: new Date(),
-      performedBy: 'System'
+      performedBy: 'System',
     };
   }
-  
+
   private getMaxLegalWeight(axlePosition: number): number {
     // Return max legal weight based on axle position
     const maxWeights: Record<number, number> = {
@@ -209,19 +209,19 @@ export class IoTSensorProvider implements WeightCaptureProvider {
       2: 34000, // Drive axles (tandem)
       3: 34000,
       4: 20000, // Trailer axles
-      5: 20000
+      5: 20000,
     };
-    
+
     return maxWeights[axlePosition] || 20000;
   }
-  
+
   private async getCurrentLocation(): Promise<GeoLocation | undefined> {
     // In a real implementation, this would get the location from the IoT device
     // For now, return a mock location
     return {
       latitude: 39.9612,
       longitude: -82.9988,
-      accuracy: 15
+      accuracy: 15,
     };
   }
 }

@@ -16,7 +16,10 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 console.log('Supabase URL:', supabaseUrl);
-console.log('Supabase Key (first 10 chars):', supabaseKey ? supabaseKey.substring(0, 10) + '...' : 'undefined');
+console.log(
+  'Supabase Key (first 10 chars):',
+  supabaseKey ? supabaseKey.substring(0, 10) + '...' : 'undefined'
+);
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('Error: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env file');
@@ -33,7 +36,7 @@ async function processSyncQueue() {
 
     // Get all pending sync queue items using direct SQL
     const { data: syncItems, error: syncError } = await supabase.rpc('execute_sql', {
-      sql_query: "SELECT * FROM sync_queue WHERE status = 'pending'"
+      sql_query: "SELECT * FROM sync_queue WHERE status = 'pending'",
     });
 
     if (syncError) {
@@ -43,8 +46,8 @@ async function processSyncQueue() {
       console.log('Trying Management API...');
       const { data: result, error: apiError } = await supabase.functions.invoke('database-query', {
         body: {
-          query: "SELECT * FROM sync_queue WHERE status = 'pending'"
-        }
+          query: "SELECT * FROM sync_queue WHERE status = 'pending'",
+        },
       });
 
       if (apiError) {
@@ -56,12 +59,12 @@ async function processSyncQueue() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${supabaseKey}`,
-            'apikey': supabaseKey
+            Authorization: `Bearer ${supabaseKey}`,
+            apikey: supabaseKey,
           },
           body: JSON.stringify({
-            sql_query: "SELECT * FROM sync_queue WHERE status = 'pending'"
-          })
+            sql_query: "SELECT * FROM sync_queue WHERE status = 'pending'",
+          }),
         });
 
         if (!response.ok) {
@@ -70,17 +73,20 @@ async function processSyncQueue() {
 
           // Final attempt: use the database query endpoint
           console.log('Using database query endpoint...');
-          const { data: queryResult, error: queryError } = await fetch(`${supabaseUrl}/rest/v1/database/query`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${supabaseKey}`,
-              'apikey': supabaseKey
-            },
-            body: JSON.stringify({
-              query: "SELECT * FROM sync_queue WHERE status = 'pending'"
-            })
-          }).then(res => res.json());
+          const { data: queryResult, error: queryError } = await fetch(
+            `${supabaseUrl}/rest/v1/database/query`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${supabaseKey}`,
+                apikey: supabaseKey,
+              },
+              body: JSON.stringify({
+                query: "SELECT * FROM sync_queue WHERE status = 'pending'",
+              }),
+            }
+          ).then(res => res.json());
 
           if (queryError) {
             console.error('Error with database query endpoint:', queryError);
@@ -130,7 +136,7 @@ async function processSyncQueue() {
         // Mark as processed using direct SQL
         const updateQuery = `UPDATE sync_queue SET status = 'processed', updated_at = NOW() WHERE id = '${item.id}'`;
         const { error: updateError } = await supabase.rpc('execute_sql', {
-          sql_query: updateQuery
+          sql_query: updateQuery,
         });
 
         if (updateError) {
@@ -139,12 +145,14 @@ async function processSyncQueue() {
           // Try using the Management API
           const { error: apiUpdateError } = await supabase.functions.invoke('database-query', {
             body: {
-              query: updateQuery
-            }
+              query: updateQuery,
+            },
           });
 
           if (apiUpdateError) {
-            console.error(`Error updating sync item status via Management API: ${apiUpdateError.message}`);
+            console.error(
+              `Error updating sync item status via Management API: ${apiUpdateError.message}`
+            );
           } else {
             console.log(`  Sync item ${item.id} processed successfully`);
           }
@@ -157,7 +165,7 @@ async function processSyncQueue() {
         // Mark as failed using direct SQL
         const failQuery = `UPDATE sync_queue SET status = 'failed', updated_at = NOW() WHERE id = '${item.id}'`;
         const { error: failError } = await supabase.rpc('execute_sql', {
-          sql_query: failQuery
+          sql_query: failQuery,
         });
 
         if (failError) {
@@ -181,12 +189,14 @@ async function processCreateAction(item) {
 
   // Convert data object to SQL-friendly format
   const columns = Object.keys(data).join(', ');
-  const values = Object.values(data).map(val => {
-    if (typeof val === 'string') return `'${val.replace(/'/g, "''")}'`;
-    if (val === null) return 'NULL';
-    if (typeof val === 'object') return `'${JSON.stringify(val).replace(/'/g, "''")}'`;
-    return val;
-  }).join(', ');
+  const values = Object.values(data)
+    .map(val => {
+      if (typeof val === 'string') return `'${val.replace(/'/g, "''")}'`;
+      if (val === null) return 'NULL';
+      if (typeof val === 'object') return `'${JSON.stringify(val).replace(/'/g, "''")}'`;
+      return val;
+    })
+    .join(', ');
 
   // Create SQL query
   const insertQuery = `INSERT INTO ${item.table_name} (${columns}) VALUES (${values}) RETURNING id`;
@@ -196,12 +206,12 @@ async function processCreateAction(item) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${supabaseKey}`,
-      'apikey': supabaseKey
+      Authorization: `Bearer ${supabaseKey}`,
+      apikey: supabaseKey,
     },
     body: JSON.stringify({
-      query: insertQuery
-    })
+      query: insertQuery,
+    }),
   }).then(res => res.json());
 
   if (error) {
@@ -223,12 +233,14 @@ async function processUpdateAction(item) {
   }
 
   // Convert update data to SQL SET clause
-  const setClause = Object.entries(updateData).map(([key, val]) => {
-    if (typeof val === 'string') return `${key} = '${val.replace(/'/g, "''")}'`;
-    if (val === null) return `${key} = NULL`;
-    if (typeof val === 'object') return `${key} = '${JSON.stringify(val).replace(/'/g, "''")}'`;
-    return `${key} = ${val}`;
-  }).join(', ');
+  const setClause = Object.entries(updateData)
+    .map(([key, val]) => {
+      if (typeof val === 'string') return `${key} = '${val.replace(/'/g, "''")}'`;
+      if (val === null) return `${key} = NULL`;
+      if (typeof val === 'object') return `${key} = '${JSON.stringify(val).replace(/'/g, "''")}'`;
+      return `${key} = ${val}`;
+    })
+    .join(', ');
 
   // Create SQL query
   const updateQuery = `UPDATE ${item.table_name} SET ${setClause}, updated_at = NOW() WHERE id = ${id} AND company_id = ${item.company_id}`;
@@ -238,12 +250,12 @@ async function processUpdateAction(item) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${supabaseKey}`,
-      'apikey': supabaseKey
+      Authorization: `Bearer ${supabaseKey}`,
+      apikey: supabaseKey,
     },
     body: JSON.stringify({
-      query: updateQuery
-    })
+      query: updateQuery,
+    }),
   }).then(res => res.json());
 
   if (error) {
@@ -272,12 +284,12 @@ async function processDeleteAction(item) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${supabaseKey}`,
-      'apikey': supabaseKey
+      Authorization: `Bearer ${supabaseKey}`,
+      apikey: supabaseKey,
     },
     body: JSON.stringify({
-      query: deleteQuery
-    })
+      query: deleteQuery,
+    }),
   }).then(res => res.json());
 
   if (error) {

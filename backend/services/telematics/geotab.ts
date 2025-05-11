@@ -47,24 +47,21 @@ export class GeotabService implements TelematicsProvider {
     }
 
     try {
-      const response = await axios.post(
-        `https://${this.server}/apiv1`,
-        {
-          method: 'Authenticate',
-          params: {
-            database: this.credentials.database,
-            userName: this.credentials.username,
-            password: this.credentials.password
-          }
-        }
-      );
+      const response = await axios.post(`https://${this.server}/apiv1`, {
+        method: 'Authenticate',
+        params: {
+          database: this.credentials.database,
+          userName: this.credentials.username,
+          password: this.credentials.password,
+        },
+      });
 
       if (response.data.error) {
         throw new Error(`Geotab authentication error: ${response.data.error.message}`);
       }
 
       this.sessionId = response.data.result.credentials.sessionId;
-      
+
       // If server redirection is needed
       if (response.data.result.path && response.data.result.path !== this.server) {
         this.server = response.data.result.path;
@@ -84,38 +81,32 @@ export class GeotabService implements TelematicsProvider {
     const sessionId = await this.authenticate();
 
     try {
-      const response = await axios.post(
-        `https://${this.server}/apiv1`,
-        {
-          method,
-          params: {
-            ...params,
-            credentials: {
-              sessionId
-            }
-          }
-        }
-      );
+      const response = await axios.post(`https://${this.server}/apiv1`, {
+        method,
+        params: {
+          ...params,
+          credentials: {
+            sessionId,
+          },
+        },
+      });
 
       if (response.data.error) {
         // If session expired, try to re-authenticate once
         if (response.data.error.code === -32000) {
           this.sessionId = null;
           const newSessionId = await this.authenticate();
-          
+
           // Retry the call with new session
-          const retryResponse = await axios.post(
-            `https://${this.server}/apiv1`,
-            {
-              method,
-              params: {
-                ...params,
-                credentials: {
-                  sessionId: newSessionId
-                }
-              }
-            }
-          );
+          const retryResponse = await axios.post(`https://${this.server}/apiv1`, {
+            method,
+            params: {
+              ...params,
+              credentials: {
+                sessionId: newSessionId,
+              },
+            },
+          });
 
           if (retryResponse.data.error) {
             throw new Error(`Geotab API error: ${retryResponse.data.error.message}`);
@@ -143,8 +134,8 @@ export class GeotabService implements TelematicsProvider {
       const device = await this.callApi('Get', {
         typeName: 'Device',
         search: {
-          id: vehicleId
-        }
+          id: vehicleId,
+        },
       });
 
       if (!device || device.length === 0) {
@@ -154,8 +145,8 @@ export class GeotabService implements TelematicsProvider {
       // Get latest location
       const locationData = await this.callApi('GetDeviceStatusInfo', {
         deviceSearch: {
-          id: vehicleId
-        }
+          id: vehicleId,
+        },
       });
 
       // Get diagnostic data
@@ -163,13 +154,13 @@ export class GeotabService implements TelematicsProvider {
         typeName: 'StatusData',
         search: {
           deviceSearch: {
-            id: vehicleId
+            id: vehicleId,
           },
           diagnosticSearch: {
-            id: 'DiagnosticEngineSpeedId' // Engine RPM as an example
+            id: 'DiagnosticEngineSpeedId', // Engine RPM as an example
           },
-          fromDate: new Date(Date.now() - 3600000).toISOString() // Last hour
-        }
+          fromDate: new Date(Date.now() - 3600000).toISOString(), // Last hour
+        },
       });
 
       // Get fault codes
@@ -177,25 +168,28 @@ export class GeotabService implements TelematicsProvider {
         typeName: 'FaultData',
         search: {
           deviceSearch: {
-            id: vehicleId
+            id: vehicleId,
           },
-          fromDate: new Date(Date.now() - 86400000).toISOString() // Last 24 hours
-        }
+          fromDate: new Date(Date.now() - 86400000).toISOString(), // Last 24 hours
+        },
       });
 
       // Transform the data
       return {
         vehicleId,
         timestamp: new Date(),
-        location: locationData.length > 0 ? {
-          latitude: locationData[0].latitude,
-          longitude: locationData[0].longitude
-        } : undefined,
+        location:
+          locationData.length > 0
+            ? {
+                latitude: locationData[0].latitude,
+                longitude: locationData[0].longitude,
+              }
+            : undefined,
         speed: locationData.length > 0 ? locationData[0].speed : undefined,
-        engineStatus: locationData.length > 0 ? 
-          (locationData[0].isDeviceOnline ? 'on' : 'off') : undefined,
+        engineStatus:
+          locationData.length > 0 ? (locationData[0].isDeviceOnline ? 'on' : 'off') : undefined,
         odometer: device[0].odometer,
-        diagnosticCodes: faultCodes.map(fault => fault.code)
+        diagnosticCodes: faultCodes.map(fault => fault.code),
       };
     } catch (error) {
       logger.error('Error fetching vehicle data from Geotab:', error);
@@ -212,8 +206,8 @@ export class GeotabService implements TelematicsProvider {
       const driver = await this.callApi('Get', {
         typeName: 'User',
         search: {
-          id: driverId
-        }
+          id: driverId,
+        },
       });
 
       if (!driver || driver.length === 0) {
@@ -225,10 +219,10 @@ export class GeotabService implements TelematicsProvider {
         typeName: 'DutyStatusLog',
         search: {
           userSearch: {
-            id: driverId
+            id: driverId,
           },
-          fromDate: new Date(Date.now() - 86400000).toISOString() // Last 24 hours
-        }
+          fromDate: new Date(Date.now() - 86400000).toISOString(), // Last 24 hours
+        },
       });
 
       // Calculate hours
@@ -237,8 +231,9 @@ export class GeotabService implements TelematicsProvider {
       let restTime = 0;
 
       driverLogs.forEach(log => {
-        const duration = (new Date(log.toDateTime).getTime() - new Date(log.fromDateTime).getTime()) / 3600000; // hours
-        
+        const duration =
+          (new Date(log.toDateTime).getTime() - new Date(log.fromDateTime).getTime()) / 3600000; // hours
+
         switch (log.status) {
           case 'D': // Driving
             drivingTime += duration;
@@ -263,8 +258,8 @@ export class GeotabService implements TelematicsProvider {
           drivingTime,
           dutyTime,
           restTime,
-          status: driverLogs.length > 0 ? driverLogs[0].status : 'Unknown'
-        }
+          status: driverLogs.length > 0 ? driverLogs[0].status : 'Unknown',
+        },
       };
     } catch (error) {
       logger.error('Error fetching driver data from Geotab:', error);
@@ -282,8 +277,8 @@ export class GeotabService implements TelematicsProvider {
         typeName: 'ExceptionEvent',
         search: {
           fromDate: startTime.toISOString(),
-          toDate: endTime.toISOString()
-        }
+          toDate: endTime.toISOString(),
+        },
       });
 
       return events.map(event => ({
@@ -297,9 +292,9 @@ export class GeotabService implements TelematicsProvider {
           duration: event.duration,
           location: {
             latitude: event.latitude,
-            longitude: event.longitude
-          }
-        }
+            longitude: event.longitude,
+          },
+        },
       }));
     } catch (error) {
       logger.error('Error fetching events from Geotab:', error);
@@ -334,13 +329,13 @@ export class GeotabService implements TelematicsProvider {
         entity: {
           name: 'ScaleMasterAI Integration',
           eventTypes: geotabEventTypes,
-          callbackUrl
-        }
+          callbackUrl,
+        },
       });
 
       return {
         subscriptionId: subscription.id,
-        eventTypes: geotabEventTypes
+        eventTypes: geotabEventTypes,
       };
     } catch (error) {
       logger.error('Error subscribing to Geotab events:', error);

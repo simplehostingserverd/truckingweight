@@ -141,27 +141,33 @@ export async function GET(request: NextRequest) {
       route: routeData.route,
       currentPosition: routeData.currentPosition,
       stats: generateDriverStats(),
-      vehicle: vehicleData ? {
-        id: vehicleData.id,
-        name: vehicleData.name,
-        type: vehicleData.type,
-        model: vehicleData.model || 'Unknown',
-        year: vehicleData.year || 2022,
-        licensePlate: vehicleData.license_plate,
-        vin: vehicleData.vin || `VIN${100000 + driverData.id}`,
-        status: vehicleData.status,
-        lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-      } : {
-        id: driverData.id,
-        name: `Truck ${100 + driverData.id}`,
-        type: 'Semi-Truck',
-        model: 'Peterbilt 579',
-        year: 2022,
-        licensePlate: `TX-${10000 + driverData.id}`,
-        vin: `1XPBD49X1MD${100000 + driverData.id}`,
-        status: 'Active',
-        lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-      }
+      vehicle: vehicleData
+        ? {
+            id: vehicleData.id,
+            name: vehicleData.name,
+            type: vehicleData.type,
+            model: vehicleData.model || 'Unknown',
+            year: vehicleData.year || 2022,
+            licensePlate: vehicleData.license_plate,
+            vin: vehicleData.vin || `VIN${100000 + driverData.id}`,
+            status: vehicleData.status,
+            lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+              .toISOString()
+              .split('T')[0],
+          }
+        : {
+            id: driverData.id,
+            name: `Truck ${100 + driverData.id}`,
+            type: 'Semi-Truck',
+            model: 'Peterbilt 579',
+            year: 2022,
+            licensePlate: `TX-${10000 + driverData.id}`,
+            vin: `1XPBD49X1MD${100000 + driverData.id}`,
+            status: 'Active',
+            lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+              .toISOString()
+              .split('T')[0],
+          },
     };
 
     return NextResponse.json(response);
@@ -187,7 +193,7 @@ function generateRouteData(driverId: string): RouteData {
 
   return {
     route: detailedRoute,
-    currentPosition: detailedRoute[currentPositionIndex]
+    currentPosition: detailedRoute[currentPositionIndex],
   };
 }
 
@@ -196,45 +202,45 @@ function getRouteWaypoints(driverId: string): Waypoint[] {
   const routes: Record<string, Waypoint[]> = {
     // Texas routes
     'dallas-houston': [
-      { lat: 32.7767, lng: -96.7970, name: 'Dallas, TX' },
+      { lat: 32.7767, lng: -96.797, name: 'Dallas, TX' },
       { lat: 32.3513, lng: -95.3011, name: 'Tyler, TX' },
       { lat: 31.3337, lng: -94.7291, name: 'Lufkin, TX' },
       { lat: 30.7235, lng: -95.5508, name: 'Huntsville, TX' },
       { lat: 30.0444, lng: -95.4614, name: 'Spring, TX' },
-      { lat: 29.7604, lng: -95.3698, name: 'Houston, TX' }
+      { lat: 29.7604, lng: -95.3698, name: 'Houston, TX' },
     ],
     'austin-sanantonio': [
       { lat: 30.2672, lng: -97.7431, name: 'Austin, TX' },
       { lat: 29.9884, lng: -97.8784, name: 'San Marcos, TX' },
       { lat: 29.8833, lng: -97.9414, name: 'New Braunfels, TX' },
-      { lat: 29.5250, lng: -98.0386, name: 'Cibolo, TX' },
-      { lat: 29.4241, lng: -98.4936, name: 'San Antonio, TX' }
+      { lat: 29.525, lng: -98.0386, name: 'Cibolo, TX' },
+      { lat: 29.4241, lng: -98.4936, name: 'San Antonio, TX' },
     ],
     'houston-corpuschristi': [
       { lat: 29.7604, lng: -95.3698, name: 'Houston, TX' },
       { lat: 29.0339, lng: -95.4344, name: 'Angleton, TX' },
-      { lat: 28.8650, lng: -96.0000, name: 'Bay City, TX' },
+      { lat: 28.865, lng: -96.0, name: 'Bay City, TX' },
       { lat: 28.6423, lng: -96.6256, name: 'Port Lavaca, TX' },
       { lat: 28.3584, lng: -97.1705, name: 'Victoria, TX' },
       { lat: 28.0229, lng: -97.5311, name: 'Sinton, TX' },
-      { lat: 27.8006, lng: -97.3964, name: 'Corpus Christi, TX' }
+      { lat: 27.8006, lng: -97.3964, name: 'Corpus Christi, TX' },
     ],
     'dallas-amarillo': [
-      { lat: 32.7767, lng: -96.7970, name: 'Dallas, TX' },
+      { lat: 32.7767, lng: -96.797, name: 'Dallas, TX' },
       { lat: 33.1984, lng: -96.6361, name: 'McKinney, TX' },
       { lat: 33.6357, lng: -97.1353, name: 'Gainesville, TX' },
       { lat: 34.4092, lng: -97.9699, name: 'Wichita Falls, TX' },
-      { lat: 34.9830, lng: -100.2171, name: 'Childress, TX' },
-      { lat: 35.2220, lng: -101.8313, name: 'Amarillo, TX' }
+      { lat: 34.983, lng: -100.2171, name: 'Childress, TX' },
+      { lat: 35.222, lng: -101.8313, name: 'Amarillo, TX' },
     ],
     'elpaso-midland': [
-      { lat: 31.7619, lng: -106.4850, name: 'El Paso, TX' },
+      { lat: 31.7619, lng: -106.485, name: 'El Paso, TX' },
       { lat: 31.4638, lng: -104.5307, name: 'Van Horn, TX' },
       { lat: 31.0982, lng: -104.2219, name: 'Pecos, TX' },
       { lat: 31.4332, lng: -102.0779, name: 'Monahans, TX' },
       { lat: 31.9973, lng: -102.0779, name: 'Odessa, TX' },
-      { lat: 32.0022, lng: -102.1014, name: 'Midland, TX' }
-    ]
+      { lat: 32.0022, lng: -102.1014, name: 'Midland, TX' },
+    ],
   };
 
   // Select a route based on driver ID or randomly
@@ -283,7 +289,7 @@ function generateDetailedRoute(routeWaypoints: Waypoint[]): RoutePoint[] {
       detailedRoute.push({
         lat: randomLat,
         lng: randomLng,
-        name: `Between ${start.name} and ${end.name}`
+        name: `Between ${start.name} and ${end.name}`,
       });
     }
   }
@@ -318,8 +324,8 @@ function generateDetailedRoute(routeWaypoints: Waypoint[]): RoutePoint[] {
       ...waypoint,
       timestamp: timestamp.toISOString(),
       speed: Math.round(speed), // Speed in mph
-      fuelLevel: 100 - (index * 100 / detailedRoute.length), // Decreasing fuel level
-      engineTemp: 195 + Math.floor(Math.random() * 10) // Engine temperature
+      fuelLevel: 100 - (index * 100) / detailedRoute.length, // Decreasing fuel level
+      engineTemp: 195 + Math.floor(Math.random() * 10), // Engine temperature
     };
   });
 }
@@ -330,15 +336,14 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
   const dLat = deg2rad(lat2 - lat1);
   const dLon = deg2rad(lon2 - lon1);
   const a =
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c; // Distance in km
 }
 
 function deg2rad(deg: number): number {
-  return deg * (Math.PI/180);
+  return deg * (Math.PI / 180);
 }
 
 function generateDriverStats(): DriverStats {
@@ -363,7 +368,7 @@ function generateDriverStats(): DriverStats {
     maxSpeed,
     hardBrakes,
     hardAccelerations,
-    idleTime: `${idleMinutes} minutes`
+    idleTime: `${idleMinutes} minutes`,
   };
 }
 
@@ -390,7 +395,7 @@ function getMockDriverActivity(driverId: string): DriverActivityResponse {
       licensePlate: `TX-${10000 + driverIdNum}`,
       vin: `1XPBD49X1MD${100000 + driverIdNum}`,
       status: 'Active',
-      lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-    }
+      lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    },
   };
 }

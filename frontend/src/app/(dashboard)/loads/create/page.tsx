@@ -32,7 +32,10 @@ export default function CreateLoad() {
     const fetchData = async () => {
       try {
         // Get authenticated user
-        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        const {
+          data: { user },
+          error: authError,
+        } = await supabase.auth.getUser();
 
         if (authError || !user) {
           router.push('/login');
@@ -76,7 +79,6 @@ export default function CreateLoad() {
 
         setVehicles(vehiclesData || []);
         setDrivers(driversData || []);
-
       } catch (err: any) {
         console.error('Error fetching data:', err);
         setError('Failed to load data');
@@ -141,11 +143,10 @@ export default function CreateLoad() {
         distance: distanceValue,
         duration: durationHours * 60 * 60, // seconds
         waypoints: [
-          { lat: 40.7128, lng: -74.0060 }, // Example coordinates
-          { lat: 34.0522, lng: -118.2437 }
-        ]
+          { lat: 40.7128, lng: -74.006 }, // Example coordinates
+          { lat: 34.0522, lng: -118.2437 },
+        ],
       });
-
     } catch (err: any) {
       setError('Failed to calculate route: ' + (err.message || 'Unknown error'));
       console.error('Route calculation error:', err);
@@ -161,7 +162,10 @@ export default function CreateLoad() {
 
     try {
       // Get authenticated user
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
 
       if (authError || !user) {
         router.push('/login');
@@ -196,8 +200,8 @@ export default function CreateLoad() {
             estimated_arrival: estimatedArrival || null,
             distance: distance || null,
             duration: duration || null,
-            route_details: routeDetails ? JSON.stringify(routeDetails) : null
-          }
+            route_details: routeDetails ? JSON.stringify(routeDetails) : null,
+          },
         ])
         .select()
         .single();
@@ -242,9 +246,7 @@ export default function CreateLoad() {
           <div className="rounded-md bg-red-900/30 p-4 mb-6 border border-red-800">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-200">
-                  {error}
-                </h3>
+                <h3 className="text-sm font-medium text-red-200">{error}</h3>
               </div>
             </div>
           </div>
@@ -268,7 +270,7 @@ export default function CreateLoad() {
                 required
                 className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={e => setDescription(e.target.value)}
               />
             </div>
 
@@ -276,7 +278,7 @@ export default function CreateLoad() {
             <RoutePlanner
               initialOrigin={origin}
               initialDestination={destination}
-              onRouteChange={(routeData) => {
+              onRouteChange={routeData => {
                 setOrigin(routeData.waypoints[0].address || '');
                 setDestination(routeData.waypoints[routeData.waypoints.length - 1].address || '');
                 setDistance(routeData.distance);
@@ -290,8 +292,8 @@ export default function CreateLoad() {
                     lat: wp.coordinates[1],
                     lng: wp.coordinates[0],
                     name: wp.name,
-                    address: wp.address
-                  }))
+                    address: wp.address,
+                  })),
                 });
               }}
             />
@@ -308,7 +310,7 @@ export default function CreateLoad() {
                 placeholder="e.g. 32,500 lbs"
                 className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500"
                 value={weight}
-                onChange={(e) => setWeight(e.target.value)}
+                onChange={e => setWeight(e.target.value)}
               />
             </div>
 
@@ -321,10 +323,10 @@ export default function CreateLoad() {
                 name="vehicle"
                 className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500"
                 value={vehicleId}
-                onChange={(e) => setVehicleId(e.target.value)}
+                onChange={e => setVehicleId(e.target.value)}
               >
                 <option value="">Select a vehicle</option>
-                {vehicles.map((vehicle) => (
+                {vehicles.map(vehicle => (
                   <option key={vehicle.id} value={vehicle.id}>
                     {vehicle.name} ({vehicle.license_plate})
                   </option>
@@ -341,10 +343,10 @@ export default function CreateLoad() {
                 name="driver"
                 className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500"
                 value={driverId}
-                onChange={(e) => setDriverId(e.target.value)}
+                onChange={e => setDriverId(e.target.value)}
               >
                 <option value="">Select a driver</option>
-                {drivers.map((driver) => (
+                {drivers.map(driver => (
                   <option key={driver.id} value={driver.id}>
                     {driver.name} ({driver.license_number})
                   </option>

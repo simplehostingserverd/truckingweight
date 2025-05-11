@@ -280,8 +280,8 @@ async function createAdminUser() {
           name: 'Admin Company',
           address: '123 Admin Street, Admin City',
           contact_email: 'simplehostingsolutionsd@yahoo.com',
-          contact_phone: '555-ADMIN'
-        }
+          contact_phone: '555-ADMIN',
+        },
       ])
       .select()
       .single();
@@ -307,7 +307,9 @@ async function createAdminUser() {
       return;
     }
 
-    const existingUser = existingUsers.users.find(user => user.email === 'simplehostingsolutionsd@yahoo.com');
+    const existingUser = existingUsers.users.find(
+      user => user.email === 'simplehostingsolutionsd@yahoo.com'
+    );
 
     if (existingUser) {
       console.log('Admin user already exists in auth, updating password...');
@@ -331,8 +333,8 @@ async function createAdminUser() {
         password: adminPassword,
         email_confirm: true,
         user_metadata: {
-          name: 'System Administrator'
-        }
+          name: 'System Administrator',
+        },
       });
 
       if (createError) {
@@ -355,8 +357,8 @@ async function createAdminUser() {
           name: 'System Administrator',
           email: 'simplehostingsolutionsd@yahoo.com',
           company_id: company.id,
-          is_admin: true
-        }
+          is_admin: true,
+        },
       ])
       .select()
       .single();
@@ -369,7 +371,6 @@ async function createAdminUser() {
     console.log('Admin user created successfully!');
     console.log('Email: simplehostingsolutionsd@yahoo.com');
     console.log('Password:', adminPassword);
-
   } catch (error) {
     console.error('Unexpected error creating admin user:', error);
   }
@@ -382,13 +383,13 @@ async function executeSql(sql) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${supabaseServiceKey}`,
-        'apikey': supabaseServiceKey,
-        'Prefer': 'params=single-object'
+        Authorization: `Bearer ${supabaseServiceKey}`,
+        apikey: supabaseServiceKey,
+        Prefer: 'params=single-object',
       },
       body: JSON.stringify({
-        query: sql
-      })
+        query: sql,
+      }),
     });
 
     if (!response.ok) {
@@ -473,7 +474,6 @@ async function resetDatabase() {
     await createAdminUser();
 
     console.log('Database reset completed successfully!');
-
   } catch (error) {
     console.error('Unexpected error during database reset:', error);
   }

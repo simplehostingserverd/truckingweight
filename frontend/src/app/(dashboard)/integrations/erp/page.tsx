@@ -15,7 +15,7 @@ import {
   ArrowPathIcon,
   ExclamationTriangleIcon,
   DocumentTextIcon,
-  CurrencyDollarIcon
+  CurrencyDollarIcon,
 } from '@heroicons/react/24/outline';
 import { formatDistanceToNow } from 'date-fns';
 import Image from 'next/image';
@@ -82,38 +82,38 @@ export default function ErpIntegrationPage() {
     {
       value: 'quickbooks',
       label: 'QuickBooks',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/QuickBooks_Logo.svg/512px-QuickBooks_Logo.svg.png'
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/QuickBooks_Logo.svg/512px-QuickBooks_Logo.svg.png',
     },
     {
       value: 'netsuite',
       label: 'NetSuite',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Oracle_NetSuite_logo.svg/512px-Oracle_NetSuite_logo.svg.png'
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Oracle_NetSuite_logo.svg/512px-Oracle_NetSuite_logo.svg.png',
     },
     {
       value: 'sap',
       label: 'SAP',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/SAP_2011_logo.svg/512px-SAP_2011_logo.svg.png'
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/SAP_2011_logo.svg/512px-SAP_2011_logo.svg.png',
     },
     {
       value: 'sage',
       label: 'Sage',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Sage_Group_logo.svg/512px-Sage_Group_logo.svg.png'
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Sage_Group_logo.svg/512px-Sage_Group_logo.svg.png',
     },
     {
       value: 'xero',
       label: 'Xero',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Xero_logo.svg/512px-Xero_logo.svg.png'
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Xero_logo.svg/512px-Xero_logo.svg.png',
     },
     {
       value: 'dynamics',
       label: 'Microsoft Dynamics',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Microsoft_Dynamics_365_logo.svg/512px-Microsoft_Dynamics_365_logo.svg.png'
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Microsoft_Dynamics_365_logo.svg/512px-Microsoft_Dynamics_365_logo.svg.png',
     },
     {
       value: 'custom',
       label: 'Custom API',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Gnome-preferences-system.svg/512px-Gnome-preferences-system.svg.png'
-    }
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Gnome-preferences-system.svg/512px-Gnome-preferences-system.svg.png',
+    },
   ];
 
   // Test connection
@@ -130,12 +130,12 @@ export default function ErpIntegrationPage() {
       // For demo purposes, we'll just simulate a successful connection
       setTestResult({
         success: true,
-        message: 'Connection successful! Authentication verified with the ERP provider.'
+        message: 'Connection successful! Authentication verified with the ERP provider.',
       });
     } catch (err: any) {
       setTestResult({
         success: false,
-        message: 'Connection failed. Please check your credentials and try again.'
+        message: 'Connection failed. Please check your credentials and try again.',
       });
     } finally {
       setLoading(false);
@@ -157,11 +157,11 @@ export default function ErpIntegrationPage() {
       if (newProvider === 'quickbooks') {
         credentials = {
           client_id: newClientId,
-          client_secret: newClientSecret
+          client_secret: newClientSecret,
         };
         settings = {
           company_id: newCompanyId,
-          sync_interval_minutes: 60
+          sync_interval_minutes: 60,
         };
       } else if (newProvider === 'netsuite') {
         credentials = {
@@ -169,30 +169,30 @@ export default function ErpIntegrationPage() {
           consumer_key: newClientId,
           consumer_secret: newClientSecret,
           token_id: newUsername,
-          token_secret: newPassword
+          token_secret: newPassword,
         };
         settings = {
-          sync_interval_minutes: 60
+          sync_interval_minutes: 60,
         };
       } else if (newProvider === 'sap') {
         credentials = {
           username: newUsername,
           password: newPassword,
-          client_id: newClientId
+          client_id: newClientId,
         };
         settings = {
           server_url: newServerUrl,
-          sync_interval_minutes: 60
+          sync_interval_minutes: 60,
         };
       } else {
         credentials = {
           api_key: newApiKey,
           username: newUsername,
-          password: newPassword
+          password: newPassword,
         };
         settings = {
           server_url: newServerUrl,
-          sync_interval_minutes: 60
+          sync_interval_minutes: 60,
         };
       }
 
@@ -203,7 +203,7 @@ export default function ErpIntegrationPage() {
           provider: newProvider,
           credentials,
           settings,
-          is_active: true
+          is_active: true,
         })
         .select()
         .single();
@@ -234,17 +234,16 @@ export default function ErpIntegrationPage() {
 
   // Delete connection
   const handleDeleteConnection = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this connection? This action cannot be undone.')) {
+    if (
+      !confirm('Are you sure you want to delete this connection? This action cannot be undone.')
+    ) {
       return;
     }
 
     try {
       setLoading(true);
 
-      const { error } = await supabase
-        .from('integration_connections')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('integration_connections').delete().eq('id', id);
 
       if (error) throw error;
 
@@ -272,9 +271,7 @@ export default function ErpIntegrationPage() {
 
       // Update state
       setConnections(
-        connections.map(conn =>
-          conn.id === id ? { ...conn, is_active: !currentStatus } : conn
-        )
+        connections.map(conn => (conn.id === id ? { ...conn, is_active: !currentStatus } : conn))
       );
     } catch (err: any) {
       console.error('Error updating ERP connection status:', err);
@@ -324,7 +321,9 @@ export default function ErpIntegrationPage() {
         >
           <ArrowLeftIcon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
         </Link>
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-white">ERP & Accounting Integration</h1>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
+          ERP & Accounting Integration
+        </h1>
       </div>
 
       {error && (
@@ -351,23 +350,28 @@ export default function ErpIntegrationPage() {
       {/* Create Form */}
       {showCreateForm && (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Add ERP Connection</h2>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+            Add ERP Connection
+          </h2>
 
           <form onSubmit={handleCreateConnection}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               {/* Provider Selection */}
               <div>
-                <label htmlFor="provider" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="provider"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   ERP Provider
                 </label>
                 <select
                   id="provider"
                   className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm rounded-md bg-white dark:bg-gray-900"
                   value={newProvider}
-                  onChange={(e) => setNewProvider(e.target.value)}
+                  onChange={e => setNewProvider(e.target.value)}
                   disabled={loading}
                 >
-                  {providers.map((provider) => (
+                  {providers.map(provider => (
                     <option key={provider.value} value={provider.value}>
                       {provider.label}
                     </option>
@@ -376,9 +380,14 @@ export default function ErpIntegrationPage() {
               </div>
 
               {/* Provider-specific fields */}
-              {(newProvider === 'quickbooks' || newProvider === 'netsuite' || newProvider === 'xero') && (
+              {(newProvider === 'quickbooks' ||
+                newProvider === 'netsuite' ||
+                newProvider === 'xero') && (
                 <div>
-                  <label htmlFor="company-id" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="company-id"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     {newProvider === 'netsuite' ? 'Account ID' : 'Company ID'}
                   </label>
                   <input
@@ -386,16 +395,22 @@ export default function ErpIntegrationPage() {
                     id="company-id"
                     className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm bg-white dark:bg-gray-900"
                     value={newCompanyId}
-                    onChange={(e) => setNewCompanyId(e.target.value)}
+                    onChange={e => setNewCompanyId(e.target.value)}
                     disabled={loading}
                   />
                 </div>
               )}
 
               {/* Client ID / Consumer Key */}
-              {(newProvider === 'quickbooks' || newProvider === 'netsuite' || newProvider === 'sap' || newProvider === 'dynamics') && (
+              {(newProvider === 'quickbooks' ||
+                newProvider === 'netsuite' ||
+                newProvider === 'sap' ||
+                newProvider === 'dynamics') && (
                 <div>
-                  <label htmlFor="client-id" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="client-id"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     {newProvider === 'netsuite' ? 'Consumer Key' : 'Client ID'}
                   </label>
                   <input
@@ -403,16 +418,21 @@ export default function ErpIntegrationPage() {
                     id="client-id"
                     className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm bg-white dark:bg-gray-900"
                     value={newClientId}
-                    onChange={(e) => setNewClientId(e.target.value)}
+                    onChange={e => setNewClientId(e.target.value)}
                     disabled={loading}
                   />
                 </div>
               )}
 
               {/* Client Secret / Consumer Secret */}
-              {(newProvider === 'quickbooks' || newProvider === 'netsuite' || newProvider === 'dynamics') && (
+              {(newProvider === 'quickbooks' ||
+                newProvider === 'netsuite' ||
+                newProvider === 'dynamics') && (
                 <div>
-                  <label htmlFor="client-secret" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="client-secret"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     {newProvider === 'netsuite' ? 'Consumer Secret' : 'Client Secret'}
                   </label>
                   <input
@@ -420,16 +440,22 @@ export default function ErpIntegrationPage() {
                     id="client-secret"
                     className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm bg-white dark:bg-gray-900"
                     value={newClientSecret}
-                    onChange={(e) => setNewClientSecret(e.target.value)}
+                    onChange={e => setNewClientSecret(e.target.value)}
                     disabled={loading}
                   />
                 </div>
               )}
 
               {/* Username / Token ID */}
-              {(newProvider === 'sap' || newProvider === 'sage' || newProvider === 'netsuite' || newProvider === 'custom') && (
+              {(newProvider === 'sap' ||
+                newProvider === 'sage' ||
+                newProvider === 'netsuite' ||
+                newProvider === 'custom') && (
                 <div>
-                  <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="username"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     {newProvider === 'netsuite' ? 'Token ID' : 'Username'}
                   </label>
                   <input
@@ -437,16 +463,22 @@ export default function ErpIntegrationPage() {
                     id="username"
                     className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm bg-white dark:bg-gray-900"
                     value={newUsername}
-                    onChange={(e) => setNewUsername(e.target.value)}
+                    onChange={e => setNewUsername(e.target.value)}
                     disabled={loading}
                   />
                 </div>
               )}
 
               {/* Password / Token Secret */}
-              {(newProvider === 'sap' || newProvider === 'sage' || newProvider === 'netsuite' || newProvider === 'custom') && (
+              {(newProvider === 'sap' ||
+                newProvider === 'sage' ||
+                newProvider === 'netsuite' ||
+                newProvider === 'custom') && (
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     {newProvider === 'netsuite' ? 'Token Secret' : 'Password'}
                   </label>
                   <input
@@ -454,7 +486,7 @@ export default function ErpIntegrationPage() {
                     id="password"
                     className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm bg-white dark:bg-gray-900"
                     value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
+                    onChange={e => setNewPassword(e.target.value)}
                     disabled={loading}
                   />
                 </div>
@@ -463,7 +495,10 @@ export default function ErpIntegrationPage() {
               {/* API Key */}
               {(newProvider === 'xero' || newProvider === 'sage' || newProvider === 'custom') && (
                 <div>
-                  <label htmlFor="api-key" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="api-key"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     API Key
                   </label>
                   <input
@@ -471,7 +506,7 @@ export default function ErpIntegrationPage() {
                     id="api-key"
                     className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm bg-white dark:bg-gray-900"
                     value={newApiKey}
-                    onChange={(e) => setNewApiKey(e.target.value)}
+                    onChange={e => setNewApiKey(e.target.value)}
                     disabled={loading}
                   />
                 </div>
@@ -480,7 +515,10 @@ export default function ErpIntegrationPage() {
               {/* Server URL */}
               {(newProvider === 'sap' || newProvider === 'custom') && (
                 <div>
-                  <label htmlFor="server-url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="server-url"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     Server URL
                   </label>
                   <input
@@ -488,7 +526,7 @@ export default function ErpIntegrationPage() {
                     id="server-url"
                     className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm bg-white dark:bg-gray-900"
                     value={newServerUrl}
-                    onChange={(e) => setNewServerUrl(e.target.value)}
+                    onChange={e => setNewServerUrl(e.target.value)}
                     placeholder="https://example.com/api"
                     disabled={loading}
                   />
@@ -498,7 +536,9 @@ export default function ErpIntegrationPage() {
 
             {/* Test Result */}
             {testResult && (
-              <div className={`mb-6 p-4 rounded-md ${testResult.success ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'}`}>
+              <div
+                className={`mb-6 p-4 rounded-md ${testResult.success ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'}`}
+              >
                 <div className="flex">
                   <div className="flex-shrink-0">
                     {testResult.success ? (
@@ -508,7 +548,9 @@ export default function ErpIntegrationPage() {
                     )}
                   </div>
                   <div className="ml-3">
-                    <p className={`text-sm ${testResult.success ? 'text-green-800 dark:text-green-200' : 'text-red-800 dark:text-red-200'}`}>
+                    <p
+                      className={`text-sm ${testResult.success ? 'text-green-800 dark:text-green-200' : 'text-red-800 dark:text-red-200'}`}
+                    >
                       {testResult.message}
                     </p>
                   </div>
@@ -565,8 +607,11 @@ export default function ErpIntegrationPage() {
           </div>
         ) : (
           <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-            {connections.map((connection) => {
-              const provider = providers.find(p => p.value === connection.provider) || { label: connection.provider, logo: '/images/integrations/custom.png' };
+            {connections.map(connection => {
+              const provider = providers.find(p => p.value === connection.provider) || {
+                label: connection.provider,
+                logo: '/images/integrations/custom.png',
+              };
 
               return (
                 <li key={connection.id} className="px-6 py-5">
@@ -587,7 +632,9 @@ export default function ErpIntegrationPage() {
                       </div>
                       <div className="ml-4">
                         <div className="flex items-center">
-                          <h3 className="text-sm font-medium text-gray-900 dark:text-white">{provider.label}</h3>
+                          <h3 className="text-sm font-medium text-gray-900 dark:text-white">
+                            {provider.label}
+                          </h3>
                           {connection.is_active ? (
                             <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
                               Active
@@ -599,10 +646,16 @@ export default function ErpIntegrationPage() {
                           )}
                         </div>
                         <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                          Created {formatDistanceToNow(new Date(connection.created_at), { addSuffix: true })}
+                          Created{' '}
+                          {formatDistanceToNow(new Date(connection.created_at), {
+                            addSuffix: true,
+                          })}
                           {connection.last_sync_at && (
                             <span className="ml-2">
-                              • Last synced {formatDistanceToNow(new Date(connection.last_sync_at), { addSuffix: true })}
+                              • Last synced{' '}
+                              {formatDistanceToNow(new Date(connection.last_sync_at), {
+                                addSuffix: true,
+                              })}
                             </span>
                           )}
                         </div>
@@ -648,47 +701,65 @@ export default function ErpIntegrationPage() {
 
       {/* Integration Benefits */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-medium text-gray-800 dark:text-white mb-4">ERP & Accounting Integration Benefits</h3>
+        <h3 className="text-lg font-medium text-gray-800 dark:text-white mb-4">
+          ERP & Accounting Integration Benefits
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-md font-medium text-gray-800 dark:text-white mb-2">Automated Financial Data</h4>
+            <h4 className="text-md font-medium text-gray-800 dark:text-white mb-2">
+              Automated Financial Data
+            </h4>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Connect your ERP system to automatically sync customer data, invoices, and financial transactions with ScaleMasterAI.
+              Connect your ERP system to automatically sync customer data, invoices, and financial
+              transactions with ScaleMasterAI.
             </p>
-            <h4 className="text-md font-medium text-gray-800 dark:text-white mb-2">Streamlined Billing</h4>
+            <h4 className="text-md font-medium text-gray-800 dark:text-white mb-2">
+              Streamlined Billing
+            </h4>
             <p className="text-gray-600 dark:text-gray-400">
-              Automatically generate invoices in your accounting system when weigh tickets are created, reducing manual data entry and errors.
+              Automatically generate invoices in your accounting system when weigh tickets are
+              created, reducing manual data entry and errors.
             </p>
           </div>
           <div>
-            <h4 className="text-md font-medium text-gray-800 dark:text-white mb-2">Real-time Financial Insights</h4>
+            <h4 className="text-md font-medium text-gray-800 dark:text-white mb-2">
+              Real-time Financial Insights
+            </h4>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Get up-to-date financial reporting by syncing weight and load data with your accounting system.
+              Get up-to-date financial reporting by syncing weight and load data with your
+              accounting system.
             </p>
-            <h4 className="text-md font-medium text-gray-800 dark:text-white mb-2">Compliance & Audit Trail</h4>
+            <h4 className="text-md font-medium text-gray-800 dark:text-white mb-2">
+              Compliance & Audit Trail
+            </h4>
             <p className="text-gray-600 dark:text-gray-400">
-              Maintain a complete audit trail of all financial transactions related to your trucking operations for compliance and reporting.
+              Maintain a complete audit trail of all financial transactions related to your trucking
+              operations for compliance and reporting.
             </p>
           </div>
         </div>
 
         <div className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-6">
-          <h4 className="text-md font-medium text-gray-800 dark:text-white mb-2">Supported ERP Systems</h4>
+          <h4 className="text-md font-medium text-gray-800 dark:text-white mb-2">
+            Supported ERP Systems
+          </h4>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mt-4">
-            {providers.filter(p => p.value !== 'custom').map((provider) => (
-              <div key={provider.value} className="flex flex-col items-center">
-                <div className="h-12 w-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden mb-2">
-                  <Image
-                    src={provider.logo}
-                    alt={provider.label}
-                    width={48}
-                    height={48}
-                    className="object-contain"
-                  />
+            {providers
+              .filter(p => p.value !== 'custom')
+              .map(provider => (
+                <div key={provider.value} className="flex flex-col items-center">
+                  <div className="h-12 w-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden mb-2">
+                    <Image
+                      src={provider.logo}
+                      alt={provider.label}
+                      width={48}
+                      height={48}
+                      className="object-contain"
+                    />
+                  </div>
+                  <span className="text-xs text-gray-600 dark:text-gray-400">{provider.label}</span>
                 </div>
-                <span className="text-xs text-gray-600 dark:text-gray-400">{provider.label}</span>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
 

@@ -16,7 +16,11 @@ export async function GET() {
     const { data, error } = await supabase.auth.getUser();
 
     // Test a simple query to verify database access
-    const { data: healthData, error: healthError } = await supabase.from('health_check').select('*').limit(1).maybeSingle();
+    const { data: healthData, error: healthError } = await supabase
+      .from('health_check')
+      .select('*')
+      .limit(1)
+      .maybeSingle();
 
     // If there's an error with the health check query, create the table
     if (healthError && healthError.message.includes('relation "health_check" does not exist')) {
@@ -38,20 +42,23 @@ export async function GET() {
     const isAuthErrorExpected = error && error.message === 'Auth session missing!';
 
     if ((error && !isAuthErrorExpected) || healthError) {
-      return NextResponse.json({
-        status: 'partial',
-        message: 'Partial connection to Supabase',
-        connectionStatus,
-        errors: {
-          auth: error ? error.message : null,
-          database: healthError ? healthError.message : null,
+      return NextResponse.json(
+        {
+          status: 'partial',
+          message: 'Partial connection to Supabase',
+          connectionStatus,
+          errors: {
+            auth: error ? error.message : null,
+            database: healthError ? healthError.message : null,
+          },
+          config: {
+            supabaseUrl: config.supabaseUrl,
+            supabaseKeyFirstChars: config.supabaseKey.substring(0, 10) + '...',
+          },
+          user: data?.user || null,
         },
-        config: {
-          supabaseUrl: config.supabaseUrl,
-          supabaseKeyFirstChars: config.supabaseKey.substring(0, 10) + '...',
-        },
-        user: data?.user || null,
-      }, { status: 207 });
+        { status: 207 }
+      );
     }
 
     return NextResponse.json({
@@ -66,10 +73,13 @@ export async function GET() {
       note: isAuthErrorExpected ? 'Auth session missing is expected when not logged in' : null,
     });
   } catch (error) {
-    return NextResponse.json({
-      status: 'error',
-      message: 'An unexpected error occurred',
-      error: error instanceof Error ? error.message : String(error),
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        status: 'error',
+        message: 'An unexpected error occurred',
+        error: error instanceof Error ? error.message : String(error),
+      },
+      { status: 500 }
+    );
   }
 }

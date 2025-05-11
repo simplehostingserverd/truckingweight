@@ -41,10 +41,7 @@ export async function middleware(req: NextRequest) {
 
   // Strict-Transport-Security - Ensures the browser only uses HTTPS (prevents MITM attacks)
   if (process.env.NODE_ENV === 'production') {
-    res.headers.set(
-      'Strict-Transport-Security',
-      'max-age=31536000; includeSubDomains; preload'
-    );
+    res.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   }
 
   // Permissions-Policy - Limits which features and APIs can be used in the browser
@@ -72,17 +69,19 @@ export async function middleware(req: NextRequest) {
     const user = data?.user;
 
     // Check auth condition
-    const isAuthRoute = req.nextUrl.pathname.startsWith('/login') ||
-                        req.nextUrl.pathname.startsWith('/register') ||
-                        req.nextUrl.pathname.startsWith('/reset-password');
+    const isAuthRoute =
+      req.nextUrl.pathname.startsWith('/login') ||
+      req.nextUrl.pathname.startsWith('/register') ||
+      req.nextUrl.pathname.startsWith('/reset-password');
 
     // API routes that should be accessible without authentication
     const isPublicApiRoute = req.nextUrl.pathname.startsWith('/api/verify-supabase');
 
     // Static assets and public routes
-    const isPublicAsset = req.nextUrl.pathname.startsWith('/_next') ||
-                          req.nextUrl.pathname.startsWith('/favicon.ico') ||
-                          req.nextUrl.pathname.match(/\.(svg|png|jpg|jpeg|gif|webp)$/);
+    const isPublicAsset =
+      req.nextUrl.pathname.startsWith('/_next') ||
+      req.nextUrl.pathname.startsWith('/favicon.ico') ||
+      req.nextUrl.pathname.match(/\.(svg|png|jpg|jpeg|gif|webp)$/);
 
     // If accessing auth routes while logged in, redirect to dashboard
     if (user && isAuthRoute) {
@@ -90,9 +89,14 @@ export async function middleware(req: NextRequest) {
     }
 
     // If accessing protected routes without authenticated user, redirect to login
-    if (!user && !isAuthRoute && !isPublicAsset && !isPublicApiRoute &&
-        !req.nextUrl.pathname.startsWith('/_next') &&
-        !req.nextUrl.pathname.startsWith('/api')) {
+    if (
+      !user &&
+      !isAuthRoute &&
+      !isPublicAsset &&
+      !isPublicApiRoute &&
+      !req.nextUrl.pathname.startsWith('/_next') &&
+      !req.nextUrl.pathname.startsWith('/api')
+    ) {
       return NextResponse.redirect(new URL('/login', req.url));
     }
   } catch (error) {
@@ -100,12 +104,17 @@ export async function middleware(req: NextRequest) {
     console.error('Error in middleware:', error);
 
     // For API routes, we can return an error response
-    if (req.nextUrl.pathname.startsWith('/api') &&
-        !req.nextUrl.pathname.startsWith('/api/verify-supabase')) {
-      return NextResponse.json({
-        error: 'Authentication error',
-        message: error instanceof Error ? error.message : 'Unknown error'
-      }, { status: 401 });
+    if (
+      req.nextUrl.pathname.startsWith('/api') &&
+      !req.nextUrl.pathname.startsWith('/api/verify-supabase')
+    ) {
+      return NextResponse.json(
+        {
+          error: 'Authentication error',
+          message: error instanceof Error ? error.message : 'Unknown error',
+        },
+        { status: 401 }
+      );
     }
   }
 

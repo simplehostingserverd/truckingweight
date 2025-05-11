@@ -259,59 +259,64 @@ VALUES
 async function updateSchema() {
   try {
     console.log('Starting database schema update...');
-    
+
     // Step 1: Drop existing tables
     console.log('Dropping existing tables...');
     const { error: dropError } = await supabase.rpc('pgmoon.query', { query: dropTablesSQL });
-    
+
     if (dropError) {
       console.error('Error dropping tables:', dropError);
       return;
     }
-    
+
     // Step 2: Create tables in correct order
     console.log('Creating tables...');
     const { error: createError } = await supabase.rpc('pgmoon.query', { query: createTablesSQL });
-    
+
     if (createError) {
       console.error('Error creating tables:', createError);
       return;
     }
-    
+
     // Step 3: Apply RLS policies
     console.log('Applying Row Level Security policies...');
     const { error: rlsError } = await supabase.rpc('pgmoon.query', { query: rlsPoliciesSQL });
-    
+
     if (rlsError) {
       console.error('Error applying RLS policies:', rlsError);
       return;
     }
-    
+
     console.log('Schema updated successfully!');
-    
+
     // Ask for confirmation before pushing sample data
     const readline = require('readline').createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
-    
-    readline.question('Do you want to insert sample data for vehicles and drivers? (y/n) ', async (answer) => {
-      if (answer.toLowerCase() === 'y') {
-        console.log('Inserting sample data...');
-        
-        // Insert sample data
-        const { error: sampleDataError } = await supabase.rpc('pgmoon.query', { query: sampleDataSQL });
-        
-        if (sampleDataError) {
-          console.error('Error inserting sample data:', sampleDataError);
-        } else {
-          console.log('Sample data inserted successfully!');
+
+    readline.question(
+      'Do you want to insert sample data for vehicles and drivers? (y/n) ',
+      async answer => {
+        if (answer.toLowerCase() === 'y') {
+          console.log('Inserting sample data...');
+
+          // Insert sample data
+          const { error: sampleDataError } = await supabase.rpc('pgmoon.query', {
+            query: sampleDataSQL,
+          });
+
+          if (sampleDataError) {
+            console.error('Error inserting sample data:', sampleDataError);
+          } else {
+            console.log('Sample data inserted successfully!');
+          }
         }
+
+        readline.close();
+        process.exit(0);
       }
-      
-      readline.close();
-      process.exit(0);
-    });
+    );
   } catch (error) {
     console.error('Unexpected error:', error);
     process.exit(1);

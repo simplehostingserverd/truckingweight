@@ -30,11 +30,7 @@ interface RecentWeightsTableProps {
 
 export default function RecentWeightsTable({ weights = [], companyId }: RecentWeightsTableProps) {
   if (!weights || weights.length === 0) {
-    return (
-      <div className="p-6 text-center text-gray-400">
-        No weight measurements found.
-      </div>
-    );
+    return <div className="p-6 text-center text-gray-400">No weight measurements found.</div>;
   }
 
   return (
@@ -63,7 +59,7 @@ export default function RecentWeightsTable({ weights = [], companyId }: RecentWe
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-800">
-          {weights.map((item) => (
+          {weights.map(item => (
             <tr key={item.id} className="hover:bg-gray-800/50 transition-colors">
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
                 {item.vehicles?.name || 'Unknown'}
@@ -71,9 +67,7 @@ export default function RecentWeightsTable({ weights = [], companyId }: RecentWe
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                 {item.drivers?.name || 'Unknown'}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                {item.weight}
-              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{item.weight}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                 {formatDate(item.date)}
                 {item.time && <span className="ml-1 text-xs text-gray-500">{item.time}</span>}
@@ -86,10 +80,16 @@ export default function RecentWeightsTable({ weights = [], companyId }: RecentWe
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm">
-                <Link href={`/weights/${item.id}`} className="text-blue-500 hover:text-blue-400 mr-3">
+                <Link
+                  href={`/weights/${item.id}`}
+                  className="text-blue-500 hover:text-blue-400 mr-3"
+                >
                   View
                 </Link>
-                <Link href={`/weights/${item.id}/edit`} className="text-blue-500 hover:text-blue-400">
+                <Link
+                  href={`/weights/${item.id}/edit`}
+                  className="text-blue-500 hover:text-blue-400"
+                >
                   Edit
                 </Link>
               </td>

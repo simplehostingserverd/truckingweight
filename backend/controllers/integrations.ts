@@ -29,7 +29,7 @@ export const getIntegrationConnections = async (req: Request, res: Response) => 
   try {
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -37,12 +37,10 @@ export const getIntegrationConnections = async (req: Request, res: Response) => 
     // Check if user is admin to determine if they can see all connections
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
-    const where = user?.is_admin 
-      ? {} 
-      : { company_id: companyId };
+    const where = user?.is_admin ? {} : { company_id: companyId };
 
     const connections = await prisma.integration_connections.findMany({
       where,
@@ -58,10 +56,10 @@ export const getIntegrationConnections = async (req: Request, res: Response) => 
         companies: {
           select: {
             id: true,
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
 
     return res.status(200).json(connections);
@@ -79,7 +77,7 @@ export const getIntegrationConnection = async (req: Request, res: Response) => {
     const { id } = req.params;
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -87,7 +85,7 @@ export const getIntegrationConnection = async (req: Request, res: Response) => {
     // Check if user is admin
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
     const connection = await prisma.integration_connections.findUnique({
@@ -96,10 +94,10 @@ export const getIntegrationConnection = async (req: Request, res: Response) => {
         companies: {
           select: {
             id: true,
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
 
     if (!connection) {
@@ -113,7 +111,7 @@ export const getIntegrationConnection = async (req: Request, res: Response) => {
 
     // Remove sensitive credentials before returning
     const { credentials, ...safeConnection } = connection;
-    
+
     return res.status(200).json(safeConnection);
   } catch (error) {
     console.error('Error fetching integration connection:', error);
@@ -128,7 +126,7 @@ export const createIntegrationConnection = async (req: Request, res: Response) =
   try {
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId || !companyId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -136,9 +134,9 @@ export const createIntegrationConnection = async (req: Request, res: Response) =
     // Validate request body
     const validationResult = createConnectionSchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ 
-        message: 'Validation error', 
-        errors: validationResult.error.errors 
+      return res.status(400).json({
+        message: 'Validation error',
+        errors: validationResult.error.errors,
       });
     }
 
@@ -153,8 +151,8 @@ export const createIntegrationConnection = async (req: Request, res: Response) =
         settings,
         is_active,
         company_id: companyId,
-        created_by: userId
-      }
+        created_by: userId,
+      },
     });
 
     // Log the creation
@@ -165,13 +163,13 @@ export const createIntegrationConnection = async (req: Request, res: Response) =
         event_type: 'create',
         status: 'success',
         message: `Integration connection created for ${provider}`,
-        details: { integration_type, provider }
-      }
+        details: { integration_type, provider },
+      },
     });
 
     // Remove sensitive credentials before returning
     const { credentials: _, ...safeConnection } = connection;
-    
+
     return res.status(201).json(safeConnection);
   } catch (error) {
     console.error('Error creating integration connection:', error);
@@ -187,7 +185,7 @@ export const updateIntegrationConnection = async (req: Request, res: Response) =
     const { id } = req.params;
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -195,15 +193,15 @@ export const updateIntegrationConnection = async (req: Request, res: Response) =
     // Validate request body
     const validationResult = updateConnectionSchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ 
-        message: 'Validation error', 
-        errors: validationResult.error.errors 
+      return res.status(400).json({
+        message: 'Validation error',
+        errors: validationResult.error.errors,
       });
     }
 
     // Check if connection exists and user has access
     const existingConnection = await prisma.integration_connections.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingConnection) {
@@ -213,7 +211,7 @@ export const updateIntegrationConnection = async (req: Request, res: Response) =
     // Check if user is admin or owns the connection
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
     if (!user?.is_admin && existingConnection.company_id !== companyId) {
@@ -230,8 +228,8 @@ export const updateIntegrationConnection = async (req: Request, res: Response) =
         credentials,
         settings,
         is_active,
-        updated_at: new Date()
-      }
+        updated_at: new Date(),
+      },
     });
 
     // Log the update
@@ -242,13 +240,13 @@ export const updateIntegrationConnection = async (req: Request, res: Response) =
         event_type: 'update',
         status: 'success',
         message: `Integration connection updated for ${connection.provider}`,
-        details: { integration_type, provider }
-      }
+        details: { integration_type, provider },
+      },
     });
 
     // Remove sensitive credentials before returning
     const { credentials: _, ...safeConnection } = connection;
-    
+
     return res.status(200).json(safeConnection);
   } catch (error) {
     console.error('Error updating integration connection:', error);
@@ -264,14 +262,14 @@ export const deleteIntegrationConnection = async (req: Request, res: Response) =
     const { id } = req.params;
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
     // Check if connection exists and user has access
     const existingConnection = await prisma.integration_connections.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingConnection) {
@@ -281,7 +279,7 @@ export const deleteIntegrationConnection = async (req: Request, res: Response) =
     // Check if user is admin or owns the connection
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
     if (!user?.is_admin && existingConnection.company_id !== companyId) {
@@ -290,9 +288,9 @@ export const deleteIntegrationConnection = async (req: Request, res: Response) =
 
     // Delete the connection
     await prisma.integration_connections.delete({
-      where: { id }
+      where: { id },
     });
-    
+
     return res.status(204).send();
   } catch (error) {
     console.error('Error deleting integration connection:', error);

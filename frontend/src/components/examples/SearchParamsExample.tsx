@@ -6,24 +6,24 @@ import { toSearchParamString, toSearchParamNumber, createSearchParams } from '@/
 
 /**
  * Example component demonstrating safe search parameter handling
- * 
+ *
  * This component shows how to safely handle search parameters in client components
  * to avoid common bugs with string[] parameters.
  */
 export default function SearchParamsExample() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   // Safely extract search parameters
   const query = toSearchParamString(searchParams.get('query'), '');
   const page = toSearchParamNumber(searchParams.get('page'), 1);
   const category = toSearchParamString(searchParams.get('category'), 'all');
-  
+
   // Local state
   const [searchQuery, setSearchQuery] = useState(query);
   const [currentPage, setCurrentPage] = useState(page);
   const [selectedCategory, setSelectedCategory] = useState(category);
-  
+
   // Update URL when filters change
   const updateFilters = () => {
     const params = createSearchParams({
@@ -31,44 +31,44 @@ export default function SearchParamsExample() {
       page: currentPage,
       category: selectedCategory !== 'all' ? selectedCategory : undefined,
     });
-    
+
     router.push(`?${params.toString()}`);
   };
-  
+
   // Handle search form submission
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setCurrentPage(1); // Reset to page 1 on new search
     updateFilters();
   };
-  
+
   // Handle pagination
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
     updateFilters();
   };
-  
+
   // Handle category change
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
     setCurrentPage(1); // Reset to page 1 on category change
     updateFilters();
   };
-  
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Search Example</h1>
-      
+
       <form onSubmit={handleSearch} className="mb-6">
         <div className="flex gap-2 mb-4">
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search..."
             className="flex-1 p-2 border rounded"
           />
-          
+
           <select
             value={selectedCategory}
             onChange={handleCategoryChange}
@@ -79,16 +79,13 @@ export default function SearchParamsExample() {
             <option value="drivers">Drivers</option>
             <option value="weights">Weights</option>
           </select>
-          
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
+
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
             Search
           </button>
         </div>
       </form>
-      
+
       <div className="mb-4">
         <p>Current Filters:</p>
         <ul className="list-disc pl-5">
@@ -97,7 +94,7 @@ export default function SearchParamsExample() {
           <li>Category: {category}</li>
         </ul>
       </div>
-      
+
       <div className="flex justify-center gap-2">
         <button
           onClick={() => handlePageChange(currentPage - 1)}

@@ -11,7 +11,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts';
 import { parseWeight } from '@/utils/compliance';
 
@@ -35,7 +35,9 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
         setIsLoading(true);
 
         // Get auth token from supabase
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
         if (!session) {
           throw new Error('No active session');
@@ -60,8 +62,8 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
 
         const response = await fetch(url, {
           headers: {
-            'x-auth-token': session.access_token
-          }
+            'x-auth-token': session.access_token,
+          },
         });
 
         if (!response.ok) {
@@ -80,7 +82,6 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
           // Regular user view or admin with specific company filter
           setWeightData(data);
         }
-
       } catch (error: any) {
         console.error('Error fetching vehicle weight data:', error);
         setError(error.message);
@@ -163,20 +164,21 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
         {weightData.length > 0 ? (
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={weightData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-              >
+              <BarChart data={weightData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                 <XAxis dataKey="name" tick={{ fill: '#fff' }} />
                 <YAxis tick={{ fill: '#fff' }} />
                 <Tooltip
-                  formatter={(value) => [`${value.toLocaleString()} lbs`, 'Weight']}
-                  contentStyle={{ backgroundColor: '#1E1E1E', border: '1px solid #333', borderRadius: '4px' }}
+                  formatter={value => [`${value.toLocaleString()} lbs`, 'Weight']}
+                  contentStyle={{
+                    backgroundColor: '#1E1E1E',
+                    border: '1px solid #333',
+                    borderRadius: '4px',
+                  }}
                   itemStyle={{ color: '#fff' }}
                   labelStyle={{ color: '#aaa' }}
                 />
-                <Legend formatter={(value) => <span style={{ color: '#fff' }}>{value}</span>} />
+                <Legend formatter={value => <span style={{ color: '#fff' }}>{value}</span>} />
                 <Bar dataKey="weight" name="Total Weight (lbs)" fill="#3B82F6" />
               </BarChart>
             </ResponsiveContainer>

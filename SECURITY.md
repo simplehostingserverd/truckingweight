@@ -4,11 +4,11 @@
 
 We take security seriously. Below are the currently supported versions for security updates:
 
-| Version         | Supported          |
-| --------------- | ------------------ |
-| Latest release  | ✅ Supported       |
-| Previous major  | ✅ Supported       |
-| Older versions  | ❌ Not supported   |
+| Version        | Supported        |
+| -------------- | ---------------- |
+| Latest release | ✅ Supported     |
+| Previous major | ✅ Supported     |
+| Older versions | ❌ Not supported |
 
 ## Reporting a Vulnerability
 
@@ -29,6 +29,7 @@ We will respond within **5 business days** and work with you to verify and addre
 ## Security Best Practices
 
 If you are deploying or using this software, we recommend:
+
 - Keep your dependencies up to date (we use Dependabot for this purpose).
 - Regularly review access tokens, secrets, and credentials.
 - Follow the principle of least privilege for user accounts and services.

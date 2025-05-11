@@ -78,9 +78,9 @@ router.delete('/:id', async (req, res) => {
  */
 router.post('/:id/regenerate-secret', async (req, res) => {
   try {
-    res.json({ 
+    res.json({
       message: `Secret regenerated for webhook ${req.params.id}`,
-      secret: require('crypto').randomBytes(32).toString('hex')
+      secret: require('crypto').randomBytes(32).toString('hex'),
     });
   } catch (err) {
     console.error(err.message);

@@ -12,22 +12,10 @@ export type { SelectProps, SelectOption } from './Select';
 export { default as Badge } from './Badge';
 export type { BadgeProps } from './Badge';
 
-export {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from './Card';
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './Card';
 
 // Export Tabs components
-export {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent
-} from './Tabs';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
 
 // Re-export existing components
 export { default as MobileNav } from './MobileNav';

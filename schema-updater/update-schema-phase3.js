@@ -5,7 +5,9 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('Error: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in environment variables');
+  console.error(
+    'Error: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in environment variables'
+  );
   process.exit(1);
 }
 
@@ -88,34 +90,40 @@ CREATE POLICY "Reports are deletable by company users" ON reports
 async function updateSchema() {
   try {
     console.log('Starting database schema update for Phase 3...');
-    
+
     // Step 1: Update weights table
     console.log('Updating weights table...');
-    const { error: weightsError } = await supabase.rpc('pgmoon.query', { query: updateWeightsTableSQL });
-    
+    const { error: weightsError } = await supabase.rpc('pgmoon.query', {
+      query: updateWeightsTableSQL,
+    });
+
     if (weightsError) {
       console.error('Error updating weights table:', weightsError);
       return;
     }
-    
+
     // Step 2: Update loads table
     console.log('Updating loads table...');
-    const { error: loadsError } = await supabase.rpc('pgmoon.query', { query: updateLoadsTableSQL });
-    
+    const { error: loadsError } = await supabase.rpc('pgmoon.query', {
+      query: updateLoadsTableSQL,
+    });
+
     if (loadsError) {
       console.error('Error updating loads table:', loadsError);
       return;
     }
-    
+
     // Step 3: Create reports table
     console.log('Creating reports table...');
-    const { error: reportsError } = await supabase.rpc('pgmoon.query', { query: createReportsTableSQL });
-    
+    const { error: reportsError } = await supabase.rpc('pgmoon.query', {
+      query: createReportsTableSQL,
+    });
+
     if (reportsError) {
       console.error('Error creating reports table:', reportsError);
       return;
     }
-    
+
     console.log('Schema updated successfully for Phase 3!');
     process.exit(0);
   } catch (error) {

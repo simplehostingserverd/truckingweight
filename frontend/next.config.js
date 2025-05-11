@@ -1,12 +1,13 @@
 /** @type {import('next').NextConfig} */
 
 // Add bundle analyzer in analyze mode
-const withBundleAnalyzer = process.env.ANALYZE === 'true'
-  ? require('@next/bundle-analyzer')({ enabled: true })
-  : (config) => config;
+const withBundleAnalyzer =
+  process.env.ANALYZE === 'true'
+    ? require('@next/bundle-analyzer')({ enabled: true })
+    : config => config;
 
 // Temporarily disable PWA support until next-pwa is installed
-const withPWA = (config) => config;
+const withPWA = config => config;
 
 // Configure webpack for Cesium
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -20,14 +21,16 @@ const sslEnabled = fs.existsSync(sslCertPath) && fs.existsSync(sslKeyPath);
 
 const nextConfig = {
   // HTTPS configuration for development
-  ...(process.env.NODE_ENV === 'development' && sslEnabled ? {
-    server: {
-      https: {
-        key: fs.readFileSync(sslKeyPath),
-        cert: fs.readFileSync(sslCertPath),
-      },
-    },
-  } : {}),
+  ...(process.env.NODE_ENV === 'development' && sslEnabled
+    ? {
+        server: {
+          https: {
+            key: fs.readFileSync(sslKeyPath),
+            cert: fs.readFileSync(sslCertPath),
+          },
+        },
+      }
+    : {}),
   // Webpack configuration for Cesium
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -36,31 +39,19 @@ const nextConfig = {
         new CopyWebpackPlugin({
           patterns: [
             {
-              from: path.join(
-                path.dirname(require.resolve('cesium')),
-                'Build/Cesium/Workers'
-              ),
+              from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/Workers'),
               to: 'static/chunks/cesium/Workers',
             },
             {
-              from: path.join(
-                path.dirname(require.resolve('cesium')),
-                'Build/Cesium/ThirdParty'
-              ),
+              from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/ThirdParty'),
               to: 'static/chunks/cesium/ThirdParty',
             },
             {
-              from: path.join(
-                path.dirname(require.resolve('cesium')),
-                'Build/Cesium/Assets'
-              ),
+              from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/Assets'),
               to: 'static/chunks/cesium/Assets',
             },
             {
-              from: path.join(
-                path.dirname(require.resolve('cesium')),
-                'Build/Cesium/Widgets'
-              ),
+              from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/Widgets'),
               to: 'static/chunks/cesium/Widgets',
             },
           ],
@@ -84,26 +75,26 @@ const nextConfig = {
         headers: [
           {
             key: 'X-DNS-Prefetch-Control',
-            value: 'on'
+            value: 'on',
           },
           {
             key: 'X-XSS-Protection',
-            value: '1; mode=block'
+            value: '1; mode=block',
           },
           {
             key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
+            value: 'SAMEORIGIN',
           },
           {
             key: 'X-Content-Type-Options',
-            value: 'nosniff'
+            value: 'nosniff',
           },
           {
             key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
-          }
-        ]
-      }
+            value: 'strict-origin-when-cross-origin',
+          },
+        ],
+      },
     ];
   },
 

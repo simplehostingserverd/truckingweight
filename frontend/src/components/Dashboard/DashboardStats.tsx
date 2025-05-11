@@ -9,7 +9,7 @@ import {
   CheckCircleIcon,
   ClockIcon,
   CalendarDaysIcon,
-  ExclamationTriangleIcon
+  ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline';
 
 interface DashboardStatsProps {
@@ -32,7 +32,9 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
         setIsLoading(true);
 
         // Get auth token from supabase
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
         if (!session) {
           throw new Error('No active session');
@@ -45,8 +47,8 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
 
         const response = await fetch(url, {
           headers: {
-            'x-auth-token': session.access_token
-          }
+            'x-auth-token': session.access_token,
+          },
         });
 
         if (!response.ok) {
@@ -63,8 +65,8 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
 
         const weightsResponse = await fetch(weightsUrl, {
           headers: {
-            'x-auth-token': session.access_token
-          }
+            'x-auth-token': session.access_token,
+          },
         });
 
         if (!weightsResponse.ok) {
@@ -107,42 +109,41 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
             label: 'Total Vehicles',
             value: statsData.vehicleCount.toString(),
             icon: TruckIcon,
-            color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+            color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
           },
           {
             label: 'Active Drivers',
             value: statsData.driverCount.toString(),
             icon: CalendarDaysIcon,
-            color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+            color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
           },
           {
             label: 'Compliance Rate',
             value: `${statsData.complianceRate}%`,
             icon: CheckCircleIcon,
-            color: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
+            color: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
           },
           {
             label: 'Active Loads',
             value: statsData.activeLoads.toString(),
             icon: ClockIcon,
-            color: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200'
+            color: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
           },
           {
             label: 'Weights Today',
             value: statsData.weightsToday.toString(),
             icon: ScaleIcon,
-            color: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
+            color: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200',
           },
           {
             label: 'Non-Compliant',
             value: statsData.nonCompliantWeights.toString(),
             icon: ExclamationTriangleIcon,
-            color: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+            color: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
           },
         ];
 
         setStats(formattedStats);
-
       } catch (error: any) {
         console.error('Error fetching dashboard stats:', error);
         setError(error.message);
@@ -158,7 +159,10 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {[...Array(6)].map((_, index) => (
-          <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 animate-pulse">
+          <div
+            key={index}
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 animate-pulse"
+          >
             <div className="flex items-center">
               <div className="bg-gray-200 dark:bg-gray-700 rounded-full h-12 w-12 mr-4"></div>
               <div className="flex-1">

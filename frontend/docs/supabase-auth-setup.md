@@ -23,6 +23,7 @@ These variables are only used on the server and should never be exposed to the c
 ## Where to Find These Values
 
 1. **Supabase URL and Anon Key**:
+
    - Go to your Supabase project dashboard
    - Click on "Settings" in the sidebar
    - Click on "API" in the submenu
@@ -31,6 +32,7 @@ These variables are only used on the server and should never be exposed to the c
      - `anon` `public`: Your `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 2. **JWT Secret**:
+
    - Go to your Supabase project dashboard
    - Click on "Settings" in the sidebar
    - Click on "API" in the submenu
@@ -47,6 +49,7 @@ These variables are only used on the server and should never be exposed to the c
 ## Setting Up Environment Files
 
 1. Copy the `.env.example` file to create a new `.env` file:
+
    ```bash
    cp .env.example .env
    ```

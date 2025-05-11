@@ -12,7 +12,9 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('Missing Supabase credentials. Please check your .env file.');
-  console.error('Make sure you have NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in your .env file.');
+  console.error(
+    'Make sure you have NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in your .env file.'
+  );
   process.exit(1);
 }
 
@@ -46,10 +48,16 @@ async function fixRlsPolicies() {
 
       // Try to provide more helpful error messages
       if (error.message.includes('permission denied')) {
-        console.error('\nPermission denied. Make sure you are using the SUPABASE_SERVICE_ROLE_KEY, not the anon key.');
-        console.error('The service role key starts with "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." and has "role": "service_role" in the JWT payload.');
+        console.error(
+          '\nPermission denied. Make sure you are using the SUPABASE_SERVICE_ROLE_KEY, not the anon key.'
+        );
+        console.error(
+          'The service role key starts with "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." and has "role": "service_role" in the JWT payload.'
+        );
       } else if (error.message.includes('function pgmoon.query')) {
-        console.error('\nThe pgmoon.query function is not available. This is needed to execute raw SQL.');
+        console.error(
+          '\nThe pgmoon.query function is not available. This is needed to execute raw SQL.'
+        );
         console.error('You may need to enable the pgmoon extension in your Supabase project.');
       }
 
@@ -57,7 +65,9 @@ async function fixRlsPolicies() {
     }
 
     console.log('RLS policies fixed successfully!');
-    console.log('\nYou should now be able to register new users without the infinite recursion error.');
+    console.log(
+      '\nYou should now be able to register new users without the infinite recursion error.'
+    );
     console.log('Try registering a new user or logging in with an existing account.');
     process.exit(0);
   } catch (error) {

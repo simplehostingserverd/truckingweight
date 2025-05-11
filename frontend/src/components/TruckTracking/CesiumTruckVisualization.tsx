@@ -21,7 +21,7 @@ interface CesiumTruckVisualizationProps {
 export default function CesiumTruckVisualization({
   route,
   currentPosition,
-  cesiumToken
+  cesiumToken,
 }: CesiumTruckVisualizationProps) {
   const cesiumContainer = useRef<HTMLDivElement>(null);
   const viewer = useRef<Cesium.Viewer | null>(null);
@@ -95,8 +95,8 @@ export default function CesiumTruckVisualization({
   // Add route path to the viewer
   const addRoutePath = (cesiumViewer: Cesium.Viewer) => {
     // Create route path
-    const routePositions = route.map(point =>
-      Cesium.Cartesian3.fromDegrees(point.lng, point.lat, 100) // Elevation in meters
+    const routePositions = route.map(
+      point => Cesium.Cartesian3.fromDegrees(point.lng, point.lat, 100) // Elevation in meters
     );
 
     // Add route path entity
@@ -193,7 +193,7 @@ export default function CesiumTruckVisualization({
         width: 64,
         height: 64,
         scale: 0.5,
-        verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       },
       label: {
         text: 'Truck',
@@ -251,11 +251,7 @@ export default function CesiumTruckVisualization({
         new Cesium.JulianDate()
       );
 
-      const position = Cesium.Cartesian3.fromDegrees(
-        route[i].lng,
-        route[i].lat,
-        100
-      );
+      const position = Cesium.Cartesian3.fromDegrees(route[i].lng, route[i].lat, 100);
 
       positionProperty.addSample(time, position);
     }
@@ -301,11 +297,7 @@ export default function CesiumTruckVisualization({
     );
 
     const finalOrientation = Cesium.Transforms.headingPitchRollQuaternion(
-      Cesium.Cartesian3.fromDegrees(
-        route[route.length - 1].lng,
-        route[route.length - 1].lat,
-        100
-      ),
+      Cesium.Cartesian3.fromDegrees(route[route.length - 1].lng, route[route.length - 1].lat, 100),
       new Cesium.HeadingPitchRoll(finalHeading, 0, 0)
     );
 

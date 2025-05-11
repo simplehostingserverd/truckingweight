@@ -1,0 +1,699 @@
+
+/var/home/jimbo/Documents/Truckers/backend/config/prisma.ts
+  14:37  error  Parsing error: Unexpected token :
+
+/var/home/jimbo/Documents/Truckers/backend/controllers/admin.js
+  540:13  warning  'type' is assigned a value but never used  no-unused-vars
+
+/var/home/jimbo/Documents/Truckers/backend/controllers/apiKeys.ts
+  26:37  error  Parsing error: Unexpected token :
+
+/var/home/jimbo/Documents/Truckers/backend/controllers/dashboard.ts
+  10:1  error  Parsing error: The keyword 'interface' is reserved
+
+/var/home/jimbo/Documents/Truckers/backend/controllers/integrations.ts
+  28:52  error  Parsing error: Unexpected token :
+
+/var/home/jimbo/Documents/Truckers/backend/controllers/prisma-example.ts
+  10:1  error  Parsing error: The keyword 'interface' is reserved
+
+/var/home/jimbo/Documents/Truckers/backend/controllers/scaleController.ts
+  24:1  error  Parsing error: The keyword 'interface' is reserved
+
+/var/home/jimbo/Documents/Truckers/backend/controllers/webhooks.ts
+  27:50  error  Parsing error: Unexpected token :
+
+/var/home/jimbo/Documents/Truckers/backend/controllers/weighTicketController.ts
+  20:1  error  Parsing error: The keyword 'interface' is reserved
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/edge.js
+   17:3   warning  'skip' is assigned a value but never used         no-unused-vars
+   23:3   warning  'warnOnce' is assigned a value but never used     no-unused-vars
+   26:3   warning  'getRuntime' is assigned a value but never used   no-unused-vars
+   27:3   warning  'createParam' is assigned a value but never used  no-unused-vars
+  580:45  error    'globalThis' is not defined                       no-undef
+  587:41  error    'globalThis' is not defined                       no-undef
+  592:43  error    'globalThis' is not defined                       no-undef
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/index-browser.js
+   12:3   warning  'skip' is assigned a value but never used  no-unused-vars
+  554:11  warning  'target' is defined but never used         no-unused-vars
+  554:19  warning  'prop' is defined but never used           no-unused-vars
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/index.d.ts
+  6:15  error  Parsing error: Unexpected token =
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/index.js
+  17:3  warning  'skip' is assigned a value but never used         no-unused-vars
+  19:3  warning  'Debug' is assigned a value but never used        no-unused-vars
+  23:3  warning  'warnOnce' is assigned a value but never used     no-unused-vars
+  26:3  warning  'getRuntime' is assigned a value but never used   no-unused-vars
+  27:3  warning  'createParam' is assigned a value but never used  no-unused-vars
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/runtime/edge-esm.js
+    42:5   warning  'b' is assigned a value but never used                                     no-unused-vars
+    46:7   error    'globalThis' is not defined                                                no-undef
+   243:5   error    Expected method 'get' to always return a value                             getter-return
+   249:5   error    Expected method 'get' to always return a value                             getter-return
+   279:16  error    'SharedArrayBuffer' is not defined                                         no-undef
+   279:57  error    'SharedArrayBuffer' is not defined                                         no-undef
+   866:12  error    'BigInt' is not defined                                                    no-undef
+   866:25  error    'BigInt' is not defined                                                    no-undef
+   866:38  error    'BigInt' is not defined                                                    no-undef
+   875:13  error    'BigInt' is not defined                                                    no-undef
+   875:26  error    'BigInt' is not defined                                                    no-undef
+   875:40  error    'BigInt' is not defined                                                    no-undef
+   929:8   error    'BigInt' is not defined                                                    no-undef
+   929:21  error    'BigInt' is not defined                                                    no-undef
+   930:7   error    'BigInt' is not defined                                                    no-undef
+   940:8   error    'BigInt' is not defined                                                    no-undef
+   940:21  error    'BigInt' is not defined                                                    no-undef
+   941:7   error    'BigInt' is not defined                                                    no-undef
+  1030:24  error    'BigInt' is not defined                                                    no-undef
+  1038:26  error    'BigInt' is not defined                                                    no-undef
+  1038:40  error    'BigInt' is not defined                                                    no-undef
+  1052:24  error    'BigInt' is not defined                                                    no-undef
+  1060:26  error    'BigInt' is not defined                                                    no-undef
+  1060:40  error    'BigInt' is not defined                                                    no-undef
+  1073:27  error    'BigInt' is not defined                                                    no-undef
+  1073:38  error    'BigInt' is not defined                                                    no-undef
+  1076:27  error    'BigInt' is not defined                                                    no-undef
+  1076:38  error    'BigInt' is not defined                                                    no-undef
+  1160:28  error    'BigInt' is not defined                                                    no-undef
+  1160:58  error    'BigInt' is not defined                                                    no-undef
+  1163:28  error    'BigInt' is not defined                                                    no-undef
+  1163:58  error    'BigInt' is not defined                                                    no-undef
+  1165:27  warning  'i' is defined but never used                                              no-unused-vars
+  1165:30  warning  'o' is defined but never used                                              no-unused-vars
+  1306:18  error    'BigInt' is not defined                                                    no-undef
+  1306:31  error    'BigInt' is not defined                                                    no-undef
+  1306:51  error    'BigInt' is not defined                                                    no-undef
+  1306:64  error    'BigInt' is not defined                                                    no-undef
+  1330:30  error    'BigInt' is not defined                                                    no-undef
+  1871:16  warning  'e' is defined but never used                                              no-unused-vars
+  1906:5   warning  'um' is assigned a value but never used                                    no-unused-vars
+  1909:3   warning  'cm' is assigned a value but never used                                    no-unused-vars
+  1911:3   warning  'pm' is assigned a value but never used                                    no-unused-vars
+  1912:3   warning  'mm' is assigned a value but never used                                    no-unused-vars
+  1913:3   warning  'fm' is assigned a value but never used                                    no-unused-vars
+  1914:3   warning  'dm' is assigned a value but never used                                    no-unused-vars
+  1919:3   warning  'gm' is assigned a value but never used                                    no-unused-vars
+  1921:3   warning  'hm' is assigned a value but never used                                    no-unused-vars
+  1923:3   warning  'ym' is assigned a value but never used                                    no-unused-vars
+  1924:3   warning  'wm' is assigned a value but never used                                    no-unused-vars
+  1925:3   warning  'Em' is assigned a value but never used                                    no-unused-vars
+  1926:3   warning  'bm' is assigned a value but never used                                    no-unused-vars
+  1927:3   warning  'xm' is assigned a value but never used                                    no-unused-vars
+  1928:3   warning  'Pm' is assigned a value but never used                                    no-unused-vars
+  1929:3   warning  'vm' is assigned a value but never used                                    no-unused-vars
+  1930:3   warning  'Tm' is assigned a value but never used                                    no-unused-vars
+  1931:3   warning  'Cm' is assigned a value but never used                                    no-unused-vars
+  1943:1   error    'globalThis' is not defined                                                no-undef
+  1944:1   error    'globalThis' is not defined                                                no-undef
+  1947:30  error    'globalThis' is not defined                                                no-undef
+  1950:13  error    'globalThis' is not defined                                                no-undef
+  1951:13  error    'globalThis' is not defined                                                no-undef
+  1954:13  error    'globalThis' is not defined                                                no-undef
+  1978:46  warning  's' is assigned a value but never used                                     no-unused-vars
+  3712:41  warning  'd' is assigned a value but never used                                     no-unused-vars
+  4038:9   error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4183:14  error    'BigInt' is not defined                                                    no-undef
+  4353:5   warning  'gu' is assigned a value but never used                                    no-unused-vars
+  4413:48  error    '$getTemplateParameters' is not defined                                    no-undef
+  6327:11  error    '$EnabledCallSite' is not defined                                          no-undef
+  6864:16  error    'globalThis' is not defined                                                no-undef
+  6865:16  error    'globalThis' is not defined                                                no-undef
+  6865:36  error    'globalThis' is not defined                                                no-undef
+  6866:16  error    'globalThis' is not defined                                                no-undef
+  6867:21  error    'globalThis' is not defined                                                no-undef
+  6868:21  error    'globalThis' is not defined                                                no-undef
+  6869:14  error    'globalThis' is not defined                                                no-undef
+  7776:11  error    Empty block statement                                                      no-empty
+  7787:5   warning  'a' is assigned a value but never used                                     no-unused-vars
+  7788:5   warning  'l' is assigned a value but never used                                     no-unused-vars
+  7789:5   warning  'd' is assigned a value but never used                                     no-unused-vars
+  7860:51  error    'SharedArrayBuffer' is not defined                                         no-undef
+  8016:15  error    'globalThis' is not defined                                                no-undef
+  8017:13  error    'globalThis' is not defined                                                no-undef
+  8212:14  error    'BigInt' is not defined                                                    no-undef
+  8730:35  error    'globalThis' is not defined                                                no-undef
+  8768:11  warning  'o' is assigned a value but never used                                     no-unused-vars
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/runtime/edge.js
+    44:5   warning  'b' is assigned a value but never used                                     no-unused-vars
+    48:7   error    'globalThis' is not defined                                                no-undef
+   245:5   error    Expected method 'get' to always return a value                             getter-return
+   251:5   error    Expected method 'get' to always return a value                             getter-return
+   281:16  error    'SharedArrayBuffer' is not defined                                         no-undef
+   281:57  error    'SharedArrayBuffer' is not defined                                         no-undef
+   868:12  error    'BigInt' is not defined                                                    no-undef
+   868:25  error    'BigInt' is not defined                                                    no-undef
+   868:38  error    'BigInt' is not defined                                                    no-undef
+   877:13  error    'BigInt' is not defined                                                    no-undef
+   877:26  error    'BigInt' is not defined                                                    no-undef
+   877:40  error    'BigInt' is not defined                                                    no-undef
+   931:8   error    'BigInt' is not defined                                                    no-undef
+   931:21  error    'BigInt' is not defined                                                    no-undef
+   932:7   error    'BigInt' is not defined                                                    no-undef
+   942:8   error    'BigInt' is not defined                                                    no-undef
+   942:21  error    'BigInt' is not defined                                                    no-undef
+   943:7   error    'BigInt' is not defined                                                    no-undef
+  1032:24  error    'BigInt' is not defined                                                    no-undef
+  1040:26  error    'BigInt' is not defined                                                    no-undef
+  1040:40  error    'BigInt' is not defined                                                    no-undef
+  1054:24  error    'BigInt' is not defined                                                    no-undef
+  1062:26  error    'BigInt' is not defined                                                    no-undef
+  1062:40  error    'BigInt' is not defined                                                    no-undef
+  1075:27  error    'BigInt' is not defined                                                    no-undef
+  1075:38  error    'BigInt' is not defined                                                    no-undef
+  1078:27  error    'BigInt' is not defined                                                    no-undef
+  1078:38  error    'BigInt' is not defined                                                    no-undef
+  1162:28  error    'BigInt' is not defined                                                    no-undef
+  1162:58  error    'BigInt' is not defined                                                    no-undef
+  1165:28  error    'BigInt' is not defined                                                    no-undef
+  1165:58  error    'BigInt' is not defined                                                    no-undef
+  1167:27  warning  'i' is defined but never used                                              no-unused-vars
+  1167:30  warning  'o' is defined but never used                                              no-unused-vars
+  1308:18  error    'BigInt' is not defined                                                    no-undef
+  1308:31  error    'BigInt' is not defined                                                    no-undef
+  1308:51  error    'BigInt' is not defined                                                    no-undef
+  1308:64  error    'BigInt' is not defined                                                    no-undef
+  1332:30  error    'BigInt' is not defined                                                    no-undef
+  1907:16  warning  'e' is defined but never used                                              no-unused-vars
+  1942:5   warning  'pm' is assigned a value but never used                                    no-unused-vars
+  1945:3   warning  'mm' is assigned a value but never used                                    no-unused-vars
+  1947:3   warning  'fm' is assigned a value but never used                                    no-unused-vars
+  1948:3   warning  'dm' is assigned a value but never used                                    no-unused-vars
+  1949:3   warning  'gm' is assigned a value but never used                                    no-unused-vars
+  1950:3   warning  'hm' is assigned a value but never used                                    no-unused-vars
+  1955:3   warning  'ym' is assigned a value but never used                                    no-unused-vars
+  1957:3   warning  'wm' is assigned a value but never used                                    no-unused-vars
+  1959:3   warning  'Em' is assigned a value but never used                                    no-unused-vars
+  1960:3   warning  'bm' is assigned a value but never used                                    no-unused-vars
+  1961:3   warning  'xm' is assigned a value but never used                                    no-unused-vars
+  1962:3   warning  'Pm' is assigned a value but never used                                    no-unused-vars
+  1963:3   warning  'vm' is assigned a value but never used                                    no-unused-vars
+  1964:3   warning  'Tm' is assigned a value but never used                                    no-unused-vars
+  1965:3   warning  'Cm' is assigned a value but never used                                    no-unused-vars
+  1966:3   warning  'Am' is assigned a value but never used                                    no-unused-vars
+  1967:3   warning  'Rm' is assigned a value but never used                                    no-unused-vars
+  1979:1   error    'globalThis' is not defined                                                no-undef
+  1980:1   error    'globalThis' is not defined                                                no-undef
+  1983:30  error    'globalThis' is not defined                                                no-undef
+  1986:13  error    'globalThis' is not defined                                                no-undef
+  1987:13  error    'globalThis' is not defined                                                no-undef
+  1990:13  error    'globalThis' is not defined                                                no-undef
+  2014:46  warning  's' is assigned a value but never used                                     no-unused-vars
+  3748:41  warning  'd' is assigned a value but never used                                     no-unused-vars
+  4074:9   error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4219:14  error    'BigInt' is not defined                                                    no-undef
+  4389:5   warning  'Tu' is assigned a value but never used                                    no-unused-vars
+  4449:48  error    '$getTemplateParameters' is not defined                                    no-undef
+  6363:11  error    '$EnabledCallSite' is not defined                                          no-undef
+  6900:16  error    'globalThis' is not defined                                                no-undef
+  6901:16  error    'globalThis' is not defined                                                no-undef
+  6901:36  error    'globalThis' is not defined                                                no-undef
+  6902:16  error    'globalThis' is not defined                                                no-undef
+  6903:21  error    'globalThis' is not defined                                                no-undef
+  6904:21  error    'globalThis' is not defined                                                no-undef
+  6905:14  error    'globalThis' is not defined                                                no-undef
+  7812:11  error    Empty block statement                                                      no-empty
+  7823:5   warning  'a' is assigned a value but never used                                     no-unused-vars
+  7824:5   warning  'l' is assigned a value but never used                                     no-unused-vars
+  7825:5   warning  'd' is assigned a value but never used                                     no-unused-vars
+  7896:51  error    'SharedArrayBuffer' is not defined                                         no-undef
+  8052:15  error    'globalThis' is not defined                                                no-undef
+  8053:13  error    'globalThis' is not defined                                                no-undef
+  8248:14  error    'BigInt' is not defined                                                    no-undef
+  8766:35  error    'globalThis' is not defined                                                no-undef
+  8804:11  warning  'o' is assigned a value but never used                                     no-unused-vars
+  9259:5   error    'DMMF' is not defined                                                      no-undef
+  9260:5   error    'Debug' is not defined                                                     no-undef
+  9261:5   error    'Decimal' is not defined                                                   no-undef
+  9262:5   error    'Extensions' is not defined                                                no-undef
+  9263:5   error    'MetricsClient' is not defined                                             no-undef
+  9264:5   error    'PrismaClientInitializationError' is not defined                           no-undef
+  9265:5   error    'PrismaClientKnownRequestError' is not defined                             no-undef
+  9266:5   error    'PrismaClientRustPanicError' is not defined                                no-undef
+  9267:5   error    'PrismaClientUnknownRequestError' is not defined                           no-undef
+  9268:5   error    'PrismaClientValidationError' is not defined                               no-undef
+  9269:5   error    'Public' is not defined                                                    no-undef
+  9270:5   error    'Sql' is not defined                                                       no-undef
+  9271:5   error    'createParam' is not defined                                               no-undef
+  9272:5   error    'defineDmmfProperty' is not defined                                        no-undef
+  9273:5   error    'deserializeJsonResponse' is not defined                                   no-undef
+  9274:5   error    'deserializeRawResult' is not defined                                      no-undef
+  9275:5   error    'dmmfToRuntimeDataModel' is not defined                                    no-undef
+  9276:5   error    'empty' is not defined                                                     no-undef
+  9277:5   error    'getPrismaClient' is not defined                                           no-undef
+  9278:5   error    'getRuntime' is not defined                                                no-undef
+  9279:5   error    'join' is not defined                                                      no-undef
+  9280:5   error    'makeStrictEnum' is not defined                                            no-undef
+  9281:5   error    'makeTypedQueryFactory' is not defined                                     no-undef
+  9282:5   error    'objectEnumValues' is not defined                                          no-undef
+  9283:5   error    'raw' is not defined                                                       no-undef
+  9284:5   error    'serializeJsonQuery' is not defined                                        no-undef
+  9285:5   error    'skip' is not defined                                                      no-undef
+  9286:5   error    'sqltag' is not defined                                                    no-undef
+  9287:5   error    'warnEnvConflicts' is not defined                                          no-undef
+  9288:5   error    'warnOnce' is not defined                                                  no-undef
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/runtime/index-browser.d.ts
+  1:9  error  Parsing error: Unexpected token class
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/runtime/index-browser.js
+    40:16  warning  'e' is defined but never used                                              no-unused-vars
+   120:18  error    'globalThis' is not defined                                                no-undef
+   127:9   error    'globalThis' is not defined                                                no-undef
+   128:20  error    'globalThis' is not defined                                                no-undef
+   131:16  error    'globalThis' is not defined                                                no-undef
+   132:21  error    'globalThis' is not defined                                                no-undef
+   133:21  error    'globalThis' is not defined                                                no-undef
+   136:18  error    'globalThis' is not defined                                                no-undef
+  1626:41  warning  'f' is assigned a value but never used                                     no-unused-vars
+  1952:9   error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  2080:26  error    'Decimal' is not defined                                                   no-undef
+  2080:35  error    'Public' is not defined                                                    no-undef
+  2080:43  error    'getRuntime' is not defined                                                no-undef
+  2080:55  error    'makeStrictEnum' is not defined                                            no-undef
+  2080:71  error    'objectEnumValues' is not defined                                          no-undef
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/runtime/library.d.ts
+  4:9  error  Parsing error: Unexpected token function
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/runtime/library.js
+   726:16  warning  'e' is defined but never used                                              no-unused-vars
+   808:1   error    'globalThis' is not defined                                                no-undef
+   809:1   error    'globalThis' is not defined                                                no-undef
+   812:30  error    'globalThis' is not defined                                                no-undef
+   815:13  error    'globalThis' is not defined                                                no-undef
+   816:13  error    'globalThis' is not defined                                                no-undef
+   819:13  error    'globalThis' is not defined                                                no-undef
+   849:28  error    'globalThis' is not defined                                                no-undef
+  1087:5   warning  'eg' is assigned a value but never used                                    no-unused-vars
+  1088:15  warning  'e' is defined but never used                                              no-unused-vars
+  1114:3   warning  'rg' is assigned a value but never used                                    no-unused-vars
+  1151:3   warning  'tg' is assigned a value but never used                                    no-unused-vars
+  1174:3   warning  'ng' is assigned a value but never used                                    no-unused-vars
+  1175:3   warning  'ig' is assigned a value but never used                                    no-unused-vars
+  1180:3   warning  'og' is assigned a value but never used                                    no-unused-vars
+  1185:3   warning  'sg' is assigned a value but never used                                    no-unused-vars
+  1190:3   warning  'ag' is assigned a value but never used                                    no-unused-vars
+  1440:19  warning  'e' is assigned a value but never used                                     no-unused-vars
+  1562:10  error    'globalThis' is not defined                                                no-undef
+  1563:3   warning  'gg' is assigned a value but never used                                    no-unused-vars
+  1563:8   error    'globalThis' is not defined                                                no-undef
+  1564:3   warning  'hg' is assigned a value but never used                                    no-unused-vars
+  1564:8   error    'globalThis' is not defined                                                no-undef
+  1565:3   warning  'yg' is assigned a value but never used                                    no-unused-vars
+  1565:8   error    'globalThis' is not defined                                                no-undef
+  1566:3   warning  'bg' is assigned a value but never used                                    no-unused-vars
+  1566:8   error    'globalThis' is not defined                                                no-undef
+  1567:3   warning  'Eg' is assigned a value but never used                                    no-unused-vars
+  1567:8   error    'globalThis' is not defined                                                no-undef
+  1568:3   warning  'wg' is assigned a value but never used                                    no-unused-vars
+  1568:42  error    'globalThis' is not defined                                                no-undef
+  1568:64  error    'WorkerGlobalScope' is not defined                                         no-undef
+  1569:3   warning  'xg' is assigned a value but never used                                    no-unused-vars
+  1569:51  error    'globalThis' is not defined                                                no-undef
+  1569:73  error    'DedicatedWorkerGlobalScope' is not defined                                no-undef
+  1570:3   warning  'vg' is assigned a value but never used                                    no-unused-vars
+  1570:48  error    'globalThis' is not defined                                                no-undef
+  1570:70  error    'SharedWorkerGlobalScope' is not defined                                   no-undef
+  1571:3   warning  'Pg' is assigned a value but never used                                    no-unused-vars
+  1571:49  error    'globalThis' is not defined                                                no-undef
+  1571:71  error    'ServiceWorkerGlobalScope' is not defined                                  no-undef
+  1572:8   error    'globalThis' is not defined                                                no-undef
+  1573:3   warning  'Tg' is assigned a value but never used                                    no-unused-vars
+  1575:5   error    'globalThis' is not defined                                                no-undef
+  1576:5   error    'globalThis' is not defined                                                no-undef
+  1577:5   error    'globalThis' is not defined                                                no-undef
+  1578:3   warning  'Sg' is assigned a value but never used                                    no-unused-vars
+  1580:5   error    'globalThis' is not defined                                                no-undef
+  1581:5   error    'globalThis' is not defined                                                no-undef
+  1582:3   warning  'Rg' is assigned a value but never used                                    no-unused-vars
+  1584:5   error    'globalThis' is not defined                                                no-undef
+  1585:5   error    'globalThis' is not defined                                                no-undef
+  1586:5   error    'globalThis' is not defined                                                no-undef
+  1587:3   warning  'Cg' is assigned a value but never used                                    no-unused-vars
+  1589:6   error    'globalThis' is not defined                                                no-undef
+  1589:55  error    'globalThis' is not defined                                                no-undef
+  1590:29  error    'globalThis' is not defined                                                no-undef
+  1591:3   warning  'Ag' is assigned a value but never used                                    no-unused-vars
+  1593:5   error    'globalThis' is not defined                                                no-undef
+  1594:5   error    'globalThis' is not defined                                                no-undef
+  1595:5   error    'globalThis' is not defined                                                no-undef
+  1720:5   warning  'Qc' is assigned a value but never used                                    no-unused-vars
+  1722:3   warning  'Gc' is assigned a value but never used                                    no-unused-vars
+  1723:3   warning  'ah' is assigned a value but never used                                    no-unused-vars
+  1727:5   warning  'lh' is assigned a value but never used                                    no-unused-vars
+  3541:41  warning  'u' is assigned a value but never used                                     no-unused-vars
+  3867:9   error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4012:14  error    'BigInt' is not defined                                                    no-undef
+  4160:32  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4190:17  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4191:44  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4192:15  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4207:17  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4229:16  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4263:19  error    'p' is already defined                                                     no-redeclare
+  4271:17  error    'c' is already defined                                                     no-redeclare
+  4272:15  error    'p' is already defined                                                     no-redeclare
+  4273:15  error    'd' is already defined                                                     no-redeclare
+  4361:80  error    Unnecessary escape character: \[                                           no-useless-escape
+  6409:13  error    '$EnabledCallSite' is not defined                                          no-undef
+  6852:16  error    'globalThis' is not defined                                                no-undef
+  6853:16  error    'globalThis' is not defined                                                no-undef
+  6853:36  error    'globalThis' is not defined                                                no-undef
+  6854:16  error    'globalThis' is not defined                                                no-undef
+  6855:21  error    'globalThis' is not defined                                                no-undef
+  6856:21  error    'globalThis' is not defined                                                no-undef
+  6857:14  error    'globalThis' is not defined                                                no-undef
+  7022:46  error    Unnecessary escape character: \[                                           no-useless-escape
+  7910:11  error    'globalThis' is not defined                                                no-undef
+  8136:21  error    'WeakRef' is not defined                                                   no-undef
+  8192:13  error    Empty block statement                                                      no-empty
+  8198:13  error    Empty block statement                                                      no-empty
+  8363:11  error    Empty block statement                                                      no-empty
+  8375:5   warning  'l' is assigned a value but never used                                     no-unused-vars
+  8376:5   warning  'u' is assigned a value but never used                                     no-unused-vars
+  8431:51  error    'SharedArrayBuffer' is not defined                                         no-undef
+  8577:15  error    'globalThis' is not defined                                                no-undef
+  8578:13  error    'globalThis' is not defined                                                no-undef
+  8728:14  error    'BigInt' is not defined                                                    no-undef
+  9226:35  error    'globalThis' is not defined                                                no-undef
+  9715:5   error    'DMMF' is not defined                                                      no-undef
+  9716:5   error    'Debug' is not defined                                                     no-undef
+  9717:5   error    'Decimal' is not defined                                                   no-undef
+  9718:5   error    'Extensions' is not defined                                                no-undef
+  9719:5   error    'MetricsClient' is not defined                                             no-undef
+  9720:5   error    'PrismaClientInitializationError' is not defined                           no-undef
+  9721:5   error    'PrismaClientKnownRequestError' is not defined                             no-undef
+  9722:5   error    'PrismaClientRustPanicError' is not defined                                no-undef
+  9723:5   error    'PrismaClientUnknownRequestError' is not defined                           no-undef
+  9724:5   error    'PrismaClientValidationError' is not defined                               no-undef
+  9725:5   error    'Public' is not defined                                                    no-undef
+  9726:5   error    'Sql' is not defined                                                       no-undef
+  9727:5   error    'createParam' is not defined                                               no-undef
+  9728:5   error    'defineDmmfProperty' is not defined                                        no-undef
+  9729:5   error    'deserializeJsonResponse' is not defined                                   no-undef
+  9730:5   error    'deserializeRawResult' is not defined                                      no-undef
+  9731:5   error    'dmmfToRuntimeDataModel' is not defined                                    no-undef
+  9732:5   error    'empty' is not defined                                                     no-undef
+  9733:5   error    'getPrismaClient' is not defined                                           no-undef
+  9734:5   error    'getRuntime' is not defined                                                no-undef
+  9735:5   error    'join' is not defined                                                      no-undef
+  9736:5   error    'makeStrictEnum' is not defined                                            no-undef
+  9737:5   error    'makeTypedQueryFactory' is not defined                                     no-undef
+  9738:5   error    'objectEnumValues' is not defined                                          no-undef
+  9739:5   error    'raw' is not defined                                                       no-undef
+  9740:5   error    'serializeJsonQuery' is not defined                                        no-undef
+  9741:5   error    'skip' is not defined                                                      no-undef
+  9742:5   error    'sqltag' is not defined                                                    no-undef
+  9743:5   error    'warnEnvConflicts' is not defined                                          no-undef
+  9744:5   error    'warnOnce' is not defined                                                  no-undef
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/runtime/react-native.js
+    44:5   warning  'x' is assigned a value but never used                                     no-unused-vars
+    48:7   error    'globalThis' is not defined                                                no-undef
+   255:5   error    Expected method 'get' to always return a value                             getter-return
+   261:5   error    Expected method 'get' to always return a value                             getter-return
+   291:16  error    'SharedArrayBuffer' is not defined                                         no-undef
+   291:57  error    'SharedArrayBuffer' is not defined                                         no-undef
+   878:12  error    'BigInt' is not defined                                                    no-undef
+   878:25  error    'BigInt' is not defined                                                    no-undef
+   878:38  error    'BigInt' is not defined                                                    no-undef
+   887:13  error    'BigInt' is not defined                                                    no-undef
+   887:26  error    'BigInt' is not defined                                                    no-undef
+   887:40  error    'BigInt' is not defined                                                    no-undef
+   941:8   error    'BigInt' is not defined                                                    no-undef
+   941:21  error    'BigInt' is not defined                                                    no-undef
+   942:7   error    'BigInt' is not defined                                                    no-undef
+   952:8   error    'BigInt' is not defined                                                    no-undef
+   952:21  error    'BigInt' is not defined                                                    no-undef
+   953:7   error    'BigInt' is not defined                                                    no-undef
+  1042:24  error    'BigInt' is not defined                                                    no-undef
+  1050:26  error    'BigInt' is not defined                                                    no-undef
+  1050:40  error    'BigInt' is not defined                                                    no-undef
+  1064:24  error    'BigInt' is not defined                                                    no-undef
+  1072:26  error    'BigInt' is not defined                                                    no-undef
+  1072:40  error    'BigInt' is not defined                                                    no-undef
+  1085:27  error    'BigInt' is not defined                                                    no-undef
+  1085:38  error    'BigInt' is not defined                                                    no-undef
+  1088:27  error    'BigInt' is not defined                                                    no-undef
+  1088:38  error    'BigInt' is not defined                                                    no-undef
+  1172:28  error    'BigInt' is not defined                                                    no-undef
+  1172:58  error    'BigInt' is not defined                                                    no-undef
+  1175:28  error    'BigInt' is not defined                                                    no-undef
+  1175:58  error    'BigInt' is not defined                                                    no-undef
+  1177:27  warning  'i' is defined but never used                                              no-unused-vars
+  1177:30  warning  'o' is defined but never used                                              no-unused-vars
+  1318:18  error    'BigInt' is not defined                                                    no-undef
+  1318:31  error    'BigInt' is not defined                                                    no-undef
+  1318:51  error    'BigInt' is not defined                                                    no-undef
+  1318:64  error    'BigInt' is not defined                                                    no-undef
+  1342:30  error    'BigInt' is not defined                                                    no-undef
+  1960:16  warning  'e' is defined but never used                                              no-unused-vars
+  2062:1   error    'globalThis' is not defined                                                no-undef
+  2063:1   error    'globalThis' is not defined                                                no-undef
+  2066:30  error    'globalThis' is not defined                                                no-undef
+  2069:13  error    'globalThis' is not defined                                                no-undef
+  2070:13  error    'globalThis' is not defined                                                no-undef
+  2073:13  error    'globalThis' is not defined                                                no-undef
+  2104:11  error    'globalThis' is not defined                                                no-undef
+  3906:41  warning  'u' is assigned a value but never used                                     no-unused-vars
+  4232:9   error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4377:14  error    'BigInt' is not defined                                                    no-undef
+  4615:32  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4645:17  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4646:44  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4647:15  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4662:17  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4684:16  error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  4718:19  error    'h' is already defined                                                     no-redeclare
+  4726:17  error    'g' is already defined                                                     no-redeclare
+  4727:15  error    'h' is already defined                                                     no-redeclare
+  4728:15  error    'v' is already defined                                                     no-redeclare
+  4816:80  error    Unnecessary escape character: \[                                           no-useless-escape
+  7094:13  error    '$EnabledCallSite' is not defined                                          no-undef
+  7632:16  error    'globalThis' is not defined                                                no-undef
+  7633:16  error    'globalThis' is not defined                                                no-undef
+  7633:36  error    'globalThis' is not defined                                                no-undef
+  7634:16  error    'globalThis' is not defined                                                no-undef
+  7635:21  error    'globalThis' is not defined                                                no-undef
+  7636:21  error    'globalThis' is not defined                                                no-undef
+  7637:14  error    'globalThis' is not defined                                                no-undef
+  7686:46  error    Unnecessary escape character: \[                                           no-useless-escape
+  7937:23  warning  'n' is defined but never used                                              no-unused-vars
+  7938:27  error    '__PrismaProxy' is not defined                                             no-undef
+  7950:14  error    '__PrismaProxy' is not defined                                             no-undef
+  7953:14  error    '__PrismaProxy' is not defined                                             no-undef
+  7956:14  error    '__PrismaProxy' is not defined                                             no-undef
+  7964:10  warning  't' is defined but never used                                              no-unused-vars
+  7968:14  error    '__PrismaProxy' is not defined                                             no-undef
+  7971:14  error    '__PrismaProxy' is not defined                                             no-undef
+  7974:14  error    '__PrismaProxy' is not defined                                             no-undef
+  7976:13  warning  't' is defined but never used                                              no-unused-vars
+  7980:14  error    '__PrismaProxy' is not defined                                             no-undef
+  7983:14  error    '__PrismaProxy' is not defined                                             no-undef
+  7988:12  error    '__PrismaProxy' is not defined                                             no-undef
+  8015:5   warning  'z2' is assigned a value but never used                                    no-unused-vars
+  8046:18  warning  'r' is defined but never used                                              no-unused-vars
+  8207:13  error    Empty block statement                                                      no-empty
+  8213:13  error    Empty block statement                                                      no-empty
+  8378:11  error    Empty block statement                                                      no-empty
+  8389:5   warning  'a' is assigned a value but never used                                     no-unused-vars
+  8390:5   warning  'l' is assigned a value but never used                                     no-unused-vars
+  8391:5   warning  'u' is assigned a value but never used                                     no-unused-vars
+  8471:51  error    'SharedArrayBuffer' is not defined                                         no-undef
+  8627:15  error    'globalThis' is not defined                                                no-undef
+  8628:13  error    'globalThis' is not defined                                                no-undef
+  8823:14  error    'BigInt' is not defined                                                    no-undef
+  9341:35  error    'globalThis' is not defined                                                no-undef
+  9379:11  warning  'o' is assigned a value but never used                                     no-unused-vars
+  9834:5   error    'DMMF' is not defined                                                      no-undef
+  9835:5   error    'Debug' is not defined                                                     no-undef
+  9836:5   error    'Decimal' is not defined                                                   no-undef
+  9837:5   error    'Extensions' is not defined                                                no-undef
+  9838:5   error    'MetricsClient' is not defined                                             no-undef
+  9839:5   error    'PrismaClientInitializationError' is not defined                           no-undef
+  9840:5   error    'PrismaClientKnownRequestError' is not defined                             no-undef
+  9841:5   error    'PrismaClientRustPanicError' is not defined                                no-undef
+  9842:5   error    'PrismaClientUnknownRequestError' is not defined                           no-undef
+  9843:5   error    'PrismaClientValidationError' is not defined                               no-undef
+  9844:5   error    'Public' is not defined                                                    no-undef
+  9845:5   error    'Sql' is not defined                                                       no-undef
+  9846:5   error    'createParam' is not defined                                               no-undef
+  9847:5   error    'defineDmmfProperty' is not defined                                        no-undef
+  9848:5   error    'deserializeJsonResponse' is not defined                                   no-undef
+  9849:5   error    'deserializeRawResult' is not defined                                      no-undef
+  9850:5   error    'dmmfToRuntimeDataModel' is not defined                                    no-undef
+  9851:5   error    'empty' is not defined                                                     no-undef
+  9852:5   error    'getPrismaClient' is not defined                                           no-undef
+  9853:5   error    'getRuntime' is not defined                                                no-undef
+  9854:5   error    'join' is not defined                                                      no-undef
+  9855:5   error    'makeStrictEnum' is not defined                                            no-undef
+  9856:5   error    'makeTypedQueryFactory' is not defined                                     no-undef
+  9857:5   error    'objectEnumValues' is not defined                                          no-undef
+  9858:5   error    'raw' is not defined                                                       no-undef
+  9859:5   error    'serializeJsonQuery' is not defined                                        no-undef
+  9860:5   error    'skip' is not defined                                                      no-undef
+  9861:5   error    'sqltag' is not defined                                                    no-undef
+  9862:5   error    'warnEnvConflicts' is not defined                                          no-undef
+  9863:5   error    'warnOnce' is not defined                                                  no-undef
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/runtime/wasm.js
+   493:5   warning  'E' is assigned a value but never used                                     no-unused-vars
+   497:7   error    'globalThis' is not defined                                                no-undef
+   837:41  error    Expected a conditional expression and instead saw an assignment            no-cond-assign
+   874:9   error    Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+   909:3   error    'Tr' is already defined                                                    no-redeclare
+  1376:19  error    'globalThis' is not defined                                                no-undef
+  1852:16  warning  't' is defined but never used                                              no-unused-vars
+  1890:5   warning  'ju' is assigned a value but never used                                    no-unused-vars
+  1893:3   warning  'Qu' is assigned a value but never used                                    no-unused-vars
+  1895:3   warning  'Ju' is assigned a value but never used                                    no-unused-vars
+  1896:3   warning  'Gu' is assigned a value but never used                                    no-unused-vars
+  1897:3   warning  'Wu' is assigned a value but never used                                    no-unused-vars
+  1898:3   warning  'Ku' is assigned a value but never used                                    no-unused-vars
+  1903:3   warning  'Hu' is assigned a value but never used                                    no-unused-vars
+  1905:3   warning  'zu' is assigned a value but never used                                    no-unused-vars
+  1907:3   warning  'Yu' is assigned a value but never used                                    no-unused-vars
+  1908:3   warning  'Xu' is assigned a value but never used                                    no-unused-vars
+  1909:3   warning  'Zu' is assigned a value but never used                                    no-unused-vars
+  1910:3   warning  'ec' is assigned a value but never used                                    no-unused-vars
+  1911:3   warning  'tc' is assigned a value but never used                                    no-unused-vars
+  1912:3   warning  'rc' is assigned a value but never used                                    no-unused-vars
+  1913:3   warning  'nc' is assigned a value but never used                                    no-unused-vars
+  1914:3   warning  'ic' is assigned a value but never used                                    no-unused-vars
+  1915:3   warning  'oc' is assigned a value but never used                                    no-unused-vars
+  1928:1   error    'globalThis' is not defined                                                no-undef
+  1929:1   error    'globalThis' is not defined                                                no-undef
+  1932:30  error    'globalThis' is not defined                                                no-undef
+  1935:13  error    'globalThis' is not defined                                                no-undef
+  1936:13  error    'globalThis' is not defined                                                no-undef
+  1939:13  error    'globalThis' is not defined                                                no-undef
+  1963:46  warning  's' is assigned a value but never used                                     no-unused-vars
+  2314:14  error    'BigInt' is not defined                                                    no-undef
+  2499:5   warning  'Hs' is assigned a value but never used                                    no-unused-vars
+  2559:48  error    '$getTemplateParameters' is not defined                                    no-undef
+  4163:13  warning  't' is defined but never used                                              no-unused-vars
+  4166:10  warning  'jr' is defined but never used                                             no-unused-vars
+  4517:11  error    '$EnabledCallSite' is not defined                                          no-undef
+  5074:16  error    'globalThis' is not defined                                                no-undef
+  5075:16  error    'globalThis' is not defined                                                no-undef
+  5075:36  error    'globalThis' is not defined                                                no-undef
+  5076:16  error    'globalThis' is not defined                                                no-undef
+  5077:21  error    'globalThis' is not defined                                                no-undef
+  5078:21  error    'globalThis' is not defined                                                no-undef
+  5079:14  error    'globalThis' is not defined                                                no-undef
+  5331:5   warning  'SS' is assigned a value but never used                                    no-unused-vars
+  5519:13  error    Empty block statement                                                      no-empty
+  5525:13  error    Empty block statement                                                      no-empty
+  5703:18  warning  'e' is defined but never used                                              no-unused-vars
+  5706:13  warning  'e' is defined but never used                                              no-unused-vars
+  5709:17  warning  'e' is defined but never used                                              no-unused-vars
+  5709:20  warning  'r' is defined but never used                                              no-unused-vars
+  5709:23  warning  'n' is defined but never used                                              no-unused-vars
+  5712:13  warning  'e' is defined but never used                                              no-unused-vars
+  5715:13  warning  'e' is defined but never used                                              no-unused-vars
+  5715:16  warning  'r' is defined but never used                                              no-unused-vars
+  5718:18  warning  'e' is defined but never used                                              no-unused-vars
+  5718:21  warning  'r' is defined but never used                                              no-unused-vars
+  5734:11  error    Empty block statement                                                      no-empty
+  5745:5   warning  'a' is assigned a value but never used                                     no-unused-vars
+  5746:5   warning  'f' is assigned a value but never used                                     no-unused-vars
+  5747:5   warning  'h' is assigned a value but never used                                     no-unused-vars
+  5786:3   error    Unreachable code                                                           no-unreachable
+  5848:51  error    'SharedArrayBuffer' is not defined                                         no-undef
+  6006:15  error    'globalThis' is not defined                                                no-undef
+  6007:13  error    'globalThis' is not defined                                                no-undef
+  6212:14  error    'BigInt' is not defined                                                    no-undef
+  6734:35  error    'globalThis' is not defined                                                no-undef
+  6772:11  warning  'o' is assigned a value but never used                                     no-unused-vars
+  7230:5   error    'DMMF' is not defined                                                      no-undef
+  7231:5   error    'Debug' is not defined                                                     no-undef
+  7232:5   error    'Decimal' is not defined                                                   no-undef
+  7233:5   error    'Extensions' is not defined                                                no-undef
+  7234:5   error    'MetricsClient' is not defined                                             no-undef
+  7235:5   error    'PrismaClientInitializationError' is not defined                           no-undef
+  7236:5   error    'PrismaClientKnownRequestError' is not defined                             no-undef
+  7237:5   error    'PrismaClientRustPanicError' is not defined                                no-undef
+  7238:5   error    'PrismaClientUnknownRequestError' is not defined                           no-undef
+  7239:5   error    'PrismaClientValidationError' is not defined                               no-undef
+  7240:5   error    'Public' is not defined                                                    no-undef
+  7241:5   error    'Sql' is not defined                                                       no-undef
+  7242:5   error    'createParam' is not defined                                               no-undef
+  7243:5   error    'defineDmmfProperty' is not defined                                        no-undef
+  7244:5   error    'deserializeJsonResponse' is not defined                                   no-undef
+  7245:5   error    'deserializeRawResult' is not defined                                      no-undef
+  7246:5   error    'dmmfToRuntimeDataModel' is not defined                                    no-undef
+  7247:5   error    'empty' is not defined                                                     no-undef
+  7248:5   error    'getPrismaClient' is not defined                                           no-undef
+  7249:5   error    'getRuntime' is not defined                                                no-undef
+  7250:5   error    'join' is not defined                                                      no-undef
+  7251:5   error    'makeStrictEnum' is not defined                                            no-undef
+  7252:5   error    'makeTypedQueryFactory' is not defined                                     no-undef
+  7253:5   error    'objectEnumValues' is not defined                                          no-undef
+  7254:5   error    'raw' is not defined                                                       no-undef
+  7255:5   error    'serializeJsonQuery' is not defined                                        no-undef
+  7256:5   error    'skip' is not defined                                                      no-undef
+  7257:5   error    'sqltag' is not defined                                                    no-undef
+  7258:5   error    'warnEnvConflicts' is not defined                                          no-undef
+  7259:5   error    'warnOnce' is not defined                                                  no-undef
+
+/var/home/jimbo/Documents/Truckers/backend/generated/prisma/wasm.js
+   12:3   warning  'skip' is assigned a value but never used  no-unused-vars
+  554:11  warning  'target' is defined but never used         no-unused-vars
+  554:19  warning  'prop' is defined but never used           no-unused-vars
+
+/var/home/jimbo/Documents/Truckers/backend/middleware/auth.ts
+  9:1  error  Parsing error: The keyword 'interface' is reserved
+
+/var/home/jimbo/Documents/Truckers/backend/middleware/companyContext.ts
+  10:1  error  Parsing error: The keyword 'interface' is reserved
+
+/var/home/jimbo/Documents/Truckers/backend/server.js
+  56:25  warning  'next' is defined but never used  no-unused-vars
+
+/var/home/jimbo/Documents/Truckers/backend/server.ts
+  58:18  error  Parsing error: Unexpected token :
+
+/var/home/jimbo/Documents/Truckers/backend/services/erp/index.ts
+  11:8  error  Parsing error: Unexpected token interface
+
+/var/home/jimbo/Documents/Truckers/backend/services/erp/netsuite.ts
+  5:1  error  Parsing error: The keyword 'interface' is reserved
+
+/var/home/jimbo/Documents/Truckers/backend/services/erp/sap.ts
+  5:1  error  Parsing error: The keyword 'interface' is reserved
+
+/var/home/jimbo/Documents/Truckers/backend/services/qrCodeService.ts
+  20:10  error  Parsing error: Unexpected token :
+
+/var/home/jimbo/Documents/Truckers/backend/services/redis/index.js
+  20:25  warning  'options' is assigned a value but never used  no-unused-vars
+
+/var/home/jimbo/Documents/Truckers/backend/services/redis/index.ts
+  5:11  error  Parsing error: Unexpected token client
+
+/var/home/jimbo/Documents/Truckers/backend/services/scaleIntegration.ts
+  43:10  error  Parsing error: Unexpected token :
+
+/var/home/jimbo/Documents/Truckers/backend/services/telematics/geotab.ts
+  5:1  error  Parsing error: The keyword 'interface' is reserved
+
+/var/home/jimbo/Documents/Truckers/backend/services/telematics/index.ts
+  11:8  error  Parsing error: Unexpected token interface
+
+/var/home/jimbo/Documents/Truckers/backend/services/telematics/samsara.ts
+  7:29  error  Parsing error: Unexpected token implements
+
+/var/home/jimbo/Documents/Truckers/backend/services/weighTicketService.ts
+  21:13  error  Parsing error: Unexpected token :
+
+/var/home/jimbo/Documents/Truckers/backend/utils/compliance.ts
+  18:10  error  Parsing error: Unexpected token :
+
+✖ 620 problems (460 errors, 160 warnings)
+

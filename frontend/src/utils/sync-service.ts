@@ -1,7 +1,12 @@
 'use client';
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { getUnsyncedItems, markAsSynced, addToSyncQueue, processSyncQueue } from './offline-storage';
+import {
+  getUnsyncedItems,
+  markAsSynced,
+  addToSyncQueue,
+  processSyncQueue,
+} from './offline-storage';
 import { v4 as uuidv4 } from 'uuid';
 
 // Create Supabase client
@@ -11,7 +16,7 @@ const supabase = createClientComponentClient();
  * Sync all unsynced items to the server
  * @returns {Promise<{success: boolean, message: string}>} Result of the sync operation
  */
-export async function syncAllData(): Promise<{success: boolean, message: string}> {
+export async function syncAllData(): Promise<{ success: boolean; message: string }> {
   try {
     // Check if online
     if (!navigator.onLine) {
@@ -19,8 +24,11 @@ export async function syncAllData(): Promise<{success: boolean, message: string}
     }
 
     // Get current user
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
     if (userError || !user) {
       return { success: false, message: 'You must be logged in to sync data' };
     }
@@ -31,7 +39,7 @@ export async function syncAllData(): Promise<{success: boolean, message: string}
       .select('company_id')
       .eq('id', user.id)
       .single();
-    
+
     if (profileError || !userData) {
       return { success: false, message: 'Could not determine company ID' };
     }
@@ -50,7 +58,7 @@ export async function syncAllData(): Promise<{success: boolean, message: string}
     for (const weight of unsyncedWeights) {
       await addToSyncQueue('weights', 'create', {
         ...weight,
-        company_id: companyId
+        company_id: companyId,
       });
     }
 
@@ -58,25 +66,25 @@ export async function syncAllData(): Promise<{success: boolean, message: string}
     for (const load of unsyncedLoads) {
       await addToSyncQueue('loads', 'create', {
         ...load,
-        company_id: companyId
+        company_id: companyId,
       });
     }
 
     // Process sync queue
     let syncedCount = 0;
-    await processSyncQueue(async (item) => {
+    await processSyncQueue(async item => {
       try {
         // Send to server
-        const { error } = await supabase
-          .from('sync_queue')
-          .insert([{
+        const { error } = await supabase.from('sync_queue').insert([
+          {
             id: uuidv4(),
             company_id: companyId,
             table_name: item.table,
             action: item.action,
             data: item.data,
-            status: 'pending'
-          }]);
+            status: 'pending',
+          },
+        ]);
 
         if (error) {
           console.error('Error adding to server sync queue:', error);
@@ -97,15 +105,15 @@ export async function syncAllData(): Promise<{success: boolean, message: string}
       }
     });
 
-    return { 
-      success: true, 
-      message: `Successfully synced ${syncedCount} items` 
+    return {
+      success: true,
+      message: `Successfully synced ${syncedCount} items`,
     };
   } catch (error) {
     console.error('Error syncing data:', error);
-    return { 
-      success: false, 
-      message: `Error syncing data: ${error instanceof Error ? error.message : String(error)}` 
+    return {
+      success: false,
+      message: `Error syncing data: ${error instanceof Error ? error.message : String(error)}`,
     };
   }
 }
@@ -118,7 +126,7 @@ export async function hasPendingSync(): Promise<boolean> {
   try {
     const unsyncedWeights = await getUnsyncedItems('weights');
     const unsyncedLoads = await getUnsyncedItems('loads');
-    
+
     return unsyncedWeights.length > 0 || unsyncedLoads.length > 0;
   } catch (error) {
     console.error('Error checking for pending sync:', error);
@@ -134,7 +142,7 @@ export function setupAutoSync(): void {
     window.addEventListener('online', async () => {
       console.log('Back online, checking for data to sync...');
       const hasPending = await hasPendingSync();
-      
+
       if (hasPending) {
         console.log('Found pending data to sync, syncing now...');
         const result = await syncAllData();

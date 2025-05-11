@@ -17,7 +17,9 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('Missing Supabase credentials. Please check your .env file.');
-  console.error('Make sure you have NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in your .env file.');
+  console.error(
+    'Make sure you have NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in your .env file.'
+  );
   process.exit(1);
 }
 
@@ -51,47 +53,47 @@ async function setAdminUser() {
       console.log('Updated user data:', data[0]);
     } else {
       console.log('No user was updated. Please check if the user ID exists in the database.');
-      
+
       // Try to get the user to verify it exists
       const { data: userData, error: userError } = await supabase
         .from('users')
         .select('*')
         .eq('id', userId);
-      
+
       if (userError) {
         console.error('Error checking user:', userError);
       } else if (userData && userData.length > 0) {
         console.log('User exists but was not updated. Current data:', userData[0]);
-        
+
         if (userData[0].is_admin) {
           console.log('User is already an admin.');
         }
       } else {
         console.log('User does not exist in the database.');
         console.log('You may need to create the user record first.');
-        
+
         // Check if the user exists in auth but not in the users table
         const { data: authData, error: authError } = await supabase.auth.admin.getUserById(userId);
-        
+
         if (authError) {
           console.error('Error checking auth user:', authError);
         } else if (authData && authData.user) {
           console.log('User exists in auth but not in the users table.');
           console.log('Creating user record...');
-          
+
           // Create the user record
           const { data: insertData, error: insertError } = await supabase
             .from('users')
             .insert([
-              { 
-                id: userId, 
+              {
+                id: userId,
                 email: userEmail,
                 name: userEmail.split('@')[0],
-                is_admin: true
-              }
+                is_admin: true,
+              },
             ])
             .select();
-          
+
           if (insertError) {
             console.error('Error creating user record:', insertError);
           } else {

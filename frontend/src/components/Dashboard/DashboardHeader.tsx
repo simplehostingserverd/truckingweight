@@ -16,7 +16,7 @@ import {
   UserGroupIcon,
   ChartBarIcon,
   UsersIcon,
-  BuildingOfficeIcon
+  BuildingOfficeIcon,
 } from '@heroicons/react/24/outline';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { useTheme } from 'next-themes';
@@ -98,9 +98,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
             )}
 
             <div className="flex-shrink-0 flex items-center ml-2 lg:ml-0">
-              <span className="text-xl font-bold text-white">
-                CargoFlex
-              </span>
+              <span className="text-xl font-bold text-white">CargoFlex</span>
             </div>
           </div>
 
@@ -110,11 +108,12 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
               className="p-2 rounded-full bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none transition-colors duration-200"
               aria-label="Toggle dark mode"
             >
-              {mounted && (theme === 'dark' ? (
-                <SunIcon className="h-5 w-5" />
-              ) : (
-                <MoonIcon className="h-5 w-5" />
-              ))}
+              {mounted &&
+                (theme === 'dark' ? (
+                  <SunIcon className="h-5 w-5" />
+                ) : (
+                  <MoonIcon className="h-5 w-5" />
+                ))}
             </button>
 
             {/* Hide notifications on mobile */}

@@ -27,7 +27,7 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   // Ensure CSS processing is enabled
-  webpack: (config) => {
+  webpack: config => {
     config.module.rules.push({
       test: /\.css$/,
       use: ['style-loader', 'css-loader', 'postcss-loader'],

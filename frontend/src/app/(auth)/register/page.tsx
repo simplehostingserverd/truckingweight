@@ -33,7 +33,7 @@ export default function Register() {
     setTruckPosition(progress / 100);
 
     // Update scale weight based on form progress
-    setScaleWeight(Math.round(progress / 100 * 80000)); // Max weight 80,000 lbs (legal limit)
+    setScaleWeight(Math.round((progress / 100) * 80000)); // Max weight 80,000 lbs (legal limit)
   }, [name, companyName, email, password]);
 
   // Draw the truck scale animation
@@ -134,7 +134,6 @@ export default function Register() {
 
     ctx.fillStyle = '#4F46E5'; // Indigo-600
     ctx.fillRect(50, 20, (canvas.width - 100) * (formProgress / 100), 10);
-
   }, [truckPosition, scaleWeight, formProgress]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -175,17 +174,15 @@ export default function Register() {
       }
 
       // 3. Create user record with company association
-      const { error: userError } = await supabase
-        .from('users')
-        .insert([
-          {
-            id: authData.user?.id,
-            name,
-            email,
-            company_id: companyData.id,
-            is_admin: true, // First user is admin
-          },
-        ]);
+      const { error: userError } = await supabase.from('users').insert([
+        {
+          id: authData.user?.id,
+          name,
+          email,
+          company_id: companyData.id,
+          is_admin: true, // First user is admin
+        },
+      ]);
 
       if (userError) {
         throw userError;
@@ -206,10 +203,7 @@ export default function Register() {
       {/* Left side - Animated Truck Scale */}
       <div className="hidden lg:flex lg:w-1/2 relative">
         <div className="absolute inset-0 bg-gray-800 z-0"></div>
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 z-10 w-full h-full"
-        ></canvas>
+        <canvas ref={canvasRef} className="absolute inset-0 z-10 w-full h-full"></canvas>
 
         {/* Stats overlays similar to the login page */}
         <div className="absolute top-1/4 right-1/4 bg-gray-800/80 backdrop-blur-sm rounded-lg p-4 z-20 text-white">
@@ -217,7 +211,10 @@ export default function Register() {
           <div className="text-2xl font-bold">{formProgress}%</div>
           <div className="flex items-center mt-2">
             <div className="h-1 w-24 bg-gray-700 rounded-full overflow-hidden">
-              <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${formProgress}%` }}></div>
+              <div
+                className="h-full bg-indigo-500 rounded-full"
+                style={{ width: `${formProgress}%` }}
+              ></div>
             </div>
           </div>
         </div>
@@ -247,7 +244,9 @@ export default function Register() {
         <div className="w-full max-w-md">
           <div className="text-center mb-10">
             <h1 className="text-3xl font-bold text-white mb-2">Create your account 🚚</h1>
-            <p className="text-gray-400">Register your trucking company and start managing your fleet</p>
+            <p className="text-gray-400">
+              Register your trucking company and start managing your fleet
+            </p>
           </div>
 
           {error && (
@@ -269,12 +268,15 @@ export default function Register() {
                 className="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter your full name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={e => setName(e.target.value)}
               />
             </div>
 
             <div>
-              <label htmlFor="company-name" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="company-name"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Company Name
               </label>
               <input
@@ -285,12 +287,15 @@ export default function Register() {
                 className="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter your company name"
                 value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
+                onChange={e => setCompanyName(e.target.value)}
               />
             </div>
 
             <div>
-              <label htmlFor="email-address" className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="email-address"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Email Address
               </label>
               <input
@@ -302,7 +307,7 @@ export default function Register() {
                 className="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Enter your email address"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
               />
             </div>
 
@@ -319,7 +324,7 @@ export default function Register() {
                 className="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Create a strong password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
               />
             </div>
 

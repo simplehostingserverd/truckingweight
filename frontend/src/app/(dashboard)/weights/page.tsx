@@ -9,7 +9,9 @@ export default async function Weights() {
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   // Get user data
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { data: userData } = await supabase
     .from('users')
     .select('company_id')
@@ -24,7 +26,8 @@ export default async function Weights() {
   if (userData?.company_id) {
     const response = await supabase
       .from('weights')
-      .select(`
+      .select(
+        `
         id,
         weight,
         date,
@@ -33,7 +36,8 @@ export default async function Weights() {
         created_at,
         vehicles(id, name),
         drivers(id, name)
-      `)
+      `
+      )
       .eq('company_id', userData.company_id)
       .order('created_at', { ascending: false });
 
@@ -51,7 +55,7 @@ export default async function Weights() {
         status: 'Compliant',
         created_at: '2023-11-15T14:30:00Z',
         vehicles: { id: 1, name: 'Truck 101' },
-        drivers: { id: 1, name: 'John Driver' }
+        drivers: { id: 1, name: 'John Driver' },
       },
       {
         id: 2,
@@ -61,8 +65,8 @@ export default async function Weights() {
         status: 'Warning',
         created_at: '2023-11-15T11:15:00Z',
         vehicles: { id: 2, name: 'Truck 102' },
-        drivers: { id: 2, name: 'Sarah Smith' }
-      }
+        drivers: { id: 2, name: 'Sarah Smith' },
+      },
     ];
   }
 
@@ -80,8 +84,19 @@ export default async function Weights() {
             href="/weights/compliance"
             className="inline-flex items-center px-4 py-2 border border-gray-700 rounded-md shadow-sm text-sm font-medium text-gray-200 bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             Compliance Check
           </Link>
@@ -131,7 +146,7 @@ export default async function Weights() {
             </thead>
             <tbody className="bg-[#1A1A1A] divide-y divide-gray-800">
               {weights && weights.length > 0 ? (
-                weights.map((item) => (
+                weights.map(item => (
                   <tr key={item.id} className="hover:bg-gray-800/50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
                       {item.vehicles?.name || 'Unknown'}
@@ -154,10 +169,16 @@ export default async function Weights() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <Link href={`/weights/${item.id}`} className="text-blue-500 hover:text-blue-400 mr-3">
+                      <Link
+                        href={`/weights/${item.id}`}
+                        className="text-blue-500 hover:text-blue-400 mr-3"
+                      >
                         View
                       </Link>
-                      <Link href={`/weights/${item.id}/edit`} className="text-blue-500 hover:text-blue-400">
+                      <Link
+                        href={`/weights/${item.id}/edit`}
+                        className="text-blue-500 hover:text-blue-400"
+                      >
                         Edit
                       </Link>
                     </td>

@@ -88,10 +88,13 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
     const getSession = async () => {
       try {
         setIsLoading(true);
-        
+
         // Get the current session
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession();
+
         if (error) {
           throw error;
         }
@@ -111,13 +114,13 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
     getSession();
 
     // Set up the auth state change listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setIsLoading(false);
-      }
-    );
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setIsLoading(false);
+    });
 
     // Clean up the subscription
     return () => {

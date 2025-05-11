@@ -8,10 +8,7 @@ import { cookies } from 'next/headers';
  * This provides real data from the database with fallback to mock data
  */
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { route: string[] } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { route: string[] } }) {
   // In Next.js 15.3.2, we need to handle params differently to avoid the
   // "params should be awaited" error
   const routeParams = Array.isArray(params.route) ? [...params.route] : [];
@@ -27,7 +24,9 @@ export async function GET(
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
 
     // Get user data
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -82,10 +81,7 @@ export async function GET(
           return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 });
       }
     } catch (fallbackError) {
-      return NextResponse.json(
-        { error: 'Internal server error' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
   }
 }
@@ -95,7 +91,10 @@ async function getStats(supabase, isAdmin, companyId) {
   // Get counts for various entities
   let vehicleQuery = supabase.from('vehicles').select('*', { count: 'exact', head: true });
   let driverQuery = supabase.from('drivers').select('*', { count: 'exact', head: true });
-  let loadQuery = supabase.from('loads').select('*', { count: 'exact', head: true }).eq('status', 'In Transit');
+  let loadQuery = supabase
+    .from('loads')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'In Transit');
 
   // If not admin, filter by company_id
   if (!isAdmin && companyId) {
@@ -121,9 +120,7 @@ async function getStats(supabase, isAdmin, companyId) {
     .eq('status', 'Non-Compliant');
 
   // Get all weights for compliance rate calculation
-  let allWeightsQuery = supabase
-    .from('weights')
-    .select('*', { count: 'exact', head: true });
+  let allWeightsQuery = supabase.from('weights').select('*', { count: 'exact', head: true });
 
   // If not admin, filter by company_id
   if (!isAdmin && companyId) {
@@ -139,20 +136,21 @@ async function getStats(supabase, isAdmin, companyId) {
     { count: activeLoads },
     { count: weightsToday },
     { count: nonCompliantWeights },
-    { count: totalWeights }
+    { count: totalWeights },
   ] = await Promise.all([
     vehicleQuery,
     driverQuery,
     loadQuery,
     weightQuery,
     nonCompliantQuery,
-    allWeightsQuery
+    allWeightsQuery,
   ]);
 
   // Calculate compliance rate
-  const complianceRate = totalWeights > 0
-    ? Math.round(((totalWeights - nonCompliantWeights) / totalWeights) * 100)
-    : 100;
+  const complianceRate =
+    totalWeights > 0
+      ? Math.round(((totalWeights - nonCompliantWeights) / totalWeights) * 100)
+      : 100;
 
   return {
     vehicleCount: vehicleCount || 0,
@@ -160,7 +158,7 @@ async function getStats(supabase, isAdmin, companyId) {
     activeLoads: activeLoads || 0,
     weightsToday: weightsToday || 0,
     complianceRate,
-    nonCompliantWeights: nonCompliantWeights || 0
+    nonCompliantWeights: nonCompliantWeights || 0,
   };
 }
 
@@ -182,10 +180,10 @@ async function getLoadStatus(supabase, isAdmin, companyId) {
 
   // Count loads by status
   const statusCounts = {
-    'Pending': 0,
+    Pending: 0,
     'In Transit': 0,
-    'Delivered': 0,
-    'Cancelled': 0
+    Delivered: 0,
+    Cancelled: 0,
   };
 
   loads.forEach(load => {
@@ -243,9 +241,9 @@ async function getComplianceData(supabase, isAdmin, companyId, dateRange) {
 
   // Count weights by status
   const statusCounts = {
-    'Compliant': 0,
-    'Warning': 0,
-    'Non-Compliant': 0
+    Compliant: 0,
+    Warning: 0,
+    'Non-Compliant': 0,
   };
 
   weights.forEach(weight => {
@@ -285,10 +283,12 @@ async function getVehicleWeights(supabase, isAdmin, companyId, dateRange) {
   // Query to get weights with vehicle info
   let query = supabase
     .from('weights')
-    .select(`
+    .select(
+      `
       weight,
       vehicles(id, name)
-    `)
+    `
+    )
     .gte('created_at', startDateStr)
     .lte('created_at', endDateStr);
 
@@ -317,7 +317,7 @@ async function getVehicleWeights(supabase, isAdmin, companyId, dateRange) {
       if (!vehicleWeights[vehicleName]) {
         vehicleWeights[vehicleName] = {
           total: 0,
-          count: 0
+          count: 0,
         };
       }
 
@@ -330,7 +330,7 @@ async function getVehicleWeights(supabase, isAdmin, companyId, dateRange) {
   return Object.entries(vehicleWeights)
     .map(([name, data]) => ({
       name,
-      weight: Math.round(data.total / data.count)
+      weight: Math.round(data.total / data.count),
     }))
     .sort((a, b) => b.weight - a.weight)
     .slice(0, 5); // Top 5 vehicles by weight
@@ -340,7 +340,8 @@ async function getRecentWeights(supabase, isAdmin, companyId) {
   // Query to get recent weights with vehicle and driver info
   let query = supabase
     .from('weights')
-    .select(`
+    .select(
+      `
       id,
       weight,
       date,
@@ -349,7 +350,8 @@ async function getRecentWeights(supabase, isAdmin, companyId) {
       created_at,
       vehicles(id, name),
       drivers(id, name)
-    `)
+    `
+    )
     .order('created_at', { ascending: false })
     .limit(10);
 
@@ -360,7 +362,8 @@ async function getRecentWeights(supabase, isAdmin, companyId) {
     // For admin, include company info
     query = supabase
       .from('weights')
-      .select(`
+      .select(
+        `
         id,
         weight,
         date,
@@ -370,7 +373,8 @@ async function getRecentWeights(supabase, isAdmin, companyId) {
         vehicles(id, name),
         drivers(id, name),
         companies(id, name)
-      `)
+      `
+      )
       .order('created_at', { ascending: false })
       .limit(10);
   }
@@ -393,7 +397,7 @@ function getMockStats() {
     activeLoads: 5,
     weightsToday: 3,
     complianceRate: 92,
-    nonCompliantWeights: 2
+    nonCompliantWeights: 2,
   };
 }
 
@@ -402,7 +406,7 @@ function getMockLoadStatus() {
     { name: 'Pending', value: 3 },
     { name: 'In Transit', value: 2 },
     { name: 'Delivered', value: 8 },
-    { name: 'Cancelled', value: 1 }
+    { name: 'Cancelled', value: 1 },
   ];
 }
 
@@ -413,7 +417,7 @@ function getMockComplianceData(dateRange: string) {
   return [
     { name: 'Compliant', value: 42 * multiplier },
     { name: 'Warning', value: 5 * multiplier },
-    { name: 'Non-Compliant', value: 3 * multiplier }
+    { name: 'Non-Compliant', value: 3 * multiplier },
   ];
 }
 
@@ -426,7 +430,7 @@ function getMockVehicleWeights(dateRange: string) {
     { name: 'Truck 102', weight: Math.round(29800 * multiplier) },
     { name: 'Truck 103', weight: Math.round(34200 * multiplier) },
     { name: 'Truck 104', weight: Math.round(31100 * multiplier) },
-    { name: 'Truck 105', weight: Math.round(33400 * multiplier) }
+    { name: 'Truck 105', weight: Math.round(33400 * multiplier) },
   ];
 }
 
@@ -440,7 +444,7 @@ function getMockRecentWeights() {
       status: 'Compliant',
       created_at: '2023-11-15T14:30:00Z',
       vehicles: { id: 1, name: 'Truck 101' },
-      drivers: { id: 1, name: 'John Driver' }
+      drivers: { id: 1, name: 'John Driver' },
     },
     {
       id: 2,
@@ -450,7 +454,7 @@ function getMockRecentWeights() {
       status: 'Warning',
       created_at: '2023-11-15T11:15:00Z',
       vehicles: { id: 2, name: 'Truck 102' },
-      drivers: { id: 2, name: 'Sarah Smith' }
+      drivers: { id: 2, name: 'Sarah Smith' },
     },
     {
       id: 3,
@@ -460,7 +464,7 @@ function getMockRecentWeights() {
       status: 'Compliant',
       created_at: '2023-11-14T16:45:00Z',
       vehicles: { id: 3, name: 'Truck 103' },
-      drivers: { id: 1, name: 'John Driver' }
-    }
+      drivers: { id: 1, name: 'John Driver' },
+    },
   ];
 }

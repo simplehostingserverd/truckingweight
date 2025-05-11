@@ -36,7 +36,7 @@ interface MapboxTruckVisualizationProps {
 export default function MapboxTruckVisualization({
   route,
   currentPosition,
-  mapboxToken
+  mapboxToken,
 }: MapboxTruckVisualizationProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -59,7 +59,7 @@ export default function MapboxTruckVisualization({
         zoom: 12,
         pitch: 60, // Tilted view
         bearing: 0,
-        antialias: true
+        antialias: true,
       });
 
       map.current = mapInstance;
@@ -77,9 +77,9 @@ export default function MapboxTruckVisualization({
             properties: {},
             geometry: {
               type: 'LineString',
-              coordinates: route.map(point => [point.lng, point.lat])
-            }
-          }
+              coordinates: route.map(point => [point.lng, point.lat]),
+            },
+          },
         });
 
         mapInstance.addLayer({
@@ -88,13 +88,13 @@ export default function MapboxTruckVisualization({
           source: 'route',
           layout: {
             'line-join': 'round',
-            'line-cap': 'round'
+            'line-cap': 'round',
           },
           paint: {
             'line-color': '#FFC107',
             'line-width': 6,
-            'line-opacity': 0.8
-          }
+            'line-opacity': 0.8,
+          },
         });
 
         // Add start and end points
@@ -136,8 +136,7 @@ export default function MapboxTruckVisualization({
   // Add 3D truck layer using Three.js
   const addTruckLayer = (mapInstance: mapboxgl.Map) => {
     // Current truck position
-    const truckPosition = currentPosition ||
-      route[Math.floor(route.length * 0.7)]; // Default to 70% along the route
+    const truckPosition = currentPosition || route[Math.floor(route.length * 0.7)]; // Default to 70% along the route
 
     // Create a custom layer for the 3D truck
     const truckLayer = {
@@ -145,7 +144,7 @@ export default function MapboxTruckVisualization({
       type: 'custom',
       renderingMode: '3d',
 
-      onAdd: function(map: mapboxgl.Map, gl: WebGLRenderingContext) {
+      onAdd: function (map: mapboxgl.Map, gl: WebGLRenderingContext) {
         // Create Three.js scene
         this.scene = new THREE.Scene();
 
@@ -156,7 +155,7 @@ export default function MapboxTruckVisualization({
         this.renderer = new THREE.WebGLRenderer({
           canvas: map.getCanvas(),
           context: gl,
-          antialias: true
+          antialias: true,
         });
 
         this.renderer.autoClear = false;
@@ -175,10 +174,10 @@ export default function MapboxTruckVisualization({
         // Add a marker directly on the map for better visibility
         this.truckMarker = new mapboxgl.Marker({
           element: createTruckMarkerElement(),
-          scale: 0.7
+          scale: 0.7,
         })
-        .setLngLat([truckPosition.lng, truckPosition.lat])
-        .addTo(map);
+          .setLngLat([truckPosition.lng, truckPosition.lat])
+          .addTo(map);
 
         // Set up animation
         this.animationProgress = 0;
@@ -187,21 +186,21 @@ export default function MapboxTruckVisualization({
         this.routeCompleted = false; // Track if route is completed
       },
 
-      createFallbackTruck: function() {
+      createFallbackTruck: function () {
         // Create a simple truck shape if the model fails to load
         const truckGeometry = new THREE.BoxGeometry(1, 0.4, 2);
         const cabinGeometry = new THREE.BoxGeometry(0.9, 0.6, 0.7);
 
         const truckMaterial = new THREE.MeshStandardMaterial({
-          color: 0x0D2B4B, // Deep blue from the design system
+          color: 0x0d2b4b, // Deep blue from the design system
           metalness: 0.5,
-          roughness: 0.5
+          roughness: 0.5,
         });
 
         const cabinMaterial = new THREE.MeshStandardMaterial({
-          color: 0x0D2B4B, // Deep blue from the design system
+          color: 0x0d2b4b, // Deep blue from the design system
           metalness: 0.6,
-          roughness: 0.4
+          roughness: 0.4,
         });
 
         const truckBody = new THREE.Mesh(truckGeometry, truckMaterial);
@@ -241,7 +240,7 @@ export default function MapboxTruckVisualization({
         this.truck.add(rearRightWheel);
 
         // Add a subtle light to make the truck visible without the glow effect
-        const pointLight = new THREE.PointLight(0xFFC107, 0.8, 50); // Highway yellow from design system
+        const pointLight = new THREE.PointLight(0xffc107, 0.8, 50); // Highway yellow from design system
         pointLight.position.set(0, 1, 0);
         this.truck.add(pointLight);
 
@@ -251,7 +250,7 @@ export default function MapboxTruckVisualization({
         this.updateTruckPosition(truckPosition.lng, truckPosition.lat);
       },
 
-      updateTruckPosition: function(lng: number, lat: number) {
+      updateTruckPosition: function (lng: number, lat: number) {
         if (!this.truck) return;
 
         // Convert geographic coordinates to Mercator coordinates
@@ -285,7 +284,7 @@ export default function MapboxTruckVisualization({
         }
       },
 
-      render: function(gl: WebGLRenderingContext, matrix: number[]) {
+      render: function (gl: WebGLRenderingContext, matrix: number[]) {
         if (!this.truck) return;
 
         // Calculate time delta for smooth animation
@@ -321,8 +320,10 @@ export default function MapboxTruckVisualization({
         const segmentProgress = this.animationProgress * (route.length - 1) - routeIndex;
 
         // Interpolate between points
-        const currentLng = route[routeIndex].lng + (route[nextIndex].lng - route[routeIndex].lng) * segmentProgress;
-        const currentLat = route[routeIndex].lat + (route[nextIndex].lat - route[routeIndex].lat) * segmentProgress;
+        const currentLng =
+          route[routeIndex].lng + (route[nextIndex].lng - route[routeIndex].lng) * segmentProgress;
+        const currentLat =
+          route[routeIndex].lat + (route[nextIndex].lat - route[routeIndex].lat) * segmentProgress;
 
         // Update truck position
         this.updateTruckPosition(currentLng, currentLat);
@@ -344,7 +345,7 @@ export default function MapboxTruckVisualization({
         // Render the Three.js scene
         this.renderer.resetState();
         this.renderer.render(this.scene, this.camera);
-      }
+      },
     } as any;
 
     // Add the custom layer to the map
@@ -374,9 +375,16 @@ export default function MapboxTruckVisualization({
             Live Truck Tracking
           </h3>
           <div className="mt-2 text-sm text-gray-600 dark:text-gray-300 space-y-1">
-            <p><span className="font-medium">Location:</span> {currentPosition.name}</p>
-            <p><span className="font-medium">Speed:</span> {currentPosition.speed.toFixed(1)} mph</p>
-            <p><span className="font-medium">Last Update:</span> {new Date(currentPosition.timestamp).toLocaleTimeString()}</p>
+            <p>
+              <span className="font-medium">Location:</span> {currentPosition.name}
+            </p>
+            <p>
+              <span className="font-medium">Speed:</span> {currentPosition.speed.toFixed(1)} mph
+            </p>
+            <p>
+              <span className="font-medium">Last Update:</span>{' '}
+              {new Date(currentPosition.timestamp).toLocaleTimeString()}
+            </p>
           </div>
         </div>
       )}

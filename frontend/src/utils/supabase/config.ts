@@ -4,7 +4,8 @@
 // Hardcoded Supabase credentials as a fallback
 // These should match the values in your .env file
 export const SUPABASE_URL = 'https://pczfmxigimuluacspxse.supabase.co';
-export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ5MjA1NzcsImV4cCI6MjAyMDQ5NjU3N30.Rl_RVQo9Ywq7zFBGzQe8oBHRFHpjKUMmcFRFbHFiLWc';
+export const SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ5MjA1NzcsImV4cCI6MjAyMDQ5NjU3N30.Rl_RVQo9Ywq7zFBGzQe8oBHRFHpjKUMmcFRFbHFiLWc';
 
 // The JWT secret is used to sign tokens - this should match your Supabase project settings
 // This is only used on the server side and should never be exposed to the client

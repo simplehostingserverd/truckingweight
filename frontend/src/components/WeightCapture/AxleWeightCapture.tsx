@@ -3,32 +3,36 @@
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
-import { 
-  TruckIcon, 
-  ArrowPathIcon, 
+import {
+  TruckIcon,
+  ArrowPathIcon,
   CheckCircleIcon,
   XCircleIcon,
   PlusCircleIcon,
-  MinusCircleIcon
+  MinusCircleIcon,
 } from '@heroicons/react/24/outline';
 import WeightReader from './WeightReader';
 
 interface AxleWeightCaptureProps {
   scale: any;
   vehicleId: number;
-  onAxleWeightsCaptured: (axleWeights: Array<{ axleNumber: number; weight: number; axleType?: string }>) => void;
+  onAxleWeightsCaptured: (
+    axleWeights: Array<{ axleNumber: number; weight: number; axleType?: string }>
+  ) => void;
 }
 
-export default function AxleWeightCapture({ 
-  scale, 
+export default function AxleWeightCapture({
+  scale,
   vehicleId,
-  onAxleWeightsCaptured
+  onAxleWeightsCaptured,
 }: AxleWeightCaptureProps) {
   const supabase = createClientComponentClient<Database>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [axleConfiguration, setAxleConfiguration] = useState<any>(null);
-  const [axleWeights, setAxleWeights] = useState<Array<{ axleNumber: number; weight: number; axleType?: string }>>([]);
+  const [axleWeights, setAxleWeights] = useState<
+    Array<{ axleNumber: number; weight: number; axleType?: string }>
+  >([]);
   const [currentAxle, setCurrentAxle] = useState(1);
   const [completed, setCompleted] = useState(false);
 
@@ -37,41 +41,46 @@ export default function AxleWeightCapture({
     const fetchAxleConfiguration = async () => {
       try {
         setLoading(true);
-        
+
         // Get auth token from supabase
-        const { data: { session } } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
         if (!session) {
           throw new Error('No active session');
         }
-        
+
         // Fetch vehicle details
         const response = await fetch(`/api/vehicles/${vehicleId}`, {
           headers: {
-            'x-auth-token': session.access_token
-          }
+            'x-auth-token': session.access_token,
+          },
         });
-        
+
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.message || 'Failed to fetch vehicle details');
         }
-        
+
         const vehicleData = await response.json();
-        
+
         // If vehicle has axle configuration, fetch it
         if (vehicleData.axle_configuration_id) {
-          const axleConfigResponse = await fetch(`/api/axle-configurations/${vehicleData.axle_configuration_id}`, {
-            headers: {
-              'x-auth-token': session.access_token
+          const axleConfigResponse = await fetch(
+            `/api/axle-configurations/${vehicleData.axle_configuration_id}`,
+            {
+              headers: {
+                'x-auth-token': session.access_token,
+              },
             }
-          });
-          
+          );
+
           if (!axleConfigResponse.ok) {
             const errorData = await axleConfigResponse.json();
             throw new Error(errorData.message || 'Failed to fetch axle configuration');
           }
-          
+
           const axleConfigData = await axleConfigResponse.json();
           setAxleConfiguration(axleConfigData);
         } else {
@@ -79,31 +88,31 @@ export default function AxleWeightCapture({
           setAxleConfiguration({
             axle_count: 5,
             name: 'Default Configuration',
-            configuration_type: 'custom'
+            configuration_type: 'custom',
           });
         }
       } catch (error: any) {
         console.error('Error fetching axle configuration:', error);
         setError(error.message);
-        
+
         // Default to 5 axles if there's an error
         setAxleConfiguration({
           axle_count: 5,
           name: 'Default Configuration',
-          configuration_type: 'custom'
+          configuration_type: 'custom',
         });
       } finally {
         setLoading(false);
       }
     };
-    
+
     fetchAxleConfiguration();
   }, [supabase, vehicleId]);
 
   const handleAxleWeightCaptured = (weight: number) => {
     // Determine axle type based on position
     let axleType = 'unknown';
-    
+
     if (currentAxle === 1) {
       axleType = 'steering';
     } else if (currentAxle === 2 || currentAxle === 3) {
@@ -111,19 +120,19 @@ export default function AxleWeightCapture({
     } else {
       axleType = 'trailer';
     }
-    
+
     // Add the captured weight
     const newAxleWeight = {
       axleNumber: currentAxle,
       weight,
-      axleType
+      axleType,
     };
-    
+
     // Update axle weights
     setAxleWeights(prev => {
       // Check if this axle already exists
       const existingIndex = prev.findIndex(a => a.axleNumber === currentAxle);
-      
+
       if (existingIndex >= 0) {
         // Replace existing axle weight
         const newWeights = [...prev];
@@ -134,7 +143,7 @@ export default function AxleWeightCapture({
         return [...prev, newAxleWeight];
       }
     });
-    
+
     // Move to next axle if not at the end
     if (axleConfiguration && currentAxle < axleConfiguration.axle_count) {
       setCurrentAxle(currentAxle + 1);
@@ -192,31 +201,34 @@ export default function AxleWeightCapture({
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center">
           <TruckIcon className="h-6 w-6 text-primary-600 dark:text-primary-400 mr-2" />
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Axle-by-Axle Weight Capture</h2>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+            Axle-by-Axle Weight Capture
+          </h2>
         </div>
         <div className="text-sm text-gray-500 dark:text-gray-400">
-          Configuration: {axleConfiguration?.name || 'Default'} ({axleConfiguration?.axle_count || 5} axles)
+          Configuration: {axleConfiguration?.name || 'Default'} (
+          {axleConfiguration?.axle_count || 5} axles)
         </div>
       </div>
-      
+
       {/* Axle progress indicators */}
       <div className="flex justify-between mb-6 px-2">
         {Array.from({ length: axleConfiguration?.axle_count || 5 }).map((_, index) => {
           const axleNum = index + 1;
           const isCurrent = axleNum === currentAxle;
           const isCompleted = axleWeights.some(a => a.axleNumber === axleNum);
-          
+
           return (
-            <div 
-              key={axleNum} 
+            <div
+              key={axleNum}
               className={`flex flex-col items-center ${isCurrent ? 'scale-110' : ''}`}
             >
-              <div 
+              <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                  isCompleted 
-                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
-                    : isCurrent 
-                      ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 ring-2 ring-blue-500' 
+                  isCompleted
+                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                    : isCurrent
+                      ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 ring-2 ring-blue-500'
                       : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
                 }`}
               >
@@ -227,36 +239,42 @@ export default function AxleWeightCapture({
                 )}
               </div>
               <span className="text-xs mt-1 text-gray-500 dark:text-gray-400">
-                {isCompleted ? (
-                  axleWeights.find(a => a.axleNumber === axleNum)?.weight.toLocaleString() + ' lbs'
-                ) : (
-                  `Axle ${axleNum}`
-                )}
+                {isCompleted
+                  ? axleWeights.find(a => a.axleNumber === axleNum)?.weight.toLocaleString() +
+                    ' lbs'
+                  : `Axle ${axleNum}`}
               </span>
             </div>
           );
         })}
       </div>
-      
+
       {completed ? (
         <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg mb-6">
           <div className="flex items-center mb-4">
             <CheckCircleIcon className="h-8 w-8 text-green-500 dark:text-green-400 mr-3" />
-            <h3 className="text-lg font-medium text-green-800 dark:text-green-200">All Axles Captured</h3>
+            <h3 className="text-lg font-medium text-green-800 dark:text-green-200">
+              All Axles Captured
+            </h3>
           </div>
-          
+
           <div className="space-y-3 mb-6">
-            {axleWeights.map((axle) => (
-              <div key={axle.axleNumber} className="flex justify-between items-center p-3 bg-white dark:bg-gray-800 rounded-md shadow-sm">
+            {axleWeights.map(axle => (
+              <div
+                key={axle.axleNumber}
+                className="flex justify-between items-center p-3 bg-white dark:bg-gray-800 rounded-md shadow-sm"
+              >
                 <div>
                   <span className="font-medium">Axle {axle.axleNumber}</span>
-                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">({axle.axleType})</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
+                    ({axle.axleType})
+                  </span>
                 </div>
                 <span className="font-bold">{axle.weight.toLocaleString()} lbs</span>
               </div>
             ))}
           </div>
-          
+
           <div className="flex justify-between">
             <button
               onClick={handleReset}
@@ -265,7 +283,7 @@ export default function AxleWeightCapture({
               <ArrowPathIcon className="h-4 w-4 mr-2" />
               Reset
             </button>
-            
+
             <button
               onClick={handleComplete}
               className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
@@ -276,15 +294,15 @@ export default function AxleWeightCapture({
           </div>
         </div>
       ) : (
-        <WeightReader 
-          scale={scale} 
-          readingType="axle" 
+        <WeightReader
+          scale={scale}
+          readingType="axle"
           axleNumber={currentAxle}
           onWeightCaptured={handleAxleWeightCaptured}
           autoCapture={false}
         />
       )}
-      
+
       {/* Axle navigation */}
       {!completed && (
         <div className="flex justify-between mt-6">
@@ -296,9 +314,11 @@ export default function AxleWeightCapture({
             <MinusCircleIcon className="h-4 w-4 mr-2" />
             Previous Axle
           </button>
-          
+
           <button
-            onClick={() => setCurrentAxle(prev => Math.min(axleConfiguration?.axle_count || 5, prev + 1))}
+            onClick={() =>
+              setCurrentAxle(prev => Math.min(axleConfiguration?.axle_count || 5, prev + 1))
+            }
             className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
             disabled={currentAxle === (axleConfiguration?.axle_count || 5)}
           >

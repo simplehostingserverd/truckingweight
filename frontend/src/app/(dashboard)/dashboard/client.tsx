@@ -59,10 +59,7 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
       )}
 
       {/* Stats Cards */}
-      <DashboardStats
-        initialUserName={userName || 'User'}
-        companyId={selectedCompanyId}
-      />
+      <DashboardStats initialUserName={userName || 'User'} companyId={selectedCompanyId} />
 
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
@@ -92,10 +89,7 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
           </div>
           <RecentWeightsTable companyId={selectedCompanyId} />
           <div className="px-6 py-3 border-t border-gray-800">
-            <Link
-              href="/weights"
-              className="text-blue-500 hover:text-blue-400 font-medium"
-            >
+            <Link href="/weights" className="text-blue-500 hover:text-blue-400 font-medium">
               View all weights →
             </Link>
           </div>

@@ -12,7 +12,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'TruckingWeight - Precision Weighing for Modern Trucking',
-  description: 'An advanced trucking weight management system with real-time weight capture, AI analytics, and compliance features',
+  description:
+    'An advanced trucking weight management system with real-time weight capture, AI analytics, and compliance features',
   manifest: '/manifest.json',
   icons: {
     apple: [

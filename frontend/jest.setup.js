@@ -22,7 +22,7 @@ jest.mock('next/router', () => ({
 // Mock Next.js image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: (props) => {
+  default: props => {
     // eslint-disable-next-line jsx-a11y/alt-text
     return <img {...props} />;
   },
@@ -33,7 +33,9 @@ jest.mock('@supabase/supabase-js', () => {
   return {
     createClient: jest.fn(() => ({
       auth: {
-        getUser: jest.fn().mockResolvedValue({ data: { user: { id: 'test-user-id' } }, error: null }),
+        getUser: jest
+          .fn()
+          .mockResolvedValue({ data: { user: { id: 'test-user-id' } }, error: null }),
         signIn: jest.fn(),
         signOut: jest.fn(),
         onAuthStateChange: jest.fn(() => ({ data: { subscription: { unsubscribe: jest.fn() } } })),
@@ -76,19 +78,25 @@ global.IntersectionObserver = class IntersectionObserver {
   constructor(callback) {
     this.callback = callback;
   }
-  observe() { return null; }
-  unobserve() { return null; }
-  disconnect() { return null; }
+  observe() {
+    return null;
+  }
+  unobserve() {
+    return null;
+  }
+  disconnect() {
+    return null;
+  }
 };
 
 // Suppress console errors during tests
 const originalConsoleError = console.error;
 console.error = (...args) => {
   if (
-    typeof args[0] === 'string' && 
-    (args[0].includes('Warning: ReactDOM.render') || 
-     args[0].includes('Warning: React.createElement') ||
-     args[0].includes('Error: Not implemented'))
+    typeof args[0] === 'string' &&
+    (args[0].includes('Warning: ReactDOM.render') ||
+      args[0].includes('Warning: React.createElement') ||
+      args[0].includes('Error: Not implemented'))
   ) {
     return;
   }

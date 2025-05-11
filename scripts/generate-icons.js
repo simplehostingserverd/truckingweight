@@ -25,17 +25,13 @@ async function generateIcons() {
 
   for (const size of sizes) {
     // For the 512x512 size, use the detailed SVG
-    const sourceSvg = size === 512
-      ? path.join(__dirname, '../frontend/public/icons/icon-512x512.svg')
-      : inputSvg;
+    const sourceSvg =
+      size === 512 ? path.join(__dirname, '../frontend/public/icons/icon-512x512.svg') : inputSvg;
 
     const outputPath = path.join(outputDir, `icon-${size}x${size}.png`);
 
     try {
-      await sharp(sourceSvg)
-        .resize(size, size)
-        .png()
-        .toFile(outputPath);
+      await sharp(sourceSvg).resize(size, size).png().toFile(outputPath);
 
       console.log(`Created icon: ${outputPath}`);
     } catch (error) {

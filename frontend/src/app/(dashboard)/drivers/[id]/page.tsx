@@ -10,7 +10,7 @@ import {
   CalendarIcon,
   PhoneIcon,
   EnvelopeIcon,
-  TruckIcon
+  TruckIcon,
 } from '@heroicons/react/24/outline';
 import { formatDate } from '@/lib/utils';
 import { toSearchParamString } from '@/utils/searchParams';
@@ -22,7 +22,9 @@ export default async function DriverDetail({ params }: { params: { id: string } 
   const id = toSearchParamString(params.id, '');
 
   // Get user data
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { data: userData } = await supabase
     .from('users')
     .select('company_id')
@@ -32,7 +34,8 @@ export default async function DriverDetail({ params }: { params: { id: string } 
   // Get driver data
   const { data: driver, error } = await supabase
     .from('drivers')
-    .select(`
+    .select(
+      `
       *,
       weights:weights(
         id,
@@ -49,7 +52,8 @@ export default async function DriverDetail({ params }: { params: { id: string } 
         destination,
         status
       )
-    `)
+    `
+    )
     .eq('id', id)
     .eq('company_id', userData?.company_id)
     .single();
@@ -63,7 +67,8 @@ export default async function DriverDetail({ params }: { params: { id: string } 
   const recentWeights = driver.weights?.slice(0, 5) || [];
 
   // Get active loads
-  const activeLoads = driver.loads?.filter(load => load.status === 'In Transit' || load.status === 'Pending') || [];
+  const activeLoads =
+    driver.loads?.filter(load => load.status === 'In Transit' || load.status === 'Pending') || [];
 
   // Get vehicle data for weights
   const vehicleIds = recentWeights.map(weight => weight.vehicle_id).filter(Boolean);
@@ -129,13 +134,15 @@ export default async function DriverDetail({ params }: { params: { id: string } 
   };
 
   // Check if license is expired
-  const isLicenseExpired = driver.license_expiry ? new Date(driver.license_expiry) < new Date() : false;
+  const isLicenseExpired = driver.license_expiry
+    ? new Date(driver.license_expiry) < new Date()
+    : false;
 
   // Check if license is expiring soon (within 30 days)
-  const isLicenseExpiringSoon = driver.license_expiry ? (
-    !isLicenseExpired &&
-    new Date(driver.license_expiry) <= new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-  ) : false;
+  const isLicenseExpiringSoon = driver.license_expiry
+    ? !isLicenseExpired &&
+      new Date(driver.license_expiry) <= new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+    : false;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -148,7 +155,9 @@ export default async function DriverDetail({ params }: { params: { id: string } 
             <ArrowLeftIcon className="h-5 w-5" />
           </Link>
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">{driver.name}</h1>
-          <span className={`ml-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeColor(driver.status)}`}>
+          <span
+            className={`ml-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeColor(driver.status)}`}
+          >
             {driver.status}
           </span>
         </div>
@@ -177,7 +186,9 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                   </div>
                   <div className="ml-3">
                     <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Name</h3>
-                    <p className="text-base font-medium text-gray-900 dark:text-white">{driver.name}</p>
+                    <p className="text-base font-medium text-gray-900 dark:text-white">
+                      {driver.name}
+                    </p>
                   </div>
                 </div>
 
@@ -186,8 +197,12 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                     <IdentificationIcon className="h-6 w-6 text-gray-400" />
                   </div>
                   <div className="ml-3">
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">License Number</h3>
-                    <p className="text-base font-medium text-gray-900 dark:text-white">{driver.license_number}</p>
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      License Number
+                    </h3>
+                    <p className="text-base font-medium text-gray-900 dark:text-white">
+                      {driver.license_number}
+                    </p>
                   </div>
                 </div>
 
@@ -197,14 +212,18 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                       <CalendarIcon className="h-6 w-6 text-gray-400" />
                     </div>
                     <div className="ml-3">
-                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">License Expiry</h3>
-                      <p className={`text-base font-medium ${
-                        isLicenseExpired
-                          ? 'text-red-600 dark:text-red-400'
-                          : isLicenseExpiringSoon
-                          ? 'text-amber-600 dark:text-amber-400'
-                          : 'text-gray-900 dark:text-white'
-                      }`}>
+                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        License Expiry
+                      </h3>
+                      <p
+                        className={`text-base font-medium ${
+                          isLicenseExpired
+                            ? 'text-red-600 dark:text-red-400'
+                            : isLicenseExpiringSoon
+                              ? 'text-amber-600 dark:text-amber-400'
+                              : 'text-gray-900 dark:text-white'
+                        }`}
+                      >
                         {formatDate(driver.license_expiry)}
                         {isLicenseExpired && ' (Expired)'}
                         {isLicenseExpiringSoon && ' (Expiring soon)'}
@@ -219,8 +238,12 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                       <PhoneIcon className="h-6 w-6 text-gray-400" />
                     </div>
                     <div className="ml-3">
-                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Phone</h3>
-                      <p className="text-base font-medium text-gray-900 dark:text-white">{driver.phone}</p>
+                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Phone
+                      </h3>
+                      <p className="text-base font-medium text-gray-900 dark:text-white">
+                        {driver.phone}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -231,8 +254,12 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                       <EnvelopeIcon className="h-6 w-6 text-gray-400" />
                     </div>
                     <div className="ml-3">
-                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Email</h3>
-                      <p className="text-base font-medium text-gray-900 dark:text-white">{driver.email}</p>
+                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Email
+                      </h3>
+                      <p className="text-base font-medium text-gray-900 dark:text-white">
+                        {driver.email}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -268,7 +295,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                 </thead>
                 <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {recentWeights.length > 0 ? (
-                    recentWeights.map((weight) => (
+                    recentWeights.map(weight => (
                       <tr key={weight.id}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                           {formatDate(weight.date)} {weight.time}
@@ -280,12 +307,17 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                           {weight.weight} lbs
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getWeightStatusBadgeColor(weight.status)}`}>
+                          <span
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getWeightStatusBadgeColor(weight.status)}`}
+                          >
                             {weight.status}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                          <Link href={`/weights/${weight.id}`} className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
+                          <Link
+                            href={`/weights/${weight.id}`}
+                            className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300"
+                          >
                             View
                           </Link>
                         </td>
@@ -293,7 +325,10 @@ export default async function DriverDetail({ params }: { params: { id: string } 
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={5} className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                      <td
+                        colSpan={5}
+                        className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400"
+                      >
                         No weight records found
                       </td>
                     </tr>
@@ -321,11 +356,18 @@ export default async function DriverDetail({ params }: { params: { id: string } 
             <div className="p-6">
               {activeLoads.length > 0 ? (
                 <div className="space-y-4">
-                  {activeLoads.map((load) => (
-                    <div key={load.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                  {activeLoads.map(load => (
+                    <div
+                      key={load.id}
+                      className="border border-gray-200 dark:border-gray-700 rounded-lg p-4"
+                    >
                       <div className="flex justify-between items-start">
-                        <h3 className="text-sm font-medium text-gray-900 dark:text-white">{load.description}</h3>
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getLoadStatusBadgeColor(load.status)}`}>
+                        <h3 className="text-sm font-medium text-gray-900 dark:text-white">
+                          {load.description}
+                        </h3>
+                        <span
+                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getLoadStatusBadgeColor(load.status)}`}
+                        >
                           {load.status}
                         </span>
                       </div>

@@ -26,15 +26,15 @@ export const getAllVehicles = async (req: AuthenticatedRequest, res: Response) =
     // Prisma will use the RLS policies to filter by company_id
     const vehicles = await prisma.vehicles.findMany({
       orderBy: {
-        created_at: 'desc'
+        created_at: 'desc',
       },
       include: {
         companies: {
           select: {
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
 
     res.json(vehicles);
@@ -52,18 +52,18 @@ export const getAllVehicles = async (req: AuthenticatedRequest, res: Response) =
 export const getVehicleById = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { id } = req.params;
-    
+
     const vehicle = await prisma.vehicles.findUnique({
       where: {
-        id: parseInt(id)
+        id: parseInt(id),
       },
       include: {
         companies: {
           select: {
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
 
     if (!vehicle) {
@@ -109,7 +109,7 @@ export const createVehicle = async (req: AuthenticatedRequest, res: Response) =>
       length,
       telematics_id,
       eld_integration,
-      axle_configuration_id
+      axle_configuration_id,
     } = req.body;
 
     // Create new vehicle with Prisma
@@ -131,8 +131,8 @@ export const createVehicle = async (req: AuthenticatedRequest, res: Response) =>
         eld_integration: eld_integration || false,
         axle_configuration_id: axle_configuration_id ? parseInt(axle_configuration_id) : null,
         company_id: req.user?.companyId || null,
-        created_at: new Date()
-      }
+        created_at: new Date(),
+      },
     });
 
     res.status(201).json(newVehicle);

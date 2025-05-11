@@ -62,7 +62,7 @@ export class TelematicsService {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
-        where: { id: connectionId }
+        where: { id: connectionId },
       });
 
       if (!connection || connection.integration_type !== 'telematics' || !connection.is_active) {
@@ -91,19 +91,19 @@ export class TelematicsService {
       // Log the successful fetch
       await this.logTelematicsEvent(connectionId, 'fetch_vehicle_data', 'success', {
         vehicleId,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
 
       return data;
     } catch (error) {
       logger.error('Error fetching vehicle data:', error);
-      
+
       // Log the error
       await this.logTelematicsEvent(connectionId, 'fetch_vehicle_data', 'error', {
         vehicleId,
-        error: error.message
+        error: error.message,
       });
-      
+
       return null;
     }
   }
@@ -115,7 +115,7 @@ export class TelematicsService {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
-        where: { id: connectionId }
+        where: { id: connectionId },
       });
 
       if (!connection || connection.integration_type !== 'telematics' || !connection.is_active) {
@@ -144,19 +144,19 @@ export class TelematicsService {
       // Log the successful fetch
       await this.logTelematicsEvent(connectionId, 'fetch_driver_data', 'success', {
         driverId,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
 
       return data;
     } catch (error) {
       logger.error('Error fetching driver data:', error);
-      
+
       // Log the error
       await this.logTelematicsEvent(connectionId, 'fetch_driver_data', 'error', {
         driverId,
-        error: error.message
+        error: error.message,
       });
-      
+
       return null;
     }
   }
@@ -164,11 +164,15 @@ export class TelematicsService {
   /**
    * Subscribe to telematics events
    */
-  async subscribeToEvents(connectionId: string, eventTypes: string[], callbackUrl: string): Promise<boolean> {
+  async subscribeToEvents(
+    connectionId: string,
+    eventTypes: string[],
+    callbackUrl: string
+  ): Promise<boolean> {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
-        where: { id: connectionId }
+        where: { id: connectionId },
       });
 
       if (!connection || connection.integration_type !== 'telematics' || !connection.is_active) {
@@ -187,20 +191,20 @@ export class TelematicsService {
       // Log the successful subscription
       await this.logTelematicsEvent(connectionId, 'subscribe_events', 'success', {
         eventTypes,
-        callbackUrl
+        callbackUrl,
       });
 
       return true;
     } catch (error) {
       logger.error('Error subscribing to telematics events:', error);
-      
+
       // Log the error
       await this.logTelematicsEvent(connectionId, 'subscribe_events', 'error', {
         eventTypes,
         callbackUrl,
-        error: error.message
+        error: error.message,
       });
-      
+
       return false;
     }
   }
@@ -222,8 +226,8 @@ export class TelematicsService {
           event_type: eventType,
           status,
           message: `Telematics ${eventType} ${status}`,
-          details
-        }
+          details,
+        },
       });
     } catch (error) {
       logger.error('Error logging telematics event:', error);

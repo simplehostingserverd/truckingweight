@@ -5,7 +5,9 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('Error: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in environment variables');
+  console.error(
+    'Error: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in environment variables'
+  );
   process.exit(1);
 }
 
@@ -292,14 +294,16 @@ async function updateSchema() {
 
     // Ask if sample data should be inserted
     console.log('Do you want to insert sample data? (y/n)');
-    process.stdin.once('data', async (data) => {
+    process.stdin.once('data', async data => {
       const answer = data.toString().trim().toLowerCase();
 
       if (answer === 'y') {
         console.log('Inserting sample data...');
 
         // Insert sample data
-        const { error: sampleDataError } = await supabase.rpc('pgmoon.query', { query: sampleDataSQL });
+        const { error: sampleDataError } = await supabase.rpc('pgmoon.query', {
+          query: sampleDataSQL,
+        });
 
         if (sampleDataError) {
           console.error('Error inserting sample data:', sampleDataError);

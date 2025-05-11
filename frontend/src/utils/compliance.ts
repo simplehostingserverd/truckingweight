@@ -316,7 +316,7 @@ export const STATE_WEIGHT_LIMITS: Record<string, typeof FEDERAL_WEIGHT_LIMITS> =
     SINGLE_AXLE: 22000,
     TANDEM_AXLE: 38000,
     GROSS_VEHICLE_WEIGHT: 80000,
-  }
+  },
 };
 
 // Bridge formula calculation
@@ -333,7 +333,9 @@ export function calculateBridgeFormula(
 
   if (numberOfAxles <= 1) return true; // Single axle, no bridge formula applies
 
-  const maxWeight = 500 * ((distanceBetweenAxles * (numberOfAxles - 1)) / (numberOfAxles - 1) + 12 * numberOfAxles + 36);
+  const maxWeight =
+    500 *
+    ((distanceBetweenAxles * (numberOfAxles - 1)) / (numberOfAxles - 1) + 12 * numberOfAxles + 36);
 
   return weightInPounds <= maxWeight;
 }
@@ -389,9 +391,10 @@ export function determineComplianceStatus(
   }
 
   // Warning threshold (95% of limit)
-  const warningThreshold = axleType === 'GROSS_VEHICLE_WEIGHT'
-    ? FEDERAL_WEIGHT_LIMITS.GROSS_VEHICLE_WEIGHT * 0.95
-    : FEDERAL_WEIGHT_LIMITS[axleType] * 0.95;
+  const warningThreshold =
+    axleType === 'GROSS_VEHICLE_WEIGHT'
+      ? FEDERAL_WEIGHT_LIMITS.GROSS_VEHICLE_WEIGHT * 0.95
+      : FEDERAL_WEIGHT_LIMITS[axleType] * 0.95;
 
   // If weight is within 95% of the limit, issue a warning
   if (weightInPounds >= warningThreshold) {
@@ -416,9 +419,10 @@ export function getComplianceDetails(
 } {
   const weightInPounds = parseWeight(weightString);
   const federalLimit = FEDERAL_WEIGHT_LIMITS[axleType];
-  const stateLimit = stateCode && STATE_WEIGHT_LIMITS[stateCode]
-    ? STATE_WEIGHT_LIMITS[stateCode][axleType]
-    : undefined;
+  const stateLimit =
+    stateCode && STATE_WEIGHT_LIMITS[stateCode]
+      ? STATE_WEIGHT_LIMITS[stateCode][axleType]
+      : undefined;
 
   const applicableLimit = stateLimit && stateLimit < federalLimit ? stateLimit : federalLimit;
   const percentOfLimit = (weightInPounds / applicableLimit) * 100;

@@ -1,6 +1,6 @@
 /**
  * Redis Service
- * 
+ *
  * This module provides a Redis client for caching and other Redis operations.
  * It handles connection management and provides utility methods for common operations.
  */
@@ -79,11 +79,11 @@ class RedisService {
     try {
       const stringValue = JSON.stringify(value);
       await this.client.set(key, stringValue);
-      
+
       if (expireSeconds) {
         await this.client.expire(key, expireSeconds);
       }
-      
+
       return true;
     } catch (err) {
       console.error('Redis set error:', err);

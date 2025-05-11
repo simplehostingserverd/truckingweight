@@ -25,7 +25,7 @@ interface DeckGLTruckVisualizationProps {
 export default function DeckGLTruckVisualization({
   route,
   currentPosition,
-  mapboxToken
+  mapboxToken,
 }: DeckGLTruckVisualizationProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -51,7 +51,7 @@ export default function DeckGLTruckVisualization({
         center: [truckPosition.lng, truckPosition.lat],
         zoom: 12,
         pitch: 45,
-        bearing: 0
+        bearing: 0,
       });
 
       mapRef.current = map;
@@ -70,7 +70,7 @@ export default function DeckGLTruckVisualization({
               center: [viewState.longitude, viewState.latitude],
               zoom: viewState.zoom,
               bearing: viewState.bearing,
-              pitch: viewState.pitch
+              pitch: viewState.pitch,
             });
           },
           views: [new MapView({ id: 'map' })],
@@ -79,7 +79,7 @@ export default function DeckGLTruckVisualization({
             latitude: truckPosition.lat,
             zoom: 12,
             pitch: 45,
-            bearing: 0
+            bearing: 0,
           },
           layers: [
             // Route path layer
@@ -88,8 +88,8 @@ export default function DeckGLTruckVisualization({
               data: [
                 {
                   path: route.map(point => [point.lng, point.lat]),
-                  name: 'Truck Route'
-                }
+                  name: 'Truck Route',
+                },
               ],
               getPath: d => d.path,
               getColor: [255, 193, 7], // Yellow
@@ -97,7 +97,7 @@ export default function DeckGLTruckVisualization({
               widthMinPixels: 4,
               widthMaxPixels: 10,
               rounded: true,
-              pickable: true
+              pickable: true,
             }),
 
             // Start and end point layers
@@ -106,18 +106,18 @@ export default function DeckGLTruckVisualization({
               data: [
                 {
                   position: [route[0].lng, route[0].lat],
-                  name: 'Start: ' + route[0].name
-                }
+                  name: 'Start: ' + route[0].name,
+                },
               ],
               getPosition: d => d.position,
               getIcon: d => ({
                 url: '/icons/start-marker.svg',
                 width: 128,
                 height: 128,
-                anchorY: 128
+                anchorY: 128,
               }),
               getSize: 48,
-              pickable: true
+              pickable: true,
             }),
 
             new IconLayer({
@@ -125,18 +125,18 @@ export default function DeckGLTruckVisualization({
               data: [
                 {
                   position: [route[route.length - 1].lng, route[route.length - 1].lat],
-                  name: 'Destination: ' + route[route.length - 1].name
-                }
+                  name: 'Destination: ' + route[route.length - 1].name,
+                },
               ],
               getPosition: d => d.position,
               getIcon: d => ({
                 url: '/icons/end-marker.svg',
                 width: 128,
                 height: 128,
-                anchorY: 128
+                anchorY: 128,
               }),
               getSize: 48,
-              pickable: true
+              pickable: true,
             }),
 
             // 3D truck layer - with fallback
@@ -148,8 +148,8 @@ export default function DeckGLTruckVisualization({
                     {
                       position: [truckPosition.lng, truckPosition.lat],
                       orientation: calculateTruckOrientation(truckPosition, route),
-                      name: 'Truck'
-                    }
+                      name: 'Truck',
+                    },
                   ],
                   scenegraph: '/models/simple-truck.json',
                   sizeScale: 30,
@@ -157,7 +157,7 @@ export default function DeckGLTruckVisualization({
                   getOrientation: d => d.orientation,
                   getTranslation: [0, 0, 0],
                   getScale: [1, 1, 1],
-                  pickable: true
+                  pickable: true,
                 });
               } catch (modelError) {
                 console.error('Failed to load 3D truck model, using fallback:', modelError);
@@ -166,7 +166,7 @@ export default function DeckGLTruckVisualization({
                   calculateTruckOrientation(truckPosition, route)
                 );
               }
-            })()
+            })(),
           ],
           onLoad: () => {
             setLoading(false);
@@ -175,7 +175,7 @@ export default function DeckGLTruckVisualization({
             console.error('Deck.gl error:', err);
             setError(err.message || 'Failed to initialize 3D visualization');
             setLoading(false);
-          }
+          },
         });
 
         deckRef.current = deck;
@@ -203,9 +203,7 @@ export default function DeckGLTruckVisualization({
     routePoints: RoutePoint[]
   ): [number, number, number] => {
     // Find position in route
-    const index = routePoints.findIndex(
-      p => p.lng === position.lng && p.lat === position.lat
-    );
+    const index = routePoints.findIndex(p => p.lng === position.lng && p.lat === position.lat);
 
     if (index > 0 && index < routePoints.length - 1) {
       const prevPoint = routePoints[index - 1];
@@ -227,7 +225,10 @@ export default function DeckGLTruckVisualization({
   };
 
   // Create a fallback truck layer using simple shapes
-  const createFallbackTruckLayer = (position: [number, number], _orientation: [number, number, number]) => {
+  const createFallbackTruckLayer = (
+    position: [number, number],
+    _orientation: [number, number, number]
+  ) => {
     // Create a simple truck shape using a polygon layer
     return new PolygonLayer({
       id: 'fallback-truck-layer',
@@ -238,11 +239,11 @@ export default function DeckGLTruckVisualization({
             [position[0] - 0.0005, position[1] - 0.0005],
             [position[0] + 0.0005, position[1] - 0.0005],
             [position[0] + 0.0005, position[1] + 0.0005],
-            [position[0] - 0.0005, position[1] + 0.0005]
+            [position[0] - 0.0005, position[1] + 0.0005],
           ],
           position: position,
-          name: 'Truck'
-        }
+          name: 'Truck',
+        },
       ],
       getPolygon: d => d.contour,
       getFillColor: [255, 0, 0, 200],
@@ -250,7 +251,7 @@ export default function DeckGLTruckVisualization({
       getLineWidth: 1,
       extruded: true,
       getElevation: 100,
-      pickable: true
+      pickable: true,
     });
   };
 
@@ -269,8 +270,8 @@ export default function DeckGLTruckVisualization({
             {
               position: [currentPosition.lng, currentPosition.lat],
               orientation: calculateTruckOrientation(currentPosition, route),
-              name: 'Truck'
-            }
+              name: 'Truck',
+            },
           ],
           scenegraph: '/models/simple-truck.json',
           sizeScale: 30,
@@ -278,7 +279,7 @@ export default function DeckGLTruckVisualization({
           getOrientation: d => d.orientation,
           getTranslation: [0, 0, 0],
           getScale: [1, 1, 1],
-          pickable: true
+          pickable: true,
         });
       } catch (modelError) {
         console.error('Failed to load 3D truck model, using fallback:', modelError);
@@ -292,22 +293,24 @@ export default function DeckGLTruckVisualization({
       const currentLayers = deckRef.current.props.layers;
 
       // Create new layers array with updated truck layer
-      const newLayers = Array.isArray(currentLayers) ? currentLayers.map(layer => {
-        if (layer && typeof layer === 'object' && 'id' in layer && layer.id === 'truck-layer') {
-          return truckLayer;
-        }
-        return layer;
-      }) : [truckLayer];
+      const newLayers = Array.isArray(currentLayers)
+        ? currentLayers.map(layer => {
+            if (layer && typeof layer === 'object' && 'id' in layer && layer.id === 'truck-layer') {
+              return truckLayer;
+            }
+            return layer;
+          })
+        : [truckLayer];
 
       // Update the deck.gl layers
       deckRef.current.setProps({
-        layers: newLayers
+        layers: newLayers,
       });
 
       // Update the map view to focus on the truck
       mapRef.current.flyTo({
         center: [currentPosition.lng, currentPosition.lat],
-        essential: true
+        essential: true,
       });
     } catch (err) {
       console.error('Error updating truck position:', err);

@@ -64,14 +64,7 @@ exports.createDriver = async (req, res) => {
   }
 
   try {
-    const {
-      name,
-      license_number,
-      license_expiry,
-      phone,
-      email,
-      status
-    } = req.body;
+    const { name, license_number, license_expiry, phone, email, status } = req.body;
 
     // Create new driver
     const { data: newDriver, error } = await supabase
@@ -85,8 +78,8 @@ exports.createDriver = async (req, res) => {
           email,
           status: status || 'Active',
           company_id: req.user.companyId,
-          created_at: new Date().toISOString()
-        }
+          created_at: new Date().toISOString(),
+        },
       ])
       .select()
       .single();
@@ -130,7 +123,7 @@ exports.updateDriver = async (req, res) => {
       .from('drivers')
       .update({
         ...req.body,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', req.params.id)
       .eq('company_id', req.user.companyId)

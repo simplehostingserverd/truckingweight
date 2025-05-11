@@ -23,31 +23,33 @@ npm run update-deps
 
 ### 2. File Structure Migration
 
-| Pages Router | App Router |
-|--------------|------------|
-| `/pages/index.js` | `/app/page.tsx` |
-| `/pages/about.js` | `/app/about/page.tsx` |
-| `/pages/blog/[slug].js` | `/app/blog/[slug]/page.tsx` |
-| `/pages/_app.js` | `/app/layout.tsx` |
-| `/pages/_document.js` | (No direct equivalent - handled by App Router) |
-| `/pages/api/*` | `/app/api/*` (API Routes remain similar) |
+| Pages Router            | App Router                                     |
+| ----------------------- | ---------------------------------------------- |
+| `/pages/index.js`       | `/app/page.tsx`                                |
+| `/pages/about.js`       | `/app/about/page.tsx`                          |
+| `/pages/blog/[slug].js` | `/app/blog/[slug]/page.tsx`                    |
+| `/pages/_app.js`        | `/app/layout.tsx`                              |
+| `/pages/_document.js`   | (No direct equivalent - handled by App Router) |
+| `/pages/api/*`          | `/app/api/*` (API Routes remain similar)       |
 
 ### 3. Component Migration
 
 #### Server Components (Default)
 
 Server Components are the default in App Router. They:
+
 - Cannot use hooks or browser APIs
 - Can directly fetch data
 - Are not interactive
 
 Example:
+
 ```tsx
 // app/page.tsx
 export default async function Page() {
   // This runs on the server
   const data = await fetchData();
-  
+
   return <div>{data.title}</div>;
 }
 ```
@@ -63,24 +65,21 @@ import { useState } from 'react';
 
 export default function Counter() {
   const [count, setCount] = useState(0);
-  
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  );
+
+  return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;
 }
 ```
 
 ### 4. Data Fetching
 
 #### Pages Router:
+
 ```tsx
 // pages/index.js
 export async function getServerSideProps() {
   const res = await fetch('https://api.example.com/data');
   const data = await res.json();
-  
+
   return { props: { data } };
 }
 
@@ -90,12 +89,13 @@ export default function Home({ data }) {
 ```
 
 #### App Router:
+
 ```tsx
 // app/page.tsx
 export default async function Home() {
   const res = await fetch('https://api.example.com/data');
   const data = await res.json();
-  
+
   return <div>{data.title}</div>;
 }
 ```
@@ -104,11 +104,7 @@ export default async function Home() {
 
 ```tsx
 // app/layout.tsx
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>{children}</body>
@@ -143,18 +139,15 @@ import { useRouter } from 'next/navigation'; // Note: 'navigation', not 'router'
 
 export default function NavigationButton() {
   const router = useRouter();
-  
-  return (
-    <button onClick={() => router.push('/dashboard')}>
-      Go to Dashboard
-    </button>
-  );
+
+  return <button onClick={() => router.push('/dashboard')}>Go to Dashboard</button>;
 }
 ```
 
 ## Testing Your Migration
 
 1. Run the development server:
+
    ```bash
    npm run dev
    ```

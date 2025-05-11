@@ -50,17 +50,17 @@ export class SapService implements ErpProvider {
           grant_type: 'password',
           client_id: this.credentials.clientId,
           username: this.credentials.username,
-          password: this.credentials.password
+          password: this.credentials.password,
         },
         {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
         }
       );
 
       this.token = response.data.access_token;
-      
+
       // Set token expiry (typically 1 hour)
       const expiresIn = response.data.expires_in || 3600;
       this.tokenExpiry = new Date(Date.now() + expiresIn * 1000);
@@ -81,9 +81,9 @@ export class SapService implements ErpProvider {
     try {
       const url = `${this.credentials?.baseUrl}${endpoint}`;
       const headers = {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        Accept: 'application/json',
       };
 
       // Add API key if available
@@ -108,14 +108,14 @@ export class SapService implements ErpProvider {
       if (error.response && error.response.status === 401) {
         this.token = null;
         this.tokenExpiry = null;
-        
+
         const newToken = await this.authenticate();
-        
+
         const url = `${this.credentials?.baseUrl}${endpoint}`;
         const headers = {
-          'Authorization': `Bearer ${newToken}`,
+          Authorization: `Bearer ${newToken}`,
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          Accept: 'application/json',
         };
 
         // Add API key if available
@@ -162,12 +162,12 @@ export class SapService implements ErpProvider {
             city: customer.CityName,
             state: customer.Region,
             zip: customer.PostalCode,
-            country: customer.Country
+            country: customer.Country,
           },
           phone: customer.PhoneNumber,
           email: customer.EmailAddress,
-          taxId: customer.TaxNumber
-        }
+          taxId: customer.TaxNumber,
+        },
       }));
     } catch (error) {
       logger.error('Error fetching customers from SAP:', error);
@@ -201,15 +201,17 @@ export class SapService implements ErpProvider {
           amount: invoice.TotalNetAmount,
           currency: invoice.TransactionCurrency,
           status: invoice.BillingDocumentIsCancelled ? 'Cancelled' : 'Active',
-          items: invoice.to_Item ? invoice.to_Item.results.map(item => ({
-            id: item.BillingDocumentItem,
-            description: item.BillingDocumentItemText,
-            quantity: item.Quantity,
-            unit: item.QuantityUnit,
-            price: item.NetAmount,
-            currency: item.TransactionCurrency
-          })) : []
-        }
+          items: invoice.to_Item
+            ? invoice.to_Item.results.map(item => ({
+                id: item.BillingDocumentItem,
+                description: item.BillingDocumentItemText,
+                quantity: item.Quantity,
+                unit: item.QuantityUnit,
+                price: item.NetAmount,
+                currency: item.TransactionCurrency,
+              }))
+            : [],
+        },
       }));
     } catch (error) {
       logger.error('Error fetching invoices from SAP:', error);
@@ -234,13 +236,17 @@ export class SapService implements ErpProvider {
             BillingDocumentItemText: item.description,
             Quantity: item.quantity,
             QuantityUnit: item.unit || 'EA',
-            NetAmount: item.amount
-          }))
-        }
+            NetAmount: item.amount,
+          })),
+        },
       };
 
       // Call SAP API to create invoice
-      const response = await this.callApi('/API_BILLING_DOCUMENT/A_BillingDocument', 'POST', sapInvoice);
+      const response = await this.callApi(
+        '/API_BILLING_DOCUMENT/A_BillingDocument',
+        'POST',
+        sapInvoice
+      );
 
       // Transform the response to our standard format
       return {
@@ -253,8 +259,8 @@ export class SapService implements ErpProvider {
           dueDate: response.PaymentDueDate,
           amount: response.TotalNetAmount,
           currency: response.TransactionCurrency,
-          status: 'Active'
-        }
+          status: 'Active',
+        },
       };
     } catch (error) {
       logger.error('Error creating invoice in SAP:', error);
@@ -279,7 +285,7 @@ export class SapService implements ErpProvider {
         VehicleID: ticketData.vehicles?.id,
         DriverID: ticketData.drivers?.id,
         MaterialDescription: ticketData.cargo?.[0]?.description || 'General Cargo',
-        Notes: ticketData.notes
+        Notes: ticketData.notes,
       };
 
       // Call SAP API to sync weigh ticket (custom endpoint)
@@ -295,8 +301,8 @@ export class SapService implements ErpProvider {
           sapId: response.WeighTicketID,
           status: response.Status,
           documentId: response.RelatedDocument,
-          syncDate: new Date().toISOString()
-        }
+          syncDate: new Date().toISOString(),
+        },
       };
     } catch (error) {
       logger.error('Error syncing weigh ticket to SAP:', error);

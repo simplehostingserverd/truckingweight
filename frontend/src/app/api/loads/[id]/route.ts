@@ -6,10 +6,7 @@ import { toSearchParamString } from '@/utils/searchParams';
  * This provides temporary mock data while the backend is being developed
  */
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   // Safely convert the ID parameter to a string
   const id = toSearchParamString(params.id, '1');
 
@@ -33,19 +30,16 @@ export async function GET(
       route_details: JSON.stringify({
         waypoints: [
           { lat: 41.8781, lng: -87.6298, name: 'Chicago, IL' },
-          { lat: 43.0389, lng: -87.9065, name: 'Milwaukee, WI' }
+          { lat: 43.0389, lng: -87.9065, name: 'Milwaukee, WI' },
         ],
         totalDistance: 92,
-        totalDuration: 105
+        totalDuration: 105,
       }),
       vehicles: { id: 1, name: 'Truck 101', license_plate: 'ABC-1234' },
-      drivers: { id: 1, name: 'John Driver', license_number: 'DL12345678' }
+      drivers: { id: 1, name: 'John Driver', license_number: 'DL12345678' },
     });
   } catch (error) {
     console.error(`Error in mock load API:`, error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

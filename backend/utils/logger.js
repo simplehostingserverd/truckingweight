@@ -42,25 +42,25 @@ const logger = winston.createLogger({
   transports: [
     // Write logs to console
     new winston.transports.Console({
-      format: consoleFormat
+      format: consoleFormat,
     }),
     // Write all logs with level 'error' and below to error.log
     new winston.transports.File({
       filename: path.join(logsDir, 'error.log'),
-      level: 'error'
+      level: 'error',
     }),
     // Write all logs to combined.log
     new winston.transports.File({
-      filename: path.join(logsDir, 'combined.log')
-    })
-  ]
+      filename: path.join(logsDir, 'combined.log'),
+    }),
+  ],
 });
 
 // Add stream for Morgan HTTP logger
 logger.stream = {
-  write: (message) => {
+  write: message => {
     logger.info(message.trim());
-  }
+  },
 };
 
 module.exports = logger;

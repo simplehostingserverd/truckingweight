@@ -14,18 +14,21 @@ exports.getDashboardData = async (req, res) => {
       { count: vehicleCount, error: vehicleError },
       { count: driverCount, error: driverError },
       { count: weightCount, error: weightError },
-      { count: loadCount, error: loadError }
+      { count: loadCount, error: loadError },
     ] = await Promise.all([
       supabase.from('users').select('*', { count: 'exact', head: true }),
       supabase.from('companies').select('*', { count: 'exact', head: true }),
       supabase.from('vehicles').select('*', { count: 'exact', head: true }),
       supabase.from('drivers').select('*', { count: 'exact', head: true }),
       supabase.from('weights').select('*', { count: 'exact', head: true }),
-      supabase.from('loads').select('*', { count: 'exact', head: true })
+      supabase.from('loads').select('*', { count: 'exact', head: true }),
     ]);
 
     if (userError || companyError || vehicleError || driverError || weightError || loadError) {
-      console.error('Error fetching dashboard data:', userError || companyError || vehicleError || driverError || weightError || loadError);
+      console.error(
+        'Error fetching dashboard data:',
+        userError || companyError || vehicleError || driverError || weightError || loadError
+      );
       return res.status(500).json({ msg: 'Server error' });
     }
 
@@ -70,9 +73,12 @@ exports.getDashboardData = async (req, res) => {
     const warningCount = complianceStats.filter(w => w.status === 'Warning').length;
     const nonCompliantCount = complianceStats.filter(w => w.status === 'Non-Compliant').length;
 
-    const compliancePercentage = totalWeights > 0 ? Math.round((compliantCount / totalWeights) * 100) : 0;
-    const warningPercentage = totalWeights > 0 ? Math.round((warningCount / totalWeights) * 100) : 0;
-    const nonCompliantPercentage = totalWeights > 0 ? Math.round((nonCompliantCount / totalWeights) * 100) : 0;
+    const compliancePercentage =
+      totalWeights > 0 ? Math.round((compliantCount / totalWeights) * 100) : 0;
+    const warningPercentage =
+      totalWeights > 0 ? Math.round((warningCount / totalWeights) * 100) : 0;
+    const nonCompliantPercentage =
+      totalWeights > 0 ? Math.round((nonCompliantCount / totalWeights) * 100) : 0;
 
     res.json({
       counts: {
@@ -81,15 +87,15 @@ exports.getDashboardData = async (req, res) => {
         vehicles: vehicleCount,
         drivers: driverCount,
         weights: weightCount,
-        loads: loadCount
+        loads: loadCount,
       },
       recentUsers,
       recentWeights,
       compliance: {
         compliant: compliancePercentage,
         warning: warningPercentage,
-        nonCompliant: nonCompliantPercentage
-      }
+        nonCompliant: nonCompliantPercentage,
+      },
     });
   } catch (err) {
     console.error(err.message);
@@ -161,8 +167,8 @@ exports.createUser = async (req, res) => {
           email,
           password: hashedPassword,
           company_id: companyId,
-          is_admin: isAdmin
-        }
+          is_admin: isAdmin,
+        },
       ])
       .select()
       .single();
@@ -208,7 +214,7 @@ exports.updateUser = async (req, res) => {
       email: email || existingUser.email,
       company_id: companyId || existingUser.company_id,
       is_admin: isAdmin !== undefined ? isAdmin : existingUser.is_admin,
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     };
 
     // If password is provided, hash it
@@ -259,10 +265,7 @@ exports.deleteUser = async (req, res) => {
     }
 
     // Delete user
-    const { error } = await supabase
-      .from('users')
-      .delete()
-      .eq('id', req.params.id);
+    const { error } = await supabase.from('users').delete().eq('id', req.params.id);
 
     if (error) {
       console.error('Error deleting user:', error);
@@ -284,7 +287,8 @@ exports.getWeightReports = async (req, res) => {
     // Get weight data with aggregations
     const { data: weights, error } = await supabase
       .from('weights')
-      .select(`
+      .select(
+        `
         id,
         weight,
         date,
@@ -292,7 +296,8 @@ exports.getWeightReports = async (req, res) => {
         company_id,
         vehicles(id, name),
         drivers(id, name)
-      `)
+      `
+      )
       .order('date', { ascending: false });
 
     if (error) {
@@ -327,7 +332,7 @@ exports.getWeightReports = async (req, res) => {
           total: 0,
           compliant: 0,
           nonCompliant: 0,
-          weights: []
+          weights: [],
         };
       }
 
@@ -343,7 +348,7 @@ exports.getWeightReports = async (req, res) => {
 
     res.json({
       weightsByCompany,
-      totalWeights: weights.length
+      totalWeights: weights.length,
     });
   } catch (err) {
     console.error(err.message);
@@ -359,7 +364,8 @@ exports.getLoadReports = async (req, res) => {
     // Get load data with aggregations
     const { data: loads, error } = await supabase
       .from('loads')
-      .select(`
+      .select(
+        `
         id,
         description,
         origin,
@@ -371,7 +377,8 @@ exports.getLoadReports = async (req, res) => {
         company_id,
         vehicles(id, name),
         drivers(id, name)
-      `)
+      `
+      )
       .order('pickup_date', { ascending: false });
 
     if (error) {
@@ -407,7 +414,7 @@ exports.getLoadReports = async (req, res) => {
           pending: 0,
           inTransit: 0,
           delivered: 0,
-          loads: []
+          loads: [],
         };
       }
 
@@ -425,7 +432,7 @@ exports.getLoadReports = async (req, res) => {
 
     res.json({
       loadsByCompany,
-      totalLoads: loads.length
+      totalLoads: loads.length,
     });
   } catch (err) {
     console.error(err.message);
@@ -441,7 +448,8 @@ exports.getComplianceReports = async (req, res) => {
     // Get weight data for compliance analysis
     const { data: weights, error } = await supabase
       .from('weights')
-      .select(`
+      .select(
+        `
         id,
         weight,
         date,
@@ -449,7 +457,8 @@ exports.getComplianceReports = async (req, res) => {
         company_id,
         vehicles(id, name),
         drivers(id, name)
-      `)
+      `
+      )
       .order('date', { ascending: false });
 
     if (error) {
@@ -484,7 +493,7 @@ exports.getComplianceReports = async (req, res) => {
           total: 0,
           compliant: 0,
           warning: 0,
-          nonCompliant: 0
+          nonCompliant: 0,
         };
       }
 
@@ -503,7 +512,8 @@ exports.getComplianceReports = async (req, res) => {
       const data = complianceByCompany[company];
       data.complianceRate = data.total > 0 ? Math.round((data.compliant / data.total) * 100) : 0;
       data.warningRate = data.total > 0 ? Math.round((data.warning / data.total) * 100) : 0;
-      data.nonComplianceRate = data.total > 0 ? Math.round((data.nonCompliant / data.total) * 100) : 0;
+      data.nonComplianceRate =
+        data.total > 0 ? Math.round((data.nonCompliant / data.total) * 100) : 0;
     });
 
     res.json({
@@ -513,8 +523,8 @@ exports.getComplianceReports = async (req, res) => {
         total: weights.length,
         compliant: weights.filter(w => w.status === 'Compliant').length,
         warning: weights.filter(w => w.status === 'Warning').length,
-        nonCompliant: weights.filter(w => w.status === 'Non-Compliant').length
-      }
+        nonCompliant: weights.filter(w => w.status === 'Non-Compliant').length,
+      },
     });
   } catch (err) {
     console.error(err.message);
@@ -530,7 +540,10 @@ exports.exportData = async (req, res) => {
     const { type } = req.params;
     const { entity, format } = req.query;
 
-    if (!entity || !['weights', 'loads', 'vehicles', 'drivers', 'users', 'companies'].includes(entity)) {
+    if (
+      !entity ||
+      !['weights', 'loads', 'vehicles', 'drivers', 'users', 'companies'].includes(entity)
+    ) {
       return res.status(400).json({ msg: 'Invalid entity type' });
     }
 
@@ -554,7 +567,7 @@ exports.exportData = async (req, res) => {
     // and set the appropriate headers for file download
     res.json({
       message: `Export of ${entity} as ${format} would be generated here`,
-      data
+      data,
     });
 
     // Example of how you might implement CSV export:
@@ -568,7 +581,6 @@ exports.exportData = async (req, res) => {
       return res.status(200).send(csv);
     }
     */
-
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

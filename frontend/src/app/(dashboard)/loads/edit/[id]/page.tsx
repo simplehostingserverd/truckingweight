@@ -27,57 +27,59 @@ export default function EditLoad({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       try {
         // Get session
-        const { data: { session } } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
         if (!session) {
           router.push('/login');
           return;
         }
-        
+
         // Get user data
         const { data: userData, error: userError } = await supabase
           .from('users')
           .select('company_id')
           .eq('id', session.user.id)
           .single();
-        
+
         if (userError) {
           throw userError;
         }
-        
+
         // Get load data
         const { data: loadData, error: loadError } = await supabase
           .from('loads')
           .select('*')
           .eq('id', id)
           .single();
-        
+
         if (loadError) {
           throw loadError;
         }
-        
+
         // Get vehicles
         const { data: vehiclesData, error: vehiclesError } = await supabase
           .from('vehicles')
           .select('id, name, type, license_plate')
           .eq('company_id', userData.company_id)
           .order('name');
-        
+
         if (vehiclesError) {
           throw vehiclesError;
         }
-        
+
         // Get drivers
         const { data: driversData, error: driversError } = await supabase
           .from('drivers')
           .select('id, name, license_number')
           .eq('company_id', userData.company_id)
           .order('name');
-        
+
         if (driversError) {
           throw driversError;
         }
-        
+
         // Set form data
         setDescription(loadData.description || '');
         setOrigin(loadData.origin || '');
@@ -86,10 +88,9 @@ export default function EditLoad({ params }: { params: { id: string } }) {
         setVehicleId(loadData.vehicle_id?.toString() || '');
         setDriverId(loadData.driver_id?.toString() || '');
         setStatus(loadData.status || '');
-        
+
         setVehicles(vehiclesData || []);
         setDrivers(driversData || []);
-        
       } catch (err: any) {
         console.error('Error fetching data:', err);
         setError('Failed to load data');
@@ -97,7 +98,7 @@ export default function EditLoad({ params }: { params: { id: string } }) {
         setIsLoadingData(false);
       }
     };
-    
+
     fetchData();
   }, [id, router, supabase]);
 
@@ -121,11 +122,11 @@ export default function EditLoad({ params }: { params: { id: string } }) {
           updated_at: new Date().toISOString(),
         })
         .eq('id', id);
-      
+
       if (loadError) {
         throw loadError;
       }
-      
+
       // Redirect to load detail
       router.push(`/loads/${id}`);
     } catch (err: any) {
@@ -149,7 +150,7 @@ export default function EditLoad({ params }: { params: { id: string } }) {
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Edit Load</h1>
-          
+
           <Link
             href={`/loads/${id}`}
             className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
@@ -157,27 +158,28 @@ export default function EditLoad({ params }: { params: { id: string } }) {
             Cancel
           </Link>
         </div>
-        
+
         {error && (
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30 mb-6">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
-                  {error}
-                </h3>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{error}</h3>
               </div>
             </div>
           </div>
         )}
-        
+
         <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
           <div className="px-6 py-4 bg-primary-700 text-white">
             <h2 className="text-xl font-semibold">Load Information</h2>
           </div>
-          
+
           <form className="p-6 space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Description
               </label>
               <input
@@ -187,13 +189,16 @@ export default function EditLoad({ params }: { params: { id: string } }) {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={e => setDescription(e.target.value)}
               />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="origin" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label
+                  htmlFor="origin"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
                   Origin
                 </label>
                 <input
@@ -203,12 +208,15 @@ export default function EditLoad({ params }: { params: { id: string } }) {
                   required
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   value={origin}
-                  onChange={(e) => setOrigin(e.target.value)}
+                  onChange={e => setOrigin(e.target.value)}
                 />
               </div>
-              
+
               <div>
-                <label htmlFor="destination" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label
+                  htmlFor="destination"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
                   Destination
                 </label>
                 <input
@@ -218,13 +226,16 @@ export default function EditLoad({ params }: { params: { id: string } }) {
                   required
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
+                  onChange={e => setDestination(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="weight" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="weight"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Weight
               </label>
               <input
@@ -235,12 +246,15 @@ export default function EditLoad({ params }: { params: { id: string } }) {
                 placeholder="e.g. 32,500 lbs"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={weight}
-                onChange={(e) => setWeight(e.target.value)}
+                onChange={e => setWeight(e.target.value)}
               />
             </div>
-            
+
             <div>
-              <label htmlFor="vehicle" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="vehicle"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Vehicle (optional)
               </label>
               <select
@@ -248,19 +262,22 @@ export default function EditLoad({ params }: { params: { id: string } }) {
                 name="vehicle"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={vehicleId}
-                onChange={(e) => setVehicleId(e.target.value)}
+                onChange={e => setVehicleId(e.target.value)}
               >
                 <option value="">Select a vehicle</option>
-                {vehicles.map((vehicle) => (
+                {vehicles.map(vehicle => (
                   <option key={vehicle.id} value={vehicle.id}>
                     {vehicle.name} ({vehicle.license_plate})
                   </option>
                 ))}
               </select>
             </div>
-            
+
             <div>
-              <label htmlFor="driver" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="driver"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Driver (optional)
               </label>
               <select
@@ -268,19 +285,22 @@ export default function EditLoad({ params }: { params: { id: string } }) {
                 name="driver"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={driverId}
-                onChange={(e) => setDriverId(e.target.value)}
+                onChange={e => setDriverId(e.target.value)}
               >
                 <option value="">Select a driver</option>
-                {drivers.map((driver) => (
+                {drivers.map(driver => (
                   <option key={driver.id} value={driver.id}>
                     {driver.name} ({driver.license_number})
                   </option>
                 ))}
               </select>
             </div>
-            
+
             <div>
-              <label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Status
               </label>
               <select
@@ -289,7 +309,7 @@ export default function EditLoad({ params }: { params: { id: string } }) {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}
+                onChange={e => setStatus(e.target.value)}
               >
                 <option value="Pending">Pending</option>
                 <option value="In Progress">In Progress</option>
@@ -297,7 +317,7 @@ export default function EditLoad({ params }: { params: { id: string } }) {
                 <option value="Cancelled">Cancelled</option>
               </select>
             </div>
-            
+
             <div className="flex justify-end">
               <button
                 type="submit"

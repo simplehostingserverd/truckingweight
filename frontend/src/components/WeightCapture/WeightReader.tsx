@@ -3,14 +3,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
-import { 
-  ScaleIcon, 
-  ArrowPathIcon, 
+import {
+  ScaleIcon,
+  ArrowPathIcon,
   CheckCircleIcon,
   XCircleIcon,
   TruckIcon,
   ArrowDownIcon,
-  ArrowUpIcon
+  ArrowUpIcon,
 } from '@heroicons/react/24/outline';
 
 interface WeightReaderProps {
@@ -21,12 +21,12 @@ interface WeightReaderProps {
   autoCapture?: boolean;
 }
 
-export default function WeightReader({ 
-  scale, 
-  readingType, 
+export default function WeightReader({
+  scale,
+  readingType,
   axleNumber = 1,
   onWeightCaptured,
-  autoCapture = false
+  autoCapture = false,
 }: WeightReaderProps) {
   const supabase = createClientComponentClient<Database>();
   const [weight, setWeight] = useState<number | null>(null);
@@ -42,31 +42,36 @@ export default function WeightReader({
     try {
       setLoading(true);
       setError('');
-      
+
       // Get auth token from supabase
-      const { data: { session } } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (!session) {
         throw new Error('No active session');
       }
-      
+
       // Fetch weight reading from API
-      const response = await fetch(`/api/scales/${scale.id}/reading?type=${readingType}${axleNumber ? `&axle=${axleNumber}` : ''}`, {
-        headers: {
-          'x-auth-token': session.access_token
+      const response = await fetch(
+        `/api/scales/${scale.id}/reading?type=${readingType}${axleNumber ? `&axle=${axleNumber}` : ''}`,
+        {
+          headers: {
+            'x-auth-token': session.access_token,
+          },
         }
-      });
-      
+      );
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to get weight reading');
       }
-      
+
       const data = await response.json();
-      
+
       if (data.reading !== undefined) {
         setWeight(data.reading);
-        
+
         // Add to weight history for stability check
         setWeightHistory(prev => {
           const newHistory = [...prev, data.reading];
@@ -89,11 +94,11 @@ export default function WeightReader({
     if (weightHistory.length >= 3) {
       const isStable = weightHistory.every((w, i, arr) => {
         if (i === 0) return true;
-        return Math.abs(w - arr[i-1]) < 20;
+        return Math.abs(w - arr[i - 1]) < 20;
       });
-      
+
       setWeightStable(isStable);
-      
+
       // Auto-capture if weight is stable and auto-capture is enabled
       if (isStable && autoCapture && !captured && weight !== null) {
         setCaptured(true);
@@ -108,11 +113,11 @@ export default function WeightReader({
   // Polling effect
   useEffect(() => {
     if (!polling) return;
-    
+
     const pollInterval = setInterval(() => {
       getWeightReading();
     }, 1000);
-    
+
     return () => clearInterval(pollInterval);
   }, [polling, getWeightReading]);
 
@@ -156,15 +161,19 @@ export default function WeightReader({
             </div>
           )}
           <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
-            {readingType === 'gross' ? 'Gross Weight' : readingType === 'tare' ? 'Tare Weight' : `Axle ${axleNumber} Weight`}
+            {readingType === 'gross'
+              ? 'Gross Weight'
+              : readingType === 'tare'
+                ? 'Tare Weight'
+                : `Axle ${axleNumber} Weight`}
           </h2>
         </div>
         <div className="flex space-x-2">
           <button
             onClick={togglePolling}
             className={`inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium ${
-              polling 
-                ? 'text-red-700 bg-red-100 hover:bg-red-200 dark:text-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50' 
+              polling
+                ? 'text-red-700 bg-red-100 hover:bg-red-200 dark:text-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50'
                 : 'text-green-700 bg-green-100 hover:bg-green-200 dark:text-green-200 dark:bg-green-900/30 dark:hover:bg-green-900/50'
             } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500`}
             disabled={captured}
@@ -181,7 +190,7 @@ export default function WeightReader({
           </button>
         </div>
       </div>
-      
+
       <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6">
         <div className="flex items-center justify-between">
           <div>
@@ -197,7 +206,7 @@ export default function WeightReader({
           </div>
         </div>
       </div>
-      
+
       <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6 text-center">
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Current Reading:</p>
         <div className="flex items-center justify-center">
@@ -217,12 +226,14 @@ export default function WeightReader({
                 {weight?.toLocaleString() || '—'}
               </span>
               <span className="ml-2 text-xl text-gray-600 dark:text-gray-300">lbs</span>
-              
+
               {weightHistory.length > 1 && (
                 <div className="ml-4">
-                  {weightHistory[weightHistory.length - 1] > weightHistory[weightHistory.length - 2] ? (
+                  {weightHistory[weightHistory.length - 1] >
+                  weightHistory[weightHistory.length - 2] ? (
                     <ArrowUpIcon className="h-5 w-5 text-red-500" />
-                  ) : weightHistory[weightHistory.length - 1] < weightHistory[weightHistory.length - 2] ? (
+                  ) : weightHistory[weightHistory.length - 1] <
+                    weightHistory[weightHistory.length - 2] ? (
                     <ArrowDownIcon className="h-5 w-5 text-green-500" />
                   ) : (
                     <div className="h-5 w-5 rounded-full bg-yellow-400"></div>
@@ -232,7 +243,7 @@ export default function WeightReader({
             </div>
           )}
         </div>
-        
+
         {weightStable && !captured && (
           <div className="mt-2 text-green-600 dark:text-green-400 text-sm flex items-center justify-center">
             <CheckCircleIcon className="h-4 w-4 mr-1" />
@@ -240,7 +251,7 @@ export default function WeightReader({
           </div>
         )}
       </div>
-      
+
       <div className="flex justify-between">
         {captured ? (
           <button

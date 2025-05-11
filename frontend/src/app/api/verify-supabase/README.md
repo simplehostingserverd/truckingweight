@@ -19,6 +19,7 @@ For the health check to work properly, you need to create a stored procedure in 
 6. Run the query
 
 This will create:
+
 - A `health_check` table that can be used to verify database access
 - A stored procedure `create_health_check_table()` that can be called to create the table
 - RLS policies that allow anyone to read from the table
@@ -28,6 +29,7 @@ This will create:
 If you see an error like "Auth session missing!", this is expected when you're not logged in. It means the Supabase connection is working, but there's no active session.
 
 If you see other errors, check:
+
 1. Your Supabase URL and anon key in the `.env` file
 2. That your Supabase project is running
 3. That you've set up the health check table as described above

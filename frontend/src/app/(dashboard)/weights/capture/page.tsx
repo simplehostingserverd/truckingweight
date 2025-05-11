@@ -15,7 +15,7 @@ import {
   ExclamationTriangleIcon,
   QrCodeIcon,
   PencilIcon,
-  XCircleIcon
+  XCircleIcon,
 } from '@heroicons/react/24/outline';
 import { weightCaptureService } from '@/services/weight-capture';
 import { weighTicketService } from '@/services/weigh-ticket-service';
@@ -30,7 +30,9 @@ export default function WeightCapturePage() {
   const supabase = createClientComponentClient();
 
   // State for weight capture
-  const [captureMethod, setCaptureMethod] = useState<'scale' | 'iot' | 'camera' | 'manual'>('scale');
+  const [captureMethod, setCaptureMethod] = useState<'scale' | 'iot' | 'camera' | 'manual'>(
+    'scale'
+  );
   const [isCapturing, setIsCapturing] = useState(false);
   const [weightReading, setWeightReading] = useState<WeightReading | null>(null);
   const [captureError, setCaptureError] = useState<string | null>(null);
@@ -61,7 +63,9 @@ export default function WeightCapturePage() {
     const fetchData = async () => {
       try {
         // Get user's company ID
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data: userData } = await supabase
           .from('users')
           .select('company_id')
@@ -118,7 +122,7 @@ export default function WeightCapturePage() {
         const success = await weightCaptureService.initializeDigitalScale('scale-1', {
           ipAddress: '192.168.1.100',
           port: 8080,
-          protocol: 'tcp'
+          protocol: 'tcp',
         });
 
         if (success) {
@@ -130,7 +134,7 @@ export default function WeightCapturePage() {
         // Initialize IoT sensor
         await weightCaptureService.initializeIoTSensor('iot-1', {
           sensorId: 'iot-sensor-001',
-          apiKey: 'demo-key'
+          apiKey: 'demo-key',
         });
 
         // Initialize camera
@@ -156,11 +160,7 @@ export default function WeightCapturePage() {
 
   // Update form validation when required fields change
   useEffect(() => {
-    setIsFormValid(
-      !!selectedVehicleId &&
-      !!selectedDriverId &&
-      !!weightReading?.grossWeight
-    );
+    setIsFormValid(!!selectedVehicleId && !!selectedDriverId && !!weightReading?.grossWeight);
   }, [selectedVehicleId, selectedDriverId, weightReading]);
 
   // Start weight capture
@@ -193,7 +193,9 @@ export default function WeightCapturePage() {
       return () => clearInterval(interval);
     } catch (error) {
       console.error('Error starting capture:', error);
-      setCaptureError(`Failed to start capture: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setCaptureError(
+        `Failed to start capture: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
       setIsCapturing(false);
     }
   };
@@ -232,7 +234,9 @@ export default function WeightCapturePage() {
       router.push(`/weights/${ticket.id}`);
     } catch (error) {
       console.error('Error creating ticket:', error);
-      setTicketCreationError(`Failed to create ticket: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setTicketCreationError(
+        `Failed to create ticket: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
       setIsCreatingTicket(false);
     }
   };
@@ -260,14 +264,20 @@ export default function WeightCapturePage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Weight Display and Capture Controls */}
         <div className="lg:col-span-2">
-          <div className={`rounded-lg shadow-md p-6 mb-6 ${getComplianceStatusColor(weightReading)}`}>
+          <div
+            className={`rounded-lg shadow-md p-6 mb-6 ${getComplianceStatusColor(weightReading)}`}
+          >
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Current Weight</h2>
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+                Current Weight
+              </h2>
               <div className="flex items-center">
                 <span className="text-sm font-medium text-gray-600 dark:text-gray-300 mr-2">
                   {isCapturing ? 'Capturing...' : 'Ready'}
                 </span>
-                <div className={`h-3 w-3 rounded-full ${isCapturing ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
+                <div
+                  className={`h-3 w-3 rounded-full ${isCapturing ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}
+                ></div>
               </div>
             </div>
 
@@ -284,17 +294,19 @@ export default function WeightCapturePage() {
 
             {weightReading?.axleWeights && weightReading.axleWeights.length > 0 && (
               <div className="mt-4">
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Axle Weights</h3>
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Axle Weights
+                </h3>
                 <div className="grid grid-cols-5 gap-2">
-                  {weightReading.axleWeights.map((axle) => (
+                  {weightReading.axleWeights.map(axle => (
                     <div
                       key={axle.position}
                       className={`p-2 rounded text-center ${
                         axle.weight > axle.maxLegal
                           ? 'bg-red-200 dark:bg-red-800'
                           : axle.weight > axle.maxLegal * 0.95
-                          ? 'bg-amber-200 dark:bg-amber-800'
-                          : 'bg-green-200 dark:bg-green-800'
+                            ? 'bg-amber-200 dark:bg-amber-800'
+                            : 'bg-green-200 dark:bg-green-800'
                       }`}
                     >
                       <div className="text-xs font-medium text-gray-600 dark:text-gray-300">
@@ -314,7 +326,9 @@ export default function WeightCapturePage() {
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Capture Method</h2>
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+              Capture Method
+            </h2>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               <button
@@ -325,16 +339,22 @@ export default function WeightCapturePage() {
                 }`}
                 onClick={() => setCaptureMethod('scale')}
               >
-                <ScaleIcon className={`h-8 w-8 mb-2 ${
-                  captureMethod === 'scale'
-                    ? 'text-primary-600 dark:text-primary-400'
-                    : 'text-gray-500 dark:text-gray-400'
-                }`} />
-                <span className={`text-sm font-medium ${
-                  captureMethod === 'scale'
-                    ? 'text-primary-700 dark:text-primary-300'
-                    : 'text-gray-700 dark:text-gray-300'
-                }`}>Digital Scale</span>
+                <ScaleIcon
+                  className={`h-8 w-8 mb-2 ${
+                    captureMethod === 'scale'
+                      ? 'text-primary-600 dark:text-primary-400'
+                      : 'text-gray-500 dark:text-gray-400'
+                  }`}
+                />
+                <span
+                  className={`text-sm font-medium ${
+                    captureMethod === 'scale'
+                      ? 'text-primary-700 dark:text-primary-300'
+                      : 'text-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  Digital Scale
+                </span>
               </button>
 
               <button
@@ -345,18 +365,32 @@ export default function WeightCapturePage() {
                 }`}
                 onClick={() => setCaptureMethod('iot')}
               >
-                <svg className={`h-8 w-8 mb-2 ${
-                  captureMethod === 'iot'
-                    ? 'text-primary-600 dark:text-primary-400'
-                    : 'text-gray-500 dark:text-gray-400'
-                }`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+                <svg
+                  className={`h-8 w-8 mb-2 ${
+                    captureMethod === 'iot'
+                      ? 'text-primary-600 dark:text-primary-400'
+                      : 'text-gray-500 dark:text-gray-400'
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"
+                  />
                 </svg>
-                <span className={`text-sm font-medium ${
-                  captureMethod === 'iot'
-                    ? 'text-primary-700 dark:text-primary-300'
-                    : 'text-gray-700 dark:text-gray-300'
-                }`}>IoT Sensor</span>
+                <span
+                  className={`text-sm font-medium ${
+                    captureMethod === 'iot'
+                      ? 'text-primary-700 dark:text-primary-300'
+                      : 'text-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  IoT Sensor
+                </span>
               </button>
 
               <button
@@ -367,16 +401,22 @@ export default function WeightCapturePage() {
                 }`}
                 onClick={() => setCaptureMethod('camera')}
               >
-                <CameraIcon className={`h-8 w-8 mb-2 ${
-                  captureMethod === 'camera'
-                    ? 'text-primary-600 dark:text-primary-400'
-                    : 'text-gray-500 dark:text-gray-400'
-                }`} />
-                <span className={`text-sm font-medium ${
-                  captureMethod === 'camera'
-                    ? 'text-primary-700 dark:text-primary-300'
-                    : 'text-gray-700 dark:text-gray-300'
-                }`}>Camera</span>
+                <CameraIcon
+                  className={`h-8 w-8 mb-2 ${
+                    captureMethod === 'camera'
+                      ? 'text-primary-600 dark:text-primary-400'
+                      : 'text-gray-500 dark:text-gray-400'
+                  }`}
+                />
+                <span
+                  className={`text-sm font-medium ${
+                    captureMethod === 'camera'
+                      ? 'text-primary-700 dark:text-primary-300'
+                      : 'text-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  Camera
+                </span>
               </button>
 
               <button
@@ -387,16 +427,22 @@ export default function WeightCapturePage() {
                 }`}
                 onClick={() => setCaptureMethod('manual')}
               >
-                <DocumentTextIcon className={`h-8 w-8 mb-2 ${
-                  captureMethod === 'manual'
-                    ? 'text-primary-600 dark:text-primary-400'
-                    : 'text-gray-500 dark:text-gray-400'
-                }`} />
-                <span className={`text-sm font-medium ${
-                  captureMethod === 'manual'
-                    ? 'text-primary-700 dark:text-primary-300'
-                    : 'text-gray-700 dark:text-gray-300'
-                }`}>Manual Entry</span>
+                <DocumentTextIcon
+                  className={`h-8 w-8 mb-2 ${
+                    captureMethod === 'manual'
+                      ? 'text-primary-600 dark:text-primary-400'
+                      : 'text-gray-500 dark:text-gray-400'
+                  }`}
+                />
+                <span
+                  className={`text-sm font-medium ${
+                    captureMethod === 'manual'
+                      ? 'text-primary-700 dark:text-primary-300'
+                      : 'text-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  Manual Entry
+                </span>
               </button>
             </div>
 
@@ -429,7 +475,9 @@ export default function WeightCapturePage() {
 
           {/* New Advanced Weight Capture Section */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Advanced Weight Capture</h2>
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+              Advanced Weight Capture
+            </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <button
@@ -444,7 +492,9 @@ export default function WeightCapturePage() {
                 }}
               >
                 <QrCodeIcon className="h-8 w-8 mb-2 text-primary-600 dark:text-primary-400" />
-                <span className="text-sm font-medium text-primary-700 dark:text-primary-300">QR Code Scale Selection</span>
+                <span className="text-sm font-medium text-primary-700 dark:text-primary-300">
+                  QR Code Scale Selection
+                </span>
               </button>
 
               <button
@@ -458,7 +508,9 @@ export default function WeightCapturePage() {
                 }}
               >
                 <TruckIcon className="h-8 w-8 mb-2 text-blue-600 dark:text-blue-400" />
-                <span className="text-sm font-medium text-blue-700 dark:text-blue-300">Axle-by-Axle Weighing</span>
+                <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
+                  Axle-by-Axle Weighing
+                </span>
               </button>
 
               <button
@@ -472,12 +524,16 @@ export default function WeightCapturePage() {
                 }}
               >
                 <ScaleIcon className="h-8 w-8 mb-2 text-green-600 dark:text-green-400" />
-                <span className="text-sm font-medium text-green-700 dark:text-green-300">Split Weighing</span>
+                <span className="text-sm font-medium text-green-700 dark:text-green-300">
+                  Split Weighing
+                </span>
               </button>
             </div>
 
             <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <h3 className="text-md font-medium text-gray-800 dark:text-white mb-2">New Features Available</h3>
+              <h3 className="text-md font-medium text-gray-800 dark:text-white mb-2">
+                New Features Available
+              </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Try our new advanced weight capture features including QR code scale selection,
                 axle-by-axle weighing, and split weighing workflows. These features provide more
@@ -490,21 +546,28 @@ export default function WeightCapturePage() {
         {/* Right Column - Vehicle, Driver, and Ticket Information */}
         <div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Ticket Information</h2>
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+              Ticket Information
+            </h2>
 
             <div className="space-y-4">
               <div>
-                <label htmlFor="vehicle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="vehicle"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Vehicle
                 </label>
                 <select
                   id="vehicle"
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   value={selectedVehicleId || ''}
-                  onChange={(e) => setSelectedVehicleId(e.target.value ? parseInt(e.target.value) : null)}
+                  onChange={e =>
+                    setSelectedVehicleId(e.target.value ? parseInt(e.target.value) : null)
+                  }
                 >
                   <option value="">Select a vehicle</option>
-                  {vehicles.map((vehicle) => (
+                  {vehicles.map(vehicle => (
                     <option key={vehicle.id} value={vehicle.id}>
                       {vehicle.name} - {vehicle.license_plate}
                     </option>
@@ -513,17 +576,22 @@ export default function WeightCapturePage() {
               </div>
 
               <div>
-                <label htmlFor="driver" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="driver"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Driver
                 </label>
                 <select
                   id="driver"
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   value={selectedDriverId || ''}
-                  onChange={(e) => setSelectedDriverId(e.target.value ? parseInt(e.target.value) : null)}
+                  onChange={e =>
+                    setSelectedDriverId(e.target.value ? parseInt(e.target.value) : null)
+                  }
                 >
                   <option value="">Select a driver</option>
-                  {drivers.map((driver) => (
+                  {drivers.map(driver => (
                     <option key={driver.id} value={driver.id}>
                       {driver.name}
                     </option>
@@ -532,17 +600,22 @@ export default function WeightCapturePage() {
               </div>
 
               <div>
-                <label htmlFor="scale" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="scale"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Scale (Optional)
                 </label>
                 <select
                   id="scale"
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   value={selectedScaleId || ''}
-                  onChange={(e) => setSelectedScaleId(e.target.value ? parseInt(e.target.value) : null)}
+                  onChange={e =>
+                    setSelectedScaleId(e.target.value ? parseInt(e.target.value) : null)
+                  }
                 >
                   <option value="">Select a scale</option>
-                  {scales.map((scale) => (
+                  {scales.map(scale => (
                     <option key={scale.id} value={scale.id}>
                       {scale.name}
                     </option>
@@ -551,7 +624,10 @@ export default function WeightCapturePage() {
               </div>
 
               <div>
-                <label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="notes"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Notes (Optional)
                 </label>
                 <textarea
@@ -559,7 +635,7 @@ export default function WeightCapturePage() {
                   rows={3}
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
+                  onChange={e => setNotes(e.target.value)}
                 ></textarea>
               </div>
             </div>

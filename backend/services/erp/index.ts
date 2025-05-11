@@ -44,7 +44,7 @@ export class ErpService {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
-        where: { id: connectionId }
+        where: { id: connectionId },
       });
 
       if (!connection || connection.integration_type !== 'erp' || !connection.is_active) {
@@ -73,18 +73,18 @@ export class ErpService {
       // Log the successful fetch
       await this.logErpEvent(connectionId, 'fetch_customers', 'success', {
         count: data.length,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
 
       return data;
     } catch (error) {
       logger.error('Error fetching customers from ERP:', error);
-      
+
       // Log the error
       await this.logErpEvent(connectionId, 'fetch_customers', 'error', {
-        error: error.message
+        error: error.message,
       });
-      
+
       return null;
     }
   }
@@ -96,7 +96,7 @@ export class ErpService {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
-        where: { id: connectionId }
+        where: { id: connectionId },
       });
 
       if (!connection || connection.integration_type !== 'erp' || !connection.is_active) {
@@ -126,19 +126,19 @@ export class ErpService {
       await this.logErpEvent(connectionId, 'fetch_invoices', 'success', {
         customerId: customerId || 'all',
         count: data.length,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
 
       return data;
     } catch (error) {
       logger.error('Error fetching invoices from ERP:', error);
-      
+
       // Log the error
       await this.logErpEvent(connectionId, 'fetch_invoices', 'error', {
         customerId: customerId || 'all',
-        error: error.message
+        error: error.message,
       });
-      
+
       return null;
     }
   }
@@ -150,7 +150,7 @@ export class ErpService {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
-        where: { id: connectionId }
+        where: { id: connectionId },
       });
 
       if (!connection || connection.integration_type !== 'erp' || !connection.is_active) {
@@ -174,19 +174,19 @@ export class ErpService {
       await this.logErpEvent(connectionId, 'create_invoice', 'success', {
         invoiceId: data.id,
         customerId: invoiceData.customerId,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
 
       return data;
     } catch (error) {
       logger.error('Error creating invoice in ERP:', error);
-      
+
       // Log the error
       await this.logErpEvent(connectionId, 'create_invoice', 'error', {
         customerId: invoiceData.customerId,
-        error: error.message
+        error: error.message,
       });
-      
+
       return null;
     }
   }
@@ -198,7 +198,7 @@ export class ErpService {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
-        where: { id: connectionId }
+        where: { id: connectionId },
       });
 
       if (!connection || connection.integration_type !== 'erp' || !connection.is_active) {
@@ -218,8 +218,8 @@ export class ErpService {
           vehicles: true,
           drivers: true,
           companies: true,
-          cargo: true
-        }
+          cargo: true,
+        },
       });
 
       if (!ticket) {
@@ -233,19 +233,19 @@ export class ErpService {
       await this.logErpEvent(connectionId, 'sync_weigh_ticket', 'success', {
         ticketId,
         erpId: data.id,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
 
       return data;
     } catch (error) {
       logger.error('Error syncing weigh ticket to ERP:', error);
-      
+
       // Log the error
       await this.logErpEvent(connectionId, 'sync_weigh_ticket', 'error', {
         ticketId,
-        error: error.message
+        error: error.message,
       });
-      
+
       return null;
     }
   }
@@ -267,8 +267,8 @@ export class ErpService {
           event_type: eventType,
           status,
           message: `ERP ${eventType} ${status}`,
-          details
-        }
+          details,
+        },
       });
     } catch (error) {
       logger.error('Error logging ERP event:', error);

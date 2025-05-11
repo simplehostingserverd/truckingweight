@@ -41,32 +41,26 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
     const companyFilter = isAdmin ? {} : { company_id: companyId };
 
     // Run queries in parallel for better performance
-    const [
-      vehicleCount,
-      driverCount,
-      activeLoads,
-      weightsToday,
-      weights
-    ] = await Promise.all([
+    const [vehicleCount, driverCount, activeLoads, weightsToday, weights] = await Promise.all([
       // Total vehicles count
       prisma.vehicles.count({
-        where: companyFilter
+        where: companyFilter,
       }),
 
       // Active drivers count
       prisma.drivers.count({
         where: {
           ...companyFilter,
-          status: 'Active'
-        }
+          status: 'Active',
+        },
       }),
 
       // Active loads count
       prisma.loads.count({
         where: {
           ...companyFilter,
-          status: { in: ['Pending', 'In Transit'] }
-        }
+          status: { in: ['Pending', 'In Transit'] },
+        },
       }),
 
       // Weights created today
@@ -74,24 +68,23 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
         where: {
           ...companyFilter,
           date: {
-            gte: today.toISOString().split('T')[0]
-          }
-        }
+            gte: today.toISOString().split('T')[0],
+          },
+        },
       }),
 
       // All weights for compliance calculation
       prisma.weights.findMany({
         where: companyFilter,
-        select: { status: true }
-      })
+        select: { status: true },
+      }),
     ]);
 
     // Calculate compliance rate
     const totalWeights = weights.length;
     const compliantWeights = weights.filter(w => w.status === 'Compliant').length;
-    const complianceRate = totalWeights > 0
-      ? Math.round((compliantWeights / totalWeights) * 100)
-      : 0;
+    const complianceRate =
+      totalWeights > 0 ? Math.round((compliantWeights / totalWeights) * 100) : 0;
 
     // Get non-compliant weights count
     const nonCompliantWeights = weights.filter(w => w.status === 'Non-Compliant').length;
@@ -103,9 +96,8 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
       activeLoads,
       weightsToday,
       complianceRate,
-      nonCompliantWeights
+      nonCompliantWeights,
     });
-
   } catch (err: any) {
     console.error('Error fetching dashboard stats:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -145,26 +137,27 @@ export const getRecentWeights = async (req: AuthenticatedRequest, res: Response)
         vehicles: {
           select: {
             id: true,
-            name: true
-          }
+            name: true,
+          },
         },
         drivers: {
           select: {
             id: true,
-            name: true
-          }
+            name: true,
+          },
         },
-        companies: isAdmin ? {
-          select: {
-            id: true,
-            name: true
-          }
-        } : undefined
-      }
+        companies: isAdmin
+          ? {
+              select: {
+                id: true,
+                name: true,
+              },
+            }
+          : undefined,
+      },
     });
 
     res.json(recentWeights);
-
   } catch (err: any) {
     console.error('Error fetching recent weights:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -215,8 +208,8 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
     let whereClause: any = {
       date: {
         gte: startDate.toISOString().split('T')[0],
-        lte: today.toISOString().split('T')[0]
-      }
+        lte: today.toISOString().split('T')[0],
+      },
     };
 
     // If admin and specific company filter is provided
@@ -233,8 +226,8 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
       where: whereClause,
       select: {
         status: true,
-        company_id: isAdmin // Include company_id for admins to group by company
-      }
+        company_id: isAdmin, // Include company_id for admins to group by company
+      },
     });
 
     // For admin users, we might want to group by company
@@ -248,7 +241,7 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
           companyWeights.set(companyId, {
             compliant: 0,
             warning: 0,
-            nonCompliant: 0
+            nonCompliant: 0,
           });
         }
 
@@ -262,8 +255,8 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
       const companies = await prisma.companies.findMany({
         select: {
           id: true,
-          name: true
-        }
+          name: true,
+        },
       });
 
       // Format data for chart
@@ -278,8 +271,8 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
           data: [
             { name: 'Compliant', value: stats.compliant },
             { name: 'Warning', value: stats.warning },
-            { name: 'Non-Compliant', value: stats.nonCompliant }
-          ]
+            { name: 'Non-Compliant', value: stats.nonCompliant },
+          ],
         });
       }
 
@@ -291,12 +284,12 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
       const overallData = [
         { name: 'Compliant', value: totalCompliant },
         { name: 'Warning', value: totalWarning },
-        { name: 'Non-Compliant', value: totalNonCompliant }
+        { name: 'Non-Compliant', value: totalNonCompliant },
       ];
 
       res.json({
         byCompany: complianceByCompany,
-        overall: overallData
+        overall: overallData,
       });
     } else {
       // Regular user or admin with specific company filter
@@ -308,12 +301,11 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
       const complianceData = [
         { name: 'Compliant', value: compliantCount },
         { name: 'Warning', value: warningCount },
-        { name: 'Non-Compliant', value: nonCompliantCount }
+        { name: 'Non-Compliant', value: nonCompliantCount },
       ];
 
       res.json(complianceData);
     }
-
   } catch (err: any) {
     console.error('Error fetching compliance data:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -364,8 +356,8 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
     let weightsWhereClause: any = {
       date: {
         gte: startDate.toISOString().split('T')[0],
-        lte: today.toISOString().split('T')[0]
-      }
+        lte: today.toISOString().split('T')[0],
+      },
     };
 
     let vehiclesWhereClause: any = {};
@@ -388,8 +380,8 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
         select: {
           weight: true,
           vehicle_id: true,
-          company_id: isAdmin // Include company_id for admins
-        }
+          company_id: isAdmin, // Include company_id for admins
+        },
       }),
 
       prisma.vehicles.findMany({
@@ -397,17 +389,19 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
         select: {
           id: true,
           name: true,
-          company_id: isAdmin // Include company_id for admins
-        }
+          company_id: isAdmin, // Include company_id for admins
+        },
       }),
 
       // Get companies if admin
-      isAdmin ? prisma.companies.findMany({
-        select: {
-          id: true,
-          name: true
-        }
-      }) : null
+      isAdmin
+        ? prisma.companies.findMany({
+            select: {
+              id: true,
+              name: true,
+            },
+          })
+        : null,
     ]);
 
     // For admin users, we might want to group by company
@@ -421,7 +415,9 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
           companyVehicleWeights.set(companyId, new Map());
         }
 
-        const vehicle = vehicles.find(v => v.id === weight.vehicle_id && v.company_id === companyId);
+        const vehicle = vehicles.find(
+          v => v.id === weight.vehicle_id && v.company_id === companyId
+        );
         if (vehicle) {
           const vehicleMap = companyVehicleWeights.get(companyId);
           const vehicleName = vehicle.name;
@@ -445,7 +441,7 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
         const vehicleWeights = Array.from(vehicleMap.entries())
           .map(([name, weight]) => ({
             name,
-            weight: Math.round(weight as number)
+            weight: Math.round(weight as number),
           }))
           .sort((a, b) => b.weight - a.weight)
           .slice(0, 5);
@@ -454,7 +450,7 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
           weightsByCompany.push({
             companyId,
             companyName,
-            data: vehicleWeights
+            data: vehicleWeights,
           });
         }
       }
@@ -469,7 +465,10 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
           const weightValue = parseFloat(weight.weight.replace(/[^\d.]/g, ''));
 
           if (overallVehicleMap.has(vehicleName)) {
-            overallVehicleMap.set(vehicleName, (overallVehicleMap.get(vehicleName) || 0) + weightValue);
+            overallVehicleMap.set(
+              vehicleName,
+              (overallVehicleMap.get(vehicleName) || 0) + weightValue
+            );
           } else {
             overallVehicleMap.set(vehicleName, weightValue);
           }
@@ -479,14 +478,14 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
       const overallData = Array.from(overallVehicleMap.entries())
         .map(([name, weight]) => ({
           name,
-          weight: Math.round(weight)
+          weight: Math.round(weight),
         }))
         .sort((a, b) => b.weight - a.weight)
         .slice(0, 5);
 
       res.json({
         byCompany: weightsByCompany,
-        overall: overallData
+        overall: overallData,
       });
     } else {
       // Regular user or admin with specific company filter
@@ -501,7 +500,10 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
           const weightValue = parseFloat(weight.weight.replace(/[^\d.]/g, ''));
 
           if (weightsByVehicleMap.has(vehicleName)) {
-            weightsByVehicleMap.set(vehicleName, (weightsByVehicleMap.get(vehicleName) || 0) + weightValue);
+            weightsByVehicleMap.set(
+              vehicleName,
+              (weightsByVehicleMap.get(vehicleName) || 0) + weightValue
+            );
           } else {
             weightsByVehicleMap.set(vehicleName, weightValue);
           }
@@ -512,14 +514,13 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
       const weightsByVehicleArray = Array.from(weightsByVehicleMap.entries())
         .map(([name, weight]) => ({
           name,
-          weight: Math.round(weight)
+          weight: Math.round(weight),
         }))
         .sort((a, b) => b.weight - a.weight)
         .slice(0, 5);
 
       res.json(weightsByVehicleArray);
     }
-
   } catch (err: any) {
     console.error('Error fetching vehicle weight data:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -548,7 +549,7 @@ export const getLoadStatusData = async (req: AuthenticatedRequest, res: Response
     // Get loads grouped by status
     const loads = await prisma.loads.findMany({
       where: { company_id: companyId },
-      select: { status: true }
+      select: { status: true },
     });
 
     // Calculate loads by status
@@ -565,14 +566,12 @@ export const getLoadStatusData = async (req: AuthenticatedRequest, res: Response
     });
 
     // Convert to array format for chart
-    const loadsByStatusArray = Array.from(loadsByStatusMap.entries())
-      .map(([name, value]) => ({
-        name,
-        value
-      }));
+    const loadsByStatusArray = Array.from(loadsByStatusMap.entries()).map(([name, value]) => ({
+      name,
+      value,
+    }));
 
     res.json(loadsByStatusArray);
-
   } catch (err: any) {
     console.error('Error fetching load status data:', err);
     res.status(500).json({ message: 'Server error', error: err.message });

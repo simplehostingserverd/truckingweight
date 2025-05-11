@@ -15,9 +15,9 @@ interface AdminCompanySelectorProps {
   selectedCompanyId: number | null;
 }
 
-export default function AdminCompanySelector({ 
-  onCompanyChange, 
-  selectedCompanyId 
+export default function AdminCompanySelector({
+  onCompanyChange,
+  selectedCompanyId,
 }: AdminCompanySelectorProps) {
   const supabase = createClientComponentClient<Database>();
   const [companies, setCompanies] = useState<Company[]>([]);
@@ -28,29 +28,30 @@ export default function AdminCompanySelector({
     const fetchCompanies = async () => {
       try {
         setIsLoading(true);
-        
+
         // Get auth token from supabase
-        const { data: { session } } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
         if (!session) {
           throw new Error('No active session');
         }
-        
+
         // Fetch companies
         const response = await fetch('/api/admin/companies', {
           headers: {
-            'x-auth-token': session.access_token
-          }
+            'x-auth-token': session.access_token,
+          },
         });
-        
+
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.message || 'Failed to fetch companies');
         }
-        
+
         const companiesData = await response.json();
         setCompanies(companiesData);
-        
       } catch (error: any) {
         console.error('Error fetching companies:', error);
         setError(error.message);
@@ -58,7 +59,7 @@ export default function AdminCompanySelector({
         setIsLoading(false);
       }
     };
-    
+
     fetchCompanies();
   }, [supabase]);
 
@@ -91,7 +92,10 @@ export default function AdminCompanySelector({
           <BuildingOfficeIcon className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
         </div>
         <div className="flex-grow">
-          <label htmlFor="company-selector" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label
+            htmlFor="company-selector"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          >
             Select Company
           </label>
           <select
@@ -101,7 +105,7 @@ export default function AdminCompanySelector({
             onChange={handleCompanyChange}
           >
             <option value="all">All Companies</option>
-            {companies.map((company) => (
+            {companies.map(company => (
               <option key={company.id} value={company.id.toString()}>
                 {company.name}
               </option>

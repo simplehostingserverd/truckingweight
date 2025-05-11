@@ -33,20 +33,24 @@ This document outlines the organization of the Truckers Weight Management System
 ## Technology Stack (Proposed)
 
 ### Frontend
+
 - React.js with Next.js for server-side rendering
 - Tailwind CSS for styling
 - Redux or Context API for state management
 
 ### Backend
+
 - Node.js with Express
 - Authentication with JWT
 - API documentation with Swagger/OpenAPI
 
 ### Database
+
 - PostgreSQL for relational data
 - Redis for caching (optional)
 
 ### DevOps
+
 - Docker for containerization
 - GitHub Actions for CI/CD
 

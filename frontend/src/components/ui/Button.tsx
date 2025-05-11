@@ -8,27 +8,27 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
    * Button variant
    */
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
-  
+
   /**
    * Button size
    */
   size?: 'sm' | 'md' | 'lg';
-  
+
   /**
    * Optional icon to display before the button text
    */
   icon?: React.ReactNode;
-  
+
   /**
    * Optional icon to display after the button text
    */
   trailingIcon?: React.ReactNode;
-  
+
   /**
    * Whether the button is in a loading state
    */
   isLoading?: boolean;
-  
+
   /**
    * Text to display when loading
    */
@@ -62,13 +62,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       ghost: 'btn-ghost',
       link: 'btn-link',
     };
-    
+
     const sizeClasses = {
       sm: 'btn-sm',
       md: 'btn-md',
       lg: 'btn-lg',
     };
-    
+
     // Combine all classes
     const buttonClasses = cn(
       'btn',
@@ -77,7 +77,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading && 'opacity-70 pointer-events-none',
       className
     );
-    
+
     // Loading spinner SVG
     const LoadingSpinner = () => (
       <svg
@@ -101,14 +101,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ></path>
       </svg>
     );
-    
+
     return (
-      <button
-        ref={ref}
-        className={buttonClasses}
-        disabled={disabled || isLoading}
-        {...props}
-      >
+      <button ref={ref} className={buttonClasses} disabled={disabled || isLoading} {...props}>
         {isLoading ? (
           <>
             <LoadingSpinner />

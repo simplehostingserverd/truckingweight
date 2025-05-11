@@ -20,7 +20,10 @@ export default function Profile() {
     const fetchUserData = async () => {
       try {
         // Get authenticated user
-        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        const {
+          data: { user },
+          error: authError,
+        } = await supabase.auth.getUser();
 
         if (authError || !user) {
           router.push('/login');
@@ -62,7 +65,10 @@ export default function Profile() {
 
     try {
       // Get authenticated user
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
 
       if (authError || !user) {
         router.push('/login');
@@ -132,9 +138,7 @@ export default function Profile() {
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30 mb-6">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
-                  {error}
-                </h3>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{error}</h3>
               </div>
             </div>
           </div>
@@ -159,7 +163,10 @@ export default function Profile() {
 
           <form className="p-6 space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Full Name
               </label>
               <input
@@ -169,12 +176,15 @@ export default function Profile() {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={e => setName(e.target.value)}
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Email Address
               </label>
               <input
@@ -191,7 +201,10 @@ export default function Profile() {
             </div>
 
             <div>
-              <label htmlFor="company-name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="company-name"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Company Name
               </label>
               <input
@@ -201,7 +214,7 @@ export default function Profile() {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
+                onChange={e => setCompanyName(e.target.value)}
               />
             </div>
 

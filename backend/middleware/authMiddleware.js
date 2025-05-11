@@ -1,6 +1,6 @@
 /**
  * Authentication Middleware
- * 
+ *
  * This middleware handles authentication and authorization for API routes.
  */
 
@@ -30,7 +30,7 @@ const protect = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: 'Not authorized, no token'
+        message: 'Not authorized, no token',
       });
     }
 
@@ -48,7 +48,7 @@ const protect = async (req, res, next) => {
       if (error || !user) {
         return res.status(401).json({
           success: false,
-          message: 'Not authorized, invalid token'
+          message: 'Not authorized, invalid token',
         });
       }
 
@@ -59,14 +59,14 @@ const protect = async (req, res, next) => {
       logger.error('Token verification error:', error);
       return res.status(401).json({
         success: false,
-        message: 'Not authorized, token failed'
+        message: 'Not authorized, token failed',
       });
     }
   } catch (error) {
     logger.error('Auth middleware error:', error);
     return res.status(500).json({
       success: false,
-      message: 'Server error'
+      message: 'Server error',
     });
   }
 };
@@ -83,7 +83,7 @@ const admin = (req, res, next) => {
   } else {
     res.status(403).json({
       success: false,
-      message: 'Not authorized as an admin'
+      message: 'Not authorized as an admin',
     });
   }
 };
@@ -101,7 +101,7 @@ const sameCompany = (req, res, next) => {
   if (!companyId) {
     return res.status(400).json({
       success: false,
-      message: 'Company ID is required'
+      message: 'Company ID is required',
     });
   }
 
@@ -111,7 +111,7 @@ const sameCompany = (req, res, next) => {
   } else {
     res.status(403).json({
       success: false,
-      message: 'Not authorized to access this company\'s data'
+      message: "Not authorized to access this company's data",
     });
   }
 };
@@ -119,5 +119,5 @@ const sameCompany = (req, res, next) => {
 module.exports = {
   protect,
   admin,
-  sameCompany
+  sameCompany,
 };

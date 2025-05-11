@@ -3,14 +3,7 @@
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Legend
-} from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface ComplianceChartProps {
   companyId?: number | null;
@@ -26,7 +19,7 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
   // Colors for compliance status
   const COLORS = {
     Compliant: '#22c55e', // bright green
-    Warning: '#f59e0b',   // amber
+    Warning: '#f59e0b', // amber
     'Non-Compliant': '#ef4444', // red
   };
 
@@ -41,7 +34,9 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
         setIsLoading(true);
 
         // Get auth token from supabase
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
         if (!session) {
           throw new Error('No active session');
@@ -66,8 +61,8 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
 
         const response = await fetch(url, {
           headers: {
-            'x-auth-token': session.access_token
-          }
+            'x-auth-token': session.access_token,
+          },
         });
 
         if (!response.ok) {
@@ -86,7 +81,6 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
           // Regular user view or admin with specific company filter
           setComplianceData(data);
         }
-
       } catch (error: any) {
         console.error('Error fetching compliance data:', error);
         setError(error.message);
@@ -181,18 +175,23 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
                   dataKey="value"
                 >
                   {complianceData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[entry.name as keyof typeof COLORS] || '#8884d8'} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[entry.name as keyof typeof COLORS] || '#8884d8'}
+                    />
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(value) => [`${value} weights`, 'Count']}
-                  contentStyle={{ backgroundColor: '#1E1E1E', border: '1px solid #333', borderRadius: '4px' }}
+                  formatter={value => [`${value} weights`, 'Count']}
+                  contentStyle={{
+                    backgroundColor: '#1E1E1E',
+                    border: '1px solid #333',
+                    borderRadius: '4px',
+                  }}
                   itemStyle={{ color: '#fff' }}
                   labelStyle={{ color: '#aaa' }}
                 />
-                <Legend
-                  formatter={(value) => <span style={{ color: '#fff' }}>{value}</span>}
-                />
+                <Legend formatter={value => <span style={{ color: '#fff' }}>{value}</span>} />
               </PieChart>
             </ResponsiveContainer>
           </div>

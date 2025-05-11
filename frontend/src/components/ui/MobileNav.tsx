@@ -21,7 +21,11 @@ interface MobileNavProps {
   isAdmin?: boolean;
 }
 
-export default function MobileNav({ navigation, adminNavigation = [], isAdmin = false }: MobileNavProps) {
+export default function MobileNav({
+  navigation,
+  adminNavigation = [],
+  isAdmin = false,
+}: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -90,8 +94,9 @@ export default function MobileNav({ navigation, adminNavigation = [], isAdmin = 
                 </div>
                 <div className="mt-5 h-0 flex-1 overflow-y-auto">
                   <nav className="space-y-1 px-2">
-                    {navigation.map((item) => {
-                      const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                    {navigation.map(item => {
+                      const isActive =
+                        pathname === item.href || pathname.startsWith(`${item.href}/`);
                       return (
                         <Link
                           key={item.name}
@@ -121,10 +126,13 @@ export default function MobileNav({ navigation, adminNavigation = [], isAdmin = 
                     {isAdmin && adminNavigation.length > 0 && (
                       <>
                         <div className="border-t border-gray-200 dark:border-gray-700 my-5"></div>
-                        <h3 className="px-3 text-sm font-medium text-gray-500 dark:text-gray-400">Admin</h3>
-                        
-                        {adminNavigation.map((item) => {
-                          const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                        <h3 className="px-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                          Admin
+                        </h3>
+
+                        {adminNavigation.map(item => {
+                          const isActive =
+                            pathname === item.href || pathname.startsWith(`${item.href}/`);
                           return (
                             <Link
                               key={item.name}

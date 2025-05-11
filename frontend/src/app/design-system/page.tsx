@@ -27,7 +27,7 @@ export default function DesignSystemPage() {
       {/* Color Palette */}
       <section className="space-y-4">
         <h2 className="text-2xl font-bold">Color Palette</h2>
-        
+
         <div className="space-y-2">
           <h3 className="text-xl font-semibold">Primary Colors</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -42,7 +42,7 @@ export default function DesignSystemPage() {
             </div>
           </div>
         </div>
-        
+
         <div className="space-y-2">
           <h3 className="text-xl font-semibold">Secondary Colors</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -60,7 +60,7 @@ export default function DesignSystemPage() {
             </div>
           </div>
         </div>
-        
+
         <div className="space-y-2">
           <h3 className="text-xl font-semibold">System Colors</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -80,40 +80,46 @@ export default function DesignSystemPage() {
       {/* Typography */}
       <section className="space-y-4">
         <h2 className="text-2xl font-bold">Typography</h2>
-        
+
         <div className="space-y-4">
           <div>
             <h1 className="text-4xl font-bold">Heading 1 (36px)</h1>
             <p className="text-muted-foreground">Font weight: Bold (700)</p>
           </div>
-          
+
           <div>
             <h2 className="text-3xl font-semibold">Heading 2 (30px)</h2>
             <p className="text-muted-foreground">Font weight: Semibold (600)</p>
           </div>
-          
+
           <div>
             <h3 className="text-2xl font-semibold">Heading 3 (24px)</h3>
             <p className="text-muted-foreground">Font weight: Semibold (600)</p>
           </div>
-          
+
           <div>
             <h4 className="text-xl font-semibold">Heading 4 (20px)</h4>
             <p className="text-muted-foreground">Font weight: Semibold (600)</p>
           </div>
-          
+
           <div>
-            <p className="text-base">Body text (16px) - The quick brown fox jumps over the lazy dog.</p>
+            <p className="text-base">
+              Body text (16px) - The quick brown fox jumps over the lazy dog.
+            </p>
             <p className="text-muted-foreground">Font weight: Regular (400)</p>
           </div>
-          
+
           <div>
-            <p className="text-sm">Small text (14px) - The quick brown fox jumps over the lazy dog.</p>
+            <p className="text-sm">
+              Small text (14px) - The quick brown fox jumps over the lazy dog.
+            </p>
             <p className="text-muted-foreground">Font weight: Regular (400)</p>
           </div>
-          
+
           <div>
-            <p className="text-xs">Caption text (12px) - The quick brown fox jumps over the lazy dog.</p>
+            <p className="text-xs">
+              Caption text (12px) - The quick brown fox jumps over the lazy dog.
+            </p>
             <p className="text-muted-foreground">Font weight: Regular (400)</p>
           </div>
         </div>
@@ -122,7 +128,7 @@ export default function DesignSystemPage() {
       {/* Buttons */}
       <section className="space-y-4">
         <h2 className="text-2xl font-bold">Buttons</h2>
-        
+
         <div className="space-y-4">
           <div className="space-y-2">
             <h3 className="text-xl font-semibold">Button Variants</h3>
@@ -134,7 +140,7 @@ export default function DesignSystemPage() {
               <Button variant="link">Link Button</Button>
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <h3 className="text-xl font-semibold">Button Sizes</h3>
             <div className="flex flex-wrap gap-4 items-center">
@@ -143,14 +149,16 @@ export default function DesignSystemPage() {
               <Button size="lg">Large Button</Button>
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <h3 className="text-xl font-semibold">Button States</h3>
             <div className="flex flex-wrap gap-4">
               <Button>Default</Button>
               <Button disabled>Disabled</Button>
               <Button isLoading>Loading</Button>
-              <Button isLoading loadingText="Saving...">Save</Button>
+              <Button isLoading loadingText="Saving...">
+                Save
+              </Button>
             </div>
           </div>
         </div>
@@ -159,32 +167,28 @@ export default function DesignSystemPage() {
       {/* Form Elements */}
       <section className="space-y-4">
         <h2 className="text-2xl font-bold">Form Elements</h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <h3 className="text-xl font-semibold">Input</h3>
             <Input label="Default Input" placeholder="Enter text here" />
-            <Input 
-              label="Input with Helper Text" 
-              placeholder="Enter text here" 
+            <Input
+              label="Input with Helper Text"
+              placeholder="Enter text here"
               helperText="This is some helpful text"
             />
-            <Input 
-              label="Input with Error" 
-              placeholder="Enter text here" 
+            <Input
+              label="Input with Error"
+              placeholder="Enter text here"
               error="This field is required"
             />
-            <Input 
-              label="Disabled Input" 
-              placeholder="Enter text here" 
-              disabled
-            />
+            <Input label="Disabled Input" placeholder="Enter text here" disabled />
           </div>
-          
+
           <div className="space-y-4">
             <h3 className="text-xl font-semibold">Select</h3>
-            <Select 
-              label="Default Select" 
+            <Select
+              label="Default Select"
               placeholder="Select an option"
               options={[
                 { value: 'option1', label: 'Option 1' },
@@ -192,8 +196,8 @@ export default function DesignSystemPage() {
                 { value: 'option3', label: 'Option 3' },
               ]}
             />
-            <Select 
-              label="Select with Helper Text" 
+            <Select
+              label="Select with Helper Text"
               placeholder="Select an option"
               helperText="This is some helpful text"
               options={[
@@ -202,8 +206,8 @@ export default function DesignSystemPage() {
                 { value: 'option3', label: 'Option 3' },
               ]}
             />
-            <Select 
-              label="Select with Error" 
+            <Select
+              label="Select with Error"
               placeholder="Select an option"
               error="This field is required"
               options={[
@@ -212,8 +216,8 @@ export default function DesignSystemPage() {
                 { value: 'option3', label: 'Option 3' },
               ]}
             />
-            <Select 
-              label="Disabled Select" 
+            <Select
+              label="Disabled Select"
               placeholder="Select an option"
               disabled
               options={[
@@ -229,7 +233,7 @@ export default function DesignSystemPage() {
       {/* Cards */}
       <section className="space-y-4">
         <h2 className="text-2xl font-bold">Cards</h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
@@ -241,10 +245,12 @@ export default function DesignSystemPage() {
             </CardContent>
             <CardFooter>
               <Button variant="primary">Primary Action</Button>
-              <Button variant="ghost" className="ml-2">Secondary Action</Button>
+              <Button variant="ghost" className="ml-2">
+                Secondary Action
+              </Button>
             </CardFooter>
           </Card>
-          
+
           <Card hoverable>
             <CardHeader>
               <CardTitle>Hoverable Card</CardTitle>
@@ -263,7 +269,7 @@ export default function DesignSystemPage() {
       {/* Badges */}
       <section className="space-y-4">
         <h2 className="text-2xl font-bold">Badges</h2>
-        
+
         <div className="flex flex-wrap gap-4">
           <Badge variant="primary">Primary</Badge>
           <Badge variant="secondary">Secondary</Badge>

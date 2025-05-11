@@ -5,9 +5,7 @@
     "node": true,
     "es6": true
   },
-  "extends": [
-    "eslint:recommended"
-  ],
+  "extends": ["eslint:recommended"],
   "parserOptions": {
     "ecmaVersion": 2022,
     "sourceType": "module"
@@ -20,9 +18,7 @@
   "overrides": [
     {
       "files": ["frontend/**/*.{js,jsx,ts,tsx}"],
-      "extends": [
-        "eslint:recommended"
-      ],
+      "extends": ["eslint:recommended"],
       "settings": {
         "next": {
           "rootDir": "frontend/"

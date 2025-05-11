@@ -2,14 +2,20 @@ import Link from 'next/link';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { formatDate } from '@/lib/utils';
-import { PlusIcon, ArrowDownTrayIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
+import {
+  PlusIcon,
+  ArrowDownTrayIcon,
+  AdjustmentsHorizontalIcon,
+} from '@heroicons/react/24/outline';
 
 export default async function Vehicles() {
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   // Get user data
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { data: userData } = await supabase
     .from('users')
     .select('company_id')
@@ -65,7 +71,8 @@ export default async function Vehicles() {
   const activeVehicles = vehicles?.filter(vehicle => vehicle.status === 'Active').length || 0;
 
   // Get count of maintenance vehicles
-  const maintenanceVehicles = vehicles?.filter(vehicle => vehicle.status === 'Maintenance').length || 0;
+  const maintenanceVehicles =
+    vehicles?.filter(vehicle => vehicle.status === 'Maintenance').length || 0;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -73,7 +80,8 @@ export default async function Vehicles() {
         <div>
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Vehicles</h1>
           <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            Manage your fleet of {vehicles?.length || 0} vehicles ({activeVehicles} active, {maintenanceVehicles} in maintenance)
+            Manage your fleet of {vehicles?.length || 0} vehicles ({activeVehicles} active,{' '}
+            {maintenanceVehicles} in maintenance)
           </p>
         </div>
 
@@ -100,15 +108,21 @@ export default async function Vehicles() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400">Total Vehicles</h3>
-          <p className="text-3xl font-bold text-primary-600 dark:text-primary-400 mt-2">{vehicles?.length || 0}</p>
+          <p className="text-3xl font-bold text-primary-600 dark:text-primary-400 mt-2">
+            {vehicles?.length || 0}
+          </p>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400">Active Vehicles</h3>
-          <p className="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">{activeVehicles}</p>
+          <p className="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">
+            {activeVehicles}
+          </p>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400">In Maintenance</h3>
-          <p className="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-2">{maintenanceVehicles}</p>
+          <p className="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-2">
+            {maintenanceVehicles}
+          </p>
         </div>
       </div>
 
@@ -174,7 +188,7 @@ export default async function Vehicles() {
             </thead>
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
               {vehicles && vehicles.length > 0 ? (
-                vehicles.map((vehicle) => (
+                vehicles.map(vehicle => (
                   <tr key={vehicle.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                       {vehicle.name}
@@ -192,21 +206,29 @@ export default async function Vehicles() {
                       {vehicle.year}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        vehicle.status === 'Active'
-                          ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                          : vehicle.status === 'Maintenance'
-                          ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
-                          : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                      }`}>
+                      <span
+                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          vehicle.status === 'Active'
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                            : vehicle.status === 'Maintenance'
+                              ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
+                              : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                        }`}
+                      >
                         {vehicle.status}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      <Link href={`/vehicles/${vehicle.id}`} className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                      <Link
+                        href={`/vehicles/${vehicle.id}`}
+                        className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3"
+                      >
                         View
                       </Link>
-                      <Link href={`/vehicles/${vehicle.id}/edit`} className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
+                      <Link
+                        href={`/vehicles/${vehicle.id}/edit`}
+                        className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300"
+                      >
                         Edit
                       </Link>
                     </td>
@@ -214,7 +236,10 @@ export default async function Vehicles() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                  <td
+                    colSpan={7}
+                    className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400"
+                  >
                     No vehicles found
                   </td>
                 </tr>

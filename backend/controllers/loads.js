@@ -27,7 +27,8 @@ exports.getAllLoads = async (req, res) => {
     // Get loads for the company with vehicle and driver info
     const { data: loads, error } = await supabase
       .from('loads')
-      .select(`
+      .select(
+        `
         id, 
         description, 
         origin, 
@@ -40,7 +41,8 @@ exports.getAllLoads = async (req, res) => {
         updated_at,
         vehicles(id, name, license_plate), 
         drivers(id, name, license_number)
-      `)
+      `
+      )
       .eq('company_id', userData.company_id)
       .order('created_at', { ascending: false });
 
@@ -76,7 +78,8 @@ exports.getLoadById = async (req, res) => {
     // Get load with vehicle and driver info
     const { data: load, error } = await supabase
       .from('loads')
-      .select(`
+      .select(
+        `
         id, 
         description, 
         origin, 
@@ -89,7 +92,8 @@ exports.getLoadById = async (req, res) => {
         updated_at,
         vehicles(id, name, license_plate), 
         drivers(id, name, license_number)
-      `)
+      `
+      )
       .eq('id', req.params.id)
       .eq('company_id', userData.company_id)
       .single();
@@ -129,7 +133,7 @@ exports.createLoad = async (req, res) => {
     driver_id,
     pickup_date,
     delivery_date,
-    status = 'pending'
+    status = 'pending',
   } = req.body;
 
   try {
@@ -158,8 +162,8 @@ exports.createLoad = async (req, res) => {
           pickup_date,
           delivery_date,
           status,
-          company_id: userData.company_id
-        }
+          company_id: userData.company_id,
+        },
       ])
       .select()
       .single();
@@ -190,7 +194,7 @@ exports.updateLoad = async (req, res) => {
     driver_id,
     pickup_date,
     delivery_date,
-    status
+    status,
   } = req.body;
 
   try {
@@ -230,7 +234,7 @@ exports.updateLoad = async (req, res) => {
         pickup_date,
         delivery_date,
         status,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', req.params.id)
       .eq('company_id', userData.company_id)

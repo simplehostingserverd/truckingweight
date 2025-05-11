@@ -9,6 +9,7 @@ The `searchParams.ts` file provides utility functions for safely handling URL se
 ### Why These Utilities Are Needed
 
 In Next.js, when accessing URL search parameters using `searchParams.get()` or similar methods, the return type can be:
+
 - `string` for a single value
 - `string[]` for multiple values with the same key
 - `undefined` if the parameter doesn't exist
@@ -22,10 +23,11 @@ This can lead to bugs when you expect a string but get an array or undefined. Ou
 Safely converts a search parameter value to a string.
 
 ```typescript
-function toSearchParamString(value: SearchParamValue, defaultValue: string = ''): string
+function toSearchParamString(value: SearchParamValue, defaultValue: string = ''): string;
 ```
 
 Example:
+
 ```typescript
 // In a route handler
 const url = new URL(request.url);
@@ -41,10 +43,11 @@ const category = toSearchParamString(searchParams.get('category'), 'all');
 Safely converts a search parameter value to a number.
 
 ```typescript
-function toSearchParamNumber(value: SearchParamValue, defaultValue: number = 0): number
+function toSearchParamNumber(value: SearchParamValue, defaultValue: number = 0): number;
 ```
 
 Example:
+
 ```typescript
 const page = toSearchParamNumber(searchParams.get('page'), 1);
 const limit = toSearchParamNumber(searchParams.get('limit'), 10);
@@ -55,10 +58,11 @@ const limit = toSearchParamNumber(searchParams.get('limit'), 10);
 Safely converts a search parameter value to a boolean.
 
 ```typescript
-function toSearchParamBoolean(value: SearchParamValue, defaultValue: boolean = false): boolean
+function toSearchParamBoolean(value: SearchParamValue, defaultValue: boolean = false): boolean;
 ```
 
 Example:
+
 ```typescript
 const showDetails = toSearchParamBoolean(searchParams.get('details'), false);
 ```
@@ -68,10 +72,11 @@ const showDetails = toSearchParamBoolean(searchParams.get('details'), false);
 Parses all search parameters into a clean object with string values.
 
 ```typescript
-function parseSearchParams(searchParams: Record<string, SearchParamValue>): ParsedSearchParams
+function parseSearchParams(searchParams: Record<string, SearchParamValue>): ParsedSearchParams;
 ```
 
 Example:
+
 ```typescript
 const params = parseSearchParams(Object.fromEntries(searchParams.entries()));
 ```
@@ -81,10 +86,13 @@ const params = parseSearchParams(Object.fromEntries(searchParams.entries()));
 Creates a URLSearchParams object from a record of search parameters.
 
 ```typescript
-function createSearchParams(params: Record<string, string | number | boolean | undefined>): URLSearchParams
+function createSearchParams(
+  params: Record<string, string | number | boolean | undefined>
+): URLSearchParams;
 ```
 
 Example:
+
 ```typescript
 const params = createSearchParams({
   query: searchQuery,
@@ -111,7 +119,7 @@ export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const query = toSearchParamString(url.searchParams.get('q'), '');
   const page = toSearchParamNumber(url.searchParams.get('page'), 1);
-  
+
   // Use the parameters safely...
 }
 ```
@@ -127,17 +135,17 @@ import { toSearchParamString, createSearchParams } from '@/utils/searchParams';
 export default function SearchComponent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  
+
   const query = toSearchParamString(searchParams.get('q'), '');
-  
+
   const updateSearch = (newQuery: string) => {
     const params = createSearchParams({
       q: newQuery,
     });
-    
+
     router.push(`?${params.toString()}`);
   };
-  
+
   // Component implementation...
 }
 ```

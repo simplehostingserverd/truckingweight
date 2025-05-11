@@ -3,7 +3,8 @@ const { createClient } = require('@supabase/supabase-js');
 
 // Supabase configuration
 const supabaseUrl = 'https://fjmrukumtldijehoggeb.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqbXJ1a3VtdGxkaWplaG9nZ2ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2MDcxMzAsImV4cCI6MjA2MjE4MzEzMH0.Wy2IcOhbhiefmSN8vzfcSVa1TszUVa5PcxIniwO1p64';
+const supabaseKey =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqbXJ1a3VtdGxkaWplaG9nZ2ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2MDcxMzAsImV4cCI6MjA2MjE4MzEzMH0.Wy2IcOhbhiefmSN8vzfcSVa1TszUVa5PcxIniwO1p64';
 
 // Admin user details
 const adminEmail = 'admin@truckingsemis.com';
@@ -14,7 +15,7 @@ const companyName = 'TruckingSemis Admin';
 async function createAdminUser() {
   // Initialize Supabase client
   const supabase = createClient(supabaseUrl, supabaseKey);
-  
+
   try {
     // 1. Create user in Supabase Auth
     console.log('Creating admin user in Supabase Auth...');
@@ -77,7 +78,6 @@ async function createAdminUser() {
     console.log('\nAdmin user created successfully!');
     console.log('Email:', adminEmail);
     console.log('Password:', adminPassword);
-    
   } catch (error) {
     console.error('Error creating admin user:', error.message);
   }

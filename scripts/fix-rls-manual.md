@@ -17,20 +17,20 @@ DECLARE
     policy_record RECORD;
 BEGIN
     -- Drop all existing policies on users table
-    FOR policy_record IN 
-        SELECT policyname 
-        FROM pg_policies 
-        WHERE tablename = 'users' 
+    FOR policy_record IN
+        SELECT policyname
+        FROM pg_policies
+        WHERE tablename = 'users'
     LOOP
         EXECUTE 'DROP POLICY IF EXISTS "' || policy_record.policyname || '" ON users';
         RAISE NOTICE 'Dropped policy: %', policy_record.policyname;
     END LOOP;
-    
+
     -- Drop all existing policies on companies table
-    FOR policy_record IN 
-        SELECT policyname 
-        FROM pg_policies 
-        WHERE tablename = 'companies' 
+    FOR policy_record IN
+        SELECT policyname
+        FROM pg_policies
+        WHERE tablename = 'companies'
     LOOP
         EXECUTE 'DROP POLICY IF EXISTS "' || policy_record.policyname || '" ON companies';
         RAISE NOTICE 'Dropped policy: %', policy_record.policyname;

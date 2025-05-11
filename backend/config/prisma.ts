@@ -23,7 +23,15 @@ const prismaWithExtensions = (prisma: PrismaClient) => {
 
           // Check if the model has a company_id field
           // This is a simple check - in a real app, you might want to check the schema
-          const modelHasCompanyId = ['companies', 'users', 'vehicles', 'drivers', 'loads', 'weights', 'weigh_tickets'].includes(model);
+          const modelHasCompanyId = [
+            'companies',
+            'users',
+            'vehicles',
+            'drivers',
+            'loads',
+            'weights',
+            'weigh_tickets',
+          ].includes(model);
 
           // For admins, we don't need to filter by company_id
           if (isAdmin) {
@@ -42,7 +50,7 @@ const prismaWithExtensions = (prisma: PrismaClient) => {
             if (['findMany', 'count', 'findFirst', 'aggregate', 'groupBy'].includes(operation)) {
               args.where = {
                 ...args.where,
-                company_id: companyId
+                company_id: companyId,
               };
             }
           }
@@ -64,9 +72,7 @@ declare global {
 // Create Prisma client with logging in development
 const createPrismaClient = () => {
   const client = new PrismaClient({
-    log: process.env.NODE_ENV === 'development'
-      ? ['query', 'error', 'warn']
-      : ['error'],
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   });
 
   return prismaWithExtensions(client);

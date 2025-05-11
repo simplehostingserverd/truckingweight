@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         email,
         name: 'Demo User',
         company_id: 1,
-        is_admin: email.includes('admin')
+        is_admin: email.includes('admin'),
       };
 
       // Return success response with mock session
@@ -27,21 +27,15 @@ export async function POST(request: NextRequest) {
         session: {
           access_token: 'mock-access-token',
           refresh_token: 'mock-refresh-token',
-          expires_at: Date.now() + 3600 * 1000 // 1 hour from now
-        }
+          expires_at: Date.now() + 3600 * 1000, // 1 hour from now
+        },
       });
     }
 
     // Return error for invalid credentials
-    return NextResponse.json(
-      { error: 'Invalid login credentials' },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: 'Invalid login credentials' }, { status: 401 });
   } catch (error) {
     console.error('Error in mock login API:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

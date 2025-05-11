@@ -48,19 +48,17 @@ export default function ResetPassword() {
             Enter your email address and we'll send you a link to reset your password.
           </p>
         </div>
-        
+
         {error && (
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
-                  {error}
-                </h3>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{error}</h3>
               </div>
             </div>
           </div>
         )}
-        
+
         {message && (
           <div className="rounded-md bg-green-50 p-4 dark:bg-green-900/30">
             <div className="flex">
@@ -72,7 +70,7 @@ export default function ResetPassword() {
             </div>
           </div>
         )}
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email-address" className="sr-only">
@@ -87,7 +85,7 @@ export default function ResetPassword() {
               className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
               placeholder="Email address"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
 
@@ -100,7 +98,7 @@ export default function ResetPassword() {
               {isLoading ? 'Sending...' : 'Send reset link'}
             </button>
           </div>
-          
+
           <div className="text-center">
             <Link
               href="/login"

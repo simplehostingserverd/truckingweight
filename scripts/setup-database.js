@@ -214,7 +214,7 @@ CREATE POLICY "Loads are deletable by company users" ON loads
 async function createAdminUser() {
   try {
     console.log('Creating admin company...');
-    
+
     // Create admin company
     const { data: company, error: companyError } = await supabase
       .from('companies')
@@ -223,39 +223,39 @@ async function createAdminUser() {
           name: 'Admin Company',
           address: '123 Admin Street, Admin City',
           contact_email: 'simplehostingsolutionsd@yahoo.com',
-          contact_phone: '555-ADMIN'
-        }
+          contact_phone: '555-ADMIN',
+        },
       ])
       .select()
       .single();
-    
+
     if (companyError) {
       console.error('Error creating admin company:', companyError);
       return;
     }
-    
+
     console.log('Admin company created with ID:', company.id);
-    
+
     // Create admin user in auth
     console.log('Creating admin user in auth...');
     const adminPassword = 'Tr#ck1ng@W3ight$2024!';
-    
+
     const { data: authUser, error: authError } = await supabase.auth.admin.createUser({
       email: 'simplehostingsolutionsd@yahoo.com',
       password: adminPassword,
       email_confirm: true,
       user_metadata: {
-        name: 'System Administrator'
-      }
+        name: 'System Administrator',
+      },
     });
-    
+
     if (authError) {
       console.error('Error creating admin auth user:', authError);
       return;
     }
-    
+
     console.log('Admin auth user created with ID:', authUser.user.id);
-    
+
     // Create admin user in users table
     console.log('Creating admin user in users table...');
     const { data: user, error: userError } = await supabase
@@ -266,21 +266,20 @@ async function createAdminUser() {
           name: 'System Administrator',
           email: 'simplehostingsolutionsd@yahoo.com',
           company_id: company.id,
-          is_admin: true
-        }
+          is_admin: true,
+        },
       ])
       .select()
       .single();
-    
+
     if (userError) {
       console.error('Error creating admin user in users table:', userError);
       return;
     }
-    
+
     console.log('Admin user created successfully!');
     console.log('Email: simplehostingsolutionsd@yahoo.com');
     console.log('Password:', adminPassword);
-    
   } catch (error) {
     console.error('Unexpected error creating admin user:', error);
   }
@@ -290,30 +289,29 @@ async function createAdminUser() {
 async function setupDatabase() {
   try {
     console.log('Starting database setup...');
-    
+
     // Step 1: Create tables
     console.log('Creating tables...');
     const { error: createError } = await supabase.rpc('pgmoon.query', { query: createTablesSQL });
-    
+
     if (createError) {
       console.error('Error creating tables:', createError);
       return;
     }
-    
+
     // Step 2: Apply RLS policies
     console.log('Applying Row Level Security policies...');
     const { error: rlsError } = await supabase.rpc('pgmoon.query', { query: rlsPoliciesSQL });
-    
+
     if (rlsError) {
       console.error('Error applying RLS policies:', rlsError);
       return;
     }
-    
+
     // Step 3: Create admin user
     await createAdminUser();
-    
+
     console.log('Database setup completed successfully!');
-    
   } catch (error) {
     console.error('Unexpected error during database setup:', error);
   }

@@ -1,10 +1,10 @@
 import express from 'express';
-import { 
+import {
   getApiKeys,
   getApiKey,
   createApiKey,
   updateApiKey,
-  deleteApiKey
+  deleteApiKey,
 } from '../controllers/apiKeys';
 import { authenticateJWT } from '../middleware/auth';
 

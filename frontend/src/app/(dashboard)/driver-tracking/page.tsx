@@ -1,13 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardFooter
-} from '@/components/ui';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui';
 import TruckVisualizationTabs from '@/components/TruckTracking/TruckVisualizationTabs';
 
 interface DriverLocation {
@@ -79,8 +73,8 @@ export default function DriverTrackingPage() {
               ...data.vehicle,
               id: 2,
               name: 'Truck 202',
-            }
-          }
+            },
+          },
         ];
 
         setDriverLocations(mockDriverLocations);
@@ -137,10 +131,12 @@ export default function DriverTrackingPage() {
             <select
               className="w-[180px] rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               value={selectedDriver || ''}
-              onChange={(e) => handleDriverChange(e.target.value)}
+              onChange={e => handleDriverChange(e.target.value)}
             >
-              <option value="" disabled>Select Driver</option>
-              {driverLocations.map((driver) => (
+              <option value="" disabled>
+                Select Driver
+              </option>
+              {driverLocations.map(driver => (
                 <option key={driver.driverId} value={driver.driverId}>
                   {driver.driverName}
                 </option>
@@ -152,7 +148,7 @@ export default function DriverTrackingPage() {
             <select
               className="w-[180px] rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               value={refreshInterval}
-              onChange={(e) => handleRefreshIntervalChange(Number(e.target.value))}
+              onChange={e => handleRefreshIntervalChange(Number(e.target.value))}
             >
               <option value="10">Refresh: 10s</option>
               <option value="30">Refresh: 30s</option>
@@ -189,8 +185,14 @@ export default function DriverTrackingPage() {
                   <TruckVisualizationTabs
                     route={activeDriverLocation.route || []}
                     currentPosition={activeDriverLocation.currentPosition}
-                    mapboxToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY21haTl1dXhpMGJ2bzJ1cTVlY2p4ajhzZCJ9.AUS7RZCMk1vnR4yQR5RAEQ'}
-                    cesiumToken={process.env.NEXT_PUBLIC_CESIUM_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0YzMxZTQ1My1lODMwLTRlZTAtYmQwMC0zNzFhMzVjZjFkYWQiLCJpZCI6MTg3MzI0LCJpYXQiOjE3MDI0OTg5NTl9.U_qVSBPVJvFG5vNu7j7jgOA9jBNjqP_ZwCNIl3Xjmtw'}
+                    mapboxToken={
+                      process.env.NEXT_PUBLIC_MAPBOX_TOKEN ||
+                      'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY21haTl1dXhpMGJ2bzJ1cTVlY2p4ajhzZCJ9.AUS7RZCMk1vnR4yQR5RAEQ'
+                    }
+                    cesiumToken={
+                      process.env.NEXT_PUBLIC_CESIUM_TOKEN ||
+                      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0YzMxZTQ1My1lODMwLTRlZTAtYmQwMC0zNzFhMzVjZjFkYWQiLCJpZCI6MTg3MzI0LCJpYXQiOjE3MDI0OTg5NTl9.U_qVSBPVJvFG5vNu7j7jgOA9jBNjqP_ZwCNIl3Xjmtw'
+                    }
                   />
                 </CardContent>
                 <CardFooter>
@@ -216,16 +218,28 @@ export default function DriverTrackingPage() {
                   <CardContent>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Driver Name</p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">{activeDriverLocation.driverName}</p>
+                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                          Driver Name
+                        </p>
+                        <p className="text-lg font-bold text-gray-900 dark:text-white">
+                          {activeDriverLocation.driverName}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Current Location</p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">{activeDriverLocation.currentPosition.name}</p>
+                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                          Current Location
+                        </p>
+                        <p className="text-lg font-bold text-gray-900 dark:text-white">
+                          {activeDriverLocation.currentPosition.name}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</p>
-                        <p className="text-lg font-bold text-green-600 dark:text-green-400">Active</p>
+                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                          Status
+                        </p>
+                        <p className="text-lg font-bold text-green-600 dark:text-green-400">
+                          Active
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -238,16 +252,28 @@ export default function DriverTrackingPage() {
                   <CardContent>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Vehicle</p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">{activeDriverLocation.vehicle.name}</p>
+                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                          Vehicle
+                        </p>
+                        <p className="text-lg font-bold text-gray-900 dark:text-white">
+                          {activeDriverLocation.vehicle.name}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Model</p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">{activeDriverLocation.vehicle.model}</p>
+                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                          Model
+                        </p>
+                        <p className="text-lg font-bold text-gray-900 dark:text-white">
+                          {activeDriverLocation.vehicle.model}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Current Speed</p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">{activeDriverLocation.currentPosition.speed} mph</p>
+                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                          Current Speed
+                        </p>
+                        <p className="text-lg font-bold text-gray-900 dark:text-white">
+                          {activeDriverLocation.currentPosition.speed} mph
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -256,7 +282,9 @@ export default function DriverTrackingPage() {
             </>
           ) : (
             <div className="flex justify-center items-center h-64 bg-gray-50 dark:bg-gray-800 rounded-lg">
-              <p className="text-lg text-gray-500 dark:text-gray-400">Select a driver to view their location</p>
+              <p className="text-lg text-gray-500 dark:text-gray-400">
+                Select a driver to view their location
+              </p>
             </div>
           )}
         </div>

@@ -6,12 +6,21 @@ import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
 import { getStatusColor } from '@/lib/utils';
-import { PencilIcon, TrashIcon, ArrowLeftIcon, TruckIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
+import {
+  PencilIcon,
+  TrashIcon,
+  ArrowLeftIcon,
+  TruckIcon,
+  MapPinIcon,
+  ClockIcon,
+} from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
 import { toSearchParamString } from '@/utils/searchParams';
 
 // Dynamically import the LoadStatusUpdater component
-const LoadStatusUpdater = dynamic(() => import('@/components/Loads/LoadStatusUpdater'), { ssr: false });
+const LoadStatusUpdater = dynamic(() => import('@/components/Loads/LoadStatusUpdater'), {
+  ssr: false,
+});
 
 export default function LoadDetail({ params }: { params: { id: string } }) {
   const [load, setLoad] = useState<any>(null);
@@ -29,7 +38,9 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
     const fetchLoad = async () => {
       try {
         // Get session
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
         if (!session) {
           router.push('/login');
@@ -39,7 +50,8 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
         // Get load with vehicle and driver info
         const { data, error } = await supabase
           .from('loads')
-          .select(`
+          .select(
+            `
             id,
             description,
             origin,
@@ -57,7 +69,8 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
             route_details,
             vehicles(id, name, license_plate),
             drivers(id, name, license_number)
-          `)
+          `
+          )
           .eq('id', id)
           .single();
 
@@ -86,10 +99,7 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
     setIsDeleting(true);
 
     try {
-      const { error } = await supabase
-        .from('loads')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('loads').delete().eq('id', id);
 
       if (error) {
         throw error;
@@ -119,9 +129,7 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
-                  {error}
-                </h3>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{error}</h3>
               </div>
             </div>
           </div>
@@ -216,7 +224,9 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
             <div className="p-6">
               <dl className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
                 <div className="sm:col-span-2">
-                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Description</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Description
+                  </dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">{load.description}</dd>
                 </div>
 
@@ -226,7 +236,9 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
                 </div>
 
                 <div>
-                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Destination</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Destination
+                  </dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">{load.destination}</dd>
                 </div>
 
@@ -238,19 +250,25 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
                 <div>
                   <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Vehicle</dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">
-                    {load.vehicles ? `${load.vehicles.name} (${load.vehicles.license_plate})` : 'Unassigned'}
+                    {load.vehicles
+                      ? `${load.vehicles.name} (${load.vehicles.license_plate})`
+                      : 'Unassigned'}
                   </dd>
                 </div>
 
                 <div>
                   <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Driver</dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">
-                    {load.drivers ? `${load.drivers.name} (${load.drivers.license_number})` : 'Unassigned'}
+                    {load.drivers
+                      ? `${load.drivers.name} (${load.drivers.license_number})`
+                      : 'Unassigned'}
                   </dd>
                 </div>
 
                 <div className="sm:col-span-2">
-                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Record Information</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Record Information
+                  </dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">
                     <div className="flex flex-col space-y-1">
                       <span>Created: {new Date(load.created_at).toLocaleString()}</span>
@@ -283,7 +301,9 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
                 <MapPinIcon className="h-5 w-5 text-primary-500 mr-2" />
                 <div>
                   <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Distance</dt>
-                  <dd className="mt-1 text-sm text-gray-900 dark:text-white">{load.distance || 'Not available'}</dd>
+                  <dd className="mt-1 text-sm text-gray-900 dark:text-white">
+                    {load.distance || 'Not available'}
+                  </dd>
                 </div>
               </div>
 
@@ -291,25 +311,35 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
                 <ClockIcon className="h-5 w-5 text-primary-500 mr-2" />
                 <div>
                   <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Duration</dt>
-                  <dd className="mt-1 text-sm text-gray-900 dark:text-white">{load.duration || 'Not available'}</dd>
+                  <dd className="mt-1 text-sm text-gray-900 dark:text-white">
+                    {load.duration || 'Not available'}
+                  </dd>
                 </div>
               </div>
 
               {/* Estimated Times */}
               <div className="flex items-start">
                 <div>
-                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Estimated Departure</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Estimated Departure
+                  </dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">
-                    {load.estimated_departure ? new Date(load.estimated_departure).toLocaleString() : 'Not scheduled'}
+                    {load.estimated_departure
+                      ? new Date(load.estimated_departure).toLocaleString()
+                      : 'Not scheduled'}
                   </dd>
                 </div>
               </div>
 
               <div className="flex items-start">
                 <div>
-                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Estimated Arrival</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Estimated Arrival
+                  </dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">
-                    {load.estimated_arrival ? new Date(load.estimated_arrival).toLocaleString() : 'Not scheduled'}
+                    {load.estimated_arrival
+                      ? new Date(load.estimated_arrival).toLocaleString()
+                      : 'Not scheduled'}
                   </dd>
                 </div>
               </div>
@@ -317,18 +347,26 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
               {/* Actual Times */}
               <div className="flex items-start">
                 <div>
-                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Actual Departure</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Actual Departure
+                  </dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">
-                    {load.actual_departure ? new Date(load.actual_departure).toLocaleString() : 'Not departed'}
+                    {load.actual_departure
+                      ? new Date(load.actual_departure).toLocaleString()
+                      : 'Not departed'}
                   </dd>
                 </div>
               </div>
 
               <div className="flex items-start">
                 <div>
-                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Actual Arrival</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Actual Arrival
+                  </dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">
-                    {load.actual_arrival ? new Date(load.actual_arrival).toLocaleString() : 'Not arrived'}
+                    {load.actual_arrival
+                      ? new Date(load.actual_arrival).toLocaleString()
+                      : 'Not arrived'}
                   </dd>
                 </div>
               </div>
@@ -336,7 +374,9 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
               {/* Route Details */}
               {load.route_details && (
                 <div className="sm:col-span-2">
-                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Route Details</dt>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Route Details
+                  </dt>
                   <dd className="mt-1 text-sm text-gray-900 dark:text-white">
                     <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded-md">
                       <pre className="text-xs overflow-auto">

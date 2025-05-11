@@ -1,11 +1,6 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "eslint:recommended"
-  ],
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "extends": ["next/core-web-vitals", "eslint:recommended"],
+  "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2022,
@@ -32,11 +27,5 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": [
-    "node_modules/",
-    ".next/",
-    "out/",
-    "public/",
-    "**/*.d.ts"
-  ]
+  "ignorePatterns": ["node_modules/", ".next/", "out/", "public/", "**/*.d.ts"]
 }

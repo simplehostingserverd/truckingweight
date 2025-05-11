@@ -25,14 +25,14 @@ router.post('/process', protect, async (req, res) => {
         success: true,
         message: `Successfully processed ${result.processed} items (${result.failed} failed)`,
         processed: result.processed,
-        failed: result.failed
+        failed: result.failed,
       });
     } else {
       res.status(500).json({
         success: false,
         message: 'Error processing sync queue',
         processed: result.processed,
-        failed: result.failed
+        failed: result.failed,
       });
     }
   } catch (error) {
@@ -41,7 +41,7 @@ router.post('/process', protect, async (req, res) => {
       success: false,
       message: `Error: ${error.message}`,
       processed: 0,
-      failed: 0
+      failed: 0,
     });
   }
 });
@@ -93,13 +93,13 @@ router.get('/status', protect, async (req, res) => {
       success: true,
       pending: pendingItems.length,
       processed: processedItems.length,
-      failed: failedItems.length
+      failed: failedItems.length,
     });
   } catch (error) {
     console.error('Error in sync status route:', error);
     res.status(500).json({
       success: false,
-      message: `Error: ${error.message}`
+      message: `Error: ${error.message}`,
     });
   }
 });

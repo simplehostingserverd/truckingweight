@@ -92,8 +92,8 @@ exports.createWeight = async (req, res) => {
           driver,
           status,
           company_id: req.user.companyId,
-          created_at: new Date().toISOString()
-        }
+          created_at: new Date().toISOString(),
+        },
       ])
       .select()
       .single();
@@ -203,10 +203,7 @@ exports.deleteWeight = async (req, res) => {
     }
 
     // Delete weight entry
-    const { error: deleteError } = await supabase
-      .from('weights')
-      .delete()
-      .eq('id', req.params.id);
+    const { error: deleteError } = await supabase.from('weights').delete().eq('id', req.params.id);
 
     if (deleteError) {
       console.error('Error deleting weight:', deleteError);

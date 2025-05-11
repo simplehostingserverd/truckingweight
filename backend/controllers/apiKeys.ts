@@ -27,7 +27,7 @@ export const getApiKeys = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -35,12 +35,10 @@ export const getApiKeys = async (req: Request, res: Response) => {
     // Check if user is admin to determine if they can see all API keys
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
-    const where = user?.is_admin 
-      ? {} 
-      : { company_id: companyId };
+    const where = user?.is_admin ? {} : { company_id: companyId };
 
     const apiKeys = await prisma.api_keys.findMany({
       where,
@@ -56,10 +54,10 @@ export const getApiKeys = async (req: Request, res: Response) => {
         companies: {
           select: {
             id: true,
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
 
     return res.status(200).json(apiKeys);
@@ -77,7 +75,7 @@ export const getApiKey = async (req: Request, res: Response) => {
     const { id } = req.params;
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -85,7 +83,7 @@ export const getApiKey = async (req: Request, res: Response) => {
     // Check if user is admin
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
     const apiKey = await prisma.api_keys.findUnique({
@@ -94,10 +92,10 @@ export const getApiKey = async (req: Request, res: Response) => {
         companies: {
           select: {
             id: true,
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
 
     if (!apiKey) {
@@ -111,7 +109,7 @@ export const getApiKey = async (req: Request, res: Response) => {
 
     // Remove actual key before returning
     const { key, ...safeApiKey } = apiKey;
-    
+
     return res.status(200).json(safeApiKey);
   } catch (error) {
     console.error('Error fetching API key:', error);
@@ -126,7 +124,7 @@ export const createApiKey = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId || !companyId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -134,9 +132,9 @@ export const createApiKey = async (req: Request, res: Response) => {
     // Validate request body
     const validationResult = createApiKeySchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ 
-        message: 'Validation error', 
-        errors: validationResult.error.errors 
+      return res.status(400).json({
+        message: 'Validation error',
+        errors: validationResult.error.errors,
       });
     }
 
@@ -154,14 +152,14 @@ export const createApiKey = async (req: Request, res: Response) => {
         expires_at: expires_at ? new Date(expires_at) : null,
         is_active: true,
         company_id: companyId,
-        created_by: userId
-      }
+        created_by: userId,
+      },
     });
 
     // Return the API key (only shown once)
     return res.status(201).json({
       ...apiKey,
-      message: 'Store this API key securely. It will not be shown again.'
+      message: 'Store this API key securely. It will not be shown again.',
     });
   } catch (error) {
     console.error('Error creating API key:', error);
@@ -177,7 +175,7 @@ export const updateApiKey = async (req: Request, res: Response) => {
     const { id } = req.params;
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -185,15 +183,15 @@ export const updateApiKey = async (req: Request, res: Response) => {
     // Validate request body
     const validationResult = updateApiKeySchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ 
-        message: 'Validation error', 
-        errors: validationResult.error.errors 
+      return res.status(400).json({
+        message: 'Validation error',
+        errors: validationResult.error.errors,
       });
     }
 
     // Check if API key exists and user has access
     const existingApiKey = await prisma.api_keys.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingApiKey) {
@@ -203,7 +201,7 @@ export const updateApiKey = async (req: Request, res: Response) => {
     // Check if user is admin or owns the API key
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
     if (!user?.is_admin && existingApiKey.company_id !== companyId) {
@@ -219,13 +217,13 @@ export const updateApiKey = async (req: Request, res: Response) => {
         permissions,
         is_active,
         expires_at: expires_at ? new Date(expires_at) : undefined,
-        updated_at: new Date()
-      }
+        updated_at: new Date(),
+      },
     });
 
     // Remove actual key before returning
     const { key, ...safeApiKey } = apiKey;
-    
+
     return res.status(200).json(safeApiKey);
   } catch (error) {
     console.error('Error updating API key:', error);
@@ -241,14 +239,14 @@ export const deleteApiKey = async (req: Request, res: Response) => {
     const { id } = req.params;
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
     // Check if API key exists and user has access
     const existingApiKey = await prisma.api_keys.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingApiKey) {
@@ -258,7 +256,7 @@ export const deleteApiKey = async (req: Request, res: Response) => {
     // Check if user is admin or owns the API key
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
     if (!user?.is_admin && existingApiKey.company_id !== companyId) {
@@ -267,9 +265,9 @@ export const deleteApiKey = async (req: Request, res: Response) => {
 
     // Delete the API key
     await prisma.api_keys.delete({
-      where: { id }
+      where: { id },
     });
-    
+
     return res.status(204).send();
   } catch (error) {
     console.error('Error deleting API key:', error);

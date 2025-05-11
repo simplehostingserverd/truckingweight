@@ -28,7 +28,7 @@ export const getWebhookSubscriptions = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -36,12 +36,10 @@ export const getWebhookSubscriptions = async (req: Request, res: Response) => {
     // Check if user is admin to determine if they can see all webhooks
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
-    const where = user?.is_admin 
-      ? {} 
-      : { company_id: companyId };
+    const where = user?.is_admin ? {} : { company_id: companyId };
 
     const webhooks = await prisma.webhook_subscriptions.findMany({
       where,
@@ -56,10 +54,10 @@ export const getWebhookSubscriptions = async (req: Request, res: Response) => {
         companies: {
           select: {
             id: true,
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
 
     return res.status(200).json(webhooks);
@@ -77,7 +75,7 @@ export const getWebhookSubscription = async (req: Request, res: Response) => {
     const { id } = req.params;
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -85,7 +83,7 @@ export const getWebhookSubscription = async (req: Request, res: Response) => {
     // Check if user is admin
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
     const webhook = await prisma.webhook_subscriptions.findUnique({
@@ -94,10 +92,10 @@ export const getWebhookSubscription = async (req: Request, res: Response) => {
         companies: {
           select: {
             id: true,
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
 
     if (!webhook) {
@@ -111,7 +109,7 @@ export const getWebhookSubscription = async (req: Request, res: Response) => {
 
     // Remove secret key before returning
     const { secret_key, ...safeWebhook } = webhook;
-    
+
     return res.status(200).json(safeWebhook);
   } catch (error) {
     console.error('Error fetching webhook subscription:', error);
@@ -126,7 +124,7 @@ export const createWebhookSubscription = async (req: Request, res: Response) => 
   try {
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId || !companyId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -134,9 +132,9 @@ export const createWebhookSubscription = async (req: Request, res: Response) => 
     // Validate request body
     const validationResult = createWebhookSchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ 
-        message: 'Validation error', 
-        errors: validationResult.error.errors 
+      return res.status(400).json({
+        message: 'Validation error',
+        errors: validationResult.error.errors,
       });
     }
 
@@ -154,15 +152,15 @@ export const createWebhookSubscription = async (req: Request, res: Response) => 
         secret_key: secretKey,
         is_active,
         company_id: companyId,
-        created_by: userId
-      }
+        created_by: userId,
+      },
     });
 
     // Return the webhook with the secret key (only shown once)
     return res.status(201).json({
       ...webhook,
       secret_key: secretKey,
-      message: 'Store this secret key securely. It will not be shown again.'
+      message: 'Store this secret key securely. It will not be shown again.',
     });
   } catch (error) {
     console.error('Error creating webhook subscription:', error);
@@ -178,7 +176,7 @@ export const updateWebhookSubscription = async (req: Request, res: Response) => 
     const { id } = req.params;
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -186,15 +184,15 @@ export const updateWebhookSubscription = async (req: Request, res: Response) => 
     // Validate request body
     const validationResult = updateWebhookSchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ 
-        message: 'Validation error', 
-        errors: validationResult.error.errors 
+      return res.status(400).json({
+        message: 'Validation error',
+        errors: validationResult.error.errors,
       });
     }
 
     // Check if webhook exists and user has access
     const existingWebhook = await prisma.webhook_subscriptions.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingWebhook) {
@@ -204,7 +202,7 @@ export const updateWebhookSubscription = async (req: Request, res: Response) => 
     // Check if user is admin or owns the webhook
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
     if (!user?.is_admin && existingWebhook.company_id !== companyId) {
@@ -220,13 +218,13 @@ export const updateWebhookSubscription = async (req: Request, res: Response) => 
         event_types,
         target_url,
         is_active,
-        updated_at: new Date()
-      }
+        updated_at: new Date(),
+      },
     });
 
     // Remove secret key before returning
     const { secret_key, ...safeWebhook } = webhook;
-    
+
     return res.status(200).json(safeWebhook);
   } catch (error) {
     console.error('Error updating webhook subscription:', error);
@@ -242,14 +240,14 @@ export const deleteWebhookSubscription = async (req: Request, res: Response) => 
     const { id } = req.params;
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
     // Check if webhook exists and user has access
     const existingWebhook = await prisma.webhook_subscriptions.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingWebhook) {
@@ -259,7 +257,7 @@ export const deleteWebhookSubscription = async (req: Request, res: Response) => 
     // Check if user is admin or owns the webhook
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
     if (!user?.is_admin && existingWebhook.company_id !== companyId) {
@@ -268,9 +266,9 @@ export const deleteWebhookSubscription = async (req: Request, res: Response) => 
 
     // Delete the webhook
     await prisma.webhook_subscriptions.delete({
-      where: { id }
+      where: { id },
     });
-    
+
     return res.status(204).send();
   } catch (error) {
     console.error('Error deleting webhook subscription:', error);
@@ -286,14 +284,14 @@ export const regenerateWebhookSecret = async (req: Request, res: Response) => {
     const { id } = req.params;
     const userId = req.user?.id;
     const companyId = req.user?.company_id;
-    
+
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
     // Check if webhook exists and user has access
     const existingWebhook = await prisma.webhook_subscriptions.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingWebhook) {
@@ -303,7 +301,7 @@ export const regenerateWebhookSecret = async (req: Request, res: Response) => {
     // Check if user is admin or owns the webhook
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { is_admin: true }
+      select: { is_admin: true },
     });
 
     if (!user?.is_admin && existingWebhook.company_id !== companyId) {
@@ -318,14 +316,14 @@ export const regenerateWebhookSecret = async (req: Request, res: Response) => {
       where: { id },
       data: {
         secret_key: secretKey,
-        updated_at: new Date()
-      }
+        updated_at: new Date(),
+      },
     });
-    
+
     return res.status(200).json({
       id,
       secret_key: secretKey,
-      message: 'Store this secret key securely. It will not be shown again.'
+      message: 'Store this secret key securely. It will not be shown again.',
     });
   } catch (error) {
     console.error('Error regenerating webhook secret:', error);

@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
 import Link from 'next/link';
-import { 
-  BellIcon, 
-  PlusIcon, 
+import {
+  BellIcon,
+  PlusIcon,
   ArrowLeftIcon,
   ClipboardDocumentIcon,
   EyeIcon,
@@ -15,7 +15,7 @@ import {
   TrashIcon,
   CheckCircleIcon,
   XCircleIcon,
-  ArrowPathIcon
+  ArrowPathIcon,
 } from '@heroicons/react/24/outline';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -33,7 +33,7 @@ interface Webhook {
 export default function WebhooksPage() {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
-  
+
   const [webhooks, setWebhooks] = useState<Webhook[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +41,10 @@ export default function WebhooksPage() {
   const [newWebhookName, setNewWebhookName] = useState('');
   const [newWebhookUrl, setNewWebhookUrl] = useState('');
   const [newWebhookEvents, setNewWebhookEvents] = useState<string[]>(['weight.created']);
-  const [newWebhookCreated, setNewWebhookCreated] = useState<{secret_key: string, id: string} | null>(null);
+  const [newWebhookCreated, setNewWebhookCreated] = useState<{
+    secret_key: string;
+    id: string;
+  } | null>(null);
   const [hiddenSecrets, setHiddenSecrets] = useState<Set<string>>(new Set());
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
 
@@ -57,7 +60,7 @@ export default function WebhooksPage() {
     { value: 'driver.updated', label: 'Driver Updated' },
     { value: 'compliance.alert', label: 'Compliance Alert' },
     { value: 'scale.reading', label: 'Scale Reading' },
-    { value: 'ticket.generated', label: 'Ticket Generated' }
+    { value: 'ticket.generated', label: 'Ticket Generated' },
   ];
 
   // Fetch webhooks
@@ -66,14 +69,14 @@ export default function WebhooksPage() {
       try {
         setLoading(true);
         setError(null);
-        
+
         const { data, error } = await supabase
           .from('webhook_subscriptions')
           .select('*')
           .order('created_at', { ascending: false });
-        
+
         if (error) throw error;
-        
+
         setWebhooks(data || []);
       } catch (err: any) {
         console.error('Error fetching webhooks:', err);
@@ -82,7 +85,7 @@ export default function WebhooksPage() {
         setLoading(false);
       }
     };
-    
+
     fetchWebhooks();
   }, [supabase]);
 
@@ -113,37 +116,37 @@ export default function WebhooksPage() {
   // Create new webhook
   const handleCreateWebhook = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       setLoading(true);
       setError(null);
-      
+
       const { data, error } = await supabase.rpc('create_webhook_subscription', {
         name: newWebhookName,
         event_types: newWebhookEvents,
-        target_url: newWebhookUrl
+        target_url: newWebhookUrl,
       });
-      
+
       if (error) throw error;
-      
+
       // Store the newly created webhook secret (only shown once)
       setNewWebhookCreated({
         secret_key: data.secret_key,
-        id: data.id
+        id: data.id,
       });
-      
+
       // Reset form
       setNewWebhookName('');
       setNewWebhookUrl('');
       setNewWebhookEvents(['weight.created']);
       setShowCreateForm(false);
-      
+
       // Refresh the list
       const { data: updatedWebhooks } = await supabase
         .from('webhook_subscriptions')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       setWebhooks(updatedWebhooks || []);
     } catch (err: any) {
       console.error('Error creating webhook:', err);
@@ -155,31 +158,35 @@ export default function WebhooksPage() {
 
   // Regenerate webhook secret
   const handleRegenerateSecret = async (id: string) => {
-    if (!confirm('Are you sure you want to regenerate the secret key? All existing integrations using this webhook will need to be updated.')) {
+    if (
+      !confirm(
+        'Are you sure you want to regenerate the secret key? All existing integrations using this webhook will need to be updated.'
+      )
+    ) {
       return;
     }
-    
+
     try {
       setLoading(true);
-      
+
       const { data, error } = await supabase.rpc('regenerate_webhook_secret', {
-        webhook_id: id
+        webhook_id: id,
       });
-      
+
       if (error) throw error;
-      
+
       // Show the new secret
       setNewWebhookCreated({
         secret_key: data.secret_key,
-        id: id
+        id: id,
       });
-      
+
       // Refresh the list
       const { data: updatedWebhooks } = await supabase
         .from('webhook_subscriptions')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       setWebhooks(updatedWebhooks || []);
     } catch (err: any) {
       console.error('Error regenerating webhook secret:', err);
@@ -194,17 +201,14 @@ export default function WebhooksPage() {
     if (!confirm('Are you sure you want to delete this webhook? This action cannot be undone.')) {
       return;
     }
-    
+
     try {
       setLoading(true);
-      
-      const { error } = await supabase
-        .from('webhook_subscriptions')
-        .delete()
-        .eq('id', id);
-      
+
+      const { error } = await supabase.from('webhook_subscriptions').delete().eq('id', id);
+
       if (error) throw error;
-      
+
       // Remove from state
       setWebhooks(webhooks.filter(webhook => webhook.id !== id));
     } catch (err: any) {
@@ -219,20 +223,20 @@ export default function WebhooksPage() {
   const toggleWebhookStatus = async (id: string, currentStatus: boolean) => {
     try {
       setLoading(true);
-      
+
       const { error } = await supabase
         .from('webhook_subscriptions')
         .update({ is_active: !currentStatus })
         .eq('id', id);
-      
+
       if (error) throw error;
-      
+
       // Update in state
-      setWebhooks(webhooks.map(webhook => 
-        webhook.id === id 
-          ? { ...webhook, is_active: !currentStatus } 
-          : webhook
-      ));
+      setWebhooks(
+        webhooks.map(webhook =>
+          webhook.id === id ? { ...webhook, is_active: !currentStatus } : webhook
+        )
+      );
     } catch (err: any) {
       console.error('Error updating webhook status:', err);
       setError('Failed to update webhook status');
@@ -264,9 +268,11 @@ export default function WebhooksPage() {
           <div className="flex justify-between items-center">
             <div>
               <p className="font-medium">Webhook Secret Key</p>
-              <p className="text-sm mt-1">Copy this secret key now. You won't be able to see it again.</p>
+              <p className="text-sm mt-1">
+                Copy this secret key now. You won't be able to see it again.
+              </p>
             </div>
-            <button 
+            <button
               onClick={() => setNewWebhookCreated(null)}
               className="text-green-800 dark:text-green-200 hover:text-green-600 dark:hover:text-green-400"
             >
@@ -307,38 +313,46 @@ export default function WebhooksPage() {
 
         {showCreateForm && (
           <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-medium text-gray-800 dark:text-white mb-4">Create New Webhook</h3>
+            <h3 className="text-lg font-medium text-gray-800 dark:text-white mb-4">
+              Create New Webhook
+            </h3>
             <form onSubmit={handleCreateWebhook}>
               <div className="mb-4">
-                <label htmlFor="webhookName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="webhookName"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Webhook Name
                 </label>
                 <input
                   type="text"
                   id="webhookName"
                   value={newWebhookName}
-                  onChange={(e) => setNewWebhookName(e.target.value)}
+                  onChange={e => setNewWebhookName(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"
                   placeholder="e.g., Weight Updates Webhook"
                   required
                 />
               </div>
-              
+
               <div className="mb-4">
-                <label htmlFor="webhookUrl" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="webhookUrl"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Target URL
                 </label>
                 <input
                   type="url"
                   id="webhookUrl"
                   value={newWebhookUrl}
-                  onChange={(e) => setNewWebhookUrl(e.target.value)}
+                  onChange={e => setNewWebhookUrl(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"
                   placeholder="https://example.com/webhook"
                   required
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Event Types
@@ -349,7 +363,7 @@ export default function WebhooksPage() {
                       <input
                         type="checkbox"
                         checked={newWebhookEvents.includes(event.value)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setNewWebhookEvents([...newWebhookEvents, event.value]);
                           } else {
@@ -358,12 +372,14 @@ export default function WebhooksPage() {
                         }}
                         className="rounded border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-700"
                       />
-                      <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">{event.label}</span>
+                      <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                        {event.label}
+                      </span>
                     </label>
                   ))}
                 </div>
               </div>
-              
+
               <div className="flex justify-end space-x-2">
                 <button
                   type="button"
@@ -374,7 +390,9 @@ export default function WebhooksPage() {
                 </button>
                 <button
                   type="submit"
-                  disabled={loading || !newWebhookName || !newWebhookUrl || newWebhookEvents.length === 0}
+                  disabled={
+                    loading || !newWebhookName || !newWebhookUrl || newWebhookEvents.length === 0
+                  }
                   className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Create Webhook
@@ -397,28 +415,46 @@ export default function WebhooksPage() {
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-900">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                  >
                     Name
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                  >
                     URL
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                  >
                     Events
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                  >
                     Created
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                  >
                     Status
                   </th>
-                  <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                  >
                     Actions
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {webhooks.map((webhook) => (
+                {webhooks.map(webhook => (
                   <tr key={webhook.id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                       {webhook.name}
@@ -442,8 +478,8 @@ export default function WebhooksPage() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                       <div className="flex flex-wrap gap-1">
                         {webhook.event_types.slice(0, 2).map(event => (
-                          <span 
-                            key={event} 
+                          <span
+                            key={event}
                             className="px-2 py-1 text-xs rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300"
                           >
                             {event}
@@ -457,14 +493,16 @@ export default function WebhooksPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      {webhook.created_at ? formatDistanceToNow(new Date(webhook.created_at), { addSuffix: true }) : 'N/A'}
+                      {webhook.created_at
+                        ? formatDistanceToNow(new Date(webhook.created_at), { addSuffix: true })
+                        : 'N/A'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <button
                         onClick={() => toggleWebhookStatus(webhook.id, webhook.is_active)}
                         className={`px-2 py-1 text-xs rounded-full ${
-                          webhook.is_active 
-                            ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' 
+                          webhook.is_active
+                            ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300'
                             : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
                         }`}
                       >
@@ -500,18 +538,22 @@ export default function WebhooksPage() {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <h3 className="text-lg font-medium text-gray-800 dark:text-white mb-4">Webhook Usage</h3>
         <p className="text-gray-600 dark:text-gray-400 mb-4">
-          Webhooks allow external systems to receive real-time notifications when events occur in your ScaleMasterAI account.
+          Webhooks allow external systems to receive real-time notifications when events occur in
+          your ScaleMasterAI account.
         </p>
         <h4 className="text-md font-medium text-gray-800 dark:text-white mt-4 mb-2">Security</h4>
         <p className="text-gray-600 dark:text-gray-400 mb-4">
-          Each webhook includes a secret key that is used to sign the payload. Verify the signature in your webhook handler to ensure the request is authentic.
+          Each webhook includes a secret key that is used to sign the payload. Verify the signature
+          in your webhook handler to ensure the request is authentic.
         </p>
-        <h4 className="text-md font-medium text-gray-800 dark:text-white mt-4 mb-2">Payload Format</h4>
+        <h4 className="text-md font-medium text-gray-800 dark:text-white mt-4 mb-2">
+          Payload Format
+        </h4>
         <p className="text-gray-600 dark:text-gray-400 mb-2">
           All webhook payloads follow this format:
         </p>
         <pre className="bg-gray-50 dark:bg-gray-900 p-4 rounded-md text-sm overflow-x-auto mb-4">
-{`{
+          {`{
   "event_type": "weight.created",
   "timestamp": "2023-06-15T14:22:10Z",
   "data": {
@@ -519,8 +561,8 @@ export default function WebhooksPage() {
   }
 }`}
         </pre>
-        <Link 
-          href="/integrations/docs#webhooks" 
+        <Link
+          href="/integrations/docs#webhooks"
           className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300"
         >
           View webhook documentation →

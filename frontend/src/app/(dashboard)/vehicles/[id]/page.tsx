@@ -9,7 +9,7 @@ import {
   ScaleIcon,
   CalendarIcon,
   IdentificationIcon,
-  BuildingOfficeIcon
+  BuildingOfficeIcon,
 } from '@heroicons/react/24/outline';
 import { formatDate } from '@/lib/utils';
 import { toSearchParamString } from '@/utils/searchParams';
@@ -21,7 +21,9 @@ export default async function VehicleDetail({ params }: { params: { id: string }
   const id = toSearchParamString(params.id, '');
 
   // Get user data
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { data: userData } = await supabase
     .from('users')
     .select('company_id')
@@ -31,7 +33,8 @@ export default async function VehicleDetail({ params }: { params: { id: string }
   // Get vehicle data
   const { data: vehicle, error } = await supabase
     .from('vehicles')
-    .select(`
+    .select(
+      `
       *,
       weights:weights(
         id,
@@ -47,7 +50,8 @@ export default async function VehicleDetail({ params }: { params: { id: string }
         destination,
         status
       )
-    `)
+    `
+    )
     .eq('id', id)
     .eq('company_id', userData?.company_id)
     .single();
@@ -61,7 +65,8 @@ export default async function VehicleDetail({ params }: { params: { id: string }
   const recentWeights = vehicle.weights?.slice(0, 5) || [];
 
   // Get active loads
-  const activeLoads = vehicle.loads?.filter(load => load.status === 'In Transit' || load.status === 'Pending') || [];
+  const activeLoads =
+    vehicle.loads?.filter(load => load.status === 'In Transit' || load.status === 'Pending') || [];
 
   // Get status badge color
   const getStatusBadgeColor = (status: string) => {
@@ -118,7 +123,9 @@ export default async function VehicleDetail({ params }: { params: { id: string }
             <ArrowLeftIcon className="h-5 w-5" />
           </Link>
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">{vehicle.name}</h1>
-          <span className={`ml-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeColor(vehicle.status)}`}>
+          <span
+            className={`ml-4 px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeColor(vehicle.status)}`}
+          >
             {vehicle.status}
           </span>
         </div>
@@ -147,7 +154,9 @@ export default async function VehicleDetail({ params }: { params: { id: string }
                   </div>
                   <div className="ml-3">
                     <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Type</h3>
-                    <p className="text-base font-medium text-gray-900 dark:text-white">{vehicle.type}</p>
+                    <p className="text-base font-medium text-gray-900 dark:text-white">
+                      {vehicle.type}
+                    </p>
                   </div>
                 </div>
 
@@ -156,8 +165,12 @@ export default async function VehicleDetail({ params }: { params: { id: string }
                     <IdentificationIcon className="h-6 w-6 text-gray-400" />
                   </div>
                   <div className="ml-3">
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">License Plate</h3>
-                    <p className="text-base font-medium text-gray-900 dark:text-white">{vehicle.license_plate}</p>
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      License Plate
+                    </h3>
+                    <p className="text-base font-medium text-gray-900 dark:text-white">
+                      {vehicle.license_plate}
+                    </p>
                   </div>
                 </div>
 
@@ -168,7 +181,9 @@ export default async function VehicleDetail({ params }: { params: { id: string }
                     </div>
                     <div className="ml-3">
                       <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">VIN</h3>
-                      <p className="text-base font-medium text-gray-900 dark:text-white">{vehicle.vin}</p>
+                      <p className="text-base font-medium text-gray-900 dark:text-white">
+                        {vehicle.vin}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -179,7 +194,9 @@ export default async function VehicleDetail({ params }: { params: { id: string }
                       <BuildingOfficeIcon className="h-6 w-6 text-gray-400" />
                     </div>
                     <div className="ml-3">
-                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Make/Model</h3>
+                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Make/Model
+                      </h3>
                       <p className="text-base font-medium text-gray-900 dark:text-white">
                         {vehicle.make} {vehicle.model}
                       </p>
@@ -194,7 +211,9 @@ export default async function VehicleDetail({ params }: { params: { id: string }
                     </div>
                     <div className="ml-3">
                       <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Year</h3>
-                      <p className="text-base font-medium text-gray-900 dark:text-white">{vehicle.year}</p>
+                      <p className="text-base font-medium text-gray-900 dark:text-white">
+                        {vehicle.year}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -205,8 +224,12 @@ export default async function VehicleDetail({ params }: { params: { id: string }
                       <ScaleIcon className="h-6 w-6 text-gray-400" />
                     </div>
                     <div className="ml-3">
-                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Maximum Weight</h3>
-                      <p className="text-base font-medium text-gray-900 dark:text-white">{vehicle.max_weight}</p>
+                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Maximum Weight
+                      </h3>
+                      <p className="text-base font-medium text-gray-900 dark:text-white">
+                        {vehicle.max_weight}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -239,7 +262,7 @@ export default async function VehicleDetail({ params }: { params: { id: string }
                 </thead>
                 <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {recentWeights.length > 0 ? (
-                    recentWeights.map((weight) => (
+                    recentWeights.map(weight => (
                       <tr key={weight.id}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                           {formatDate(weight.date)} {weight.time}
@@ -248,12 +271,17 @@ export default async function VehicleDetail({ params }: { params: { id: string }
                           {weight.weight} lbs
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getWeightStatusBadgeColor(weight.status)}`}>
+                          <span
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getWeightStatusBadgeColor(weight.status)}`}
+                          >
                             {weight.status}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                          <Link href={`/weights/${weight.id}`} className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
+                          <Link
+                            href={`/weights/${weight.id}`}
+                            className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300"
+                          >
                             View
                           </Link>
                         </td>
@@ -261,7 +289,10 @@ export default async function VehicleDetail({ params }: { params: { id: string }
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={4} className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                      <td
+                        colSpan={4}
+                        className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400"
+                      >
                         No weight records found
                       </td>
                     </tr>
@@ -289,11 +320,18 @@ export default async function VehicleDetail({ params }: { params: { id: string }
             <div className="p-6">
               {activeLoads.length > 0 ? (
                 <div className="space-y-4">
-                  {activeLoads.map((load) => (
-                    <div key={load.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                  {activeLoads.map(load => (
+                    <div
+                      key={load.id}
+                      className="border border-gray-200 dark:border-gray-700 rounded-lg p-4"
+                    >
                       <div className="flex justify-between items-start">
-                        <h3 className="text-sm font-medium text-gray-900 dark:text-white">{load.description}</h3>
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getLoadStatusBadgeColor(load.status)}`}>
+                        <h3 className="text-sm font-medium text-gray-900 dark:text-white">
+                          {load.description}
+                        </h3>
+                        <span
+                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getLoadStatusBadgeColor(load.status)}`}
+                        >
                           {load.status}
                         </span>
                       </div>

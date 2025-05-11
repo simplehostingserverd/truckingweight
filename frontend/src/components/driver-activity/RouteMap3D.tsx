@@ -30,7 +30,7 @@ const RouteMap3D: React.FC<RouteMap3DProps> = ({ route, currentPosition }) => {
 
     // Scene setup
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0xDFE9F3, 0.002);
+    scene.fog = new THREE.FogExp2(0xdfe9f3, 0.002);
 
     // Camera setup
     const camera = new THREE.PerspectiveCamera(
@@ -44,7 +44,7 @@ const RouteMap3D: React.FC<RouteMap3DProps> = ({ route, currentPosition }) => {
     // Renderer setup
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
-      logarithmicDepthBuffer: true
+      logarithmicDepthBuffer: true,
     });
     renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
     renderer.shadowMap.enabled = true;
@@ -98,21 +98,21 @@ const RouteMap3D: React.FC<RouteMap3DProps> = ({ route, currentPosition }) => {
 
     // Add water
     const waterGeometry = new THREE.PlaneGeometry(10000, 10000);
-    const water = new Water(
-      waterGeometry,
-      {
-        textureWidth: 512,
-        textureHeight: 512,
-        waterNormals: new THREE.TextureLoader().load('/textures/waternormals.jpg', function (texture) {
+    const water = new Water(waterGeometry, {
+      textureWidth: 512,
+      textureHeight: 512,
+      waterNormals: new THREE.TextureLoader().load(
+        '/textures/waternormals.jpg',
+        function (texture) {
           texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-        }),
-        sunDirection: new THREE.Vector3(),
-        sunColor: 0xffffff,
-        waterColor: 0x001e0f,
-        distortionScale: 3.7,
-        fog: scene.fog !== undefined
-      }
-    );
+        }
+      ),
+      sunDirection: new THREE.Vector3(),
+      sunColor: 0xffffff,
+      waterColor: 0x001e0f,
+      distortionScale: 3.7,
+      fog: scene.fog !== undefined,
+    });
     water.rotation.x = -Math.PI / 2;
     water.position.y = -5;
     scene.add(water);
@@ -143,7 +143,7 @@ const RouteMap3D: React.FC<RouteMap3DProps> = ({ route, currentPosition }) => {
     const groundMaterial = new THREE.MeshStandardMaterial({
       color: 0x7cfc00,
       roughness: 0.8,
-      metalness: 0.2
+      metalness: 0.2,
     });
 
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
@@ -176,7 +176,7 @@ const RouteMap3D: React.FC<RouteMap3DProps> = ({ route, currentPosition }) => {
     route.forEach((point, index) => {
       const markerGeometry = new THREE.SphereGeometry(0.3, 16, 16);
       const markerMaterial = new THREE.MeshStandardMaterial({
-        color: index === 0 ? 0x00ff00 : index === route.length - 1 ? 0xff0000 : 0xffff00
+        color: index === 0 ? 0x00ff00 : index === route.length - 1 ? 0xff0000 : 0xffff00,
       });
       const marker = new THREE.Mesh(markerGeometry, markerMaterial);
       marker.position.copy(mapPoints[index]);
@@ -193,7 +193,7 @@ const RouteMap3D: React.FC<RouteMap3DProps> = ({ route, currentPosition }) => {
     try {
       loader.load(
         '/models/truck.glb', // You'll need to add this model file to your public directory
-        (gltf) => {
+        gltf => {
           truck = gltf.scene;
           truck.scale.set(0.5, 0.5, 0.5);
           truck.castShadow = true;
@@ -219,7 +219,7 @@ const RouteMap3D: React.FC<RouteMap3DProps> = ({ route, currentPosition }) => {
           setLoading(false);
         },
         undefined,
-        (error) => {
+        error => {
           console.error('Error loading truck model:', error);
           // Fallback to a simple box
           createFallbackTruck();

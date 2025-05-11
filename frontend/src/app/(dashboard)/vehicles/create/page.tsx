@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
-import { 
-  TruckIcon, 
-  IdentificationIcon, 
-  BuildingOfficeIcon, 
-  ScaleIcon, 
+import {
+  TruckIcon,
+  IdentificationIcon,
+  BuildingOfficeIcon,
+  ScaleIcon,
   CalendarIcon,
   CheckCircleIcon,
-  ExclamationCircleIcon
+  ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -28,29 +28,31 @@ export default function CreateVehicle() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  
+
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
     setIsSuccess(false);
-    
+
     try {
       // Get user's company ID
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const { data: userData, error: userError } = await supabase
         .from('users')
         .select('company_id')
         .eq('id', user?.id)
         .single();
-      
+
       if (userError) {
         throw userError;
       }
-      
+
       // Create vehicle record
       const { data: vehicle, error: vehicleError } = await supabase
         .from('vehicles')
@@ -68,13 +70,13 @@ export default function CreateVehicle() {
         })
         .select()
         .single();
-      
+
       if (vehicleError) {
         throw vehicleError;
       }
-      
+
       setIsSuccess(true);
-      
+
       // Reset form after successful submission
       setName('');
       setType('Semi');
@@ -85,13 +87,12 @@ export default function CreateVehicle() {
       setYear('');
       setStatus('Active');
       setMaxWeight('');
-      
+
       // Redirect to vehicle list after a short delay
       setTimeout(() => {
         router.push('/vehicles');
         router.refresh();
       }, 1500);
-      
     } catch (err: any) {
       setError(err.message || 'An error occurred while creating the vehicle');
       console.error('Create vehicle error:', err);
@@ -99,11 +100,11 @@ export default function CreateVehicle() {
       setIsLoading(false);
     }
   };
-  
+
   // Generate years for dropdown (from current year back to 1990)
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: currentYear - 1989 }, (_, i) => currentYear - i);
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
@@ -115,30 +116,33 @@ export default function CreateVehicle() {
           Back to Vehicles
         </Link>
       </div>
-      
+
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
         <div className="px-6 py-4 bg-primary-700 text-white">
           <h2 className="text-xl font-semibold">Vehicle Information</h2>
         </div>
-        
+
         {isSuccess && (
           <div className="p-4 m-6 bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 rounded-md flex items-center">
             <CheckCircleIcon className="h-5 w-5 mr-2" />
             Vehicle created successfully! Redirecting...
           </div>
         )}
-        
+
         {error && (
           <div className="p-4 m-6 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 rounded-md flex items-center">
             <ExclamationCircleIcon className="h-5 w-5 mr-2" />
             {error}
           </div>
         )}
-        
+
         <form className="p-6 space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Vehicle Name *
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -152,13 +156,16 @@ export default function CreateVehicle() {
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   placeholder="Truck 101"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="type" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="type"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Vehicle Type *
               </label>
               <select
@@ -166,7 +173,7 @@ export default function CreateVehicle() {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={type}
-                onChange={(e) => setType(e.target.value)}
+                onChange={e => setType(e.target.value)}
               >
                 <option value="Semi">Semi</option>
                 <option value="Box Truck">Box Truck</option>
@@ -177,9 +184,12 @@ export default function CreateVehicle() {
                 <option value="Other">Other</option>
               </select>
             </div>
-            
+
             <div>
-              <label htmlFor="licensePlate" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="licensePlate"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 License Plate *
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -193,13 +203,16 @@ export default function CreateVehicle() {
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   placeholder="ABC-1234"
                   value={licensePlate}
-                  onChange={(e) => setLicensePlate(e.target.value)}
+                  onChange={e => setLicensePlate(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="vin" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="vin"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 VIN
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -212,13 +225,16 @@ export default function CreateVehicle() {
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   placeholder="1HGCM82633A123456"
                   value={vin}
-                  onChange={(e) => setVin(e.target.value)}
+                  onChange={e => setVin(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="make" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="make"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Make
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -231,13 +247,16 @@ export default function CreateVehicle() {
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   placeholder="Freightliner"
                   value={make}
-                  onChange={(e) => setMake(e.target.value)}
+                  onChange={e => setMake(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="model" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="model"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Model
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -250,48 +269,57 @@ export default function CreateVehicle() {
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   placeholder="Cascadia"
                   value={model}
-                  onChange={(e) => setModel(e.target.value)}
+                  onChange={e => setModel(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="year" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="year"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Year
               </label>
               <select
                 id="year"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={year}
-                onChange={(e) => setYear(e.target.value)}
+                onChange={e => setYear(e.target.value)}
               >
                 <option value="">Select Year</option>
-                {years.map((y) => (
+                {years.map(y => (
                   <option key={y} value={y}>
                     {y}
                   </option>
                 ))}
               </select>
             </div>
-            
+
             <div>
-              <label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Status
               </label>
               <select
                 id="status"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}
+                onChange={e => setStatus(e.target.value)}
               >
                 <option value="Active">Active</option>
                 <option value="Maintenance">Maintenance</option>
                 <option value="Out of Service">Out of Service</option>
               </select>
             </div>
-            
+
             <div>
-              <label htmlFor="maxWeight" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="maxWeight"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Maximum Weight
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -304,12 +332,12 @@ export default function CreateVehicle() {
                   className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   placeholder="80,000 lbs"
                   value={maxWeight}
-                  onChange={(e) => setMaxWeight(e.target.value)}
+                  onChange={e => setMaxWeight(e.target.value)}
                 />
               </div>
             </div>
           </div>
-          
+
           <div className="flex justify-end space-x-3">
             <Link
               href="/vehicles"

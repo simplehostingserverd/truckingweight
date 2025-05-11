@@ -24,17 +24,9 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       warning: 'badge-warning',
       alert: 'badge-alert',
     };
-    
+
     return (
-      <span
-        ref={ref}
-        className={cn(
-          'badge',
-          variantClasses[variant],
-          className
-        )}
-        {...props}
-      />
+      <span ref={ref} className={cn('badge', variantClasses[variant], className)} {...props} />
     );
   }
 );

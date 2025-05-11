@@ -37,18 +37,24 @@ export class NetSuiteService implements ErpProvider {
 
     // This is a simplified version - in a real implementation, you would use a proper OAuth 1.0 library
     const timestamp = Math.floor(Date.now() / 1000).toString();
-    const nonce = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const nonce =
+      Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
     return {
-      'Authorization': `OAuth realm="${this.credentials.accountId}",oauth_consumer_key="${this.credentials.consumerKey}",oauth_token="${this.credentials.tokenId}",oauth_signature_method="HMAC-SHA256",oauth_timestamp="${timestamp}",oauth_nonce="${nonce}",oauth_version="1.0"`,
-      'Content-Type': 'application/json'
+      Authorization: `OAuth realm="${this.credentials.accountId}",oauth_consumer_key="${this.credentials.consumerKey}",oauth_token="${this.credentials.tokenId}",oauth_signature_method="HMAC-SHA256",oauth_timestamp="${timestamp}",oauth_nonce="${nonce}",oauth_version="1.0"`,
+      'Content-Type': 'application/json',
     };
   }
 
   /**
    * Make an authenticated call to NetSuite API
    */
-  private async callApi(scriptId: string, deployId: string, method: string, data?: any): Promise<any> {
+  private async callApi(
+    scriptId: string,
+    deployId: string,
+    method: string,
+    data?: any
+  ): Promise<any> {
     try {
       const url = `${this.baseUrl}?script=${scriptId}&deploy=${deployId}`;
       const headers = this.generateOAuthHeaders(method, url);
@@ -77,7 +83,11 @@ export class NetSuiteService implements ErpProvider {
   async fetchCustomers(): Promise<ErpData[]> {
     try {
       // Call NetSuite RESTlet to get customers
-      const response = await this.callApi('customscript_sm_customers', 'customdeploy_sm_customers', 'GET');
+      const response = await this.callApi(
+        'customscript_sm_customers',
+        'customdeploy_sm_customers',
+        'GET'
+      );
 
       // Transform the response to our standard format
       return response.map(customer => ({
@@ -92,12 +102,12 @@ export class NetSuiteService implements ErpProvider {
             city: customer.address.city,
             state: customer.address.state,
             zip: customer.address.zip,
-            country: customer.address.country
+            country: customer.address.country,
           },
           accountNumber: customer.accountNumber,
           terms: customer.terms,
-          creditLimit: customer.creditLimit
-        }
+          creditLimit: customer.creditLimit,
+        },
       }));
     } catch (error) {
       logger.error('Error fetching customers from NetSuite:', error);
@@ -112,8 +122,8 @@ export class NetSuiteService implements ErpProvider {
     try {
       // Call NetSuite RESTlet to get invoices
       const response = await this.callApi(
-        'customscript_sm_invoices', 
-        'customdeploy_sm_invoices', 
+        'customscript_sm_invoices',
+        'customdeploy_sm_invoices',
         'POST',
         { customerId }
       );
@@ -136,9 +146,9 @@ export class NetSuiteService implements ErpProvider {
             description: item.description,
             quantity: item.quantity,
             rate: item.rate,
-            amount: item.amount
-          }))
-        }
+            amount: item.amount,
+          })),
+        },
       }));
     } catch (error) {
       logger.error('Error fetching invoices from NetSuite:', error);
@@ -161,14 +171,14 @@ export class NetSuiteService implements ErpProvider {
           itemId: item.itemId,
           description: item.description,
           quantity: item.quantity,
-          rate: item.rate
-        }))
+          rate: item.rate,
+        })),
       };
 
       // Call NetSuite RESTlet to create invoice
       const response = await this.callApi(
-        'customscript_sm_create_invoice', 
-        'customdeploy_sm_create_invoice', 
+        'customscript_sm_create_invoice',
+        'customdeploy_sm_create_invoice',
         'POST',
         netsuiteInvoice
       );
@@ -191,9 +201,9 @@ export class NetSuiteService implements ErpProvider {
             description: item.description,
             quantity: item.quantity,
             rate: item.rate,
-            amount: item.amount
-          }))
-        }
+            amount: item.amount,
+          })),
+        },
       };
     } catch (error) {
       logger.error('Error creating invoice in NetSuite:', error);
@@ -225,14 +235,14 @@ export class NetSuiteService implements ErpProvider {
           description: c.description,
           commodityType: c.commodity_type,
           isHazmat: c.is_hazmat,
-          hazmatClass: c.hazmat_class
-        }))
+          hazmatClass: c.hazmat_class,
+        })),
       };
 
       // Call NetSuite RESTlet to sync weigh ticket
       const response = await this.callApi(
-        'customscript_sm_sync_ticket', 
-        'customdeploy_sm_sync_ticket', 
+        'customscript_sm_sync_ticket',
+        'customdeploy_sm_sync_ticket',
         'POST',
         netsuiteTicket
       );
@@ -247,8 +257,8 @@ export class NetSuiteService implements ErpProvider {
           netsuiteId: response.netsuiteId,
           status: response.status,
           invoiceId: response.invoiceId,
-          syncDate: response.syncDate
-        }
+          syncDate: response.syncDate,
+        },
       };
     } catch (error) {
       logger.error('Error syncing weigh ticket to NetSuite:', error);

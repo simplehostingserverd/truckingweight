@@ -15,7 +15,10 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 console.log('Supabase URL:', supabaseUrl);
-console.log('Supabase Key (first 10 chars):', supabaseKey ? supabaseKey.substring(0, 10) + '...' : 'undefined');
+console.log(
+  'Supabase Key (first 10 chars):',
+  supabaseKey ? supabaseKey.substring(0, 10) + '...' : 'undefined'
+);
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('Error: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env file');
@@ -240,7 +243,7 @@ CREATE POLICY "Users can manage their company's sync queue" ON sync_queue
 async function createAdminUser() {
   try {
     console.log('Creating admin company...');
-    
+
     // Create admin company
     const { data: company, error: companyError } = await supabase
       .from('companies')
@@ -249,39 +252,39 @@ async function createAdminUser() {
           name: 'System Administrator',
           address: '123 Admin St',
           contact_email: 'simplehostingsolutionsd@yahoo.com',
-          contact_phone: '555-123-4567'
-        }
+          contact_phone: '555-123-4567',
+        },
       ])
       .select()
       .single();
-    
+
     if (companyError) {
       console.error('Error creating admin company:', companyError);
       return;
     }
-    
+
     console.log('Admin company created with ID:', company.id);
-    
+
     // Create admin user in auth
     console.log('Creating admin user in auth...');
     const adminPassword = 'Tr#ck1ng@W3ight$2024!';
-    
+
     const { data: authUser, error: authError } = await supabase.auth.admin.createUser({
       email: 'simplehostingsolutionsd@yahoo.com',
       password: adminPassword,
       email_confirm: true,
       user_metadata: {
-        name: 'System Administrator'
-      }
+        name: 'System Administrator',
+      },
     });
-    
+
     if (authError) {
       console.error('Error creating admin auth user:', authError);
       return;
     }
-    
+
     console.log('Admin auth user created with ID:', authUser.user.id);
-    
+
     // Create admin user in users table
     console.log('Creating admin user in users table...');
     const { data: user, error: userError } = await supabase
@@ -292,21 +295,20 @@ async function createAdminUser() {
           name: 'System Administrator',
           email: 'simplehostingsolutionsd@yahoo.com',
           company_id: company.id,
-          is_admin: true
-        }
+          is_admin: true,
+        },
       ])
       .select()
       .single();
-    
+
     if (userError) {
       console.error('Error creating admin user in users table:', userError);
       return;
     }
-    
+
     console.log('Admin user created successfully!');
     console.log('Email: simplehostingsolutionsd@yahoo.com');
     console.log('Password:', adminPassword);
-    
   } catch (error) {
     console.error('Unexpected error creating admin user:', error);
   }
@@ -316,20 +318,20 @@ async function createAdminUser() {
 async function setupDatabase() {
   try {
     console.log('Starting database setup...');
-    
+
     // Step 1: Create tables
     console.log('Creating tables...');
-    
+
     // Try direct SQL via REST API
     const { error: createError } = await supabase.rpc('pgmoon.query', { query: createTablesSQL });
-    
+
     if (createError) {
       console.error('Error creating tables via pgmoon.query:', createError);
-      
+
       if (createError.message.includes('function pgmoon.query() does not exist')) {
         console.log('\nThe pgmoon extension is not enabled in your Supabase project.');
         console.log('Trying to create tables one by one via REST API...');
-        
+
         // Create tables one by one using REST API
         await createTablesOneByOne();
       } else {
@@ -338,14 +340,14 @@ async function setupDatabase() {
     } else {
       console.log('Tables created successfully!');
     }
-    
+
     // Step 2: Apply RLS policies
     console.log('Applying Row Level Security policies...');
     const { error: rlsError } = await supabase.rpc('pgmoon.query', { query: rlsPoliciesSQL });
-    
+
     if (rlsError) {
       console.error('Error applying RLS policies:', rlsError);
-      
+
       if (rlsError.message.includes('function pgmoon.query() does not exist')) {
         console.log('\nSkipping RLS policies for now. You can apply them later.');
       } else {
@@ -354,10 +356,10 @@ async function setupDatabase() {
     } else {
       console.log('RLS policies applied successfully!');
     }
-    
+
     // Step 3: Create admin user
     await createAdminUser();
-    
+
     console.log('Database setup completed successfully!');
   } catch (error) {
     console.error('Unexpected error setting up database:', error);
@@ -369,26 +371,23 @@ async function createTablesOneByOne() {
   try {
     // Create companies table
     console.log('Creating companies table...');
-    const { error: companiesError } = await supabase
-      .from('companies')
-      .insert([
-        {
-          name: 'Test Company',
-          address: '123 Test St',
-          contact_email: 'test@example.com',
-          contact_phone: '555-123-4567'
-        }
-      ]);
-    
+    const { error: companiesError } = await supabase.from('companies').insert([
+      {
+        name: 'Test Company',
+        address: '123 Test St',
+        contact_email: 'test@example.com',
+        contact_phone: '555-123-4567',
+      },
+    ]);
+
     if (companiesError && !companiesError.message.includes('already exists')) {
       console.error('Error creating companies table:', companiesError);
     } else {
       console.log('Companies table created or already exists');
     }
-    
+
     // Create other tables similarly
     // ...
-    
   } catch (error) {
     console.error('Error creating tables one by one:', error);
   }

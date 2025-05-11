@@ -4,7 +4,7 @@
  */
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { 
+import {
   WeightReading,
   WeighTicket,
   AxleWeight,
@@ -13,12 +13,12 @@ import {
   TicketSignature,
   ComplianceIssue,
   VehicleExtended,
-  Driver
+  Driver,
 } from '@/types/scale-master';
 
 export class WeighTicketService {
   private supabase = createClientComponentClient();
-  
+
   /**
    * Generate a unique ticket number
    * @returns Unique ticket number
@@ -28,7 +28,7 @@ export class WeighTicketService {
     const random = Math.random().toString(36).substring(2, 7).toUpperCase();
     return `TKT-${timestamp}-${random}`;
   }
-  
+
   /**
    * Create a new weigh ticket from a weight reading
    * @param reading Weight reading
@@ -48,23 +48,25 @@ export class WeighTicketService {
     notes?: string
   ): Promise<WeighTicket> {
     // Get the current user
-    const { data: { user } } = await this.supabase.auth.getUser();
-    
+    const {
+      data: { user },
+    } = await this.supabase.auth.getUser();
+
     if (!user) {
       throw new Error('User not authenticated');
     }
-    
+
     // Get the user's company ID
     const { data: userData, error: userError } = await this.supabase
       .from('users')
       .select('company_id')
       .eq('id', user.id)
       .single();
-    
+
     if (userError || !userData) {
       throw new Error('Failed to get user data');
     }
-    
+
     // Create the weigh ticket
     const ticketData = {
       ticket_number: this.generateTicketNumber(),
@@ -84,27 +86,27 @@ export class WeighTicketService {
       longitude: reading.locationData?.longitude,
       notes: notes,
       company_id: userData.company_id,
-      created_by: user.id
+      created_by: user.id,
     };
-    
+
     const { data: ticket, error } = await this.supabase
       .from('weigh_tickets')
       .insert(ticketData)
       .select()
       .single();
-    
+
     if (error || !ticket) {
       throw new Error(`Failed to create weigh ticket: ${error?.message}`);
     }
-    
+
     // If we have axle weights, save them
     if (reading.axleWeights && reading.axleWeights.length > 0) {
       await this.saveAxleWeights(ticket.id, reading.axleWeights);
     }
-    
+
     return ticket;
   }
-  
+
   /**
    * Save axle weights for a weigh ticket
    * @param ticketId Weigh ticket ID
@@ -117,49 +119,49 @@ export class WeighTicketService {
     if (!axleWeights || axleWeights.length === 0) {
       return;
     }
-    
+
     const axleWeightData = axleWeights.map(aw => ({
       weigh_ticket_id: ticketId,
       axle_position: aw.position,
       weight: aw.weight,
       max_legal_weight: aw.maxLegal,
-      compliance_status: this.determineAxleComplianceStatus(aw.weight, aw.maxLegal)
+      compliance_status: this.determineAxleComplianceStatus(aw.weight, aw.maxLegal),
     }));
-    
-    const { error } = await this.supabase
-      .from('axle_weights')
-      .insert(axleWeightData);
-    
+
+    const { error } = await this.supabase.from('axle_weights').insert(axleWeightData);
+
     if (error) {
       console.error('Failed to save axle weights:', error);
     }
   }
-  
+
   /**
    * Determine the compliance status based on the weight reading
    * @param reading Weight reading
    * @returns Compliance status
    */
-  private determineComplianceStatus(reading: WeightReading): 'Compliant' | 'Warning' | 'Non-Compliant' {
+  private determineComplianceStatus(
+    reading: WeightReading
+  ): 'Compliant' | 'Warning' | 'Non-Compliant' {
     // If we have axle weights, check if any are non-compliant
     if (reading.axleWeights && reading.axleWeights.length > 0) {
-      const axleStatuses = reading.axleWeights.map(aw => 
+      const axleStatuses = reading.axleWeights.map(aw =>
         this.determineAxleComplianceStatus(aw.weight, aw.maxLegal)
       );
-      
+
       if (axleStatuses.includes('Non-Compliant')) {
         return 'Non-Compliant';
       }
-      
+
       if (axleStatuses.includes('Warning')) {
         return 'Warning';
       }
     }
-    
+
     // If no axle weights or all are compliant, return Compliant
     return 'Compliant';
   }
-  
+
   /**
    * Determine the compliance status for an axle
    * @param weight Axle weight
@@ -174,16 +176,16 @@ export class WeighTicketService {
     if (weight > maxLegal) {
       return 'Non-Compliant';
     }
-    
+
     // If weight is within 5% of the legal limit, it's a warning
     if (weight > maxLegal * 0.95) {
       return 'Warning';
     }
-    
+
     // Otherwise, it's compliant
     return 'Compliant';
   }
-  
+
   /**
    * Get a weigh ticket by ID
    * @param ticketId Weigh ticket ID
@@ -192,7 +194,8 @@ export class WeighTicketService {
   async getTicket(ticketId: number): Promise<WeighTicket> {
     const { data: ticket, error } = await this.supabase
       .from('weigh_tickets')
-      .select(`
+      .select(
+        `
         *,
         vehicle:vehicle_id(*),
         driver:driver_id(*),
@@ -201,41 +204,39 @@ export class WeighTicketService {
         images:ticket_images(*),
         signatures:ticket_signatures(*),
         compliance_issues(*)
-      `)
+      `
+      )
       .eq('id', ticketId)
       .single();
-    
+
     if (error || !ticket) {
       throw new Error(`Failed to get weigh ticket: ${error?.message}`);
     }
-    
+
     return ticket;
   }
-  
+
   /**
    * Update a weigh ticket
    * @param ticketId Weigh ticket ID
    * @param updates Updates to apply
    * @returns Updated weigh ticket
    */
-  async updateTicket(
-    ticketId: number,
-    updates: Partial<WeighTicket>
-  ): Promise<WeighTicket> {
+  async updateTicket(ticketId: number, updates: Partial<WeighTicket>): Promise<WeighTicket> {
     const { data: ticket, error } = await this.supabase
       .from('weigh_tickets')
       .update(updates)
       .eq('id', ticketId)
       .select()
       .single();
-    
+
     if (error || !ticket) {
       throw new Error(`Failed to update weigh ticket: ${error?.message}`);
     }
-    
+
     return ticket;
   }
-  
+
   /**
    * Add cargo information to a weigh ticket
    * @param ticketId Weigh ticket ID
@@ -250,18 +251,18 @@ export class WeighTicketService {
       .from('cargo')
       .insert({
         ...cargoData,
-        weigh_ticket_id: ticketId
+        weigh_ticket_id: ticketId,
       })
       .select()
       .single();
-    
+
     if (error || !cargo) {
       throw new Error(`Failed to add cargo information: ${error?.message}`);
     }
-    
+
     return cargo;
   }
-  
+
   /**
    * Add an image to a weigh ticket
    * @param ticketId Weigh ticket ID
@@ -275,30 +276,32 @@ export class WeighTicketService {
     imageType: 'Vehicle' | 'Cargo' | 'Document'
   ): Promise<TicketImage> {
     // Get the current user
-    const { data: { user } } = await this.supabase.auth.getUser();
-    
+    const {
+      data: { user },
+    } = await this.supabase.auth.getUser();
+
     if (!user) {
       throw new Error('User not authenticated');
     }
-    
+
     const { data: image, error } = await this.supabase
       .from('ticket_images')
       .insert({
         weigh_ticket_id: ticketId,
         image_url: imageUrl,
         image_type: imageType,
-        captured_by: user.id
+        captured_by: user.id,
       })
       .select()
       .single();
-    
+
     if (error || !image) {
       throw new Error(`Failed to add image: ${error?.message}`);
     }
-    
+
     return image;
   }
-  
+
   /**
    * Add a signature to a weigh ticket
    * @param ticketId Weigh ticket ID
@@ -320,18 +323,18 @@ export class WeighTicketService {
         signature_url: signatureUrl,
         name,
         role,
-        ip_address: '127.0.0.1' // In a real app, we would get the client's IP
+        ip_address: '127.0.0.1', // In a real app, we would get the client's IP
       })
       .select()
       .single();
-    
+
     if (error || !signature) {
       throw new Error(`Failed to add signature: ${error?.message}`);
     }
-    
+
     return signature;
   }
-  
+
   /**
    * Add a compliance issue to a weigh ticket
    * @param ticketId Weigh ticket ID
@@ -355,15 +358,15 @@ export class WeighTicketService {
         issue_type: issueType,
         description,
         severity,
-        recommendation
+        recommendation,
       })
       .select()
       .single();
-    
+
     if (error || !issue) {
       throw new Error(`Failed to add compliance issue: ${error?.message}`);
     }
-    
+
     return issue;
   }
 }

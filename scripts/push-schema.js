@@ -39,37 +39,37 @@ const seedSQL = fs.readFileSync(seedPath, 'utf8');
 async function pushSchema() {
   try {
     console.log('Pushing schema to Supabase...');
-    
+
     // Execute schema SQL
     const { error: schemaError } = await supabase.rpc('pgmoon.query', { query: schemaSQL });
-    
+
     if (schemaError) {
       console.error('Error pushing schema:', schemaError);
       return;
     }
-    
+
     console.log('Schema pushed successfully!');
-    
+
     // Ask for confirmation before pushing seed data
     const readline = require('readline').createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
-    
-    readline.question('Do you want to push seed data? (y/n) ', async (answer) => {
+
+    readline.question('Do you want to push seed data? (y/n) ', async answer => {
       if (answer.toLowerCase() === 'y') {
         console.log('Pushing seed data to Supabase...');
-        
+
         // Execute seed SQL
         const { error: seedError } = await supabase.rpc('pgmoon.query', { query: seedSQL });
-        
+
         if (seedError) {
           console.error('Error pushing seed data:', seedError);
         } else {
           console.log('Seed data pushed successfully!');
         }
       }
-      
+
       readline.close();
       process.exit(0);
     });

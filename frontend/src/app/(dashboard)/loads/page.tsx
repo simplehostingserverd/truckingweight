@@ -9,7 +9,9 @@ export default async function Loads() {
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   // Get user data
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { data: userData } = await supabase
     .from('users')
     .select('company_id')
@@ -34,7 +36,8 @@ export default async function Loads() {
       // Admin can see all loads from all companies
       const response = await supabase
         .from('loads')
-        .select(`
+        .select(
+          `
           id,
           description,
           origin,
@@ -46,7 +49,8 @@ export default async function Loads() {
           companies(name),
           vehicles(id, name),
           drivers(id, name)
-        `)
+        `
+        )
         .order('created_at', { ascending: false });
 
       loads = response.data || [];
@@ -55,7 +59,8 @@ export default async function Loads() {
       // Regular user can only see loads from their company
       const response = await supabase
         .from('loads')
-        .select(`
+        .select(
+          `
           id,
           description,
           origin,
@@ -65,7 +70,8 @@ export default async function Loads() {
           created_at,
           vehicles(id, name),
           drivers(id, name)
-        `)
+        `
+        )
         .eq('company_id', userData.company_id)
         .order('created_at', { ascending: false });
 
@@ -137,7 +143,7 @@ export default async function Loads() {
             </thead>
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
               {loads && loads.length > 0 ? (
-                loads.map((item) => (
+                loads.map(item => (
                   <tr key={item.id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                       {truncateText(item.description, 30)}
@@ -162,10 +168,16 @@ export default async function Loads() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      <Link href={`/loads/${item.id}`} className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                      <Link
+                        href={`/loads/${item.id}`}
+                        className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3"
+                      >
                         View
                       </Link>
-                      <Link href={`/loads/edit/${item.id}`} className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300">
+                      <Link
+                        href={`/loads/edit/${item.id}`}
+                        className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300"
+                      >
                         Edit
                       </Link>
                     </td>
@@ -173,7 +185,10 @@ export default async function Loads() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                  <td
+                    colSpan={7}
+                    className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400"
+                  >
                     No loads found
                   </td>
                 </tr>

@@ -14,6 +14,7 @@ This document provides an overview of the TruckingWeight design system, includin
 ## Brand Foundations
 
 ### Brand Identity
+
 - **Name**: TruckingWeight
 - **Tagline**: "Precision Weighing for Modern Trucking"
 - **Mission**: To simplify weight management for trucking operations through intelligent design and seamless technology
@@ -22,17 +23,20 @@ This document provides an overview of the TruckingWeight design system, includin
 ## Color Palette
 
 ### Primary Colors
+
 - **Deep Blue** (#0D2B4B): Primary brand color, representing trust and reliability
 - **Highway Yellow** (#FFC107): Action elements, alerts, and highlights
 - **Steel Gray** (#607D8B): Secondary UI elements and backgrounds
 
 ### Secondary Colors
+
 - **Forest Green** (#2E7D32): Success states and positive indicators
 - **Brick Red** (#C62828): Error states and warnings
 - **Slate** (#455A64): Neutral text and UI elements
 - **Sky Blue** (#03A9F4): Interactive elements and links
 
 ### System Colors
+
 - **Alert Red** (#D50000): Critical errors and warnings
 - **Success Green** (#00C853): Compliance indicators and confirmations
 - **Warning Orange** (#FF6D00): Caution indicators
@@ -40,10 +44,12 @@ This document provides an overview of the TruckingWeight design system, includin
 ## Typography
 
 ### Font Family
+
 - **Primary**: Inter (sans-serif)
 - **Brand**: Product Sans (for branded elements)
 
 ### Type Scale
+
 - **Display**: 2.25rem (36px)
 - **Heading 1**: 1.75rem (28px)
 - **Heading 2**: 1.5rem (24px)
@@ -54,6 +60,7 @@ This document provides an overview of the TruckingWeight design system, includin
 - **Small**: 0.625rem (10px)
 
 ### Font Weights
+
 - **Light**: 300
 - **Regular**: 400
 - **Medium**: 500
@@ -87,6 +94,7 @@ Buttons are used for actions and navigation. We have several button variants:
 - **Link**: Used for navigation
 
 Button sizes:
+
 - **Small**: For tight spaces
 - **Medium**: Default size
 - **Large**: For prominent actions
@@ -94,15 +102,19 @@ Button sizes:
 ### Form Elements
 
 #### Input
+
 Text inputs for user data entry.
 
 #### Select
+
 Dropdown selects for choosing from a list of options.
 
 #### Checkbox
+
 For binary choices or multiple selections.
 
 #### Radio
+
 For selecting one option from a list.
 
 ### Cards

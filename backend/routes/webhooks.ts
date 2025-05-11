@@ -1,11 +1,11 @@
 import express from 'express';
-import { 
+import {
   getWebhookSubscriptions,
   getWebhookSubscription,
   createWebhookSubscription,
   updateWebhookSubscription,
   deleteWebhookSubscription,
-  regenerateWebhookSecret
+  regenerateWebhookSecret,
 } from '../controllers/webhooks';
 import { authenticateJWT } from '../middleware/auth';
 

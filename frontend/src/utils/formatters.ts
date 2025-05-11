@@ -11,13 +11,13 @@ export function formatDistance(meters: number): string {
   if (meters < 1000) {
     return `${Math.round(meters)} m`;
   }
-  
+
   const miles = meters / 1609.34;
-  
+
   if (miles < 10) {
     return `${miles.toFixed(1)} mi`;
   }
-  
+
   return `${Math.round(miles)} mi`;
 }
 
@@ -29,11 +29,11 @@ export function formatDistance(meters: number): string {
 export function formatDuration(seconds: number): string {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
-  
+
   if (hours === 0) {
     return `${minutes} min`;
   }
-  
+
   return `${hours} hr ${minutes} min`;
 }
 
@@ -45,18 +45,18 @@ export function formatDuration(seconds: number): string {
  */
 export function formatWeight(weight: number | string, unit: 'lbs' | 'kg' = 'lbs'): string {
   let numericWeight: number;
-  
+
   if (typeof weight === 'string') {
     // Remove any non-numeric characters except decimal point
     numericWeight = parseFloat(weight.replace(/[^\d.]/g, ''));
   } else {
     numericWeight = weight;
   }
-  
+
   if (isNaN(numericWeight)) {
     return '0 ' + unit;
   }
-  
+
   // Format with commas for thousands
   return numericWeight.toLocaleString() + ' ' + unit;
 }
@@ -69,18 +69,18 @@ export function formatWeight(weight: number | string, unit: 'lbs' | 'kg' = 'lbs'
  */
 export function formatDate(date: Date | string, includeTime: boolean = false): string {
   const dateObj = typeof date === 'string' ? new Date(date) : date;
-  
+
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
   };
-  
+
   if (includeTime) {
     options.hour = '2-digit';
     options.minute = '2-digit';
   }
-  
+
   return dateObj.toLocaleDateString('en-US', options);
 }
 
@@ -115,14 +115,14 @@ export function formatPercentage(value: number, decimals: number = 1): string {
 export function formatPhoneNumber(phone: string): string {
   // Remove all non-numeric characters
   const cleaned = phone.replace(/\D/g, '');
-  
+
   // Check if it's a valid US phone number
   const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-  
+
   if (match) {
     return `(${match[1]}) ${match[2]}-${match[3]}`;
   }
-  
+
   return phone;
 }
 
@@ -133,11 +133,11 @@ export function formatPhoneNumber(phone: string): string {
  */
 export function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 Bytes';
-  
+
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  
+
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
@@ -152,7 +152,7 @@ export function truncateText(text: string, length: number, suffix: string = '...
   if (text.length <= length) {
     return text;
   }
-  
+
   return text.substring(0, length) + suffix;
 }
 
@@ -175,5 +175,5 @@ export default {
   formatPhoneNumber,
   formatFileSize,
   truncateText,
-  formatNumber
+  formatNumber,
 };

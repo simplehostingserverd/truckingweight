@@ -31,11 +31,11 @@ const getDirectPool = () => {
 
     directPool = new Pool({
       connectionString: directConnectionUrl,
-      ssl: { rejectUnauthorized: false }
+      ssl: { rejectUnauthorized: false },
     });
 
     // Test the connection
-    directPool.on('error', (err) => {
+    directPool.on('error', err => {
       console.error('Unexpected error on idle client', err);
       process.exit(1);
     });
@@ -57,11 +57,11 @@ const getPooledPool = () => {
 
     pooledPool = new Pool({
       connectionString: poolConnectionUrl,
-      ssl: { rejectUnauthorized: false }
+      ssl: { rejectUnauthorized: false },
     });
 
     // Test the connection
-    pooledPool.on('error', (err) => {
+    pooledPool.on('error', err => {
       console.error('Unexpected error on idle client', err);
       process.exit(1);
     });
@@ -111,5 +111,5 @@ module.exports = {
   getPooledPool,
   queryDirect,
   queryPooled,
-  closeConnections
+  closeConnections,
 };

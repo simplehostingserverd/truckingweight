@@ -10,7 +10,8 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-xl font-semibold mb-4">TruckingSemis</h3>
             <p className="text-gray-300">
-              A modern web application for trucking companies to manage weight checking and load management.
+              A modern web application for trucking companies to manage weight checking and load
+              management.
             </p>
           </div>
           <div>

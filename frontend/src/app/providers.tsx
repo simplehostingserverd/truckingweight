@@ -77,7 +77,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         )}
         <ServiceWorkerRegistration
           onUpdate={handleServiceWorkerUpdate}
-          onError={(error) => logger.error('Service worker error', { error }, 'ServiceWorker')}
+          onError={error => logger.error('Service worker error', { error }, 'ServiceWorker')}
         />
       </ThemeProvider>
     </SupabaseAuthProvider>

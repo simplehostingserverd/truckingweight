@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 /**
  * Security middleware that adds various HTTP security headers to prevent common web vulnerabilities
- * 
+ *
  * This middleware implements similar protections to the Helmet package but is optimized for Next.js
  * It sets headers to protect against:
  * - XSS (Cross-Site Scripting)
@@ -16,7 +16,7 @@ export function securityMiddleware(req: NextRequest) {
   const response = NextResponse.next();
 
   // Set security headers
-  
+
   // Content-Security-Policy - Helps prevent XSS attacks
   // Customize this policy based on your application's needs
   response.headers.set(

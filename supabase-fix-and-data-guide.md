@@ -27,7 +27,7 @@ BEGIN
         EXECUTE 'DROP POLICY IF EXISTS "' || policy_record.policyname || '" ON users';
         RAISE NOTICE 'Dropped policy: %', policy_record.policyname;
     END LOOP;
-    
+
     -- Drop all existing policies on companies table
     FOR policy_record IN
         SELECT policyname
@@ -134,10 +134,12 @@ The dummy data includes:
 ### Notes About the Dummy Data
 
 1. **User IDs**: The dummy data includes example UUIDs for users. In a real scenario, these would be created through the Supabase Auth system. If you want to use these test users, you'll need to:
+
    - Create corresponding auth users with the same UUIDs
    - Or update the UUIDs in the SQL to match your existing auth users
 
 2. **Weight Status**: The weight records include a mix of "Compliant", "Warning", and "Non-Compliant" statuses based on the weight values:
+
    - Under 34,000 lbs: Compliant
    - 34,000-36,000 lbs: Warning
    - Over 36,000 lbs: Non-Compliant
