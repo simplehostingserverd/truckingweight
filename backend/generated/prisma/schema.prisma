@@ -82,6 +82,7 @@ model companies {
   loads                   loads[]
   scale_facilities        scale_facilities[]
   scales                  scales[]
+  sync_queue              sync_queue[]
   users                   users[]
   vehicles                vehicles[]
   webhook_subscriptions   webhook_subscriptions[]
@@ -499,4 +500,17 @@ model blockchain_records {
   verified             Boolean  @default(false)
   verification_details Json?
   created_at           DateTime @default(now()) @db.Timestamptz(6)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model sync_queue {
+  id         String    @id @db.VarChar(255)
+  company_id Int
+  table_name String    @db.VarChar(255)
+  action     String    @db.VarChar(50)
+  data       Json
+  status     String?   @db.VarChar(50)
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @default(now()) @db.Timestamptz(6)
+  companies  companies @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

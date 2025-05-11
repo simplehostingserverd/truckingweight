@@ -1,7 +1,23 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { PlusIcon, MinusIcon, ArrowsUpDownIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import mapboxService, { Waypoint, MapboxProfile, Route } from '@/services/mapboxService';
 import { formatDistance, formatDuration } from '@/utils/formatters';
@@ -168,24 +184,97 @@ export default function RoutePlanner({
     );
   };
 
+  // Set up sensors for drag detection
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   // Handle drag and drop
-  const handleDragEnd = (result: any) => {
-    if (!result.destination) return;
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
 
-    const items = Array.from(waypoints);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+    if (!over || active.id === over.id) return;
 
-    // Ensure origin is first and destination is last
-    const origin = items.find(wp => wp.id === 'origin');
-    const destination = items.find(wp => wp.id === 'destination');
+    setWaypoints((currentWaypoints) => {
+      const oldIndex = currentWaypoints.findIndex(wp => wp.id === active.id);
+      const newIndex = currentWaypoints.findIndex(wp => wp.id === over.id);
 
-    if (origin && destination) {
-      const filteredItems = items.filter(wp => wp.id !== 'origin' && wp.id !== 'destination');
-      setWaypoints([origin, ...filteredItems, destination]);
-    } else {
-      setWaypoints(items);
-    }
+      const reorderedWaypoints = arrayMove(currentWaypoints, oldIndex, newIndex);
+
+      // Ensure origin is first and destination is last
+      const origin = reorderedWaypoints.find(wp => wp.id === 'origin');
+      const destination = reorderedWaypoints.find(wp => wp.id === 'destination');
+
+      if (origin && destination) {
+        const filteredItems = reorderedWaypoints.filter(wp => wp.id !== 'origin' && wp.id !== 'destination');
+        return [origin, ...filteredItems, destination];
+      }
+
+      return reorderedWaypoints;
+    });
+  };
+
+  // Sortable waypoint component
+  const SortableWaypoint = ({ waypoint, index }: { waypoint: Waypoint, index: number }) => {
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+      isDragging
+    } = useSortable({
+      id: waypoint.id,
+      disabled: waypoint.id === 'origin' || waypoint.id === 'destination'
+    });
+
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+      opacity: isDragging ? 0.5 : 1,
+    };
+
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="flex items-center space-x-2 bg-gray-800 p-3 rounded-lg border border-gray-700"
+      >
+        <div {...attributes} {...listeners} className="text-gray-400 cursor-grab">
+          <ArrowsUpDownIcon className="h-5 w-5" />
+        </div>
+
+        <div className="flex-1">
+          <label className="block text-sm font-medium text-gray-300 mb-1">
+            {waypoint.id === 'origin'
+              ? 'Origin'
+              : waypoint.id === 'destination'
+                ? 'Destination'
+                : `Waypoint ${index}`}
+          </label>
+          <input
+            type="text"
+            value={waypoint.address || ''}
+            onChange={e => handleAddressChange(waypoint.id, e.target.value)}
+            placeholder="Enter address"
+            className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {waypoint.id !== 'origin' && waypoint.id !== 'destination' && (
+          <button
+            onClick={() => removeWaypoint(waypoint.id)}
+            className="p-1.5 rounded-full bg-gray-700 text-gray-400 hover:bg-red-600 hover:text-white transition-colors"
+            aria-label="Remove waypoint"
+          >
+            <MinusIcon className="h-4 w-4" />
+          </button>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -209,62 +298,26 @@ export default function RoutePlanner({
             </button>
           </div>
 
-          <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="waypoints">
-              {provided => (
-                <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-3">
-                  {waypoints.map((waypoint, index) => (
-                    <Draggable
-                      key={waypoint.id}
-                      draggableId={waypoint.id}
-                      index={index}
-                      isDragDisabled={waypoint.id === 'origin' || waypoint.id === 'destination'}
-                    >
-                      {provided => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          className="flex items-center space-x-2 bg-gray-800 p-3 rounded-lg border border-gray-700"
-                        >
-                          <div {...provided.dragHandleProps} className="text-gray-400 cursor-grab">
-                            <ArrowsUpDownIcon className="h-5 w-5" />
-                          </div>
-
-                          <div className="flex-1">
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              {waypoint.id === 'origin'
-                                ? 'Origin'
-                                : waypoint.id === 'destination'
-                                  ? 'Destination'
-                                  : `Waypoint ${index}`}
-                            </label>
-                            <input
-                              type="text"
-                              value={waypoint.address || ''}
-                              onChange={e => handleAddressChange(waypoint.id, e.target.value)}
-                              placeholder="Enter address"
-                              className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                          </div>
-
-                          {waypoint.id !== 'origin' && waypoint.id !== 'destination' && (
-                            <button
-                              onClick={() => removeWaypoint(waypoint.id)}
-                              className="p-1.5 rounded-full bg-gray-700 text-gray-400 hover:bg-red-600 hover:text-white transition-colors"
-                              aria-label="Remove waypoint"
-                            >
-                              <MinusIcon className="h-4 w-4" />
-                            </button>
-                          )}
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={waypoints.map(wp => wp.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              <div className="space-y-3">
+                {waypoints.map((waypoint, index) => (
+                  <SortableWaypoint
+                    key={waypoint.id}
+                    waypoint={waypoint}
+                    index={index}
+                  />
+                ))}
+              </div>
+            </SortableContext>
+          </DndContext>
 
           {/* Departure Time */}
           <div className="mt-6 space-y-4">

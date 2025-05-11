@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import useSWRFetch from '@/hooks/useSWRFetch';
 
 interface ComplianceChartProps {
   companyId?: number | null;
@@ -11,10 +12,8 @@ interface ComplianceChartProps {
 
 export default function ComplianceChart({ companyId }: ComplianceChartProps) {
   const supabase = createClientComponentClient<Database>();
-  const [complianceData, setComplianceData] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
   const [dateRange, setDateRange] = useState('week'); // 'week', 'month', 'year'
+  const [selectedCompany, setSelectedCompany] = useState<string>('overall');
 
   // Colors for compliance status
   const COLORS = {
@@ -23,74 +22,43 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
     'Non-Compliant': '#ef4444', // red
   };
 
-  // Add state for admin view
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [companyData, setCompanyData] = useState<any[]>([]);
-  const [selectedCompany, setSelectedCompany] = useState<string>('overall');
+  // Fetch auth token for API requests
+  const { data: session } = useSWRFetch('/api/auth/session');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
+  // Fetch user data to check admin status
+  const { data: userData } = useSWRFetch(
+    session ? '/api/auth/user' : null,
+    {
+      headers: {
+        'x-auth-token': session?.token || '',
+      },
+    }
+  );
 
-        // Get auth token from supabase
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
+  const isAdmin = userData?.is_admin === true;
 
-        if (!session) {
-          throw new Error('No active session');
-        }
+  // Construct the URL for compliance data
+  const complianceUrl = companyId
+    ? `/api/dashboard/compliance?dateRange=${dateRange}&companyId=${companyId}`
+    : `/api/dashboard/compliance?dateRange=${dateRange}`;
 
-        // Check if user is admin
-        const { data: userData } = await supabase.auth.getUser();
-        if (userData?.user) {
-          const { data: userDetails } = await supabase
-            .from('users')
-            .select('is_admin')
-            .eq('id', userData.user.id)
-            .single();
+  // Fetch compliance data
+  const { data: complianceApiData, error, isLoading } = useSWRFetch(
+    session ? complianceUrl : null,
+    {
+      headers: {
+        'x-auth-token': session?.token || '',
+      },
+    }
+  );
 
-          setIsAdmin(userDetails?.is_admin === true);
-        }
-
-        // Use the new API endpoint to get compliance data
-        const url = companyId
-          ? `/api/dashboard/compliance?dateRange=${dateRange}&companyId=${companyId}`
-          : `/api/dashboard/compliance?dateRange=${dateRange}`;
-
-        const response = await fetch(url, {
-          headers: {
-            'x-auth-token': session.access_token,
-          },
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to fetch compliance data');
-        }
-
-        const data = await response.json();
-
-        // Handle different data formats based on admin status
-        if (data.overall && data.byCompany) {
-          // Admin view with company breakdown
-          setCompanyData(data.byCompany);
-          setComplianceData(data.overall);
-        } else {
-          // Regular user view or admin with specific company filter
-          setComplianceData(data);
-        }
-      } catch (error: any) {
-        console.error('Error fetching compliance data:', error);
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [supabase, dateRange, companyId]);
+  // Process the data based on admin status
+  const companyData = complianceApiData?.byCompany || [];
+  const complianceData = complianceApiData?.overall
+    ? (selectedCompany === 'overall'
+        ? complianceApiData.overall
+        : companyData.find((c: any) => c.companyId.toString() === selectedCompany)?.data || [])
+    : complianceApiData || [];
 
   const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDateRange(e.target.value);
@@ -99,17 +67,7 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
   const handleCompanyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const companyId = e.target.value;
     setSelectedCompany(companyId);
-
-    if (companyId === 'overall') {
-      // Show overall data
-      setComplianceData(companyData.overall);
-    } else {
-      // Find the selected company data
-      const company = companyData.find(c => c.companyId.toString() === companyId);
-      if (company) {
-        setComplianceData(company.data);
-      }
-    }
+    // The data will be automatically updated based on the selectedCompany state
   };
 
   if (isLoading) {

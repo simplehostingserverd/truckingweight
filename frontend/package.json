@@ -12,6 +12,10 @@
   },
   "dependencies": {
     "@cesium/engine": "^17.0.0",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^8.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@ducanh2912/next-pwa": "^10.2.9",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@loaders.gl/core": "^4.3.3",
@@ -32,12 +36,10 @@
     "jspdf-autotable": "^5.0.2",
     "mapbox-gl": "^3.12.0",
     "next": "^15.3.2",
-    "next-pwa": "^5.6.0",
     "next-themes": "^0.2.1",
     "nodemailer": "^7.0.2",
     "postcss": "^8.5.3",
     "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^6.2.0",
     "react-dom": "^18.2.0",
@@ -45,7 +47,7 @@
     "react-map-gl": "^8.0.4",
     "react-toastify": "^10.0.4",
     "recharts": "^2.15.3",
-    "server-only": "^0.0.1",
+    "swr": "^2.3.3",
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
@@ -75,5 +77,9 @@
     "sharp": "^0.34.1",
     "ts-jest": "^29.3.2",
     "typescript": "^5.3.3"
+  },
+  "overrides": {
+    "glob": "^9.3.5",
+    "sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.15"
   }
 }

@@ -5,6 +5,8 @@
  * It handles connection management and provides utility methods for common operations.
  */
 
+const Redis = require('ioredis');
+
 // Use a mock implementation if Redis is not available
 class MockRedisClient {
   constructor() {
@@ -49,8 +51,46 @@ class MockRedisClient {
 
 class RedisService {
   constructor() {
-    this.client = new MockRedisClient();
-    this.isConnected = true;
+    try {
+      const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+      this.client = new Redis(redisUrl, {
+        maxRetriesPerRequest: 3,
+        retryStrategy: times => {
+          const delay = Math.min(times * 50, 2000);
+          return delay;
+        },
+      });
+
+      this.client.on('connect', () => {
+        this.isConnected = true;
+        console.log('Redis client connected');
+      });
+
+      this.client.on('error', err => {
+        this.isConnected = false;
+        console.error('Redis client error:', err);
+
+        // If we can't connect to Redis, fall back to mock implementation
+        if (!this.isConnected && !(this.client instanceof MockRedisClient)) {
+          console.log('Falling back to mock Redis client');
+          this.client = new MockRedisClient();
+          this.isConnected = true;
+        }
+      });
+
+      this.client.on('reconnecting', () => {
+        console.log('Redis client reconnecting');
+      });
+
+      this.client.on('end', () => {
+        this.isConnected = false;
+        console.log('Redis client disconnected');
+      });
+    } catch (err) {
+      console.error('Error initializing Redis client:', err);
+      this.client = new MockRedisClient();
+      this.isConnected = true;
+    }
   }
 
   /**
@@ -78,10 +118,11 @@ class RedisService {
   async set(key, value, expireSeconds = null) {
     try {
       const stringValue = JSON.stringify(value);
-      await this.client.set(key, stringValue);
 
       if (expireSeconds) {
-        await this.client.expire(key, expireSeconds);
+        await this.client.set(key, stringValue, 'EX', expireSeconds);
+      } else {
+        await this.client.set(key, stringValue);
       }
 
       return true;
@@ -120,7 +161,11 @@ class RedisService {
    */
   async close() {
     try {
-      await this.client.close();
+      if (this.client.quit) {
+        await this.client.quit();
+      } else if (this.client.close) {
+        await this.client.close();
+      }
       this.isConnected = false;
     } catch (err) {
       console.error('Redis close error:', err);
