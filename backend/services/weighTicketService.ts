@@ -35,7 +35,7 @@ export const generateWeighTicket = async (
   },
   companyId: number,
   userId: string
-): Promise<{ success: boolean; ticket?: any; error?: string }> {
+): Promise<{ success: boolean; ticket?: any; error?: string }> => {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId);
@@ -180,7 +180,7 @@ export const getWeighTicket = async (
   ticketId: number,
   companyId: number,
   isAdmin: boolean = false
-): Promise<{ success: boolean; ticket?: any; error?: string }> {
+): Promise<{ success: boolean; ticket?: any; error?: string }> => {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId, isAdmin);
@@ -243,7 +243,7 @@ export const updateWeighTicket = async (
   },
   companyId: number,
   userId: string
-): Promise<{ success: boolean; ticket?: any; error?: string }> {
+): Promise<{ success: boolean; ticket?: any; error?: string }> => {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId);

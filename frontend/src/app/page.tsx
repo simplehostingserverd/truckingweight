@@ -270,6 +270,147 @@ export default async function Home() {
           </div>
         </section>
 
+        {/* City Login Section */}
+        <section className="py-20 bg-gray-100">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+              <div className="md:w-1/2">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                  Texas Municipal Weighing System
+                </h2>
+                <p className="text-xl text-gray-600 mb-8">
+                  A centralized platform for city employees across Texas to manage municipal weighing operations,
+                  enforce compliance, and generate reports.
+                </p>
+                <div className="bg-white p-8 rounded-xl shadow-md">
+                  <h3 className="text-2xl font-semibold text-gray-800 mb-6">City Employee Login</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
+                        Select City
+                      </label>
+                      <select
+                        id="city"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                      >
+                        <option value="">Select your city</option>
+                        <option value="austin">Austin</option>
+                        <option value="dallas">Dallas</option>
+                        <option value="houston">Houston</option>
+                        <option value="san-antonio">San Antonio</option>
+                        <option value="fort-worth">Fort Worth</option>
+                        <option value="el-paso">El Paso</option>
+                        <option value="arlington">Arlington</option>
+                        <option value="corpus-christi">Corpus Christi</option>
+                        <option value="plano">Plano</option>
+                        <option value="laredo">Laredo</option>
+                        <option value="lubbock">Lubbock</option>
+                        <option value="garland">Garland</option>
+                        <option value="irving">Irving</option>
+                        <option value="amarillo">Amarillo</option>
+                        <option value="grand-prairie">Grand Prairie</option>
+                        <option value="brownsville">Brownsville</option>
+                        <option value="mckinney">McKinney</option>
+                        <option value="frisco">Frisco</option>
+                        <option value="waco">Waco</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                        placeholder="city.employee@cityname.gov"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        id="password"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                        placeholder="••••••••"
+                      />
+                    </div>
+                    <div className="pt-2">
+                      <Link
+                        href="/city-weighing"
+                        className="w-full inline-flex justify-center items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                      >
+                        Sign In
+                      </Link>
+                    </div>
+                    <div className="text-center text-sm text-gray-500">
+                      <Link href="/city-register" className="text-primary-600 hover:text-primary-500">
+                        Request City Access
+                      </Link>
+                      {' | '}
+                      <Link href="/city-forgot-password" className="text-primary-600 hover:text-primary-500">
+                        Forgot Password?
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="md:w-1/2">
+                <div className="relative">
+                  <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary-100 rounded-lg z-0"></div>
+                  <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary-100 rounded-lg z-0"></div>
+                  <div className="relative z-10 bg-white p-6 rounded-xl shadow-lg">
+                    <Image
+                      src="/images/texas-map.svg"
+                      alt="Texas Municipal Network"
+                      width={500}
+                      height={400}
+                      className="w-full h-auto"
+                    />
+                    <div className="mt-6 space-y-4">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-gray-900">Statewide Compliance</h4>
+                          <p className="text-gray-600 text-sm">Unified weight enforcement across all Texas municipalities</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-gray-900">Centralized Reporting</h4>
+                          <p className="text-gray-600 text-sm">Generate comprehensive reports for your municipality</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-gray-900">Permit Management</h4>
+                          <p className="text-gray-600 text-sm">Issue and track overweight permits efficiently</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section className="py-20 bg-primary-700 text-white">
           <div className="container mx-auto px-4 text-center">

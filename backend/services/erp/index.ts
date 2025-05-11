@@ -146,7 +146,7 @@ export class ErpService {
   /**
    * Create an invoice in an ERP provider
    */
-  async createInvoice(connectionId: string, invoiceData: any): Promise<ErpData | null> {
+  async createInvoice(connectionId: string, invoiceData: any): Promise<ErpData | null> => {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
@@ -194,7 +194,7 @@ export class ErpService {
   /**
    * Sync a weigh ticket to an ERP provider
    */
-  async syncWeighTicket(connectionId: string, ticketId: string): Promise<ErpData | null> {
+  async syncWeighTicket(connectionId: string, ticketId: string): Promise<ErpData | null> => {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
@@ -258,7 +258,7 @@ export class ErpService {
     eventType: string,
     status: 'success' | 'error' | 'warning',
     details: any
-  ): Promise<void> {
+  ): Promise<void> => {
     try {
       await prisma.integration_logs.create({
         data: {

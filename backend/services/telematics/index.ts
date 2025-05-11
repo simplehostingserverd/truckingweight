@@ -58,7 +58,7 @@ export class TelematicsService {
   /**
    * Fetch vehicle data from a telematics provider
    */
-  async fetchVehicleData(connectionId: string, vehicleId: string): Promise<TelematicsData | null> {
+  async fetchVehicleData(connectionId: string, vehicleId: string): Promise<TelematicsData | null> => {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
@@ -111,7 +111,7 @@ export class TelematicsService {
   /**
    * Fetch driver data from a telematics provider
    */
-  async fetchDriverData(connectionId: string, driverId: string): Promise<any | null> {
+  async fetchDriverData(connectionId: string, driverId: string): Promise<any | null> => {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
@@ -168,7 +168,7 @@ export class TelematicsService {
     connectionId: string,
     eventTypes: string[],
     callbackUrl: string
-  ): Promise<boolean> {
+  ): Promise<boolean> => {
     try {
       // Get the integration connection
       const connection = await prisma.integration_connections.findUnique({
@@ -217,7 +217,7 @@ export class TelematicsService {
     eventType: string,
     status: 'success' | 'error' | 'warning',
     details: any
-  ): Promise<void> {
+  ): Promise<void> => {
     try {
       await prisma.integration_logs.create({
         data: {

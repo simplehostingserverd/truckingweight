@@ -32,7 +32,7 @@ export class SamsaraService implements TelematicsProvider {
   /**
    * Fetch vehicle data from Samsara
    */
-  async fetchVehicleData(vehicleId: string): Promise<TelematicsData> {
+  async fetchVehicleData(vehicleId: string): Promise<TelematicsData> => {
     try {
       // Validate API key
       if (!this.apiKey) {
@@ -77,7 +77,7 @@ export class SamsaraService implements TelematicsProvider {
   /**
    * Fetch driver data from Samsara
    */
-  async fetchDriverData(driverId: string): Promise<any> {
+  async fetchDriverData(driverId: string): Promise<any> => {
     try {
       // Validate API key
       if (!this.apiKey) {
@@ -124,7 +124,7 @@ export class SamsaraService implements TelematicsProvider {
   /**
    * Fetch events from Samsara
    */
-  async fetchEvents(startTime: Date, endTime: Date): Promise<any[]> {
+  async fetchEvents(startTime: Date, endTime: Date): Promise<any[]> => {
     try {
       // Validate API key
       if (!this.apiKey) {
@@ -166,7 +166,7 @@ export class SamsaraService implements TelematicsProvider {
   /**
    * Subscribe to events from Samsara
    */
-  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<any> {
+  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<any> => {
     try {
       // Validate API key
       if (!this.apiKey) {

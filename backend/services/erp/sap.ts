@@ -33,7 +33,7 @@ export class SapService implements ErpProvider {
   /**
    * Authenticate with SAP API
    */
-  private async authenticate(): Promise<string> {
+  private async authenticate(): Promise<string> => {
     if (!this.credentials) {
       throw new Error('SAP credentials not configured');
     }
@@ -75,7 +75,7 @@ export class SapService implements ErpProvider {
   /**
    * Make an authenticated call to SAP API
    */
-  private async callApi(endpoint: string, method: string = 'GET', data?: any): Promise<any> {
+  private async callApi(endpoint: string, method: string = 'GET', data?: any): Promise<any> => {
     const token = await this.authenticate();
 
     try {
@@ -143,7 +143,7 @@ export class SapService implements ErpProvider {
   /**
    * Fetch customers from SAP
    */
-  async fetchCustomers(): Promise<ErpData[]> {
+  async fetchCustomers(): Promise<ErpData[]> => {
     try {
       // Call SAP API to get customers (Business Partners)
       const response = await this.callApi('/API_BUSINESS_PARTNER/A_BusinessPartner');
@@ -178,7 +178,7 @@ export class SapService implements ErpProvider {
   /**
    * Fetch invoices from SAP
    */
-  async fetchInvoices(customerId?: string): Promise<ErpData[]> {
+  async fetchInvoices(customerId?: string): Promise<ErpData[]> => {
     try {
       // Build the endpoint with filter if customerId is provided
       let endpoint = '/API_BILLING_DOCUMENT/A_BillingDocument';
@@ -222,7 +222,7 @@ export class SapService implements ErpProvider {
   /**
    * Create an invoice in SAP
    */
-  async createInvoice(invoiceData: any): Promise<ErpData> {
+  async createInvoice(invoiceData: any): Promise<ErpData> => {
     try {
       // Transform our data to SAP format
       const sapInvoice = {
@@ -271,7 +271,7 @@ export class SapService implements ErpProvider {
   /**
    * Sync a weigh ticket to SAP
    */
-  async syncWeighTicket(ticketId: string, ticketData: any): Promise<ErpData> {
+  async syncWeighTicket(ticketId: string, ticketData: any): Promise<ErpData> => {
     try {
       // Transform weigh ticket data to SAP format
       const sapTicket = {

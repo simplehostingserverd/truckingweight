@@ -20,7 +20,7 @@ export const generateScaleQRCode = async (
   scaleId: number,
   companyId: number,
   isAdmin: boolean = false
-): Promise<{ success: boolean; qrCodeDataUrl?: string; qrCodeUuid?: string; error?: string }> {
+): Promise<{ success: boolean; qrCodeDataUrl?: string; qrCodeUuid?: string; error?: string }> => {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId, isAdmin);
@@ -79,7 +79,7 @@ export const generateTicketQRCode = async (
   ticketId: number,
   companyId: number,
   isAdmin: boolean = false
-): Promise<{ success: boolean; qrCodeDataUrl?: string; error?: string }> {
+): Promise<{ success: boolean; qrCodeDataUrl?: string; error?: string }> => {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId, isAdmin);
@@ -140,7 +140,7 @@ export const generateTicketQRCode = async (
 export const validateScaleQRCode = async (
   qrCodeData: any,
   companyId: number
-): Promise<{ success: boolean; scale?: any; error?: string }> {
+): Promise<{ success: boolean; scale?: any; error?: string }> => {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId);
@@ -185,7 +185,7 @@ export const validateScaleQRCode = async (
 export const validateTicketQRCode = async (
   qrCodeData: any,
   companyId: number
-): Promise<{ success: boolean; ticket?: any; error?: string }> {
+): Promise<{ success: boolean; ticket?: any; error?: string }> => {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId);

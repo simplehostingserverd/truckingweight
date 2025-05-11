@@ -37,7 +37,7 @@ export class GeotabService implements TelematicsProvider {
   /**
    * Authenticate with Geotab API
    */
-  private async authenticate(): Promise<string> {
+  private async authenticate(): Promise<string> => {
     if (!this.credentials) {
       throw new Error('Geotab credentials not configured');
     }
@@ -77,7 +77,7 @@ export class GeotabService implements TelematicsProvider {
   /**
    * Make an authenticated call to Geotab API
    */
-  private async callApi(method: string, params: any = {}): Promise<any> {
+  private async callApi(method: string, params: any = {}): Promise<any> => {
     const sessionId = await this.authenticate();
 
     try {
@@ -128,7 +128,7 @@ export class GeotabService implements TelematicsProvider {
   /**
    * Fetch vehicle data from Geotab
    */
-  async fetchVehicleData(vehicleId: string): Promise<TelematicsData> {
+  async fetchVehicleData(vehicleId: string): Promise<TelematicsData> => {
     try {
       // Get device info
       const device = await this.callApi('Get', {
@@ -200,7 +200,7 @@ export class GeotabService implements TelematicsProvider {
   /**
    * Fetch driver data from Geotab
    */
-  async fetchDriverData(driverId: string): Promise<any> {
+  async fetchDriverData(driverId: string): Promise<any> => {
     try {
       // Get driver info
       const driver = await this.callApi('Get', {
@@ -270,7 +270,7 @@ export class GeotabService implements TelematicsProvider {
   /**
    * Fetch events from Geotab
    */
-  async fetchEvents(startTime: Date, endTime: Date): Promise<any[]> {
+  async fetchEvents(startTime: Date, endTime: Date): Promise<any[]> => {
     try {
       // Get exception events
       const events = await this.callApi('Get', {
@@ -305,7 +305,7 @@ export class GeotabService implements TelematicsProvider {
   /**
    * Subscribe to events from Geotab
    */
-  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<any> {
+  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<any> => {
     try {
       // Map our event types to Geotab event types
       const geotabEventTypes = eventTypes.map(type => {

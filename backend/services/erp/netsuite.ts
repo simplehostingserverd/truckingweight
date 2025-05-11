@@ -54,7 +54,7 @@ export class NetSuiteService implements ErpProvider {
     deployId: string,
     method: string,
     data?: any
-  ): Promise<any> {
+  ): Promise<any> => {
     try {
       const url = `${this.baseUrl}?script=${scriptId}&deploy=${deployId}`;
       const headers = this.generateOAuthHeaders(method, url);
@@ -80,7 +80,7 @@ export class NetSuiteService implements ErpProvider {
   /**
    * Fetch customers from NetSuite
    */
-  async fetchCustomers(): Promise<ErpData[]> {
+  async fetchCustomers(): Promise<ErpData[]> => {
     try {
       // Call NetSuite RESTlet to get customers
       const response = await this.callApi(
@@ -118,7 +118,7 @@ export class NetSuiteService implements ErpProvider {
   /**
    * Fetch invoices from NetSuite
    */
-  async fetchInvoices(customerId?: string): Promise<ErpData[]> {
+  async fetchInvoices(customerId?: string): Promise<ErpData[]> => {
     try {
       // Call NetSuite RESTlet to get invoices
       const response = await this.callApi(
@@ -159,7 +159,7 @@ export class NetSuiteService implements ErpProvider {
   /**
    * Create an invoice in NetSuite
    */
-  async createInvoice(invoiceData: any): Promise<ErpData> {
+  async createInvoice(invoiceData: any): Promise<ErpData> => {
     try {
       // Transform our data to NetSuite format
       const netsuiteInvoice = {
@@ -214,7 +214,7 @@ export class NetSuiteService implements ErpProvider {
   /**
    * Sync a weigh ticket to NetSuite
    */
-  async syncWeighTicket(ticketId: string, ticketData: any): Promise<ErpData> {
+  async syncWeighTicket(ticketId: string, ticketData: any): Promise<ErpData> => {
     try {
       // Transform weigh ticket data to NetSuite format
       const netsuiteTicket = {

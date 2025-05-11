@@ -10,6 +10,7 @@ CHECK_FORMATTING=true
 CHECK_TYPES=true
 RUN_TESTS=false
 FIX_MODE=false
+FIX_TS_SYNTAX_ONLY=false
 REPORT_MODE=false
 SPECIFIC_PATH=""
 
@@ -57,6 +58,7 @@ show_usage() {
   echo "  --no-types                Skip TypeScript type checking"
   echo "  --with-tests              Run tests"
   echo "  --fix                     Try to automatically fix issues"
+  echo "  --fix-ts-syntax           Fix TypeScript syntax errors only"
   echo "  --report                  Generate reports instead of failing"
   echo "  --path=<path>             Check only specific path (e.g. frontend/src/components)"
   echo ""
@@ -93,6 +95,13 @@ parse_args() {
         ;;
       --fix)
         FIX_MODE=true
+        ;;
+      --fix-ts-syntax)
+        FIX_TS_SYNTAX_ONLY=true
+        CHECK_FRONTEND=false
+        CHECK_FORMATTING=false
+        CHECK_TYPES=false
+        RUN_TESTS=false
         ;;
       --report)
         REPORT_MODE=true
@@ -242,7 +251,39 @@ lint_backend() {
   # Create a temporary ESLint config if one doesn't exist
   if [ ! -f ".eslintrc.json" ]; then
     print_message "${BLUE}" "📝" "Creating temporary ESLint config for backend..."
-    cat > .eslintrc.temp.json << EOF
+
+    # Check if TypeScript files exist in the backend
+    if ls *.ts &> /dev/null || find . -name "*.ts" | grep -q .; then
+      print_message "${BLUE}" "🔍" "TypeScript files detected, creating TypeScript-aware ESLint config..."
+      cat > .eslintrc.temp.json << EOF
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "semi": ["error", "always"]
+  }
+}
+EOF
+    else
+      # Regular JavaScript config
+      cat > .eslintrc.temp.json << EOF
 {
   "env": {
     "node": true,
@@ -262,12 +303,39 @@ lint_backend() {
   }
 }
 EOF
+    fi
     TEMP_CONFIG="--config .eslintrc.temp.json"
   else
     TEMP_CONFIG=""
   fi
 
   print_message "${BLUE}" "🔍" "Running ESLint on backend${lint_path:+ (path: $lint_path)}..."
+
+  # Check if TypeScript ESLint dependencies are installed
+  local ts_eslint_installed=false
+  if npm list @typescript-eslint/parser &> /dev/null && npm list @typescript-eslint/eslint-plugin &> /dev/null; then
+    ts_eslint_installed=true
+  fi
+
+  # If TypeScript files exist but dependencies aren't installed, warn the user
+  if [ "$ts_eslint_installed" = false ] && (ls *.ts &> /dev/null || find . -name "*.ts" | grep -q .); then
+    print_message "${YELLOW}" "⚠️" "TypeScript files detected but @typescript-eslint packages not found"
+    print_message "${YELLOW}" "ℹ️" "For proper TypeScript linting, install the required packages:"
+    print_message "${YELLOW}" "  " "npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin"
+
+    # Ask if user wants to install the dependencies
+    read -p "Would you like to install these packages now? (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      print_message "${BLUE}" "📦" "Installing TypeScript ESLint packages..."
+      npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin
+      ts_eslint_installed=true
+      print_message "${GREEN}" "✅" "TypeScript ESLint packages installed"
+    else
+      print_message "${YELLOW}" "⚠️" "Continuing without TypeScript ESLint packages"
+      print_message "${YELLOW}" "ℹ️" "TypeScript files may not be linted correctly"
+    fi
+  fi
 
   # Prepare ESLint command with options
   local eslint_cmd="npx eslint ${TEMP_CONFIG} --ext .js,.ts"
@@ -578,6 +646,79 @@ run_tests() {
   fi
 }
 
+# Fix common TypeScript syntax errors
+fix_typescript_syntax_errors() {
+  print_header "Checking for Common TypeScript Syntax Errors"
+
+  # Only run if we're checking the backend and TypeScript files exist
+  if [ "$CHECK_BACKEND" = false ] || [ ! -d "backend" ]; then
+    return
+  fi
+
+  cd backend || handle_error "Could not change to backend directory"
+
+  # Check if TypeScript files exist
+  if ! ls *.ts &> /dev/null && ! find . -name "*.ts" | grep -q .; then
+    print_message "${YELLOW}" "ℹ️" "No TypeScript files found in backend, skipping syntax check"
+    cd ..
+    return
+  fi
+
+  print_message "${BLUE}" "🔍" "Checking for common TypeScript syntax errors..."
+
+  # Look for the specific '=>' expected error pattern in function return types
+  local files_with_errors=$(grep -l -r "): Promise<" --include="*.ts" . 2>/dev/null || echo "")
+
+  if [ -z "$files_with_errors" ]; then
+    print_message "${GREEN}" "✅" "No common TypeScript syntax errors found"
+    cd ..
+    return
+  fi
+
+  print_message "${YELLOW}" "⚠️" "Found potential TypeScript syntax errors in function return types"
+  print_message "${YELLOW}" "ℹ️" "These errors often appear as 'SyntaxError: '=>' expected'"
+
+  # Ask if user wants to fix these errors
+  if [ "$FIX_MODE" = true ]; then
+    print_message "${BLUE}" "🔧" "Attempting to fix TypeScript syntax errors..."
+    fix_ts_errors=true
+  else
+    read -p "Would you like to attempt to fix these errors? (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      print_message "${BLUE}" "🔧" "Attempting to fix TypeScript syntax errors..."
+      fix_ts_errors=true
+    else
+      print_message "${YELLOW}" "⚠️" "Skipping TypeScript syntax error fixes"
+      fix_ts_errors=false
+    fi
+  fi
+
+  if [ "$fix_ts_errors" = true ]; then
+    # Create a backup directory
+    mkdir -p .ts-syntax-backups
+
+    # Process each file with potential errors
+    for file in $files_with_errors; do
+      print_message "${BLUE}" "🔧" "Checking file: $file"
+
+      # Create a backup
+      cp "$file" ".ts-syntax-backups/$(basename "$file").bak"
+
+      # Fix the common pattern: "): Promise<...> {" to "): Promise<...> => {"
+      # This addresses the "SyntaxError: '=>' expected" error
+      sed -i 's/): Promise<\([^>]*\)> {/): Promise<\1> => {/g' "$file"
+
+      print_message "${GREEN}" "✅" "Fixed potential syntax errors in $file"
+    done
+
+    print_message "${GREEN}" "✅" "TypeScript syntax fixes applied"
+    print_message "${BLUE}" "ℹ️" "Backups saved in .ts-syntax-backups directory"
+  fi
+
+  cd ..
+}
+
 # Check for and fix ESLint configuration conflicts
 check_eslint_config() {
   print_header "Checking ESLint Configuration"
@@ -640,6 +781,20 @@ main() {
   check_toolbox
   check_npm
   check_eslint_config
+
+  # Handle TypeScript syntax-only fix mode
+  if [ "$FIX_TS_SYNTAX_ONLY" = true ]; then
+    print_message "${BLUE}" "🔧" "Running in TypeScript syntax fix only mode"
+    # Force fix mode for TypeScript syntax errors
+    FIX_MODE=true
+    fix_typescript_syntax_errors
+    print_header "TypeScript Syntax Fix Complete"
+    print_message "${GREEN}" "🎉" "TypeScript syntax fixes completed!"
+    exit 0
+  fi
+
+  # Fix TypeScript syntax errors before running linting
+  fix_typescript_syntax_errors
 
   # Run the checks
   [ "$CHECK_FRONTEND" = true ] && lint_frontend

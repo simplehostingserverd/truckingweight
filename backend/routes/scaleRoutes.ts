@@ -14,6 +14,9 @@ import {
   getReading,
   getScaleQRCode,
   validateQRCode,
+  processCameraTicket,
+  getHardwareOptions,
+  configureHardware,
 } from '../controllers/scaleController';
 import { protect } from '../middleware/authMiddleware';
 import { setCompanyContextMiddleware } from '../middleware/companyContext';
@@ -35,5 +38,12 @@ router.get('/:id/reading', getReading);
 // QR code routes
 router.get('/:id/qrcode', getScaleQRCode);
 router.post('/validate-qrcode', validateQRCode);
+
+// Camera ticket processing route
+router.post('/camera-ticket', processCameraTicket);
+
+// IoT hardware integration routes
+router.get('/hardware-options', getHardwareOptions);
+router.post('/:id/configure-hardware', configureHardware);
 
 export default router;

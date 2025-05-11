@@ -12,6 +12,8 @@ import {
   getScaleReading,
   processIoTSensorData,
   processCameraScannedTicket,
+  getAvailableHardwareOptions,
+  configureIoTHardware,
 } from '../services/scaleIntegration';
 import { generateScaleQRCode, validateScaleQRCode } from '../services/qrCodeService';
 import {
@@ -372,5 +374,102 @@ export const validateQRCode = async (req: AuthenticatedRequest, res: Response) =
   } catch (error: any) {
     logger.error(`Error validating scale QR code: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+/**
+ * @desc    Process a camera-scanned weight ticket
+ * @route   POST /api/scales/camera-ticket
+ * @access  Private
+ */
+export const processCameraTicket = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { ticketImageUrl } = req.body;
+    const companyId = req.user?.companyId;
+
+    if (!companyId) {
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
+    }
+
+    if (!ticketImageUrl) {
+      return res.status(400).json({ message: 'Ticket image URL is required' });
+    }
+
+    const result = await processCameraScannedTicket(ticketImageUrl, companyId);
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error });
+    }
+
+    return res.status(200).json(result);
+  } catch (error: any) {
+    logger.error(`Error processing camera ticket: ${error.message}`, { error });
+    return res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+/**
+ * @desc    Get available IoT hardware options
+ * @route   GET /api/scales/hardware-options
+ * @access  Private
+ */
+export const getHardwareOptions = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const isAdmin = req.user?.isAdmin === true;
+    const result = getAvailableHardwareOptions();
+
+    // Filter options based on user role if needed
+    if (!isAdmin) {
+      // If not admin, filter out city scale system option
+      if (result.options) {
+        result.options = result.options.filter(option => !option.isCityScaleCompatible);
+      }
+    }
+
+    return res.status(200).json(result);
+  } catch (error: any) {
+    logger.error(`Error getting hardware options: ${error.message}`, { error });
+    return res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+/**
+ * @desc    Configure IoT hardware for a scale
+ * @route   POST /api/scales/:id/configure-hardware
+ * @access  Private
+ */
+export const configureHardware = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const companyId = req.user?.companyId;
+    const isAdmin = req.user?.isAdmin === true;
+    const scaleId = parseInt(req.params.id);
+    const { hardwareType, config } = req.body;
+
+    if (!companyId && !isAdmin) {
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
+    }
+
+    if (!hardwareType || !config) {
+      return res.status(400).json({
+        message: 'Hardware type and configuration are required'
+      });
+    }
+
+    const result = await configureIoTHardware(
+      scaleId,
+      hardwareType,
+      config,
+      companyId,
+      isAdmin
+    );
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error });
+    }
+
+    return res.status(200).json(result);
+  } catch (error: any) {
+    logger.error(`Error configuring hardware: ${error.message}`, { error });
+    return res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

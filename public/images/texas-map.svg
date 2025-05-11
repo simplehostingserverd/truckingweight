@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="700px" viewBox="0 0 800 700" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Texas Municipal Network</title>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="texasGradient">
+            <stop stop-color="#E6F7FF" offset="0%"></stop>
+            <stop stop-color="#CCE5FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <!-- Texas State Shape -->
+        <path d="M213,36 L232,36 L232,52 L251,52 L251,68 L270,68 L270,84 L289,84 L289,100 L308,100 L308,116 L327,116 L327,132 L346,132 L346,148 L365,148 L365,164 L384,164 L384,180 L403,180 L403,196 L422,196 L422,212 L441,212 L441,228 L460,228 L460,244 L479,244 L479,260 L498,260 L498,276 L517,276 L517,292 L536,292 L536,308 L555,308 L555,324 L574,324 L574,340 L593,340 L593,356 L612,356 L612,372 L631,372 L631,388 L650,388 L650,404 L669,404 L669,420 L688,420 L688,436 L707,436 L707,452 L726,452 L726,468 L745,468 L745,484 L764,484 L764,500 L745,500 L745,516 L726,516 L726,532 L707,532 L707,548 L688,548 L688,564 L669,564 L669,580 L650,580 L650,596 L631,596 L631,612 L612,612 L612,628 L593,628 L593,644 L574,644 L574,628 L555,628 L555,612 L536,612 L536,596 L517,596 L517,580 L498,580 L498,564 L479,564 L479,548 L460,548 L460,532 L441,532 L441,516 L422,516 L422,500 L403,500 L403,484 L384,484 L384,468 L365,468 L365,452 L346,452 L346,436 L327,436 L327,420 L308,420 L308,404 L289,404 L289,388 L270,388 L270,372 L251,372 L251,356 L232,356 L232,340 L213,340 L213,324 L194,324 L194,308 L175,308 L175,292 L156,292 L156,276 L137,276 L137,260 L118,260 L118,244 L99,244 L99,228 L80,228 L80,212 L61,212 L61,196 L42,196 L42,180 L23,180 L23,164 L42,164 L42,148 L61,148 L61,132 L80,132 L80,116 L99,116 L99,100 L118,100 L118,84 L137,84 L137,68 L156,68 L156,52 L175,52 L175,36 L194,36 L194,20 L213,20 L213,36 Z" 
+              fill="url(#texasGradient)" 
+              stroke="#0D2B4B" 
+              stroke-width="2"></path>
+        
+        <!-- City Markers -->
+        <!-- Dallas -->
+        <circle cx="460" cy="180" r="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"></circle>
+        <text x="460" y="210" font-family="Arial" font-size="12" fill="#0D2B4B" text-anchor="middle">Dallas</text>
+        
+        <!-- Houston -->
+        <circle cx="550" cy="350" r="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"></circle>
+        <text x="550" y="380" font-family="Arial" font-size="12" fill="#0D2B4B" text-anchor="middle">Houston</text>
+        
+        <!-- San Antonio -->
+        <circle cx="400" cy="400" r="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"></circle>
+        <text x="400" y="430" font-family="Arial" font-size="12" fill="#0D2B4B" text-anchor="middle">San Antonio</text>
+        
+        <!-- Austin -->
+        <circle cx="420" cy="320" r="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"></circle>
+        <text x="420" y="350" font-family="Arial" font-size="12" fill="#0D2B4B" text-anchor="middle">Austin</text>
+        
+        <!-- Fort Worth -->
+        <circle cx="430" cy="180" r="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"></circle>
+        <text x="430" y="160" font-family="Arial" font-size="12" fill="#0D2B4B" text-anchor="middle">Fort Worth</text>
+        
+        <!-- El Paso -->
+        <circle cx="100" cy="300" r="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"></circle>
+        <text x="100" y="330" font-family="Arial" font-size="12" fill="#0D2B4B" text-anchor="middle">El Paso</text>
+        
+        <!-- Corpus Christi -->
+        <circle cx="480" cy="480" r="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"></circle>
+        <text x="480" y="510" font-family="Arial" font-size="12" fill="#0D2B4B" text-anchor="middle">Corpus Christi</text>
+        
+        <!-- Lubbock -->
+        <circle cx="300" cy="150" r="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"></circle>
+        <text x="300" y="180" font-family="Arial" font-size="12" fill="#0D2B4B" text-anchor="middle">Lubbock</text>
+        
+        <!-- Amarillo -->
+        <circle cx="250" cy="80" r="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"></circle>
+        <text x="250" y="110" font-family="Arial" font-size="12" fill="#0D2B4B" text-anchor="middle">Amarillo</text>
+        
+        <!-- Laredo -->
+        <circle cx="350" cy="500" r="10" fill="#FFC107" stroke="#0D2B4B" stroke-width="2"></circle>
+        <text x="350" y="530" font-family="Arial" font-size="12" fill="#0D2B4B" text-anchor="middle">Laredo</text>
+        
+        <!-- Connection Lines -->
+        <path d="M460,180 L550,350" stroke="#0D2B4B" stroke-width="1" stroke-dasharray="5,5"></path>
+        <path d="M460,180 L430,180" stroke="#0D2B4B" stroke-width="1" stroke-dasharray="5,5"></path>
+        <path d="M460,180 L420,320" stroke="#0D2B4B" stroke-width="1" stroke-dasharray="5,5"></path>
+        <path d="M420,320 L400,400" stroke="#0D2B4B" stroke-width="1" stroke-dasharray="5,5"></path>
+        <path d="M420,320 L550,350" stroke="#0D2B4B" stroke-width="1" stroke-dasharray="5,5"></path>
+        <path d="M400,400 L480,480" stroke="#0D2B4B" stroke-width="1" stroke-dasharray="5,5"></path>
+        <path d="M400,400 L350,500" stroke="#0D2B4B" stroke-width="1" stroke-dasharray="5,5"></path>
+        <path d="M300,150 L250,80" stroke="#0D2B4B" stroke-width="1" stroke-dasharray="5,5"></path>
+        <path d="M300,150 L430,180" stroke="#0D2B4B" stroke-width="1" stroke-dasharray="5,5"></path>
+        <path d="M100,300 L300,150" stroke="#0D2B4B" stroke-width="1" stroke-dasharray="5,5"></path>
+        
+        <!-- Title -->
+        <text x="400" y="30" font-family="Arial" font-size="20" font-weight="bold" fill="#0D2B4B" text-anchor="middle">Texas Municipal Weighing Network</text>
+    </g>
+</svg>
