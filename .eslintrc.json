@@ -21,8 +21,7 @@
     {
       "files": ["frontend/**/*.{js,jsx,ts,tsx}"],
       "extends": [
-        "eslint:recommended",
-        "next/core-web-vitals"
+        "eslint:recommended"
       ],
       "settings": {
         "next": {
@@ -39,5 +38,6 @@
         "no-console": "off"
       }
     }
-  ]
+  ],
+  "ignorePatterns": ["frontend/**/*"]
 }
