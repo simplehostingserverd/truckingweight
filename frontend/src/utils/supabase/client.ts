@@ -10,5 +10,18 @@ export const createClient = () => {
   return createClientComponentClient<Database>({
     supabaseUrl,
     supabaseKey,
+    options: {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        flowType: 'pkce',
+      },
+      global: {
+        headers: {
+          'X-Client-Info': 'supabase-auth-helpers-nextjs',
+        },
+      },
+    },
   });
 };

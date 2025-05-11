@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Image from 'next/image';
+import { useSupabaseAuth } from '@/providers/SupabaseAuthProvider';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -13,7 +13,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const { signIn } = useSupabaseAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,19 +21,14 @@ export default function Login() {
     setError('');
 
     try {
-      // Authenticate with Supabase
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      // Use our custom auth provider to sign in
+      const { error } = await signIn(email, password);
 
       if (error) {
         throw error;
       }
 
-      // Redirect to dashboard on successful login
-      router.push('/dashboard');
-      router.refresh();
+      // The redirect is handled in the auth provider
     } catch (err: any) {
       setError(err.message || 'Invalid email or password');
       console.error('Login error:', err);

@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // Initialize Supabase client
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
     // Try to get real data from the database

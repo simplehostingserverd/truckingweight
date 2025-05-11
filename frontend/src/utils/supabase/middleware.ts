@@ -13,10 +13,19 @@ export async function middleware(req: NextRequest) {
   // Apply security headers
 
   // Content-Security-Policy - Helps prevent XSS attacks
-  res.headers.set(
-    'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co; img-src 'self' data: https://images.pexels.com https://*.supabase.co; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; frame-src 'self';"
-  );
+  // More permissive in development mode to help with debugging
+  if (process.env.NODE_ENV === 'production') {
+    res.headers.set(
+      'Content-Security-Policy',
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co; img-src 'self' data: https://images.pexels.com https://*.supabase.co; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; frame-src 'self';"
+    );
+  } else {
+    // More permissive for development
+    res.headers.set(
+      'Content-Security-Policy',
+      "default-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';"
+    );
+  }
 
   // X-XSS-Protection - Stops pages from loading when they detect reflected XSS attacks
   res.headers.set('X-XSS-Protection', '1; mode=block');
