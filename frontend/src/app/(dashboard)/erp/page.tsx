@@ -3,17 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { PlusIcon, ArrowPathIcon, LinkIcon, ServerIcon } from '@heroicons/react/24/outline';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Button, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
+import { Alert, AlertDescription, AlertTitle, Badge, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, Separator, Skeleton } from '@/components/ui';
 import type { Database } from '@/types/supabase';
 
 type Connection = {
@@ -65,7 +57,7 @@ export default function ERPPage() {
       setError('');
 
       const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-      
+
       if (sessionError) {
         throw sessionError;
       }
@@ -112,7 +104,7 @@ export default function ERPPage() {
   const fetchSyncLogs = async () => {
     try {
       const { data: sessionData } = await supabase.auth.getSession();
-      
+
       if (!sessionData.session) {
         return;
       }
@@ -163,9 +155,9 @@ export default function ERPPage() {
   const handleCreateConnection = async () => {
     try {
       setIsLoading(true);
-      
+
       const { data: sessionData } = await supabase.auth.getSession();
-      
+
       if (!sessionData.session) {
         throw new Error('No active session');
       }
@@ -218,7 +210,7 @@ export default function ERPPage() {
       // This would call your backend API to trigger a sync
       // For now, we'll just show a success message
       alert(`Sync initiated for connection ${connectionId}`);
-      
+
       // Refresh the connections list
       fetchConnections();
       fetchSyncLogs();
@@ -293,9 +285,9 @@ export default function ERPPage() {
                       <div>
                         <CardTitle>{connection.name}</CardTitle>
                         <CardDescription>
-                          {connection.provider === 'netsuite' ? 'NetSuite' : 
-                           connection.provider === 'sap' ? 'SAP' : 
-                           connection.provider === 'quickbooks' ? 'QuickBooks' : 
+                          {connection.provider === 'netsuite' ? 'NetSuite' :
+                           connection.provider === 'sap' ? 'SAP' :
+                           connection.provider === 'quickbooks' ? 'QuickBooks' :
                            connection.provider}
                         </CardDescription>
                       </div>

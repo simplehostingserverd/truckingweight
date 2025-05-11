@@ -17,6 +17,19 @@ export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 // Export Tabs components
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
 
+// Export Dialog components
+export { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './dialog';
+
+// Export Table components
+export { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from './table';
+
+// Export Alert components
+export { Alert, AlertDescription, AlertTitle } from './alert';
+
+// Export other components
+export { Separator } from './separator';
+export { Skeleton } from './skeleton';
+
 // Re-export existing components
 export { default as MobileNav } from './MobileNav';
 export { default as ServiceWorkerRegistration } from './ServiceWorkerRegistration';
