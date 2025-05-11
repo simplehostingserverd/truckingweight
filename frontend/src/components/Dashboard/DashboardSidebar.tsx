@@ -12,6 +12,9 @@ import {
   Cog6ToothIcon,
   UsersIcon,
   BuildingOfficeIcon,
+  ServerIcon,
+  SignalIcon,
+  MapPinIcon,
 } from '@heroicons/react/24/outline';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { cn } from '@/lib/utils';
@@ -69,16 +72,20 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
     { name: 'Weights', href: '/weights', icon: ScaleIcon },
     { name: 'Weight Capture', href: '/weights/capture', icon: ScaleIcon },
+    { name: 'Scales', href: '/scales', icon: ScaleIcon },
     { name: 'Loads', href: '/loads', icon: TruckIcon },
     { name: 'Vehicles', href: '/vehicles', icon: TruckIcon },
     { name: 'Drivers', href: '/drivers', icon: UserGroupIcon },
     { name: 'Driver Tracking', href: '/driver-tracking', icon: TruckIcon },
+    { name: 'ERP Integration', href: '/erp', icon: ServerIcon },
+    { name: 'Telematics', href: '/telematics', icon: SignalIcon },
     { name: 'Reports', href: '/reports', icon: ChartBarIcon },
   ];
 
   const adminNavigation = [
     { name: 'Users', href: '/admin/users', icon: UsersIcon },
     { name: 'Companies', href: '/admin/companies', icon: BuildingOfficeIcon },
+    { name: 'City Dashboard', href: '/city-weighing', icon: MapPinIcon },
     { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
   ];
 
