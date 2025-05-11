@@ -47,7 +47,7 @@ class RedisService {
   /**
    * Get a value from Redis
    */
-  public async get<T>(key: string): Promise<T | null> => {
+  public async get<T>(key: string): Promise<T | null> {
     try {
       const data = await this.client.get(key);
       if (!data) return null;
@@ -61,7 +61,7 @@ class RedisService {
   /**
    * Set a value in Redis with optional TTL
    */
-  public async set(key: string, value: any, ttl?: number): Promise<boolean> => {
+  public async set(key: string, value: any, ttl?: number): Promise<boolean> {
     try {
       const serializedValue = JSON.stringify(value);
 
@@ -81,7 +81,7 @@ class RedisService {
   /**
    * Delete a key from Redis
    */
-  public async delete(key: string): Promise<boolean> => {
+  public async delete(key: string): Promise<boolean> {
     try {
       await this.client.del(key);
       return true;
@@ -94,7 +94,7 @@ class RedisService {
   /**
    * Delete multiple keys matching a pattern
    */
-  public async deletePattern(pattern: string): Promise<boolean> => {
+  public async deletePattern(pattern: string): Promise<boolean> {
     try {
       const keys = await this.client.keys(pattern);
       if (keys.length > 0) {
@@ -110,7 +110,7 @@ class RedisService {
   /**
    * Check if a key exists in Redis
    */
-  public async exists(key: string): Promise<boolean> => {
+  public async exists(key: string): Promise<boolean> {
     try {
       const result = await this.client.exists(key);
       return result === 1;
@@ -123,7 +123,7 @@ class RedisService {
   /**
    * Get the TTL of a key in Redis
    */
-  public async ttl(key: string): Promise<number> => {
+  public async ttl(key: string): Promise<number> {
     try {
       return await this.client.ttl(key);
     } catch (error) {
@@ -135,7 +135,7 @@ class RedisService {
   /**
    * Set a hash in Redis
    */
-  public async hset(key: string, field: string, value: any): Promise<boolean> => {
+  public async hset(key: string, field: string, value: any): Promise<boolean> {
     try {
       const serializedValue = JSON.stringify(value);
       await this.client.hset(key, field, serializedValue);
@@ -149,7 +149,7 @@ class RedisService {
   /**
    * Get a hash field from Redis
    */
-  public async hget<T>(key: string, field: string): Promise<T | null> => {
+  public async hget<T>(key: string, field: string): Promise<T | null> {
     try {
       const data = await this.client.hget(key, field);
       if (!data) return null;
@@ -183,7 +183,7 @@ class RedisService {
   /**
    * Delete a hash field from Redis
    */
-  public async hdel(key: string, field: string): Promise<boolean> => {
+  public async hdel(key: string, field: string): Promise<boolean> {
     try {
       await this.client.hdel(key, field);
       return true;
@@ -196,7 +196,7 @@ class RedisService {
   /**
    * Add a value to a Redis set
    */
-  public async sadd(key: string, value: string): Promise<boolean> => {
+  public async sadd(key: string, value: string): Promise<boolean> {
     try {
       await this.client.sadd(key, value);
       return true;
@@ -209,7 +209,7 @@ class RedisService {
   /**
    * Get all members of a Redis set
    */
-  public async smembers(key: string): Promise<string[]> => {
+  public async smembers(key: string): Promise<string[]> {
     try {
       return await this.client.smembers(key);
     } catch (error) {
@@ -221,7 +221,7 @@ class RedisService {
   /**
    * Close the Redis connection
    */
-  public async close(): Promise<void> => {
+  public async close(): Promise<void> {
     try {
       await this.client.quit();
       this.isConnected = false;
