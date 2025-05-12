@@ -62,54 +62,57 @@ export default function WeightCapturePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Get user's company ID
+        // Get auth token from supabase
         const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        const { data: userData } = await supabase
-          .from('users')
-          .select('company_id')
-          .eq('id', user?.id)
-          .single();
+          data: { session },
+        } = await supabase.auth.getSession();
 
-        if (!userData) {
-          throw new Error('Failed to get user data');
+        if (!session) {
+          throw new Error('No active session');
         }
 
-        // Fetch vehicles
-        const { data: vehiclesData } = await supabase
-          .from('vehicles')
-          .select('*')
-          .eq('company_id', userData.company_id)
-          .eq('status', 'Active');
+        // Fetch vehicles and drivers from our new API endpoint
+        const response = await fetch('/api/scales/vehicles-drivers', {
+          headers: {
+            'x-auth-token': session.access_token,
+          },
+        });
 
-        if (vehiclesData) {
-          setVehicles(vehiclesData);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to fetch vehicles and drivers');
         }
 
-        // Fetch drivers
-        const { data: driversData } = await supabase
-          .from('drivers')
-          .select('*')
-          .eq('company_id', userData.company_id)
-          .eq('status', 'Active');
+        const data = await response.json();
 
-        if (driversData) {
-          setDrivers(driversData);
+        if (data.vehicles) {
+          setVehicles(data.vehicles);
+        }
+
+        if (data.drivers) {
+          setDrivers(data.drivers);
         }
 
         // Fetch scales
-        const { data: scalesData } = await supabase
-          .from('scales')
-          .select('*')
-          .eq('company_id', userData.company_id)
-          .eq('status', 'Active');
+        const scalesResponse = await fetch('/api/scales', {
+          headers: {
+            'x-auth-token': session.access_token,
+          },
+        });
 
-        if (scalesData) {
-          setScales(scalesData);
+        if (!scalesResponse.ok) {
+          const errorData = await scalesResponse.json();
+          throw new Error(errorData.message || 'Failed to fetch scales');
         }
+
+        const scalesData = await scalesResponse.json();
+
+        // Filter only active scales
+        const activeScales = scalesData.filter((scale: any) => scale.status === 'Active');
+        setScales(activeScales);
       } catch (error) {
         console.error('Error fetching data:', error);
+        // Even if there's an error, the API should return mock data
       }
     };
 

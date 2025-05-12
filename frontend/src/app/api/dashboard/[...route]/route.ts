@@ -65,23 +65,28 @@ export async function GET(request: NextRequest, { params }: { params: { route: s
   } catch (error) {
     console.error(`Error in dashboard API (${route}):`, error);
 
-    // Fall back to mock data if there's an error
-    try {
-      switch (route) {
-        case 'stats':
-          return NextResponse.json(getMockStats());
-        case 'load-status':
-          return NextResponse.json(getMockLoadStatus());
-        case 'compliance':
-          return NextResponse.json(getMockComplianceData(dateRange));
-        case 'vehicle-weights':
-          return NextResponse.json(getMockVehicleWeights(dateRange));
-        case 'recent-weights':
-          return NextResponse.json(getMockRecentWeights());
-        default:
-          return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 });
+    // Always use mock data in development mode or if there's an error
+    if (process.env.NODE_ENV !== 'production' || error) {
+      console.log(`Using mock data for ${route} in ${process.env.NODE_ENV} mode`);
+      try {
+        switch (route) {
+          case 'stats':
+            return NextResponse.json(getMockStats());
+          case 'load-status':
+            return NextResponse.json(getMockLoadStatus());
+          case 'compliance':
+            return NextResponse.json(getMockComplianceData(dateRange));
+          case 'vehicle-weights':
+            return NextResponse.json(getMockVehicleWeights(dateRange));
+          case 'recent-weights':
+            return NextResponse.json(getMockRecentWeights());
+          default:
+            return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 });
+        }
+      } catch (fallbackError) {
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
       }
-    } catch (fallbackError) {
+    } else {
       return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
   }
