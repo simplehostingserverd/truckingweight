@@ -21,6 +21,7 @@
     "@fastify/rate-limit": "^8.0.3",
     "@fastify/swagger": "^8.14.0",
     "@fastify/swagger-ui": "^2.1.0",
+    "@fastify/websocket": "^11.0.2",
     "@prisma/client": "^6.7.0",
     "@supabase/supabase-js": "^2.49.4",
     "axios": "^1.9.0",
@@ -54,6 +55,7 @@
     "prisma-generator-plantuml-erd": "^1.6.0",
     "supertest": "^6.3.4",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },

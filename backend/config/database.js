@@ -4,8 +4,8 @@
  * when the Supabase client API is not sufficient for certain operations.
  */
 
-const { Pool } = require('pg');
-const dotenv = require('dotenv');
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
 
 // Load environment variables
 dotenv.config();
@@ -125,7 +125,7 @@ const testConnection = async () => {
   }
 };
 
-module.exports = {
+export {
   getDirectPool,
   getPooledPool,
   queryDirect,
