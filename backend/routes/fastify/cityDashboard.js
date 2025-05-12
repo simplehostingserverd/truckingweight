@@ -6,30 +6,45 @@
 const { createClient } = require('@supabase/supabase-js');
 const { cityAuthMiddleware } = require('../../middleware/fastify/cityAuth');
 const { logger } = require('../../utils/logger');
+const { bearerAuthMiddleware } = require('../../middleware/fastify/bearerAuth');
 
 // Initialize Supabase client
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY
 );
 
 // City dashboard route schemas
 const dashboardStatsSchema = {
+  tags: ['City Dashboard'],
+  summary: 'Get city dashboard statistics',
+  description: 'Returns key metrics for the city dashboard including scales, weighings, revenue, and permits',
+  security: [{ bearerAuth: [] }],
   response: {
     200: {
+      description: 'Successful response with dashboard statistics',
       type: 'object',
       properties: {
-        totalScales: { type: 'number' },
-        activeScales: { type: 'number' },
-        totalWeighings: { type: 'number' },
-        revenueCollected: { type: 'number' },
-        complianceRate: { type: 'number' },
-        pendingPermits: { type: 'number' },
-        activePermits: { type: 'number' },
-        recentViolations: { type: 'number' },
+        totalScales: { type: 'number', description: 'Total number of scales registered to the city' },
+        activeScales: { type: 'number', description: 'Number of scales currently active' },
+        totalWeighings: { type: 'number', description: 'Total number of weighings recorded' },
+        revenueCollected: { type: 'number', description: 'Total revenue collected from permits and fines' },
+        complianceRate: { type: 'number', description: 'Percentage of compliant weighings' },
+        pendingPermits: { type: 'number', description: 'Number of permits pending approval or payment' },
+        activePermits: { type: 'number', description: 'Number of currently active permits' },
+        recentViolations: { type: 'number', description: 'Number of violations in the last 30 days' },
+      },
+    },
+    401: {
+      description: 'Unauthorized - Invalid or missing authentication token',
+      type: 'object',
+      properties: {
+        error: { type: 'string' },
+        message: { type: 'string' },
       },
     },
     500: {
+      description: 'Server error',
       type: 'object',
       properties: {
         msg: { type: 'string' },
@@ -39,8 +54,23 @@ const dashboardStatsSchema = {
 };
 
 const recentWeighingsSchema = {
+  tags: ['City Dashboard'],
+  summary: 'Get recent weighings for city',
+  description: 'Returns a list of recent weighing tickets for the city',
+  security: [{ bearerAuth: [] }],
+  querystring: {
+    type: 'object',
+    properties: {
+      limit: {
+        type: 'integer',
+        description: 'Number of records to return',
+        default: 10
+      }
+    }
+  },
   response: {
     200: {
+      description: 'Successful response with recent weighings',
       type: 'object',
       properties: {
         weighings: {
@@ -48,21 +78,30 @@ const recentWeighingsSchema = {
           items: {
             type: 'object',
             properties: {
-              id: { type: 'number' },
-              ticketNumber: { type: 'string' },
-              vehicleInfo: { type: 'string' },
-              companyName: { type: 'string' },
-              grossWeight: { type: 'number' },
-              netWeight: { type: 'number' },
-              weighDate: { type: 'string' },
-              status: { type: 'string' },
-              scaleName: { type: 'string' },
+              id: { type: 'number', description: 'Weighing ticket ID' },
+              ticketNumber: { type: 'string', description: 'Unique ticket number' },
+              vehicleInfo: { type: 'string', description: 'Vehicle information (license plate, VIN)' },
+              companyName: { type: 'string', description: 'Company name' },
+              grossWeight: { type: 'number', description: 'Gross weight of the vehicle' },
+              netWeight: { type: 'number', description: 'Net weight (gross - tare)' },
+              weighDate: { type: 'string', format: 'date-time', description: 'Date and time of weighing' },
+              status: { type: 'string', description: 'Status of the weighing (Compliant, Non-Compliant, Warning)' },
+              scaleName: { type: 'string', description: 'Name of the scale used' },
             },
           },
         },
       },
     },
+    401: {
+      description: 'Unauthorized - Invalid or missing authentication token',
+      type: 'object',
+      properties: {
+        error: { type: 'string' },
+        message: { type: 'string' },
+      },
+    },
     500: {
+      description: 'Server error',
       type: 'object',
       properties: {
         msg: { type: 'string' },
@@ -72,17 +111,57 @@ const recentWeighingsSchema = {
 };
 
 const complianceDataSchema = {
+  tags: ['City Dashboard'],
+  summary: 'Get compliance data for charts',
+  description: 'Returns compliance data for the specified time period for visualization',
+  security: [{ bearerAuth: [] }],
+  querystring: {
+    type: 'object',
+    properties: {
+      days: {
+        type: 'integer',
+        description: 'Number of days to include in the data',
+        default: 30
+      }
+    }
+  },
   response: {
     200: {
+      description: 'Successful response with compliance data',
       type: 'object',
       properties: {
-        labels: { type: 'array', items: { type: 'string' } },
-        compliant: { type: 'array', items: { type: 'number' } },
-        nonCompliant: { type: 'array', items: { type: 'number' } },
-        warning: { type: 'array', items: { type: 'number' } },
+        labels: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Date labels for the data points'
+        },
+        compliant: {
+          type: 'array',
+          items: { type: 'number' },
+          description: 'Number of compliant weighings for each date'
+        },
+        nonCompliant: {
+          type: 'array',
+          items: { type: 'number' },
+          description: 'Number of non-compliant weighings for each date'
+        },
+        warning: {
+          type: 'array',
+          items: { type: 'number' },
+          description: 'Number of warning weighings for each date'
+        },
+      },
+    },
+    401: {
+      description: 'Unauthorized - Invalid or missing authentication token',
+      type: 'object',
+      properties: {
+        error: { type: 'string' },
+        message: { type: 'string' },
       },
     },
     500: {
+      description: 'Server error',
       type: 'object',
       properties: {
         msg: { type: 'string' },
@@ -92,16 +171,52 @@ const complianceDataSchema = {
 };
 
 const revenueDataSchema = {
+  tags: ['City Dashboard'],
+  summary: 'Get revenue data for charts',
+  description: 'Returns revenue data for the specified time period for visualization',
+  security: [{ bearerAuth: [] }],
+  querystring: {
+    type: 'object',
+    properties: {
+      months: {
+        type: 'integer',
+        description: 'Number of months to include in the data',
+        default: 6
+      }
+    }
+  },
   response: {
     200: {
+      description: 'Successful response with revenue data',
       type: 'object',
       properties: {
-        labels: { type: 'array', items: { type: 'string' } },
-        permitRevenue: { type: 'array', items: { type: 'number' } },
-        fineRevenue: { type: 'array', items: { type: 'number' } },
+        labels: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Month labels for the data points'
+        },
+        permitRevenue: {
+          type: 'array',
+          items: { type: 'number' },
+          description: 'Revenue from permits for each month'
+        },
+        fineRevenue: {
+          type: 'array',
+          items: { type: 'number' },
+          description: 'Revenue from fines for each month'
+        },
+      },
+    },
+    401: {
+      description: 'Unauthorized - Invalid or missing authentication token',
+      type: 'object',
+      properties: {
+        error: { type: 'string' },
+        message: { type: 'string' },
       },
     },
     500: {
+      description: 'Server error',
       type: 'object',
       properties: {
         msg: { type: 'string' },
@@ -114,8 +229,8 @@ const revenueDataSchema = {
  * City Dashboard Routes
  */
 async function routes(fastify, options) {
-  // Add city auth middleware to all routes
-  fastify.addHook('preHandler', cityAuthMiddleware);
+  // We're using the global bearer auth middleware now
+  // This will validate the token and set the user in the request
 
   /**
    * @route   GET /api/city-dashboard/stats
@@ -322,7 +437,7 @@ async function routes(fastify, options) {
       complianceData.forEach(ticket => {
         const dateStr = new Date(ticket.weigh_date).toISOString().split('T')[0];
         const index = labels.indexOf(dateStr);
-        
+
         if (index !== -1) {
           if (ticket.status === 'Compliant') {
             compliant[index]++;
@@ -400,7 +515,7 @@ async function routes(fastify, options) {
         const date = new Date(permit.created_at);
         const monthYear = date.toLocaleString('default', { month: 'short', year: 'numeric' });
         const index = labels.indexOf(monthYear);
-        
+
         if (index !== -1) {
           permitRevenue[index] += parseFloat(permit.fee_amount);
         }
@@ -411,7 +526,7 @@ async function routes(fastify, options) {
         const date = new Date(fine.created_at);
         const monthYear = date.toLocaleString('default', { month: 'short', year: 'numeric' });
         const index = labels.indexOf(monthYear);
-        
+
         if (index !== -1) {
           fineRevenue[index] += parseFloat(fine.fine_amount);
         }

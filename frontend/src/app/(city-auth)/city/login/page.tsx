@@ -4,13 +4,32 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BuildingOfficeIcon, LockClosedIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { createClient } from '@/utils/supabase/client';
+
+// MUI Joy UI components
+import { CssVarsProvider } from '@mui/joy/styles';
+import Box from '@mui/joy/Box';
+import Typography from '@mui/joy/Typography';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import Input from '@mui/joy/Input';
+import Button from '@mui/joy/Button';
+import Checkbox from '@mui/joy/Checkbox';
+import Alert from '@mui/joy/Alert';
+import Card from '@mui/joy/Card';
+import Divider from '@mui/joy/Divider';
+import Stack from '@mui/joy/Stack';
+import Grid from '@mui/joy/Grid';
+
+// MUI Icons
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+import InfoIcon from '@mui/icons-material/Info';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import WarningIcon from '@mui/icons-material/Warning';
+
+// Custom theme
+import cityTheme from '@/theme/cityTheme';
 
 export default function CityLogin() {
   const [email, setEmail] = useState('');
@@ -19,7 +38,6 @@ export default function CityLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +62,7 @@ export default function CityLogin() {
 
       // Store the token in localStorage
       localStorage.setItem('cityToken', data.token);
-      
+
       // Store user data in localStorage
       localStorage.setItem('cityUser', JSON.stringify(data.user));
 
@@ -59,148 +77,229 @@ export default function CityLogin() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-900">
-      {/* Left side - Image and info */}
-      <div className="hidden lg:flex lg:w-1/2 bg-blue-900 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-800/70 z-10"></div>
-        <Image
-          src="/images/city-weighing-bg.jpg"
-          alt="City Weighing System"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="relative z-20 flex flex-col justify-center px-12 text-white">
-          <div className="mb-8">
-            <BuildingOfficeIcon className="h-12 w-12 text-blue-300" />
-          </div>
-          <h1 className="text-4xl font-bold mb-4">City Weighing Portal</h1>
-          <p className="text-xl text-blue-200 mb-8">
-            Manage commercial vehicle weights, permits, and compliance across your municipality.
-          </p>
-          <div className="space-y-4">
-            <div className="flex items-start">
-              <div className="flex-shrink-0 h-6 w-6 text-blue-300 mr-3">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <p className="text-blue-100">Issue and manage overweight/oversize permits</p>
-            </div>
-            <div className="flex items-start">
-              <div className="flex-shrink-0 h-6 w-6 text-blue-300 mr-3">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <p className="text-blue-100">Track compliance and issue violations</p>
-            </div>
-            <div className="flex items-start">
-              <div className="flex-shrink-0 h-6 w-6 text-blue-300 mr-3">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <p className="text-blue-100">Monitor revenue and generate reports</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <CssVarsProvider defaultMode="dark" theme={cityTheme}>
+      <Box
+        sx={{
+          display: 'flex',
+          minHeight: '100vh',
+          width: '100%',
+          bgcolor: 'background.body',
+        }}
+      >
+        {/* Left side - Image and info */}
+        <Box
+          sx={{
+            display: { xs: 'none', lg: 'flex' },
+            width: '50%',
+            position: 'relative',
+            bgcolor: 'primary.800',
+            overflow: 'hidden',
+          }}
+        >
+          <Box
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to right, rgba(0,80,179,0.9), rgba(0,58,140,0.7))',
+              zIndex: 1,
+            }}
+          />
+          <Image
+            src="/images/city-weighing-bg.jpg"
+            alt="City Weighing System"
+            fill
+            style={{ objectFit: 'cover' }}
+            priority
+          />
+          <Box
+            sx={{
+              position: 'relative',
+              zIndex: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              px: 6,
+              color: 'white',
+            }}
+          >
+            <Box sx={{ mb: 4 }}>
+              <ApartmentIcon sx={{ fontSize: 48, color: 'primary.300' }} />
+            </Box>
+            <Typography level="h1" sx={{ mb: 2, color: 'white', fontSize: '2.5rem', fontWeight: 'bold' }}>
+              City Weighing Portal
+            </Typography>
+            <Typography sx={{ mb: 4, color: 'primary.200', fontSize: '1.25rem' }}>
+              Manage commercial vehicle weights, permits, and compliance across your municipality.
+            </Typography>
+            <Stack spacing={2}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                <CheckCircleIcon sx={{ color: 'primary.300', mr: 1.5, fontSize: '1.25rem' }} />
+                <Typography sx={{ color: 'primary.100' }}>
+                  Issue and manage overweight/oversize permits
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                <CheckCircleIcon sx={{ color: 'primary.300', mr: 1.5, fontSize: '1.25rem' }} />
+                <Typography sx={{ color: 'primary.100' }}>
+                  Track compliance and issue violations
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+                <CheckCircleIcon sx={{ color: 'primary.300', mr: 1.5, fontSize: '1.25rem' }} />
+                <Typography sx={{ color: 'primary.100' }}>
+                  Monitor revenue and generate reports
+                </Typography>
+              </Box>
+            </Stack>
+          </Box>
+        </Box>
 
-      {/* Right side - Login form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-white mb-2">City Weighing Portal</h1>
-            <p className="text-gray-400">Please sign in to your municipal account</p>
-          </div>
+        {/* Right side - Login form */}
+        <Box
+          sx={{
+            width: { xs: '100%', lg: '50%' },
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            p: 4,
+          }}
+        >
+          <Card
+            variant="outlined"
+            sx={{
+              width: '100%',
+              maxWidth: 480,
+              p: 4,
+              boxShadow: 'lg',
+              bgcolor: 'background.level1',
+              borderColor: 'primary.700',
+              borderWidth: 2,
+            }}
+          >
+            <Box sx={{ textAlign: 'center', mb: 4 }}>
+              <Typography level="h2" sx={{ mb: 1, color: 'primary.400', fontWeight: 'bold' }}>
+                City Weighing Portal
+              </Typography>
+              <Typography level="body1" sx={{ color: 'text.secondary' }}>
+                Please sign in to your municipal account
+              </Typography>
+            </Box>
 
-          {error && (
-            <Alert variant="destructive" className="mb-6">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+            {error && (
+              <Alert
+                variant="soft"
+                color="danger"
+                startDecorator={<WarningIcon />}
+                sx={{ mb: 3 }}
+              >
+                {error}
+              </Alert>
+            )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <Label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-                Email Address
-              </Label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <EnvelopeIcon className="h-5 w-5 text-gray-500" />
-                </div>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  required
-                  className="pl-10 w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="city@example.gov"
-                />
-              </div>
-            </div>
+            <form onSubmit={handleSubmit}>
+              <Stack spacing={3}>
+                <FormControl>
+                  <FormLabel>Email Address</FormLabel>
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="city@example.gov"
+                    startDecorator={<EmailIcon />}
+                    sx={{
+                      '--Input-focusedHighlight': 'primary.500',
+                      '&:hover': {
+                        borderColor: 'primary.400',
+                      },
+                    }}
+                  />
+                </FormControl>
 
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <Label htmlFor="password" className="block text-sm font-medium text-gray-300">
-                  Password
-                </Label>
-                <Link
-                  href="/city/forgot-password"
-                  className="text-sm text-blue-400 hover:text-blue-300"
+                <FormControl>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', mb: 1 }}>
+                    <FormLabel>Password</FormLabel>
+                    <Link href="/city/forgot-password" style={{ textDecoration: 'none' }}>
+                      <Typography level="body3" sx={{ color: 'primary.400' }}>
+                        Forgot password?
+                      </Typography>
+                    </Link>
+                  </Box>
+                  <Input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    placeholder="••••••••"
+                    startDecorator={<LockIcon />}
+                    sx={{
+                      '--Input-focusedHighlight': 'primary.500',
+                      '&:hover': {
+                        borderColor: 'primary.400',
+                      },
+                    }}
+                  />
+                </FormControl>
+
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Checkbox
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    label="Remember me"
+                    sx={{
+                      color: 'primary.500',
+                      '&.Mui-checked': {
+                        color: 'primary.500',
+                      },
+                    }}
+                  />
+                </Box>
+
+                <Button
+                  type="submit"
+                  loading={isLoading}
+                  disabled={isLoading}
+                  fullWidth
+                  sx={{
+                    bgcolor: 'primary.500',
+                    color: 'white',
+                    fontWeight: 600,
+                    py: 1.5,
+                    '&:hover': {
+                      bgcolor: 'primary.600',
+                    },
+                    '&:active': {
+                      bgcolor: 'primary.700',
+                    },
+                  }}
                 >
-                  Forgot password?
-                </Link>
-              </div>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <LockClosedIcon className="h-5 w-5 text-gray-500" />
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  required
-                  className="pl-10 w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="••••••••"
-                />
-              </div>
-            </div>
+                  {isLoading ? 'Signing in...' : 'Login'}
+                </Button>
 
-            <div className="flex items-center">
-              <Checkbox
-                id="remember-me"
-                checked={rememberMe}
-                onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                className="h-4 w-4 rounded border-gray-700 bg-gray-800 text-blue-600 focus:ring-blue-500"
-              />
-              <Label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
-                Remember me
-              </Label>
-            </div>
+                <Divider sx={{ my: 1 }}>
+                  <Typography level="body3" sx={{ color: 'text.tertiary' }}>
+                    OR
+                  </Typography>
+                </Divider>
 
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full py-3 px-4 rounded-md bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-white font-medium transition-colors disabled:opacity-70"
-            >
-              {isLoading ? 'Signing in...' : 'Login'}
-            </Button>
-
-            <div className="text-center mt-4">
-              <p className="text-sm text-gray-400">
-                Don't have an account?{' '}
-                <Link href="/city/register" className="text-blue-400 hover:text-blue-300">
-                  Contact your administrator
-                </Link>
-              </p>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Typography level="body2" sx={{ color: 'text.secondary' }}>
+                    Don't have an account?{' '}
+                    <Link href="/city/register" style={{ textDecoration: 'none' }}>
+                      <Typography
+                        component="span"
+                        sx={{ color: 'primary.400', fontWeight: 500, textDecoration: 'none' }}
+                      >
+                        Contact your administrator
+                      </Typography>
+                    </Link>
+                  </Typography>
+                </Box>
+              </Stack>
+            </form>
+          </Card>
+        </Box>
+      </Box>
+    </CssVarsProvider>
   );
 }

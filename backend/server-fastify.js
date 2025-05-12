@@ -1,4 +1,13 @@
-const fastify = require('fastify')({ logger: true });
+const fastify = require('fastify')({
+  logger: true,
+  ajv: {
+    customOptions: {
+      removeAdditional: 'all',
+      coerceTypes: true,
+      useDefaults: true,
+    }
+  }
+});
 const dotenv = require('dotenv');
 
 // Load environment variables
@@ -10,13 +19,19 @@ const db = require('./config/database');
 // Import Redis service
 const { redisService } = require('./services/redis');
 
+// Import Swagger configuration
+const { swaggerOptions, swaggerUiOptions } = require('./config/swagger');
+
+// Import authentication middleware
+const { bearerAuthMiddleware, apiKeyAuthMiddleware } = require('./middleware/fastify/bearerAuth');
+
 // Register plugins
 async function registerPlugins() {
   // CORS
   await fastify.register(require('@fastify/cors'), {
     origin: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token', 'x-api-key'],
   });
 
   // Compression
@@ -27,7 +42,7 @@ async function registerPlugins() {
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"], // Allow inline scripts for Swagger UI
         styleSrc: ["'self'", "'unsafe-inline'"],
         imgSrc: ["'self'", 'data:'],
       },
@@ -67,6 +82,36 @@ async function registerPlugins() {
       files: 5, // Max number of file fields
       headerPairs: 2000, // Max number of header key=>value pairs
     },
+  });
+
+  // Register Swagger
+  await fastify.register(require('@fastify/swagger'), swaggerOptions);
+
+  // Register Swagger UI
+  await fastify.register(require('@fastify/swagger-ui'), swaggerUiOptions);
+
+  // Add global hooks for authentication
+  fastify.addHook('onRequest', async (request, reply) => {
+    // Skip authentication for Swagger UI and documentation
+    if (request.url.startsWith('/documentation') ||
+        request.url === '/swagger.json' ||
+        request.url === '/swagger.yaml') {
+      return;
+    }
+
+    // Skip authentication for public routes
+    if (request.routeOptions.config && request.routeOptions.config.public) {
+      return;
+    }
+
+    // Check for API key authentication first
+    if (request.headers['x-api-key']) {
+      await apiKeyAuthMiddleware(request, reply);
+      return;
+    }
+
+    // Fall back to bearer token authentication
+    await bearerAuthMiddleware(request, reply);
   });
 }
 

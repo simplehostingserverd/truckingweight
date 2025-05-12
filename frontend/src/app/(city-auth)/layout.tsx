@@ -15,7 +15,7 @@ export default async function CityAuthLayout({ children }: { children: React.Rea
   if (user) {
     // Check if user has city_user metadata
     const userMetadata = user.user_metadata;
-    
+
     if (userMetadata && userMetadata.user_type === 'city') {
       redirect('/city/dashboard');
     } else {
@@ -23,5 +23,5 @@ export default async function CityAuthLayout({ children }: { children: React.Rea
     }
   }
 
-  return <div className="min-h-screen bg-gray-900">{children}</div>;
+  return children;
 }
