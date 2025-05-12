@@ -2,18 +2,40 @@
 
 import React, { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { PlusIcon, ArrowPathIcon, MapPinIcon, TruckIcon, SignalIcon } from '@heroicons/react/24/outline';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
+import {
+  Add as PlusIcon,
+  Refresh as ArrowPathIcon,
+  LocationOn as MapPinIcon,
+  LocalShipping as TruckIcon,
+  SignalCellular4Bar as SignalIcon
+} from '@mui/icons-material';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardOverflow,
+  Typography,
+  Chip,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
+  Input,
+  Select,
+  Option,
+  Table,
+  Sheet,
+  Divider,
+  Modal,
+  ModalDialog,
+  ModalClose,
+  Box,
+  Stack,
+  FormControl,
+  FormLabel,
+  Alert,
+  IconButton
+} from '@mui/joy';
 import type { Database } from '@/types/supabase';
 
 type Connection = {
@@ -72,7 +94,7 @@ export default function TelematicsPage() {
       setError('');
 
       const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-      
+
       if (sessionError) {
         throw sessionError;
       }
@@ -164,7 +186,7 @@ export default function TelematicsPage() {
           engineStatus: 'running'
         }
       ];
-      
+
       setVehicleData(mockData);
     } catch (err: any) {
       console.error('Error fetching vehicle data:', err);
@@ -174,9 +196,9 @@ export default function TelematicsPage() {
   const handleCreateConnection = async () => {
     try {
       setIsLoading(true);
-      
+
       const { data: sessionData } = await supabase.auth.getSession();
-      
+
       if (!sessionData.session) {
         throw new Error('No active session');
       }
@@ -236,239 +258,273 @@ export default function TelematicsPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Telematics Integration</h1>
-        <div className="flex space-x-2">
-          <Button variant="outline" onClick={handleRefreshData}>
-            <ArrowPathIcon className="h-5 w-5 mr-2" />
+    <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography level="h2">Telematics Integration</Typography>
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <Button
+            variant="outlined"
+            onClick={handleRefreshData}
+            startDecorator={<ArrowPathIcon />}
+          >
             Refresh Data
           </Button>
-          <Button onClick={() => setShowNewConnectionDialog(true)}>
-            <PlusIcon className="h-5 w-5 mr-2" />
+          <Button
+            onClick={() => setShowNewConnectionDialog(true)}
+            startDecorator={<PlusIcon />}
+          >
             New Connection
           </Button>
-        </div>
-      </div>
+        </Box>
+      </Box>
 
       {error && (
-        <Alert variant="destructive" className="mb-6">
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
+        <Alert
+          color="danger"
+          variant="soft"
+          sx={{ mb: 2 }}
+        >
+          {error}
         </Alert>
       )}
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-6">
-          <TabsTrigger value="vehicles">Vehicles</TabsTrigger>
-          <TabsTrigger value="connections">Connections</TabsTrigger>
-          <TabsTrigger value="events">Events</TabsTrigger>
-        </TabsList>
+      <Tabs
+        value={activeTab}
+        onChange={(_, value) => setActiveTab(value as string)}
+        sx={{ width: '100%' }}
+      >
+        <TabList variant="outlined" sx={{ mb: 2 }}>
+          <Tab value="vehicles">Vehicles</Tab>
+          <Tab value="connections">Connections</Tab>
+          <Tab value="events">Events</Tab>
+        </TabList>
 
-        <TabsContent value="vehicles">
-          <Card>
-            <CardHeader>
-              <CardTitle>Vehicle Telematics Data</CardTitle>
-              <CardDescription>Real-time data from your connected vehicles</CardDescription>
-            </CardHeader>
+        <TabPanel value="vehicles">
+          <Card variant="outlined">
+            <Box sx={{ p: 2 }}>
+              <Typography level="title-lg">Vehicle Telematics Data</Typography>
+              <Typography level="body-sm" color="neutral">Real-time data from your connected vehicles</Typography>
+            </Box>
             <CardContent>
               {vehicleData.length === 0 ? (
-                <div className="text-center py-8">
-                  <TruckIcon className="h-12 w-12 mx-auto text-gray-400" />
-                  <p className="mt-4 text-gray-500 dark:text-gray-400">No vehicle data available</p>
-                </div>
+                <Box sx={{ textAlign: 'center', py: 4 }}>
+                  <TruckIcon sx={{ fontSize: 48, color: 'neutral.400', mb: 2 }} />
+                  <Typography color="neutral">No vehicle data available</Typography>
+                </Box>
               ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Vehicle</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Location</TableHead>
-                      <TableHead>Speed</TableHead>
-                      <TableHead>Fuel</TableHead>
-                      <TableHead>Last Update</TableHead>
-                      <TableHead>Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
+                <Table
+                  borderAxis="bothBetween"
+                  stripe="odd"
+                  hoverRow
+                  sx={{
+                    '& thead th:nth-child(1)': { width: '20%' },
+                    '& thead th:nth-child(3)': { width: '25%' },
+                  }}
+                >
+                  <thead>
+                    <tr>
+                      <th>Vehicle</th>
+                      <th>Status</th>
+                      <th>Location</th>
+                      <th>Speed</th>
+                      <th>Fuel</th>
+                      <th>Last Update</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                     {vehicleData.map(vehicle => (
-                      <TableRow key={vehicle.id}>
-                        <TableCell className="font-medium">{vehicle.name}</TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={
-                              vehicle.status === 'active'
-                                ? 'success'
-                                : 'destructive'
-                            }
+                      <tr key={vehicle.id}>
+                        <td>
+                          <Typography fontWeight="md">{vehicle.name}</Typography>
+                        </td>
+                        <td>
+                          <Chip
+                            color={vehicle.status === 'active' ? 'success' : 'danger'}
+                            variant="soft"
+                            size="sm"
                           >
                             {vehicle.engineStatus === 'running' ? 'Running' : 'Stopped'}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center">
-                            <MapPinIcon className="h-4 w-4 mr-1 text-gray-500" />
-                            {vehicle.location.address}
-                          </div>
-                        </TableCell>
-                        <TableCell>{vehicle.speed} mph</TableCell>
-                        <TableCell>{vehicle.fuelLevel}%</TableCell>
-                        <TableCell>
+                          </Chip>
+                        </td>
+                        <td>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <MapPinIcon fontSize="small" />
+                            <Typography level="body-sm">{vehicle.location.address}</Typography>
+                          </Box>
+                        </td>
+                        <td>{vehicle.speed} mph</td>
+                        <td>{vehicle.fuelLevel}%</td>
+                        <td>
                           {new Date(vehicle.lastUpdate).toLocaleTimeString()}
-                        </TableCell>
-                        <TableCell>
-                          <Button variant="ghost" size="sm">
+                        </td>
+                        <td>
+                          <Button variant="plain" size="sm">
                             Details
                           </Button>
-                        </TableCell>
-                      </TableRow>
+                        </td>
+                      </tr>
                     ))}
-                  </TableBody>
+                  </tbody>
                 </Table>
               )}
             </CardContent>
           </Card>
-        </TabsContent>
+        </TabPanel>
 
-        <TabsContent value="connections">
+        <TabPanel value="connections">
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr', lg: '1fr 1fr 1fr' }, gap: 2 }}>
               {[1, 2, 3].map(i => (
-                <Card key={i} className="h-full">
-                  <CardHeader>
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-1/2" />
-                  </CardHeader>
+                <Card key={i} variant="outlined">
+                  <Box sx={{ p: 2 }}>
+                    <Box sx={{ height: 24, width: '75%', mb: 1, bgcolor: 'neutral.200', borderRadius: 1 }} />
+                    <Box sx={{ height: 16, width: '50%', bgcolor: 'neutral.200', borderRadius: 1 }} />
+                  </Box>
                   <CardContent>
-                    <div className="space-y-4">
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-3/4" />
-                    </div>
+                    <Stack spacing={2}>
+                      <Box sx={{ height: 16, width: '100%', bgcolor: 'neutral.200', borderRadius: 1 }} />
+                      <Box sx={{ height: 16, width: '100%', bgcolor: 'neutral.200', borderRadius: 1 }} />
+                      <Box sx={{ height: 16, width: '75%', bgcolor: 'neutral.200', borderRadius: 1 }} />
+                    </Stack>
                   </CardContent>
                 </Card>
               ))}
-            </div>
+            </Box>
           ) : connections.length === 0 ? (
-            <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg">
-              <SignalIcon className="h-12 w-12 mx-auto text-gray-400" />
-              <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">No Telematics Connections</h3>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                Get started by creating a new connection to your telematics provider.
-              </p>
-              <div className="mt-6">
-                <Button onClick={() => setShowNewConnectionDialog(true)}>
-                  <PlusIcon className="h-5 w-5 mr-2" />
+            <Card variant="outlined" sx={{ textAlign: 'center', py: 6 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                <SignalIcon sx={{ fontSize: 48, color: 'neutral.400' }} />
+                <Typography level="title-lg">No Telematics Connections</Typography>
+                <Typography level="body-sm" color="neutral" sx={{ maxWidth: 400, mx: 'auto' }}>
+                  Get started by creating a new connection to your telematics provider.
+                </Typography>
+                <Button
+                  onClick={() => setShowNewConnectionDialog(true)}
+                  startDecorator={<PlusIcon />}
+                  sx={{ mt: 2 }}
+                >
                   New Connection
                 </Button>
-              </div>
-            </div>
+              </Box>
+            </Card>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr', lg: '1fr 1fr 1fr' }, gap: 2 }}>
               {connections.map(connection => (
-                <Card key={connection.id} className="h-full">
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle>{connection.name}</CardTitle>
-                        <CardDescription>
-                          {connection.provider === 'geotab' ? 'Geotab' : 
-                           connection.provider === 'samsara' ? 'Samsara' : 
-                           connection.provider === 'fleetcomplete' ? 'Fleet Complete' : 
-                           connection.provider}
-                        </CardDescription>
-                      </div>
-                      <Badge variant={connection.status === 'active' ? 'success' : 'destructive'}>
-                        {connection.status === 'active' ? 'Active' : 'Inactive'}
-                      </Badge>
-                    </div>
-                  </CardHeader>
+                <Card key={connection.id} variant="outlined">
+                  <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <Box>
+                      <Typography level="title-md">{connection.name}</Typography>
+                      <Typography level="body-sm" color="neutral">
+                        {connection.provider === 'geotab' ? 'Geotab' :
+                         connection.provider === 'samsara' ? 'Samsara' :
+                         connection.provider === 'fleetcomplete' ? 'Fleet Complete' :
+                         connection.provider}
+                      </Typography>
+                    </Box>
+                    <Chip
+                      color={connection.status === 'active' ? 'success' : 'danger'}
+                      variant="soft"
+                      size="sm"
+                    >
+                      {connection.status === 'active' ? 'Active' : 'Inactive'}
+                    </Chip>
+                  </Box>
                   <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">Last Sync:</span>
-                        <span className="text-sm">
+                    <Stack spacing={2}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Typography level="body-sm" color="neutral">Last Sync:</Typography>
+                        <Typography level="body-sm">
                           {connection.last_sync ? new Date(connection.last_sync).toLocaleString() : 'Never'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">Created:</span>
-                        <span className="text-sm">
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Typography level="body-sm" color="neutral">Created:</Typography>
+                        <Typography level="body-sm">
                           {new Date(connection.created_at).toLocaleDateString()}
-                        </span>
-                      </div>
-                    </div>
+                        </Typography>
+                      </Box>
+                    </Stack>
                   </CardContent>
-                  <CardFooter className="flex justify-between">
-                    <Button variant="outline" size="sm">
+                  <CardOverflow sx={{ display: 'flex', justifyContent: 'space-between', p: 1.5, borderTop: '1px solid', borderColor: 'divider' }}>
+                    <Button variant="outlined" size="sm">
                       Configure
                     </Button>
-                    <Button size="sm">
-                      <ArrowPathIcon className="h-4 w-4 mr-2" />
+                    <Button size="sm" startDecorator={<ArrowPathIcon />}>
                       Sync Now
                     </Button>
-                  </CardFooter>
+                  </CardOverflow>
                 </Card>
               ))}
-            </div>
+            </Box>
           )}
-        </TabsContent>
+        </TabPanel>
 
-        <TabsContent value="events">
-          <Card>
-            <CardHeader>
-              <CardTitle>Telematics Events</CardTitle>
-              <CardDescription>Recent events from your connected vehicles</CardDescription>
-            </CardHeader>
+        <TabPanel value="events">
+          <Card variant="outlined">
+            <Box sx={{ p: 2 }}>
+              <Typography level="title-lg">Telematics Events</Typography>
+              <Typography level="body-sm" color="neutral">Recent events from your connected vehicles</Typography>
+            </Box>
             <CardContent>
-              <div className="text-center py-8">
-                <p className="text-gray-500 dark:text-gray-400">No recent events</p>
-              </div>
+              <Box sx={{ textAlign: 'center', py: 4 }}>
+                <Typography color="neutral">No recent events</Typography>
+              </Box>
             </CardContent>
           </Card>
-        </TabsContent>
+        </TabPanel>
       </Tabs>
 
       {/* New Connection Dialog */}
-      <Dialog open={showNewConnectionDialog} onOpenChange={setShowNewConnectionDialog}>
-        <DialogContent className="sm:max-w-[500px]">
-          <DialogHeader>
-            <DialogTitle>Create Telematics Connection</DialogTitle>
-            <DialogDescription>
-              Connect your telematics provider to enable real-time vehicle data.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Connection Name</label>
+      <Modal
+        open={showNewConnectionDialog}
+        onClose={() => setShowNewConnectionDialog(false)}
+      >
+        <ModalDialog
+          variant="outlined"
+          sx={{ maxWidth: 500 }}
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Typography level="title-lg">Create Telematics Connection</Typography>
+            <ModalClose />
+          </Box>
+          <Typography level="body-sm" color="neutral" sx={{ mb: 3 }}>
+            Connect your telematics provider to enable real-time vehicle data.
+          </Typography>
+
+          <Stack spacing={3}>
+            <FormControl>
+              <FormLabel>Connection Name</FormLabel>
               <Input
                 value={newConnection.name}
                 onChange={e => setNewConnection({ ...newConnection, name: e.target.value })}
                 placeholder="e.g., Fleet Geotab"
               />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Telematics Provider</label>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Telematics Provider</FormLabel>
               <Select
                 value={newConnection.provider}
-                onValueChange={value => setNewConnection({ ...newConnection, provider: value })}
+                onChange={(_, value) => setNewConnection({
+                  ...newConnection,
+                  provider: value as string
+                })}
+                placeholder="Select Telematics Provider"
               >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Telematics Provider" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="geotab">Geotab</SelectItem>
-                  <SelectItem value="samsara">Samsara</SelectItem>
-                  <SelectItem value="fleetcomplete">Fleet Complete</SelectItem>
-                  <SelectItem value="omnitracs">Omnitracs</SelectItem>
-                </SelectContent>
+                <Option value="geotab">Geotab</Option>
+                <Option value="samsara">Samsara</Option>
+                <Option value="fleetcomplete">Fleet Complete</Option>
+                <Option value="omnitracs">Omnitracs</Option>
               </Select>
-            </div>
-            <Separator />
+            </FormControl>
+
+            <Divider />
+
             {newConnection.provider === 'geotab' && (
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">API Key</label>
+              <Stack spacing={2}>
+                <FormControl>
+                  <FormLabel>API Key</FormLabel>
                   <Input
                     value={newConnection.config.apiKey}
                     onChange={e => setNewConnection({
@@ -476,9 +532,10 @@ export default function TelematicsPage() {
                       config: { ...newConnection.config, apiKey: e.target.value }
                     })}
                   />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Username</label>
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>Username</FormLabel>
                   <Input
                     value={newConnection.config.username}
                     onChange={e => setNewConnection({
@@ -486,9 +543,10 @@ export default function TelematicsPage() {
                       config: { ...newConnection.config, username: e.target.value }
                     })}
                   />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Password</label>
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>Password</FormLabel>
                   <Input
                     type="password"
                     value={newConnection.config.password}
@@ -497,9 +555,10 @@ export default function TelematicsPage() {
                       config: { ...newConnection.config, password: e.target.value }
                     })}
                   />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Database</label>
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>Database</FormLabel>
                   <Input
                     value={newConnection.config.database}
                     onChange={e => setNewConnection({
@@ -507,9 +566,10 @@ export default function TelematicsPage() {
                       config: { ...newConnection.config, database: e.target.value }
                     })}
                   />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Server</label>
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>Server</FormLabel>
                   <Input
                     value={newConnection.config.server}
                     onChange={e => setNewConnection({
@@ -518,20 +578,28 @@ export default function TelematicsPage() {
                     })}
                     placeholder="my.geotabserver.com"
                   />
-                </div>
-              </div>
+                </FormControl>
+              </Stack>
             )}
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowNewConnectionDialog(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleCreateConnection} disabled={isLoading}>
-              {isLoading ? 'Creating...' : 'Create Connection'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+
+            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', mt: 2 }}>
+              <Button
+                variant="outlined"
+                color="neutral"
+                onClick={() => setShowNewConnectionDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleCreateConnection}
+                disabled={isLoading}
+              >
+                {isLoading ? 'Creating...' : 'Create Connection'}
+              </Button>
+            </Box>
+          </Stack>
+        </ModalDialog>
+      </Modal>
     </div>
   );
 }
