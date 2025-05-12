@@ -34,6 +34,23 @@ async function registerPlugins() {
     },
   });
 
+  // JWT Authentication
+  fastify.register(require('@fastify/jwt'), {
+    secret: process.env.JWT_SECRET || 'supersecretkey',
+    sign: {
+      expiresIn: '24h',
+    },
+  });
+
+  // Add authenticate decorator
+  fastify.decorate('authenticate', async (request, reply) => {
+    try {
+      await request.jwtVerify();
+    } catch (err) {
+      reply.code(401).send({ message: 'Unauthorized' });
+    }
+  });
+
   // Rate limiting
   await fastify.register(require('@fastify/rate-limit'), {
     max: 100,
@@ -69,6 +86,11 @@ async function registerRoutes() {
   const apiKeyRoutes = require('./routes/fastify/apiKeys');
   const healthRoutes = require('./routes/fastify/health');
 
+  // Import city route handlers
+  const cityAuthRoutes = require('./routes/fastify/cityAuth');
+  const cityDashboardRoutes = require('./routes/fastify/cityDashboard');
+  const cityPermitsRoutes = require('./routes/fastify/cityPermits');
+
   // Register routes
   fastify.register(authRoutes, { prefix: '/api/auth' });
   fastify.register(weightRoutes, { prefix: '/api/weights' });
@@ -82,6 +104,11 @@ async function registerRoutes() {
   fastify.register(webhookRoutes, { prefix: '/api/webhooks' });
   fastify.register(apiKeyRoutes, { prefix: '/api/api-keys' });
   fastify.register(healthRoutes, { prefix: '/health' });
+
+  // Register city routes
+  fastify.register(cityAuthRoutes, { prefix: '/api/city-auth' });
+  fastify.register(cityDashboardRoutes, { prefix: '/api/city-dashboard' });
+  fastify.register(cityPermitsRoutes, { prefix: '/api/city-permits' });
 
   // Root route
   fastify.get('/', async (request, reply) => {

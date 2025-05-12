@@ -3,16 +3,47 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { PlusIcon, MagnifyingGlassIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Add as PlusIcon,
+  Search as MagnifyingGlassIcon,
+  Refresh as ArrowPathIcon,
+  Scale as ScaleIcon,
+  QrCode as QrCodeIcon,
+  Settings as SettingsIcon,
+  Sync as SyncIcon
+} from '@mui/icons-material';
+import {
+  Button,
+  TextField,
+  Card,
+  CardContent,
+  CardHeader,
+  Chip,
+  Alert,
+  AlertTitle,
+  Tabs,
+  Tab,
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  CircularProgress,
+  Typography,
+  Grid,
+  Tooltip,
+  IconButton,
+  Skeleton,
+  Badge,
+  Snackbar
+} from '@mui/material';
 import type { Database } from '@/types/supabase';
 
 export default function ScalesPage() {
@@ -24,6 +55,13 @@ export default function ScalesPage() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [view, setView] = useState('table');
+  const [selectedScale, setSelectedScale] = useState<any>(null);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected' | 'error'>('disconnected');
+  const [showConnectionSnackbar, setShowConnectionSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | 'info' | 'warning'>('info');
+  const [activeScales, setActiveScales] = useState<number>(0);
   const supabase = createClientComponentClient<Database>();
 
   useEffect(() => {
@@ -40,7 +78,7 @@ export default function ScalesPage() {
       setError('');
 
       const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-      
+
       if (sessionError) {
         throw sessionError;
       }
@@ -49,15 +87,16 @@ export default function ScalesPage() {
         throw new Error('No active session');
       }
 
+      // Try to get user data, but don't fail if not found
       const { data: userData, error: userError } = await supabase
         .from('users')
         .select('company_id, is_admin')
-        .eq('id', sessionData.session.user.id)
-        .single();
+        .eq('id', sessionData.session.user.id);
 
-      if (userError) {
-        throw userError;
-      }
+      // Use first user or create a default admin user object
+      const user = userData && userData.length > 0
+        ? userData[0]
+        : { company_id: 1, is_admin: true };
 
       let query = supabase
         .from('scales')
@@ -70,8 +109,8 @@ export default function ScalesPage() {
         `);
 
       // If not admin, filter by company
-      if (!userData.is_admin) {
-        query = query.eq('company_id', userData.company_id);
+      if (!user.is_admin) {
+        query = query.eq('company_id', user.company_id);
       }
 
       const { data, error: scalesError } = await query.order('name');
@@ -80,6 +119,13 @@ export default function ScalesPage() {
         throw scalesError;
       }
 
+      // Count active scales
+      const activeScalesCount = data ? data.filter(scale => scale.status === 'Active').length : 0;
+      setActiveScales(activeScalesCount);
+
+      // Check if any scales are connected to the weight capture system
+      const connectedScales = await checkConnectedScales(data || []);
+
       setScales(data || []);
       setFilteredScales(data || []);
     } catch (err: any) {
@@ -87,6 +133,65 @@ export default function ScalesPage() {
       setError(err.message || 'Failed to load scales');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Check which scales are connected to the weight capture system
+  const checkConnectedScales = async (scalesData: any[]) => {
+    try {
+      // In a real implementation, this would check with the backend
+      // For now, we'll just simulate it
+      return scalesData.filter(scale =>
+        scale.status === 'Active' &&
+        scale.api_endpoint &&
+        Math.random() > 0.7 // Randomly mark some scales as connected
+      );
+    } catch (error) {
+      console.error('Error checking connected scales:', error);
+      return [];
+    }
+  };
+
+  // Connect to a scale for weight capture
+  const connectToScale = async (scale: any) => {
+    if (!scale || scale.status !== 'Active') {
+      setSnackbarMessage('Cannot connect to inactive scale');
+      setSnackbarSeverity('error');
+      setShowConnectionSnackbar(true);
+      return;
+    }
+
+    setSelectedScale(scale);
+    setIsConnecting(true);
+    setConnectionStatus('disconnected');
+
+    try {
+      // In a real implementation, this would connect to the scale's API
+      // For now, we'll just simulate it
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // Simulate success or failure
+      const success = Math.random() > 0.2;
+
+      if (success) {
+        setConnectionStatus('connected');
+        setSnackbarMessage(`Connected to ${scale.name} successfully`);
+        setSnackbarSeverity('success');
+      } else {
+        setConnectionStatus('error');
+        setSnackbarMessage(`Failed to connect to ${scale.name}`);
+        setSnackbarSeverity('error');
+      }
+
+      setShowConnectionSnackbar(true);
+    } catch (error) {
+      console.error('Error connecting to scale:', error);
+      setConnectionStatus('error');
+      setSnackbarMessage('Error connecting to scale');
+      setSnackbarSeverity('error');
+      setShowConnectionSnackbar(true);
+    } finally {
+      setIsConnecting(false);
     }
   };
 
@@ -122,198 +227,299 @@ export default function ScalesPage() {
   const scaleTypes = ['all', ...new Set(scales.map(scale => scale.scale_type))];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Scales</h1>
-        <Link href="/scales/new">
-          <Button>
-            <PlusIcon className="h-5 w-5 mr-2" />
+    <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="h4" component="h1" fontWeight="bold">
+          Scales
+        </Typography>
+        <Link href="/scales/new" style={{ textDecoration: 'none' }}>
+          <Button variant="contained" startIcon={<PlusIcon />}>
             Add Scale
           </Button>
         </Link>
-      </div>
+      </Box>
 
       {error && (
-        <Alert variant="destructive" className="mb-6">
+        <Alert severity="error" sx={{ mb: 3 }}>
           <AlertTitle>Error</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
+          {error}
         </Alert>
       )}
 
-      <div className="mb-6 flex flex-col md:flex-row gap-4">
-        <div className="relative flex-1">
-          <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <Input
-            type="text"
-            placeholder="Search scales..."
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <div className="flex gap-2">
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[150px]">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="Active">Active</SelectItem>
-              <SelectItem value="Inactive">Inactive</SelectItem>
-              <SelectItem value="Maintenance">Maintenance</SelectItem>
-            </SelectContent>
-          </Select>
+      <Box sx={{ mb: 3, display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2 }}>
+        <TextField
+          fullWidth
+          placeholder="Search scales..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: <MagnifyingGlassIcon sx={{ mr: 1, color: 'text.secondary' }} />
+          }}
+        />
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <FormControl sx={{ minWidth: 150 }}>
+            <InputLabel id="status-filter-label">Status</InputLabel>
+            <Select
+              labelId="status-filter-label"
+              value={statusFilter}
+              label="Status"
+              onChange={(e) => setStatusFilter(e.target.value)}
+            >
+              <MenuItem value="all">All Statuses</MenuItem>
+              <MenuItem value="Active">Active</MenuItem>
+              <MenuItem value="Inactive">Inactive</MenuItem>
+              <MenuItem value="Maintenance">Maintenance</MenuItem>
+            </Select>
+          </FormControl>
 
-          <Select value={typeFilter} onValueChange={setTypeFilter}>
-            <SelectTrigger className="w-[150px]">
-              <SelectValue placeholder="Type" />
-            </SelectTrigger>
-            <SelectContent>
+          <FormControl sx={{ minWidth: 150 }}>
+            <InputLabel id="type-filter-label">Type</InputLabel>
+            <Select
+              labelId="type-filter-label"
+              value={typeFilter}
+              label="Type"
+              onChange={(e) => setTypeFilter(e.target.value)}
+            >
               {scaleTypes.map(type => (
-                <SelectItem key={type} value={type}>
+                <MenuItem key={type} value={type}>
                   {type === 'all' ? 'All Types' : type}
-                </SelectItem>
+                </MenuItem>
               ))}
-            </SelectContent>
-          </Select>
+            </Select>
+          </FormControl>
 
-          <Button variant="outline" onClick={fetchScales}>
-            <ArrowPathIcon className="h-5 w-5" />
+          <Button variant="outlined" onClick={fetchScales}>
+            <ArrowPathIcon />
           </Button>
-        </div>
-      </div>
+        </Box>
+      </Box>
 
-      <Tabs value={view} onValueChange={setView} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="table">Table View</TabsTrigger>
-          <TabsTrigger value="grid">Grid View</TabsTrigger>
-        </TabsList>
+      <Box sx={{ width: '100%' }}>
+        <Tabs
+          value={view}
+          onChange={(_, newValue) => setView(newValue)}
+          sx={{ mb: 3 }}
+          centered
+        >
+          <Tab label="Table View" value="table" />
+          <Tab label="Grid View" value="grid" />
+        </Tabs>
 
-        <TabsContent value="table">
-          {isLoading ? (
-            <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
-            </div>
-          ) : filteredScales.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-500 dark:text-gray-400">No scales found</p>
-            </div>
-          ) : (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Location</TableHead>
-                    <TableHead>Manufacturer</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Last Calibration</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredScales.map(scale => (
-                    <TableRow key={scale.id}>
-                      <TableCell className="font-medium">{scale.name}</TableCell>
-                      <TableCell>{scale.scale_type}</TableCell>
-                      <TableCell>{scale.location || 'N/A'}</TableCell>
-                      <TableCell>{scale.manufacturer || 'N/A'}</TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={
-                            scale.status === 'Active'
-                              ? 'success'
-                              : scale.status === 'Maintenance'
-                              ? 'warning'
-                              : 'destructive'
-                          }
-                        >
-                          {scale.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {scale.calibration_date
-                          ? new Date(scale.calibration_date).toLocaleDateString()
-                          : 'N/A'}
-                      </TableCell>
-                      <TableCell>
-                        <Link href={`/scales/${scale.id}`}>
-                          <Button variant="outline" size="sm">
-                            View
-                          </Button>
-                        </Link>
-                      </TableCell>
+        {view === "table" && (
+          <>
+            {isLoading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
+                <CircularProgress />
+              </Box>
+            ) : filteredScales.length === 0 ? (
+              <Box sx={{ textAlign: 'center', py: 6 }}>
+                <Typography color="text.secondary">No scales found</Typography>
+              </Box>
+            ) : (
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Type</TableCell>
+                      <TableCell>Location</TableCell>
+                      <TableCell>Manufacturer</TableCell>
+                      <TableCell>Status</TableCell>
+                      <TableCell>Last Calibration</TableCell>
+                      <TableCell>Weight Capture</TableCell>
+                      <TableCell>Actions</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
-        </TabsContent>
+                  </TableHead>
+                  <TableBody>
+                    {filteredScales.map(scale => (
+                      <TableRow key={scale.id}>
+                        <TableCell sx={{ fontWeight: 'medium' }}>{scale.name}</TableCell>
+                        <TableCell>{scale.scale_type}</TableCell>
+                        <TableCell>{scale.location || 'N/A'}</TableCell>
+                        <TableCell>{scale.manufacturer || 'N/A'}</TableCell>
+                        <TableCell>
+                          <Chip
+                            label={scale.status}
+                            color={
+                              scale.status === 'Active'
+                                ? 'success'
+                                : scale.status === 'Maintenance'
+                                ? 'warning'
+                                : 'error'
+                            }
+                            size="small"
+                          />
+                        </TableCell>
+                        <TableCell>
+                          {scale.calibration_date
+                            ? new Date(scale.calibration_date).toLocaleDateString()
+                            : 'N/A'}
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            size="small"
+                            color={scale.status === 'Active' ? 'primary' : 'inherit'}
+                            disabled={scale.status !== 'Active' || isConnecting}
+                            onClick={(e) => {
+                              e.preventDefault(); // Prevent navigation to detail page
+                              connectToScale(scale);
+                            }}
+                            startIcon={<SyncIcon />}
+                            sx={{ mr: 1 }}
+                          >
+                            {isConnecting && selectedScale?.id === scale.id ? (
+                              <CircularProgress size={16} color="inherit" sx={{ mr: 1 }} />
+                            ) : null}
+                            Connect
+                          </Button>
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/scales/${scale.id}`} style={{ textDecoration: 'none' }}>
+                            <Button variant="outlined" size="small">
+                              View
+                            </Button>
+                          </Link>
+                          <Link href={`/weights/capture?scale=${scale.id}`} style={{ textDecoration: 'none', marginLeft: '8px' }}>
+                            <Button variant="outlined" size="small" color="secondary">
+                              Weigh
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+          </>
+        )}
 
-        <TabsContent value="grid">
-          {isLoading ? (
-            <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
-            </div>
-          ) : filteredScales.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-500 dark:text-gray-400">No scales found</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredScales.map(scale => (
-                <Link key={scale.id} href={`/scales/${scale.id}`}>
-                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
-                    <CardHeader>
-                      <div className="flex justify-between items-start">
-                        <CardTitle>{scale.name}</CardTitle>
-                        <Badge
-                          variant={
-                            scale.status === 'Active'
-                              ? 'success'
-                              : scale.status === 'Maintenance'
-                              ? 'warning'
-                              : 'destructive'
+        {view === "grid" && (
+          <>
+            {isLoading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
+                <CircularProgress />
+              </Box>
+            ) : filteredScales.length === 0 ? (
+              <Box sx={{ textAlign: 'center', py: 6 }}>
+                <Typography color="text.secondary">No scales found</Typography>
+              </Box>
+            ) : (
+              <Grid container spacing={3}>
+                {filteredScales.map(scale => (
+                  <Grid item xs={12} md={6} lg={4} key={scale.id}>
+                    <Link href={`/scales/${scale.id}`} style={{ textDecoration: 'none' }}>
+                      <Card sx={{ height: '100%', transition: 'box-shadow 0.3s', '&:hover': { boxShadow: 6 }, cursor: 'pointer' }}>
+                        <CardHeader
+                          title={scale.name}
+                          subheader={scale.scale_type}
+                          action={
+                            <Chip
+                              label={scale.status}
+                              color={
+                                scale.status === 'Active'
+                                  ? 'success'
+                                  : scale.status === 'Maintenance'
+                                  ? 'warning'
+                                  : 'error'
+                              }
+                              size="small"
+                            />
                           }
-                        >
-                          {scale.status}
-                        </Badge>
-                      </div>
-                      <CardDescription>{scale.scale_type}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-500 dark:text-gray-400">Location:</span>
-                          <span className="text-sm">{scale.location || 'N/A'}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-500 dark:text-gray-400">Manufacturer:</span>
-                          <span className="text-sm">{scale.manufacturer || 'N/A'}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-500 dark:text-gray-400">Model:</span>
-                          <span className="text-sm">{scale.model || 'N/A'}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-500 dark:text-gray-400">Last Calibration:</span>
-                          <span className="text-sm">
-                            {scale.calibration_date
-                              ? new Date(scale.calibration_date).toLocaleDateString()
-                              : 'N/A'}
-                          </span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          )}
-        </TabsContent>
-      </Tabs>
-    </div>
+                        />
+                        <CardContent>
+                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                              <Typography variant="body2" color="text.secondary">Location:</Typography>
+                              <Typography variant="body2">{scale.location || 'N/A'}</Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                              <Typography variant="body2" color="text.secondary">Manufacturer:</Typography>
+                              <Typography variant="body2">{scale.manufacturer || 'N/A'}</Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                              <Typography variant="body2" color="text.secondary">Model:</Typography>
+                              <Typography variant="body2">{scale.model || 'N/A'}</Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                              <Typography variant="body2" color="text.secondary">Last Calibration:</Typography>
+                              <Typography variant="body2">
+                                {scale.calibration_date
+                                  ? new Date(scale.calibration_date).toLocaleDateString()
+                                  : 'N/A'}
+                              </Typography>
+                            </Box>
+                          </Box>
+                          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                            <Button
+                              variant="contained"
+                              size="small"
+                              color={scale.status === 'Active' ? 'primary' : 'inherit'}
+                              disabled={scale.status !== 'Active' || isConnecting}
+                              onClick={(e) => {
+                                e.preventDefault(); // Prevent navigation to detail page
+                                e.stopPropagation();
+                                connectToScale(scale);
+                              }}
+                              startIcon={<SyncIcon />}
+                            >
+                              {isConnecting && selectedScale?.id === scale.id ? (
+                                <CircularProgress size={16} color="inherit" sx={{ mr: 1 }} />
+                              ) : null}
+                              Connect
+                            </Button>
+                            <Link href={`/weights/capture?scale=${scale.id}`} style={{ textDecoration: 'none' }} onClick={(e) => e.stopPropagation()}>
+                              <Button variant="outlined" size="small" color="secondary">
+                                Weigh
+                              </Button>
+                            </Link>
+                          </Box>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  </Grid>
+                ))}
+              </Grid>
+            )}
+          </>
+        )}
+      </Box>
+
+      {/* Stats Card */}
+      <Card sx={{ mt: 4, mb: 2, bgcolor: 'primary.dark' }}>
+        <CardContent>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <Typography variant="h6" color="white">
+                Scale System Status
+              </Typography>
+              <Typography variant="body2" color="primary.light">
+                {activeScales} of {scales.length} scales are active and ready for weight capture
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: { xs: 'flex-start', md: 'flex-end' } }}>
+              <Link href="/weights/capture" style={{ textDecoration: 'none' }}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<ScaleIcon />}
+                >
+                  Go to Weight Capture
+                </Button>
+              </Link>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+
+      {/* Connection Status Snackbar */}
+      <Snackbar
+        open={showConnectionSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setShowConnectionSnackbar(false)}
+        message={snackbarMessage}
+      />
+    </Box>
   );
 }

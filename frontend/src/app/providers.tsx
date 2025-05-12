@@ -1,6 +1,6 @@
 'use client';
 
-import { ThemeProvider } from 'next-themes';
+import { ThemeProvider as NextThemeProvider } from 'next-themes';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 // Import the CSS directly without source maps
@@ -8,6 +8,9 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration';
 import logger from '@/utils/logger';
 import { SupabaseAuthProvider } from '@/providers/SupabaseAuthProvider';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from '@/theme/theme';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   // Use undefined as initial state to avoid hydration mismatch
@@ -55,31 +58,44 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <SupabaseAuthProvider>
-      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-        {children}
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
-        {/* Only render offline banner after client-side hydration */}
-        {typeof isOnline === 'boolean' && !isOnline && (
-          <div className="fixed bottom-0 left-0 right-0 bg-yellow-500 text-white p-2 text-center z-50">
-            You are currently offline. Some features may be limited.
-          </div>
-        )}
-        <ServiceWorkerRegistration
-          onUpdate={handleServiceWorkerUpdate}
-          onError={error => logger.error('Service worker error', { error }, 'ServiceWorker')}
-        />
-      </ThemeProvider>
+      <MUIThemeProvider theme={theme}>
+        <CssBaseline />
+        <NextThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          {children}
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+          {/* Only render offline banner after client-side hydration */}
+          {typeof isOnline === 'boolean' && !isOnline && (
+            <div style={{
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              backgroundColor: theme.palette.warning.main,
+              color: theme.palette.warning.contrastText,
+              padding: '8px',
+              textAlign: 'center',
+              zIndex: 9999
+            }}>
+              You are currently offline. Some features may be limited.
+            </div>
+          )}
+          <ServiceWorkerRegistration
+            onUpdate={handleServiceWorkerUpdate}
+            onError={error => logger.error('Service worker error', { error }, 'ServiceWorker')}
+          />
+        </NextThemeProvider>
+      </MUIThemeProvider>
     </SupabaseAuthProvider>
   );
 }

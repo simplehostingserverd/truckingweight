@@ -4,14 +4,35 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { ArrowLeftIcon, PencilIcon, TrashIcon, QrCodeIcon, ScaleIcon } from '@heroicons/react/24/outline';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Separator } from '@/components/ui/separator';
+import {
+  ArrowBack as ArrowLeftIcon,
+  Edit as PencilIcon,
+  Delete as TrashIcon,
+  QrCode as QrCodeIcon,
+  Scale as ScaleIcon
+} from '@mui/icons-material';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  Chip,
+  Alert,
+  AlertTitle,
+  Tabs,
+  Tab,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  CircularProgress,
+  Grid,
+  Paper,
+  Divider
+} from '@mui/material';
 import { QRCodeSVG } from 'qrcode.react';
 import HardwareSelector from '@/components/scales/HardwareSelector';
 import { toSearchParamString } from '@/lib/utils';
@@ -115,208 +136,225 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
-      </div>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
     );
   }
 
   if (error) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <Alert variant="destructive">
+      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 4 }}>
+        <Alert severity="error">
           <AlertTitle>Error</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
+          {error}
         </Alert>
-        <div className="mt-4">
-          <Link
-            href="/scales"
-            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-          >
-            <ArrowLeftIcon className="h-4 w-4 mr-2" />
-            Back to Scales
+        <Box sx={{ mt: 2 }}>
+          <Link href="/scales" style={{ textDecoration: 'none' }}>
+            <Button
+              variant="outlined"
+              startIcon={<ArrowLeftIcon />}
+              sx={{ mt: 2 }}
+            >
+              Back to Scales
+            </Button>
           </Link>
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   }
 
   if (!scale) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <Alert>
+      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 4 }}>
+        <Alert severity="info">
           <AlertTitle>Not Found</AlertTitle>
-          <AlertDescription>The requested scale could not be found.</AlertDescription>
+          The requested scale could not be found.
         </Alert>
-        <div className="mt-4">
-          <Link
-            href="/scales"
-            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-          >
-            <ArrowLeftIcon className="h-4 w-4 mr-2" />
-            Back to Scales
+        <Box sx={{ mt: 2 }}>
+          <Link href="/scales" style={{ textDecoration: 'none' }}>
+            <Button
+              variant="outlined"
+              startIcon={<ArrowLeftIcon />}
+              sx={{ mt: 2 }}
+            >
+              Back to Scales
+            </Button>
           </Link>
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">{scale.name}</h1>
-          <div className="flex space-x-2">
-            <Link href={`/scales/${id}/edit`}>
-              <Button variant="outline" size="sm">
-                <PencilIcon className="h-4 w-4 mr-2" />
+    <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 4 }}>
+      <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <Typography variant="h4" component="h1" fontWeight="bold">
+            {scale.name}
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Link href={`/scales/${id}/edit`} style={{ textDecoration: 'none' }}>
+              <Button variant="outlined" size="small" startIcon={<PencilIcon />}>
                 Edit
               </Button>
             </Link>
-            <Button variant="destructive" size="sm" onClick={() => setShowDeleteConfirm(true)}>
-              <TrashIcon className="h-4 w-4 mr-2" />
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              startIcon={<TrashIcon />}
+              onClick={() => setShowDeleteConfirm(true)}
+            >
               Delete
             </Button>
-          </div>
-        </div>
+          </Box>
+        </Box>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="details">Details</TabsTrigger>
-            <TabsTrigger value="hardware">Hardware</TabsTrigger>
-            <TabsTrigger value="qrcode">QR Code</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="details" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Scale Information</CardTitle>
-                <CardDescription>Details about this scale</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Type</h3>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-white">{scale.scale_type}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</h3>
-                    <p className="mt-1 text-sm">
-                      <Badge variant={scale.status === 'Active' ? 'success' : 'destructive'}>
-                        {scale.status}
-                      </Badge>
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Location</h3>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-white">{scale.location || 'N/A'}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Company</h3>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-white">{scale.companies?.name || 'N/A'}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Manufacturer</h3>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-white">{scale.manufacturer || 'N/A'}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Model</h3>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-white">{scale.model || 'N/A'}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Serial Number</h3>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-white">{scale.serial_number || 'N/A'}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Max Capacity</h3>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-white">
-                      {scale.max_capacity ? `${scale.max_capacity.toLocaleString()} lbs` : 'N/A'}
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Precision</h3>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-white">
-                      {scale.precision ? `${scale.precision} lbs` : 'N/A'}
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Last Calibration</h3>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-white">
-                      {scale.calibration_date ? new Date(scale.calibration_date).toLocaleDateString() : 'N/A'}
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Next Calibration</h3>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-white">
-                      {scale.next_calibration_date ? new Date(scale.next_calibration_date).toLocaleDateString() : 'N/A'}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="hardware" className="space-y-4">
-            <HardwareSelector scaleId={parseInt(id)} />
-          </TabsContent>
-          
-          <TabsContent value="qrcode" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Scale QR Code</CardTitle>
-                <CardDescription>Scan this QR code to quickly select this scale for weighing</CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-col items-center">
-                {qrCode ? (
-                  <div className="bg-white p-6 rounded-lg">
-                    <img src={qrCode} alt="Scale QR Code" className="w-64 h-64" />
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center p-8">
-                    <QrCodeIcon className="h-16 w-16 text-gray-400 mb-4" />
-                    <p className="text-gray-500">QR code not available</p>
-                  </div>
-                )}
-              </CardContent>
-              <CardFooter className="flex justify-center">
-                <Button variant="outline" onClick={() => window.print()}>
-                  Print QR Code
-                </Button>
-              </CardFooter>
-            </Card>
-          </TabsContent>
-        </Tabs>
-
-        <div className="mt-6">
-          <Link
-            href="/scales"
-            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+        <Box sx={{ width: '100%', mb: 4 }}>
+          <Tabs
+            value={activeTab}
+            onChange={(_, newValue) => setActiveTab(newValue)}
+            centered
           >
-            <ArrowLeftIcon className="h-4 w-4 mr-2" />
-            Back to Scales
+            <Tab label="Details" value="details" />
+            <Tab label="Hardware" value="hardware" />
+            <Tab label="QR Code" value="qrcode" />
+          </Tabs>
+        </Box>
+
+        {activeTab === "details" && (
+          <Card sx={{ mb: 3 }}>
+            <CardHeader
+              title="Scale Information"
+              subheader="Details about this scale"
+            />
+            <CardContent>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Type</Typography>
+                  <Typography variant="body2">{scale.scale_type}</Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Status</Typography>
+                  <Chip
+                    label={scale.status}
+                    color={scale.status === 'Active' ? 'success' : 'error'}
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Location</Typography>
+                  <Typography variant="body2">{scale.location || 'N/A'}</Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Company</Typography>
+                  <Typography variant="body2">{scale.companies?.name || 'N/A'}</Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Manufacturer</Typography>
+                  <Typography variant="body2">{scale.manufacturer || 'N/A'}</Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Model</Typography>
+                  <Typography variant="body2">{scale.model || 'N/A'}</Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Serial Number</Typography>
+                  <Typography variant="body2">{scale.serial_number || 'N/A'}</Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Max Capacity</Typography>
+                  <Typography variant="body2">
+                    {scale.max_capacity ? `${scale.max_capacity.toLocaleString()} lbs` : 'N/A'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Precision</Typography>
+                  <Typography variant="body2">
+                    {scale.precision ? `${scale.precision} lbs` : 'N/A'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Last Calibration</Typography>
+                  <Typography variant="body2">
+                    {scale.calibration_date ? new Date(scale.calibration_date).toLocaleDateString() : 'N/A'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="text.secondary">Next Calibration</Typography>
+                  <Typography variant="body2">
+                    {scale.next_calibration_date ? new Date(scale.next_calibration_date).toLocaleDateString() : 'N/A'}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        )}
+
+        {activeTab === "hardware" && (
+          <Box sx={{ mb: 3 }}>
+            <HardwareSelector scaleId={parseInt(id)} />
+          </Box>
+        )}
+
+        {activeTab === "qrcode" && (
+          <Card sx={{ mb: 3 }}>
+            <CardHeader
+              title="Scale QR Code"
+              subheader="Scan this QR code to quickly select this scale for weighing"
+            />
+            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {qrCode ? (
+                <Box sx={{ bgcolor: 'white', p: 3, borderRadius: 1 }}>
+                  <img src={qrCode} alt="Scale QR Code" style={{ width: 256, height: 256 }} />
+                </Box>
+              ) : (
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
+                  <QrCodeIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
+                  <Typography color="text.secondary">QR code not available</Typography>
+                </Box>
+              )}
+            </CardContent>
+            <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
+              <Button variant="outlined" onClick={() => window.print()}>
+                Print QR Code
+              </Button>
+            </Box>
+          </Card>
+        )}
+
+        <Box sx={{ mt: 3 }}>
+          <Link href="/scales" style={{ textDecoration: 'none' }}>
+            <Button variant="outlined" startIcon={<ArrowLeftIcon />}>
+              Back to Scales
+            </Button>
           </Link>
-        </div>
+        </Box>
 
         {/* Delete Confirmation Dialog */}
-        <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <Dialog
+          open={showDeleteConfirm}
+          onClose={() => setShowDeleteConfirm(false)}
+        >
+          <DialogTitle>Confirm Deletion</DialogTitle>
           <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Confirm Deletion</DialogTitle>
-              <DialogDescription>
-                Are you sure you want to delete this scale? This action cannot be undone.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setShowDeleteConfirm(false)}>
-                Cancel
-              </Button>
-              <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
-                {isDeleting ? 'Deleting...' : 'Delete'}
-              </Button>
-            </DialogFooter>
+            <DialogContentText>
+              Are you sure you want to delete this scale? This action cannot be undone.
+            </DialogContentText>
           </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShowDeleteConfirm(false)}>Cancel</Button>
+            <Button
+              onClick={handleDelete}
+              color="error"
+              disabled={isDeleting}
+            >
+              {isDeleting ? 'Deleting...' : 'Delete'}
+            </Button>
+          </DialogActions>
         </Dialog>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

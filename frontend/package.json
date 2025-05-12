@@ -16,10 +16,14 @@
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@ducanh2912/next-pwa": "^10.2.9",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@loaders.gl/core": "^4.3.3",
     "@loaders.gl/gltf": "^4.3.3",
+    "@mui/icons-material": "^7.1.0",
+    "@mui/material": "^7.1.0",
     "@supabase/auth-helpers-nextjs": "^0.9.0",
     "@supabase/supabase-js": "^2.39.7",
     "@types/react-datepicker": "^6.0.1",
@@ -79,6 +83,10 @@
     "typescript": "^5.3.3"
   },
   "overrides": {
+    "glob": "^9.3.5",
+    "sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.15"
+  },
+  "resolutions": {
     "glob": "^9.3.5",
     "sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.15"
   }
