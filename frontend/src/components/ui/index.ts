@@ -8,6 +8,7 @@ export type { InputProps } from './Input';
 
 export { default as Select } from './Select';
 export type { SelectProps, SelectOption } from './Select';
+export { SelectTrigger, SelectValue, SelectContent, SelectItem } from './Select';
 
 export { default as Badge } from './Badge';
 export type { BadgeProps } from './Badge';

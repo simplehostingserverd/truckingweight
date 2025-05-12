@@ -1,13 +1,41 @@
 'use client';
 
 import * as React from 'react';
-import * as DialogPrimitive from '@headlessui/react';
+import { Dialog as HeadlessDialog } from '@headlessui/react';
 import { cn } from '@/lib/utils';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-const Dialog = DialogPrimitive.Dialog;
+// Create a custom Dialog component that accepts onOpenChange
+const Dialog = ({ open, onOpenChange, children, ...props }: {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  children?: React.ReactNode;
+} & Omit<React.ComponentProps<typeof HeadlessDialog>, 'open' | 'onClose'>) => {
+  return (
+    <HeadlessDialog
+      open={open || false}
+      onClose={() => onOpenChange?.(false)}
+      {...props}
+    >
+      {children}
+    </HeadlessDialog>
+  );
+};
 
-const DialogTrigger = DialogPrimitive.Button;
+// Create a custom DialogTrigger component
+const DialogTrigger = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, children, ...props }, ref) => (
+  <button
+    ref={ref}
+    className={cn('inline-flex items-center justify-center', className)}
+    {...props}
+  >
+    {children}
+  </button>
+));
+DialogTrigger.displayName = 'DialogTrigger';
 
 const DialogPortal = ({
   className,
@@ -100,7 +128,7 @@ const DialogTitle = React.forwardRef<
   HTMLHeadingElement,
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title
+  <h2
     ref={ref}
     className={cn('text-lg font-semibold leading-none tracking-tight', className)}
     {...props}
@@ -112,7 +140,7 @@ const DialogDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Description
+  <p
     ref={ref}
     className={cn('text-sm text-muted-foreground', className)}
     {...props}
