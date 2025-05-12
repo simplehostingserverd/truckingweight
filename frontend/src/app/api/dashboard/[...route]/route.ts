@@ -65,29 +65,51 @@ export async function GET(request: NextRequest, { params }: { params: { route: s
   } catch (error) {
     console.error(`Error in dashboard API (${route}):`, error);
 
-    // Always use mock data in development mode or if there's an error
-    if (process.env.NODE_ENV !== 'production' || error) {
-      console.log(`Using mock data for ${route} in ${process.env.NODE_ENV} mode`);
-      try {
-        switch (route) {
-          case 'stats':
-            return NextResponse.json(getMockStats());
-          case 'load-status':
-            return NextResponse.json(getMockLoadStatus());
-          case 'compliance':
-            return NextResponse.json(getMockComplianceData(dateRange));
-          case 'vehicle-weights':
-            return NextResponse.json(getMockVehicleWeights(dateRange));
-          case 'recent-weights':
-            return NextResponse.json(getMockRecentWeights());
-          default:
-            return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 });
-        }
-      } catch (fallbackError) {
-        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    // Log the error but try to continue with database access
+    console.error(`Error in dashboard API (${route}):`, error);
+
+    // Try to recover and still use the database
+    try {
+      // Initialize a new Supabase client
+      const cookieStore = await cookies();
+      const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+
+      // Get user data
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
-    } else {
-      return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+
+      // Get user's company_id and admin status
+      const { data: userData } = await supabase
+        .from('users')
+        .select('company_id, is_admin')
+        .eq('id', user.id)
+        .single();
+
+      const isAdmin = userData?.is_admin || false;
+      const companyId = userData?.company_id;
+
+      // Try again with the route
+      switch (route) {
+        case 'stats':
+          return NextResponse.json(await getStats(supabase, isAdmin, companyId));
+        case 'load-status':
+          return NextResponse.json(await getLoadStatus(supabase, isAdmin, companyId));
+        case 'compliance':
+          return NextResponse.json(await getComplianceData(supabase, isAdmin, companyId, dateRange));
+        case 'vehicle-weights':
+          return NextResponse.json(await getVehicleWeights(supabase, isAdmin, companyId, dateRange));
+        case 'recent-weights':
+          return NextResponse.json(await getRecentWeights(supabase, isAdmin, companyId));
+        default:
+          return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 });
+      }
+    } catch (recoveryError) {
+      console.error(`Recovery attempt failed for ${route}:`, recoveryError);
+      return NextResponse.json({ error: 'Database connection error' }, { status: 500 });
     }
   }
 }

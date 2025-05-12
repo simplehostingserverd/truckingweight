@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Workbox } from 'workbox-window';
 import logger from '@/utils/logger';
+import { useToastContext } from '@/providers/ToastProvider';
 
 interface ServiceWorkerRegistrationProps {
   onUpdate?: () => void;
@@ -17,6 +18,7 @@ export default function ServiceWorkerRegistration({
 }: ServiceWorkerRegistrationProps) {
   // Use undefined as initial state to avoid hydration mismatch
   const [isUpdateAvailable, setIsUpdateAvailable] = useState<boolean | undefined>(undefined);
+  const toast = useToastContext();
 
   useEffect(() => {
     if (
@@ -33,9 +35,23 @@ export default function ServiceWorkerRegistration({
         if (event.isUpdate) {
           logger.info('New content is available, please refresh', {}, 'ServiceWorker');
           setIsUpdateAvailable(true);
+
+          // Show toast notification for update
+          toast.info({
+            title: 'Update Available',
+            description: 'A new version is available. Click to refresh and use the latest version.',
+          });
+
           onUpdate?.();
         } else {
           logger.info('Content is cached for offline use', {}, 'ServiceWorker');
+
+          // Show toast notification for successful caching
+          toast.success({
+            title: 'Offline Ready',
+            description: 'App is now available offline',
+          });
+
           onSuccess?.();
         }
       });
@@ -44,6 +60,13 @@ export default function ServiceWorkerRegistration({
       wb.addEventListener('error', event => {
         const error = new Error('Service worker registration failed');
         logger.error('Service Worker registration failed', { event }, 'ServiceWorker');
+
+        // Show toast notification for error
+        toast.error({
+          title: 'Service Worker Error',
+          description: 'Failed to enable offline functionality',
+        });
+
         onError?.(error);
       });
 
@@ -60,10 +83,17 @@ export default function ServiceWorkerRegistration({
         })
         .catch(error => {
           logger.error('Service Worker registration failed', { error }, 'ServiceWorker');
+
+          // Show toast notification for registration error
+          toast.error({
+            title: 'Service Worker Error',
+            description: error.message || 'Failed to register service worker',
+          });
+
           onError?.(error);
         });
     }
-  }, [onUpdate, onSuccess, onError]);
+  }, [onUpdate, onSuccess, onError, toast]);
 
   // Only render UI on client-side after initial hydration
   if (typeof isUpdateAvailable === 'boolean' && isUpdateAvailable) {

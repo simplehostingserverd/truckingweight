@@ -33,6 +33,7 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
     const fetchData = async () => {
       try {
         setIsLoading(true);
+        setError('');
 
         // Get auth token from supabase
         const {
@@ -55,15 +56,17 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
           setIsAdmin(userDetails?.is_admin === true);
         }
 
-        // Use the new API endpoint to get vehicle weight data
+        // Use the API endpoint to get vehicle weight data
         const url = companyId
           ? `/api/dashboard/vehicle-weights?dateRange=${dateRange}&companyId=${companyId}`
           : `/api/dashboard/vehicle-weights?dateRange=${dateRange}`;
 
         const response = await fetch(url, {
           headers: {
-            'x-auth-token': session.access_token,
+            'x-auth-token': session.access_token || '',
           },
+          // Add cache control to ensure fresh data
+          cache: 'no-cache',
         });
 
         if (!response.ok) {
@@ -85,13 +88,69 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
       } catch (error: any) {
         console.error('Error fetching vehicle weight data:', error);
         setError(error.message);
+
+        // Try to recover by querying the database directly
+        try {
+          // Query vehicles directly from the database
+          let vehiclesQuery = supabase
+            .from('vehicles')
+            .select('id, name, weight');
+
+          // If not admin and we have a company ID, filter by it
+          if (!isAdmin && companyId) {
+            vehiclesQuery = vehiclesQuery.eq('company_id', companyId);
+          }
+
+          const { data: vehicles, error: vehiclesError } = await vehiclesQuery;
+
+          if (vehiclesError) {
+            throw vehiclesError;
+          }
+
+          // If we have vehicles, format them for the chart
+          if (vehicles && vehicles.length > 0) {
+            // Group by vehicle name and calculate average weight
+            const vehicleWeights = {};
+
+            vehicles.forEach(vehicle => {
+              const weightValue = parseFloat(vehicle.weight || '0');
+
+              if (!isNaN(weightValue) && weightValue > 0) {
+                if (!vehicleWeights[vehicle.name]) {
+                  vehicleWeights[vehicle.name] = {
+                    total: 0,
+                    count: 0,
+                  };
+                }
+
+                vehicleWeights[vehicle.name].total += weightValue;
+                vehicleWeights[vehicle.name].count++;
+              }
+            });
+
+            // Format for chart
+            const formattedData = Object.entries(vehicleWeights)
+              .map(([name, data]) => ({
+                name,
+                weight: Math.round(data.total / data.count),
+              }))
+              .sort((a, b) => b.weight - a.weight)
+              .slice(0, 5); // Top 5 vehicles by weight
+
+            setWeightData(formattedData);
+            setError('Using local data - connection to API failed');
+          }
+        } catch (recoveryError) {
+          console.error('Recovery attempt failed:', recoveryError);
+          // Keep the original error
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [supabase, dateRange, companyId]);
+  }, [supabase, dateRange, companyId, isAdmin]);
 
   const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDateRange(e.target.value);

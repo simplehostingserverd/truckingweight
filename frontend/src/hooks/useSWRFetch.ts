@@ -1,14 +1,26 @@
 import useSWR, { SWRConfiguration, SWRResponse } from 'swr';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { handleApiError, AppError } from '@/utils/errorHandler';
+import logger from '@/utils/logger';
 
-// Create a fetcher function that uses axios
+// Create a fetcher function that uses axios with error handling
 const axiosFetcher = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
   try {
     const response: AxiosResponse<T> = await axios(url, config);
     return response.data;
   } catch (error) {
-    const axiosError = error as AxiosError;
-    throw axiosError;
+    // Convert to AppError for better error handling
+    const appError = handleApiError(error);
+
+    // Log the error
+    logger.error(`API Error: ${appError.message}`, {
+      url,
+      type: appError.type,
+      statusCode: appError.statusCode,
+      details: appError.details,
+    });
+
+    throw appError;
   }
 };
 
@@ -17,18 +29,25 @@ export function useSWRFetch<T = any>(
   url: string | null,
   config?: AxiosRequestConfig,
   swrOptions?: SWRConfiguration
-): SWRResponse<T, AxiosError> {
+): SWRResponse<T, AppError> {
   // Only fetch if URL is provided
   const shouldFetch = !!url;
-  
-  return useSWR<T, AxiosError>(
+
+  return useSWR<T, AppError>(
     shouldFetch ? [url, config] : null,
     ([url, config]) => axiosFetcher<T>(url, config),
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
       dedupingInterval: 5000, // 5 seconds
+      errorRetryCount: 3, // Retry 3 times on error
       ...swrOptions,
+      onError: (error, key) => {
+        // Call the user's onError if provided
+        if (swrOptions?.onError) {
+          swrOptions.onError(error, key);
+        }
+      }
     }
   );
 }
@@ -39,11 +58,26 @@ export function useSWRMutation<T = any, D = any>(
   options?: SWRConfiguration
 ) {
   const fetcher = async (url: string, { arg }: { arg: D }) => {
-    const response = await axios.post<T>(url, arg);
-    return response.data;
+    try {
+      const response = await axios.post<T>(url, arg);
+      return response.data;
+    } catch (error) {
+      // Convert to AppError for better error handling
+      const appError = handleApiError(error);
+
+      // Log the error
+      logger.error(`API POST Error: ${appError.message}`, {
+        url,
+        type: appError.type,
+        statusCode: appError.statusCode,
+        details: appError.details,
+      });
+
+      throw appError;
+    }
   };
 
-  return useSWR.mutation<T, AxiosError, string, { arg: D }>(url, fetcher, options);
+  return useSWR.mutation<T, AppError, string, { arg: D }>(url, fetcher, options);
 }
 
 // Hook for PUT requests
@@ -52,11 +86,26 @@ export function useSWRPut<T = any, D = any>(
   options?: SWRConfiguration
 ) {
   const fetcher = async (url: string, { arg }: { arg: D }) => {
-    const response = await axios.put<T>(url, arg);
-    return response.data;
+    try {
+      const response = await axios.put<T>(url, arg);
+      return response.data;
+    } catch (error) {
+      // Convert to AppError for better error handling
+      const appError = handleApiError(error);
+
+      // Log the error
+      logger.error(`API PUT Error: ${appError.message}`, {
+        url,
+        type: appError.type,
+        statusCode: appError.statusCode,
+        details: appError.details,
+      });
+
+      throw appError;
+    }
   };
 
-  return useSWR.mutation<T, AxiosError, string, { arg: D }>(url, fetcher, options);
+  return useSWR.mutation<T, AppError, string, { arg: D }>(url, fetcher, options);
 }
 
 // Hook for DELETE requests
@@ -65,11 +114,26 @@ export function useSWRDelete<T = any>(
   options?: SWRConfiguration
 ) {
   const fetcher = async (url: string) => {
-    const response = await axios.delete<T>(url);
-    return response.data;
+    try {
+      const response = await axios.delete<T>(url);
+      return response.data;
+    } catch (error) {
+      // Convert to AppError for better error handling
+      const appError = handleApiError(error);
+
+      // Log the error
+      logger.error(`API DELETE Error: ${appError.message}`, {
+        url,
+        type: appError.type,
+        statusCode: appError.statusCode,
+        details: appError.details,
+      });
+
+      throw appError;
+    }
   };
 
-  return useSWR.mutation<T, AxiosError, string>(url, fetcher, options);
+  return useSWR.mutation<T, AppError, string>(url, fetcher, options);
 }
 
 export default useSWRFetch;

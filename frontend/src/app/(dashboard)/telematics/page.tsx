@@ -123,8 +123,87 @@ export default function TelematicsPage() {
 
   const fetchVehicleData = async () => {
     try {
-      // This would normally fetch from your backend API
-      // For now, we'll use mock data
+      setIsLoading(true);
+      setError('');
+
+      // Get active connections
+      const activeConnections = connections.filter(conn => conn.status === 'active');
+
+      if (activeConnections.length === 0) {
+        // No active connections, use mock data for demo purposes
+        const mockData: VehicleData[] = [
+          {
+            id: '1',
+            name: 'Truck 101',
+            status: 'active',
+            location: {
+              latitude: 32.7767,
+              longitude: -96.7970,
+              address: 'Dallas, TX'
+            },
+            lastUpdate: new Date().toISOString(),
+            speed: 65,
+            fuelLevel: 75,
+            engineStatus: 'running'
+          },
+          {
+            id: '2',
+            name: 'Truck 102',
+            status: 'inactive',
+            location: {
+              latitude: 29.7604,
+              longitude: -95.3698,
+              address: 'Houston, TX'
+            },
+            lastUpdate: new Date(Date.now() - 3600000).toISOString(),
+            speed: 0,
+            fuelLevel: 45,
+            engineStatus: 'off'
+          },
+          {
+            id: '3',
+            name: 'Truck 103',
+            status: 'active',
+            location: {
+              latitude: 30.2672,
+              longitude: -97.7431,
+              address: 'Austin, TX'
+            },
+            lastUpdate: new Date().toISOString(),
+            speed: 55,
+            fuelLevel: 60,
+            engineStatus: 'running'
+          }
+        ];
+
+        setVehicleData(mockData);
+        return;
+      }
+
+      // Try to fetch real data from the API
+      const { data: sessionData } = await supabase.auth.getSession();
+
+      if (!sessionData.session) {
+        throw new Error('No active session');
+      }
+
+      // Fetch vehicle data from API
+      const response = await fetch('/api/telematics/vehicles', {
+        headers: {
+          'x-auth-token': sessionData.session.access_token || '',
+        },
+      });
+
+      if (!response.ok) {
+        // If API fails, fall back to mock data
+        throw new Error('Failed to fetch vehicle data');
+      }
+
+      const data = await response.json();
+      setVehicleData(data);
+    } catch (err: any) {
+      console.error('Error fetching vehicle data:', err);
+      // Fall back to mock data on error
       const mockData: VehicleData[] = [
         {
           id: '1',
@@ -171,8 +250,8 @@ export default function TelematicsPage() {
       ];
 
       setVehicleData(mockData);
-    } catch (err: any) {
-      console.error('Error fetching vehicle data:', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 

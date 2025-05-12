@@ -47,7 +47,7 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
 
         const response = await fetch(url, {
           headers: {
-            'x-auth-token': session.access_token,
+            'x-auth-token': session.access_token || '',
           },
         });
 
@@ -65,7 +65,7 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
 
         const weightsResponse = await fetch(weightsUrl, {
           headers: {
-            'x-auth-token': session.access_token,
+            'x-auth-token': session.access_token || '',
           },
         });
 
@@ -147,6 +147,89 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
       } catch (error: any) {
         console.error('Error fetching dashboard stats:', error);
         setError(error.message);
+
+        // Try to recover by querying the database directly
+        try {
+          // Query the database directly for stats
+          const [
+            { data: vehicles, error: vehiclesError },
+            { data: drivers, error: driversError },
+            { data: loads, error: loadsError },
+            { data: weights, error: weightsError },
+          ] = await Promise.all([
+            // Get vehicles count
+            supabase.from('vehicles').select('id', { count: 'exact', head: true }),
+            // Get drivers count
+            supabase.from('drivers').select('id', { count: 'exact', head: true }),
+            // Get active loads count
+            supabase.from('loads').select('id', { count: 'exact', head: true }).eq('status', 'In Transit'),
+            // Get weights count
+            supabase.from('weights').select('id, status', { count: 'exact' }),
+          ]);
+
+          if (vehiclesError || driversError || loadsError || weightsError) {
+            throw new Error('Failed to fetch recovery data');
+          }
+
+          // Calculate compliance rate
+          const totalWeights = weights?.length || 0;
+          const nonCompliantWeights = weights?.filter(w => w.status === 'Non-Compliant').length || 0;
+          const complianceRate = totalWeights > 0
+            ? Math.round(((totalWeights - nonCompliantWeights) / totalWeights) * 100)
+            : 100;
+
+          // Get today's weights
+          const today = new Date().toISOString().split('T')[0];
+          const weightsToday = weights?.filter(w =>
+            w.created_at && w.created_at.startsWith(today)
+          ).length || 0;
+
+          // Format stats for display
+          const formattedStats = [
+            {
+              label: 'Total Vehicles',
+              value: vehicles?.count?.toString() || '0',
+              icon: TruckIcon,
+              color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+            },
+            {
+              label: 'Active Drivers',
+              value: drivers?.count?.toString() || '0',
+              icon: CalendarDaysIcon,
+              color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+            },
+            {
+              label: 'Compliance Rate',
+              value: `${complianceRate}%`,
+              icon: CheckCircleIcon,
+              color: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+            },
+            {
+              label: 'Active Loads',
+              value: loads?.count?.toString() || '0',
+              icon: ClockIcon,
+              color: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
+            },
+            {
+              label: 'Weights Today',
+              value: weightsToday.toString(),
+              icon: ScaleIcon,
+              color: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200',
+            },
+            {
+              label: 'Non-Compliant',
+              value: nonCompliantWeights.toString(),
+              icon: ExclamationTriangleIcon,
+              color: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+            },
+          ];
+
+          setStats(formattedStats);
+          setError('Using local data - connection to API failed');
+        } catch (recoveryError) {
+          console.error('Recovery attempt failed:', recoveryError);
+          // Keep the original error
+        }
       } finally {
         setIsLoading(false);
       }

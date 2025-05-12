@@ -23,7 +23,7 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
   };
 
   // Fetch auth token for API requests
-  const { data: session } = useSWRFetch('/api/auth/session');
+  const { data: session, error: sessionError } = useSWRFetch('/api/auth/session');
 
   // Fetch user data to check admin status
   const { data: userData } = useSWRFetch(
@@ -35,7 +35,7 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
     }
   );
 
-  const isAdmin = userData?.is_admin === true;
+  const isAdmin = userData?.is_admin === true || userData?.user?.is_admin === true;
 
   // Construct the URL for compliance data
   const complianceUrl = companyId
@@ -49,6 +49,15 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
       headers: {
         'x-auth-token': session?.token || '',
       },
+    },
+    {
+      // Increase retry attempts for better reliability
+      errorRetryCount: 3,
+      // Decrease revalidation interval to ensure fresh data
+      dedupingInterval: 10000, // 10 seconds
+      // Enable revalidation on focus and reconnect
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
     }
   );
 

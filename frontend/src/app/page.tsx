@@ -4,6 +4,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Layout from '@/components/Layout/Layout';
+import LogoCarousel from '@/components/LogoCarousel';
 
 export default async function Home() {
   // Await cookies to fix the "cookies() should be awaited" error
@@ -79,6 +80,13 @@ export default async function Home() {
             </svg>
           </div>
         </section>
+
+        {/* Trucking Companies Logo Carousel */}
+        <LogoCarousel
+          type="trucking"
+          title="Trusted by Leading Trucking Companies"
+          subtitle="Join these industry leaders who rely on our platform for their weight management needs"
+        />
 
         {/* Features Section */}
         <section className="py-20 bg-white">
@@ -216,59 +224,120 @@ export default async function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Testimonial 1 */}
-              <div className="bg-white rounded-xl p-8 shadow-sm">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-primary-700 font-bold text-xl">JD</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">John Doe</h4>
-                    <p className="text-gray-500 text-sm">Fleet Manager, ABC Trucking</p>
-                  </div>
-                </div>
-                <p className="text-gray-600 italic">
-                  "This system has revolutionized how we manage our fleet's weights. We've reduced
-                  compliance issues by 85% since implementation."
-                </p>
-              </div>
+              {/* Fetch testimonials from the database */}
+              {(async () => {
+                // Fetch testimonials from the database
+                const { data: testimonials, error } = await supabase
+                  .from('testimonials')
+                  .select('*')
+                  .order('rating', { ascending: false })
+                  .limit(3);
 
-              {/* Testimonial 2 */}
-              <div className="bg-white rounded-xl p-8 shadow-sm">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-primary-700 font-bold text-xl">JS</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Jane Smith</h4>
-                    <p className="text-gray-500 text-sm">Operations Director, XYZ Logistics</p>
-                  </div>
-                </div>
-                <p className="text-gray-600 italic">
-                  "The load tracking features have improved our delivery times and customer
-                  satisfaction. I can't imagine running our operation without it."
-                </p>
-              </div>
+                if (error || !testimonials || testimonials.length === 0) {
+                  // Fallback to default testimonials if there's an error or no data
+                  return (
+                    <>
+                      {/* Testimonial 1 */}
+                      <div className="bg-white rounded-xl p-8 shadow-sm">
+                        <div className="flex items-center mb-4">
+                          <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
+                            <span className="text-primary-700 font-bold text-xl">MT</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-900">Michael Thompson</h4>
+                            <p className="text-gray-500 text-sm">Fleet Manager, Thompson Logistics</p>
+                          </div>
+                        </div>
+                        <p className="text-gray-600 italic">
+                          "TruckingWeight has completely transformed our weight compliance process. The real-time monitoring has saved us thousands in potential fines and improved our efficiency by 30%."
+                        </p>
+                      </div>
 
-              {/* Testimonial 3 */}
-              <div className="bg-white rounded-xl p-8 shadow-sm">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-primary-700 font-bold text-xl">RJ</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Robert Johnson</h4>
-                    <p className="text-gray-500 text-sm">CEO, Johnson Transport</p>
-                  </div>
-                </div>
-                <p className="text-gray-600 italic">
-                  "The compliance reporting has saved us countless hours and helped us avoid fines.
-                  The ROI on this system was evident within the first month."
-                </p>
-              </div>
+                      {/* Testimonial 2 */}
+                      <div className="bg-white rounded-xl p-8 shadow-sm">
+                        <div className="flex items-center mb-4">
+                          <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
+                            <span className="text-primary-700 font-bold text-xl">SR</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-900">Sarah Rodriguez</h4>
+                            <p className="text-gray-500 text-sm">Operations Director, Express Freight Solutions</p>
+                          </div>
+                        </div>
+                        <p className="text-gray-600 italic">
+                          "The analytics dashboard gives us insights we never had before. We can now make data-driven decisions that have improved our load efficiency and reduced overweight incidents to nearly zero."
+                        </p>
+                      </div>
+
+                      {/* Testimonial 3 */}
+                      <div className="bg-white rounded-xl p-8 shadow-sm">
+                        <div className="flex items-center mb-4">
+                          <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
+                            <span className="text-primary-700 font-bold text-xl">DC</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-900">David Chen</h4>
+                            <p className="text-gray-500 text-sm">CEO, Pacific Northwest Transport</p>
+                          </div>
+                        </div>
+                        <p className="text-gray-600 italic">
+                          "Implementation was smooth and the support team was incredibly helpful. The system paid for itself within the first three months through avoided fines and improved route planning."
+                        </p>
+                      </div>
+                    </>
+                  );
+                }
+
+                // Render testimonials from the database
+                return testimonials.map((testimonial) => {
+                  // Get initials for the avatar
+                  const initials = testimonial.name
+                    .split(' ')
+                    .map((n) => n[0])
+                    .join('')
+                    .toUpperCase();
+
+                  return (
+                    <div key={testimonial.id} className="bg-white rounded-xl p-8 shadow-sm">
+                      <div className="flex items-center mb-4">
+                        <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
+                          <span className="text-primary-700 font-bold text-xl">{initials}</span>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+                          <p className="text-gray-500 text-sm">{testimonial.position}, {testimonial.company}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-2">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <svg
+                            key={i}
+                            className={`w-5 h-5 ${
+                              i < testimonial.rating ? 'text-yellow-400' : 'text-gray-300'
+                            }`}
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <p className="text-gray-600 italic">"{testimonial.review}"</p>
+                    </div>
+                  );
+                });
+              })()}
             </div>
           </div>
         </section>
+
+        {/* Texas Cities Logo Carousel */}
+        <LogoCarousel
+          type="city"
+          title="Serving Texas Municipalities"
+          subtitle="Partnering with cities across Texas to ensure road safety and infrastructure protection"
+        />
 
         {/* City Login Section */}
         <section className="py-20 bg-gray-100">

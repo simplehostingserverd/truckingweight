@@ -2,10 +2,9 @@
 
 import { ThemeProvider as NextThemeProvider } from 'next-themes';
 import { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-// Import the CSS directly without source maps
-import 'react-toastify/dist/ReactToastify.min.css';
+import { ToastProvider } from '@/providers/ToastProvider';
 import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import logger from '@/utils/logger';
 import { SupabaseAuthProvider } from '@/providers/SupabaseAuthProvider';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
@@ -24,13 +23,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
     // Define event handlers
     const handleOnline = () => {
       setIsOnline(true);
-      toast.success('You are back online!');
+      // Toast will be handled by ToastProvider
       logger.info('Application is online', {}, 'NetworkStatus');
     };
 
     const handleOffline = () => {
       setIsOnline(false);
-      toast.warn('You are offline. Some features may be limited.');
+      // Toast will be handled by ToastProvider
       logger.warn('Application is offline', {}, 'NetworkStatus');
     };
 
@@ -47,13 +46,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   // Handle service worker updates
   const handleServiceWorkerUpdate = () => {
-    toast.info('A new version is available!', {
-      autoClose: false,
-      closeOnClick: false,
-      draggable: false,
-      closeButton: true,
-      onClick: () => window.location.reload(),
-    });
+    // Toast will be handled by ToastProvider
+    // We'll implement this in the ServiceWorkerRegistration component
   };
 
   return (
@@ -61,39 +55,31 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <MUIThemeProvider theme={theme}>
         <CssBaseline />
         <NextThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          {children}
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-          />
-          {/* Only render offline banner after client-side hydration */}
-          {typeof isOnline === 'boolean' && !isOnline && (
-            <div style={{
-              position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: theme.palette.warning.main,
-              color: theme.palette.warning.contrastText,
-              padding: '8px',
-              textAlign: 'center',
-              zIndex: 9999
-            }}>
-              You are currently offline. Some features may be limited.
-            </div>
-          )}
-          <ServiceWorkerRegistration
-            onUpdate={handleServiceWorkerUpdate}
-            onError={error => logger.error('Service worker error', { error }, 'ServiceWorker')}
-          />
+          <ToastProvider>
+            <ErrorBoundary>
+              {children}
+              {/* Only render offline banner after client-side hydration */}
+              {typeof isOnline === 'boolean' && !isOnline && (
+                <div style={{
+                  position: 'fixed',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  backgroundColor: theme.palette.warning.main,
+                  color: theme.palette.warning.contrastText,
+                  padding: '8px',
+                  textAlign: 'center',
+                  zIndex: 9999
+                }}>
+                  You are currently offline. Some features may be limited.
+                </div>
+              )}
+              <ServiceWorkerRegistration
+                onUpdate={handleServiceWorkerUpdate}
+                onError={error => logger.error('Service worker error', { error }, 'ServiceWorker')}
+              />
+            </ErrorBoundary>
+          </ToastProvider>
         </NextThemeProvider>
       </MUIThemeProvider>
     </SupabaseAuthProvider>

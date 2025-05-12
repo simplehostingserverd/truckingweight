@@ -285,6 +285,18 @@ async function createAdminUser() {
   }
 }
 
+// Function to run a script
+async function runScript(scriptPath) {
+  try {
+    console.log(`Running script: ${path.basename(scriptPath)}`);
+    require(scriptPath);
+    return true;
+  } catch (error) {
+    console.error(`Error running script ${path.basename(scriptPath)}:`, error);
+    return false;
+  }
+}
+
 // Main function to set up the database
 async function setupDatabase() {
   try {
@@ -310,6 +322,14 @@ async function setupDatabase() {
 
     // Step 3: Create admin user
     await createAdminUser();
+
+    // Step 4: Run seed-realistic-data.js
+    console.log('\n=== Adding realistic company and vehicle data ===');
+    await runScript('./seed-realistic-data.js');
+
+    // Step 5: Run add-realistic-data.js
+    console.log('\n=== Adding realistic weight and telematics data ===');
+    await runScript('./add-realistic-data.js');
 
     console.log('Database setup completed successfully!');
   } catch (error) {

@@ -11,7 +11,7 @@ const __dirname = dirname(__filename);
 dotenv.config({ path: resolve(__dirname, '../.env') });
 
 // Get Supabase credentials from environment variables
-const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 console.log('Supabase URL:', supabaseUrl);
@@ -258,6 +258,51 @@ async function createTables() {
       }
     } else {
       console.log('Sync queue table created successfully');
+    }
+
+    // Create company_logos table
+    console.log('Creating company_logos table...');
+    try {
+      // Try to create the table directly
+      const { error: logoError } = await supabase.from('company_logos').insert([
+        {
+          name: 'Test Company Logo',
+          logo_url: 'https://example.com/logo.png',
+          website: 'https://example.com',
+          type: 'trucking',
+        },
+      ]);
+
+      if (logoError && !logoError.message?.includes('already exists')) {
+        console.error('Error creating company_logos table:', logoError);
+      } else {
+        console.log('Company logos table created or already exists');
+      }
+    } catch (logoError) {
+      console.error('Error with company_logos table:', logoError);
+    }
+
+    // Create testimonials table
+    console.log('Creating testimonials table...');
+    try {
+      // Try to create the table directly
+      const { error: testimonialError } = await supabase.from('testimonials').insert([
+        {
+          name: 'Test Testimonial',
+          company: 'Test Company',
+          position: 'Test Position',
+          rating: 5,
+          review: 'This is a test review',
+        },
+      ]);
+
+      if (testimonialError && !testimonialError.message?.includes('already exists')) {
+        console.error('Error creating testimonials table:', testimonialError);
+      } else {
+        console.log('Testimonials table created or already exists');
+      }
+    } catch (testimonialError) {
+      console.error('Error with testimonials table:', testimonialError);
     }
 
     console.log('All tables created or verified!');

@@ -498,8 +498,18 @@ model blockchain_records {
   blockchain_id        String?  @db.VarChar(255)
   transaction_id       String?  @db.VarChar(255)
   verified             Boolean  @default(false)
-  verification_details Json?
-  created_at           DateTime @default(now()) @db.Timestamptz(6)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model testimonials {
+  id         Int        @id @default(autoincrement())
+  name       String     @db.VarChar(255)
+  company    String     @db.VarChar(255)
+  position   String     @db.VarChar(255)
+  rating     Int
+  review     String
+  created_at DateTime?  @default(now()) @db.Timestamptz(6)
+  updated_at DateTime?  @default(now()) @db.Timestamptz(6)
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

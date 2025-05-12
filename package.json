@@ -18,7 +18,11 @@
     "postinstall": "npm run prepare || true",
     "setup-db": "node scripts/setup-database.js",
     "create-admin": "node scripts/create-admin.js",
-    "reset-db": "node --experimental-modules scripts/reset-database.js"
+    "reset-db": "node --experimental-modules scripts/reset-database.js",
+    "seed-data": "node --experimental-modules scripts/seed-realistic-data.js",
+    "add-data": "node --experimental-modules scripts/add-realistic-data.js",
+    "add-logos": "node --experimental-modules scripts/add-company-logos.js",
+    "setup-all": "npm run setup-db && npm run seed-data && npm run add-data && npm run add-logos"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
