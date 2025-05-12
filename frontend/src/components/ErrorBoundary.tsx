@@ -2,8 +2,8 @@
 
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { useToastContext } from '@/providers/ToastProvider';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import Button from '@/components/ui/Button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/Card';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 interface Props {
@@ -20,7 +20,7 @@ interface State {
 // Context consumer component to access toast context
 const ErrorToastConsumer = ({ error }: { error: Error }) => {
   const toast = useToastContext();
-  
+
   React.useEffect(() => {
     if (error) {
       toast.error({
@@ -29,7 +29,7 @@ const ErrorToastConsumer = ({ error }: { error: Error }) => {
       });
     }
   }, [error, toast]);
-  
+
   return null;
 };
 
