@@ -5,23 +5,23 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "push-schema": "node scripts/push-schema.js",
-    "update-schema": "node scripts/update-schema.js",
-    "update-deps": "node scripts/update-dependencies.js",
+    "push-schema": "node scripts/push-schema.mjs",
+    "update-schema": "node scripts/update-schema.mjs",
+    "update-deps": "node scripts/update-dependencies.mjs",
     "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
-    "install-deps": "node scripts/install-deps.js",
+    "install-deps": "node scripts/install-deps.mjs",
     "prepare": "husky install || echo 'Skipping husky install'",
     "lint": "eslint . || echo 'Skipping eslint'",
     "lint:fix": "eslint --fix . || echo 'Skipping eslint fix'",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\" || echo 'Skipping prettier'",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md,css}\" || echo 'Skipping prettier check'",
     "postinstall": "npm run prepare || true",
-    "setup-db": "node scripts/setup-database.js",
-    "create-admin": "node scripts/create-admin.js",
-    "reset-db": "node --experimental-modules scripts/reset-database.js",
-    "seed-data": "node --experimental-modules scripts/seed-realistic-data.js",
-    "add-data": "node --experimental-modules scripts/add-realistic-data.js",
-    "add-logos": "node --experimental-modules scripts/add-company-logos.js",
+    "setup-db": "node scripts/setup-database.mjs",
+    "create-admin": "node scripts/create-admin.mjs",
+    "reset-db": "node --experimental-modules scripts/reset-database.mjs",
+    "seed-data": "node --experimental-modules scripts/seed-realistic-data.mjs",
+    "add-data": "node --experimental-modules scripts/add-realistic-data.mjs",
+    "add-logos": "node --experimental-modules scripts/add-company-logos.mjs",
     "setup-all": "npm run setup-db && npm run seed-data && npm run add-data && npm run add-logos"
   },
   "dependencies": {
@@ -59,5 +59,6 @@
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
-  }
+  },
+  "type": "module"
 }

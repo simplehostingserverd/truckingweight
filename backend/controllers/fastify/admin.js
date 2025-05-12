@@ -532,7 +532,7 @@ async function getComplianceReports(request, reply) {
  */
 async function exportData(request, reply) {
   try {
-    const { type } = request.params;
+    // type parameter is not used in this implementation
     const { entity, format = 'csv' } = request.query;
 
     if (!entity) {

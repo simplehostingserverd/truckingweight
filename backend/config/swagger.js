@@ -77,8 +77,6 @@ const swaggerUiOptions = {
     onRequest: function (request, reply, next) { next(); },
     preHandler: function (request, reply, next) { next(); },
   },
-  staticCSP: true,
-  transformStaticCSP: (header) => header,
 };
 
 module.exports = {

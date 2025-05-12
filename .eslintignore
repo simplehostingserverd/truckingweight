@@ -1,0 +1,30 @@
+# Ignore Prisma generated files
+backend/generated/**/*
+backend/prisma/**/*
+
+# Ignore node_modules
+node_modules
+
+# Ignore build directories
+dist
+build
+.next
+
+# Ignore scripts (console.log warnings)
+scripts/**/*
+
+# Ignore test files
+test/**/*
+*.test.js
+*.test.ts
+*.test.tsx
+
+# Ignore configuration files
+*.config.js
+*.config.ts
+
+# Ignore environment files
+.env*
+
+# Ignore backup files
+backup-files/**/*

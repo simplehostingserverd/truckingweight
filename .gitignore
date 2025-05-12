@@ -76,3 +76,11 @@ debug.log
 
 # Build artifacts
 *.tsbuildinfo
+
+# Fix scripts and temporary files
+fix-*.js
+fix-*.mjs
+scripts/fix-*.js
+scripts/fix-*.mjs
+scripts/check-*.js
+backup-files/

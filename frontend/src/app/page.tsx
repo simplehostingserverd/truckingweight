@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import Image from 'next/image';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -21,7 +22,8 @@ export default async function Home() {
   }
 
   return (
-    <Layout>
+    <ErrorBoundary>
+      <Layout>
       <main>
         {/* Hero Section */}
         <section className="relative bg-gradient-to-r from-primary-700 to-primary-500 text-white overflow-hidden">

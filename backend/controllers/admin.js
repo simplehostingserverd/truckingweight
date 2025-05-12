@@ -537,7 +537,7 @@ exports.getComplianceReports = async (req, res) => {
 // @access  Private/Admin
 exports.exportData = async (req, res) => {
   try {
-    const { type } = req.params;
+    // type parameter is not used in this implementation
     const { entity, format } = req.query;
 
     if (
