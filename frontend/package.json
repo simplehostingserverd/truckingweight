@@ -39,6 +39,7 @@
     "idb": "^8.0.0",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
+    "lucide-react": "^0.363.0",
     "mapbox-gl": "^3.12.0",
     "next": "^15.3.2",
     "next-themes": "^0.2.1",

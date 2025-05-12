@@ -3,40 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
-  Add as PlusIcon,
-  Refresh as ArrowPathIcon,
-  LocationOn as MapPinIcon,
-  LocalShipping as TruckIcon,
-  SignalCellular4Bar as SignalIcon
-} from '@mui/icons-material';
-import { CssVarsProvider } from '@mui/joy/styles';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardOverflow,
-  Typography,
-  Chip,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanel,
-  Input,
-  Select,
-  Option,
-  Table,
-  Sheet,
-  Divider,
-  Modal,
-  ModalDialog,
-  ModalClose,
-  Box,
-  Stack,
-  FormControl,
-  FormLabel,
-  Alert,
-  IconButton
-} from '@mui/joy';
+  PlusIcon,
+  ArrowPathIcon,
+  MapPinIcon,
+  TruckIcon,
+  SignalIcon
+} from '@heroicons/react/24/outline';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 import type { Database } from '@/types/supabase';
 
 type Connection = {
@@ -259,297 +241,276 @@ export default function TelematicsPage() {
   };
 
   return (
-    <CssVarsProvider>
-      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography level="h2">Telematics Integration</Typography>
-          <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button
-              variant="outlined"
-              onClick={handleRefreshData}
-              startDecorator={<ArrowPathIcon />}
-            >
-              Refresh Data
-            </Button>
-            <Button
-              onClick={() => setShowNewConnectionDialog(true)}
-              startDecorator={<PlusIcon />}
-            >
-              New Connection
-            </Button>
-          </Box>
-        </Box>
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Telematics Integration</h1>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={handleRefreshData}
+          >
+            <ArrowPathIcon className="h-4 w-4 mr-2" />
+            Refresh Data
+          </Button>
+          <Button
+            onClick={() => setShowNewConnectionDialog(true)}
+          >
+            <PlusIcon className="h-4 w-4 mr-2" />
+            New Connection
+          </Button>
+        </div>
+      </div>
 
       {error && (
-        <Alert
-          color="danger"
-          variant="soft"
-          sx={{ mb: 2 }}
-        >
-          {error}
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
 
-      <Tabs
-        value={activeTab}
-        onChange={(_, value) => setActiveTab(value as string)}
-        sx={{ width: '100%' }}
-      >
-        <TabList variant="outlined" sx={{ mb: 2 }}>
-          <Tab value="vehicles">Vehicles</Tab>
-          <Tab value="connections">Connections</Tab>
-          <Tab value="events">Events</Tab>
-        </TabList>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="vehicles">Vehicles</TabsTrigger>
+          <TabsTrigger value="connections">Connections</TabsTrigger>
+          <TabsTrigger value="events">Events</TabsTrigger>
+        </TabsList>
 
-        <TabPanel value="vehicles">
-          <Card variant="outlined">
-            <Box sx={{ p: 2 }}>
-              <Typography level="title-lg">Vehicle Telematics Data</Typography>
-              <Typography level="body-sm" color="neutral">Real-time data from your connected vehicles</Typography>
-            </Box>
+        <TabsContent value="vehicles">
+          <Card>
+            <CardHeader>
+              <CardTitle>Vehicle Telematics Data</CardTitle>
+              <CardDescription>Real-time data from your connected vehicles</CardDescription>
+            </CardHeader>
             <CardContent>
               {vehicleData.length === 0 ? (
-                <Box sx={{ textAlign: 'center', py: 4 }}>
-                  <TruckIcon sx={{ fontSize: 48, color: 'neutral.400', mb: 2 }} />
-                  <Typography color="neutral">No vehicle data available</Typography>
-                </Box>
+                <div className="text-center py-8">
+                  <TruckIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-500">No vehicle data available</p>
+                </div>
               ) : (
-                <Table
-                  borderAxis="bothBetween"
-                  stripe="odd"
-                  hoverRow
-                  sx={{
-                    '& thead th:nth-child(1)': { width: '20%' },
-                    '& thead th:nth-child(3)': { width: '25%' },
-                  }}
-                >
+                <table className="w-full">
                   <thead>
-                    <tr>
-                      <th>Vehicle</th>
-                      <th>Status</th>
-                      <th>Location</th>
-                      <th>Speed</th>
-                      <th>Fuel</th>
-                      <th>Last Update</th>
-                      <th>Actions</th>
+                    <tr className="border-b">
+                      <th className="text-left py-2">Vehicle</th>
+                      <th className="text-left py-2">Status</th>
+                      <th className="text-left py-2">Location</th>
+                      <th className="text-left py-2">Speed</th>
+                      <th className="text-left py-2">Fuel</th>
+                      <th className="text-left py-2">Last Update</th>
+                      <th className="text-left py-2">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {vehicleData.map(vehicle => (
-                      <tr key={vehicle.id}>
-                        <td>
-                          <Typography fontWeight="md">{vehicle.name}</Typography>
-                        </td>
-                        <td>
-                          <Chip
-                            color={vehicle.status === 'active' ? 'success' : 'danger'}
-                            variant="soft"
-                            size="sm"
-                          >
+                      <tr key={vehicle.id} className="border-b">
+                        <td className="py-2 font-medium">{vehicle.name}</td>
+                        <td className="py-2">
+                          <Badge variant={vehicle.status === 'active' ? 'success' : 'destructive'}>
                             {vehicle.engineStatus === 'running' ? 'Running' : 'Stopped'}
-                          </Chip>
+                          </Badge>
                         </td>
-                        <td>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <MapPinIcon fontSize="small" />
-                            <Typography level="body-sm">{vehicle.location.address}</Typography>
-                          </Box>
+                        <td className="py-2">
+                          <div className="flex items-center">
+                            <MapPinIcon className="h-4 w-4 mr-1 text-gray-500" />
+                            <span>{vehicle.location.address}</span>
+                          </div>
                         </td>
-                        <td>{vehicle.speed} mph</td>
-                        <td>{vehicle.fuelLevel}%</td>
-                        <td>
+                        <td className="py-2">{vehicle.speed} mph</td>
+                        <td className="py-2">{vehicle.fuelLevel}%</td>
+                        <td className="py-2">
                           {new Date(vehicle.lastUpdate).toLocaleTimeString()}
                         </td>
-                        <td>
-                          <Button variant="plain" size="sm">
+                        <td className="py-2">
+                          <Button variant="outline" size="sm">
                             Details
                           </Button>
                         </td>
                       </tr>
                     ))}
                   </tbody>
-                </Table>
+                </table>
               )}
             </CardContent>
           </Card>
-        </TabPanel>
+        </TabsContent>
 
-        <TabPanel value="connections">
+        <TabsContent value="connections">
           {isLoading ? (
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr', lg: '1fr 1fr 1fr' }, gap: 2 }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[1, 2, 3].map(i => (
-                <Card key={i} variant="outlined">
-                  <Box sx={{ p: 2 }}>
-                    <Box sx={{ height: 24, width: '75%', mb: 1, bgcolor: 'neutral.200', borderRadius: 1 }} />
-                    <Box sx={{ height: 16, width: '50%', bgcolor: 'neutral.200', borderRadius: 1 }} />
-                  </Box>
-                  <CardContent>
-                    <Stack spacing={2}>
-                      <Box sx={{ height: 16, width: '100%', bgcolor: 'neutral.200', borderRadius: 1 }} />
-                      <Box sx={{ height: 16, width: '100%', bgcolor: 'neutral.200', borderRadius: 1 }} />
-                      <Box sx={{ height: 16, width: '75%', bgcolor: 'neutral.200', borderRadius: 1 }} />
-                    </Stack>
-                  </CardContent>
+                <Card key={i}>
+                  <div className="animate-pulse">
+                    <CardHeader>
+                      <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2">
+                        <div className="h-4 bg-gray-200 rounded w-full"></div>
+                        <div className="h-4 bg-gray-200 rounded w-full"></div>
+                        <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                      </div>
+                    </CardContent>
+                  </div>
                 </Card>
               ))}
-            </Box>
+            </div>
           ) : connections.length === 0 ? (
-            <Card variant="outlined" sx={{ textAlign: 'center', py: 6 }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-                <SignalIcon sx={{ fontSize: 48, color: 'neutral.400' }} />
-                <Typography level="title-lg">No Telematics Connections</Typography>
-                <Typography level="body-sm" color="neutral" sx={{ maxWidth: 400, mx: 'auto' }}>
+            <Card className="text-center py-12">
+              <div className="flex flex-col items-center gap-4">
+                <SignalIcon className="h-12 w-12 text-gray-400" />
+                <CardTitle>No Telematics Connections</CardTitle>
+                <CardDescription className="max-w-md mx-auto">
                   Get started by creating a new connection to your telematics provider.
-                </Typography>
+                </CardDescription>
                 <Button
                   onClick={() => setShowNewConnectionDialog(true)}
-                  startDecorator={<PlusIcon />}
-                  sx={{ mt: 2 }}
+                  className="mt-2"
                 >
+                  <PlusIcon className="h-4 w-4 mr-2" />
                   New Connection
                 </Button>
-              </Box>
+              </div>
             </Card>
           ) : (
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr', lg: '1fr 1fr 1fr' }, gap: 2 }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {connections.map(connection => (
-                <Card key={connection.id} variant="outlined">
-                  <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <Box>
-                      <Typography level="title-md">{connection.name}</Typography>
-                      <Typography level="body-sm" color="neutral">
-                        {connection.provider === 'geotab' ? 'Geotab' :
-                         connection.provider === 'samsara' ? 'Samsara' :
-                         connection.provider === 'fleetcomplete' ? 'Fleet Complete' :
-                         connection.provider}
-                      </Typography>
-                    </Box>
-                    <Chip
-                      color={connection.status === 'active' ? 'success' : 'danger'}
-                      variant="soft"
-                      size="sm"
-                    >
-                      {connection.status === 'active' ? 'Active' : 'Inactive'}
-                    </Chip>
-                  </Box>
+                <Card key={connection.id}>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg">{connection.name}</CardTitle>
+                        <CardDescription>
+                          {connection.provider === 'geotab' ? 'Geotab' :
+                           connection.provider === 'samsara' ? 'Samsara' :
+                           connection.provider === 'fleetcomplete' ? 'Fleet Complete' :
+                           connection.provider}
+                        </CardDescription>
+                      </div>
+                      <Badge variant={connection.status === 'active' ? 'success' : 'destructive'}>
+                        {connection.status === 'active' ? 'Active' : 'Inactive'}
+                      </Badge>
+                    </div>
+                  </CardHeader>
                   <CardContent>
-                    <Stack spacing={2}>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography level="body-sm" color="neutral">Last Sync:</Typography>
-                        <Typography level="body-sm">
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-500">Last Sync:</span>
+                        <span className="text-sm">
                           {connection.last_sync ? new Date(connection.last_sync).toLocaleString() : 'Never'}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography level="body-sm" color="neutral">Created:</Typography>
-                        <Typography level="body-sm">
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-500">Created:</span>
+                        <span className="text-sm">
                           {new Date(connection.created_at).toLocaleDateString()}
-                        </Typography>
-                      </Box>
-                    </Stack>
+                        </span>
+                      </div>
+                    </div>
                   </CardContent>
-                  <CardOverflow sx={{ display: 'flex', justifyContent: 'space-between', p: 1.5, borderTop: '1px solid', borderColor: 'divider' }}>
-                    <Button variant="outlined" size="sm">
+                  <CardFooter className="flex justify-between border-t pt-4">
+                    <Button variant="outline" size="sm">
                       Configure
                     </Button>
-                    <Button size="sm" startDecorator={<ArrowPathIcon />}>
+                    <Button size="sm">
+                      <ArrowPathIcon className="h-4 w-4 mr-2" />
                       Sync Now
                     </Button>
-                  </CardOverflow>
+                  </CardFooter>
                 </Card>
               ))}
-            </Box>
+            </div>
           )}
-        </TabPanel>
+        </TabsContent>
 
-        <TabPanel value="events">
-          <Card variant="outlined">
-            <Box sx={{ p: 2 }}>
-              <Typography level="title-lg">Telematics Events</Typography>
-              <Typography level="body-sm" color="neutral">Recent events from your connected vehicles</Typography>
-            </Box>
+        <TabsContent value="events">
+          <Card>
+            <CardHeader>
+              <CardTitle>Telematics Events</CardTitle>
+              <CardDescription>Recent events from your connected vehicles</CardDescription>
+            </CardHeader>
             <CardContent>
-              <Box sx={{ textAlign: 'center', py: 4 }}>
-                <Typography color="neutral">No recent events</Typography>
-              </Box>
+              <div className="text-center py-8">
+                <p className="text-gray-500">No recent events</p>
+              </div>
             </CardContent>
           </Card>
-        </TabPanel>
+        </TabsContent>
       </Tabs>
 
       {/* New Connection Dialog */}
-      <Modal
-        open={showNewConnectionDialog}
-        onClose={() => setShowNewConnectionDialog(false)}
-      >
-        <ModalDialog
-          variant="outlined"
-          sx={{ maxWidth: 500 }}
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography level="title-lg">Create Telematics Connection</Typography>
-            <ModalClose />
-          </Box>
-          <Typography level="body-sm" color="neutral" sx={{ mb: 3 }}>
-            Connect your telematics provider to enable real-time vehicle data.
-          </Typography>
+      <Dialog open={showNewConnectionDialog} onOpenChange={setShowNewConnectionDialog}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Create Telematics Connection</DialogTitle>
+            <p className="text-sm text-gray-500">
+              Connect your telematics provider to enable real-time vehicle data.
+            </p>
+          </DialogHeader>
 
-          <Stack spacing={3}>
-            <FormControl>
-              <FormLabel>Connection Name</FormLabel>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="connection-name">Connection Name</Label>
               <Input
+                id="connection-name"
                 value={newConnection.name}
                 onChange={e => setNewConnection({ ...newConnection, name: e.target.value })}
                 placeholder="e.g., Fleet Geotab"
               />
-            </FormControl>
+            </div>
 
-            <FormControl>
-              <FormLabel>Telematics Provider</FormLabel>
+            <div className="space-y-2">
+              <Label htmlFor="provider">Telematics Provider</Label>
               <Select
                 value={newConnection.provider}
-                onChange={(_, value) => setNewConnection({
+                onValueChange={(value) => setNewConnection({
                   ...newConnection,
-                  provider: value as string
+                  provider: value
                 })}
-                placeholder="Select Telematics Provider"
               >
-                <Option value="geotab">Geotab</Option>
-                <Option value="samsara">Samsara</Option>
-                <Option value="fleetcomplete">Fleet Complete</Option>
-                <Option value="omnitracs">Omnitracs</Option>
+                <SelectTrigger id="provider">
+                  <SelectValue placeholder="Select Telematics Provider" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="geotab">Geotab</SelectItem>
+                  <SelectItem value="samsara">Samsara</SelectItem>
+                  <SelectItem value="fleetcomplete">Fleet Complete</SelectItem>
+                  <SelectItem value="omnitracs">Omnitracs</SelectItem>
+                </SelectContent>
               </Select>
-            </FormControl>
+            </div>
 
-            <Divider />
+            <Separator />
 
             {newConnection.provider === 'geotab' && (
-              <Stack spacing={2}>
-                <FormControl>
-                  <FormLabel>API Key</FormLabel>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="apiKey">API Key</Label>
                   <Input
+                    id="apiKey"
                     value={newConnection.config.apiKey}
                     onChange={e => setNewConnection({
                       ...newConnection,
                       config: { ...newConnection.config, apiKey: e.target.value }
                     })}
                   />
-                </FormControl>
+                </div>
 
-                <FormControl>
-                  <FormLabel>Username</FormLabel>
+                <div className="space-y-2">
+                  <Label htmlFor="username">Username</Label>
                   <Input
+                    id="username"
                     value={newConnection.config.username}
                     onChange={e => setNewConnection({
                       ...newConnection,
                       config: { ...newConnection.config, username: e.target.value }
                     })}
                   />
-                </FormControl>
+                </div>
 
-                <FormControl>
-                  <FormLabel>Password</FormLabel>
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
                   <Input
+                    id="password"
                     type="password"
                     value={newConnection.config.password}
                     onChange={e => setNewConnection({
@@ -557,22 +518,24 @@ export default function TelematicsPage() {
                       config: { ...newConnection.config, password: e.target.value }
                     })}
                   />
-                </FormControl>
+                </div>
 
-                <FormControl>
-                  <FormLabel>Database</FormLabel>
+                <div className="space-y-2">
+                  <Label htmlFor="database">Database</Label>
                   <Input
+                    id="database"
                     value={newConnection.config.database}
                     onChange={e => setNewConnection({
                       ...newConnection,
                       config: { ...newConnection.config, database: e.target.value }
                     })}
                   />
-                </FormControl>
+                </div>
 
-                <FormControl>
-                  <FormLabel>Server</FormLabel>
+                <div className="space-y-2">
+                  <Label htmlFor="server">Server</Label>
                   <Input
+                    id="server"
                     value={newConnection.config.server}
                     onChange={e => setNewConnection({
                       ...newConnection,
@@ -580,28 +543,27 @@ export default function TelematicsPage() {
                     })}
                     placeholder="my.geotabserver.com"
                   />
-                </FormControl>
-              </Stack>
+                </div>
+              </div>
             )}
+          </div>
 
-            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', mt: 2 }}>
-              <Button
-                variant="outlined"
-                color="neutral"
-                onClick={() => setShowNewConnectionDialog(false)}
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={handleCreateConnection}
-                disabled={isLoading}
-              >
-                {isLoading ? 'Creating...' : 'Create Connection'}
-              </Button>
-            </Box>
-          </Stack>
-        </ModalDialog>
-      </Modal>
-    </CssVarsProvider>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowNewConnectionDialog(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleCreateConnection}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Creating...' : 'Create Connection'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }

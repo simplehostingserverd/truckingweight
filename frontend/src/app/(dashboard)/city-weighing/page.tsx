@@ -3,46 +3,26 @@
 import React, { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
-  Refresh as ArrowPathIcon,
-  Description as DocumentTextIcon,
-  Scale as ScaleIcon,
-  LocalShipping as TruckIcon,
-  AttachMoney as CurrencyDollarIcon,
-  Warning as ExclamationTriangleIcon,
-  FileCopy as DocumentDuplicateIcon,
-  LocationOn as MapPinIcon,
-  AccessTime as ClockIcon
-} from '@mui/icons-material';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardOverflow,
-  Typography,
-  Chip,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanel,
-  Input,
-  Select,
-  Option,
-  Table,
-  Sheet,
-  Divider,
-  Modal,
-  ModalDialog,
-  ModalClose,
-  Box,
-  Stack,
-  FormControl,
-  FormLabel,
-  Alert,
-  IconButton,
-  Grid,
-  LinearProgress,
-  CircularProgress
-} from '@mui/joy';
+  ArrowPathIcon,
+  DocumentTextIcon,
+  ScaleIcon,
+  TruckIcon,
+  CurrencyDollarIcon,
+  ExclamationTriangleIcon,
+  DocumentDuplicateIcon,
+  MapPinIcon,
+  ClockIcon,
+  QrCodeIcon
+} from '@heroicons/react/24/outline';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { Database } from '@/types/supabase';
 
 export default function CityWeighingPage() {
@@ -144,621 +124,218 @@ export default function CityWeighingPage() {
   };
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Box>
-          <Typography level="h2">
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h1 className="text-3xl font-bold">
             {cityData.name} Municipal Weighing System
-          </Typography>
-          <Typography level="body-sm" color="neutral">
+          </h1>
+          <p className="text-gray-500">
             Monitoring and managing commercial vehicle weights across {cityData.name}, {cityData.state}
-          </Typography>
-        </Box>
-        <Box sx={{ display: 'flex', gap: 1 }}>
+          </p>
+        </div>
+        <div className="flex gap-2">
           <Button
-            variant="outlined"
+            variant="outline"
             onClick={() => setIsLoading(true)}
-            startDecorator={<ArrowPathIcon />}
           >
+            <ArrowPathIcon className="h-4 w-4 mr-2" />
             Refresh Data
           </Button>
           <Button
             onClick={() => setShowPermitDialog(true)}
-            startDecorator={<DocumentTextIcon />}
           >
+            <DocumentTextIcon className="h-4 w-4 mr-2" />
             Issue Permit
           </Button>
-        </Box>
-      </Box>
+        </div>
+      </div>
 
       {error && (
-        <Alert
-          color="danger"
-          variant="soft"
-          sx={{ mb: 2 }}
-        >
-          {error}
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
 
-      <Tabs
-        value={activeTab}
-        onChange={(_, value) => setActiveTab(value as string)}
-        sx={{ width: '100%' }}
-      >
-        <TabList variant="outlined" sx={{ mb: 2 }}>
-          <Tab value="dashboard">Dashboard</Tab>
-          <Tab value="permits">Permit Management</Tab>
-          <Tab value="monitoring">Real-time Monitoring</Tab>
-          <Tab value="reports">Reports</Tab>
-        </TabList>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+          <TabsTrigger value="permits">Permit Management</TabsTrigger>
+          <TabsTrigger value="monitoring">Real-time Monitoring</TabsTrigger>
+          <TabsTrigger value="reports">Reports</TabsTrigger>
+        </TabsList>
 
-        <TabPanel value="dashboard">
+        <TabsContent value="dashboard">
           {isLoading ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 6 }}>
-              <CircularProgress />
-            </Box>
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
           ) : (
-            <Stack spacing={3}>
-              <Grid container spacing={2}>
-                <Grid xs={12} md={6} lg={3}>
-                  <Card variant="outlined">
-                    <Box sx={{ p: 2 }}>
-                      <Typography level="body-xs" color="neutral">
-                        Total Weighings
-                      </Typography>
-                    </Box>
-                    <CardContent>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <ScaleIcon sx={{ fontSize: 32, color: 'primary.500', mr: 1.5 }} />
-                        <Box>
-                          <Typography level="h3">{cityData.totalWeighings.toLocaleString()}</Typography>
-                          <Typography level="body-xs" color="neutral">Last 30 days</Typography>
-                        </Box>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardDescription>Total Weighings</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center">
+                      <ScaleIcon className="h-8 w-8 text-primary mr-3" />
+                      <div>
+                        <div className="text-2xl font-bold">{cityData.totalWeighings.toLocaleString()}</div>
+                        <div className="text-xs text-gray-500">Last 30 days</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-                <Grid xs={12} md={6} lg={3}>
-                  <Card variant="outlined">
-                    <Box sx={{ p: 2 }}>
-                      <Typography level="body-xs" color="neutral">
-                        Revenue Collected
-                      </Typography>
-                    </Box>
-                    <CardContent>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <CurrencyDollarIcon sx={{ fontSize: 32, color: 'success.500', mr: 1.5 }} />
-                        <Box>
-                          <Typography level="h3">${cityData.revenueCollected.toLocaleString()}</Typography>
-                          <Typography level="body-xs" color="neutral">Last 30 days</Typography>
-                        </Box>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardDescription>Revenue Collected</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center">
+                      <CurrencyDollarIcon className="h-8 w-8 text-green-500 mr-3" />
+                      <div>
+                        <div className="text-2xl font-bold">${cityData.revenueCollected.toLocaleString()}</div>
+                        <div className="text-xs text-gray-500">Last 30 days</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-                <Grid xs={12} md={6} lg={3}>
-                  <Card variant="outlined">
-                    <Box sx={{ p: 2 }}>
-                      <Typography level="body-xs" color="neutral">
-                        Compliance Rate
-                      </Typography>
-                    </Box>
-                    <CardContent>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <ExclamationTriangleIcon sx={{ fontSize: 32, color: 'warning.500', mr: 1.5 }} />
-                        <Box>
-                          <Typography level="h3">{cityData.complianceRate}%</Typography>
-                          <LinearProgress
-                            determinate
-                            value={cityData.complianceRate}
-                            sx={{ height: 8, width: 100, mt: 1, borderRadius: 4 }}
-                          />
-                        </Box>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardDescription>Compliance Rate</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center">
+                      <ExclamationTriangleIcon className="h-8 w-8 text-amber-500 mr-3" />
+                      <div>
+                        <div className="text-2xl font-bold">{cityData.complianceRate}%</div>
+                        <div className="w-24 h-2 bg-gray-200 rounded-full mt-1">
+                          <div
+                            className="h-2 bg-green-500 rounded-full"
+                            style={{ width: `${cityData.complianceRate}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-                <Grid xs={12} md={6} lg={3}>
-                  <Card variant="outlined">
-                    <Box sx={{ p: 2 }}>
-                      <Typography level="body-xs" color="neutral">
-                        Active Permits
-                      </Typography>
-                    </Box>
-                    <CardContent>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <DocumentDuplicateIcon sx={{ fontSize: 32, color: 'primary.500', mr: 1.5 }} />
-                        <Box>
-                          <Typography level="h3">{cityData.activePermits}</Typography>
-                          <Typography level="body-xs" color="neutral">{cityData.pendingPermits} pending approval</Typography>
-                        </Box>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardDescription>Active Permits</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center">
+                      <DocumentDuplicateIcon className="h-8 w-8 text-blue-500 mr-3" />
+                      <div>
+                        <div className="text-2xl font-bold">{cityData.activePermits}</div>
+                        <div className="text-xs text-gray-500">{cityData.pendingPermits} pending approval</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
 
-              <Grid container spacing={2}>
-                <Grid xs={12} lg={6}>
-                  <Card variant="outlined">
-                    <Box sx={{ p: 2 }}>
-                      <Typography level="title-lg">Recent Weighings</Typography>
-                      <Typography level="body-sm" color="neutral">Latest vehicle weighings across city stations</Typography>
-                    </Box>
-                    <CardContent>
-                      <Table
-                        borderAxis="bothBetween"
-                        stripe="odd"
-                        hoverRow
-                      >
-                        <thead>
-                          <tr>
-                            <th>Time</th>
-                            <th>Vehicle ID</th>
-                            <th>Weight</th>
-                            <th>Location</th>
-                            <th>Status</th>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Recent Weighings</CardTitle>
+                    <CardDescription>Latest vehicle weighings across city stations</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left py-2">Time</th>
+                          <th className="text-left py-2">Vehicle ID</th>
+                          <th className="text-left py-2">Weight</th>
+                          <th className="text-left py-2">Location</th>
+                          <th className="text-left py-2">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {recentWeighings.map(weighing => (
+                          <tr key={weighing.id} className="border-b">
+                            <td className="py-2">
+                              {new Date(weighing.timestamp).toLocaleTimeString()}
+                            </td>
+                            <td className="py-2">{weighing.vehicleId}</td>
+                            <td className="py-2">{weighing.weight.toLocaleString()} lbs</td>
+                            <td className="py-2">{weighing.location}</td>
+                            <td className="py-2">
+                              <Badge variant={weighing.status === 'compliant' ? 'success' : 'destructive'}>
+                                {weighing.status === 'compliant' ? 'Compliant' : 'Violation'}
+                              </Badge>
+                            </td>
                           </tr>
-                        </thead>
-                        <tbody>
-                          {recentWeighings.map(weighing => (
-                            <tr key={weighing.id}>
-                              <td>
-                                {new Date(weighing.timestamp).toLocaleTimeString()}
-                              </td>
-                              <td>{weighing.vehicleId}</td>
-                              <td>{weighing.weight.toLocaleString()} lbs</td>
-                              <td>{weighing.location}</td>
-                              <td>
-                                <Chip
-                                  color={weighing.status === 'compliant' ? 'success' : 'danger'}
-                                  variant="soft"
-                                  size="sm"
-                                >
-                                  {weighing.status === 'compliant' ? 'Compliant' : 'Violation'}
-                                </Chip>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
-                    </CardContent>
-                    <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider', p: 1.5, display: 'flex', justifyContent: 'flex-end' }}>
-                      <Button variant="outlined" size="sm">
-                        View All
-                      </Button>
-                    </CardOverflow>
-                  </Card>
-                </Grid>
-
-                <Grid xs={12} lg={6}>
-                  <Card variant="outlined">
-                    <Box sx={{ p: 2 }}>
-                      <Typography level="title-lg">Scale Status</Typography>
-                      <Typography level="body-sm" color="neutral">Current status of city weighing stations</Typography>
-                    </Box>
-                    <CardContent>
-                      <Stack spacing={2}>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Box sx={{ width: 12, height: 12, borderRadius: '50%', bgcolor: 'success.500', mr: 1 }} />
-                            <Typography>Active Scales</Typography>
-                          </Box>
-                          <Typography fontWeight="md">{cityData.activeScales}</Typography>
-                        </Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Box sx={{ width: 12, height: 12, borderRadius: '50%', bgcolor: 'danger.500', mr: 1 }} />
-                            <Typography>Inactive Scales</Typography>
-                          </Box>
-                          <Typography fontWeight="md">{cityData.totalScales - cityData.activeScales}</Typography>
-                        </Box>
-                        <Divider />
-                        <Box sx={{ pt: 1 }}>
-                          <Typography level="body-sm" fontWeight="md" sx={{ mb: 1 }}>Scale Utilization</Typography>
-                          <LinearProgress
-                            determinate
-                            value={83}
-                            sx={{ height: 8, borderRadius: 4 }}
-                          />
-                          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
-                            <Typography level="body-xs" color="neutral">0%</Typography>
-                            <Typography level="body-xs" color="neutral">83%</Typography>
-                            <Typography level="body-xs" color="neutral">100%</Typography>
-                          </Box>
-                        </Box>
-                      </Stack>
-                    </CardContent>
-                    <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider', p: 1.5, display: 'flex', justifyContent: 'flex-end' }}>
-                      <Button variant="outlined" size="sm">
-                        View Details
-                      </Button>
-                    </CardOverflow>
-                  </Card>
-                </Grid>
-              </Grid>
+                        ))}
+                      </tbody>
+                    </table>
+                  </CardContent>
+                  <CardFooter className="flex justify-end">
+                    <Button variant="outline" size="sm">
+                      View All
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
             </div>
           )}
-        </TabsContent>
-
-        <TabsContent value="permits">
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <div>
-                  <CardTitle>Permit Management</CardTitle>
-                  <CardDescription>Manage and track commercial vehicle permits</CardDescription>
-                </div>
-                <Button onClick={() => setShowPermitDialog(true)}>
-                  <DocumentTextIcon className="h-5 w-5 mr-2" />
-                  Issue New Permit
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <Tabs defaultValue="active">
-                <TabsList className="mb-4">
-                  <TabsTrigger value="active">Active Permits</TabsTrigger>
-                  <TabsTrigger value="pending">Pending Approval</TabsTrigger>
-                  <TabsTrigger value="expired">Expired</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="active">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Permit ID</TableHead>
-                        <TableHead>Company</TableHead>
-                        <TableHead>Vehicle ID</TableHead>
-                        <TableHead>Type</TableHead>
-                        <TableHead>Issued</TableHead>
-                        <TableHead>Expires</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {activePermits.map(permit => (
-                        <TableRow key={permit.id}>
-                          <TableCell className="font-medium">{permit.id}</TableCell>
-                          <TableCell>{permit.company}</TableCell>
-                          <TableCell>{permit.vehicleId}</TableCell>
-                          <TableCell>{permit.type}</TableCell>
-                          <TableCell>{new Date(permit.issued).toLocaleDateString()}</TableCell>
-                          <TableCell>{new Date(permit.expires).toLocaleDateString()}</TableCell>
-                          <TableCell>
-                            <Badge
-                              variant={
-                                permit.status === 'active'
-                                  ? 'success'
-                                  : permit.status === 'expiring'
-                                  ? 'warning'
-                                  : 'default'
-                              }
-                            >
-                              {permit.status === 'active' ? 'Active' :
-                               permit.status === 'expiring' ? 'Expiring Soon' : permit.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Button variant="ghost" size="sm">
-                              View
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TabsContent>
-
-                <TabsContent value="pending">
-                  <div className="text-center py-8">
-                    <p className="text-gray-500 dark:text-gray-400">No pending permits</p>
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="expired">
-                  <div className="text-center py-8">
-                    <p className="text-gray-500 dark:text-gray-400">No expired permits in the last 30 days</p>
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="monitoring">
-          <Card>
-            <CardHeader>
-              <CardTitle>Real-time Scale Monitoring</CardTitle>
-              <CardDescription>Live data from city weighing stations</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between items-center">
-                      <CardTitle className="text-base">North Austin Station</CardTitle>
-                      <Badge variant="success">Active</Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <TruckIcon className="h-5 w-5 text-gray-500 mr-2" />
-                          <span className="text-sm">Current Vehicle</span>
-                        </div>
-                        <span className="font-medium">TX-12345</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <ScaleIcon className="h-5 w-5 text-gray-500 mr-2" />
-                          <span className="text-sm">Current Weight</span>
-                        </div>
-                        <span className="font-medium">78,500 lbs</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <ClockIcon className="h-5 w-5 text-gray-500 mr-2" />
-                          <span className="text-sm">Last Activity</span>
-                        </div>
-                        <span className="font-medium">2 mins ago</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between items-center">
-                      <CardTitle className="text-base">South Austin Station</CardTitle>
-                      <Badge variant="success">Active</Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <TruckIcon className="h-5 w-5 text-gray-500 mr-2" />
-                          <span className="text-sm">Current Vehicle</span>
-                        </div>
-                        <span className="font-medium">None</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <ScaleIcon className="h-5 w-5 text-gray-500 mr-2" />
-                          <span className="text-sm">Current Weight</span>
-                        </div>
-                        <span className="font-medium">0 lbs</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <ClockIcon className="h-5 w-5 text-gray-500 mr-2" />
-                          <span className="text-sm">Last Activity</span>
-                        </div>
-                        <span className="font-medium">15 mins ago</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between items-center">
-                      <CardTitle className="text-base">East Austin Station</CardTitle>
-                      <Badge variant="destructive">Inactive</Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <TruckIcon className="h-5 w-5 text-gray-500 mr-2" />
-                          <span className="text-sm">Current Vehicle</span>
-                        </div>
-                        <span className="font-medium">None</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <ScaleIcon className="h-5 w-5 text-gray-500 mr-2" />
-                          <span className="text-sm">Current Weight</span>
-                        </div>
-                        <span className="font-medium">0 lbs</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <ClockIcon className="h-5 w-5 text-gray-500 mr-2" />
-                          <span className="text-sm">Last Activity</span>
-                        </div>
-                        <span className="font-medium">2 hours ago</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="reports">
-          <Card>
-            <CardHeader>
-              <CardTitle>Reports</CardTitle>
-              <CardDescription>Generate and view reports for municipal weighing operations</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <Card className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
-                  <CardHeader>
-                    <CardTitle className="text-base">Monthly Compliance Report</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-500">
-                      Summary of compliance rates, violations, and enforcement actions
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" size="sm" className="w-full">
-                      Generate Report
-                    </Button>
-                  </CardFooter>
-                </Card>
-
-                <Card className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
-                  <CardHeader>
-                    <CardTitle className="text-base">Revenue Analysis</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-500">
-                      Detailed breakdown of permit fees, fines, and other revenue sources
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" size="sm" className="w-full">
-                      Generate Report
-                    </Button>
-                  </CardFooter>
-                </Card>
-
-                <Card className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
-                  <CardHeader>
-                    <CardTitle className="text-base">Scale Utilization</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-500">
-                      Analysis of scale usage, peak times, and operational efficiency
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" size="sm" className="w-full">
-                      Generate Report
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
         </TabsContent>
       </Tabs>
 
       {/* Permit Dialog */}
-      <Modal
-        open={showPermitDialog}
-        onClose={() => setShowPermitDialog(false)}
-      >
-        <ModalDialog
-          variant="outlined"
-          sx={{ maxWidth: 600 }}
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography level="title-lg">Issue New Permit</Typography>
-            <ModalClose />
-          </Box>
-          <Typography level="body-sm" color="neutral" sx={{ mb: 3 }}>
-            Create a new overweight or oversize permit for a commercial vehicle.
-          </Typography>
-
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid xs={12} sm={6}>
-              <FormControl>
-                <FormLabel>Permit Number</FormLabel>
+      <Dialog open={showPermitDialog} onOpenChange={setShowPermitDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Issue New Permit</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="permitNumber">Permit Number</Label>
                 <Input
+                  id="permitNumber"
                   value={permitDetails.permitNumber}
                   onChange={e => setPermitDetails({ ...permitDetails, permitNumber: e.target.value })}
                   placeholder="Auto-generated"
                   disabled
                 />
-              </FormControl>
-            </Grid>
-            <Grid xs={12} sm={6}>
-              <FormControl>
-                <FormLabel>Permit Type</FormLabel>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="permitType">Permit Type</Label>
                 <Select
                   value={permitDetails.permitType}
-                  onChange={(_, value) => setPermitDetails({
+                  onValueChange={(value) => setPermitDetails({
                     ...permitDetails,
-                    permitType: value as string
+                    permitType: value
                   })}
-                  placeholder="Select Permit Type"
                 >
-                  <Option value="overweight">Overweight</Option>
-                  <Option value="oversize">Oversize</Option>
-                  <Option value="both">Overweight & Oversize</Option>
+                  <SelectTrigger id="permitType">
+                    <SelectValue placeholder="Select Permit Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="overweight">Overweight</SelectItem>
+                    <SelectItem value="oversize">Oversize</SelectItem>
+                    <SelectItem value="both">Overweight & Oversize</SelectItem>
+                  </SelectContent>
                 </Select>
-              </FormControl>
-            </Grid>
-            <Grid xs={12}>
-              <FormControl>
-                <FormLabel>Company Name</FormLabel>
-                <Input
-                  value={permitDetails.companyName}
-                  onChange={e => setPermitDetails({ ...permitDetails, companyName: e.target.value })}
-                  placeholder="Enter company name"
-                />
-              </FormControl>
-            </Grid>
-            <Grid xs={12}>
-              <FormControl>
-                <FormLabel>Vehicle Information</FormLabel>
-                <Input
-                  value={permitDetails.vehicleInfo}
-                  onChange={e => setPermitDetails({ ...permitDetails, vehicleInfo: e.target.value })}
-                  placeholder="License plate, VIN, or vehicle ID"
-                />
-              </FormControl>
-            </Grid>
-            <Grid xs={12} sm={6}>
-              <FormControl>
-                <FormLabel>Start Date</FormLabel>
-                <Input
-                  type="date"
-                  value={permitDetails.startDate}
-                  onChange={e => setPermitDetails({ ...permitDetails, startDate: e.target.value })}
-                />
-              </FormControl>
-            </Grid>
-            <Grid xs={12} sm={6}>
-              <FormControl>
-                <FormLabel>End Date</FormLabel>
-                <Input
-                  type="date"
-                  value={permitDetails.endDate}
-                  onChange={e => setPermitDetails({ ...permitDetails, endDate: e.target.value })}
-                />
-              </FormControl>
-            </Grid>
-            <Grid xs={12} sm={6}>
-              <FormControl>
-                <FormLabel>Permit Fee ($)</FormLabel>
-                <Input
-                  type="number"
-                  value={permitDetails.fee}
-                  onChange={e => setPermitDetails({ ...permitDetails, fee: e.target.value })}
-                  placeholder="0.00"
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-
-          <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
-            <Button
-              variant="outlined"
-              color="neutral"
-              onClick={() => setShowPermitDialog(false)}
-            >
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowPermitDialog(false)}>
               Cancel
             </Button>
             <Button onClick={handleIssuePermit}>
               Issue Permit
             </Button>
-          </Box>
-        </ModalDialog>
-      </Modal>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
