@@ -6,8 +6,10 @@
   "scripts": {
     "start": "node server-fastify.js",
     "start:express": "node server.js",
+    "predev": "node scripts/check-redis.js",
     "dev": "nodemon server-fastify.js",
     "dev:express": "nodemon server.js",
+    "check-redis": "node scripts/check-redis.js",
     "test": "jest"
   },
   "dependencies": {

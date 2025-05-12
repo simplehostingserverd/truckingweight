@@ -52,6 +52,14 @@ class MockRedisClient {
 class RedisService {
   constructor() {
     try {
+      // Check if we should use mock Redis (for local development without Redis)
+      if (process.env.USE_MOCK_REDIS === 'true') {
+        console.log('Using mock Redis client (USE_MOCK_REDIS=true)');
+        this.client = new MockRedisClient();
+        this.isConnected = true;
+        return;
+      }
+
       const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
       const redisPassword = process.env.REDIS_PASSWORD || '';
 
@@ -59,15 +67,25 @@ class RedisService {
       const redisOptions = {
         maxRetriesPerRequest: 3,
         retryStrategy: times => {
+          // After 5 retries, give up and use mock Redis
+          if (times >= 5) {
+            console.log('Max Redis retries reached, falling back to mock Redis client');
+            this.client = new MockRedisClient();
+            this.isConnected = true;
+            return null; // Stop retrying
+          }
           const delay = Math.min(times * 50, 2000);
           return delay;
         },
+        connectTimeout: 5000, // 5 seconds
       };
 
       // Add password if provided
       if (redisPassword) {
         redisOptions.password = redisPassword;
       }
+
+      console.log(`Attempting to connect to Redis at ${redisUrl.split('@').pop()}`);
 
       // Create Redis client
       this.client = new Redis(redisUrl, redisOptions);
@@ -83,9 +101,15 @@ class RedisService {
 
         // If we can't connect to Redis, fall back to mock implementation
         if (!this.isConnected && !(this.client instanceof MockRedisClient)) {
-          console.log('Falling back to mock Redis client');
+          console.log('Falling back to mock Redis client due to connection error');
           this.client = new MockRedisClient();
           this.isConnected = true;
+
+          // Log helpful information for debugging
+          console.log('Redis connection failed. If running locally without Redis:');
+          console.log('1. Set USE_MOCK_REDIS=true in your environment');
+          console.log('2. Or install Redis locally: sudo apt install redis-server');
+          console.log('3. Or start Redis in Docker: docker run -p 6379:6379 redis:alpine');
         }
       });
 
@@ -99,8 +123,15 @@ class RedisService {
       });
     } catch (err) {
       console.error('Error initializing Redis client:', err);
+      console.log('Falling back to mock Redis client due to initialization error');
       this.client = new MockRedisClient();
       this.isConnected = true;
+
+      // Log helpful information for debugging
+      console.log('Redis initialization failed. If running locally without Redis:');
+      console.log('1. Set USE_MOCK_REDIS=true in your environment');
+      console.log('2. Or install Redis locally: sudo apt install redis-server');
+      console.log('3. Or start Redis in Docker: docker run -p 6379:6379 redis:alpine');
     }
   }
 
