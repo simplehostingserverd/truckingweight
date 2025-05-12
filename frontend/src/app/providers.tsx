@@ -60,7 +60,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <SupabaseAuthProvider>
       <MUIThemeProvider theme={theme}>
         <CssBaseline />
-        <NextThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <NextThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
           <ToastContainer
             position="top-right"
@@ -72,7 +72,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            theme="light"
+            theme="dark"
           />
           {/* Only render offline banner after client-side hydration */}
           {typeof isOnline === 'boolean' && !isOnline && (
