@@ -4,12 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/useToast';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/Badge';
 import { Loader2, WifiIcon, BluetoothIcon, UsbIcon, EthernetIcon, ServerIcon } from 'lucide-react';
 import { useSupabase } from '@/hooks/useSupabase';
 
@@ -53,24 +53,24 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
       setIsLoading(true);
       try {
         const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-        
+
         if (sessionError) {
           throw sessionError;
         }
-        
+
         const response = await fetch('/api/scales/hardware-options', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${sessionData?.session?.access_token}`
           }
         });
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch hardware options');
         }
-        
+
         const data = await response.json();
-        
+
         if (data.success && data.options) {
           setHardwareOptions(data.options);
         } else {
@@ -95,7 +95,7 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
   const handleHardwareChange = (value: string) => {
     setSelectedHardware(value);
     setConnectionType('');
-    
+
     // Reset config
     setConfig({
       ipAddress: '',
@@ -120,20 +120,20 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
       const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-      
+
       if (sessionError) {
         throw sessionError;
       }
-      
+
       // Prepare configuration based on connection type
       const hardwareConfig = {
         connectionType,
         ...config,
       };
-      
+
       const response = await fetch(`/api/scales/${scaleId}/configure-hardware`, {
         method: 'POST',
         headers: {
@@ -145,9 +145,9 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
           config: hardwareConfig
         })
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         toast({
           title: 'Success',
@@ -296,8 +296,8 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
                             </div>
                             <div className="space-y-2">
                               <Label htmlFor="baudRate">Baud Rate</Label>
-                              <Select 
-                                value={config.baudRate} 
+                              <Select
+                                value={config.baudRate}
                                 onValueChange={(value) => setConfig(prev => ({ ...prev, baudRate: value }))}
                               >
                                 <SelectTrigger id="baudRate">
@@ -316,8 +316,8 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
                         )}
                         <div className="space-y-2">
                           <Label htmlFor="sensorType">Sensor Type</Label>
-                          <Select 
-                            value={config.sensorType} 
+                          <Select
+                            value={config.sensorType}
                             onValueChange={(value) => setConfig(prev => ({ ...prev, sensorType: value }))}
                           >
                             <SelectTrigger id="sensorType">
@@ -352,9 +352,9 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
                             <AccordionContent>
                               <p className="text-sm">
                                 For detailed setup instructions, please visit:
-                                <a 
-                                  href={selectedOption.setupInstructions} 
-                                  target="_blank" 
+                                <a
+                                  href={selectedOption.setupInstructions}
+                                  target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-primary ml-1 underline"
                                 >

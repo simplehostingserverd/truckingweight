@@ -18,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/Badge';
 
 interface CityDashboardHeaderProps {
   user: {
@@ -57,24 +57,24 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
       read: true,
     },
   ]);
-  
+
   const router = useRouter();
-  
+
   const handleLogout = () => {
     // Clear local storage
     localStorage.removeItem('cityToken');
     localStorage.removeItem('cityUser');
-    
+
     // Redirect to login page
     router.push('/city/login');
   };
-  
+
   const markAllAsRead = () => {
     setNotifications(notifications.map(notification => ({ ...notification, read: true })));
   };
-  
+
   const unreadCount = notifications.filter(notification => !notification.read).length;
-  
+
   return (
     <header className="bg-gray-800 border-b border-gray-700 py-3 px-4 md:px-6">
       <div className="flex items-center justify-between">
@@ -86,7 +86,7 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
             {user?.role === 'admin' ? 'Administrator' : user?.role === 'operator' ? 'Operator' : user?.role === 'inspector' ? 'Inspector' : 'Viewer'}
           </Badge>
         </div>
-        
+
         <div className="flex items-center space-x-4">
           {/* Notifications */}
           <DropdownMenu>
@@ -148,14 +148,14 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          
+
           {/* Settings */}
           <Link href="/city/settings">
             <Button variant="ghost" size="icon">
               <Cog6ToothIcon className="h-6 w-6 text-gray-300" />
             </Button>
           </Link>
-          
+
           {/* User menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -1,5 +1,7 @@
 'use client';
 
+import ErrorBoundary from '@/components/ErrorBoundary';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -77,7 +79,8 @@ export default function CityLogin() {
   };
 
   return (
-    <CssVarsProvider defaultMode="dark" theme={cityTheme}>
+    <ErrorBoundary>
+      <CssVarsProvider defaultMode="dark" theme={cityTheme}>
       <Box
         sx={{
           display: 'flex',
@@ -301,5 +304,7 @@ export default function CityLogin() {
         </Box>
       </Box>
     </CssVarsProvider>
+  
+    </ErrorBoundary>
   );
 }

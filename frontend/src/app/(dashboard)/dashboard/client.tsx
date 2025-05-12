@@ -1,5 +1,7 @@
 'use client';
 
+import ErrorBoundary from '@/components/ErrorBoundary';
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { ScaleIcon } from '@heroicons/react/24/outline';
@@ -24,7 +26,8 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <ErrorBoundary>
+      <div className="container mx-auto px-4 py-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white">Dashboard</h1>
@@ -137,5 +140,7 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
         </div>
       </div>
     </div>
+  
+    </ErrorBoundary>
   );
 }
