@@ -11,7 +11,8 @@ import { cookies } from 'next/headers';
 export async function GET(request: NextRequest, { params }: { params: { route: string[] } }) {
   // In Next.js 15.3.2, we need to handle params differently to avoid the
   // "params should be awaited" error
-  const routeParams = Array.isArray(params.route) ? [...params.route] : [];
+  const paramsValue = await params;
+  const routeParams = Array.isArray(paramsValue.route) ? [...paramsValue.route] : [];
   const route = routeParams.join('/');
 
   // Extract query parameters safely using our utility function

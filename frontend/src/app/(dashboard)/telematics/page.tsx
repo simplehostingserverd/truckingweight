@@ -9,6 +9,7 @@ import {
   LocalShipping as TruckIcon,
   SignalCellular4Bar as SignalIcon
 } from '@mui/icons-material';
+import { CssVarsProvider } from '@mui/joy/styles';
 import {
   Button,
   Card,
@@ -258,25 +259,26 @@ export default function TelematicsPage() {
   };
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography level="h2">Telematics Integration</Typography>
-        <Box sx={{ display: 'flex', gap: 1 }}>
-          <Button
-            variant="outlined"
-            onClick={handleRefreshData}
-            startDecorator={<ArrowPathIcon />}
-          >
-            Refresh Data
-          </Button>
-          <Button
-            onClick={() => setShowNewConnectionDialog(true)}
-            startDecorator={<PlusIcon />}
-          >
-            New Connection
-          </Button>
+    <CssVarsProvider>
+      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <Typography level="h2">Telematics Integration</Typography>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button
+              variant="outlined"
+              onClick={handleRefreshData}
+              startDecorator={<ArrowPathIcon />}
+            >
+              Refresh Data
+            </Button>
+            <Button
+              onClick={() => setShowNewConnectionDialog(true)}
+              startDecorator={<PlusIcon />}
+            >
+              New Connection
+            </Button>
+          </Box>
         </Box>
-      </Box>
 
       {error && (
         <Alert
@@ -600,6 +602,6 @@ export default function TelematicsPage() {
           </Stack>
         </ModalDialog>
       </Modal>
-    </div>
+    </CssVarsProvider>
   );
 }
