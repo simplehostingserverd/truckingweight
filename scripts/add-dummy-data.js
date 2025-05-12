@@ -1,6 +1,15 @@
-require('dotenv').config();
-const { createClient } = require('@supabase/supabase-js');
-const { v4: uuidv4 } = require('uuid');
+import dotenv from 'dotenv';
+import { createClient } from '@supabase/supabase-js';
+import { v4 as uuidv4 } from 'uuid';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+// Get current file directory (ESM equivalent of __dirname)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load environment variables from root .env file
+dotenv.config({ path: resolve(__dirname, '../.env') });
 
 // Create Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -62,7 +71,7 @@ async function addDummyData() {
         // Add ERP connections for this company
         const erpProviders = ['netsuite', 'quickbooks', 'sap', 'sage'];
         const randomProvider = erpProviders[Math.floor(Math.random() * erpProviders.length)];
-        
+
         const { data: connection, error: connectionError } = await supabase
           .from('integration_connections')
           .insert({
@@ -86,7 +95,7 @@ async function addDummyData() {
         }
 
         console.log(`Added ERP connection for ${company.name}: ${randomProvider}`);
-        
+
         // Add some sync logs for this connection
         await addSyncLogs(connection[0].id, company.id);
       } else {
@@ -113,7 +122,7 @@ async function addDummyData() {
         // Add telematics connections for this company
         const telematicsProviders = ['geotab', 'samsara', 'fleetcomplete', 'omnitracs'];
         const randomProvider = telematicsProviders[Math.floor(Math.random() * telematicsProviders.length)];
-        
+
         const { error: connectionError } = await supabase
           .from('integration_connections')
           .insert({
@@ -159,12 +168,12 @@ async function addDummyData() {
         const vehiclesToAdd = 5 - vehicles.length;
         const vehicleTypes = ['Semi', 'Box Truck', 'Flatbed', 'Tanker', 'Dump Truck'];
         const vehicleMakes = ['Freightliner', 'Peterbilt', 'Kenworth', 'Volvo', 'Mack', 'International'];
-        
+
         for (let i = 0; i < vehiclesToAdd; i++) {
           const randomType = vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
           const randomMake = vehicleMakes[Math.floor(Math.random() * vehicleMakes.length)];
           const randomYear = 2015 + Math.floor(Math.random() * 9); // 2015-2023
-          
+
           const { error: vehicleError } = await supabase
             .from('vehicles')
             .insert({
@@ -211,16 +220,16 @@ async function addDummyData() {
         const driversToAdd = 5 - drivers.length;
         const firstNames = ['John', 'Sarah', 'Michael', 'Emily', 'David', 'Jessica', 'Robert', 'Jennifer', 'William', 'Lisa'];
         const lastNames = ['Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor'];
-        
+
         for (let i = 0; i < driversToAdd; i++) {
           const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];
           const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];
           const fullName = `${randomFirstName} ${randomLastName}`;
-          
+
           // Generate a future date for license expiry (1-3 years from now)
           const expiryDate = new Date();
           expiryDate.setFullYear(expiryDate.getFullYear() + 1 + Math.floor(Math.random() * 3));
-          
+
           const { error: driverError } = await supabase
             .from('drivers')
             .insert({
@@ -281,21 +290,21 @@ async function addDummyData() {
         // Add more weights
         const weightsToAdd = 20 - weights.length;
         const statuses = ['Compliant', 'Warning', 'Non-Compliant'];
-        
+
         for (let i = 0; i < weightsToAdd; i++) {
           const randomVehicle = vehicles[Math.floor(Math.random() * vehicles.length)];
           const randomDriver = drivers[Math.floor(Math.random() * drivers.length)];
-          
+
           // Generate a date within the last 30 days
           const date = new Date();
           date.setDate(date.getDate() - Math.floor(Math.random() * 30));
-          
+
           // Generate a weight that's sometimes over the limit
           const emptyWeight = randomVehicle.empty_weight || 35000;
           const maxGross = randomVehicle.max_gross_weight || 80000;
           const cargoWeight = Math.floor(Math.random() * (maxGross - emptyWeight));
           const totalWeight = emptyWeight + cargoWeight;
-          
+
           // Determine status based on weight
           let status;
           if (totalWeight > maxGross) {
@@ -305,7 +314,7 @@ async function addDummyData() {
           } else {
             status = 'Compliant';
           }
-          
+
           const { error: weightError } = await supabase
             .from('weights')
             .insert({
@@ -347,15 +356,15 @@ async function addSyncLogs(connectionId, companyId) {
     'Failed to synchronize data - authentication error',
     'Failed to synchronize data - timeout error',
   ];
-  
+
   // Add 5 sync logs with different timestamps
   for (let i = 0; i < 5; i++) {
     const date = new Date();
     date.setDate(date.getDate() - i * 2); // Every 2 days back
-    
+
     const randomStatus = statuses[Math.floor(Math.random() * (i === 0 ? 1 : statuses.length))]; // First one is always success
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    
+
     let details = {};
     if (randomStatus === 'success') {
       details = {
@@ -381,7 +390,7 @@ async function addSyncLogs(connectionId, companyId) {
         error: 'Authentication failed. Token expired.',
       };
     }
-    
+
     const { error } = await supabase
       .from('integration_logs')
       .insert({
@@ -392,12 +401,12 @@ async function addSyncLogs(connectionId, companyId) {
         created_at: date.toISOString(),
         company_id: companyId,
       });
-    
+
     if (error) {
       throw error;
     }
   }
-  
+
   console.log(`Added 5 sync logs for connection ${connectionId}`);
 }
 

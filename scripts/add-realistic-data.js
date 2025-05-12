@@ -158,7 +158,7 @@ async function addRealisticData() {
       // Get drivers for this company
       const { data: drivers, error: driversError } = await supabase
         .from('drivers')
-        .select('id, first_name, last_name')
+        .select('id, name')
         .eq('company_id', company.id);
 
       if (driversError) throw driversError;

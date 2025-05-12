@@ -25,42 +25,37 @@ const companies = [
   {
     name: 'Horizon Freight Systems',
     address: '1250 Industrial Parkway, Dallas, TX 75247',
-    phone: '(214) 555-7890',
+    contact_phone: '(214) 555-7890',
+    contact_email: 'info@horizonfreight.com',
     email: 'info@horizonfreight.com',
-    website: 'https://horizonfreight.com',
-    status: 'active',
   },
   {
     name: 'Summit Logistics Inc.',
     address: '4500 Transport Avenue, Houston, TX 77002',
-    phone: '(713) 555-3421',
+    contact_phone: '(713) 555-3421',
+    contact_email: 'contact@summitlogistics.com',
     email: 'contact@summitlogistics.com',
-    website: 'https://summitlogistics.com',
-    status: 'active',
   },
   {
     name: 'Velocity Transport Group',
     address: '8700 Commerce Drive, Austin, TX 78744',
-    phone: '(512) 555-9876',
+    contact_phone: '(512) 555-9876',
+    contact_email: 'info@velocitytransport.com',
     email: 'info@velocitytransport.com',
-    website: 'https://velocitytransport.com',
-    status: 'active',
   },
   {
     name: 'Precision Cargo Services',
     address: '2300 Freight Boulevard, San Antonio, TX 78219',
-    phone: '(210) 555-4567',
+    contact_phone: '(210) 555-4567',
+    contact_email: 'operations@precisioncargo.com',
     email: 'operations@precisioncargo.com',
-    website: 'https://precisioncargo.com',
-    status: 'active',
   },
   {
     name: 'Alliance Trucking Co.',
     address: '5600 Logistics Way, Fort Worth, TX 76177',
-    phone: '(817) 555-2345',
+    contact_phone: '(817) 555-2345',
+    contact_email: 'dispatch@alliancetrucking.com',
     email: 'dispatch@alliancetrucking.com',
-    website: 'https://alliancetrucking.com',
-    status: 'active',
   },
 ];
 
@@ -119,7 +114,7 @@ const customerReviews = [
     name: 'Robert Jackson',
     company: 'Southern Cargo Express',
     rating: 4,
-    review: 'We've been using TruckingWeight for over a year now, and it has become an essential part of our operation. The integration with our existing systems was seamless.',
+    review: "We've been using TruckingWeight for over a year now, and it has become an essential part of our operation. The integration with our existing systems was seamless.",
     position: 'Technology Director',
   },
 ];
@@ -159,7 +154,7 @@ async function seedDatabase() {
     console.log('Inserting companies...');
     const { data: companiesData, error: companiesError } = await supabase
       .from('companies')
-      .upsert(companies, { onConflict: 'name' })
+      .upsert(companies)
       .select();
 
     if (companiesError) throw companiesError;
@@ -169,7 +164,7 @@ async function seedDatabase() {
     console.log('Inserting customer reviews...');
     const { data: reviewsData, error: reviewsError } = await supabase
       .from('testimonials')
-      .upsert(customerReviews, { onConflict: 'name' })
+      .upsert(customerReviews)
       .select();
 
     if (reviewsError) throw reviewsError;
@@ -220,14 +215,12 @@ async function seedDatabase() {
         const lastName = getRandomElement(lastNames);
         drivers.push({
           company_id: company.id,
-          first_name: firstName,
-          last_name: lastName,
+          name: `${firstName} ${lastName}`,
           email: getRandomEmail(firstName, lastName),
           phone: getRandomPhone(),
           license_number: getRandomLicenseNumber(),
-          license_state: getRandomElement(['TX', 'CA', 'FL', 'NY', 'IL', 'PA', 'OH', 'GA', 'NC', 'MI']),
-          license_expiration: getRandomDate(new Date(), new Date(2026, 11, 31)).toISOString().split('T')[0],
-          status: getRandomElement(['active', 'on_leave', 'inactive']),
+          license_expiry: getRandomDate(new Date(), new Date(2026, 11, 31)).toISOString().split('T')[0],
+          status: getRandomElement(['Active', 'On Leave', 'Inactive']),
         });
       }
     }
