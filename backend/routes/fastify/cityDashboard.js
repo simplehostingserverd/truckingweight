@@ -11,7 +11,7 @@ const { bearerAuthMiddleware } = require('../../middleware/fastify/bearerAuth');
 // Initialize Supabase client
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY
 );
 
 // City dashboard route schemas

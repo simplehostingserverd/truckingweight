@@ -9,9 +9,10 @@ const fastify = require('fastify')({
   }
 });
 const dotenv = require('dotenv');
+const path = require('path');
 
-// Load environment variables
-dotenv.config();
+// Load environment variables from .env file in the backend directory
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 // Import database connection
 const db = require('./config/database');

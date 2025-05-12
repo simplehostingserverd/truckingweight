@@ -545,7 +545,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/joker/Documents/truckingweight/backend/generated/prisma",
+      "value": "/home/joker/Documents/truckingweight-1/backend/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -559,7 +559,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/joker/Documents/truckingweight/backend/prisma/schema.prisma",
+    "sourceFilePath": "/home/joker/Documents/truckingweight-1/backend/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

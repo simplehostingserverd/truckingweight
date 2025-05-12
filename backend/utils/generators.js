@@ -10,7 +10,7 @@ const { logger } = require('./logger');
 // Initialize Supabase client
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY
 );
 
 /**
@@ -23,7 +23,7 @@ const generateTicketNumber = async (companyId) => {
   try {
     const date = new Date();
     const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
-    
+
     // Get the latest ticket number for today
     const { data, error } = await supabase
       .from('weigh_tickets')
@@ -31,22 +31,22 @@ const generateTicketNumber = async (companyId) => {
       .like('ticket_number', `WT-${dateStr}-%`)
       .order('ticket_number', { ascending: false })
       .limit(1);
-    
+
     let sequenceNumber = 1;
-    
+
     if (!error && data && data.length > 0) {
       // Extract the sequence number from the latest ticket
       const latestTicket = data[0].ticket_number;
       const latestSequence = parseInt(latestTicket.split('-')[2]);
       sequenceNumber = latestSequence + 1;
     }
-    
+
     // Format the sequence number with leading zeros
     const formattedSequence = sequenceNumber.toString().padStart(4, '0');
-    
+
     // Generate the ticket number
     const ticketNumber = `WT-${dateStr}-${formattedSequence}`;
-    
+
     return ticketNumber;
   } catch (error) {
     logger.error('Error generating ticket number:', error);
@@ -66,7 +66,7 @@ const generatePermitNumber = async (cityId) => {
     const date = new Date();
     const yearMonth = date.toISOString().slice(0, 7).replace(/-/g, '');
     const cityIdStr = cityId.toString().padStart(3, '0');
-    
+
     // Get the latest permit number for this month and city
     const { data, error } = await supabase
       .from('city_permits')
@@ -74,22 +74,22 @@ const generatePermitNumber = async (cityId) => {
       .like('permit_number', `CP-${cityIdStr}-${yearMonth}-%`)
       .order('permit_number', { ascending: false })
       .limit(1);
-    
+
     let sequenceNumber = 1;
-    
+
     if (!error && data && data.length > 0) {
       // Extract the sequence number from the latest permit
       const latestPermit = data[0].permit_number;
       const latestSequence = parseInt(latestPermit.split('-')[3]);
       sequenceNumber = latestSequence + 1;
     }
-    
+
     // Format the sequence number with leading zeros
     const formattedSequence = sequenceNumber.toString().padStart(4, '0');
-    
+
     // Generate the permit number
     const permitNumber = `CP-${cityIdStr}-${yearMonth}-${formattedSequence}`;
-    
+
     return permitNumber;
   } catch (error) {
     logger.error('Error generating permit number:', error);
@@ -109,7 +109,7 @@ const generateViolationNumber = async (cityId) => {
     const date = new Date();
     const yearMonth = date.toISOString().slice(0, 7).replace(/-/g, '');
     const cityIdStr = cityId.toString().padStart(3, '0');
-    
+
     // Get the latest violation number for this month and city
     const { data, error } = await supabase
       .from('city_violations')
@@ -117,22 +117,22 @@ const generateViolationNumber = async (cityId) => {
       .like('violation_number', `CV-${cityIdStr}-${yearMonth}-%`)
       .order('violation_number', { ascending: false })
       .limit(1);
-    
+
     let sequenceNumber = 1;
-    
+
     if (!error && data && data.length > 0) {
       // Extract the sequence number from the latest violation
       const latestViolation = data[0].violation_number;
       const latestSequence = parseInt(latestViolation.split('-')[3]);
       sequenceNumber = latestSequence + 1;
     }
-    
+
     // Format the sequence number with leading zeros
     const formattedSequence = sequenceNumber.toString().padStart(4, '0');
-    
+
     // Generate the violation number
     const violationNumber = `CV-${cityIdStr}-${yearMonth}-${formattedSequence}`;
-    
+
     return violationNumber;
   } catch (error) {
     logger.error('Error generating violation number:', error);
@@ -152,7 +152,7 @@ const generateCityWeighTicketNumber = async (cityId) => {
     const date = new Date();
     const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
     const cityIdStr = cityId.toString().padStart(3, '0');
-    
+
     // Get the latest ticket number for today and city
     const { data, error } = await supabase
       .from('city_weigh_tickets')
@@ -160,22 +160,22 @@ const generateCityWeighTicketNumber = async (cityId) => {
       .like('ticket_number', `CWT-${cityIdStr}-${dateStr}-%`)
       .order('ticket_number', { ascending: false })
       .limit(1);
-    
+
     let sequenceNumber = 1;
-    
+
     if (!error && data && data.length > 0) {
       // Extract the sequence number from the latest ticket
       const latestTicket = data[0].ticket_number;
       const latestSequence = parseInt(latestTicket.split('-')[3]);
       sequenceNumber = latestSequence + 1;
     }
-    
+
     // Format the sequence number with leading zeros
     const formattedSequence = sequenceNumber.toString().padStart(4, '0');
-    
+
     // Generate the ticket number
     const ticketNumber = `CWT-${cityIdStr}-${dateStr}-${formattedSequence}`;
-    
+
     return ticketNumber;
   } catch (error) {
     logger.error('Error generating city weigh ticket number:', error);

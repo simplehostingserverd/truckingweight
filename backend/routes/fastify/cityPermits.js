@@ -11,7 +11,7 @@ const { generatePermitNumber } = require('../../utils/generators');
 // Initialize Supabase client
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY
 );
 
 // City permits route schemas
@@ -34,7 +34,7 @@ const createPermitSchema = {
       vehicleInfo: { type: 'string', minLength: 1 },
       permitType: { type: 'string', enum: ['overweight', 'oversize', 'both'] },
       maxWeight: { type: 'number' },
-      dimensions: { 
+      dimensions: {
         type: 'object',
         properties: {
           length: { type: 'number' },
@@ -256,9 +256,9 @@ async function routes(fastify, options) {
    */
   fastify.post(
     '/',
-    { 
+    {
       preHandler: [cityRoleMiddleware(['admin', 'operator'])],
-      schema: createPermitSchema 
+      schema: createPermitSchema
     },
     async (request, reply) => {
       try {
@@ -495,7 +495,7 @@ async function routes(fastify, options) {
         if (updateData.feeAmount !== undefined) updateFields.fee_amount = updateData.feeAmount;
         if (updateData.paymentStatus !== undefined) updateFields.payment_status = updateData.paymentStatus;
         if (updateData.status !== undefined) updateFields.status = updateData.status;
-        
+
         // Add updated_at timestamp
         updateFields.updated_at = new Date().toISOString();
 
