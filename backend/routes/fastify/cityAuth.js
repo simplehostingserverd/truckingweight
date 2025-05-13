@@ -145,6 +145,36 @@ const loginCityUserSchema = {
   },
 };
 
+const forgotPasswordSchema = {
+  body: {
+    type: 'object',
+    required: ['email'],
+    properties: {
+      email: { type: 'string', format: 'email' },
+    },
+  },
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        msg: { type: 'string' },
+      },
+    },
+    400: {
+      type: 'object',
+      properties: {
+        msg: { type: 'string' },
+      },
+    },
+    500: {
+      type: 'object',
+      properties: {
+        msg: { type: 'string' },
+      },
+    },
+  },
+};
+
 /**
  * City Auth Routes
  */
@@ -427,6 +457,49 @@ async function routes(fastify, options) {
       });
     } catch (err) {
       request.log.error('Server error in get city user:', err);
+      return reply.code(500).send({ msg: 'Server error' });
+    }
+  });
+
+  /**
+   * @route   POST /api/city-auth/forgot-password
+   * @desc    Send password reset email
+   * @access  Public
+   */
+  fastify.post('/forgot-password', { schema: forgotPasswordSchema }, async (request, reply) => {
+    const { email } = request.body;
+
+    try {
+      // Check if user exists
+      const { data: user, error: userError } = await supabase
+        .from('city_users')
+        .select('*')
+        .eq('email', email)
+        .single();
+
+      if (userError && userError.code !== 'PGRST116') {
+        request.log.error('Error checking for city user:', userError);
+        return reply.code(500).send({ msg: 'Server error' });
+      }
+
+      // For security reasons, always return success even if user doesn't exist
+      if (!user) {
+        return reply.code(200).send({ msg: 'Password reset email sent if account exists' });
+      }
+
+      // Send password reset email using Supabase Auth
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${process.env.FRONTEND_URL}/city/reset-password`,
+      });
+
+      if (resetError) {
+        request.log.error('Error sending password reset email:', resetError);
+        return reply.code(500).send({ msg: 'Error sending password reset email' });
+      }
+
+      return reply.code(200).send({ msg: 'Password reset email sent' });
+    } catch (err) {
+      request.log.error('Server error in forgot password:', err);
       return reply.code(500).send({ msg: 'Server error' });
     }
   });
