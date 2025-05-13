@@ -1,6 +1,6 @@
 // Import tiny-lru correctly - it exports an object with lru factory function
 import { lru } from 'tiny-lru';
-import { logger } from '../../utils/logger';
+import logger from '../../utils/logger';
 
 /**
  * High-performance in-memory LRU caching service

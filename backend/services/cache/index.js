@@ -2,7 +2,7 @@
 
 // Import tiny-lru correctly - it exports an object with lru factory function
 const { lru } = require('tiny-lru');
-const { logger } = require('../../utils/logger');
+const logger = require('../../utils/logger');
 
 /**
  * High-performance in-memory LRU caching service

@@ -69,4 +69,4 @@ const stream: LoggerStream = {
 
 logger.stream = stream;
 
-export { logger };
+export default logger;
