@@ -2,11 +2,10 @@ import { PrismaClient } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 import { SamsaraService } from './samsara';
 import { GeotabService } from './geotab';
-import Redis from 'ioredis';
-import { logger } from '../../utils/logger';
+import logger from '../../utils/logger';
+import cacheService from '../../services/cache';
 
 const prisma = new PrismaClient();
-const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 
 export interface TelematicsData {;
   vehicleId: string;
