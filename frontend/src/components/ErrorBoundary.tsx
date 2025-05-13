@@ -2,8 +2,8 @@
 
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { useToastContext } from '@/providers/ToastProvider';
-import Button from '@/components/ui/Button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 interface Props {

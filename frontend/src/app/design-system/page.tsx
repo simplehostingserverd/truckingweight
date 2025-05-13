@@ -1,18 +1,18 @@
 'use client';
 
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 import {
-  Button,
-  Input,
-  Select,
-  Badge,
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
   CardFooter,
-} from '@/components/ui';
+} from '@/components/ui/card';
 
 export default function DesignSystemPage() {
   return (

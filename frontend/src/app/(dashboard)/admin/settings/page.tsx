@@ -13,25 +13,20 @@ import {
   CheckIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
-  Button,
-  Input,
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
   CardFooter,
-  Alert,
-  AlertTitle,
-  AlertDescription,
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-  Switch,
-  Separator,
-} from '@/components/ui';
+} from '@/components/ui/card';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Switch } from '@/components/ui/switch';
+import { Separator } from '@/components/ui/separator';
 import type { Database } from '@/types/supabase';
 
 type SystemSettings = {

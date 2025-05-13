@@ -1,28 +1,28 @@
 // Export all UI components from this file for easier imports
 
 // Button
-export { default as Button } from './Button';
-export type { ButtonProps } from './Button';
+export { default as Button } from './button';
+export type { ButtonProps } from './button';
 
 // Input
-export { default as Input } from './Input';
-export type { InputProps } from './Input';
+export { default as Input } from './input';
+export type { InputProps } from './input';
 
 // Select
-export { default as Select } from './Select';
-export type { SelectProps, SelectOption } from './Select';
-export { SelectTrigger, SelectValue, SelectContent, SelectItem } from './Select';
+export { default as Select } from './select';
+export type { SelectProps, SelectOption } from './select';
+export { SelectTrigger, SelectValue, SelectContent, SelectItem } from './select';
 
 // Badge
-export { default as Badge } from './Badge';
-export type { BadgeProps } from './Badge';
+export { default as Badge } from './badge';
+export type { BadgeProps } from './badge';
 
 // Card
-export { default as Card } from './Card';
-export { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './Card';
+export { default as Card } from './card';
+export { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './card';
 
 // Tabs
-export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
 
 // Dialog components
 export {
@@ -52,6 +52,7 @@ export { Alert, AlertDescription, AlertTitle } from './alert';
 // Other components
 export { Separator } from './separator';
 export { Skeleton } from './skeleton';
+export { Switch } from './switch';
 
 // Re-export existing components
 export { default as MobileNav } from './MobileNav';
