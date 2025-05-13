@@ -1,8 +1,8 @@
-/**
- * Weigh Ticket Service
- * 
- * This service handles the generation and management of weigh tickets
- */
+/**;
+ * Weigh Ticket Service;
+ * ;
+ * This service handles the generation and management of weigh tickets;
+ */;
 
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '../config/prisma';
@@ -11,228 +11,228 @@ import { logger } from '../utils/logger';
 import { generateTicketQRCode } from './qrCodeService';
 import { checkWeightCompliance } from '../utils/compliance';
 
-/**
- * Generate a new weigh ticket
- * @param weightData - The weight data for the ticket
- * @param companyId - The company ID for context
- * @param userId - The ID of the user creating the ticket
- */
-export const generateWeighTicket = async (
-  weightData: {
+/**;
+ * Generate a new weigh ticket;
+ * @param weightData - The weight data for the ticket;
+ * @param companyId - The company ID for context;
+ * @param userId - The ID of the user creating the ticket;
+ */;
+export const generateWeighTicket = async (;
+  weightData: {;
     vehicleId: number;
     driverId: number;
     scaleId: number;
     grossWeight: number;
     tareWeight?: number;
     axleWeights?: Array<{ axleNumber: number; weight: number; axleType?: string }>;
-    weighType: string; // 'gross_only', 'tare_only', 'gross_tare', 'split_weigh'
-    weighMethod: string; // 'scale_api', 'manual_entry', 'camera_scan', 'iot_sensor'
+    weighType: string; // 'gross_only', 'tare_only', 'gross_tare', 'split_weigh';
+    weighMethod: string; // 'scale_api', 'manual_entry', 'camera_scan', 'iot_sensor';
     notes?: string;
     ticketImageUrl?: string;
     signatureImageUrl?: string;
     signatureName?: string;
     signatureRole?: string;
-  },
-  companyId: number,
-  userId: string
-): Promise<{ success: boolean; ticket?: any; error?: string }> => {
-  try {
-    // Set company context for Prisma queries
+  },;
+  companyId: number,;
+  userId: string;
+): Promise<{ success: boolean; ticket?: any; error?: string }> => {;
+  try {;
+    // Set company context for Prisma queries;
     setCompanyContext(companyId);
 
-    // Generate a unique ticket number
+    // Generate a unique ticket number;
     const ticketNumber = `TKT-${companyId}-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
 
-    // Calculate net weight if both gross and tare are provided
+    // Calculate net weight if both gross and tare are provided;
     const netWeight = weightData.tareWeight ? weightData.grossWeight - weightData.tareWeight : undefined;
 
-    // Create a new weight record
-    const weight = await prisma.weights.create({
-      data: {
-        vehicle_id: weightData.vehicleId,
-        driver_id: weightData.driverId,
-        weight: weightData.grossWeight.toString(),
-        date: new Date().toISOString().split('T')[0],
-        time: new Date().toTimeString().split(' ')[0],
-        status: 'Pending', // Will be updated after compliance check
-        capture_method: weightData.weighMethod,
-        notes: weightData.notes,
-        company_id: companyId,
-        created_by: userId,
-      },
+    // Create a new weight record;
+    const weight = await prisma.weights.create({;
+      data: {;
+        vehicle_id: weightData.vehicleId,;
+        driver_id: weightData.driverId,;
+        weight: weightData.grossWeight.toString(),;
+        date: new Date().toISOString().split('T')[0],;
+        time: new Date().toTimeString().split(' ')[0],;
+        status: 'Pending', // Will be updated after compliance check;
+        capture_method: weightData.weighMethod,;
+        notes: weightData.notes,;
+        company_id: companyId,;
+        created_by: userId,;
+      },;
     });
 
-    // Create axle weight records if provided
-    if (weightData.axleWeights && weightData.axleWeights.length > 0) {
-      await prisma.axle_weights.createMany({
-        data: weightData.axleWeights.map(axle => ({
-          weight_id: weight.id,
-          axle_number: axle.axleNumber,
-          axle_weight: axle.weight,
-          axle_type: axle.axleType,
-        })),
+    // Create axle weight records if provided;
+    if (weightData.axleWeights && weightData.axleWeights.length > 0) {;
+      await prisma.axle_weights.createMany({;
+        data: weightData.axleWeights.map(axle => ({;
+          weight_id: weight.id,;
+          axle_number: axle.axleNumber,;
+          axle_weight: axle.weight,;
+          axle_type: axle.axleType,;
+        })),;
       });
-    }
+    };
 
-    // Create the weigh ticket
-    const ticket = await prisma.weigh_tickets.create({
-      data: {
-        ticket_number: ticketNumber,
-        weight_id: weight.id,
-        scale_id: weightData.scaleId,
-        gross_weight: weightData.grossWeight,
-        tare_weight: weightData.tareWeight,
-        net_weight: netWeight,
-        weigh_type: weightData.weighType,
-        weigh_method: weightData.weighMethod,
-        notes: weightData.notes,
-        company_id: companyId,
-      },
+    // Create the weigh ticket;
+    const ticket = await prisma.weigh_tickets.create({;
+      data: {;
+        ticket_number: ticketNumber,;
+        weight_id: weight.id,;
+        scale_id: weightData.scaleId,;
+        gross_weight: weightData.grossWeight,;
+        tare_weight: weightData.tareWeight,;
+        net_weight: netWeight,;
+        weigh_type: weightData.weighType,;
+        weigh_method: weightData.weighMethod,;
+        notes: weightData.notes,;
+        company_id: companyId,;
+      },;
     });
 
-    // Save ticket image if provided
-    if (weightData.ticketImageUrl) {
-      await prisma.ticket_images.create({
-        data: {
-          weigh_ticket_id: ticket.id,
-          image_url: weightData.ticketImageUrl,
-          image_type: 'ticket',
-          captured_by: userId,
-        },
+    // Save ticket image if provided;
+    if (weightData.ticketImageUrl) {;
+      await prisma.ticket_images.create({;
+        data: {;
+          weigh_ticket_id: ticket.id,;
+          image_url: weightData.ticketImageUrl,;
+          image_type: 'ticket',;
+          captured_by: userId,;
+        },;
       });
-    }
+    };
 
-    // Save signature if provided
-    if (weightData.signatureImageUrl && weightData.signatureName) {
-      await prisma.ticket_signatures.create({
-        data: {
-          weigh_ticket_id: ticket.id,
-          signature_url: weightData.signatureImageUrl,
-          name: weightData.signatureName,
-          role: weightData.signatureRole,
-        },
+    // Save signature if provided;
+    if (weightData.signatureImageUrl && weightData.signatureName) {;
+      await prisma.ticket_signatures.create({;
+        data: {;
+          weigh_ticket_id: ticket.id,;
+          signature_url: weightData.signatureImageUrl,;
+          name: weightData.signatureName,;
+          role: weightData.signatureRole,;
+        },;
       });
-    }
+    };
 
-    // Check compliance
+    // Check compliance;
     const complianceResult = await checkWeightCompliance(weight.id, companyId);
 
-    // Update weight status based on compliance check
-    await prisma.weights.update({
-      where: { id: weight.id },
-      data: { status: complianceResult.status },
+    // Update weight status based on compliance check;
+    await prisma.weights.update({;
+      where: { id: weight.id },;
+      data: { status: complianceResult.status },;
     });
 
-    // Create compliance issues if any
-    if (complianceResult.issues && complianceResult.issues.length > 0) {
-      await prisma.compliance_issues.createMany({
-        data: complianceResult.issues.map(issue => ({
-          weigh_ticket_id: ticket.id,
-          issue_type: issue.type,
-          description: issue.description,
-          severity: issue.severity,
-          recommendation: issue.recommendation,
-        })),
+    // Create compliance issues if any;
+    if (complianceResult.issues && complianceResult.issues.length > 0) {;
+      await prisma.compliance_issues.createMany({;
+        data: complianceResult.issues.map(issue => ({;
+          weigh_ticket_id: ticket.id,;
+          issue_type: issue.type,;
+          description: issue.description,;
+          severity: issue.severity,;
+          recommendation: issue.recommendation,;
+        })),;
       });
-    }
+    };
 
-    // Generate QR code for the ticket
+    // Generate QR code for the ticket;
     const qrCodeResult = await generateTicketQRCode(ticket.id, companyId);
 
-    // Return the created ticket with additional information
-    const completeTicket = await prisma.weigh_tickets.findUnique({
-      where: { id: ticket.id },
-      include: {
-        weights: {
-          include: {
-            vehicles: true,
-            drivers: true,
-            axle_weights: true,
-          },
-        },
-        scales: true,
-        compliance_issues: true,
-        ticket_images: true,
-        ticket_signatures: true,
-      },
+    // Return the created ticket with additional information;
+    const completeTicket = await prisma.weigh_tickets.findUnique({;
+      where: { id: ticket.id },;
+      include: {;
+        weights: {;
+          include: {;
+            vehicles: true,;
+            drivers: true,;
+            axle_weights: true,;
+          },;
+        },;
+        scales: true,;
+        compliance_issues: true,;
+        ticket_images: true,;
+        ticket_signatures: true,;
+      },;
     });
 
-    return {
-      success: true,
-      ticket: {
-        ...completeTicket,
-        qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,
-      },
+    return {;
+      success: true,;
+      ticket: {;
+        ...completeTicket,;
+        qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,;
+      },;
     };
-  } catch (error: any) {
+  } catch (error: any) {;
     logger.error(`Error generating weigh ticket: ${error.message}`, { error });
     return { success: false, error: error.message };
-  }
+  };
 };
 
-/**
- * Get a weigh ticket by ID
- * @param ticketId - The ID of the weigh ticket
- * @param companyId - The company ID for context
- * @param isAdmin - Whether the user is an admin
- */
-export const getWeighTicket = async (
-  ticketId: number,
-  companyId: number,
-  isAdmin: boolean = false
-): Promise<{ success: boolean; ticket?: any; error?: string }> => {
-  try {
-    // Set company context for Prisma queries
+/**;
+ * Get a weigh ticket by ID;
+ * @param ticketId - The ID of the weigh ticket;
+ * @param companyId - The company ID for context;
+ * @param isAdmin - Whether the user is an admin;
+ */;
+export const getWeighTicket = async (;
+  ticketId: number,;
+  companyId: number,;
+  isAdmin: boolean = false;
+): Promise<{ success: boolean; ticket?: any; error?: string }> => {;
+  try {;
+    // Set company context for Prisma queries;
     setCompanyContext(companyId, isAdmin);
 
-    // Get the ticket
-    const ticket = await prisma.weigh_tickets.findUnique({
-      where: { id: ticketId },
-      include: {
-        weights: {
-          include: {
-            vehicles: true,
-            drivers: true,
-            axle_weights: true,
-          },
-        },
-        scales: true,
-        compliance_issues: true,
-        ticket_images: true,
-        ticket_signatures: true,
-      },
+    // Get the ticket;
+    const ticket = await prisma.weigh_tickets.findUnique({;
+      where: { id: ticketId },;
+      include: {;
+        weights: {;
+          include: {;
+            vehicles: true,;
+            drivers: true,;
+            axle_weights: true,;
+          },;
+        },;
+        scales: true,;
+        compliance_issues: true,;
+        ticket_images: true,;
+        ticket_signatures: true,;
+      },;
     });
 
-    if (!ticket) {
+    if (!ticket) {;
       return { success: false, error: 'Ticket not found' };
-    }
+    };
 
-    // Generate QR code for the ticket
+    // Generate QR code for the ticket;
     const qrCodeResult = await generateTicketQRCode(ticket.id, companyId, isAdmin);
 
-    return {
-      success: true,
-      ticket: {
-        ...ticket,
-        qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,
-      },
+    return {;
+      success: true,;
+      ticket: {;
+        ...ticket,;
+        qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,;
+      },;
     };
-  } catch (error: any) {
+  } catch (error: any) {;
     logger.error(`Error getting weigh ticket: ${error.message}`, { error });
     return { success: false, error: error.message };
-  }
+  };
 };
 
-/**
- * Update a weigh ticket
- * @param ticketId - The ID of the weigh ticket
- * @param updateData - The data to update
- * @param companyId - The company ID for context
- * @param userId - The ID of the user updating the ticket
- */
-export const updateWeighTicket = async (
-  ticketId: number,
-  updateData: {
+/**;
+ * Update a weigh ticket;
+ * @param ticketId - The ID of the weigh ticket;
+ * @param updateData - The data to update;
+ * @param companyId - The company ID for context;
+ * @param userId - The ID of the user updating the ticket;
+ */;
+export const updateWeighTicket = async (;
+  ticketId: number,;
+  updateData: {;
     grossWeight?: number;
     tareWeight?: number;
     notes?: string;
@@ -240,127 +240,127 @@ export const updateWeighTicket = async (
     signatureImageUrl?: string;
     signatureName?: string;
     signatureRole?: string;
-  },
-  companyId: number,
-  userId: string
-): Promise<{ success: boolean; ticket?: any; error?: string }> => {
-  try {
-    // Set company context for Prisma queries
+  },;
+  companyId: number,;
+  userId: string;
+): Promise<{ success: boolean; ticket?: any; error?: string }> => {;
+  try {;
+    // Set company context for Prisma queries;
     setCompanyContext(companyId);
 
-    // Get the existing ticket
-    const existingTicket = await prisma.weigh_tickets.findUnique({
-      where: { id: ticketId },
-      include: {
-        weights: true,
-      },
+    // Get the existing ticket;
+    const existingTicket = await prisma.weigh_tickets.findUnique({;
+      where: { id: ticketId },;
+      include: {;
+        weights: true,;
+      },;
     });
 
-    if (!existingTicket) {
+    if (!existingTicket) {;
       return { success: false, error: 'Ticket not found' };
-    }
+    };
 
-    // Calculate net weight if both gross and tare are provided
+    // Calculate net weight if both gross and tare are provided;
     const grossWeight = updateData.grossWeight || existingTicket.gross_weight;
     const tareWeight = updateData.tareWeight || existingTicket.tare_weight;
     const netWeight = tareWeight ? grossWeight - tareWeight : undefined;
 
-    // Update the ticket
-    const updatedTicket = await prisma.weigh_tickets.update({
-      where: { id: ticketId },
-      data: {
-        gross_weight: grossWeight,
-        tare_weight: tareWeight,
-        net_weight: netWeight,
-        notes: updateData.notes,
-        updated_at: new Date(),
-      },
+    // Update the ticket;
+    const updatedTicket = await prisma.weigh_tickets.update({;
+      where: { id: ticketId },;
+      data: {;
+        gross_weight: grossWeight,;
+        tare_weight: tareWeight,;
+        net_weight: netWeight,;
+        notes: updateData.notes,;
+        updated_at: new Date(),;
+      },;
     });
 
-    // Update the weight record
-    if (existingTicket.weight_id) {
-      await prisma.weights.update({
-        where: { id: existingTicket.weight_id },
-        data: {
-          weight: grossWeight.toString(),
-          notes: updateData.notes,
-          updated_at: new Date(),
-        },
+    // Update the weight record;
+    if (existingTicket.weight_id) {;
+      await prisma.weights.update({;
+        where: { id: existingTicket.weight_id },;
+        data: {;
+          weight: grossWeight.toString(),;
+          notes: updateData.notes,;
+          updated_at: new Date(),;
+        },;
       });
 
-      // Re-check compliance
+      // Re-check compliance;
       const complianceResult = await checkWeightCompliance(existingTicket.weight_id, companyId);
 
-      // Update weight status based on compliance check
-      await prisma.weights.update({
-        where: { id: existingTicket.weight_id },
-        data: { status: complianceResult.status },
+      // Update weight status based on compliance check;
+      await prisma.weights.update({;
+        where: { id: existingTicket.weight_id },;
+        data: { status: complianceResult.status },;
       });
 
-      // Clear existing compliance issues
-      await prisma.compliance_issues.deleteMany({
-        where: { weigh_ticket_id: ticketId },
+      // Clear existing compliance issues;
+      await prisma.compliance_issues.deleteMany({;
+        where: { weigh_ticket_id: ticketId },;
       });
 
-      // Create new compliance issues if any
-      if (complianceResult.issues && complianceResult.issues.length > 0) {
-        await prisma.compliance_issues.createMany({
-          data: complianceResult.issues.map(issue => ({
-            weigh_ticket_id: ticketId,
-            issue_type: issue.type,
-            description: issue.description,
-            severity: issue.severity,
-            recommendation: issue.recommendation,
-          })),
+      // Create new compliance issues if any;
+      if (complianceResult.issues && complianceResult.issues.length > 0) {;
+        await prisma.compliance_issues.createMany({;
+          data: complianceResult.issues.map(issue => ({;
+            weigh_ticket_id: ticketId,;
+            issue_type: issue.type,;
+            description: issue.description,;
+            severity: issue.severity,;
+            recommendation: issue.recommendation,;
+          })),;
         });
-      }
-    }
+      };
+    };
 
-    // Save new ticket image if provided
-    if (updateData.ticketImageUrl) {
-      await prisma.ticket_images.create({
-        data: {
-          weigh_ticket_id: ticketId,
-          image_url: updateData.ticketImageUrl,
-          image_type: 'ticket',
-          captured_by: userId,
-        },
+    // Save new ticket image if provided;
+    if (updateData.ticketImageUrl) {;
+      await prisma.ticket_images.create({;
+        data: {;
+          weigh_ticket_id: ticketId,;
+          image_url: updateData.ticketImageUrl,;
+          image_type: 'ticket',;
+          captured_by: userId,;
+        },;
       });
-    }
+    };
 
-    // Save new signature if provided
-    if (updateData.signatureImageUrl && updateData.signatureName) {
-      await prisma.ticket_signatures.create({
-        data: {
-          weigh_ticket_id: ticketId,
-          signature_url: updateData.signatureImageUrl,
-          name: updateData.signatureName,
-          role: updateData.signatureRole,
-        },
+    // Save new signature if provided;
+    if (updateData.signatureImageUrl && updateData.signatureName) {;
+      await prisma.ticket_signatures.create({;
+        data: {;
+          weigh_ticket_id: ticketId,;
+          signature_url: updateData.signatureImageUrl,;
+          name: updateData.signatureName,;
+          role: updateData.signatureRole,;
+        },;
       });
-    }
+    };
 
-    // Get the updated ticket with all related data
-    const completeTicket = await prisma.weigh_tickets.findUnique({
-      where: { id: ticketId },
-      include: {
-        weights: {
-          include: {
-            vehicles: true,
-            drivers: true,
-            axle_weights: true,
-          },
-        },
-        scales: true,
-        compliance_issues: true,
-        ticket_images: true,
-        ticket_signatures: true,
-      },
+    // Get the updated ticket with all related data;
+    const completeTicket = await prisma.weigh_tickets.findUnique({;
+      where: { id: ticketId },;
+      include: {;
+        weights: {;
+          include: {;
+            vehicles: true,;
+            drivers: true,;
+            axle_weights: true,;
+          },;
+        },;
+        scales: true,;
+        compliance_issues: true,;
+        ticket_images: true,;
+        ticket_signatures: true,;
+      },;
     });
 
     return { success: true, ticket: completeTicket };
-  } catch (error: any) {
+  } catch (error: any) {;
     logger.error(`Error updating weigh ticket: ${error.message}`, { error });
     return { success: false, error: error.message };
-  }
+  };
 };

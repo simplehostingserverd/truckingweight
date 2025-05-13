@@ -8,10 +8,10 @@ import { logger } from '../../utils/logger';
 const prisma = new PrismaClient();
 const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 
-export interface TelematicsData {
+export interface TelematicsData {;
   vehicleId: string;
   timestamp: Date;
-  location?: {
+  location?: {;
     latitude: number;
     longitude: number;
   };
@@ -20,220 +20,220 @@ export interface TelematicsData {
   fuelLevel?: number;
   odometer?: number;
   diagnosticCodes?: string[];
-  driverHours?: {
+  driverHours?: {;
     drivingTime: number;
     dutyTime: number;
     restTime: number;
   };
-  events?: {
+  events?: {;
     type: string;
     timestamp: Date;
     details: any;
   }[];
-}
+};
 
-export interface TelematicsProvider {
+export interface TelematicsProvider {;
   fetchVehicleData(vehicleId: string): Promise<TelematicsData>;
   fetchDriverData(driverId: string): Promise<any>;
   fetchEvents(startTime: Date, endTime: Date): Promise<any[]>;
   subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<any>;
-}
+};
 
-export class TelematicsService {
+export class TelematicsService {;
   private providers: Map<string, TelematicsProvider> = new Map();
 
-  constructor() {
-    // Initialize providers
+  constructor() {;
+    // Initialize providers;
     this.providers.set('samsara', new SamsaraService());
     this.providers.set('geotab', new GeotabService());
-  }
+  };
 
-  /**
-   * Get a telematics provider instance
-   */
-  getProvider(providerName: string): TelematicsProvider | null {
+  /**;
+   * Get a telematics provider instance;
+   */;
+  getProvider(providerName: string): TelematicsProvider | null {;
     return this.providers.get(providerName.toLowerCase()) || null;
-  }
+  };
 
-  /**
-   * Fetch vehicle data from a telematics provider
-   */
-  async fetchVehicleData(connectionId: string, vehicleId: string): Promise<TelematicsData | null> => {
-    try {
-      // Get the integration connection
-      const connection = await prisma.integration_connections.findUnique({
-        where: { id: connectionId },
+  /**;
+   * Fetch vehicle data from a telematics provider;
+   */;
+  async fetchVehicleData(connectionId: string, vehicleId: string): Promise<TelematicsData | null> => {;
+    try {;
+      // Get the integration connection;
+      const connection = await prisma.integration_connections.findUnique({;
+        where: { id: connectionId },;
       });
 
-      if (!connection || connection.integration_type !== 'telematics' || !connection.is_active) {
+      if (!connection || connection.integration_type !== 'telematics' || !connection.is_active) {;
         throw new Error('Invalid or inactive telematics connection');
-      }
+      };
 
-      // Get the provider
+      // Get the provider;
       const provider = this.getProvider(connection.provider);
-      if (!provider) {
+      if (!provider) {;
         throw new Error(`Unsupported telematics provider: ${connection.provider}`);
-      }
+      };
 
-      // Check cache first
+      // Check cache first;
       const cacheKey = `telematics:vehicle:${vehicleId}`;
       const cachedData = await redis.get(cacheKey);
-      if (cachedData) {
+      if (cachedData) {;
         return JSON.parse(cachedData);
-      }
+      };
 
-      // Fetch data from provider
+      // Fetch data from provider;
       const data = await provider.fetchVehicleData(vehicleId);
 
-      // Cache the data for 5 minutes
+      // Cache the data for 5 minutes;
       await redis.set(cacheKey, JSON.stringify(data), 'EX', 300);
 
-      // Log the successful fetch
-      await this.logTelematicsEvent(connectionId, 'fetch_vehicle_data', 'success', {
-        vehicleId,
-        timestamp: new Date(),
+      // Log the successful fetch;
+      await this.logTelematicsEvent(connectionId, 'fetch_vehicle_data', 'success', {;
+        vehicleId,;
+        timestamp: new Date(),;
       });
 
       return data;
-    } catch (error) {
+    } catch (error) {;
       logger.error('Error fetching vehicle data:', error);
 
-      // Log the error
-      await this.logTelematicsEvent(connectionId, 'fetch_vehicle_data', 'error', {
-        vehicleId,
-        error: error.message,
+      // Log the error;
+      await this.logTelematicsEvent(connectionId, 'fetch_vehicle_data', 'error', {;
+        vehicleId,;
+        error: error.message,;
       });
 
       return null;
-    }
-  }
+    };
+  };
 
-  /**
-   * Fetch driver data from a telematics provider
-   */
-  async fetchDriverData(connectionId: string, driverId: string): Promise<any | null> => {
-    try {
-      // Get the integration connection
-      const connection = await prisma.integration_connections.findUnique({
-        where: { id: connectionId },
+  /**;
+   * Fetch driver data from a telematics provider;
+   */;
+  async fetchDriverData(connectionId: string, driverId: string): Promise<any | null> => {;
+    try {;
+      // Get the integration connection;
+      const connection = await prisma.integration_connections.findUnique({;
+        where: { id: connectionId },;
       });
 
-      if (!connection || connection.integration_type !== 'telematics' || !connection.is_active) {
+      if (!connection || connection.integration_type !== 'telematics' || !connection.is_active) {;
         throw new Error('Invalid or inactive telematics connection');
-      }
+      };
 
-      // Get the provider
+      // Get the provider;
       const provider = this.getProvider(connection.provider);
-      if (!provider) {
+      if (!provider) {;
         throw new Error(`Unsupported telematics provider: ${connection.provider}`);
-      }
+      };
 
-      // Check cache first
+      // Check cache first;
       const cacheKey = `telematics:driver:${driverId}`;
       const cachedData = await redis.get(cacheKey);
-      if (cachedData) {
+      if (cachedData) {;
         return JSON.parse(cachedData);
-      }
+      };
 
-      // Fetch data from provider
+      // Fetch data from provider;
       const data = await provider.fetchDriverData(driverId);
 
-      // Cache the data for 5 minutes
+      // Cache the data for 5 minutes;
       await redis.set(cacheKey, JSON.stringify(data), 'EX', 300);
 
-      // Log the successful fetch
-      await this.logTelematicsEvent(connectionId, 'fetch_driver_data', 'success', {
-        driverId,
-        timestamp: new Date(),
+      // Log the successful fetch;
+      await this.logTelematicsEvent(connectionId, 'fetch_driver_data', 'success', {;
+        driverId,;
+        timestamp: new Date(),;
       });
 
       return data;
-    } catch (error) {
+    } catch (error) {;
       logger.error('Error fetching driver data:', error);
 
-      // Log the error
-      await this.logTelematicsEvent(connectionId, 'fetch_driver_data', 'error', {
-        driverId,
-        error: error.message,
+      // Log the error;
+      await this.logTelematicsEvent(connectionId, 'fetch_driver_data', 'error', {;
+        driverId,;
+        error: error.message,;
       });
 
       return null;
-    }
-  }
+    };
+  };
 
-  /**
-   * Subscribe to telematics events
-   */
-  async subscribeToEvents(
-    connectionId: string,
-    eventTypes: string[],
-    callbackUrl: string
-  ): Promise<boolean> => {
-    try {
-      // Get the integration connection
-      const connection = await prisma.integration_connections.findUnique({
-        where: { id: connectionId },
+  /**;
+   * Subscribe to telematics events;
+   */;
+  async subscribeToEvents(;
+    connectionId: string,;
+    eventTypes: string[],;
+    callbackUrl: string;
+  ): Promise<boolean> => {;
+    try {;
+      // Get the integration connection;
+      const connection = await prisma.integration_connections.findUnique({;
+        where: { id: connectionId },;
       });
 
-      if (!connection || connection.integration_type !== 'telematics' || !connection.is_active) {
+      if (!connection || connection.integration_type !== 'telematics' || !connection.is_active) {;
         throw new Error('Invalid or inactive telematics connection');
-      }
+      };
 
-      // Get the provider
+      // Get the provider;
       const provider = this.getProvider(connection.provider);
-      if (!provider) {
+      if (!provider) {;
         throw new Error(`Unsupported telematics provider: ${connection.provider}`);
-      }
+      };
 
-      // Subscribe to events
+      // Subscribe to events;
       await provider.subscribeToEvents(eventTypes, callbackUrl);
 
-      // Log the successful subscription
-      await this.logTelematicsEvent(connectionId, 'subscribe_events', 'success', {
-        eventTypes,
-        callbackUrl,
+      // Log the successful subscription;
+      await this.logTelematicsEvent(connectionId, 'subscribe_events', 'success', {;
+        eventTypes,;
+        callbackUrl,;
       });
 
       return true;
-    } catch (error) {
+    } catch (error) {;
       logger.error('Error subscribing to telematics events:', error);
 
-      // Log the error
-      await this.logTelematicsEvent(connectionId, 'subscribe_events', 'error', {
-        eventTypes,
-        callbackUrl,
-        error: error.message,
+      // Log the error;
+      await this.logTelematicsEvent(connectionId, 'subscribe_events', 'error', {;
+        eventTypes,;
+        callbackUrl,;
+        error: error.message,;
       });
 
       return false;
-    }
-  }
+    };
+  };
 
-  /**
-   * Log a telematics event
-   */
-  private async logTelematicsEvent(
-    connectionId: string,
-    eventType: string,
-    status: 'success' | 'error' | 'warning',
-    details: any
-  ): Promise<void> => {
-    try {
-      await prisma.integration_logs.create({
-        data: {
-          id: uuidv4(),
-          integration_connection_id: connectionId,
-          event_type: eventType,
-          status,
-          message: `Telematics ${eventType} ${status}`,
-          details,
-        },
+  /**;
+   * Log a telematics event;
+   */;
+  private async logTelematicsEvent(;
+    connectionId: string,;
+    eventType: string,;
+    status: 'success' | 'error' | 'warning',;
+    details: any;
+  ): Promise<void> => {;
+    try {;
+      await prisma.integration_logs.create({;
+        data: {;
+          id: uuidv4(),;
+          integration_connection_id: connectionId,;
+          event_type: eventType,;
+          status,;
+          message: `Telematics ${eventType} ${status}`,;
+          details,;
+        },;
       });
-    } catch (error) {
+    } catch (error) {;
       logger.error('Error logging telematics event:', error);
-    }
-  }
-}
+    };
+  };
+};
 
-// Export singleton instance
+// Export singleton instance;
 export const telematicsService = new TelematicsService();

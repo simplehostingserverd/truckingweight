@@ -11,8 +11,8 @@
  */
 export function debounce<T extends (...args: any[]) => any>(fn: T, ms = 300) {
   let timeoutId: ReturnType<typeof setTimeout>;
-  
-  return function(this: any, ...args: Parameters<T>) {
+
+  return function (this: any, ...args: Parameters<T>) {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => fn.apply(this, args), ms);
   };
@@ -26,11 +26,11 @@ export function debounce<T extends (...args: any[]) => any>(fn: T, ms = 300) {
  */
 export function throttle<T extends (...args: any[]) => any>(fn: T, ms = 300) {
   let lastCall = 0;
-  
-  return function(this: any, ...args: Parameters<T>) {
+
+  return function (this: any, ...args: Parameters<T>) {
     const now = Date.now();
     if (now - lastCall < ms) return;
-    
+
     lastCall = now;
     return fn.apply(this, args);
   };
@@ -43,11 +43,11 @@ export function throttle<T extends (...args: any[]) => any>(fn: T, ms = 300) {
  */
 export function memoize<T extends (...args: any[]) => any>(fn: T) {
   const cache = new Map();
-  
-  return function(this: any, ...args: Parameters<T>) {
+
+  return function (this: any, ...args: Parameters<T>) {
     const key = JSON.stringify(args);
     if (cache.has(key)) return cache.get(key);
-    
+
     const result = fn.apply(this, args);
     cache.set(key, result);
     return result;
@@ -78,19 +78,19 @@ export function createResourceLoader<T>(
   } = {}
 ) {
   const { maxRetries = 3, retryDelay = 1000, onError } = options;
-  
+
   return async function load(): Promise<T> {
     let retries = 0;
-    
+
     while (true) {
       try {
         return await loadFn();
       } catch (error) {
         if (retries >= maxRetries) throw error;
-        
+
         retries++;
         if (onError) onError(error as Error, retries);
-        
+
         // Wait before retrying
         await new Promise(resolve => setTimeout(resolve, retryDelay * retries));
       }
@@ -108,18 +108,18 @@ export function useLazyImage(src: string, placeholder: string) {
   if (typeof window === 'undefined') {
     return { currentSrc: placeholder, isLoading: true };
   }
-  
+
   const image = new Image();
   let currentSrc = placeholder;
   let isLoading = true;
-  
+
   image.onload = () => {
     currentSrc = src;
     isLoading = false;
   };
-  
+
   image.src = src;
-  
+
   return { currentSrc, isLoading };
 }
 
@@ -138,11 +138,7 @@ export function isIntersectionObserverSupported(): boolean {
  * @param visibleItems The number of visible items
  * @returns The visible items and scroll handlers
  */
-export function createVirtualList<T>(
-  items: T[],
-  itemHeight: number,
-  visibleItems: number
-) {
+export function createVirtualList<T>(items: T[], itemHeight: number, visibleItems: number) {
   if (typeof window === 'undefined') {
     return {
       visibleItems: items.slice(0, visibleItems),
@@ -150,15 +146,15 @@ export function createVirtualList<T>(
       onScroll: () => {},
     };
   }
-  
+
   let startIndex = 0;
   let endIndex = Math.min(startIndex + visibleItems, items.length);
-  
+
   const onScroll = (scrollTop: number) => {
     startIndex = Math.floor(scrollTop / itemHeight);
     endIndex = Math.min(startIndex + visibleItems, items.length);
   };
-  
+
   return {
     visibleItems: items.slice(startIndex, endIndex),
     totalHeight: items.length * itemHeight,
@@ -176,21 +172,21 @@ export const cacheAPI = {
    * @param data The data to cache
    * @param ttl Time to live in seconds
    */
-  async set(key: string, data: any, ttl = 3600): Promise<void> {
+  async set(key: string, data: any, ttl = 3600): Promise<void> => {
     if (typeof window === 'undefined') return;
-    
+
     try {
       const cache = {
         data,
         expires: Date.now() + ttl * 1000,
       };
-      
+
       localStorage.setItem(`cache_${key}`, JSON.stringify(cache));
     } catch (error) {
       console.error('Cache set error:', error);
     }
   },
-  
+
   /**
    * Get data from the cache
    * @param key The cache key
@@ -198,44 +194,44 @@ export const cacheAPI = {
    */
   get(key: string): any {
     if (typeof window === 'undefined') return null;
-    
+
     try {
       const cacheJson = localStorage.getItem(`cache_${key}`);
       if (!cacheJson) return null;
-      
+
       const cache = JSON.parse(cacheJson);
       if (cache.expires < Date.now()) {
         localStorage.removeItem(`cache_${key}`);
         return null;
       }
-      
+
       return cache.data;
     } catch (error) {
       console.error('Cache get error:', error);
       return null;
     }
   },
-  
+
   /**
    * Remove data from the cache
    * @param key The cache key
    */
   remove(key: string): void {
     if (typeof window === 'undefined') return;
-    
+
     try {
       localStorage.removeItem(`cache_${key}`);
     } catch (error) {
       console.error('Cache remove error:', error);
     }
   },
-  
+
   /**
    * Clear all cached data
    */
   clear(): void {
     if (typeof window === 'undefined') return;
-    
+
     try {
       Object.keys(localStorage)
         .filter(key => key.startsWith('cache_'))
@@ -254,13 +250,13 @@ export const cacheAPI = {
  */
 export function measurePerformance<T>(fn: () => T, label: string): T {
   if (typeof performance === 'undefined') return fn();
-  
+
   const start = performance.now();
   const result = fn();
   const end = performance.now();
-  
+
   console.log(`${label}: ${end - start}ms`);
-  
+
   return result;
 }
 
@@ -279,26 +275,28 @@ export function createCachedFetch<T>(
   }
 ) {
   const { key, ttl = 3600, staleWhileRevalidate = true } = options;
-  
+
   return async function cachedFetch(): Promise<T> {
     // Try to get from cache first
     const cachedData = cacheAPI.get(key);
-    
+
     // If we have cached data and we're not revalidating, return it
     if (cachedData && !staleWhileRevalidate) {
       return cachedData;
     }
-    
+
     // If we have cached data and we're revalidating, return it and fetch in background
     if (cachedData && staleWhileRevalidate) {
       // Fetch in background
-      fetcher().then(newData => {
-        cacheAPI.set(key, newData, ttl);
-      }).catch(console.error);
-      
+      fetcher()
+        .then(newData => {
+          cacheAPI.set(key, newData, ttl);
+        })
+        .catch(console.error);
+
       return cachedData;
     }
-    
+
     // If we don't have cached data, fetch it
     const data = await fetcher();
     cacheAPI.set(key, data, ttl);
