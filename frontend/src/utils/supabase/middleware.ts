@@ -27,6 +27,15 @@ export async function middleware(req: NextRequest) {
     );
   }
 
+  // Add CORS headers to allow Supabase requests
+  res.headers.set('Access-Control-Allow-Origin', '*');
+  res.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.headers.set(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version, X-File-Name'
+  );
+  res.headers.set('Access-Control-Allow-Credentials', 'true');
+
   // X-XSS-Protection - Stops pages from loading when they detect reflected XSS attacks
   res.headers.set('X-XSS-Protection', '1; mode=block');
 

@@ -19,6 +19,87 @@ interface LogoCarouselProps {
   subtitle?: string;
 }
 
+// Fallback logos for when Supabase fetch fails
+const FALLBACK_TRUCKING_LOGOS: Logo[] = [
+  {
+    id: 1,
+    name: 'JB Hunt',
+    logo_url: '/logos/jb-hunt.png',
+    website: 'https://www.jbhunt.com',
+    type: 'trucking',
+  },
+  {
+    id: 2,
+    name: 'Schneider',
+    logo_url: '/logos/schneider.png',
+    website: 'https://schneider.com',
+    type: 'trucking',
+  },
+  {
+    id: 3,
+    name: 'Swift Transportation',
+    logo_url: '/logos/swift.png',
+    website: 'https://www.swifttrans.com',
+    type: 'trucking',
+  },
+  {
+    id: 4,
+    name: 'Werner Enterprises',
+    logo_url: '/logos/werner.png',
+    website: 'https://www.werner.com',
+    type: 'trucking',
+  },
+  {
+    id: 5,
+    name: 'Knight-Swift',
+    logo_url: '/logos/knight-swift.png',
+    website: 'https://www.knightswift.com',
+    type: 'trucking',
+  },
+];
+
+const FALLBACK_CITY_LOGOS: Logo[] = [
+  {
+    id: 6,
+    name: 'Houston',
+    logo_url: '/logos/cities/houston.png',
+    website: 'https://www.houstontx.gov',
+    type: 'city',
+  },
+  {
+    id: 7,
+    name: 'Dallas',
+    logo_url: '/logos/cities/dallas.png',
+    website: 'https://www.dallascityhall.com',
+    type: 'city',
+  },
+  {
+    id: 8,
+    name: 'San Antonio',
+    logo_url: '/logos/cities/san-antonio.png',
+    website: 'https://www.sanantonio.gov',
+    type: 'city',
+  },
+  {
+    id: 9,
+    name: 'Austin',
+    logo_url: '/logos/cities/austin.png',
+    website: 'https://www.austintexas.gov',
+    type: 'city',
+  },
+  {
+    id: 10,
+    name: 'Fort Worth',
+    logo_url: '/logos/cities/fort-worth.png',
+    website: 'https://www.fortworthtexas.gov',
+    type: 'city',
+  },
+];
+
+// Placeholder image for missing logos
+const PLACEHOLDER_IMAGE =
+  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2YwZjBmMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IiM5OTkiPkxvZ288L3RleHQ+PC9zdmc+';
+
 export default function LogoCarousel({
   type = 'all',
   title = 'Trusted by Industry Leaders',
@@ -26,6 +107,7 @@ export default function LogoCarousel({
 }: LogoCarouselProps) {
   const [logos, setLogos] = useState<Logo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [useFallback, setUseFallback] = useState(false);
   const supabase = createClientComponentClient();
   const { handleError } = useErrorHandler();
 
@@ -33,6 +115,19 @@ export default function LogoCarousel({
     const fetchLogos = async () => {
       try {
         setIsLoading(true);
+
+        // If we've already determined to use fallbacks, don't try to fetch from Supabase
+        if (useFallback) {
+          if (type === 'trucking') {
+            setLogos(FALLBACK_TRUCKING_LOGOS);
+          } else if (type === 'city') {
+            setLogos(FALLBACK_CITY_LOGOS);
+          } else {
+            // For 'all' type, combine both sets
+            setLogos([...FALLBACK_TRUCKING_LOGOS, ...FALLBACK_CITY_LOGOS]);
+          }
+          return;
+        }
 
         let query = supabase.from('company_logos').select('*');
 
@@ -44,19 +139,53 @@ export default function LogoCarousel({
         const { data, error } = await query;
 
         if (error) {
-          throw error;
+          console.warn('Error fetching logos from Supabase:', error);
+          setUseFallback(true);
+
+          // Use fallback logos based on type
+          if (type === 'trucking') {
+            setLogos(FALLBACK_TRUCKING_LOGOS);
+          } else if (type === 'city') {
+            setLogos(FALLBACK_CITY_LOGOS);
+          } else {
+            // For 'all' type, combine both sets
+            setLogos([...FALLBACK_TRUCKING_LOGOS, ...FALLBACK_CITY_LOGOS]);
+          }
+          return;
         }
 
-        setLogos(data || []);
+        if (data && data.length > 0) {
+          setLogos(data);
+        } else {
+          // If no data returned, use fallbacks
+          setUseFallback(true);
+          if (type === 'trucking') {
+            setLogos(FALLBACK_TRUCKING_LOGOS);
+          } else if (type === 'city') {
+            setLogos(FALLBACK_CITY_LOGOS);
+          } else {
+            setLogos([...FALLBACK_TRUCKING_LOGOS, ...FALLBACK_CITY_LOGOS]);
+          }
+        }
       } catch (error) {
         handleError(error, 'LogoCarousel');
+        setUseFallback(true);
+
+        // Use fallback logos based on type
+        if (type === 'trucking') {
+          setLogos(FALLBACK_TRUCKING_LOGOS);
+        } else if (type === 'city') {
+          setLogos(FALLBACK_CITY_LOGOS);
+        } else {
+          setLogos([...FALLBACK_TRUCKING_LOGOS, ...FALLBACK_CITY_LOGOS]);
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchLogos();
-  }, [supabase, type, handleError]);
+  }, [supabase, type, handleError, useFallback]);
 
   if (isLoading) {
     return (
@@ -107,6 +236,10 @@ export default function LogoCarousel({
                     width={160}
                     height={80}
                     className="max-h-16 md:max-h-20 w-auto object-contain"
+                    onError={e => {
+                      // Fallback to placeholder if image fails to load
+                      (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                    }}
                   />
                 </a>
               </div>
@@ -130,6 +263,10 @@ export default function LogoCarousel({
                     width={160}
                     height={80}
                     className="max-h-16 md:max-h-20 w-auto object-contain"
+                    onError={e => {
+                      // Fallback to placeholder if image fails to load
+                      (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                    }}
                   />
                 </a>
               </div>
