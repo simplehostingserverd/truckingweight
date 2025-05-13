@@ -6,10 +6,8 @@
   "scripts": {
     "start": "node server-fastify.js",
     "start:express": "node server.js",
-    "predev": "node scripts/check-redis.js",
     "dev": "nodemon server-fastify.js",
     "dev:express": "nodemon server.js",
-    "check-redis": "node scripts/check-redis.js",
     "lint": "eslint .",
     "lint:check": "eslint \"**/*.{js,ts}\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"generated/**\" --ignore-pattern \"prisma/**\"",
     "lint:fix": "eslint \"**/*.{js,ts}\" --fix --ignore-pattern \"node_modules/**\" --ignore-pattern \"generated/**\" --ignore-pattern \"prisma/**\"",
@@ -35,7 +33,6 @@
     "exceljs": "^4.4.0",
     "fastify": "^4.29.1",
     "fastify-plugin": "^4.5.1",
-    "ioredis": "^5.6.1",
     "node-cron": "^3.0.3",
     "paseto": "^3.1.4",
     "pdfkit": "^0.14.0",

@@ -1,11 +1,11 @@
 /**
  * Token Service
- * Handles token storage, validation, and management using Redis
+ * Handles token storage, validation, and management using in-memory cache
  * Note: This service is being deprecated in favor of pasetoService.js
  * It is kept for backward compatibility with API keys only
  */
 
-const { redisService } = require('./redis');
+const cacheService = require('./cache');
 const pasetoService = require('./pasetoService');
 
 // Token expiration times (in seconds)
@@ -15,8 +15,8 @@ const TOKEN_EXPIRY = {
   API_KEY: 365 * 24 * 60 * 60, // 1 year
 };
 
-// Redis key prefixes
-const REDIS_KEYS = {
+// Cache key prefixes
+const CACHE_KEYS = {
   SESSION: 'session:',
   BLACKLIST: 'blacklist:',
   API_KEY: 'apikey:',
@@ -66,56 +66,55 @@ const invalidateToken = async token => {
 };
 
 /**
- * Store API key in Redis
+ * Store API key in cache
  * @param {string} apiKey - API key
  * @param {Object} apiKeyData - API key data
  * @returns {Promise<boolean>} - Success status
  */
 const storeApiKey = async (apiKey, apiKeyData) => {
   try {
-    const key = `${REDIS_KEYS.API_KEY}${apiKey}`;
+    const key = `${CACHE_KEYS.API_KEY}${apiKey}`;
     const expiresIn = apiKeyData.expiresAt
       ? Math.floor((new Date(apiKeyData.expiresAt).getTime() - Date.now()) / 1000)
       : TOKEN_EXPIRY.API_KEY;
 
     // Store API key data
-    await redisService.set(key, JSON.stringify(apiKeyData), 'EX', expiresIn);
+    await cacheService.set(key, apiKeyData, expiresIn);
 
     return true;
   } catch (error) {
-    console.error('Error storing API key in Redis:', error);
+    console.error('Error storing API key in cache:', error);
     return false;
   }
 };
 
 /**
- * Validate API key in Redis
+ * Validate API key in cache
  * @param {string} apiKey - API key
  * @returns {Promise<Object|null>} - API key data if valid, null otherwise
  */
 const validateApiKey = async apiKey => {
   try {
-    const key = `${REDIS_KEYS.API_KEY}${apiKey}`;
-    const apiKeyData = await redisService.get(key);
+    const key = `${CACHE_KEYS.API_KEY}${apiKey}`;
+    const apiKeyData = await cacheService.get(key);
 
     if (!apiKeyData) {
       return null;
     }
 
     // Update last used timestamp
-    const data = JSON.parse(apiKeyData);
-    data.lastUsedAt = new Date().toISOString();
+    apiKeyData.lastUsedAt = new Date().toISOString();
 
-    // Update in Redis
-    const expiresIn = data.expiresAt
-      ? Math.floor((new Date(data.expiresAt).getTime() - Date.now()) / 1000)
+    // Update in cache
+    const expiresIn = apiKeyData.expiresAt
+      ? Math.floor((new Date(apiKeyData.expiresAt).getTime() - Date.now()) / 1000)
       : TOKEN_EXPIRY.API_KEY;
 
-    await redisService.set(key, JSON.stringify(data), 'EX', expiresIn);
+    await cacheService.set(key, apiKeyData, expiresIn);
 
-    return data;
+    return apiKeyData;
   } catch (error) {
-    console.error('Error validating API key in Redis:', error);
+    console.error('Error validating API key in cache:', error);
     return null;
   }
 };
@@ -128,5 +127,5 @@ module.exports = {
   storeApiKey,
   validateApiKey,
   TOKEN_EXPIRY,
-  REDIS_KEYS,
+  CACHE_KEYS,
 };

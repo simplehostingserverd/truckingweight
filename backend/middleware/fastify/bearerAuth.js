@@ -1,12 +1,12 @@
 /**
  * Bearer Authentication Middleware for Fastify
  * Validates bearer tokens from the Authorization header
- * Checks token validity in Redis or database
+ * Checks token validity in database
  * Uses Paseto tokens for enhanced security
  */
 
 const { createClient } = require('@supabase/supabase-js');
-const { redisService } = require('../../services/redis');
+const cacheService = require('../../services/cache');
 const pasetoService = require('../../services/pasetoService');
 
 // Initialize Supabase client
@@ -37,7 +37,7 @@ const tokenService = require('../../services/tokenService');
 
 /**
  * Bearer authentication middleware
- * Validates Paseto tokens and checks Redis for token validity
+ * Validates Paseto tokens and checks for token validity
  */
 const bearerAuthMiddleware = async (request, reply) => {
   try {

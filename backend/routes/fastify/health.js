@@ -21,11 +21,6 @@ async function routes(fastify, options) {
 
   // Detailed health check
   fastify.get('/detailed', async (request, reply) => {
-    // Check Redis connection
-    const redisStatus = {
-      connected: redisService.isReady(),
-    };
-
     // Check database connection
     let dbStatus = { connected: false };
     try {
@@ -38,6 +33,12 @@ async function routes(fastify, options) {
       dbStatus.error = err.message;
     }
 
+    // Check cache status
+    const cacheStatus = {
+      available: true,
+      type: 'in-memory LRU',
+    };
+
     // System info
     const systemInfo = {
       uptime: process.uptime(),
@@ -48,24 +49,38 @@ async function routes(fastify, options) {
     };
 
     return {
-      status: redisStatus.connected && dbStatus.connected ? 'healthy' : 'degraded',
+      status: dbStatus.connected ? 'healthy' : 'degraded',
       timestamp: new Date().toISOString(),
-      redis: redisStatus,
+      cache: cacheStatus,
       database: dbStatus,
       system: systemInfo,
     };
   });
 
-  // Redis health check
-  fastify.get('/redis', async (request, reply) => {
-    const isConnected = redisService.isReady();
+  // Cache health check
+  fastify.get('/cache', async (request, reply) => {
+    try {
+      // Test cache by setting and getting a value
+      const testKey = 'health-check-test';
+      const testValue = { timestamp: new Date().toISOString() };
 
-    if (!isConnected) {
+      await cacheService.set(testKey, testValue);
+      const retrieved = await cacheService.get(testKey);
+
+      if (retrieved && retrieved.timestamp) {
+        return {
+          status: 'ok',
+          message: 'Cache is working properly',
+          type: 'in-memory LRU',
+        };
+      } else {
+        reply.code(503);
+        return { status: 'error', message: 'Cache retrieval failed' };
+      }
+    } catch (err) {
       reply.code(503);
-      return { status: 'error', message: 'Redis connection failed' };
+      return { status: 'error', message: 'Cache operation failed', error: err.message };
     }
-
-    return { status: 'ok', message: 'Redis connection successful' };
   });
 
   // Database health check

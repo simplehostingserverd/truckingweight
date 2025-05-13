@@ -6,7 +6,7 @@
 
 const { V4 } = require('paseto');
 const crypto = require('crypto');
-const { redisService } = require('./redis');
+const cacheService = require('./cache');
 
 // Generate a secure key for Paseto tokens
 let secretKey;
@@ -43,8 +43,8 @@ const TOKEN_EXPIRY = {
   API_KEY: 365 * 24 * 60 * 60, // 1 year
 };
 
-// Redis key prefixes
-const REDIS_KEYS = {
+// Cache key prefixes
+const CACHE_KEYS = {
   SESSION: 'session:',
   BLACKLIST: 'blacklist:',
   API_KEY: 'apikey:',
@@ -58,17 +58,20 @@ const REDIS_KEYS = {
  */
 const generateToken = async (payload, type = 'access') => {
   const expiresIn = type === 'refresh' ? TOKEN_EXPIRY.REFRESH : TOKEN_EXPIRY.ACCESS;
-  
+
   // Create expiration date
   const expirationDate = new Date();
   expirationDate.setSeconds(expirationDate.getSeconds() + expiresIn);
-  
+
   // Create token with Paseto
-  return await V4.encrypt({
-    ...payload,
-    type,
-    exp: expirationDate.toISOString(),
-  }, secretKey);
+  return await V4.encrypt(
+    {
+      ...payload,
+      type,
+      exp: expirationDate.toISOString(),
+    },
+    secretKey
+  );
 };
 
 /**
@@ -76,15 +79,15 @@ const generateToken = async (payload, type = 'access') => {
  * @param {string} token - Paseto token
  * @returns {Promise<Object|null>} - Decrypted payload or null if invalid
  */
-const decryptToken = async (token) => {
+const decryptToken = async token => {
   try {
     const payload = await V4.decrypt(token, secretKey);
-    
+
     // Check if token has expired
     if (payload.exp && new Date(payload.exp) < new Date()) {
       return null;
     }
-    
+
     return payload;
   } catch (error) {
     console.error('Error decrypting Paseto token:', error);
@@ -93,7 +96,7 @@ const decryptToken = async (token) => {
 };
 
 /**
- * Store token in Redis
+ * Store token in cache
  * @param {string} token - Paseto token
  * @param {Object} userData - User data to store with token
  * @param {string} type - Token type ('access' or 'refresh')
@@ -102,35 +105,34 @@ const decryptToken = async (token) => {
 const storeToken = async (token, userData, type = 'access') => {
   try {
     const expiresIn = type === 'refresh' ? TOKEN_EXPIRY.REFRESH : TOKEN_EXPIRY.ACCESS;
-    const key = `${REDIS_KEYS.SESSION}${token}`;
+    const key = `${CACHE_KEYS.SESSION}${token}`;
 
     // Store token with user data
-    await redisService.set(
+    await cacheService.set(
       key,
-      JSON.stringify({
+      {
         ...userData,
         tokenType: type,
-      }),
-      'EX',
+      },
       expiresIn
     );
 
     return true;
   } catch (error) {
-    console.error('Error storing token in Redis:', error);
+    console.error('Error storing token in cache:', error);
     return false;
   }
 };
 
 /**
- * Validate token in Redis
+ * Validate token in cache
  * @param {string} token - Paseto token
  * @returns {Promise<Object|null>} - User data if valid, null otherwise
  */
 const validateToken = async token => {
   try {
     // Check if token is blacklisted
-    const isBlacklisted = await redisService.get(`${REDIS_KEYS.BLACKLIST}${token}`);
+    const isBlacklisted = await cacheService.get(`${CACHE_KEYS.BLACKLIST}${token}`);
     if (isBlacklisted) {
       return null;
     }
@@ -142,14 +144,14 @@ const validateToken = async token => {
     }
 
     // Get session data
-    const sessionData = await redisService.get(`${REDIS_KEYS.SESSION}${token}`);
+    const sessionData = await cacheService.get(`${CACHE_KEYS.SESSION}${token}`);
     if (!sessionData) {
       return null;
     }
 
-    return JSON.parse(sessionData);
+    return sessionData;
   } catch (error) {
-    console.error('Error validating token in Redis:', error);
+    console.error('Error validating token in cache:', error);
     return null;
   }
 };
@@ -174,10 +176,10 @@ const invalidateToken = async token => {
     }
 
     // Add token to blacklist
-    await redisService.set(`${REDIS_KEYS.BLACKLIST}${token}`, '1', 'EX', expiresIn);
+    await cacheService.set(`${CACHE_KEYS.BLACKLIST}${token}`, true, expiresIn);
 
     // Remove from active sessions
-    await redisService.del(`${REDIS_KEYS.SESSION}${token}`);
+    await cacheService.delete(`${CACHE_KEYS.SESSION}${token}`);
 
     return true;
   } catch (error) {
@@ -193,5 +195,5 @@ module.exports = {
   validateToken,
   invalidateToken,
   TOKEN_EXPIRY,
-  REDIS_KEYS,
+  CACHE_KEYS,
 };
