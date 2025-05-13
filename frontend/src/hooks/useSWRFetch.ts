@@ -4,7 +4,7 @@ import { handleApiError, AppError } from '@/utils/errorHandler';
 import logger from '@/utils/logger';
 
 // Create a fetcher function that uses axios with error handling
-const axiosFetcher = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+const axiosFetcher = async function <T>(url: string, config?: AxiosRequestConfig): Promise<T> {
   try {
     const response: AxiosResponse<T> = await axios(url, config);
     return response.data;
@@ -54,7 +54,7 @@ export function useSWRFetch<T = any>(
 
 // Hook for POST requests
 export function useSWRMutation<T = any, D = any>(url: string, options?: SWRConfiguration) {
-  const fetcher = async (url: string, { arg }: { arg: D }) => {
+  const fetcher = async function (url: string, { arg }: { arg: D }) {
     try {
       const response = await axios.post<T>(url, arg);
       return response.data;
@@ -79,7 +79,7 @@ export function useSWRMutation<T = any, D = any>(url: string, options?: SWRConfi
 
 // Hook for PUT requests
 export function useSWRPut<T = any, D = any>(url: string, options?: SWRConfiguration) {
-  const fetcher = async (url: string, { arg }: { arg: D }) => {
+  const fetcher = async function (url: string, { arg }: { arg: D }) {
     try {
       const response = await axios.put<T>(url, arg);
       return response.data;
@@ -104,7 +104,7 @@ export function useSWRPut<T = any, D = any>(url: string, options?: SWRConfigurat
 
 // Hook for DELETE requests
 export function useSWRDelete<T = any>(url: string, options?: SWRConfiguration) {
-  const fetcher = async (url: string) => {
+  const fetcher = async function (url: string) {
     try {
       const response = await axios.delete<T>(url);
       return response.data;
