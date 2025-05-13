@@ -172,6 +172,9 @@ const nextConfig = {
     // Better scroll handling
     scrollRestoration: true,
   },
+
+  // Transpile UI libraries
+  transpilePackages: ['@mui/material', '@mui/joy', '@mui/icons-material', 'lucide-react'],
 };
 
 // Apply bundle analyzer and PWA wrappers
