@@ -48,7 +48,7 @@ install_package() {
 # Check for missing packages and install them
 check_and_install_packages() {
   print_header "Checking for Missing Packages"
-  
+
   # List of essential packages for linting and formatting
   local packages=(
     "eslint"
@@ -63,7 +63,7 @@ check_and_install_packages() {
     "eslint-config-prettier"
     "eslint-plugin-prettier"
   )
-  
+
   for package in "${packages[@]}"; do
     if ! npm list $package --depth=0 >/dev/null 2>&1; then
       install_package $package
@@ -76,123 +76,123 @@ check_and_install_packages() {
 # Fix linting issues in the frontend
 fix_frontend_linting() {
   print_header "Fixing Frontend Linting Issues"
-  
+
   if [ ! -d "frontend" ]; then
     print_message "${YELLOW}" "⚠️" "Frontend directory not found, skipping"
     return
   fi
-  
+
   cd frontend || handle_error "Could not change to frontend directory"
-  
+
   print_message "${BLUE}" "🔍" "Running ESLint with auto-fix in frontend..."
   npx eslint --fix --max-warnings=0 "src/**/*.{js,jsx,ts,tsx}" || true
-  
+
   print_message "${BLUE}" "💅" "Running Prettier in frontend..."
   npx prettier --write "src/**/*.{js,jsx,ts,tsx,json,css,md}" || true
-  
+
   print_message "${GREEN}" "✅" "Frontend linting and formatting fixes applied"
-  
+
   cd ..
 }
 
 # Fix linting issues in the backend
 fix_backend_linting() {
   print_header "Fixing Backend Linting Issues"
-  
+
   if [ ! -d "backend" ]; then
     print_message "${YELLOW}" "⚠️" "Backend directory not found, skipping"
     return
-  }
-  
+  fi
+
   cd backend || handle_error "Could not change to backend directory"
-  
+
   print_message "${BLUE}" "🔍" "Running ESLint with auto-fix in backend..."
   npx eslint --fix "**/*.{js,ts}" --ignore-pattern "node_modules/" || true
-  
+
   print_message "${BLUE}" "💅" "Running Prettier in backend..."
   npx prettier --write "**/*.{js,ts,json,md}" --ignore-path .gitignore || true
-  
+
   print_message "${GREEN}" "✅" "Backend linting and formatting fixes applied"
-  
+
   cd ..
 }
 
 # Fix TypeScript syntax errors
 fix_typescript_syntax_errors() {
   print_header "Fixing TypeScript Syntax Errors"
-  
+
   # Check backend TypeScript files
   if [ -d "backend" ]; then
     cd backend || handle_error "Could not change to backend directory"
-    
+
     # Create a backup directory
     mkdir -p .ts-syntax-backups
-    
+
     # Find TypeScript files with common syntax errors
     local files_with_errors=$(grep -l -r "): Promise<" --include="*.ts" . 2>/dev/null || echo "")
-    
+
     if [ -n "$files_with_errors" ]; then
       print_message "${YELLOW}" "⚠️" "Found potential TypeScript syntax errors in backend"
-      
+
       # Process each file with potential errors
       for file in $files_with_errors; do
         print_message "${BLUE}" "🔧" "Fixing file: $file"
-        
+
         # Create a backup
         cp "$file" ".ts-syntax-backups/$(basename "$file").bak"
-        
+
         # Fix common TypeScript syntax errors
         # 1. Fix missing arrow functions in async methods returning Promise
         sed -i 's/): Promise<\([^>]*\)> {/): Promise<\1> => {/g' "$file"
-        
+
         # 2. Fix interface declarations with trailing semicolons
         sed -i 's/interface \([A-Za-z0-9_]*\) {;/interface \1 {/g' "$file"
-        
+
         # 3. Fix object literals with trailing semicolons
         sed -i 's/= {;/= {/g' "$file"
-        
+
         # 4. Fix missing semicolons at the end of statements
         sed -i 's/\([^;{]\)$/\1;/g' "$file"
-        
+
         print_message "${GREEN}" "✅" "Fixed potential syntax errors in $file"
       done
     else
       print_message "${GREEN}" "✅" "No common TypeScript syntax errors found in backend"
     fi
-    
+
     cd ..
   fi
-  
+
   # Check frontend TypeScript files
   if [ -d "frontend" ]; then
     cd frontend || handle_error "Could not change to frontend directory"
-    
+
     # Create a backup directory
     mkdir -p .ts-syntax-backups
-    
+
     # Find TypeScript files with common syntax errors
     local files_with_errors=$(grep -l -r "): Promise<" --include="*.ts" --include="*.tsx" src 2>/dev/null || echo "")
-    
+
     if [ -n "$files_with_errors" ]; then
       print_message "${YELLOW}" "⚠️" "Found potential TypeScript syntax errors in frontend"
-      
+
       # Process each file with potential errors
       for file in $files_with_errors; do
         print_message "${BLUE}" "🔧" "Fixing file: $file"
-        
+
         # Create a backup
         cp "$file" ".ts-syntax-backups/$(basename "$file").bak"
-        
+
         # Fix common TypeScript syntax errors
         # 1. Fix missing arrow functions in async methods returning Promise
         sed -i 's/): Promise<\([^>]*\)> {/): Promise<\1> => {/g' "$file"
-        
+
         print_message "${GREEN}" "✅" "Fixed potential syntax errors in $file"
       done
     else
       print_message "${GREEN}" "✅" "No common TypeScript syntax errors found in frontend"
     fi
-    
+
     cd ..
   fi
 }
@@ -200,9 +200,9 @@ fix_typescript_syntax_errors() {
 # Generate a comprehensive report of remaining issues
 generate_report() {
   print_header "Generating Comprehensive Report"
-  
+
   local report_file="mcp-bot-report.md"
-  
+
   # Start the report
   cat > "$report_file" << EOF
 # MCP Bot Report - $(date)
@@ -212,53 +212,53 @@ This report contains information about remaining issues that need to be fixed ma
 ## Summary
 
 EOF
-  
+
   # Check frontend issues
   if [ -d "frontend" ]; then
     cd frontend || handle_error "Could not change to frontend directory"
-    
+
     echo "### Frontend Issues" >> "../$report_file"
-    
+
     # Check ESLint issues
     echo -e "\n#### ESLint Issues" >> "../$report_file"
     npx eslint "src/**/*.{js,jsx,ts,tsx}" --max-warnings=0 > eslint-report.txt 2>&1 || true
     local eslint_count=$(grep -c "error\|warning" eslint-report.txt || echo "0")
     echo "- Found approximately $eslint_count ESLint issues" >> "../$report_file"
-    
+
     # Check TypeScript issues
     echo -e "\n#### TypeScript Issues" >> "../$report_file"
     npx tsc --noEmit > typescript-report.txt 2>&1 || true
     local ts_count=$(grep -c "error TS" typescript-report.txt || echo "0")
     echo "- Found approximately $ts_count TypeScript type errors" >> "../$report_file"
-    
+
     # Add sample issues to the report
     if [ "$eslint_count" -gt 0 ]; then
       echo -e "\n##### Sample ESLint Issues:" >> "../$report_file"
       head -n 10 eslint-report.txt >> "../$report_file"
       echo -e "\n..." >> "../$report_file"
     fi
-    
+
     if [ "$ts_count" -gt 0 ]; then
       echo -e "\n##### Sample TypeScript Issues:" >> "../$report_file"
       head -n 10 typescript-report.txt >> "../$report_file"
       echo -e "\n..." >> "../$report_file"
     fi
-    
+
     cd ..
   fi
-  
+
   # Check backend issues
   if [ -d "backend" ]; then
     cd backend || handle_error "Could not change to backend directory"
-    
+
     echo -e "\n### Backend Issues" >> "../$report_file"
-    
+
     # Check ESLint issues
     echo -e "\n#### ESLint Issues" >> "../$report_file"
     npx eslint "**/*.{js,ts}" --ignore-pattern "node_modules/" > eslint-report.txt 2>&1 || true
     local eslint_count=$(grep -c "error\|warning" eslint-report.txt || echo "0")
     echo "- Found approximately $eslint_count ESLint issues" >> "../$report_file"
-    
+
     # Check TypeScript issues
     echo -e "\n#### TypeScript Issues" >> "../$report_file"
     if [ -f "tsconfig.json" ]; then
@@ -268,23 +268,23 @@ EOF
     else
       echo "- No TypeScript configuration found" >> "../$report_file"
     fi
-    
+
     # Add sample issues to the report
     if [ "$eslint_count" -gt 0 ]; then
       echo -e "\n##### Sample ESLint Issues:" >> "../$report_file"
       head -n 10 eslint-report.txt >> "../$report_file"
       echo -e "\n..." >> "../$report_file"
     fi
-    
+
     if [ -f "tsconfig.json" ] && [ "$ts_count" -gt 0 ]; then
       echo -e "\n##### Sample TypeScript Issues:" >> "../$report_file"
       head -n 10 typescript-report.txt >> "../$report_file"
       echo -e "\n..." >> "../$report_file"
     fi
-    
+
     cd ..
   fi
-  
+
   # Add recommendations to the report
   cat >> "$report_file" << EOF
 
@@ -323,30 +323,30 @@ EOF
    - Enable "Format on Save" for automatic formatting
 
 EOF
-  
+
   print_message "${GREEN}" "✅" "Report generated: $report_file"
 }
 
 # Main function
 main() {
   print_header "MCP Bot - Automatic Linting and Formatting Fixer"
-  
+
   # Check for required tools
   command_exists npm || handle_error "npm is required but not installed"
   command_exists npx || handle_error "npx is required but not installed"
   command_exists grep || handle_error "grep is required but not installed"
   command_exists sed || handle_error "sed is required but not installed"
-  
+
   # Check and install missing packages
   check_and_install_packages
-  
+
   # Fix TypeScript syntax errors
   fix_typescript_syntax_errors
-  
+
   # Fix linting and formatting issues
   fix_frontend_linting
   fix_backend_linting
-  
+
   # Run the comprehensive linting script if it exists
   if [ -f "lint-check.sh" ]; then
     print_header "Running Comprehensive Linting Check"
@@ -354,10 +354,10 @@ main() {
     chmod +x lint-check.sh
     ./lint-check.sh --auto-fix-all --report || true
   fi
-  
+
   # Generate a comprehensive report
   generate_report
-  
+
   print_header "MCP Bot Completed"
   print_message "${GREEN}" "🎉" "Linting and formatting fixes applied!"
   print_message "${BLUE}" "📊" "Check mcp-bot-report.md for details on remaining issues"
