@@ -1,10 +1,11 @@
 /**
  * Authentication middleware
- * Verifies JWT token and sets user data in request object
+ * Verifies Paseto token and sets user data in request object
  */
 
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+// Import the Paseto service (using require since it's a CommonJS module)
+const pasetoService = require('../services/pasetoService');
 
 interface AuthenticatedRequest extends Request {
   user?: {
@@ -14,7 +15,7 @@ interface AuthenticatedRequest extends Request {
   };
 }
 
-interface JwtPayload {
+interface PasetoPayload {
   user: {
     id: string;
     companyId?: number;
@@ -24,9 +25,9 @@ interface JwtPayload {
 
 /**
  * Authentication middleware
- * Verifies JWT token and sets user data in request object
+ * Verifies Paseto token and sets user data in request object
  */
-const auth = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+const auth = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   // Get token from header
   const token = req.header('x-auth-token');
 
@@ -36,8 +37,12 @@ const auth = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   }
 
   try {
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as JwtPayload;
+    // Verify Paseto token
+    const decoded = (await pasetoService.decryptToken(token)) as PasetoPayload;
+
+    if (!decoded) {
+      return res.status(401).json({ message: 'Token is not valid or expired' });
+    }
 
     // Set user data in request
     req.user = decoded.user;

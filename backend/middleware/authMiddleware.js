@@ -4,7 +4,7 @@
  * This middleware handles authentication and authorization for API routes.
  */
 
-const jwt = require('jsonwebtoken');
+const pasetoService = require('../services/pasetoService');
 const supabase = require('../config/supabase');
 const logger = require('../utils/logger');
 
@@ -35,8 +35,15 @@ const protect = async (req, res, next) => {
     }
 
     try {
-      // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      // Verify Paseto token
+      const decoded = await pasetoService.decryptToken(token);
+
+      if (!decoded) {
+        return res.status(401).json({
+          success: false,
+          message: 'Not authorized, token expired or invalid',
+        });
+      }
 
       // Get user from Supabase
       const { data: user, error } = await supabase

@@ -5,9 +5,9 @@
 
 const { createClient } = require('@supabase/supabase-js');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 const { logger } = require('../../utils/logger');
+const pasetoService = require('../../services/pasetoService');
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -181,7 +181,7 @@ async function routes(fastify, options) {
         return reply.code(500).send({ msg: 'Error creating user record' });
       }
 
-      // Create and return JWT token
+      // Create and return Paseto token
       const payload = {
         user: {
           id: newUser.id,
@@ -191,7 +191,7 @@ async function routes(fastify, options) {
         },
       };
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' });
+      const token = await pasetoService.generateToken(payload);
 
       return reply.code(200).send({
         token,
@@ -244,7 +244,7 @@ async function routes(fastify, options) {
         return reply.code(400).send({ msg: 'Account is inactive' });
       }
 
-      // Create and return JWT token
+      // Create and return Paseto token
       const payload = {
         user: {
           id: userData.id,
@@ -254,7 +254,7 @@ async function routes(fastify, options) {
         },
       };
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' });
+      const token = await pasetoService.generateToken(payload);
 
       return reply.code(200).send({
         token,

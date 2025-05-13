@@ -1,11 +1,11 @@
 /**
  * City Authentication Middleware
- * Verifies JWT tokens for city users and sets user data in request
+ * Verifies Paseto tokens for city users and sets user data in request
  */
 
-const jwt = require('jsonwebtoken');
 const { createClient } = require('@supabase/supabase-js');
 const { logger } = require('../../utils/logger');
+const pasetoService = require('../../services/pasetoService');
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -15,7 +15,7 @@ const supabase = createClient(
 
 /**
  * Authenticate city user middleware
- * Verifies JWT token and sets city user data in request
+ * Verifies Paseto token and sets city user data in request
  */
 const cityAuthMiddleware = async (request, reply) => {
   try {
@@ -33,8 +33,8 @@ const cityAuthMiddleware = async (request, reply) => {
     }
 
     try {
-      // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      // Verify Paseto token
+      const decoded = await pasetoService.decryptToken(token);
 
       // Check if user is a city user
       if (!decoded.user || decoded.user.userType !== 'city') {

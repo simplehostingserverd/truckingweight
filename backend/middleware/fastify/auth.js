@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const pasetoService = require('../../services/pasetoService');
 
 // Auth middleware for Fastify
 async function authMiddleware(request, reply) {
@@ -10,9 +10,14 @@ async function authMiddleware(request, reply) {
     return reply.code(401).send({ msg: 'No token, authorization denied' });
   }
 
-  // Verify token
+  // Verify Paseto token
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
+    const decoded = await pasetoService.decryptToken(token);
+
+    if (!decoded) {
+      return reply.code(401).send({ msg: 'Token is not valid or expired' });
+    }
+
     request.user = decoded.user;
   } catch (err) {
     return reply.code(401).send({ msg: 'Token is not valid' });
