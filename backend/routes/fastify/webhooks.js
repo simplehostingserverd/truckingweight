@@ -10,7 +10,7 @@ const webhookSchema = {
     url: { type: 'string', format: 'uri' },
     events: {
       type: 'array',
-      items: { type: 'string' }
+      items: { type: 'string' },
     },
     description: { type: ['string', 'null'] },
     headers: { type: 'object' },
@@ -74,7 +74,7 @@ const createWebhookSchema = {
       url: { type: 'string', format: 'uri' },
       events: {
         type: 'array',
-        items: { type: 'string' }
+        items: { type: 'string' },
       },
       description: { type: 'string' },
       headers: { type: 'object' },
@@ -113,7 +113,7 @@ const updateWebhookSchema = {
       url: { type: 'string', format: 'uri' },
       events: {
         type: 'array',
-        items: { type: 'string' }
+        items: { type: 'string' },
       },
       description: { type: 'string' },
       headers: { type: 'object' },
@@ -241,45 +241,73 @@ const testWebhookSchema = {
 // Webhooks routes
 async function routes(fastify, options) {
   // Get all webhooks
-  fastify.get('/', {
-    preHandler: authMiddleware,
-    schema: getAllWebhooksSchema,
-  }, webhookController.getAllWebhooks);
+  fastify.get(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: getAllWebhooksSchema,
+    },
+    webhookController.getAllWebhooks
+  );
 
   // Get webhook by ID
-  fastify.get('/:id', {
-    preHandler: authMiddleware,
-    schema: getWebhookByIdSchema,
-  }, webhookController.getWebhookById);
+  fastify.get(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: getWebhookByIdSchema,
+    },
+    webhookController.getWebhookById
+  );
 
   // Create a new webhook
-  fastify.post('/', {
-    preHandler: authMiddleware,
-    schema: createWebhookSchema,
-  }, webhookController.createWebhook);
+  fastify.post(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: createWebhookSchema,
+    },
+    webhookController.createWebhook
+  );
 
   // Update a webhook
-  fastify.put('/:id', {
-    preHandler: authMiddleware,
-    schema: updateWebhookSchema,
-  }, webhookController.updateWebhook);
+  fastify.put(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: updateWebhookSchema,
+    },
+    webhookController.updateWebhook
+  );
 
   // Delete a webhook
-  fastify.delete('/:id', {
-    preHandler: authMiddleware,
-    schema: deleteWebhookSchema,
-  }, webhookController.deleteWebhook);
+  fastify.delete(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: deleteWebhookSchema,
+    },
+    webhookController.deleteWebhook
+  );
 
   // Webhook callback endpoint (public)
-  fastify.post('/callback/:token', {
-    schema: webhookCallbackSchema,
-  }, webhookController.processWebhookCallback);
+  fastify.post(
+    '/callback/:token',
+    {
+      schema: webhookCallbackSchema,
+    },
+    webhookController.processWebhookCallback
+  );
 
   // Test a webhook
-  fastify.post('/:id/test', {
-    preHandler: authMiddleware,
-    schema: testWebhookSchema,
-  }, webhookController.testWebhook);
+  fastify.post(
+    '/:id/test',
+    {
+      preHandler: authMiddleware,
+      schema: testWebhookSchema,
+    },
+    webhookController.testWebhook
+  );
 }
 
 module.exports = routes;

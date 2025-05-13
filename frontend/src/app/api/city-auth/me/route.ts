@@ -4,41 +4,38 @@ export async function GET(request: NextRequest) {
   try {
     // Get the authorization token from the request headers
     const authHeader = request.headers.get('authorization');
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json(
-        { error: 'Authorization token is required' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Authorization token is required' }, { status: 401 });
     }
-    
+
     const token = authHeader.split(' ')[1];
-    
+
     // Call the backend API to get the current user
     const response = await fetch(`${process.env.BACKEND_URL}/api/city-auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    
+
     const data = await response.json();
-    
+
     if (!response.ok) {
       return NextResponse.json(
         { error: data.msg || 'Failed to fetch user data' },
         { status: response.status }
       );
     }
-    
+
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('Error fetching city user data:', error);
-    
+
     // Return mock data for development/demo purposes
     if (process.env.NODE_ENV !== 'production') {
       // Try to get user from localStorage if running in browser
       let cityUser = null;
-      
+
       if (typeof window !== 'undefined') {
         const storedUser = localStorage.getItem('cityUser');
         if (storedUser) {
@@ -49,7 +46,7 @@ export async function GET(request: NextRequest) {
           }
         }
       }
-      
+
       // If no stored user, create a dummy one
       if (!cityUser) {
         cityUser = {
@@ -64,13 +61,10 @@ export async function GET(request: NextRequest) {
           },
         };
       }
-      
+
       return NextResponse.json({ user: cityUser });
     }
-    
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

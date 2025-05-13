@@ -65,10 +65,4 @@ import * as tabsLower from './tabs';
 import * as cardLower from './card';
 
 // Re-export lowercase versions
-export {
-  inputLower,
-  badgeLower,
-  selectLower,
-  tabsLower,
-  cardLower
-};
+export { inputLower, badgeLower, selectLower, tabsLower, cardLower };

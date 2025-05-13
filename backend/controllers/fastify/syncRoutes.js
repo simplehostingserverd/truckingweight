@@ -56,7 +56,7 @@ async function syncData(request, reply) {
 
     if (!table || !action || !data || !companyId) {
       return reply.code(400).send({
-        msg: 'Missing required fields. Required: table, action, data, companyId'
+        msg: 'Missing required fields. Required: table, action, data, companyId',
       });
     }
 
@@ -64,7 +64,7 @@ async function syncData(request, reply) {
     const validActions = ['create', 'update', 'delete'];
     if (!validActions.includes(action)) {
       return reply.code(400).send({
-        msg: 'Invalid action. Must be one of: create, update, delete'
+        msg: 'Invalid action. Must be one of: create, update, delete',
       });
     }
 

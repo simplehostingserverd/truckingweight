@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ESNext",
+    "module": "NodeNext",
     "lib": ["ES2020", "DOM"],
     "allowJs": true,
     "checkJs": false,
@@ -21,12 +21,6 @@
     "typeRoots": ["./node_modules/@types", "./types"],
     "sourceMap": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.js"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["**/*.ts", "**/*.js"],
+  "exclude": ["node_modules", "dist"]
 }

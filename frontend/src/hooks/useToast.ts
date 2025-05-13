@@ -33,12 +33,12 @@ export function useToast() {
       duration: options.duration || DEFAULT_TOAST_DURATION,
     };
 
-    setToasts((prevToasts) => [...prevToasts, newToast]);
+    setToasts(prevToasts => [...prevToasts, newToast]);
     return id;
   }, []);
 
   const dismissToast = useCallback((id: string) => {
-    setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
+    setToasts(prevToasts => prevToasts.filter(toast => toast.id !== id));
   }, []);
 
   const dismissAllToasts = useCallback(() => {
@@ -46,17 +46,25 @@ export function useToast() {
   }, []);
 
   // Convenience methods for different toast types
-  const success = useCallback((options: Omit<ToastOptions, 'type'>) =>
-    toast({ ...options, type: 'success' }), [toast]);
+  const success = useCallback(
+    (options: Omit<ToastOptions, 'type'>) => toast({ ...options, type: 'success' }),
+    [toast]
+  );
 
-  const error = useCallback((options: Omit<ToastOptions, 'type'>) =>
-    toast({ ...options, type: 'error' }), [toast]);
+  const error = useCallback(
+    (options: Omit<ToastOptions, 'type'>) => toast({ ...options, type: 'error' }),
+    [toast]
+  );
 
-  const warning = useCallback((options: Omit<ToastOptions, 'type'>) =>
-    toast({ ...options, type: 'warning' }), [toast]);
+  const warning = useCallback(
+    (options: Omit<ToastOptions, 'type'>) => toast({ ...options, type: 'warning' }),
+    [toast]
+  );
 
-  const info = useCallback((options: Omit<ToastOptions, 'type'>) =>
-    toast({ ...options, type: 'info' }), [toast]);
+  const info = useCallback(
+    (options: Omit<ToastOptions, 'type'>) => toast({ ...options, type: 'info' }),
+    [toast]
+  );
 
   return {
     toasts,

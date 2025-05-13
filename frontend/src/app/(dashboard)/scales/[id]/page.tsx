@@ -9,7 +9,7 @@ import {
   Edit as PencilIcon,
   Delete as TrashIcon,
   QrCode as QrCodeIcon,
-  Scale as ScaleIcon
+  Scale as ScaleIcon,
 } from '@mui/icons-material';
 import {
   Box,
@@ -31,7 +31,7 @@ import {
   CircularProgress,
   Grid,
   Paper,
-  Divider
+  Divider,
 } from '@mui/material';
 import { QRCodeSVG } from 'qrcode.react';
 import HardwareSelector from '@/components/scales/HardwareSelector';
@@ -67,7 +67,8 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
         // Get scale data
         const { data, error } = await supabase
           .from('scales')
-          .select(`
+          .select(
+            `
             *,
             companies(
               id,
@@ -80,7 +81,8 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
               calibrated_by,
               notes
             )
-          `)
+          `
+          )
           .eq('id', id)
           .single();
 
@@ -94,8 +96,8 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
         const response = await fetch(`/api/scales/${id}/qrcode`, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`
-          }
+            Authorization: `Bearer ${session.access_token}`,
+          },
         });
 
         if (response.ok) {
@@ -136,7 +138,9 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
 
   if (isLoading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -151,11 +155,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
         </Alert>
         <Box sx={{ mt: 2 }}>
           <Link href="/scales" style={{ textDecoration: 'none' }}>
-            <Button
-              variant="outlined"
-              startIcon={<ArrowLeftIcon />}
-              sx={{ mt: 2 }}
-            >
+            <Button variant="outlined" startIcon={<ArrowLeftIcon />} sx={{ mt: 2 }}>
               Back to Scales
             </Button>
           </Link>
@@ -173,11 +173,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
         </Alert>
         <Box sx={{ mt: 2 }}>
           <Link href="/scales" style={{ textDecoration: 'none' }}>
-            <Button
-              variant="outlined"
-              startIcon={<ArrowLeftIcon />}
-              sx={{ mt: 2 }}
-            >
+            <Button variant="outlined" startIcon={<ArrowLeftIcon />} sx={{ mt: 2 }}>
               Back to Scales
             </Button>
           </Link>
@@ -212,31 +208,28 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
         </Box>
 
         <Box sx={{ width: '100%', mb: 4 }}>
-          <Tabs
-            value={activeTab}
-            onChange={(_, newValue) => setActiveTab(newValue)}
-            centered
-          >
+          <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)} centered>
             <Tab label="Details" value="details" />
             <Tab label="Hardware" value="hardware" />
             <Tab label="QR Code" value="qrcode" />
           </Tabs>
         </Box>
 
-        {activeTab === "details" && (
+        {activeTab === 'details' && (
           <Card sx={{ mb: 3 }}>
-            <CardHeader
-              title="Scale Information"
-              subheader="Details about this scale"
-            />
+            <CardHeader title="Scale Information" subheader="Details about this scale" />
             <CardContent>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Type</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Type
+                  </Typography>
                   <Typography variant="body2">{scale.scale_type}</Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Status</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Status
+                  </Typography>
                   <Chip
                     label={scale.status}
                     color={scale.status === 'Active' ? 'success' : 'error'}
@@ -244,47 +237,69 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Location</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Location
+                  </Typography>
                   <Typography variant="body2">{scale.location || 'N/A'}</Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Company</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Company
+                  </Typography>
                   <Typography variant="body2">{scale.companies?.name || 'N/A'}</Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Manufacturer</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Manufacturer
+                  </Typography>
                   <Typography variant="body2">{scale.manufacturer || 'N/A'}</Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Model</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Model
+                  </Typography>
                   <Typography variant="body2">{scale.model || 'N/A'}</Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Serial Number</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Serial Number
+                  </Typography>
                   <Typography variant="body2">{scale.serial_number || 'N/A'}</Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Max Capacity</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Max Capacity
+                  </Typography>
                   <Typography variant="body2">
                     {scale.max_capacity ? `${scale.max_capacity.toLocaleString()} lbs` : 'N/A'}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Precision</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Precision
+                  </Typography>
                   <Typography variant="body2">
                     {scale.precision ? `${scale.precision} lbs` : 'N/A'}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Last Calibration</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Last Calibration
+                  </Typography>
                   <Typography variant="body2">
-                    {scale.calibration_date ? new Date(scale.calibration_date).toLocaleDateString() : 'N/A'}
+                    {scale.calibration_date
+                      ? new Date(scale.calibration_date).toLocaleDateString()
+                      : 'N/A'}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="text.secondary">Next Calibration</Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Next Calibration
+                  </Typography>
                   <Typography variant="body2">
-                    {scale.next_calibration_date ? new Date(scale.next_calibration_date).toLocaleDateString() : 'N/A'}
+                    {scale.next_calibration_date
+                      ? new Date(scale.next_calibration_date).toLocaleDateString()
+                      : 'N/A'}
                   </Typography>
                 </Grid>
               </Grid>
@@ -292,13 +307,13 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
           </Card>
         )}
 
-        {activeTab === "hardware" && (
+        {activeTab === 'hardware' && (
           <Box sx={{ mb: 3 }}>
             <HardwareSelector scaleId={parseInt(id)} />
           </Box>
         )}
 
-        {activeTab === "qrcode" && (
+        {activeTab === 'qrcode' && (
           <Card sx={{ mb: 3 }}>
             <CardHeader
               title="Scale QR Code"
@@ -333,10 +348,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
         </Box>
 
         {/* Delete Confirmation Dialog */}
-        <Dialog
-          open={showDeleteConfirm}
-          onClose={() => setShowDeleteConfirm(false)}
-        >
+        <Dialog open={showDeleteConfirm} onClose={() => setShowDeleteConfirm(false)}>
           <DialogTitle>Confirm Deletion</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -345,11 +357,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setShowDeleteConfirm(false)}>Cancel</Button>
-            <Button
-              onClick={handleDelete}
-              color="error"
-              disabled={isDeleting}
-            >
+            <Button onClick={handleDelete} color="error" disabled={isDeleting}>
               {isDeleting ? 'Deleting...' : 'Delete'}
             </Button>
           </DialogActions>

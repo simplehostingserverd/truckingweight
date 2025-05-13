@@ -57,9 +57,7 @@ const swaggerOptions = {
         description: 'Enter your API key',
       },
     },
-    security: [
-      { bearerAuth: [] },
-    ],
+    security: [{ bearerAuth: [] }],
   },
 };
 
@@ -67,15 +65,19 @@ const swaggerUiOptions = {
   routePrefix: '/documentation',
   exposeRoute: true,
   staticCSP: true,
-  transformStaticCSP: (header) => header,
+  transformStaticCSP: header => header,
   uiConfig: {
     docExpansion: 'list',
     deepLinking: true,
     persistAuthorization: true,
   },
   uiHooks: {
-    onRequest: function (request, reply, next) { next(); },
-    preHandler: function (request, reply, next) { next(); },
+    onRequest: function (request, reply, next) {
+      next();
+    },
+    preHandler: function (request, reply, next) {
+      next();
+    },
   },
 };
 

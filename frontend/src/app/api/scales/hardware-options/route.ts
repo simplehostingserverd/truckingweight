@@ -8,13 +8,13 @@ export async function GET(req: NextRequest) {
     const supabase = createRouteHandlerClient({ cookies });
 
     // Get the user session
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
 
     if (sessionError || !session) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     // Get the user
@@ -25,10 +25,7 @@ export async function GET(req: NextRequest) {
       .single();
 
     if (userError || !userData) {
-      return NextResponse.json(
-        { success: false, error: 'User not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
     }
 
     // Make a request to the backend API
@@ -37,8 +34,8 @@ export async function GET(req: NextRequest) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.access_token}`
-      }
+        Authorization: `Bearer ${session.access_token}`,
+      },
     });
 
     if (!response.ok) {

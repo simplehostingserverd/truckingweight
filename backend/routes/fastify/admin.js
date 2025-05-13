@@ -197,54 +197,90 @@ const deleteUserSchema = {
 // Admin routes
 async function routes(fastify, options) {
   // Get admin dashboard data
-  fastify.get('/dashboard', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: dashboardDataSchema,
-  }, adminController.getDashboardData);
+  fastify.get(
+    '/dashboard',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: dashboardDataSchema,
+    },
+    adminController.getDashboardData
+  );
 
   // Get all users
-  fastify.get('/users', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: getAllUsersSchema,
-  }, adminController.getAllUsers);
+  fastify.get(
+    '/users',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: getAllUsersSchema,
+    },
+    adminController.getAllUsers
+  );
 
   // Create a new user
-  fastify.post('/users', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: createUserSchema,
-  }, adminController.createUser);
+  fastify.post(
+    '/users',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: createUserSchema,
+    },
+    adminController.createUser
+  );
 
   // Update a user
-  fastify.put('/users/:id', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: updateUserSchema,
-  }, adminController.updateUser);
+  fastify.put(
+    '/users/:id',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: updateUserSchema,
+    },
+    adminController.updateUser
+  );
 
   // Delete a user
-  fastify.delete('/users/:id', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: deleteUserSchema,
-  }, adminController.deleteUser);
+  fastify.delete(
+    '/users/:id',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: deleteUserSchema,
+    },
+    adminController.deleteUser
+  );
 
   // Get weight reports
-  fastify.get('/reports/weights', {
-    preHandler: [authMiddleware, adminMiddleware],
-  }, adminController.getWeightReports);
+  fastify.get(
+    '/reports/weights',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+    },
+    adminController.getWeightReports
+  );
 
   // Get load reports
-  fastify.get('/reports/loads', {
-    preHandler: [authMiddleware, adminMiddleware],
-  }, adminController.getLoadReports);
+  fastify.get(
+    '/reports/loads',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+    },
+    adminController.getLoadReports
+  );
 
   // Get compliance reports
-  fastify.get('/reports/compliance', {
-    preHandler: [authMiddleware, adminMiddleware],
-  }, adminController.getComplianceReports);
+  fastify.get(
+    '/reports/compliance',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+    },
+    adminController.getComplianceReports
+  );
 
   // Export data
-  fastify.get('/export/:type', {
-    preHandler: [authMiddleware, adminMiddleware],
-  }, adminController.exportData);
+  fastify.get(
+    '/export/:type',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+    },
+    adminController.exportData
+  );
 }
 
 module.exports = routes;

@@ -6,10 +6,7 @@ export async function POST(request: NextRequest) {
     const { email, password } = await request.json();
 
     if (!email || !password) {
-      return NextResponse.json(
-        { error: 'Email and password are required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
     // Call the backend API to authenticate the city user
@@ -33,9 +30,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('City login error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

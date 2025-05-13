@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 // Dynamically import Cesium components with no SSR
-const CesiumMap = dynamic(
-  () => import('./CesiumMap'),
-  { ssr: false, loading: () => <MapLoadingPlaceholder /> }
-);
+const CesiumMap = dynamic(() => import('./CesiumMap'), {
+  ssr: false,
+  loading: () => <MapLoadingPlaceholder />,
+});
 
 // Placeholder component while map is loading
 function MapLoadingPlaceholder() {

@@ -1,7 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { XMarkIcon, CheckCircleIcon, ExclamationTriangleIcon, InformationCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import {
+  XMarkIcon,
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
+  InformationCircleIcon,
+  XCircleIcon,
+} from '@heroicons/react/24/outline';
 import { cn } from '@/lib/utils';
 import { createPortal } from 'react-dom';
 
@@ -59,7 +65,9 @@ export const Toast = ({ id, title, description, type, onDismiss }: ToastProps) =
         <div className="flex-shrink-0">{icons[type]}</div>
         <div className="ml-3 flex-1">
           <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{title}</p>
-          {description && <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{description}</p>}
+          {description && (
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{description}</p>
+          )}
         </div>
         <button
           type="button"
@@ -92,7 +100,7 @@ export const ToastContainer = ({ toasts, onDismiss }: ToastContainerProps) => {
   return createPortal(
     <div className="fixed top-0 right-0 z-50 p-4 space-y-4 max-h-screen overflow-hidden pointer-events-none">
       <div className="flex flex-col items-end space-y-2 pointer-events-auto">
-        {toasts.map((toast) => (
+        {toasts.map(toast => (
           <Toast key={toast.id} {...toast} onDismiss={onDismiss} />
         ))}
       </div>

@@ -11,7 +11,9 @@ const { redisService } = require('../../services/redis');
 // Initialize Supabase client
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_SERVICE_KEY ||
+    process.env.SUPABASE_KEY
 );
 
 /**
@@ -19,7 +21,7 @@ const supabase = createClient(
  * @param {string} authHeader - Authorization header value
  * @returns {string|null} - Extracted token or null
  */
-const extractBearerToken = (authHeader) => {
+const extractBearerToken = authHeader => {
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return null;
   }
@@ -50,7 +52,7 @@ const bearerAuthMiddleware = async (request, reply) => {
     if (!token) {
       return reply.code(401).send({
         error: 'Unauthorized',
-        message: 'No token provided'
+        message: 'No token provided',
       });
     }
 
@@ -63,7 +65,7 @@ const bearerAuthMiddleware = async (request, reply) => {
       if (!sessionData) {
         return reply.code(401).send({
           error: 'Unauthorized',
-          message: 'Token is invalid or has been revoked'
+          message: 'Token is invalid or has been revoked',
         });
       }
 
@@ -77,7 +79,7 @@ const bearerAuthMiddleware = async (request, reply) => {
       if (error || !user) {
         return reply.code(401).send({
           error: 'Unauthorized',
-          message: 'User not found'
+          message: 'User not found',
         });
       }
 
@@ -92,18 +94,17 @@ const bearerAuthMiddleware = async (request, reply) => {
 
       // Store token in request for potential use in other middleware
       request.token = token;
-
     } catch (err) {
       return reply.code(401).send({
         error: 'Unauthorized',
-        message: 'Token is invalid'
+        message: 'Token is invalid',
       });
     }
   } catch (error) {
     request.log.error('Bearer auth middleware error:', error);
     return reply.code(500).send({
       error: 'Internal Server Error',
-      message: 'Authentication service error'
+      message: 'Authentication service error',
     });
   }
 };
@@ -126,7 +127,7 @@ const apiKeyAuthMiddleware = async (request, reply) => {
     if (!apiKey) {
       return reply.code(401).send({
         error: 'Unauthorized',
-        message: 'No API key provided'
+        message: 'No API key provided',
       });
     }
 
@@ -145,7 +146,7 @@ const apiKeyAuthMiddleware = async (request, reply) => {
       if (error || !data) {
         return reply.code(401).send({
           error: 'Unauthorized',
-          message: 'Invalid API key'
+          message: 'Invalid API key',
         });
       }
 
@@ -153,7 +154,7 @@ const apiKeyAuthMiddleware = async (request, reply) => {
       if (data.expires_at && new Date(data.expires_at) < new Date()) {
         return reply.code(401).send({
           error: 'Unauthorized',
-          message: 'API key has expired'
+          message: 'API key has expired',
         });
       }
 
@@ -177,12 +178,11 @@ const apiKeyAuthMiddleware = async (request, reply) => {
       permissions: apiKeyData.permissions,
       companyId: apiKeyData.company_id,
     };
-
   } catch (error) {
     request.log.error('API key auth middleware error:', error);
     return reply.code(500).send({
       error: 'Internal Server Error',
-      message: 'Authentication service error'
+      message: 'Authentication service error',
     });
   }
 };

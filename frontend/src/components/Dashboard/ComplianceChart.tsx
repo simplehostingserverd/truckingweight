@@ -26,14 +26,11 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
   const { data: session, error: sessionError } = useSWRFetch('/api/auth/session');
 
   // Fetch user data to check admin status
-  const { data: userData } = useSWRFetch(
-    session ? '/api/auth/user' : null,
-    {
-      headers: {
-        'x-auth-token': session?.token || '',
-      },
-    }
-  );
+  const { data: userData } = useSWRFetch(session ? '/api/auth/user' : null, {
+    headers: {
+      'x-auth-token': session?.token || '',
+    },
+  });
 
   const isAdmin = userData?.is_admin === true || userData?.user?.is_admin === true;
 
@@ -43,7 +40,11 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
     : `/api/dashboard/compliance?dateRange=${dateRange}`;
 
   // Fetch compliance data
-  const { data: complianceApiData, error, isLoading } = useSWRFetch(
+  const {
+    data: complianceApiData,
+    error,
+    isLoading,
+  } = useSWRFetch(
     session ? complianceUrl : null,
     {
       headers: {
@@ -64,9 +65,9 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
   // Process the data based on admin status
   const companyData = complianceApiData?.byCompany || [];
   const complianceData = complianceApiData?.overall
-    ? (selectedCompany === 'overall'
-        ? complianceApiData.overall
-        : companyData.find((c: any) => c.companyId.toString() === selectedCompany)?.data || [])
+    ? selectedCompany === 'overall'
+      ? complianceApiData.overall
+      : companyData.find((c: any) => c.companyId.toString() === selectedCompany)?.data || []
     : complianceApiData || [];
 
   const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

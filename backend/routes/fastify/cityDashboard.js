@@ -18,21 +18,34 @@ const supabase = createClient(
 const dashboardStatsSchema = {
   tags: ['City Dashboard'],
   summary: 'Get city dashboard statistics',
-  description: 'Returns key metrics for the city dashboard including scales, weighings, revenue, and permits',
+  description:
+    'Returns key metrics for the city dashboard including scales, weighings, revenue, and permits',
   security: [{ bearerAuth: [] }],
   response: {
     200: {
       description: 'Successful response with dashboard statistics',
       type: 'object',
       properties: {
-        totalScales: { type: 'number', description: 'Total number of scales registered to the city' },
+        totalScales: {
+          type: 'number',
+          description: 'Total number of scales registered to the city',
+        },
         activeScales: { type: 'number', description: 'Number of scales currently active' },
         totalWeighings: { type: 'number', description: 'Total number of weighings recorded' },
-        revenueCollected: { type: 'number', description: 'Total revenue collected from permits and fines' },
+        revenueCollected: {
+          type: 'number',
+          description: 'Total revenue collected from permits and fines',
+        },
         complianceRate: { type: 'number', description: 'Percentage of compliant weighings' },
-        pendingPermits: { type: 'number', description: 'Number of permits pending approval or payment' },
+        pendingPermits: {
+          type: 'number',
+          description: 'Number of permits pending approval or payment',
+        },
         activePermits: { type: 'number', description: 'Number of currently active permits' },
-        recentViolations: { type: 'number', description: 'Number of violations in the last 30 days' },
+        recentViolations: {
+          type: 'number',
+          description: 'Number of violations in the last 30 days',
+        },
       },
     },
     401: {
@@ -64,9 +77,9 @@ const recentWeighingsSchema = {
       limit: {
         type: 'integer',
         description: 'Number of records to return',
-        default: 10
-      }
-    }
+        default: 10,
+      },
+    },
   },
   response: {
     200: {
@@ -80,12 +93,22 @@ const recentWeighingsSchema = {
             properties: {
               id: { type: 'number', description: 'Weighing ticket ID' },
               ticketNumber: { type: 'string', description: 'Unique ticket number' },
-              vehicleInfo: { type: 'string', description: 'Vehicle information (license plate, VIN)' },
+              vehicleInfo: {
+                type: 'string',
+                description: 'Vehicle information (license plate, VIN)',
+              },
               companyName: { type: 'string', description: 'Company name' },
               grossWeight: { type: 'number', description: 'Gross weight of the vehicle' },
               netWeight: { type: 'number', description: 'Net weight (gross - tare)' },
-              weighDate: { type: 'string', format: 'date-time', description: 'Date and time of weighing' },
-              status: { type: 'string', description: 'Status of the weighing (Compliant, Non-Compliant, Warning)' },
+              weighDate: {
+                type: 'string',
+                format: 'date-time',
+                description: 'Date and time of weighing',
+              },
+              status: {
+                type: 'string',
+                description: 'Status of the weighing (Compliant, Non-Compliant, Warning)',
+              },
               scaleName: { type: 'string', description: 'Name of the scale used' },
             },
           },
@@ -121,9 +144,9 @@ const complianceDataSchema = {
       days: {
         type: 'integer',
         description: 'Number of days to include in the data',
-        default: 30
-      }
-    }
+        default: 30,
+      },
+    },
   },
   response: {
     200: {
@@ -133,22 +156,22 @@ const complianceDataSchema = {
         labels: {
           type: 'array',
           items: { type: 'string' },
-          description: 'Date labels for the data points'
+          description: 'Date labels for the data points',
         },
         compliant: {
           type: 'array',
           items: { type: 'number' },
-          description: 'Number of compliant weighings for each date'
+          description: 'Number of compliant weighings for each date',
         },
         nonCompliant: {
           type: 'array',
           items: { type: 'number' },
-          description: 'Number of non-compliant weighings for each date'
+          description: 'Number of non-compliant weighings for each date',
         },
         warning: {
           type: 'array',
           items: { type: 'number' },
-          description: 'Number of warning weighings for each date'
+          description: 'Number of warning weighings for each date',
         },
       },
     },
@@ -181,9 +204,9 @@ const revenueDataSchema = {
       months: {
         type: 'integer',
         description: 'Number of months to include in the data',
-        default: 6
-      }
-    }
+        default: 6,
+      },
+    },
   },
   response: {
     200: {
@@ -193,17 +216,17 @@ const revenueDataSchema = {
         labels: {
           type: 'array',
           items: { type: 'string' },
-          description: 'Month labels for the data points'
+          description: 'Month labels for the data points',
         },
         permitRevenue: {
           type: 'array',
           items: { type: 'number' },
-          description: 'Revenue from permits for each month'
+          description: 'Revenue from permits for each month',
         },
         fineRevenue: {
           type: 'array',
           items: { type: 'number' },
-          description: 'Revenue from fines for each month'
+          description: 'Revenue from fines for each month',
         },
       },
     },
@@ -297,7 +320,9 @@ async function routes(fastify, options) {
 
       let complianceRate = 0;
       if (complianceData && complianceData.length > 0) {
-        const compliantCount = complianceData.filter(ticket => ticket.status === 'Compliant').length;
+        const compliantCount = complianceData.filter(
+          ticket => ticket.status === 'Compliant'
+        ).length;
         complianceRate = Math.round((compliantCount / complianceData.length) * 100);
       }
 
@@ -353,7 +378,8 @@ async function routes(fastify, options) {
 
       const { data: weighings, error } = await supabase
         .from('city_weigh_tickets')
-        .select(`
+        .select(
+          `
           id,
           ticket_number,
           vehicle_info,
@@ -365,7 +391,8 @@ async function routes(fastify, options) {
           city_scales (
             name
           )
-        `)
+        `
+        )
         .eq('city_id', cityId)
         .order('weigh_date', { ascending: false })
         .limit(limit);

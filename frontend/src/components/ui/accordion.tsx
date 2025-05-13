@@ -27,8 +27,22 @@ const AccordionContext = React.createContext<{
 });
 
 export const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
-  ({ className, type = 'single', collapsible = false, value, defaultValue, onValueChange, children, ...props }, ref) => {
-    const [internalValue, setInternalValue] = React.useState<string | string[]>(defaultValue || (type === 'multiple' ? [] : ''));
+  (
+    {
+      className,
+      type = 'single',
+      collapsible = false,
+      value,
+      defaultValue,
+      onValueChange,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const [internalValue, setInternalValue] = React.useState<string | string[]>(
+      defaultValue || (type === 'multiple' ? [] : '')
+    );
 
     const handleValueChange = React.useCallback(
       (itemValue: string) => {
@@ -40,9 +54,11 @@ export const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
         if (type === 'single') {
           setInternalValue(internalValue === itemValue && collapsible ? '' : itemValue);
         } else {
-          setInternalValue((prev) => {
+          setInternalValue(prev => {
             if (Array.isArray(prev)) {
-              return prev.includes(itemValue) ? prev.filter((v) => v !== itemValue) : [...prev, itemValue];
+              return prev.includes(itemValue)
+                ? prev.filter(v => v !== itemValue)
+                : [...prev, itemValue];
             }
             return [itemValue];
           });
@@ -84,9 +100,10 @@ interface AccordionItemProps {
 export const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
   ({ className, value, children, ...props }, ref) => {
     const context = React.useContext(AccordionContext);
-    const isExpanded = context.type === 'single'
-      ? context.value === value
-      : Array.isArray(context.value) && context.value.includes(value);
+    const isExpanded =
+      context.type === 'single'
+        ? context.value === value
+        : Array.isArray(context.value) && context.value.includes(value);
 
     return (
       <AccordionItemContext.Provider value={{ value }}>
@@ -118,9 +135,11 @@ export const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTri
       throw new Error('AccordionTrigger must be used within an AccordionItem');
     }
 
-    const isExpanded = accordionContext.type === 'single'
-      ? accordionContext.value === itemContext.value
-      : Array.isArray(accordionContext.value) && accordionContext.value.includes(itemContext.value);
+    const isExpanded =
+      accordionContext.type === 'single'
+        ? accordionContext.value === itemContext.value
+        : Array.isArray(accordionContext.value) &&
+          accordionContext.value.includes(itemContext.value);
 
     return (
       <button
@@ -161,9 +180,11 @@ export const AccordionContent = React.forwardRef<HTMLDivElement, AccordionConten
       throw new Error('AccordionContent must be used within an AccordionItem');
     }
 
-    const isExpanded = accordionContext.type === 'single'
-      ? accordionContext.value === itemContext.value
-      : Array.isArray(accordionContext.value) && accordionContext.value.includes(itemContext.value);
+    const isExpanded =
+      accordionContext.type === 'single'
+        ? accordionContext.value === itemContext.value
+        : Array.isArray(accordionContext.value) &&
+          accordionContext.value.includes(itemContext.value);
 
     return (
       <div

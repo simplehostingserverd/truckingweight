@@ -10,7 +10,7 @@ import { cacheAPI } from '@/lib/performance';
  * - Automatic error retry
  * - Focus revalidation
  * - Polling
- * 
+ *
  * @param key The key for the data
  * @param fetcher The function to fetch the data
  * @param options Configuration options
@@ -52,12 +52,12 @@ export function useSWROptimized<Data = any, Error = any>(
     setIsLoading(true);
     try {
       const data = await fetcher(k);
-      
+
       // Update local cache if enabled
       if (localCache) {
         cacheAPI.set(k, data, localCacheTtl);
       }
-      
+
       setIsLoading(false);
       return data;
     } catch (error) {
@@ -67,17 +67,13 @@ export function useSWROptimized<Data = any, Error = any>(
   };
 
   // Use SWR with our custom fetcher and initial data
-  const swr = useSWR<Data, Error>(
-    key,
-    customFetcher,
-    {
-      fallbackData: initialData,
-      revalidateOnFocus: true,
-      revalidateOnReconnect: true,
-      dedupingInterval: 5000, // 5 seconds
-      ...swrOptions,
-    }
-  );
+  const swr = useSWR<Data, Error>(key, customFetcher, {
+    fallbackData: initialData,
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    dedupingInterval: 5000, // 5 seconds
+    ...swrOptions,
+  });
 
   return {
     ...swr,
@@ -87,7 +83,7 @@ export function useSWROptimized<Data = any, Error = any>(
 
 /**
  * Hook for fetching paginated data with optimizations
- * 
+ *
  * @param baseKey The base key for the data
  * @param fetcher The function to fetch the data
  * @param page The current page
@@ -97,7 +93,11 @@ export function useSWROptimized<Data = any, Error = any>(
  */
 export function useSWRPagination<Data = any, Error = any>(
   baseKey: string | null,
-  fetcher: (key: string, page: number, pageSize: number) => Promise<{ data: Data[]; total: number }>,
+  fetcher: (
+    key: string,
+    page: number,
+    pageSize: number
+  ) => Promise<{ data: Data[]; total: number }>,
   page: number = 1,
   pageSize: number = 10,
   options: SWRConfiguration & {
@@ -114,11 +114,10 @@ export function useSWRPagination<Data = any, Error = any>(
   };
 
   // Use our optimized SWR hook
-  const { data, error, isLoading, mutate } = useSWROptimized<{ data: Data[]; total: number }, Error>(
-    key,
-    paginatedFetcher,
-    options
-  );
+  const { data, error, isLoading, mutate } = useSWROptimized<
+    { data: Data[]; total: number },
+    Error
+  >(key, paginatedFetcher, options);
 
   // Calculate pagination values
   const totalPages = data ? Math.ceil(data.total / pageSize) : 0;
@@ -143,7 +142,7 @@ export function useSWRPagination<Data = any, Error = any>(
 
 /**
  * Hook for fetching data with infinite scrolling and optimizations
- * 
+ *
  * @param baseKey The base key for the data
  * @param fetcher The function to fetch the data
  * @param pageSize The page size
@@ -152,7 +151,11 @@ export function useSWRPagination<Data = any, Error = any>(
  */
 export function useSWRInfinite<Data = any, Error = any>(
   baseKey: string | null,
-  fetcher: (key: string, page: number, pageSize: number) => Promise<{ data: Data[]; total: number }>,
+  fetcher: (
+    key: string,
+    page: number,
+    pageSize: number
+  ) => Promise<{ data: Data[]; total: number }>,
   pageSize: number = 10,
   options: SWRConfiguration & {
     localCache?: boolean;
@@ -174,11 +177,10 @@ export function useSWRInfinite<Data = any, Error = any>(
   };
 
   // Use our optimized SWR hook
-  const { data, error, isLoading, mutate } = useSWROptimized<{ data: Data[]; total: number }, Error>(
-    key,
-    infiniteFetcher,
-    options
-  );
+  const { data, error, isLoading, mutate } = useSWROptimized<
+    { data: Data[]; total: number },
+    Error
+  >(key, infiniteFetcher, options);
 
   // Update all data when new data is fetched
   useEffect(() => {
@@ -190,7 +192,7 @@ export function useSWRInfinite<Data = any, Error = any>(
         // Append data for subsequent pages
         setAllData(prev => [...prev, ...data.data]);
       }
-      
+
       setTotal(data.total);
       setHasMore(page * pageSize < data.total);
     }
@@ -226,14 +228,11 @@ export function useSWRInfinite<Data = any, Error = any>(
 
 /**
  * Hook for prefetching data to improve perceived performance
- * 
+ *
  * @param keys Array of keys to prefetch
  * @param fetcher The function to fetch the data
  */
-export function usePrefetch(
-  keys: string[],
-  fetcher: (key: string) => Promise<any>
-) {
+export function usePrefetch(keys: string[], fetcher: (key: string) => Promise<any>) {
   useEffect(() => {
     // Prefetch data for each key
     keys.forEach(key => {

@@ -109,10 +109,14 @@ async function routes(fastify, options) {
   fastify.post('/login', { schema: loginSchema }, authController.login);
 
   // Get user data
-  fastify.get('/user', { 
-    preHandler: authMiddleware,
-    schema: getUserSchema 
-  }, authController.getUser);
+  fastify.get(
+    '/user',
+    {
+      preHandler: authMiddleware,
+      schema: getUserSchema,
+    },
+    authController.getUser
+  );
 }
 
 module.exports = routes;

@@ -106,7 +106,7 @@ const cityAdminMiddleware = async (request, reply) => {
  * Must be used after cityAuthMiddleware
  * @param {Array} roles - Array of allowed roles
  */
-const cityRoleMiddleware = (roles) => {
+const cityRoleMiddleware = roles => {
   return async (request, reply) => {
     try {
       // Check if user exists and is a city user

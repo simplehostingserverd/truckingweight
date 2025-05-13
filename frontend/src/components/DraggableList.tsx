@@ -25,13 +25,7 @@ interface Item {
 
 // Sortable item component
 const SortableItem = ({ id, content }: Item) => {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-  } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -73,33 +67,29 @@ const DraggableList: React.FC<DraggableListProps> = ({ items: initialItems, onRe
   // Handle drag end event
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    
+
     if (over && active.id !== over.id) {
-      setItems((currentItems) => {
-        const oldIndex = currentItems.findIndex((item) => item.id === active.id);
-        const newIndex = currentItems.findIndex((item) => item.id === over.id);
-        
+      setItems(currentItems => {
+        const oldIndex = currentItems.findIndex(item => item.id === active.id);
+        const newIndex = currentItems.findIndex(item => item.id === over.id);
+
         const newItems = arrayMove(currentItems, oldIndex, newIndex);
-        
+
         // Call the onReorder callback if provided
         if (onReorder) {
           onReorder(newItems);
         }
-        
+
         return newItems;
       });
     }
   };
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-    >
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={items.map(item => item.id)} strategy={verticalListSortingStrategy}>
         <div>
-          {items.map((item) => (
+          {items.map(item => (
             <SortableItem key={item.id} id={item.id} content={item.content} />
           ))}
         </div>

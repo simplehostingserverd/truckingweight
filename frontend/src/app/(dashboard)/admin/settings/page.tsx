@@ -119,14 +119,14 @@ export default function AdminSettingsPage() {
 
       // In a real app, we would fetch settings from a settings table
       // For now, we'll use the default settings defined above
-      
+
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 800));
-      
+
       // For demo purposes, we'll just use the default settings
       // In a real app, you would fetch from the database:
       // const { data, error } = await supabase.from('system_settings').select('*').single();
-      
+
       setSettings({
         ...settings,
         last_backup_time: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
@@ -147,16 +147,16 @@ export default function AdminSettingsPage() {
 
       // In a real app, we would save settings to a settings table
       // For now, we'll just simulate a successful save
-      
+
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1200));
-      
+
       // For demo purposes, we'll just show a success message
       // In a real app, you would update the database:
       // const { error } = await supabase.from('system_settings').update(settings).eq('id', 1);
-      
+
       setSuccess('Settings saved successfully');
-      
+
       // Clear success message after 3 seconds
       setTimeout(() => {
         setSuccess('');
@@ -177,15 +177,15 @@ export default function AdminSettingsPage() {
 
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       // Update last backup time
       setSettings({
         ...settings,
         last_backup_time: new Date().toISOString(),
       });
-      
+
       setSuccess('Backup completed successfully');
-      
+
       // Clear success message after 3 seconds
       setTimeout(() => {
         setSuccess('');
@@ -200,14 +200,14 @@ export default function AdminSettingsPage() {
 
   const addEmailNotification = () => {
     if (!newEmailNotification) return;
-    
+
     // Simple email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(newEmailNotification)) {
       setError('Please enter a valid email address');
       return;
     }
-    
+
     setSettings({
       ...settings,
       admin_email_notifications: [...settings.admin_email_notifications, newEmailNotification],
@@ -225,7 +225,7 @@ export default function AdminSettingsPage() {
 
   const addFileType = () => {
     if (!newFileType) return;
-    
+
     setSettings({
       ...settings,
       allowed_file_types: [...settings.allowed_file_types, newFileType.toLowerCase()],
@@ -446,7 +446,8 @@ export default function AdminSettingsPage() {
                   />
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  When enabled, passwords must include uppercase, lowercase, numbers, and special characters
+                  When enabled, passwords must include uppercase, lowercase, numbers, and special
+                  characters
                 </p>
               </div>
 

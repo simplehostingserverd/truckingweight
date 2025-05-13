@@ -241,7 +241,9 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                         </div>
                       </div>
                       <p className="text-gray-600 italic">
-                        "TruckingWeight has completely transformed our weight compliance process. The real-time monitoring has saved us thousands in potential fines and improved our efficiency by 30%."
+                        "TruckingWeight has completely transformed our weight compliance process.
+                        The real-time monitoring has saved us thousands in potential fines and
+                        improved our efficiency by 30%."
                       </p>
                     </div>
 
@@ -253,11 +255,15 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                         </div>
                         <div>
                           <h4 className="font-semibold text-gray-900">Sarah Rodriguez</h4>
-                          <p className="text-gray-500 text-sm">Operations Director, Express Freight Solutions</p>
+                          <p className="text-gray-500 text-sm">
+                            Operations Director, Express Freight Solutions
+                          </p>
                         </div>
                       </div>
                       <p className="text-gray-600 italic">
-                        "The analytics dashboard gives us insights we never had before. We can now make data-driven decisions that have improved our load efficiency and reduced overweight incidents to nearly zero."
+                        "The analytics dashboard gives us insights we never had before. We can now
+                        make data-driven decisions that have improved our load efficiency and
+                        reduced overweight incidents to nearly zero."
                       </p>
                     </div>
 
@@ -273,17 +279,19 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                         </div>
                       </div>
                       <p className="text-gray-600 italic">
-                        "Implementation was smooth and the support team was incredibly helpful. The system paid for itself within the first three months through avoided fines and improved route planning."
+                        "Implementation was smooth and the support team was incredibly helpful. The
+                        system paid for itself within the first three months through avoided fines
+                        and improved route planning."
                       </p>
                     </div>
                   </>
                 ) : (
                   // Render testimonials from the database
-                  testimonials.map((testimonial) => {
+                  testimonials.map(testimonial => {
                     // Get initials for the avatar
                     const initials = testimonial.name
                       .split(' ')
-                      .map((n) => n[0])
+                      .map(n => n[0])
                       .join('')
                       .toUpperCase();
 
@@ -295,7 +303,9 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                           </div>
                           <div>
                             <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                            <p className="text-gray-500 text-sm">{testimonial.position}, {testimonial.company}</p>
+                            <p className="text-gray-500 text-sm">
+                              {testimonial.position}, {testimonial.company}
+                            </p>
                           </div>
                         </div>
                         <div className="flex items-center mb-2">
@@ -338,14 +348,19 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                     Texas Municipal Weighing System
                   </h2>
                   <p className="text-xl text-gray-600 mb-8">
-                    A centralized platform for city employees across Texas to manage municipal weighing operations,
-                    enforce compliance, and generate reports.
+                    A centralized platform for city employees across Texas to manage municipal
+                    weighing operations, enforce compliance, and generate reports.
                   </p>
                   <div className="bg-white p-8 rounded-xl shadow-md">
-                    <h3 className="text-2xl font-semibold text-gray-800 mb-6">City Employee Login</h3>
+                    <h3 className="text-2xl font-semibold text-gray-800 mb-6">
+                      City Employee Login
+                    </h3>
                     <div className="space-y-4">
                       <div>
-                        <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label
+                          htmlFor="city"
+                          className="block text-sm font-medium text-gray-700 mb-1"
+                        >
                           Select City
                         </label>
                         <select
@@ -375,7 +390,10 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                         </select>
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-medium text-gray-700 mb-1"
+                        >
                           Email
                         </label>
                         <input
@@ -386,7 +404,10 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                         />
                       </div>
                       <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label
+                          htmlFor="password"
+                          className="block text-sm font-medium text-gray-700 mb-1"
+                        >
                           Password
                         </label>
                         <input
@@ -405,11 +426,17 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                         </Link>
                       </div>
                       <div className="text-center text-sm text-gray-500">
-                        <Link href="/city-register" className="text-primary-600 hover:text-primary-500">
+                        <Link
+                          href="/city-register"
+                          className="text-primary-600 hover:text-primary-500"
+                        >
                           Request City Access
                         </Link>
                         {' | '}
-                        <Link href="/city-forgot-password" className="text-primary-600 hover:text-primary-500">
+                        <Link
+                          href="/city-forgot-password"
+                          className="text-primary-600 hover:text-primary-500"
+                        >
                           Forgot Password?
                         </Link>
                       </div>
@@ -431,35 +458,74 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                       <div className="mt-6 space-y-4">
                         <div className="flex items-center">
                           <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6 text-green-600"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
                             </svg>
                           </div>
                           <div>
                             <h4 className="font-semibold text-gray-900">Statewide Compliance</h4>
-                            <p className="text-gray-600 text-sm">Unified weight enforcement across all Texas municipalities</p>
+                            <p className="text-gray-600 text-sm">
+                              Unified weight enforcement across all Texas municipalities
+                            </p>
                           </div>
                         </div>
                         <div className="flex items-center">
                           <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6 text-blue-600"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                              />
                             </svg>
                           </div>
                           <div>
                             <h4 className="font-semibold text-gray-900">Centralized Reporting</h4>
-                            <p className="text-gray-600 text-sm">Generate comprehensive reports for your municipality</p>
+                            <p className="text-gray-600 text-sm">
+                              Generate comprehensive reports for your municipality
+                            </p>
                           </div>
                         </div>
                         <div className="flex items-center">
                           <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6 text-purple-600"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+                              />
                             </svg>
                           </div>
                           <div>
                             <h4 className="font-semibold text-gray-900">Permit Management</h4>
-                            <p className="text-gray-600 text-sm">Issue and track overweight permits efficiently</p>
+                            <p className="text-gray-600 text-sm">
+                              Issue and track overweight permits efficiently
+                            </p>
                           </div>
                         </div>
                       </div>

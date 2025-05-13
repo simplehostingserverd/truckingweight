@@ -2,13 +2,31 @@
 
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/useToast';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/Select';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/Badge';
 import { Loader2, WifiIcon, BluetoothIcon, UsbIcon, EthernetIcon, ServerIcon } from 'lucide-react';
 import { useSupabase } from '@/hooks/useSupabase';
@@ -61,8 +79,8 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
         const response = await fetch('/api/scales/hardware-options', {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionData?.session?.access_token}`
-          }
+            Authorization: `Bearer ${sessionData?.session?.access_token}`,
+          },
         });
 
         if (!response.ok) {
@@ -138,12 +156,12 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionData?.session?.access_token}`
+          Authorization: `Bearer ${sessionData?.session?.access_token}`,
         },
         body: JSON.stringify({
           hardwareType: selectedHardware,
-          config: hardwareConfig
-        })
+          config: hardwareConfig,
+        }),
       });
 
       const data = await response.json();
@@ -173,12 +191,18 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
   // Get connection icon
   const getConnectionIcon = (type: string) => {
     switch (type.toLowerCase()) {
-      case 'wifi': return <WifiIcon className="h-4 w-4" />;
-      case 'bluetooth': return <BluetoothIcon className="h-4 w-4" />;
-      case 'usb': return <UsbIcon className="h-4 w-4" />;
-      case 'ethernet': return <EthernetIcon className="h-4 w-4" />;
-      case 'serial': return <ServerIcon className="h-4 w-4" />;
-      default: return <ServerIcon className="h-4 w-4" />;
+      case 'wifi':
+        return <WifiIcon className="h-4 w-4" />;
+      case 'bluetooth':
+        return <BluetoothIcon className="h-4 w-4" />;
+      case 'usb':
+        return <UsbIcon className="h-4 w-4" />;
+      case 'ethernet':
+        return <EthernetIcon className="h-4 w-4" />;
+      case 'serial':
+        return <ServerIcon className="h-4 w-4" />;
+      default:
+        return <ServerIcon className="h-4 w-4" />;
     }
   };
 
@@ -189,9 +213,7 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
     <Card className="w-full">
       <CardHeader>
         <CardTitle>IoT Hardware Configuration</CardTitle>
-        <CardDescription>
-          Select and configure IoT hardware for your scale
-        </CardDescription>
+        <CardDescription>Select and configure IoT hardware for your scale</CardDescription>
       </CardHeader>
       <CardContent>
         {isLoading && !hardwareOptions.length ? (
@@ -212,7 +234,9 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
                       <SelectItem key={option.id} value={option.id}>
                         {option.name}
                         {option.isCityScaleCompatible && (
-                          <Badge variant="outline" className="ml-2">City Compatible</Badge>
+                          <Badge variant="outline" className="ml-2">
+                            City Compatible
+                          </Badge>
                         )}
                       </SelectItem>
                     ))}
@@ -226,7 +250,9 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
                     <p className="text-sm">{selectedOption.description}</p>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {selectedOption.supportedSensors.map(sensor => (
-                        <Badge key={sensor} variant="secondary">{sensor}</Badge>
+                        <Badge key={sensor} variant="secondary">
+                          {sensor}
+                        </Badge>
                       ))}
                     </div>
                   </div>
@@ -298,7 +324,9 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
                               <Label htmlFor="baudRate">Baud Rate</Label>
                               <Select
                                 value={config.baudRate}
-                                onValueChange={(value) => setConfig(prev => ({ ...prev, baudRate: value }))}
+                                onValueChange={value =>
+                                  setConfig(prev => ({ ...prev, baudRate: value }))
+                                }
                               >
                                 <SelectTrigger id="baudRate">
                                   <SelectValue placeholder="Select baud rate" />
@@ -318,14 +346,19 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
                           <Label htmlFor="sensorType">Sensor Type</Label>
                           <Select
                             value={config.sensorType}
-                            onValueChange={(value) => setConfig(prev => ({ ...prev, sensorType: value }))}
+                            onValueChange={value =>
+                              setConfig(prev => ({ ...prev, sensorType: value }))
+                            }
                           >
                             <SelectTrigger id="sensorType">
                               <SelectValue placeholder="Select sensor type" />
                             </SelectTrigger>
                             <SelectContent>
                               {selectedOption.supportedSensors.map(sensor => (
-                                <SelectItem key={sensor} value={sensor.toLowerCase().replace(' ', '_')}>
+                                <SelectItem
+                                  key={sensor}
+                                  value={sensor.toLowerCase().replace(' ', '_')}
+                                >
                                   {sensor}
                                 </SelectItem>
                               ))}

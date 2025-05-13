@@ -77,10 +77,7 @@ class ErrorBoundaryClass extends Component<Props, State> {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-end space-x-2 border-t border-gray-200 dark:border-gray-700 pt-4">
-                  <Button
-                    variant="outline"
-                    onClick={() => window.location.reload()}
-                  >
+                  <Button variant="outline" onClick={() => window.location.reload()}>
                     Reload Page
                   </Button>
                   <Button

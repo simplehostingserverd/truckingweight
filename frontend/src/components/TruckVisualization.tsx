@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 // Dynamically import Three.js component with no SSR
-const TruckModel = dynamic(
-  () => import('./TruckModel'),
-  { ssr: false, loading: () => <ModelLoadingPlaceholder /> }
-);
+const TruckModel = dynamic(() => import('./TruckModel'), {
+  ssr: false,
+  loading: () => <ModelLoadingPlaceholder />,
+});
 
 // Placeholder component while model is loading
 function ModelLoadingPlaceholder() {

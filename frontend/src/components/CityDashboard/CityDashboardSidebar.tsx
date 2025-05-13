@@ -69,14 +69,54 @@ export default function CityDashboardSidebar({ role }: SidebarProps) {
 
   // Define navigation items based on user role
   const navigation = [
-    { name: 'Dashboard', href: '/city/dashboard', icon: HomeIcon, roles: ['admin', 'operator', 'inspector', 'viewer'] },
-    { name: 'Scales', href: '/city/scales', icon: ScaleIcon, roles: ['admin', 'operator', 'inspector', 'viewer'] },
-    { name: 'Weighing', href: '/city/weighing', icon: ScaleIcon, roles: ['admin', 'operator', 'inspector'] },
-    { name: 'Permits', href: '/city/permits', icon: DocumentTextIcon, roles: ['admin', 'operator', 'viewer'] },
-    { name: 'Violations', href: '/city/violations', icon: ExclamationTriangleIcon, roles: ['admin', 'operator', 'inspector'] },
-    { name: 'Revenue', href: '/city/revenue', icon: CurrencyDollarIcon, roles: ['admin', 'operator', 'viewer'] },
-    { name: 'Reports', href: '/city/reports', icon: ChartBarIcon, roles: ['admin', 'operator', 'viewer'] },
-    { name: 'Map', href: '/city/map', icon: MapPinIcon, roles: ['admin', 'operator', 'inspector', 'viewer'] },
+    {
+      name: 'Dashboard',
+      href: '/city/dashboard',
+      icon: HomeIcon,
+      roles: ['admin', 'operator', 'inspector', 'viewer'],
+    },
+    {
+      name: 'Scales',
+      href: '/city/scales',
+      icon: ScaleIcon,
+      roles: ['admin', 'operator', 'inspector', 'viewer'],
+    },
+    {
+      name: 'Weighing',
+      href: '/city/weighing',
+      icon: ScaleIcon,
+      roles: ['admin', 'operator', 'inspector'],
+    },
+    {
+      name: 'Permits',
+      href: '/city/permits',
+      icon: DocumentTextIcon,
+      roles: ['admin', 'operator', 'viewer'],
+    },
+    {
+      name: 'Violations',
+      href: '/city/violations',
+      icon: ExclamationTriangleIcon,
+      roles: ['admin', 'operator', 'inspector'],
+    },
+    {
+      name: 'Revenue',
+      href: '/city/revenue',
+      icon: CurrencyDollarIcon,
+      roles: ['admin', 'operator', 'viewer'],
+    },
+    {
+      name: 'Reports',
+      href: '/city/reports',
+      icon: ChartBarIcon,
+      roles: ['admin', 'operator', 'viewer'],
+    },
+    {
+      name: 'Map',
+      href: '/city/map',
+      icon: MapPinIcon,
+      roles: ['admin', 'operator', 'inspector', 'viewer'],
+    },
   ];
 
   const adminNavigation = [

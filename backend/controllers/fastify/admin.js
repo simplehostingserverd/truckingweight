@@ -545,22 +545,40 @@ async function exportData(request, reply) {
     // Fetch data based on entity type
     switch (entity) {
       case 'weights':
-        ({ data, error } = await supabase.from('weights').select('*').order('date', { ascending: false }));
+        ({ data, error } = await supabase
+          .from('weights')
+          .select('*')
+          .order('date', { ascending: false }));
         break;
       case 'loads':
-        ({ data, error } = await supabase.from('loads').select('*').order('pickup_date', { ascending: false }));
+        ({ data, error } = await supabase
+          .from('loads')
+          .select('*')
+          .order('pickup_date', { ascending: false }));
         break;
       case 'vehicles':
-        ({ data, error } = await supabase.from('vehicles').select('*').order('name', { ascending: true }));
+        ({ data, error } = await supabase
+          .from('vehicles')
+          .select('*')
+          .order('name', { ascending: true }));
         break;
       case 'drivers':
-        ({ data, error } = await supabase.from('drivers').select('*').order('name', { ascending: true }));
+        ({ data, error } = await supabase
+          .from('drivers')
+          .select('*')
+          .order('name', { ascending: true }));
         break;
       case 'companies':
-        ({ data, error } = await supabase.from('companies').select('*').order('name', { ascending: true }));
+        ({ data, error } = await supabase
+          .from('companies')
+          .select('*')
+          .order('name', { ascending: true }));
         break;
       case 'users':
-        ({ data, error } = await supabase.from('users').select('id, name, email, company_id, is_admin, created_at').order('name', { ascending: true }));
+        ({ data, error } = await supabase
+          .from('users')
+          .select('id, name, email, company_id, is_admin, created_at')
+          .order('name', { ascending: true }));
         break;
       default:
         return reply.code(400).send({ msg: 'Invalid entity type' });
@@ -579,31 +597,41 @@ async function exportData(request, reply) {
     if (format === 'json') {
       // Set appropriate headers for JSON download
       reply.header('Content-Type', 'application/json');
-      reply.header('Content-Disposition', `attachment; filename=${entity}_export_${new Date().toISOString().split('T')[0]}.json`);
+      reply.header(
+        'Content-Disposition',
+        `attachment; filename=${entity}_export_${new Date().toISOString().split('T')[0]}.json`
+      );
 
       return reply.send(data);
     } else if (format === 'csv') {
       // Convert data to CSV
       const headers = Object.keys(data[0]).join(',');
-      const rows = data.map(item => {
-        return Object.values(item).map(value => {
-          // Handle values with commas by wrapping in quotes
-          if (value === null || value === undefined) {
-            return '';
-          }
-          if (typeof value === 'object') {
-            value = JSON.stringify(value);
-          }
-          value = String(value);
-          return value.includes(',') ? `"${value}"` : value;
-        }).join(',');
-      }).join('\n');
+      const rows = data
+        .map(item => {
+          return Object.values(item)
+            .map(value => {
+              // Handle values with commas by wrapping in quotes
+              if (value === null || value === undefined) {
+                return '';
+              }
+              if (typeof value === 'object') {
+                value = JSON.stringify(value);
+              }
+              value = String(value);
+              return value.includes(',') ? `"${value}"` : value;
+            })
+            .join(',');
+        })
+        .join('\n');
 
       const csv = `${headers}\n${rows}`;
 
       // Set appropriate headers for CSV download
       reply.header('Content-Type', 'text/csv');
-      reply.header('Content-Disposition', `attachment; filename=${entity}_export_${new Date().toISOString().split('T')[0]}.csv`);
+      reply.header(
+        'Content-Disposition',
+        `attachment; filename=${entity}_export_${new Date().toISOString().split('T')[0]}.csv`
+      );
 
       return reply.send(csv);
     } else {

@@ -5,8 +5,8 @@ const fastify = require('fastify')({
       removeAdditional: 'all',
       coerceTypes: true,
       useDefaults: true,
-    }
-  }
+    },
+  },
 });
 const dotenv = require('dotenv');
 const path = require('path');
@@ -94,9 +94,11 @@ async function registerPlugins() {
   // Add global hooks for authentication
   fastify.addHook('onRequest', async (request, reply) => {
     // Skip authentication for Swagger UI and documentation
-    if (request.url.startsWith('/documentation') ||
-        request.url === '/swagger.json' ||
-        request.url === '/swagger.yaml') {
+    if (
+      request.url.startsWith('/documentation') ||
+      request.url === '/swagger.json' ||
+      request.url === '/swagger.yaml'
+    ) {
       return;
     }
 

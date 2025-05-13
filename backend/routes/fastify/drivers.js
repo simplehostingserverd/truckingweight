@@ -172,34 +172,54 @@ const deleteDriverSchema = {
 // Driver routes
 async function routes(fastify, options) {
   // Get all drivers
-  fastify.get('/', {
-    preHandler: authMiddleware,
-    schema: getAllDriversSchema,
-  }, driverController.getAllDrivers);
+  fastify.get(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: getAllDriversSchema,
+    },
+    driverController.getAllDrivers
+  );
 
   // Get driver by ID
-  fastify.get('/:id', {
-    preHandler: authMiddleware,
-    schema: getDriverByIdSchema,
-  }, driverController.getDriverById);
+  fastify.get(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: getDriverByIdSchema,
+    },
+    driverController.getDriverById
+  );
 
   // Create a new driver
-  fastify.post('/', {
-    preHandler: authMiddleware,
-    schema: createDriverSchema,
-  }, driverController.createDriver);
+  fastify.post(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: createDriverSchema,
+    },
+    driverController.createDriver
+  );
 
   // Update a driver
-  fastify.put('/:id', {
-    preHandler: authMiddleware,
-    schema: updateDriverSchema,
-  }, driverController.updateDriver);
+  fastify.put(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: updateDriverSchema,
+    },
+    driverController.updateDriver
+  );
 
   // Delete a driver
-  fastify.delete('/:id', {
-    preHandler: authMiddleware,
-    schema: deleteDriverSchema,
-  }, driverController.deleteDriver);
+  fastify.delete(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: deleteDriverSchema,
+    },
+    driverController.deleteDriver
+  );
 }
 
 module.exports = routes;

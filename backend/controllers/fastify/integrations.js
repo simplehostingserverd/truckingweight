@@ -64,8 +64,8 @@ async function createIntegration(request, reply) {
     // Validate integration type
     const validTypes = ['erp', 'telematics', 'accounting', 'crm', 'custom'];
     if (!validTypes.includes(type)) {
-      return reply.code(400).send({ 
-        msg: `Invalid integration type. Valid types are: ${validTypes.join(', ')}` 
+      return reply.code(400).send({
+        msg: `Invalid integration type. Valid types are: ${validTypes.join(', ')}`,
       });
     }
 

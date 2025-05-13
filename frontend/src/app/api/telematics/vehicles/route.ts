@@ -58,9 +58,7 @@ export async function GET(request: NextRequest) {
     // If no active connections, query vehicles table directly
     if (!connections || connections.length === 0) {
       // Get vehicles from the database
-      let vehiclesQuery = supabase
-        .from('vehicles')
-        .select('*');
+      let vehiclesQuery = supabase.from('vehicles').select('*');
 
       // If not admin, filter by company_id
       if (!isAdmin && companyId) {
@@ -86,13 +84,13 @@ export async function GET(request: NextRequest) {
         status: vehicle.status || 'active',
         location: {
           latitude: vehicle.last_latitude || 32.7767,
-          longitude: vehicle.last_longitude || -96.7970,
-          address: vehicle.last_location || 'Unknown'
+          longitude: vehicle.last_longitude || -96.797,
+          address: vehicle.last_location || 'Unknown',
         },
         lastUpdate: vehicle.updated_at || new Date().toISOString(),
         speed: vehicle.last_speed || 0,
         fuelLevel: vehicle.fuel_level || 75,
-        engineStatus: vehicle.engine_status || 'off'
+        engineStatus: vehicle.engine_status || 'off',
       }));
 
       return NextResponse.json(telematicsData);
@@ -119,9 +117,7 @@ export async function GET(request: NextRequest) {
       // If no telematics data found, fall back to vehicles table
       if (!telematicsData || telematicsData.length === 0) {
         // Get vehicles from the database
-        let vehiclesQuery = supabase
-          .from('vehicles')
-          .select('*');
+        let vehiclesQuery = supabase.from('vehicles').select('*');
 
         // If not admin, filter by company_id
         if (!isAdmin && companyId) {
@@ -142,13 +138,13 @@ export async function GET(request: NextRequest) {
           status: vehicle.status || 'active',
           location: {
             latitude: vehicle.last_latitude || 32.7767,
-            longitude: vehicle.last_longitude || -96.7970,
-            address: vehicle.last_location || 'Unknown'
+            longitude: vehicle.last_longitude || -96.797,
+            address: vehicle.last_location || 'Unknown',
           },
           lastUpdate: vehicle.updated_at || new Date().toISOString(),
           speed: vehicle.last_speed || 0,
           fuelLevel: vehicle.fuel_level || 75,
-          engineStatus: vehicle.engine_status || 'off'
+          engineStatus: vehicle.engine_status || 'off',
         }));
 
         return NextResponse.json(formattedData);
@@ -161,13 +157,13 @@ export async function GET(request: NextRequest) {
         status: data.status || 'active',
         location: {
           latitude: data.latitude || 32.7767,
-          longitude: data.longitude || -96.7970,
-          address: data.location || 'Unknown'
+          longitude: data.longitude || -96.797,
+          address: data.location || 'Unknown',
         },
         lastUpdate: data.timestamp || new Date().toISOString(),
         speed: data.speed || 0,
         fuelLevel: data.fuel_level || 75,
-        engineStatus: data.engine_status || 'off'
+        engineStatus: data.engine_status || 'off',
       }));
 
       return NextResponse.json(formattedData);
@@ -175,9 +171,7 @@ export async function GET(request: NextRequest) {
       console.error('Error processing telematics data:', telematicsError);
 
       // Fall back to vehicles table as a last resort
-      let vehiclesQuery = supabase
-        .from('vehicles')
-        .select('*');
+      let vehiclesQuery = supabase.from('vehicles').select('*');
 
       // If not admin, filter by company_id
       if (!isAdmin && companyId) {
@@ -198,13 +192,13 @@ export async function GET(request: NextRequest) {
         status: vehicle.status || 'active',
         location: {
           latitude: vehicle.last_latitude || 32.7767,
-          longitude: vehicle.last_longitude || -96.7970,
-          address: vehicle.last_location || 'Unknown'
+          longitude: vehicle.last_longitude || -96.797,
+          address: vehicle.last_location || 'Unknown',
         },
         lastUpdate: vehicle.updated_at || new Date().toISOString(),
         speed: vehicle.last_speed || 0,
         fuelLevel: vehicle.fuel_level || 75,
-        engineStatus: vehicle.engine_status || 'off'
+        engineStatus: vehicle.engine_status || 'off',
       }));
 
       return NextResponse.json(formattedData);
@@ -237,9 +231,7 @@ export async function GET(request: NextRequest) {
       const companyId = userData?.company_id;
 
       // Query vehicles directly
-      let vehiclesQuery = supabase
-        .from('vehicles')
-        .select('*');
+      let vehiclesQuery = supabase.from('vehicles').select('*');
 
       // If not admin, filter by company_id
       if (!isAdmin && companyId) {
@@ -260,13 +252,13 @@ export async function GET(request: NextRequest) {
         status: vehicle.status || 'active',
         location: {
           latitude: vehicle.last_latitude || 32.7767,
-          longitude: vehicle.last_longitude || -96.7970,
-          address: vehicle.last_location || 'Unknown'
+          longitude: vehicle.last_longitude || -96.797,
+          address: vehicle.last_location || 'Unknown',
         },
         lastUpdate: vehicle.updated_at || new Date().toISOString(),
         speed: vehicle.last_speed || 0,
         fuelLevel: vehicle.fuel_level || 75,
-        engineStatus: vehicle.engine_status || 'off'
+        engineStatus: vehicle.engine_status || 'off',
       }));
 
       return NextResponse.json(formattedData);
@@ -287,13 +279,13 @@ function getMockVehicleData() {
       status: 'active',
       location: {
         latitude: 32.7767,
-        longitude: -96.7970,
-        address: 'Dallas, TX'
+        longitude: -96.797,
+        address: 'Dallas, TX',
       },
       lastUpdate: new Date().toISOString(),
       speed: 65,
       fuelLevel: 75,
-      engineStatus: 'running'
+      engineStatus: 'running',
     },
     {
       id: '2',
@@ -302,12 +294,12 @@ function getMockVehicleData() {
       location: {
         latitude: 29.7604,
         longitude: -95.3698,
-        address: 'Houston, TX'
+        address: 'Houston, TX',
       },
       lastUpdate: new Date(Date.now() - 3600000).toISOString(),
       speed: 0,
       fuelLevel: 45,
-      engineStatus: 'off'
+      engineStatus: 'off',
     },
     {
       id: '3',
@@ -316,12 +308,12 @@ function getMockVehicleData() {
       location: {
         latitude: 30.2672,
         longitude: -97.7431,
-        address: 'Austin, TX'
+        address: 'Austin, TX',
       },
       lastUpdate: new Date().toISOString(),
       speed: 55,
       fuelLevel: 60,
-      engineStatus: 'running'
-    }
+      engineStatus: 'running',
+    },
   ];
 }

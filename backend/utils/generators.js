@@ -19,7 +19,7 @@ const supabase = createClient(
  * @param {number} companyId - Company ID
  * @returns {string} - Unique ticket number
  */
-const generateTicketNumber = async (companyId) => {
+const generateTicketNumber = async companyId => {
   try {
     const date = new Date();
     const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
@@ -61,7 +61,7 @@ const generateTicketNumber = async (companyId) => {
  * @param {number} cityId - City ID
  * @returns {string} - Unique permit number
  */
-const generatePermitNumber = async (cityId) => {
+const generatePermitNumber = async cityId => {
   try {
     const date = new Date();
     const yearMonth = date.toISOString().slice(0, 7).replace(/-/g, '');
@@ -104,7 +104,7 @@ const generatePermitNumber = async (cityId) => {
  * @param {number} cityId - City ID
  * @returns {string} - Unique violation number
  */
-const generateViolationNumber = async (cityId) => {
+const generateViolationNumber = async cityId => {
   try {
     const date = new Date();
     const yearMonth = date.toISOString().slice(0, 7).replace(/-/g, '');
@@ -147,7 +147,7 @@ const generateViolationNumber = async (cityId) => {
  * @param {number} cityId - City ID
  * @returns {string} - Unique city weigh ticket number
  */
-const generateCityWeighTicketNumber = async (cityId) => {
+const generateCityWeighTicketNumber = async cityId => {
   try {
     const date = new Date();
     const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');

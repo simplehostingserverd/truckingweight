@@ -125,35 +125,29 @@ const SelectTrigger = React.forwardRef<
 ));
 SelectTrigger.displayName = 'SelectTrigger';
 
-const SelectValue = React.forwardRef<
-  HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement>
->(({ className, children, ...props }, ref) => (
-  <span
-    ref={ref}
-    className={cn('flex-grow text-sm truncate', className)}
-    {...props}
-  >
-    {children}
-  </span>
-));
+const SelectValue = React.forwardRef<HTMLSpanElement, React.HTMLAttributes<HTMLSpanElement>>(
+  ({ className, children, ...props }, ref) => (
+    <span ref={ref} className={cn('flex-grow text-sm truncate', className)} {...props}>
+      {children}
+    </span>
+  )
+);
 SelectValue.displayName = 'SelectValue';
 
-const SelectContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      'absolute z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md animate-in fade-in-80',
-      className
-    )}
-    {...props}
-  >
-    <div className="p-1">{children}</div>
-  </div>
-));
+const SelectContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, children, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        'absolute z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md animate-in fade-in-80',
+        className
+      )}
+      {...props}
+    >
+      <div className="p-1">{children}</div>
+    </div>
+  )
+);
 SelectContent.displayName = 'SelectContent';
 
 const SelectItem = React.forwardRef<

@@ -181,34 +181,54 @@ const deleteVehicleSchema = {
 // Vehicle routes
 async function routes(fastify, options) {
   // Get all vehicles
-  fastify.get('/', {
-    preHandler: authMiddleware,
-    schema: getAllVehiclesSchema,
-  }, vehicleController.getAllVehicles);
+  fastify.get(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: getAllVehiclesSchema,
+    },
+    vehicleController.getAllVehicles
+  );
 
   // Get vehicle by ID
-  fastify.get('/:id', {
-    preHandler: authMiddleware,
-    schema: getVehicleByIdSchema,
-  }, vehicleController.getVehicleById);
+  fastify.get(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: getVehicleByIdSchema,
+    },
+    vehicleController.getVehicleById
+  );
 
   // Create a new vehicle
-  fastify.post('/', {
-    preHandler: authMiddleware,
-    schema: createVehicleSchema,
-  }, vehicleController.createVehicle);
+  fastify.post(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: createVehicleSchema,
+    },
+    vehicleController.createVehicle
+  );
 
   // Update a vehicle
-  fastify.put('/:id', {
-    preHandler: authMiddleware,
-    schema: updateVehicleSchema,
-  }, vehicleController.updateVehicle);
+  fastify.put(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: updateVehicleSchema,
+    },
+    vehicleController.updateVehicle
+  );
 
   // Delete a vehicle
-  fastify.delete('/:id', {
-    preHandler: authMiddleware,
-    schema: deleteVehicleSchema,
-  }, vehicleController.deleteVehicle);
+  fastify.delete(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: deleteVehicleSchema,
+    },
+    vehicleController.deleteVehicle
+  );
 }
 
 module.exports = routes;

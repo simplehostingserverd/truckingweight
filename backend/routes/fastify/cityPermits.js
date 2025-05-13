@@ -18,14 +18,7 @@ const supabase = createClient(
 const createPermitSchema = {
   body: {
     type: 'object',
-    required: [
-      'companyName',
-      'vehicleInfo',
-      'permitType',
-      'startDate',
-      'endDate',
-      'feeAmount',
-    ],
+    required: ['companyName', 'vehicleInfo', 'permitType', 'startDate', 'endDate', 'feeAmount'],
     properties: {
       companyName: { type: 'string', minLength: 1 },
       contactName: { type: 'string' },
@@ -40,7 +33,7 @@ const createPermitSchema = {
           length: { type: 'number' },
           width: { type: 'number' },
           height: { type: 'number' },
-        }
+        },
       },
       startDate: { type: 'string', format: 'date' },
       endDate: { type: 'string', format: 'date' },
@@ -258,7 +251,7 @@ async function routes(fastify, options) {
     '/',
     {
       preHandler: [cityRoleMiddleware(['admin', 'operator'])],
-      schema: createPermitSchema
+      schema: createPermitSchema,
     },
     async (request, reply) => {
       try {
@@ -482,18 +475,24 @@ async function routes(fastify, options) {
 
         // Prepare update data with snake_case keys
         const updateFields = {};
-        if (updateData.companyName !== undefined) updateFields.company_name = updateData.companyName;
-        if (updateData.contactName !== undefined) updateFields.contact_name = updateData.contactName;
-        if (updateData.contactEmail !== undefined) updateFields.contact_email = updateData.contactEmail;
-        if (updateData.contactPhone !== undefined) updateFields.contact_phone = updateData.contactPhone;
-        if (updateData.vehicleInfo !== undefined) updateFields.vehicle_info = updateData.vehicleInfo;
+        if (updateData.companyName !== undefined)
+          updateFields.company_name = updateData.companyName;
+        if (updateData.contactName !== undefined)
+          updateFields.contact_name = updateData.contactName;
+        if (updateData.contactEmail !== undefined)
+          updateFields.contact_email = updateData.contactEmail;
+        if (updateData.contactPhone !== undefined)
+          updateFields.contact_phone = updateData.contactPhone;
+        if (updateData.vehicleInfo !== undefined)
+          updateFields.vehicle_info = updateData.vehicleInfo;
         if (updateData.permitType !== undefined) updateFields.permit_type = updateData.permitType;
         if (updateData.maxWeight !== undefined) updateFields.max_weight = updateData.maxWeight;
         if (updateData.dimensions !== undefined) updateFields.dimensions = updateData.dimensions;
         if (updateData.startDate !== undefined) updateFields.start_date = updateData.startDate;
         if (updateData.endDate !== undefined) updateFields.end_date = updateData.endDate;
         if (updateData.feeAmount !== undefined) updateFields.fee_amount = updateData.feeAmount;
-        if (updateData.paymentStatus !== undefined) updateFields.payment_status = updateData.paymentStatus;
+        if (updateData.paymentStatus !== undefined)
+          updateFields.payment_status = updateData.paymentStatus;
         if (updateData.status !== undefined) updateFields.status = updateData.status;
 
         // Add updated_at timestamp

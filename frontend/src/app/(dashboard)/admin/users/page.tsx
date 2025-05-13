@@ -229,7 +229,7 @@ export default function UsersPage() {
   const handleEditUser = async () => {
     try {
       if (!selectedUser) return;
-      
+
       setIsLoading(true);
       setError('');
 
@@ -264,7 +264,7 @@ export default function UsersPage() {
   const handleDeleteUser = async () => {
     try {
       if (!selectedUser) return;
-      
+
       setIsLoading(true);
       setError('');
 
@@ -276,10 +276,7 @@ export default function UsersPage() {
       }
 
       // Delete user from users table
-      const { error: userError } = await supabase
-        .from('users')
-        .delete()
-        .eq('id', selectedUser.id);
+      const { error: userError } = await supabase.from('users').delete().eq('id', selectedUser.id);
 
       if (userError) {
         throw userError;
@@ -400,9 +397,7 @@ export default function UsersPage() {
                           {user.is_admin ? 'Admin' : 'User'}
                         </Badge>
                       </TableCell>
-                      <TableCell>
-                        {new Date(user.created_at).toLocaleDateString()}
-                      </TableCell>
+                      <TableCell>{new Date(user.created_at).toLocaleDateString()}</TableCell>
                       <TableCell className="text-right">
                         <Button
                           variant="ghost"
@@ -518,9 +513,7 @@ export default function UsersPage() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Edit User</DialogTitle>
-            <DialogDescription>
-              Update user information and permissions.
-            </DialogDescription>
+            <DialogDescription>Update user information and permissions.</DialogDescription>
           </DialogHeader>
           {selectedUser && (
             <div className="space-y-4 py-4">
@@ -561,9 +554,7 @@ export default function UsersPage() {
                   type="checkbox"
                   id="edit-is-admin"
                   checked={selectedUser.is_admin}
-                  onChange={e =>
-                    setSelectedUser({ ...selectedUser, is_admin: e.target.checked })
-                  }
+                  onChange={e => setSelectedUser({ ...selectedUser, is_admin: e.target.checked })}
                   className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                 />
                 <label htmlFor="edit-is-admin" className="text-sm font-medium">
@@ -610,11 +601,7 @@ export default function UsersPage() {
             <Button variant="outline" onClick={() => setShowDeleteUserDialog(false)}>
               Cancel
             </Button>
-            <Button
-              variant="destructive"
-              onClick={handleDeleteUser}
-              disabled={isLoading}
-            >
+            <Button variant="destructive" onClick={handleDeleteUser} disabled={isLoading}>
               {isLoading ? 'Deleting...' : 'Delete User'}
             </Button>
           </DialogFooter>

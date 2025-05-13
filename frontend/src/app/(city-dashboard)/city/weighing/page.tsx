@@ -11,17 +11,29 @@ import {
   ExclamationCircleIcon,
   CameraIcon,
   QrCodeIcon,
-  PrinterIcon
+  PrinterIcon,
 } from '@heroicons/react/24/outline';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/Select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/Badge';
 
@@ -62,8 +74,8 @@ export default function CityWeighingPage() {
       // Fetch scales
       const response = await fetch('/api/city-scales', {
         headers: {
-          Authorization: `Bearer ${cityToken}`
-        }
+          Authorization: `Bearer ${cityToken}`,
+        },
       });
 
       if (!response.ok) {
@@ -78,7 +90,6 @@ export default function CityWeighingPage() {
       if (activeScales.length > 0) {
         setSelectedScale(activeScales[0].id.toString());
       }
-
     } catch (err: any) {
       console.error('Error fetching scales:', err);
       setError(err.message || 'Failed to load scales');
@@ -92,7 +103,6 @@ export default function CityWeighingPage() {
 
       setScales(dummyScales);
       setSelectedScale('1');
-
     } finally {
       setIsLoading(false);
     }
@@ -154,9 +164,9 @@ export default function CityWeighingPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${cityToken}`
+          Authorization: `Bearer ${cityToken}`,
         },
-        body: JSON.stringify(weighData)
+        body: JSON.stringify(weighData),
       });
 
       if (!response.ok) {
@@ -171,7 +181,6 @@ export default function CityWeighingPage() {
 
       // Reset form
       resetForm();
-
     } catch (err: any) {
       console.error('Error creating weigh ticket:', err);
       setError(err.message || 'Failed to create weigh ticket');
@@ -183,7 +192,6 @@ export default function CityWeighingPage() {
         setSuccess('Demo mode: Weigh ticket created successfully!');
         setShowTicketDialog(true);
       }
-
     } finally {
       setIsSubmitting(false);
     }
@@ -211,9 +219,7 @@ export default function CityWeighingPage() {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold text-white">City Weighing</h1>
-          <p className="text-gray-400">
-            Record and manage commercial vehicle weights
-          </p>
+          <p className="text-gray-400">Record and manage commercial vehicle weights</p>
         </div>
         <div className="flex space-x-2">
           <Button variant="outline" onClick={fetchScales} disabled={isLoading}>
@@ -242,7 +248,12 @@ export default function CityWeighingPage() {
               <CardTitle>Record Weight</CardTitle>
             </CardHeader>
             <CardContent>
-              <Tabs defaultValue="manual" value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+              <Tabs
+                defaultValue="manual"
+                value={activeTab}
+                onValueChange={setActiveTab}
+                className="space-y-6"
+              >
                 <TabsList className="grid grid-cols-3 w-full max-w-md">
                   <TabsTrigger value="manual">Manual Entry</TabsTrigger>
                   <TabsTrigger value="camera">Camera Scan</TabsTrigger>
@@ -282,7 +293,7 @@ export default function CityWeighingPage() {
                           id="vehicleInfo"
                           placeholder="License Plate / VIN"
                           value={vehicleInfo}
-                          onChange={(e) => setVehicleInfo(e.target.value)}
+                          onChange={e => setVehicleInfo(e.target.value)}
                           className="bg-gray-700 border-gray-600"
                           required
                         />
@@ -294,7 +305,7 @@ export default function CityWeighingPage() {
                           id="driverName"
                           placeholder="Driver Name (Optional)"
                           value={driverName}
-                          onChange={(e) => setDriverName(e.target.value)}
+                          onChange={e => setDriverName(e.target.value)}
                           className="bg-gray-700 border-gray-600"
                         />
                       </div>
@@ -305,7 +316,7 @@ export default function CityWeighingPage() {
                           id="companyName"
                           placeholder="Company Name (Optional)"
                           value={companyName}
-                          onChange={(e) => setCompanyName(e.target.value)}
+                          onChange={e => setCompanyName(e.target.value)}
                           className="bg-gray-700 border-gray-600"
                         />
                       </div>
@@ -317,7 +328,7 @@ export default function CityWeighingPage() {
                           type="number"
                           placeholder="Gross Weight"
                           value={grossWeight}
-                          onChange={(e) => setGrossWeight(e.target.value)}
+                          onChange={e => setGrossWeight(e.target.value)}
                           className="bg-gray-700 border-gray-600"
                           required
                         />
@@ -330,7 +341,7 @@ export default function CityWeighingPage() {
                           type="number"
                           placeholder="Tare Weight (Optional)"
                           value={tareWeight}
-                          onChange={(e) => setTareWeight(e.target.value)}
+                          onChange={e => setTareWeight(e.target.value)}
                           className="bg-gray-700 border-gray-600"
                         />
                       </div>
@@ -353,7 +364,7 @@ export default function CityWeighingPage() {
                           id="permitNumber"
                           placeholder="Permit Number (Optional)"
                           value={permitNumber}
-                          onChange={(e) => setPermitNumber(e.target.value)}
+                          onChange={e => setPermitNumber(e.target.value)}
                           className="bg-gray-700 border-gray-600"
                         />
                       </div>
@@ -365,7 +376,7 @@ export default function CityWeighingPage() {
                         id="notes"
                         placeholder="Additional notes (Optional)"
                         value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
+                        onChange={e => setNotes(e.target.value)}
                         className="w-full h-24 px-3 py-2 text-white bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
@@ -387,7 +398,9 @@ export default function CityWeighingPage() {
                     <div className="w-full max-w-md h-64 bg-gray-900 rounded-lg border-2 border-dashed border-gray-700 flex items-center justify-center">
                       <div className="text-center">
                         <CameraIcon className="mx-auto h-12 w-12 text-gray-500" />
-                        <p className="mt-2 text-sm text-gray-400">Camera feed not available in demo</p>
+                        <p className="mt-2 text-sm text-gray-400">
+                          Camera feed not available in demo
+                        </p>
                       </div>
                     </div>
                     <Button disabled className="bg-blue-600 hover:bg-blue-700">
@@ -395,7 +408,8 @@ export default function CityWeighingPage() {
                       Scan Vehicle
                     </Button>
                     <p className="text-sm text-gray-400">
-                      Use the camera to scan vehicle license plates or QR codes for automated data entry.
+                      Use the camera to scan vehicle license plates or QR codes for automated data
+                      entry.
                     </p>
                   </div>
                 </TabsContent>
@@ -405,7 +419,9 @@ export default function CityWeighingPage() {
                     <div className="w-full max-w-md h-64 bg-gray-900 rounded-lg border-2 border-dashed border-gray-700 flex items-center justify-center">
                       <div className="text-center">
                         <ScaleIcon className="mx-auto h-12 w-12 text-gray-500" />
-                        <p className="mt-2 text-sm text-gray-400">Scale API connection not available in demo</p>
+                        <p className="mt-2 text-sm text-gray-400">
+                          Scale API connection not available in demo
+                        </p>
                       </div>
                     </div>
                     <Button disabled className="bg-blue-600 hover:bg-blue-700">
@@ -413,7 +429,8 @@ export default function CityWeighingPage() {
                       Connect to Scale
                     </Button>
                     <p className="text-sm text-gray-400">
-                      Connect directly to compatible scales to automatically retrieve weight measurements.
+                      Connect directly to compatible scales to automatically retrieve weight
+                      measurements.
                     </p>
                   </div>
                 </TabsContent>
@@ -435,9 +452,7 @@ export default function CityWeighingPage() {
                   ))}
                 </div>
               ) : scales.length === 0 ? (
-                <div className="text-center py-6 text-gray-400">
-                  No scales found
-                </div>
+                <div className="text-center py-6 text-gray-400">No scales found</div>
               ) : (
                 <div className="space-y-4">
                   {scales.map((scale: any) => (
@@ -452,15 +467,17 @@ export default function CityWeighingPage() {
                       <div className="flex justify-between items-start">
                         <div>
                           <h3 className="font-medium text-white">{scale.name}</h3>
-                          <p className="text-sm text-gray-400">Max: {scale.max_capacity.toLocaleString()} lbs</p>
+                          <p className="text-sm text-gray-400">
+                            Max: {scale.max_capacity.toLocaleString()} lbs
+                          </p>
                         </div>
                         <Badge
                           className={
                             scale.status === 'Active'
                               ? 'bg-green-900/20 text-green-400 border-green-800'
                               : scale.status === 'Maintenance'
-                              ? 'bg-yellow-900/20 text-yellow-400 border-yellow-800'
-                              : 'bg-red-900/20 text-red-400 border-red-800'
+                                ? 'bg-yellow-900/20 text-yellow-400 border-yellow-800'
+                                : 'bg-red-900/20 text-red-400 border-red-800'
                           }
                         >
                           {scale.status}
@@ -548,7 +565,9 @@ export default function CityWeighingPage() {
                 {netWeight && (
                   <div className="flex justify-between">
                     <span className="text-gray-400">Net Weight:</span>
-                    <span className="font-medium text-white">{parseInt(netWeight).toLocaleString()} lbs</span>
+                    <span className="font-medium text-white">
+                      {parseInt(netWeight).toLocaleString()} lbs
+                    </span>
                   </div>
                 )}
 

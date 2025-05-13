@@ -60,17 +60,19 @@ export function Providers({ children }: { children: React.ReactNode }) {
               {children}
               {/* Only render offline banner after client-side hydration */}
               {typeof isOnline === 'boolean' && !isOnline && (
-                <div style={{
-                  position: 'fixed',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  backgroundColor: theme.palette.warning.main,
-                  color: theme.palette.warning.contrastText,
-                  padding: '8px',
-                  textAlign: 'center',
-                  zIndex: 9999
-                }}>
+                <div
+                  style={{
+                    position: 'fixed',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    backgroundColor: theme.palette.warning.main,
+                    color: theme.palette.warning.contrastText,
+                    padding: '8px',
+                    textAlign: 'center',
+                    zIndex: 9999,
+                  }}
+                >
                   You are currently offline. Some features may be limited.
                 </div>
               )}

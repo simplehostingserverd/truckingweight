@@ -6,17 +6,18 @@ import { cn } from '@/lib/utils';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 // Create a custom Dialog component that accepts onOpenChange
-const Dialog = ({ open, onOpenChange, children, ...props }: {
+const Dialog = ({
+  open,
+  onOpenChange,
+  children,
+  ...props
+}: {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   children?: React.ReactNode;
 } & Omit<React.ComponentProps<typeof HeadlessDialog>, 'open' | 'onClose'>) => {
   return (
-    <HeadlessDialog
-      open={open || false}
-      onClose={() => onOpenChange?.(false)}
-      {...props}
-    >
+    <HeadlessDialog open={open || false} onClose={() => onOpenChange?.(false)} {...props}>
       {children}
     </HeadlessDialog>
   );
@@ -27,11 +28,7 @@ const DialogTrigger = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ className, children, ...props }, ref) => (
-  <button
-    ref={ref}
-    className={cn('inline-flex items-center justify-center', className)}
-    {...props}
-  >
+  <button ref={ref} className={cn('inline-flex items-center justify-center', className)} {...props}>
     {children}
   </button>
 ));
@@ -54,21 +51,20 @@ const DialogPortal = ({
 };
 DialogPortal.displayName = 'DialogPortal';
 
-const DialogOverlay = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      className={cn(
-        'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-all duration-100',
-        className
-      )}
-      {...props}
-    />
-  );
-});
+const DialogOverlay = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-all duration-100',
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
 DialogOverlay.displayName = 'DialogOverlay';
 
 const DialogContent = React.forwardRef<
@@ -102,21 +98,12 @@ const DialogContent = React.forwardRef<
 });
 DialogContent.displayName = 'DialogContent';
 
-const DialogHeader = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)}
-    {...props}
-  />
+const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)} {...props} />
 );
 DialogHeader.displayName = 'DialogHeader';
 
-const DialogFooter = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)}
     {...props}
@@ -124,27 +111,22 @@ const DialogFooter = ({
 );
 DialogFooter.displayName = 'DialogFooter';
 
-const DialogTitle = React.forwardRef<
-  HTMLHeadingElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h2
-    ref={ref}
-    className={cn('text-lg font-semibold leading-none tracking-tight', className)}
-    {...props}
-  />
-));
+const DialogTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
+  ({ className, ...props }, ref) => (
+    <h2
+      ref={ref}
+      className={cn('text-lg font-semibold leading-none tracking-tight', className)}
+      {...props}
+    />
+  )
+);
 DialogTitle.displayName = 'DialogTitle';
 
 const DialogDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn('text-sm text-muted-foreground', className)}
-    {...props}
-  />
+  <p ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
 ));
 DialogDescription.displayName = 'DialogDescription';
 

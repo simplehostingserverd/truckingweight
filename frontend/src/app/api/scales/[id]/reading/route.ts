@@ -8,10 +8,7 @@ import { toSearchParamString } from '@/utils/searchParams';
  * This provides real data from the database with fallback to mock data
  */
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     // Create a Supabase client
     const supabase = createRouteHandlerClient({ cookies });

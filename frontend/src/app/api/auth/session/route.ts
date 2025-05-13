@@ -19,10 +19,7 @@ export async function GET(request: NextRequest) {
     } = await supabase.auth.getSession();
 
     if (!session) {
-      return NextResponse.json(
-        { error: 'No active session' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'No active session' }, { status: 401 });
     }
 
     // Return session data
@@ -48,10 +45,7 @@ export async function GET(request: NextRequest) {
       } = await supabase.auth.getSession();
 
       if (!session) {
-        return NextResponse.json(
-          { error: 'No active session' },
-          { status: 401 }
-        );
+        return NextResponse.json({ error: 'No active session' }, { status: 401 });
       }
 
       // Return session data
@@ -78,9 +72,6 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

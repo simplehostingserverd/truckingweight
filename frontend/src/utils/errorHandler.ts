@@ -40,24 +40,32 @@ export function handleApiError(error: any): AppError {
   if (error.name === 'AbortError') {
     return createError('Request was aborted', ErrorType.NETWORK);
   }
-  
+
   if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
     return createError('Network error. Please check your connection.', ErrorType.NETWORK);
   }
-  
+
   // Handle response errors
   if (error.statusCode || error.status) {
     const statusCode = error.statusCode || error.status;
-    
+
     // Auth errors
     if (statusCode === 401) {
-      return createError('Authentication required. Please log in again.', ErrorType.AUTH, statusCode);
+      return createError(
+        'Authentication required. Please log in again.',
+        ErrorType.AUTH,
+        statusCode
+      );
     }
-    
+
     if (statusCode === 403) {
-      return createError('You do not have permission to perform this action.', ErrorType.AUTH, statusCode);
+      return createError(
+        'You do not have permission to perform this action.',
+        ErrorType.AUTH,
+        statusCode
+      );
     }
-    
+
     // Validation errors
     if (statusCode === 400 || statusCode === 422) {
       return createError(
@@ -67,17 +75,13 @@ export function handleApiError(error: any): AppError {
         error.details || error.data
       );
     }
-    
+
     // Server errors
     if (statusCode >= 500) {
-      return createError(
-        'Server error. Please try again later.',
-        ErrorType.SERVER,
-        statusCode
-      );
+      return createError('Server error. Please try again later.', ErrorType.SERVER, statusCode);
     }
   }
-  
+
   // Database errors
   if (error.code && (error.code.startsWith('PGDB') || error.message?.includes('database'))) {
     return createError(
@@ -87,7 +91,7 @@ export function handleApiError(error: any): AppError {
       error.details
     );
   }
-  
+
   // Supabase errors
   if (error.error_description || error.error) {
     return createError(
@@ -97,7 +101,7 @@ export function handleApiError(error: any): AppError {
       error
     );
   }
-  
+
   // Default unknown error
   return createError(
     error.message || 'An unexpected error occurred',
@@ -110,10 +114,10 @@ export function handleApiError(error: any): AppError {
 // Hook to use error handling with toast
 export function useErrorHandler() {
   const toast = useToastContext();
-  
+
   const handleError = (error: any, context?: string) => {
     const appError = handleApiError(error);
-    
+
     // Log the error
     logger.error(appError.message, {
       type: appError.type,
@@ -121,16 +125,16 @@ export function useErrorHandler() {
       details: appError.details,
       context,
     });
-    
+
     // Show toast notification
     toast.error({
       title: getErrorTitle(appError),
       description: appError.message,
     });
-    
+
     return appError;
   };
-  
+
   return { handleError };
 }
 

@@ -2,18 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const scaleId = params.id;
-    
+
     if (!scaleId) {
-      return NextResponse.json(
-        { success: false, error: 'Scale ID is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'Scale ID is required' }, { status: 400 });
     }
 
     // Parse request body
@@ -31,13 +25,13 @@ export async function POST(
     const supabase = createRouteHandlerClient({ cookies });
 
     // Get the user session
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
 
     if (sessionError || !session) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     // Get the user
@@ -48,10 +42,7 @@ export async function POST(
       .single();
 
     if (userError || !userData) {
-      return NextResponse.json(
-        { success: false, error: 'User not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
     }
 
     // Make a request to the backend API
@@ -60,12 +51,12 @@ export async function POST(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.access_token}`
+        Authorization: `Bearer ${session.access_token}`,
       },
       body: JSON.stringify({
         hardwareType,
-        config
-      })
+        config,
+      }),
     });
 
     if (!response.ok) {

@@ -11,7 +11,7 @@ const apiKeySchema = {
     prefix: { type: 'string' },
     scopes: {
       type: 'array',
-      items: { type: 'string' }
+      items: { type: 'string' },
     },
     expires_at: { type: ['string', 'null'], format: 'date-time' },
     created_at: { type: ['string', 'null'], format: 'date-time' },
@@ -73,7 +73,7 @@ const createApiKeySchema = {
       name: { type: 'string' },
       scopes: {
         type: 'array',
-        items: { type: 'string' }
+        items: { type: 'string' },
       },
       expiresAt: { type: 'string', format: 'date-time' },
     },
@@ -88,7 +88,7 @@ const createApiKeySchema = {
         key: { type: 'string' },
         scopes: {
           type: 'array',
-          items: { type: 'string' }
+          items: { type: 'string' },
         },
         expires_at: { type: ['string', 'null'], format: 'date-time' },
         created_at: { type: ['string', 'null'], format: 'date-time' },
@@ -126,7 +126,7 @@ const updateApiKeySchema = {
       name: { type: 'string' },
       scopes: {
         type: 'array',
-        items: { type: 'string' }
+        items: { type: 'string' },
       },
       status: { type: 'string', enum: ['active', 'inactive', 'revoked'] },
     },
@@ -195,7 +195,7 @@ const verifyApiKeySchema = {
         valid: { type: 'boolean' },
         scopes: {
           type: 'array',
-          items: { type: 'string' }
+          items: { type: 'string' },
         },
         companyId: { type: 'integer' },
       },
@@ -224,39 +224,63 @@ const verifyApiKeySchema = {
 // API Keys routes
 async function routes(fastify, options) {
   // Get all API keys
-  fastify.get('/', {
-    preHandler: authMiddleware,
-    schema: getAllApiKeysSchema,
-  }, apiKeyController.getAllApiKeys);
+  fastify.get(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: getAllApiKeysSchema,
+    },
+    apiKeyController.getAllApiKeys
+  );
 
   // Get API key by ID
-  fastify.get('/:id', {
-    preHandler: authMiddleware,
-    schema: getApiKeyByIdSchema,
-  }, apiKeyController.getApiKeyById);
+  fastify.get(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: getApiKeyByIdSchema,
+    },
+    apiKeyController.getApiKeyById
+  );
 
   // Create a new API key
-  fastify.post('/', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: createApiKeySchema,
-  }, apiKeyController.createApiKey);
+  fastify.post(
+    '/',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: createApiKeySchema,
+    },
+    apiKeyController.createApiKey
+  );
 
   // Update an API key
-  fastify.put('/:id', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: updateApiKeySchema,
-  }, apiKeyController.updateApiKey);
+  fastify.put(
+    '/:id',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: updateApiKeySchema,
+    },
+    apiKeyController.updateApiKey
+  );
 
   // Delete an API key
-  fastify.delete('/:id', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: deleteApiKeySchema,
-  }, apiKeyController.deleteApiKey);
+  fastify.delete(
+    '/:id',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: deleteApiKeySchema,
+    },
+    apiKeyController.deleteApiKey
+  );
 
   // Verify an API key
-  fastify.post('/verify', {
-    schema: verifyApiKeySchema,
-  }, apiKeyController.verifyApiKey);
+  fastify.post(
+    '/verify',
+    {
+      schema: verifyApiKeySchema,
+    },
+    apiKeyController.verifyApiKey
+  );
 }
 
 module.exports = routes;

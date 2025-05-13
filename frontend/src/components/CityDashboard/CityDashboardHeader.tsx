@@ -83,7 +83,13 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
             {user?.city?.name || 'City'} Municipal Weighing System
           </h1>
           <Badge variant="outline" className="bg-blue-900 text-blue-200 border-blue-700">
-            {user?.role === 'admin' ? 'Administrator' : user?.role === 'operator' ? 'Operator' : user?.role === 'inspector' ? 'Inspector' : 'Viewer'}
+            {user?.role === 'admin'
+              ? 'Administrator'
+              : user?.role === 'operator'
+                ? 'Operator'
+                : user?.role === 'inspector'
+                  ? 'Inspector'
+                  : 'Viewer'}
           </Badge>
         </div>
 
@@ -100,7 +106,10 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-80 bg-gray-800 border-gray-700 text-white">
+            <DropdownMenuContent
+              align="end"
+              className="w-80 bg-gray-800 border-gray-700 text-white"
+            >
               <DropdownMenuLabel className="flex items-center justify-between">
                 <span>Notifications</span>
                 {unreadCount > 0 && (
@@ -116,9 +125,7 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
               </DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-gray-700" />
               {notifications.length === 0 ? (
-                <div className="py-4 px-2 text-center text-gray-400">
-                  No notifications
-                </div>
+                <div className="py-4 px-2 text-center text-gray-400">No notifications</div>
               ) : (
                 notifications.map(notification => (
                   <DropdownMenuItem
@@ -163,7 +170,10 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
                 <UserCircleIcon className="h-6 w-6 text-gray-300" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-gray-800 border-gray-700 text-white">
+            <DropdownMenuContent
+              align="end"
+              className="w-56 bg-gray-800 border-gray-700 text-white"
+            >
               <DropdownMenuLabel>
                 <div className="flex flex-col">
                   <span className="font-medium">{user?.name}</span>
@@ -182,7 +192,10 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-gray-700" />
-              <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-400 hover:text-red-300 focus:text-red-300">
+              <DropdownMenuItem
+                onClick={handleLogout}
+                className="cursor-pointer text-red-400 hover:text-red-300 focus:text-red-300"
+              >
                 <ArrowRightOnRectangleIcon className="h-4 w-4 mr-2" />
                 Logout
               </DropdownMenuItem>

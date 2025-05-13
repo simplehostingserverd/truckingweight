@@ -259,7 +259,7 @@ export default function CompaniesPage() {
   const handleEditCompany = async () => {
     try {
       if (!selectedCompany) return;
-      
+
       setIsLoading(true);
       setError('');
 
@@ -300,7 +300,7 @@ export default function CompaniesPage() {
   const handleDeleteCompany = async () => {
     try {
       if (!selectedCompany) return;
-      
+
       setIsLoading(true);
       setError('');
 
@@ -505,9 +505,7 @@ export default function CompaniesPage() {
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>Create New Company</DialogTitle>
-            <DialogDescription>
-              Add a new company to the system.
-            </DialogDescription>
+            <DialogDescription>Add a new company to the system.</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-1 gap-2">
@@ -613,9 +611,7 @@ export default function CompaniesPage() {
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>Edit Company</DialogTitle>
-            <DialogDescription>
-              Update company information.
-            </DialogDescription>
+            <DialogDescription>Update company information.</DialogDescription>
           </DialogHeader>
           {selectedCompany && (
             <div className="grid gap-4 py-4">
@@ -630,7 +626,9 @@ export default function CompaniesPage() {
                 <label className="text-sm font-medium">Address</label>
                 <Input
                   value={selectedCompany.address}
-                  onChange={e => setSelectedCompany({ ...selectedCompany, address: e.target.value })}
+                  onChange={e =>
+                    setSelectedCompany({ ...selectedCompany, address: e.target.value })
+                  }
                 />
               </div>
               <div className="grid grid-cols-3 gap-4">
@@ -645,7 +643,9 @@ export default function CompaniesPage() {
                   <label className="text-sm font-medium">State</label>
                   <Input
                     value={selectedCompany.state}
-                    onChange={e => setSelectedCompany({ ...selectedCompany, state: e.target.value })}
+                    onChange={e =>
+                      setSelectedCompany({ ...selectedCompany, state: e.target.value })
+                    }
                   />
                 </div>
                 <div className="grid grid-cols-1 gap-2">
@@ -661,7 +661,9 @@ export default function CompaniesPage() {
                   <label className="text-sm font-medium">Phone</label>
                   <Input
                     value={selectedCompany.phone}
-                    onChange={e => setSelectedCompany({ ...selectedCompany, phone: e.target.value })}
+                    onChange={e =>
+                      setSelectedCompany({ ...selectedCompany, phone: e.target.value })
+                    }
                   />
                 </div>
                 <div className="grid grid-cols-1 gap-2">
@@ -669,7 +671,9 @@ export default function CompaniesPage() {
                   <Input
                     type="email"
                     value={selectedCompany.email}
-                    onChange={e => setSelectedCompany({ ...selectedCompany, email: e.target.value })}
+                    onChange={e =>
+                      setSelectedCompany({ ...selectedCompany, email: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -677,7 +681,9 @@ export default function CompaniesPage() {
                 <label className="text-sm font-medium">Website</label>
                 <Input
                   value={selectedCompany.website}
-                  onChange={e => setSelectedCompany({ ...selectedCompany, website: e.target.value })}
+                  onChange={e =>
+                    setSelectedCompany({ ...selectedCompany, website: e.target.value })
+                  }
                 />
               </div>
               <div className="grid grid-cols-1 gap-2">

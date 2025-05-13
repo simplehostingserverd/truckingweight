@@ -8,14 +8,14 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  DragEndEvent
+  DragEndEvent,
 } from '@dnd-kit/core';
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
-  verticalListSortingStrategy
+  verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { PlusIcon, MinusIcon, ArrowsUpDownIcon, MapPinIcon } from '@heroicons/react/24/outline';
@@ -198,7 +198,7 @@ export default function RoutePlanner({
 
     if (!over || active.id === over.id) return;
 
-    setWaypoints((currentWaypoints) => {
+    setWaypoints(currentWaypoints => {
       const oldIndex = currentWaypoints.findIndex(wp => wp.id === active.id);
       const newIndex = currentWaypoints.findIndex(wp => wp.id === over.id);
 
@@ -209,7 +209,9 @@ export default function RoutePlanner({
       const destination = reorderedWaypoints.find(wp => wp.id === 'destination');
 
       if (origin && destination) {
-        const filteredItems = reorderedWaypoints.filter(wp => wp.id !== 'origin' && wp.id !== 'destination');
+        const filteredItems = reorderedWaypoints.filter(
+          wp => wp.id !== 'origin' && wp.id !== 'destination'
+        );
         return [origin, ...filteredItems, destination];
       }
 
@@ -218,17 +220,10 @@ export default function RoutePlanner({
   };
 
   // Sortable waypoint component
-  const SortableWaypoint = ({ waypoint, index }: { waypoint: Waypoint, index: number }) => {
-    const {
-      attributes,
-      listeners,
-      setNodeRef,
-      transform,
-      transition,
-      isDragging
-    } = useSortable({
+  const SortableWaypoint = ({ waypoint, index }: { waypoint: Waypoint; index: number }) => {
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
       id: waypoint.id,
-      disabled: waypoint.id === 'origin' || waypoint.id === 'destination'
+      disabled: waypoint.id === 'origin' || waypoint.id === 'destination',
     });
 
     const style = {
@@ -309,11 +304,7 @@ export default function RoutePlanner({
             >
               <div className="space-y-3">
                 {waypoints.map((waypoint, index) => (
-                  <SortableWaypoint
-                    key={waypoint.id}
-                    waypoint={waypoint}
-                    index={index}
-                  />
+                  <SortableWaypoint key={waypoint.id} waypoint={waypoint} index={index} />
                 ))}
               </div>
             </SortableContext>

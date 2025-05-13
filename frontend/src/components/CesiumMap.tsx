@@ -89,13 +89,15 @@ const CesiumMap: React.FC<CesiumMapProps> = ({
           height: 32,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         },
-        label: marker.title ? {
-          text: marker.title,
-          font: '14px sans-serif',
-          horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-          verticalOrigin: Cesium.VerticalOrigin.TOP,
-          pixelOffset: new Cesium.Cartesian2(0, -36),
-        } : undefined,
+        label: marker.title
+          ? {
+              text: marker.title,
+              font: '14px sans-serif',
+              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+              verticalOrigin: Cesium.VerticalOrigin.TOP,
+              pixelOffset: new Cesium.Cartesian2(0, -36),
+            }
+          : undefined,
       });
 
       markersRef.current[marker.id] = entity;

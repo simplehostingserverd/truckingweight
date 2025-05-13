@@ -7,17 +7,36 @@ import {
   ArrowPathIcon,
   MapPinIcon,
   TruckIcon,
-  SignalIcon
+  SignalIcon,
 } from '@heroicons/react/24/outline';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { Badge } from '@/components/ui/Badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/Select';
 import { Separator } from '@/components/ui/separator';
 import type { Database } from '@/types/supabase';
 
@@ -106,7 +125,9 @@ export default function TelematicsPage() {
         query = query.eq('company_id', userData.company_id);
       }
 
-      const { data, error: connectionsError } = await query.order('created_at', { ascending: false });
+      const { data, error: connectionsError } = await query.order('created_at', {
+        ascending: false,
+      });
 
       if (connectionsError) {
         throw connectionsError;
@@ -138,13 +159,13 @@ export default function TelematicsPage() {
             status: 'active',
             location: {
               latitude: 32.7767,
-              longitude: -96.7970,
-              address: 'Dallas, TX'
+              longitude: -96.797,
+              address: 'Dallas, TX',
             },
             lastUpdate: new Date().toISOString(),
             speed: 65,
             fuelLevel: 75,
-            engineStatus: 'running'
+            engineStatus: 'running',
           },
           {
             id: '2',
@@ -153,12 +174,12 @@ export default function TelematicsPage() {
             location: {
               latitude: 29.7604,
               longitude: -95.3698,
-              address: 'Houston, TX'
+              address: 'Houston, TX',
             },
             lastUpdate: new Date(Date.now() - 3600000).toISOString(),
             speed: 0,
             fuelLevel: 45,
-            engineStatus: 'off'
+            engineStatus: 'off',
           },
           {
             id: '3',
@@ -167,13 +188,13 @@ export default function TelematicsPage() {
             location: {
               latitude: 30.2672,
               longitude: -97.7431,
-              address: 'Austin, TX'
+              address: 'Austin, TX',
             },
             lastUpdate: new Date().toISOString(),
             speed: 55,
             fuelLevel: 60,
-            engineStatus: 'running'
-          }
+            engineStatus: 'running',
+          },
         ];
 
         setVehicleData(mockData);
@@ -211,13 +232,13 @@ export default function TelematicsPage() {
           status: 'active',
           location: {
             latitude: 32.7767,
-            longitude: -96.7970,
-            address: 'Dallas, TX'
+            longitude: -96.797,
+            address: 'Dallas, TX',
           },
           lastUpdate: new Date().toISOString(),
           speed: 65,
           fuelLevel: 75,
-          engineStatus: 'running'
+          engineStatus: 'running',
         },
         {
           id: '2',
@@ -226,12 +247,12 @@ export default function TelematicsPage() {
           location: {
             latitude: 29.7604,
             longitude: -95.3698,
-            address: 'Houston, TX'
+            address: 'Houston, TX',
           },
           lastUpdate: new Date(Date.now() - 3600000).toISOString(),
           speed: 0,
           fuelLevel: 45,
-          engineStatus: 'off'
+          engineStatus: 'off',
         },
         {
           id: '3',
@@ -240,13 +261,13 @@ export default function TelematicsPage() {
           location: {
             latitude: 30.2672,
             longitude: -97.7431,
-            address: 'Austin, TX'
+            address: 'Austin, TX',
           },
           lastUpdate: new Date().toISOString(),
           speed: 55,
           fuelLevel: 60,
-          engineStatus: 'running'
-        }
+          engineStatus: 'running',
+        },
       ];
 
       setVehicleData(mockData);
@@ -324,16 +345,11 @@ export default function TelematicsPage() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Telematics Integration</h1>
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            onClick={handleRefreshData}
-          >
+          <Button variant="outline" onClick={handleRefreshData}>
             <ArrowPathIcon className="h-4 w-4 mr-2" />
             Refresh Data
           </Button>
-          <Button
-            onClick={() => setShowNewConnectionDialog(true)}
-          >
+          <Button onClick={() => setShowNewConnectionDialog(true)}>
             <PlusIcon className="h-4 w-4 mr-2" />
             New Connection
           </Button>
@@ -441,10 +457,7 @@ export default function TelematicsPage() {
                 <CardDescription className="max-w-md mx-auto">
                   Get started by creating a new connection to your telematics provider.
                 </CardDescription>
-                <Button
-                  onClick={() => setShowNewConnectionDialog(true)}
-                  className="mt-2"
-                >
+                <Button onClick={() => setShowNewConnectionDialog(true)} className="mt-2">
                   <PlusIcon className="h-4 w-4 mr-2" />
                   New Connection
                 </Button>
@@ -459,10 +472,13 @@ export default function TelematicsPage() {
                       <div>
                         <CardTitle className="text-lg">{connection.name}</CardTitle>
                         <CardDescription>
-                          {connection.provider === 'geotab' ? 'Geotab' :
-                           connection.provider === 'samsara' ? 'Samsara' :
-                           connection.provider === 'fleetcomplete' ? 'Fleet Complete' :
-                           connection.provider}
+                          {connection.provider === 'geotab'
+                            ? 'Geotab'
+                            : connection.provider === 'samsara'
+                              ? 'Samsara'
+                              : connection.provider === 'fleetcomplete'
+                                ? 'Fleet Complete'
+                                : connection.provider}
                         </CardDescription>
                       </div>
                       <Badge variant={connection.status === 'active' ? 'success' : 'destructive'}>
@@ -475,7 +491,9 @@ export default function TelematicsPage() {
                       <div className="flex justify-between">
                         <span className="text-sm text-gray-500">Last Sync:</span>
                         <span className="text-sm">
-                          {connection.last_sync ? new Date(connection.last_sync).toLocaleString() : 'Never'}
+                          {connection.last_sync
+                            ? new Date(connection.last_sync).toLocaleString()
+                            : 'Never'}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -541,10 +559,12 @@ export default function TelematicsPage() {
               <Label htmlFor="provider">Telematics Provider</Label>
               <Select
                 value={newConnection.provider}
-                onValueChange={(value) => setNewConnection({
-                  ...newConnection,
-                  provider: value
-                })}
+                onValueChange={value =>
+                  setNewConnection({
+                    ...newConnection,
+                    provider: value,
+                  })
+                }
               >
                 <SelectTrigger id="provider">
                   <SelectValue placeholder="Select Telematics Provider" />
@@ -567,10 +587,12 @@ export default function TelematicsPage() {
                   <Input
                     id="apiKey"
                     value={newConnection.config.apiKey}
-                    onChange={e => setNewConnection({
-                      ...newConnection,
-                      config: { ...newConnection.config, apiKey: e.target.value }
-                    })}
+                    onChange={e =>
+                      setNewConnection({
+                        ...newConnection,
+                        config: { ...newConnection.config, apiKey: e.target.value },
+                      })
+                    }
                   />
                 </div>
 
@@ -579,10 +601,12 @@ export default function TelematicsPage() {
                   <Input
                     id="username"
                     value={newConnection.config.username}
-                    onChange={e => setNewConnection({
-                      ...newConnection,
-                      config: { ...newConnection.config, username: e.target.value }
-                    })}
+                    onChange={e =>
+                      setNewConnection({
+                        ...newConnection,
+                        config: { ...newConnection.config, username: e.target.value },
+                      })
+                    }
                   />
                 </div>
 
@@ -592,10 +616,12 @@ export default function TelematicsPage() {
                     id="password"
                     type="password"
                     value={newConnection.config.password}
-                    onChange={e => setNewConnection({
-                      ...newConnection,
-                      config: { ...newConnection.config, password: e.target.value }
-                    })}
+                    onChange={e =>
+                      setNewConnection({
+                        ...newConnection,
+                        config: { ...newConnection.config, password: e.target.value },
+                      })
+                    }
                   />
                 </div>
 
@@ -604,10 +630,12 @@ export default function TelematicsPage() {
                   <Input
                     id="database"
                     value={newConnection.config.database}
-                    onChange={e => setNewConnection({
-                      ...newConnection,
-                      config: { ...newConnection.config, database: e.target.value }
-                    })}
+                    onChange={e =>
+                      setNewConnection({
+                        ...newConnection,
+                        config: { ...newConnection.config, database: e.target.value },
+                      })
+                    }
                   />
                 </div>
 
@@ -616,10 +644,12 @@ export default function TelematicsPage() {
                   <Input
                     id="server"
                     value={newConnection.config.server}
-                    onChange={e => setNewConnection({
-                      ...newConnection,
-                      config: { ...newConnection.config, server: e.target.value }
-                    })}
+                    onChange={e =>
+                      setNewConnection({
+                        ...newConnection,
+                        config: { ...newConnection.config, server: e.target.value },
+                      })
+                    }
                     placeholder="my.geotabserver.com"
                   />
                 </div>
@@ -628,16 +658,10 @@ export default function TelematicsPage() {
           </div>
 
           <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setShowNewConnectionDialog(false)}
-            >
+            <Button variant="outline" onClick={() => setShowNewConnectionDialog(false)}>
               Cancel
             </Button>
-            <Button
-              onClick={handleCreateConnection}
-              disabled={isLoading}
-            >
+            <Button onClick={handleCreateConnection} disabled={isLoading}>
               {isLoading ? 'Creating...' : 'Create Connection'}
             </Button>
           </DialogFooter>

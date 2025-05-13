@@ -26,12 +26,7 @@ const DropdownMenuTrigger: React.FC<DropdownMenuTriggerProps> = ({ asChild, chil
   return (
     <div onClick={handleClick}>
       {children}
-      {open && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={() => setOpen(false)}
-        />
-      )}
+      {open && <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />}
     </div>
   );
 };
@@ -96,18 +91,10 @@ interface DropdownMenuLabelProps extends React.HTMLAttributes<HTMLDivElement> {
   inset?: boolean;
 }
 
-const DropdownMenuLabel: React.FC<DropdownMenuLabelProps> = ({
-  className,
-  inset,
-  ...props
-}) => {
+const DropdownMenuLabel: React.FC<DropdownMenuLabelProps> = ({ className, inset, ...props }) => {
   return (
     <div
-      className={cn(
-        'px-2 py-1.5 text-sm font-semibold',
-        inset && 'pl-8',
-        className
-      )}
+      className={cn('px-2 py-1.5 text-sm font-semibold', inset && 'pl-8', className)}
       {...props}
     />
   );
@@ -117,12 +104,7 @@ const DropdownMenuSeparator: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className,
   ...props
 }) => {
-  return (
-    <div
-      className={cn('-mx-1 my-1 h-px bg-muted', className)}
-      {...props}
-    />
-  );
+  return <div className={cn('-mx-1 my-1 h-px bg-muted', className)} {...props} />;
 };
 
 export {

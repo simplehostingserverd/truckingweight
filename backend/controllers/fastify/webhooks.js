@@ -62,12 +62,21 @@ async function createWebhook(request, reply) {
     const { name, url, events, description, headers } = request.body;
 
     // Validate events
-    const validEvents = ['weight.created', 'weight.updated', 'load.created', 'load.updated', 'vehicle.created', 'vehicle.updated', 'driver.created', 'driver.updated'];
+    const validEvents = [
+      'weight.created',
+      'weight.updated',
+      'load.created',
+      'load.updated',
+      'vehicle.created',
+      'vehicle.updated',
+      'driver.created',
+      'driver.updated',
+    ];
     const invalidEvents = events.filter(event => !validEvents.includes(event));
-    
+
     if (invalidEvents.length > 0) {
-      return reply.code(400).send({ 
-        msg: `Invalid events: ${invalidEvents.join(', ')}. Valid events are: ${validEvents.join(', ')}` 
+      return reply.code(400).send({
+        msg: `Invalid events: ${invalidEvents.join(', ')}. Valid events are: ${validEvents.join(', ')}`,
       });
     }
 
@@ -131,12 +140,21 @@ async function updateWebhook(request, reply) {
 
     // Validate events if provided
     if (events) {
-      const validEvents = ['weight.created', 'weight.updated', 'load.created', 'load.updated', 'vehicle.created', 'vehicle.updated', 'driver.created', 'driver.updated'];
+      const validEvents = [
+        'weight.created',
+        'weight.updated',
+        'load.created',
+        'load.updated',
+        'vehicle.created',
+        'vehicle.updated',
+        'driver.created',
+        'driver.updated',
+      ];
       const invalidEvents = events.filter(event => !validEvents.includes(event));
-      
+
       if (invalidEvents.length > 0) {
-        return reply.code(400).send({ 
-          msg: `Invalid events: ${invalidEvents.join(', ')}. Valid events are: ${validEvents.join(', ')}` 
+        return reply.code(400).send({
+          msg: `Invalid events: ${invalidEvents.join(', ')}. Valid events are: ${validEvents.join(', ')}`,
         });
       }
     }
@@ -217,23 +235,23 @@ async function deleteWebhook(request, reply) {
 async function processWebhookCallback(request, reply) {
   try {
     const { token } = request.params;
-    
+
     // Find webhook by token
     const { data: webhook, error } = await supabase
       .from('webhook_subscriptions')
       .select('*')
       .eq('secret_token', token)
       .single();
-    
+
     if (error || !webhook) {
       request.log.error('Invalid webhook token:', token);
       return reply.code(404).send({ msg: 'Not found' });
     }
-    
+
     // In a real implementation, this would process the webhook data
     // For now, just log the request and return success
     request.log.info(`Webhook callback received for ${webhook.name}`);
-    
+
     return reply.send({ msg: 'Webhook received' });
   } catch (err) {
     request.log.error('Error in processWebhookCallback:', err);
@@ -262,16 +280,16 @@ async function testWebhook(request, reply) {
     if (!webhook) {
       return reply.code(404).send({ msg: 'Webhook not found' });
     }
-    
+
     // In a real implementation, this would send a test request to the webhook URL
     // For now, just return success
-    return reply.send({ 
+    return reply.send({
       msg: 'Test webhook sent successfully',
       webhook: {
         id: webhook.id,
         name: webhook.name,
         url: webhook.url,
-      }
+      },
     });
   } catch (err) {
     request.log.error('Error in testWebhook:', err);

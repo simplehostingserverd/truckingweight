@@ -12,17 +12,36 @@ import {
   DocumentDuplicateIcon,
   MapPinIcon,
   ClockIcon,
-  QrCodeIcon
+  QrCodeIcon,
 } from '@heroicons/react/24/outline';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { Badge } from '@/components/ui/Badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/Select';
 import type { Database } from '@/types/supabase';
 
 export default function CityWeighingPage() {
@@ -36,7 +55,7 @@ export default function CityWeighingPage() {
     complianceRate: 92,
     pendingPermits: 8,
     activePermits: 124,
-    recentViolations: 17
+    recentViolations: 17,
   });
 
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -50,7 +69,7 @@ export default function CityWeighingPage() {
     permitType: 'overweight',
     startDate: '',
     endDate: '',
-    fee: ''
+    fee: '',
   });
 
   const [recentWeighings, setRecentWeighings] = useState([
@@ -60,7 +79,7 @@ export default function CityWeighingPage() {
       vehicleId: 'TX-12345',
       weight: 78500,
       location: 'North Austin Station',
-      status: 'compliant'
+      status: 'compliant',
     },
     {
       id: '2',
@@ -68,7 +87,7 @@ export default function CityWeighingPage() {
       vehicleId: 'TX-67890',
       weight: 92000,
       location: 'South Austin Station',
-      status: 'violation'
+      status: 'violation',
     },
     {
       id: '3',
@@ -76,8 +95,8 @@ export default function CityWeighingPage() {
       vehicleId: 'TX-54321',
       weight: 80200,
       location: 'East Austin Station',
-      status: 'compliant'
-    }
+      status: 'compliant',
+    },
   ]);
 
   const [activePermits, setActivePermits] = useState([
@@ -88,7 +107,7 @@ export default function CityWeighingPage() {
       type: 'Overweight',
       issued: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 20).toISOString(),
-      status: 'active'
+      status: 'active',
     },
     {
       id: 'P-1002',
@@ -97,7 +116,7 @@ export default function CityWeighingPage() {
       type: 'Oversize',
       issued: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 25).toISOString(),
-      status: 'active'
+      status: 'active',
     },
     {
       id: 'P-1003',
@@ -106,8 +125,8 @@ export default function CityWeighingPage() {
       type: 'Overweight & Oversize',
       issued: new Date(Date.now() - 1000 * 60 * 60 * 24 * 15).toISOString(),
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 15).toISOString(),
-      status: 'expiring'
-    }
+      status: 'expiring',
+    },
   ]);
 
   useEffect(() => {
@@ -127,24 +146,18 @@ export default function CityWeighingPage() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold">
-            {cityData.name} Municipal Weighing System
-          </h1>
+          <h1 className="text-3xl font-bold">{cityData.name} Municipal Weighing System</h1>
           <p className="text-gray-500">
-            Monitoring and managing commercial vehicle weights across {cityData.name}, {cityData.state}
+            Monitoring and managing commercial vehicle weights across {cityData.name},{' '}
+            {cityData.state}
           </p>
         </div>
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            onClick={() => setIsLoading(true)}
-          >
+          <Button variant="outline" onClick={() => setIsLoading(true)}>
             <ArrowPathIcon className="h-4 w-4 mr-2" />
             Refresh Data
           </Button>
-          <Button
-            onClick={() => setShowPermitDialog(true)}
-          >
+          <Button onClick={() => setShowPermitDialog(true)}>
             <DocumentTextIcon className="h-4 w-4 mr-2" />
             Issue Permit
           </Button>
@@ -181,7 +194,9 @@ export default function CityWeighingPage() {
                     <div className="flex items-center">
                       <ScaleIcon className="h-8 w-8 text-primary mr-3" />
                       <div>
-                        <div className="text-2xl font-bold">{cityData.totalWeighings.toLocaleString()}</div>
+                        <div className="text-2xl font-bold">
+                          {cityData.totalWeighings.toLocaleString()}
+                        </div>
                         <div className="text-xs text-gray-500">Last 30 days</div>
                       </div>
                     </div>
@@ -196,7 +211,9 @@ export default function CityWeighingPage() {
                     <div className="flex items-center">
                       <CurrencyDollarIcon className="h-8 w-8 text-green-500 mr-3" />
                       <div>
-                        <div className="text-2xl font-bold">${cityData.revenueCollected.toLocaleString()}</div>
+                        <div className="text-2xl font-bold">
+                          ${cityData.revenueCollected.toLocaleString()}
+                        </div>
                         <div className="text-xs text-gray-500">Last 30 days</div>
                       </div>
                     </div>
@@ -232,7 +249,9 @@ export default function CityWeighingPage() {
                       <DocumentDuplicateIcon className="h-8 w-8 text-blue-500 mr-3" />
                       <div>
                         <div className="text-2xl font-bold">{cityData.activePermits}</div>
-                        <div className="text-xs text-gray-500">{cityData.pendingPermits} pending approval</div>
+                        <div className="text-xs text-gray-500">
+                          {cityData.pendingPermits} pending approval
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -266,7 +285,11 @@ export default function CityWeighingPage() {
                             <td className="py-2">{weighing.weight.toLocaleString()} lbs</td>
                             <td className="py-2">{weighing.location}</td>
                             <td className="py-2">
-                              <Badge variant={weighing.status === 'compliant' ? 'success' : 'destructive'}>
+                              <Badge
+                                variant={
+                                  weighing.status === 'compliant' ? 'success' : 'destructive'
+                                }
+                              >
                                 {weighing.status === 'compliant' ? 'Compliant' : 'Violation'}
                               </Badge>
                             </td>
@@ -300,7 +323,9 @@ export default function CityWeighingPage() {
                 <Input
                   id="permitNumber"
                   value={permitDetails.permitNumber}
-                  onChange={e => setPermitDetails({ ...permitDetails, permitNumber: e.target.value })}
+                  onChange={e =>
+                    setPermitDetails({ ...permitDetails, permitNumber: e.target.value })
+                  }
                   placeholder="Auto-generated"
                   disabled
                 />
@@ -309,10 +334,12 @@ export default function CityWeighingPage() {
                 <Label htmlFor="permitType">Permit Type</Label>
                 <Select
                   value={permitDetails.permitType}
-                  onValueChange={(value) => setPermitDetails({
-                    ...permitDetails,
-                    permitType: value
-                  })}
+                  onValueChange={value =>
+                    setPermitDetails({
+                      ...permitDetails,
+                      permitType: value,
+                    })
+                  }
                 >
                   <SelectTrigger id="permitType">
                     <SelectValue placeholder="Select Permit Type" />
@@ -330,9 +357,7 @@ export default function CityWeighingPage() {
             <Button variant="outline" onClick={() => setShowPermitDialog(false)}>
               Cancel
             </Button>
-            <Button onClick={handleIssuePermit}>
-              Issue Permit
-            </Button>
+            <Button onClick={handleIssuePermit}>Issue Permit</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

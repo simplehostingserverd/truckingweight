@@ -214,40 +214,64 @@ const testIntegrationSchema = {
 // Integrations routes
 async function routes(fastify, options) {
   // Get all integrations
-  fastify.get('/', {
-    preHandler: authMiddleware,
-    schema: getAllIntegrationsSchema,
-  }, integrationController.getAllIntegrations);
+  fastify.get(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: getAllIntegrationsSchema,
+    },
+    integrationController.getAllIntegrations
+  );
 
   // Get integration by ID
-  fastify.get('/:id', {
-    preHandler: authMiddleware,
-    schema: getIntegrationByIdSchema,
-  }, integrationController.getIntegrationById);
+  fastify.get(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: getIntegrationByIdSchema,
+    },
+    integrationController.getIntegrationById
+  );
 
   // Create a new integration
-  fastify.post('/', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: createIntegrationSchema,
-  }, integrationController.createIntegration);
+  fastify.post(
+    '/',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: createIntegrationSchema,
+    },
+    integrationController.createIntegration
+  );
 
   // Update an integration
-  fastify.put('/:id', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: updateIntegrationSchema,
-  }, integrationController.updateIntegration);
+  fastify.put(
+    '/:id',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: updateIntegrationSchema,
+    },
+    integrationController.updateIntegration
+  );
 
   // Delete an integration
-  fastify.delete('/:id', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: deleteIntegrationSchema,
-  }, integrationController.deleteIntegration);
+  fastify.delete(
+    '/:id',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: deleteIntegrationSchema,
+    },
+    integrationController.deleteIntegration
+  );
 
   // Test an integration
-  fastify.post('/:id/test', {
-    preHandler: authMiddleware,
-    schema: testIntegrationSchema,
-  }, integrationController.testIntegration);
+  fastify.post(
+    '/:id/test',
+    {
+      preHandler: authMiddleware,
+      schema: testIntegrationSchema,
+    },
+    integrationController.testIntegration
+  );
 }
 
 module.exports = routes;

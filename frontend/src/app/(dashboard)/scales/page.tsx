@@ -10,7 +10,7 @@ import {
   Scale as ScaleIcon,
   QrCode as QrCodeIcon,
   Settings as SettingsIcon,
-  Sync as SyncIcon
+  Sync as SyncIcon,
 } from '@mui/icons-material';
 import {
   Button,
@@ -42,7 +42,7 @@ import {
   IconButton,
   Skeleton,
   Badge,
-  Snackbar
+  Snackbar,
 } from '@mui/material';
 import type { Database } from '@/types/supabase';
 
@@ -57,10 +57,14 @@ export default function ScalesPage() {
   const [view, setView] = useState('table');
   const [selectedScale, setSelectedScale] = useState<any>(null);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected' | 'error'>('disconnected');
+  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected' | 'error'>(
+    'disconnected'
+  );
   const [showConnectionSnackbar, setShowConnectionSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | 'info' | 'warning'>('info');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<
+    'success' | 'error' | 'info' | 'warning'
+  >('info');
   const [activeScales, setActiveScales] = useState<number>(0);
   const supabase = createClientComponentClient<Database>();
 
@@ -94,13 +98,10 @@ export default function ScalesPage() {
         .eq('id', sessionData.session.user.id);
 
       // Use first user or create a default admin user object
-      const user = userData && userData.length > 0
-        ? userData[0]
-        : { company_id: 1, is_admin: true };
+      const user =
+        userData && userData.length > 0 ? userData[0] : { company_id: 1, is_admin: true };
 
-      let query = supabase
-        .from('scales')
-        .select(`
+      let query = supabase.from('scales').select(`
           *,
           companies(
             id,
@@ -141,10 +142,8 @@ export default function ScalesPage() {
     try {
       // In a real implementation, this would check with the backend
       // For now, we'll just simulate it
-      return scalesData.filter(scale =>
-        scale.status === 'Active' &&
-        scale.api_endpoint &&
-        Math.random() > 0.7 // Randomly mark some scales as connected
+      return scalesData.filter(
+        scale => scale.status === 'Active' && scale.api_endpoint && Math.random() > 0.7 // Randomly mark some scales as connected
       );
     } catch (error) {
       console.error('Error checking connected scales:', error);
@@ -251,9 +250,9 @@ export default function ScalesPage() {
           fullWidth
           placeholder="Search scales..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           InputProps={{
-            startAdornment: <MagnifyingGlassIcon sx={{ mr: 1, color: 'text.secondary' }} />
+            startAdornment: <MagnifyingGlassIcon sx={{ mr: 1, color: 'text.secondary' }} />,
           }}
         />
         <Box sx={{ display: 'flex', gap: 2 }}>
@@ -263,7 +262,7 @@ export default function ScalesPage() {
               labelId="status-filter-label"
               value={statusFilter}
               label="Status"
-              onChange={(e) => setStatusFilter(e.target.value)}
+              onChange={e => setStatusFilter(e.target.value)}
             >
               <MenuItem value="all">All Statuses</MenuItem>
               <MenuItem value="Active">Active</MenuItem>
@@ -278,7 +277,7 @@ export default function ScalesPage() {
               labelId="type-filter-label"
               value={typeFilter}
               label="Type"
-              onChange={(e) => setTypeFilter(e.target.value)}
+              onChange={e => setTypeFilter(e.target.value)}
             >
               {scaleTypes.map(type => (
                 <MenuItem key={type} value={type}>
@@ -295,17 +294,12 @@ export default function ScalesPage() {
       </Box>
 
       <Box sx={{ width: '100%' }}>
-        <Tabs
-          value={view}
-          onChange={(_, newValue) => setView(newValue)}
-          sx={{ mb: 3 }}
-          centered
-        >
+        <Tabs value={view} onChange={(_, newValue) => setView(newValue)} sx={{ mb: 3 }} centered>
           <Tab label="Table View" value="table" />
           <Tab label="Grid View" value="grid" />
         </Tabs>
 
-        {view === "table" && (
+        {view === 'table' && (
           <>
             {isLoading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
@@ -344,8 +338,8 @@ export default function ScalesPage() {
                               scale.status === 'Active'
                                 ? 'success'
                                 : scale.status === 'Maintenance'
-                                ? 'warning'
-                                : 'error'
+                                  ? 'warning'
+                                  : 'error'
                             }
                             size="small"
                           />
@@ -361,7 +355,7 @@ export default function ScalesPage() {
                             size="small"
                             color={scale.status === 'Active' ? 'primary' : 'inherit'}
                             disabled={scale.status !== 'Active' || isConnecting}
-                            onClick={(e) => {
+                            onClick={e => {
                               e.preventDefault(); // Prevent navigation to detail page
                               connectToScale(scale);
                             }}
@@ -380,7 +374,10 @@ export default function ScalesPage() {
                               View
                             </Button>
                           </Link>
-                          <Link href={`/weights/capture?scale=${scale.id}`} style={{ textDecoration: 'none', marginLeft: '8px' }}>
+                          <Link
+                            href={`/weights/capture?scale=${scale.id}`}
+                            style={{ textDecoration: 'none', marginLeft: '8px' }}
+                          >
                             <Button variant="outlined" size="small" color="secondary">
                               Weigh
                             </Button>
@@ -395,7 +392,7 @@ export default function ScalesPage() {
           </>
         )}
 
-        {view === "grid" && (
+        {view === 'grid' && (
           <>
             {isLoading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
@@ -410,7 +407,14 @@ export default function ScalesPage() {
                 {filteredScales.map(scale => (
                   <Grid item xs={12} md={6} lg={4} key={scale.id}>
                     <Link href={`/scales/${scale.id}`} style={{ textDecoration: 'none' }}>
-                      <Card sx={{ height: '100%', transition: 'box-shadow 0.3s', '&:hover': { boxShadow: 6 }, cursor: 'pointer' }}>
+                      <Card
+                        sx={{
+                          height: '100%',
+                          transition: 'box-shadow 0.3s',
+                          '&:hover': { boxShadow: 6 },
+                          cursor: 'pointer',
+                        }}
+                      >
                         <CardHeader
                           title={scale.name}
                           subheader={scale.scale_type}
@@ -421,8 +425,8 @@ export default function ScalesPage() {
                                 scale.status === 'Active'
                                   ? 'success'
                                   : scale.status === 'Maintenance'
-                                  ? 'warning'
-                                  : 'error'
+                                    ? 'warning'
+                                    : 'error'
                               }
                               size="small"
                             />
@@ -431,19 +435,27 @@ export default function ScalesPage() {
                         <CardContent>
                           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                              <Typography variant="body2" color="text.secondary">Location:</Typography>
+                              <Typography variant="body2" color="text.secondary">
+                                Location:
+                              </Typography>
                               <Typography variant="body2">{scale.location || 'N/A'}</Typography>
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                              <Typography variant="body2" color="text.secondary">Manufacturer:</Typography>
+                              <Typography variant="body2" color="text.secondary">
+                                Manufacturer:
+                              </Typography>
                               <Typography variant="body2">{scale.manufacturer || 'N/A'}</Typography>
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                              <Typography variant="body2" color="text.secondary">Model:</Typography>
+                              <Typography variant="body2" color="text.secondary">
+                                Model:
+                              </Typography>
                               <Typography variant="body2">{scale.model || 'N/A'}</Typography>
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                              <Typography variant="body2" color="text.secondary">Last Calibration:</Typography>
+                              <Typography variant="body2" color="text.secondary">
+                                Last Calibration:
+                              </Typography>
                               <Typography variant="body2">
                                 {scale.calibration_date
                                   ? new Date(scale.calibration_date).toLocaleDateString()
@@ -457,7 +469,7 @@ export default function ScalesPage() {
                               size="small"
                               color={scale.status === 'Active' ? 'primary' : 'inherit'}
                               disabled={scale.status !== 'Active' || isConnecting}
-                              onClick={(e) => {
+                              onClick={e => {
                                 e.preventDefault(); // Prevent navigation to detail page
                                 e.stopPropagation();
                                 connectToScale(scale);
@@ -469,7 +481,11 @@ export default function ScalesPage() {
                               ) : null}
                               Connect
                             </Button>
-                            <Link href={`/weights/capture?scale=${scale.id}`} style={{ textDecoration: 'none' }} onClick={(e) => e.stopPropagation()}>
+                            <Link
+                              href={`/weights/capture?scale=${scale.id}`}
+                              style={{ textDecoration: 'none' }}
+                              onClick={e => e.stopPropagation()}
+                            >
                               <Button variant="outlined" size="small" color="secondary">
                                 Weigh
                               </Button>
@@ -498,13 +514,14 @@ export default function ScalesPage() {
                 {activeScales} of {scales.length} scales are active and ready for weight capture
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: { xs: 'flex-start', md: 'flex-end' } }}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              sx={{ display: 'flex', justifyContent: { xs: 'flex-start', md: 'flex-end' } }}
+            >
               <Link href="/weights/capture" style={{ textDecoration: 'none' }}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  startIcon={<ScaleIcon />}
-                >
+                <Button variant="contained" color="secondary" startIcon={<ScaleIcon />}>
                   Go to Weight Capture
                 </Button>
               </Link>

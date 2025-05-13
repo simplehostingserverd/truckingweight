@@ -37,12 +37,12 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       duration: options.duration || 5000,
     };
 
-    setToasts((prevToasts) => [...prevToasts, newToast]);
+    setToasts(prevToasts => [...prevToasts, newToast]);
     return id;
   }, []);
 
   const dismiss = useCallback((id: string) => {
-    setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
+    setToasts(prevToasts => prevToasts.filter(toast => toast.id !== id));
   }, []);
 
   const dismissAll = useCallback(() => {
@@ -70,9 +70,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   );
 
   return (
-    <ToastContext.Provider
-      value={{ toast, success, error, warning, info, dismiss, dismissAll }}
-    >
+    <ToastContext.Provider value={{ toast, success, error, warning, info, dismiss, dismissAll }}>
       {children}
       <ToastContainer toasts={toasts} onDismiss={dismiss} />
     </ToastContext.Provider>

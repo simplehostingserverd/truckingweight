@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
 
     // Query to get vehicles
     let vehiclesQuery = supabase.from('vehicles').select('*').eq('status', 'Active');
-    
+
     // Query to get drivers
     let driversQuery = supabase.from('drivers').select('*').eq('status', 'Active');
 
@@ -48,10 +48,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Execute both queries in parallel
-    const [vehiclesResult, driversResult] = await Promise.all([
-      vehiclesQuery,
-      driversQuery,
-    ]);
+    const [vehiclesResult, driversResult] = await Promise.all([vehiclesQuery, driversQuery]);
 
     if (vehiclesResult.error) {
       throw vehiclesResult.error;

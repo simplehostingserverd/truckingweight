@@ -57,12 +57,8 @@ async function register(request, reply) {
     };
 
     // Sign token
-    const token = jwt.sign(
-      payload, 
-      process.env.JWT_SECRET || 'secret', 
-      { expiresIn: '24h' }
-    );
-    
+    const token = jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: '24h' });
+
     return reply.send({ token });
   } catch (err) {
     request.log.error(err);
@@ -107,12 +103,8 @@ async function login(request, reply) {
     };
 
     // Sign token
-    const token = jwt.sign(
-      payload, 
-      process.env.JWT_SECRET || 'secret', 
-      { expiresIn: '24h' }
-    );
-    
+    const token = jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: '24h' });
+
     return reply.send({ token });
   } catch (err) {
     request.log.error(err);

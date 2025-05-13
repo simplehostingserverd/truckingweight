@@ -76,7 +76,7 @@ export interface RouteOptions {
 /**
  * Get Mapbox access token from environment variables or Supabase
  */
-const getMapboxToken = async (): Promise<string> => {
+const getMapboxToken = async (): Promise<string> {
   // First try to get from environment variable
   if (process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
     return process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
@@ -108,7 +108,7 @@ export const getDirections = async (
   waypoints: Waypoint[],
   profile: MapboxProfile = MapboxProfile.TRUCKING,
   options: RouteOptions = { steps: true, geometries: 'geojson', overview: 'full' }
-): Promise<Route> => {
+): Promise<Route> {
   if (waypoints.length < 2) {
     throw new Error('At least 2 waypoints are required');
   }
@@ -151,7 +151,7 @@ export const getDirections = async (
  * @param address Address to geocode
  * @returns Coordinates [longitude, latitude]
  */
-export const geocodeAddress = async (address: string): Promise<[number, number]> => {
+export const geocodeAddress = async (address: string): Promise<[number, number]> {
   const token = await getMapboxToken();
 
   const queryParams = new URLSearchParams({

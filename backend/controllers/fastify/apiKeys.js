@@ -9,7 +9,9 @@ async function getAllApiKeys(request, reply) {
     // Get API keys for the company
     const { data: apiKeys, error } = await supabase
       .from('api_keys')
-      .select('id, name, prefix, scopes, expires_at, created_at, updated_at, created_by, last_used_at, status')
+      .select(
+        'id, name, prefix, scopes, expires_at, created_at, updated_at, created_by, last_used_at, status'
+      )
       .eq('company_id', request.user.companyId)
       .order('created_at', { ascending: false });
 
@@ -33,7 +35,9 @@ async function getApiKeyById(request, reply) {
     // Get API key by ID
     const { data: apiKey, error } = await supabase
       .from('api_keys')
-      .select('id, name, prefix, scopes, expires_at, created_at, updated_at, created_by, last_used_at, status')
+      .select(
+        'id, name, prefix, scopes, expires_at, created_at, updated_at, created_by, last_used_at, status'
+      )
       .eq('id', request.params.id)
       .eq('company_id', request.user.companyId)
       .single();
@@ -62,19 +66,28 @@ async function createApiKey(request, reply) {
     const { name, scopes, expiresAt } = request.body;
 
     // Validate scopes
-    const validScopes = ['read:weights', 'write:weights', 'read:loads', 'write:loads', 'read:vehicles', 'write:vehicles', 'read:drivers', 'write:drivers'];
+    const validScopes = [
+      'read:weights',
+      'write:weights',
+      'read:loads',
+      'write:loads',
+      'read:vehicles',
+      'write:vehicles',
+      'read:drivers',
+      'write:drivers',
+    ];
     const invalidScopes = scopes.filter(scope => !validScopes.includes(scope));
-    
+
     if (invalidScopes.length > 0) {
-      return reply.code(400).send({ 
-        msg: `Invalid scopes: ${invalidScopes.join(', ')}. Valid scopes are: ${validScopes.join(', ')}` 
+      return reply.code(400).send({
+        msg: `Invalid scopes: ${invalidScopes.join(', ')}. Valid scopes are: ${validScopes.join(', ')}`,
       });
     }
 
     // Generate API key
     const apiKeyValue = crypto.randomBytes(32).toString('hex');
     const prefix = crypto.randomBytes(4).toString('hex');
-    
+
     // Hash the API key for storage
     const hashedKey = crypto.createHash('sha256').update(apiKeyValue).digest('hex');
 
@@ -140,12 +153,21 @@ async function updateApiKey(request, reply) {
 
     // Validate scopes if provided
     if (scopes) {
-      const validScopes = ['read:weights', 'write:weights', 'read:loads', 'write:loads', 'read:vehicles', 'write:vehicles', 'read:drivers', 'write:drivers'];
+      const validScopes = [
+        'read:weights',
+        'write:weights',
+        'read:loads',
+        'write:loads',
+        'read:vehicles',
+        'write:vehicles',
+        'read:drivers',
+        'write:drivers',
+      ];
       const invalidScopes = scopes.filter(scope => !validScopes.includes(scope));
-      
+
       if (invalidScopes.length > 0) {
-        return reply.code(400).send({ 
-          msg: `Invalid scopes: ${invalidScopes.join(', ')}. Valid scopes are: ${validScopes.join(', ')}` 
+        return reply.code(400).send({
+          msg: `Invalid scopes: ${invalidScopes.join(', ')}. Valid scopes are: ${validScopes.join(', ')}`,
         });
       }
     }
@@ -161,7 +183,9 @@ async function updateApiKey(request, reply) {
       })
       .eq('id', request.params.id)
       .eq('company_id', request.user.companyId)
-      .select('id, name, prefix, scopes, expires_at, created_at, updated_at, created_by, last_used_at, status')
+      .select(
+        'id, name, prefix, scopes, expires_at, created_at, updated_at, created_by, last_used_at, status'
+      )
       .single();
 
     if (error) {
@@ -223,21 +247,21 @@ async function deleteApiKey(request, reply) {
 async function verifyApiKey(request, reply) {
   try {
     const { apiKey } = request.body;
-    
+
     if (!apiKey) {
       return reply.code(400).send({ msg: 'API key is required' });
     }
-    
+
     // Split the API key into prefix and value
     const [prefix, value] = apiKey.split('.');
-    
+
     if (!prefix || !value) {
       return reply.code(401).send({ msg: 'Invalid API key format' });
     }
-    
+
     // Hash the API key value
     const hashedKey = crypto.createHash('sha256').update(value).digest('hex');
-    
+
     // Find the API key in the database
     const { data: apiKeyData, error } = await supabase
       .from('api_keys')
@@ -246,16 +270,16 @@ async function verifyApiKey(request, reply) {
       .eq('key', hashedKey)
       .eq('status', 'active')
       .single();
-    
+
     if (error || !apiKeyData) {
       return reply.code(401).send({ msg: 'Invalid API key' });
     }
-    
+
     // Check if the API key has expired
     if (apiKeyData.expires_at && new Date(apiKeyData.expires_at) < new Date()) {
       return reply.code(401).send({ msg: 'API key has expired' });
     }
-    
+
     // Update last used timestamp
     await supabase
       .from('api_keys')
@@ -263,7 +287,7 @@ async function verifyApiKey(request, reply) {
         last_used_at: new Date().toISOString(),
       })
       .eq('id', apiKeyData.id);
-    
+
     return reply.send({
       valid: true,
       scopes: apiKeyData.scopes,

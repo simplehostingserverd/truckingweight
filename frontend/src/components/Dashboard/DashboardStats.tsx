@@ -162,7 +162,10 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
             // Get drivers count
             supabase.from('drivers').select('id', { count: 'exact', head: true }),
             // Get active loads count
-            supabase.from('loads').select('id', { count: 'exact', head: true }).eq('status', 'In Transit'),
+            supabase
+              .from('loads')
+              .select('id', { count: 'exact', head: true })
+              .eq('status', 'In Transit'),
             // Get weights count
             supabase.from('weights').select('id, status', { count: 'exact' }),
           ]);
@@ -173,16 +176,17 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
 
           // Calculate compliance rate
           const totalWeights = weights?.length || 0;
-          const nonCompliantWeights = weights?.filter(w => w.status === 'Non-Compliant').length || 0;
-          const complianceRate = totalWeights > 0
-            ? Math.round(((totalWeights - nonCompliantWeights) / totalWeights) * 100)
-            : 100;
+          const nonCompliantWeights =
+            weights?.filter(w => w.status === 'Non-Compliant').length || 0;
+          const complianceRate =
+            totalWeights > 0
+              ? Math.round(((totalWeights - nonCompliantWeights) / totalWeights) * 100)
+              : 100;
 
           // Get today's weights
           const today = new Date().toISOString().split('T')[0];
-          const weightsToday = weights?.filter(w =>
-            w.created_at && w.created_at.startsWith(today)
-          ).length || 0;
+          const weightsToday =
+            weights?.filter(w => w.created_at && w.created_at.startsWith(today)).length || 0;
 
           // Format stats for display
           const formattedStats = [

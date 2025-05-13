@@ -172,7 +172,7 @@ export const cacheAPI = {
    * @param data The data to cache
    * @param ttl Time to live in seconds
    */
-  async set(key: string, data: any, ttl = 3600): Promise<void> => {
+  async set(key: string, data: any, ttl = 3600): Promise<void> {
     if (typeof window === 'undefined') return;
 
     try {

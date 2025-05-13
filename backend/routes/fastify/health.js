@@ -1,6 +1,6 @@
 /**
  * Health Check Routes
- * 
+ *
  * This module provides endpoints for checking the health of the application
  * and its dependencies like Redis and the database.
  */
@@ -59,12 +59,12 @@ async function routes(fastify, options) {
   // Redis health check
   fastify.get('/redis', async (request, reply) => {
     const isConnected = redisService.isReady();
-    
+
     if (!isConnected) {
       reply.code(503);
       return { status: 'error', message: 'Redis connection failed' };
     }
-    
+
     return { status: 'ok', message: 'Redis connection successful' };
   });
 
@@ -72,15 +72,15 @@ async function routes(fastify, options) {
   fastify.get('/database', async (request, reply) => {
     try {
       const result = await db.testConnection();
-      return { 
-        status: 'ok', 
+      return {
+        status: 'ok',
         message: 'Database connection successful',
         version: result?.version || 'unknown',
       };
     } catch (err) {
       reply.code(503);
-      return { 
-        status: 'error', 
+      return {
+        status: 'error',
         message: 'Database connection failed',
         error: err.message,
       };

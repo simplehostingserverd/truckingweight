@@ -187,7 +187,10 @@ async function deleteWeight(request, reply) {
     }
 
     // Delete weight entry
-    const { error: deleteError } = await supabase.from('weights').delete().eq('id', request.params.id);
+    const { error: deleteError } = await supabase
+      .from('weights')
+      .delete()
+      .eq('id', request.params.id);
 
     if (deleteError) {
       request.log.error('Error deleting weight:', deleteError);

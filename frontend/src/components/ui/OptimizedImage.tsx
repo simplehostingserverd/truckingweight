@@ -48,7 +48,8 @@ export function OptimizedImage({
   const imageRef = useRef<HTMLDivElement>(null);
 
   // Default blur data URL for placeholder
-  const defaultBlurDataURL = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PC9zdmc+';
+  const defaultBlurDataURL =
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PC9zdmc+';
 
   // Set up intersection observer for lazy loading
   useEffect(() => {
@@ -207,11 +208,7 @@ export function OptimizedBackgroundImage({
   return (
     <div
       ref={containerRef}
-      className={cn(
-        'relative',
-        !isLoaded && 'bg-gray-200 animate-pulse',
-        className
-      )}
+      className={cn('relative', !isLoaded && 'bg-gray-200 animate-pulse', className)}
       style={{
         backgroundImage: isLoaded ? `url(${hasError ? fallbackImage : src})` : 'none',
         backgroundSize: 'cover',
@@ -276,22 +273,13 @@ export function OptimizedAvatar({
 
   return (
     <div
-      className={cn(
-        'relative overflow-hidden rounded-full bg-gray-200',
-        className
-      )}
+      className={cn('relative overflow-hidden rounded-full bg-gray-200', className)}
       style={{ width: size, height: size }}
       {...props}
     >
       {hasError ? (
         fallback ? (
-          <Image
-            src={fallbackSrc}
-            alt={alt}
-            width={size}
-            height={size}
-            className="object-cover"
-          />
+          <Image src={fallbackSrc} alt={alt} width={size} height={size} className="object-cover" />
         ) : (
           <div
             className="flex items-center justify-center w-full h-full bg-primary-500 text-white font-medium"

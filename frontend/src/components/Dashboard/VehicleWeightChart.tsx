@@ -92,9 +92,7 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
         // Try to recover by querying the database directly
         try {
           // Query vehicles directly from the database
-          let vehiclesQuery = supabase
-            .from('vehicles')
-            .select('id, name, weight');
+          let vehiclesQuery = supabase.from('vehicles').select('id, name, weight');
 
           // If not admin and we have a company ID, filter by it
           if (!isAdmin && companyId) {

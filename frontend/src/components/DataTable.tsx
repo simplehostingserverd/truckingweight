@@ -31,7 +31,10 @@ function DataTable<T extends { id: string | number }>({
   // Handle error state
   if (error) {
     return (
-      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <div
+        className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+        role="alert"
+      >
         <strong className="font-bold">Error:</strong>
         <span className="block sm:inline"> {error.message || 'Failed to load data'}</span>
       </div>
@@ -40,11 +43,7 @@ function DataTable<T extends { id: string | number }>({
 
   // Handle empty data
   if (!data || data.length === 0) {
-    return (
-      <div className="text-center py-10 text-gray-500">
-        No data available
-      </div>
-    );
+    return <div className="text-center py-10 text-gray-500">No data available</div>;
   }
 
   return (
@@ -52,7 +51,7 @@ function DataTable<T extends { id: string | number }>({
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            {columns.map((column) => (
+            {columns.map(column => (
               <th
                 key={column.key.toString()}
                 scope="col"
@@ -64,14 +63,17 @@ function DataTable<T extends { id: string | number }>({
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {data.map((item) => (
+          {data.map(item => (
             <tr
               key={item.id}
               onClick={() => onRowClick && onRowClick(item)}
               className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
             >
-              {columns.map((column) => (
-                <td key={`${item.id}-${column.key.toString()}`} className="px-6 py-4 whitespace-nowrap">
+              {columns.map(column => (
+                <td
+                  key={`${item.id}-${column.key.toString()}`}
+                  className="px-6 py-4 whitespace-nowrap"
+                >
                   {column.render
                     ? column.render(item[column.key], item)
                     : item[column.key]?.toString()}

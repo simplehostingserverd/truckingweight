@@ -451,17 +451,11 @@ export const configureHardware = async (req: AuthenticatedRequest, res: Response
 
     if (!hardwareType || !config) {
       return res.status(400).json({
-        message: 'Hardware type and configuration are required'
+        message: 'Hardware type and configuration are required',
       });
     }
 
-    const result = await configureIoTHardware(
-      scaleId,
-      hardwareType,
-      config,
-      companyId,
-      isAdmin
-    );
+    const result = await configureIoTHardware(scaleId, hardwareType, config, companyId, isAdmin);
 
     if (!result.success) {
       return res.status(400).json({ message: result.error });

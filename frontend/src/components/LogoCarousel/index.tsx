@@ -33,7 +33,8 @@ const CITY_LOGOS = [
 ];
 
 // Placeholder image for missing logos
-const PLACEHOLDER_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2YwZjBmMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IiM5OTkiPkxvZ288L3RleHQ+PC9zdmc+';
+const PLACEHOLDER_IMAGE =
+  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2YwZjBmMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IiM5OTkiPkxvZ288L3RleHQ+PC9zdmc+';
 
 interface LogoCarouselProps {
   type: 'trucking' | 'city';
@@ -51,7 +52,7 @@ const LogoCarousel: React.FC<LogoCarouselProps> = ({ type, title, subtitle }) =>
   useEffect(() => {
     const logoSet = type === 'trucking' ? TRUCKING_LOGOS : CITY_LOGOS;
     setLogos(logoSet);
-    
+
     // Duplicate logos for infinite scroll effect
     setDuplicatedLogos([...logoSet, ...logoSet]);
   }, [type]);
@@ -78,9 +79,7 @@ const LogoCarousel: React.FC<LogoCarouselProps> = ({ type, title, subtitle }) =>
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              {subtitle}
-            </p>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">{subtitle}</p>
           </div>
 
           <div className="overflow-hidden">
@@ -112,7 +111,7 @@ const LogoCarousel: React.FC<LogoCarouselProps> = ({ type, title, subtitle }) =>
                           fill
                           sizes="128px"
                           className="object-contain"
-                          onError={(e) => {
+                          onError={e => {
                             // Fallback to placeholder if image fails to load
                             (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
                           }}

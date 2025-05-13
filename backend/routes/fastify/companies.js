@@ -198,34 +198,54 @@ const deleteCompanySchema = {
 // Company routes
 async function routes(fastify, options) {
   // Get all companies (admin only)
-  fastify.get('/', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: getAllCompaniesSchema,
-  }, companyController.getAllCompanies);
+  fastify.get(
+    '/',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: getAllCompaniesSchema,
+    },
+    companyController.getAllCompanies
+  );
 
   // Get company by ID
-  fastify.get('/:id', {
-    preHandler: authMiddleware,
-    schema: getCompanyByIdSchema,
-  }, companyController.getCompanyById);
+  fastify.get(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: getCompanyByIdSchema,
+    },
+    companyController.getCompanyById
+  );
 
   // Create a new company (admin only)
-  fastify.post('/', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: createCompanySchema,
-  }, companyController.createCompany);
+  fastify.post(
+    '/',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: createCompanySchema,
+    },
+    companyController.createCompany
+  );
 
   // Update a company (admin only)
-  fastify.put('/:id', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: updateCompanySchema,
-  }, companyController.updateCompany);
+  fastify.put(
+    '/:id',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: updateCompanySchema,
+    },
+    companyController.updateCompany
+  );
 
   // Delete a company (admin only)
-  fastify.delete('/:id', {
-    preHandler: [authMiddleware, adminMiddleware],
-    schema: deleteCompanySchema,
-  }, companyController.deleteCompany);
+  fastify.delete(
+    '/:id',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: deleteCompanySchema,
+    },
+    companyController.deleteCompany
+  );
 }
 
 module.exports = routes;

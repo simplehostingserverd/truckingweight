@@ -111,22 +111,34 @@ const syncHistorySchema = {
 // Sync routes
 async function routes(fastify, options) {
   // Get sync status
-  fastify.get('/status', {
-    preHandler: authMiddleware,
-    schema: syncStatusSchema,
-  }, syncController.getSyncStatus);
+  fastify.get(
+    '/status',
+    {
+      preHandler: authMiddleware,
+      schema: syncStatusSchema,
+    },
+    syncController.getSyncStatus
+  );
 
   // Sync data
-  fastify.post('/data', {
-    preHandler: authMiddleware,
-    schema: syncDataSchema,
-  }, syncController.syncData);
+  fastify.post(
+    '/data',
+    {
+      preHandler: authMiddleware,
+      schema: syncDataSchema,
+    },
+    syncController.syncData
+  );
 
   // Get sync history
-  fastify.get('/history', {
-    preHandler: authMiddleware,
-    schema: syncHistorySchema,
-  }, syncController.getSyncHistory);
+  fastify.get(
+    '/history',
+    {
+      preHandler: authMiddleware,
+      schema: syncHistorySchema,
+    },
+    syncController.getSyncHistory
+  );
 }
 
 module.exports = routes;

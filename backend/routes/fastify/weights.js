@@ -183,34 +183,54 @@ const deleteWeightSchema = {
 // Weight routes
 async function routes(fastify, options) {
   // Get all weights
-  fastify.get('/', {
-    preHandler: authMiddleware,
-    schema: getAllWeightsSchema,
-  }, weightController.getAllWeights);
+  fastify.get(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: getAllWeightsSchema,
+    },
+    weightController.getAllWeights
+  );
 
   // Get weight by ID
-  fastify.get('/:id', {
-    preHandler: authMiddleware,
-    schema: getWeightByIdSchema,
-  }, weightController.getWeightById);
+  fastify.get(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: getWeightByIdSchema,
+    },
+    weightController.getWeightById
+  );
 
   // Create a new weight
-  fastify.post('/', {
-    preHandler: authMiddleware,
-    schema: createWeightSchema,
-  }, weightController.createWeight);
+  fastify.post(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: createWeightSchema,
+    },
+    weightController.createWeight
+  );
 
   // Update a weight
-  fastify.put('/:id', {
-    preHandler: authMiddleware,
-    schema: updateWeightSchema,
-  }, weightController.updateWeight);
+  fastify.put(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: updateWeightSchema,
+    },
+    weightController.updateWeight
+  );
 
   // Delete a weight
-  fastify.delete('/:id', {
-    preHandler: authMiddleware,
-    schema: deleteWeightSchema,
-  }, weightController.deleteWeight);
+  fastify.delete(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: deleteWeightSchema,
+    },
+    weightController.deleteWeight
+  );
 }
 
 module.exports = routes;

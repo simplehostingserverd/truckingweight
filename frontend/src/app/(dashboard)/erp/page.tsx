@@ -168,7 +168,9 @@ export default function ERPPage() {
         query = query.eq('company_id', userData.company_id);
       }
 
-      const { data, error: connectionsError } = await query.order('created_at', { ascending: false });
+      const { data, error: connectionsError } = await query.order('created_at', {
+        ascending: false,
+      });
 
       if (connectionsError) {
         throw connectionsError;
@@ -305,14 +307,16 @@ export default function ERPPage() {
 
       let query = supabase
         .from('integration_logs')
-        .select(`
+        .select(
+          `
           id,
           created_at,
           status,
           message,
           details,
           integration_connections(company_id)
-        `)
+        `
+        )
         .eq('integration_connections.integration_type', 'erp');
 
       // If not admin, filter by company
@@ -320,9 +324,7 @@ export default function ERPPage() {
         query = query.eq('integration_connections.company_id', userData.company_id);
       }
 
-      const { data, error } = await query
-        .order('created_at', { ascending: false })
-        .limit(50);
+      const { data, error } = await query.order('created_at', { ascending: false }).limit(50);
 
       if (error) {
         throw error;
@@ -402,13 +404,15 @@ export default function ERPPage() {
         ];
         setSyncLogs(dummyLogs);
       } else {
-        setSyncLogs(data.map(log => ({
-          id: log.id,
-          timestamp: log.created_at,
-          status: log.status,
-          message: log.message,
-          details: log.details,
-        })));
+        setSyncLogs(
+          data.map(log => ({
+            id: log.id,
+            timestamp: log.created_at,
+            status: log.status,
+            message: log.message,
+            details: log.details,
+          }))
+        );
       }
     } catch (err: any) {
       console.error('Error fetching sync logs:', err);
@@ -525,9 +529,7 @@ export default function ERPPage() {
       // Update the connection's last sync time
       setConnections(
         connections.map(conn =>
-          conn.id === connectionId
-            ? { ...conn, last_sync: new Date().toISOString() }
-            : conn
+          conn.id === connectionId ? { ...conn, last_sync: new Date().toISOString() } : conn
         )
       );
 
@@ -588,7 +590,9 @@ export default function ERPPage() {
             <div className="flex justify-between items-center">
               <div>
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Customers</p>
-                <h3 className="text-2xl font-bold mt-1">{dataSummary.customers.toLocaleString()}</h3>
+                <h3 className="text-2xl font-bold mt-1">
+                  {dataSummary.customers.toLocaleString()}
+                </h3>
               </div>
               <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full">
                 <UserGroupIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -630,7 +634,9 @@ export default function ERPPage() {
             <div className="flex justify-between items-center">
               <div>
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Transactions</p>
-                <h3 className="text-2xl font-bold mt-1">{dataSummary.transactions.toLocaleString()}</h3>
+                <h3 className="text-2xl font-bold mt-1">
+                  {dataSummary.transactions.toLocaleString()}
+                </h3>
               </div>
               <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-full">
                 <CurrencyDollarIcon className="h-6 w-6 text-amber-600 dark:text-amber-400" />
@@ -660,9 +666,7 @@ export default function ERPPage() {
             <div>
               <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Last Sync</p>
               <p className="mt-1">
-                {syncStatus.lastSync
-                  ? new Date(syncStatus.lastSync).toLocaleString()
-                  : 'Never'}
+                {syncStatus.lastSync ? new Date(syncStatus.lastSync).toLocaleString() : 'Never'}
               </p>
             </div>
 
@@ -711,7 +715,9 @@ export default function ERPPage() {
           ) : connections.length === 0 ? (
             <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <ServerIcon className="h-12 w-12 mx-auto text-gray-400" />
-              <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">No ERP Connections</h3>
+              <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">
+                No ERP Connections
+              </h3>
               <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 Get started by creating a new connection to your ERP system.
               </p>
@@ -731,10 +737,13 @@ export default function ERPPage() {
                       <div>
                         <CardTitle>{connection.name}</CardTitle>
                         <CardDescription>
-                          {connection.provider === 'netsuite' ? 'NetSuite' :
-                           connection.provider === 'sap' ? 'SAP' :
-                           connection.provider === 'quickbooks' ? 'QuickBooks' :
-                           connection.provider}
+                          {connection.provider === 'netsuite'
+                            ? 'NetSuite'
+                            : connection.provider === 'sap'
+                              ? 'SAP'
+                              : connection.provider === 'quickbooks'
+                                ? 'QuickBooks'
+                                : connection.provider}
                         </CardDescription>
                       </div>
                       <Badge variant={connection.status === 'active' ? 'success' : 'destructive'}>
@@ -747,7 +756,9 @@ export default function ERPPage() {
                       <div className="flex justify-between">
                         <span className="text-sm text-gray-500 dark:text-gray-400">Last Sync:</span>
                         <span className="text-sm">
-                          {connection.last_sync ? new Date(connection.last_sync).toLocaleString() : 'Never'}
+                          {connection.last_sync
+                            ? new Date(connection.last_sync).toLocaleString()
+                            : 'Never'}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -806,15 +817,19 @@ export default function ERPPage() {
                               log.status === 'success'
                                 ? 'success'
                                 : log.status === 'warning'
-                                ? 'warning'
-                                : 'destructive'
+                                  ? 'warning'
+                                  : 'destructive'
                             }
                           >
                             {log.status}
                           </Badge>
                         </TableCell>
                         <TableCell>
-                          <Button variant="ghost" size="sm" onClick={() => handleViewSyncDetails(log)}>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleViewSyncDetails(log)}
+                          >
                             View
                           </Button>
                         </TableCell>
@@ -870,20 +885,24 @@ export default function ERPPage() {
                   <label className="text-sm font-medium">Account ID</label>
                   <Input
                     value={newConnection.config.accountId}
-                    onChange={e => setNewConnection({
-                      ...newConnection,
-                      config: { ...newConnection.config, accountId: e.target.value }
-                    })}
+                    onChange={e =>
+                      setNewConnection({
+                        ...newConnection,
+                        config: { ...newConnection.config, accountId: e.target.value },
+                      })
+                    }
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Consumer Key</label>
                   <Input
                     value={newConnection.config.consumerKey}
-                    onChange={e => setNewConnection({
-                      ...newConnection,
-                      config: { ...newConnection.config, consumerKey: e.target.value }
-                    })}
+                    onChange={e =>
+                      setNewConnection({
+                        ...newConnection,
+                        config: { ...newConnection.config, consumerKey: e.target.value },
+                      })
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -891,20 +910,24 @@ export default function ERPPage() {
                   <Input
                     type="password"
                     value={newConnection.config.consumerSecret}
-                    onChange={e => setNewConnection({
-                      ...newConnection,
-                      config: { ...newConnection.config, consumerSecret: e.target.value }
-                    })}
+                    onChange={e =>
+                      setNewConnection({
+                        ...newConnection,
+                        config: { ...newConnection.config, consumerSecret: e.target.value },
+                      })
+                    }
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Token ID</label>
                   <Input
                     value={newConnection.config.tokenId}
-                    onChange={e => setNewConnection({
-                      ...newConnection,
-                      config: { ...newConnection.config, tokenId: e.target.value }
-                    })}
+                    onChange={e =>
+                      setNewConnection({
+                        ...newConnection,
+                        config: { ...newConnection.config, tokenId: e.target.value },
+                      })
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -912,10 +935,12 @@ export default function ERPPage() {
                   <Input
                     type="password"
                     value={newConnection.config.tokenSecret}
-                    onChange={e => setNewConnection({
-                      ...newConnection,
-                      config: { ...newConnection.config, tokenSecret: e.target.value }
-                    })}
+                    onChange={e =>
+                      setNewConnection({
+                        ...newConnection,
+                        config: { ...newConnection.config, tokenSecret: e.target.value },
+                      })
+                    }
                   />
                 </div>
               </div>
@@ -957,8 +982,8 @@ export default function ERPPage() {
                         selectedLog.status === 'success'
                           ? 'success'
                           : selectedLog.status === 'warning'
-                          ? 'warning'
-                          : 'destructive'
+                            ? 'warning'
+                            : 'destructive'
                       }
                     >
                       {selectedLog.status}
@@ -986,28 +1011,36 @@ export default function ERPPage() {
                         {selectedLog.details.recordsProcessed && (
                           <div className="flex justify-between">
                             <span>Records Processed:</span>
-                            <span className="font-medium">{selectedLog.details.recordsProcessed}</span>
+                            <span className="font-medium">
+                              {selectedLog.details.recordsProcessed}
+                            </span>
                           </div>
                         )}
 
                         {selectedLog.details.recordsCreated && (
                           <div className="flex justify-between">
                             <span>Records Created:</span>
-                            <span className="font-medium">{selectedLog.details.recordsCreated}</span>
+                            <span className="font-medium">
+                              {selectedLog.details.recordsCreated}
+                            </span>
                           </div>
                         )}
 
                         {selectedLog.details.recordsUpdated && (
                           <div className="flex justify-between">
                             <span>Records Updated:</span>
-                            <span className="font-medium">{selectedLog.details.recordsUpdated}</span>
+                            <span className="font-medium">
+                              {selectedLog.details.recordsUpdated}
+                            </span>
                           </div>
                         )}
 
                         {selectedLog.details.recordsSkipped && (
                           <div className="flex justify-between">
                             <span>Records Skipped:</span>
-                            <span className="font-medium">{selectedLog.details.recordsSkipped}</span>
+                            <span className="font-medium">
+                              {selectedLog.details.recordsSkipped}
+                            </span>
                           </div>
                         )}
 
@@ -1023,7 +1056,9 @@ export default function ERPPage() {
                             <p className="font-medium mb-2">Errors:</p>
                             <ul className="list-disc pl-5 space-y-1">
                               {selectedLog.details.errors.map((error: string, index: number) => (
-                                <li key={index} className="text-red-600 dark:text-red-400">{error}</li>
+                                <li key={index} className="text-red-600 dark:text-red-400">
+                                  {error}
+                                </li>
                               ))}
                             </ul>
                           </div>
@@ -1037,9 +1072,7 @@ export default function ERPPage() {
           )}
 
           <DialogFooter>
-            <Button onClick={() => setShowSyncDetailsDialog(false)}>
-              Close
-            </Button>
+            <Button onClick={() => setShowSyncDetailsDialog(false)}>Close</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

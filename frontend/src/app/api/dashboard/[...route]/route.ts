@@ -99,9 +99,13 @@ export async function GET(request: NextRequest, { params }: { params: { route: s
         case 'load-status':
           return NextResponse.json(await getLoadStatus(supabase, isAdmin, companyId));
         case 'compliance':
-          return NextResponse.json(await getComplianceData(supabase, isAdmin, companyId, dateRange));
+          return NextResponse.json(
+            await getComplianceData(supabase, isAdmin, companyId, dateRange)
+          );
         case 'vehicle-weights':
-          return NextResponse.json(await getVehicleWeights(supabase, isAdmin, companyId, dateRange));
+          return NextResponse.json(
+            await getVehicleWeights(supabase, isAdmin, companyId, dateRange)
+          );
         case 'recent-weights':
           return NextResponse.json(await getRecentWeights(supabase, isAdmin, companyId));
         default:

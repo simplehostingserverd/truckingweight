@@ -201,34 +201,54 @@ const deleteLoadSchema = {
 // Load routes
 async function routes(fastify, options) {
   // Get all loads
-  fastify.get('/', {
-    preHandler: authMiddleware,
-    schema: getAllLoadsSchema,
-  }, loadController.getAllLoads);
+  fastify.get(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: getAllLoadsSchema,
+    },
+    loadController.getAllLoads
+  );
 
   // Get load by ID
-  fastify.get('/:id', {
-    preHandler: authMiddleware,
-    schema: getLoadByIdSchema,
-  }, loadController.getLoadById);
+  fastify.get(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: getLoadByIdSchema,
+    },
+    loadController.getLoadById
+  );
 
   // Create a new load
-  fastify.post('/', {
-    preHandler: authMiddleware,
-    schema: createLoadSchema,
-  }, loadController.createLoad);
+  fastify.post(
+    '/',
+    {
+      preHandler: authMiddleware,
+      schema: createLoadSchema,
+    },
+    loadController.createLoad
+  );
 
   // Update a load
-  fastify.put('/:id', {
-    preHandler: authMiddleware,
-    schema: updateLoadSchema,
-  }, loadController.updateLoad);
+  fastify.put(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: updateLoadSchema,
+    },
+    loadController.updateLoad
+  );
 
   // Delete a load
-  fastify.delete('/:id', {
-    preHandler: authMiddleware,
-    schema: deleteLoadSchema,
-  }, loadController.deleteLoad);
+  fastify.delete(
+    '/:id',
+    {
+      preHandler: authMiddleware,
+      schema: deleteLoadSchema,
+    },
+    loadController.deleteLoad
+  );
 }
 
 module.exports = routes;

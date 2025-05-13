@@ -33,20 +33,20 @@ export default function LogoCarousel({
     const fetchLogos = async () => {
       try {
         setIsLoading(true);
-        
+
         let query = supabase.from('company_logos').select('*');
-        
+
         // Filter by type if specified
         if (type !== 'all') {
           query = query.eq('type', type);
         }
-        
+
         const { data, error } = await query;
-        
+
         if (error) {
           throw error;
         }
-        
+
         setLogos(data || []);
       } catch (error) {
         handleError(error, 'LogoCarousel');
@@ -54,7 +54,7 @@ export default function LogoCarousel({
         setIsLoading(false);
       }
     };
-    
+
     fetchLogos();
   }, [supabase, type, handleError]);
 
@@ -85,12 +85,12 @@ export default function LogoCarousel({
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{title}</h2>
           <p className="text-gray-600 mt-2">{subtitle}</p>
         </div>
-        
+
         {/* Logo carousel */}
         <div className="relative overflow-hidden">
           <div className="flex animate-carousel">
             {/* First set of logos */}
-            {logos.map((logo) => (
+            {logos.map(logo => (
               <div
                 key={`first-${logo.id}`}
                 className="flex-shrink-0 flex items-center justify-center mx-8 w-32 h-20 md:w-40 md:h-24"
@@ -111,9 +111,9 @@ export default function LogoCarousel({
                 </a>
               </div>
             ))}
-            
+
             {/* Duplicate logos for seamless looping */}
-            {logos.map((logo) => (
+            {logos.map(logo => (
               <div
                 key={`second-${logo.id}`}
                 className="flex-shrink-0 flex items-center justify-center mx-8 w-32 h-20 md:w-40 md:h-24"
