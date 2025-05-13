@@ -5,7 +5,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": false,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "NodeNext",
@@ -20,7 +20,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/components/ui/badge": ["./src/components/ui/Badge"],
+      "@/components/ui/input": ["./src/components/ui/Input"],
+      "@/components/ui/select": ["./src/components/ui/Select"],
+      "@/components/ui/tabs": ["./src/components/ui/Tabs"],
+      "@/components/ui/card": ["./src/components/ui/Card"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

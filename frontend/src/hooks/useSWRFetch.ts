@@ -47,16 +47,13 @@ export function useSWRFetch<T = any>(
         if (swrOptions?.onError) {
           swrOptions.onError(error, key);
         }
-      }
+      },
     }
   );
 }
 
 // Hook for POST requests
-export function useSWRMutation<T = any, D = any>(
-  url: string,
-  options?: SWRConfiguration
-) {
+export function useSWRMutation<T = any, D = any>(url: string, options?: SWRConfiguration) {
   const fetcher = async (url: string, { arg }: { arg: D }) => {
     try {
       const response = await axios.post<T>(url, arg);
@@ -81,10 +78,7 @@ export function useSWRMutation<T = any, D = any>(
 }
 
 // Hook for PUT requests
-export function useSWRPut<T = any, D = any>(
-  url: string,
-  options?: SWRConfiguration
-) {
+export function useSWRPut<T = any, D = any>(url: string, options?: SWRConfiguration) {
   const fetcher = async (url: string, { arg }: { arg: D }) => {
     try {
       const response = await axios.put<T>(url, arg);
@@ -109,10 +103,7 @@ export function useSWRPut<T = any, D = any>(
 }
 
 // Hook for DELETE requests
-export function useSWRDelete<T = any>(
-  url: string,
-  options?: SWRConfiguration
-) {
+export function useSWRDelete<T = any>(url: string, options?: SWRConfiguration) {
   const fetcher = async (url: string) => {
     try {
       const response = await axios.delete<T>(url);
