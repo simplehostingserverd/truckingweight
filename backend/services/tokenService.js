@@ -1,10 +1,12 @@
 /**
  * Token Service
  * Handles token storage, validation, and management using Redis
+ * Note: This service is being deprecated in favor of pasetoService.js
+ * It is kept for backward compatibility with API keys only
  */
 
-const jwt = require('jsonwebtoken');
 const { redisService } = require('./redis');
+const pasetoService = require('./pasetoService');
 
 // Token expiration times (in seconds)
 const TOKEN_EXPIRY = {
@@ -21,105 +23,46 @@ const REDIS_KEYS = {
 };
 
 /**
- * Generate JWT token
+ * Generate token using Paseto
  * @param {Object} payload - Token payload
  * @param {string} type - Token type ('access' or 'refresh')
- * @returns {string} - JWT token
+ * @returns {Promise<string>} - Paseto token
+ * @deprecated Use pasetoService.generateToken directly
  */
-const generateToken = (payload, type = 'access') => {
-  const expiresIn = type === 'refresh' ? TOKEN_EXPIRY.REFRESH : TOKEN_EXPIRY.ACCESS;
-
-  return jwt.sign(payload, process.env.JWT_SECRET || 'supersecretkey', {
-    expiresIn: `${expiresIn}s`,
-  });
+const generateToken = async (payload, type = 'access') => {
+  return await pasetoService.generateToken(payload, type);
 };
 
 /**
  * Store token in Redis
- * @param {string} token - JWT token
+ * @param {string} token - Paseto token
  * @param {Object} userData - User data to store with token
  * @param {string} type - Token type ('access' or 'refresh')
  * @returns {Promise<boolean>} - Success status
+ * @deprecated Use pasetoService.storeToken directly
  */
 const storeToken = async (token, userData, type = 'access') => {
-  try {
-    const expiresIn = type === 'refresh' ? TOKEN_EXPIRY.REFRESH : TOKEN_EXPIRY.ACCESS;
-    const key = `${REDIS_KEYS.SESSION}${token}`;
-
-    // Store token with user data
-    await redisService.set(
-      key,
-      JSON.stringify({
-        ...userData,
-        tokenType: type,
-      }),
-      'EX',
-      expiresIn
-    );
-
-    return true;
-  } catch (error) {
-    console.error('Error storing token in Redis:', error);
-    return false;
-  }
+  return await pasetoService.storeToken(token, userData, type);
 };
 
 /**
  * Validate token in Redis
- * @param {string} token - JWT token
+ * @param {string} token - Paseto token
  * @returns {Promise<Object|null>} - User data if valid, null otherwise
+ * @deprecated Use pasetoService.validateToken directly
  */
 const validateToken = async token => {
-  try {
-    // Check if token is blacklisted
-    const isBlacklisted = await redisService.get(`${REDIS_KEYS.BLACKLIST}${token}`);
-    if (isBlacklisted) {
-      return null;
-    }
-
-    // Get session data
-    const sessionData = await redisService.get(`${REDIS_KEYS.SESSION}${token}`);
-    if (!sessionData) {
-      return null;
-    }
-
-    return JSON.parse(sessionData);
-  } catch (error) {
-    console.error('Error validating token in Redis:', error);
-    return null;
-  }
+  return await pasetoService.validateToken(token);
 };
 
 /**
  * Invalidate token (add to blacklist)
- * @param {string} token - JWT token
+ * @param {string} token - Paseto token
  * @returns {Promise<boolean>} - Success status
+ * @deprecated Use pasetoService.invalidateToken directly
  */
 const invalidateToken = async token => {
-  try {
-    // Decode token to get expiration time
-    const decoded = jwt.decode(token);
-    if (!decoded || !decoded.exp) {
-      return false;
-    }
-
-    // Calculate remaining time until expiration
-    const expiresIn = decoded.exp - Math.floor(Date.now() / 1000);
-    if (expiresIn <= 0) {
-      return true; // Token already expired
-    }
-
-    // Add token to blacklist
-    await redisService.set(`${REDIS_KEYS.BLACKLIST}${token}`, '1', 'EX', expiresIn);
-
-    // Remove from active sessions
-    await redisService.del(`${REDIS_KEYS.SESSION}${token}`);
-
-    return true;
-  } catch (error) {
-    console.error('Error invalidating token:', error);
-    return false;
-  }
+  return await pasetoService.invalidateToken(token);
 };
 
 /**
