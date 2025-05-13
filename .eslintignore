@@ -1,6 +1,8 @@
 # Ignore Prisma generated files
 backend/generated/**/*
 backend/prisma/**/*
+**/generated/**/*
+**/prisma/**/*
 
 # Ignore node_modules
 node_modules
