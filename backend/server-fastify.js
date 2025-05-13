@@ -17,10 +17,7 @@ dotenv.config({ path: path.resolve(__dirname, '.env') });
 // Import database connection
 const db = require('./config/database');
 
-// Import Redis service
-const { redisService } = require('./services/redis');
-
-// Import hybrid cache service (LRU + Redis)
+// Import high-performance LRU cache service
 const cacheService = require('./services/cache');
 
 // Import Swagger configuration
@@ -217,10 +214,6 @@ process.on('SIGTERM', async () => {
   await db.closeConnections();
   fastify.log.info('Database connections closed');
 
-  // Close Redis connection
-  await redisService.close();
-  fastify.log.info('Redis connection closed');
-
   // Clear cache
   await cacheService.clear();
   fastify.log.info('Cache cleared');
@@ -236,10 +229,6 @@ process.on('SIGINT', async () => {
   // Close database connections
   await db.closeConnections();
   fastify.log.info('Database connections closed');
-
-  // Close Redis connection
-  await redisService.close();
-  fastify.log.info('Redis connection closed');
 
   // Clear cache
   await cacheService.clear();

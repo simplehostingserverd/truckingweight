@@ -67,8 +67,8 @@ const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// Import Redis service
-const { redisService } = require('./services/redis');
+// Import cache service
+const cacheService = require('./services/cache');
 
 // Handle graceful shutdown
 process.on('SIGTERM', () => {
@@ -78,9 +78,9 @@ process.on('SIGTERM', () => {
     // Close database connections
     await db.closeConnections();
     console.log('Database connections closed');
-    // Close Redis connection
-    await redisService.close();
-    console.log('Redis connection closed');
+    // Clear cache
+    await cacheService.clear();
+    console.log('Cache cleared');
     process.exit(0);
   });
 });
@@ -92,9 +92,9 @@ process.on('SIGINT', () => {
     // Close database connections
     await db.closeConnections();
     console.log('Database connections closed');
-    // Close Redis connection
-    await redisService.close();
-    console.log('Redis connection closed');
+    // Clear cache
+    await cacheService.clear();
+    console.log('Cache cleared');
     process.exit(0);
   });
 });

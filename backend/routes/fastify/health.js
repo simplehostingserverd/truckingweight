@@ -2,11 +2,11 @@
  * Health Check Routes
  *
  * This module provides endpoints for checking the health of the application
- * and its dependencies like Redis and the database.
+ * and its dependencies like the database.
  */
 
-const { redisService } = require('../../services/redis');
 const db = require('../../config/database');
+const cacheService = require('../../services/cache');
 
 /**
  * Register health check routes
