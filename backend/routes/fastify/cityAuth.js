@@ -520,7 +520,7 @@ async function routes(fastify, options) {
 
       // Send password reset email using Supabase Auth
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.FRONTEND_URL}/city/reset-password`,
+        redirectTo: `${process.env.FRONTEND_URL}/city-reset-password`,
       });
 
       if (resetError) {
