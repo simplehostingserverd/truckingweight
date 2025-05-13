@@ -129,7 +129,7 @@ fix_typescript_syntax_errors() {
     mkdir -p .ts-syntax-backups
 
     # Find TypeScript files with common syntax errors - expanded patterns
-    local files_with_errors=$(grep -l -r -E "(\): Promise<|async [a-zA-Z0-9_]+\(.*\): Promise<)" --include="*.ts" . 2>/dev/null || echo "")
+    local files_with_errors=$(grep -l -r -E "(\): Promise<|async [a-zA-Z0-9_]+\(.*\): Promise<|interface [A-Za-z0-9_]+ \{;|= \{;)" --include="*.ts" . 2>/dev/null || echo "")
 
     if [ -n "$files_with_errors" ]; then
       print_message "${YELLOW}" "⚠️" "Found potential TypeScript syntax errors in backend"
@@ -155,14 +155,26 @@ fix_typescript_syntax_errors() {
         # 4. Fix object literals with trailing semicolons
         sed -i 's/= {;/= {/g' "$file"
 
-        # 5. Fix missing semicolons at the end of statements
+        # 5. Fix trailing semicolons in property declarations
+        sed -i 's/\([a-zA-Z0-9_]*\): \([a-zA-Z0-9_<>[\]|&]*\);$/\1: \2/g' "$file"
+
+        # 6. Fix trailing semicolons in method declarations
+        sed -i 's/\([a-zA-Z0-9_]*\)(\([^)]*\));/\1(\2)/g' "$file"
+
+        # 7. Fix missing semicolons at the end of statements
         sed -i 's/\([^;{]\)$/\1;/g' "$file"
 
-        # 6. Fix static async methods with arrow function syntax
+        # 8. Fix static async methods with arrow function syntax
         sed -i 's/static async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> => {/static async \1\2): Promise<\2> {/g' "$file"
 
-        # 7. Fix async methods with arrow function syntax
+        # 9. Fix async methods with arrow function syntax
         sed -i 's/async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> => {/async \1\2): Promise<\2> {/g' "$file"
+
+        # 10. Fix trailing semicolons in object properties
+        sed -i 's/\([a-zA-Z0-9_]*\): \([a-zA-Z0-9_"'\'']*\),;/\1: \2,/g' "$file"
+
+        # 11. Fix trailing semicolons at the end of object literals
+        sed -i 's/};/}/g' "$file"
 
         print_message "${GREEN}" "✅" "Fixed potential syntax errors in $file"
       done
