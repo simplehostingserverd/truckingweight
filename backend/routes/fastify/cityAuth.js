@@ -175,6 +175,37 @@ const forgotPasswordSchema = {
   },
 };
 
+const resetPasswordSchema = {
+  body: {
+    type: 'object',
+    required: ['token', 'password'],
+    properties: {
+      token: { type: 'string' },
+      password: { type: 'string', minLength: 6 },
+    },
+  },
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        msg: { type: 'string' },
+      },
+    },
+    400: {
+      type: 'object',
+      properties: {
+        msg: { type: 'string' },
+      },
+    },
+    500: {
+      type: 'object',
+      properties: {
+        msg: { type: 'string' },
+      },
+    },
+  },
+};
+
 /**
  * City Auth Routes
  */
@@ -500,6 +531,39 @@ async function routes(fastify, options) {
       return reply.code(200).send({ msg: 'Password reset email sent' });
     } catch (err) {
       request.log.error('Server error in forgot password:', err);
+      return reply.code(500).send({ msg: 'Server error' });
+    }
+  });
+
+  /**
+   * @route   POST /api/city-auth/reset-password
+   * @desc    Reset user password
+   * @access  Public
+   */
+  fastify.post('/reset-password', { schema: resetPasswordSchema }, async (request, reply) => {
+    const { token, password } = request.body;
+
+    try {
+      // Update password using Supabase Auth
+      const { error: updateError } = await supabase.auth.updateUser(
+        {
+          password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (updateError) {
+        request.log.error('Error resetting password:', updateError);
+        return reply.code(400).send({ msg: 'Invalid or expired token' });
+      }
+
+      return reply.code(200).send({ msg: 'Password reset successful' });
+    } catch (err) {
+      request.log.error('Server error in reset password:', err);
       return reply.code(500).send({ msg: 'Server error' });
     }
   });
