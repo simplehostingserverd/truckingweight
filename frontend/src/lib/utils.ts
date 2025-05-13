@@ -147,3 +147,21 @@ export function debounce<T extends (...args: any[]) => any>(
     timeout = setTimeout(later, wait);
   };
 }
+
+/**
+ * Convert an object to a URL search parameter string
+ */
+export function toSearchParamString(
+  params: Record<string, string | number | boolean | undefined>
+): string {
+  const searchParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) {
+      searchParams.append(key, String(value));
+    }
+  });
+
+  const searchParamString = searchParams.toString();
+  return searchParamString ? `?${searchParamString}` : '';
+}

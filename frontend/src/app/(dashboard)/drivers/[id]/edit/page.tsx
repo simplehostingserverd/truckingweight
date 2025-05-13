@@ -16,7 +16,13 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-export default function EditDriver({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default function EditDriver({ params }: PageProps) {
   const [name, setName] = useState('');
   const [licenseNumber, setLicenseNumber] = useState('');
   const [licenseExpiry, setLicenseExpiry] = useState('');

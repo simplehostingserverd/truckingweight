@@ -20,13 +20,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@/components/ui/badge": ["./src/components/ui/Badge"],
-      "@/components/ui/button": ["./src/components/ui/Button"],
-      "@/components/ui/input": ["./src/components/ui/Input"],
-      "@/components/ui/select": ["./src/components/ui/Select"],
-      "@/components/ui/tabs": ["./src/components/ui/Tabs"],
-      "@/components/ui/card": ["./src/components/ui/Card"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

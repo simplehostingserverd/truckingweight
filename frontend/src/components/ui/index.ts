@@ -1,28 +1,28 @@
 // Export all UI components from this file for easier imports
 
 // Button
-export { default as Button } from './Button';
-export type { ButtonProps } from './Button';
+export { default as Button } from './button';
+export type { ButtonProps } from './button';
 
 // Input - support both casing versions
-export { default as Input } from './Input';
-export type { InputProps } from './Input';
+export { default as Input } from './input';
+export type { InputProps } from './input';
 
 // Select - support both casing versions
-export { default as Select } from './Select';
-export type { SelectProps, SelectOption } from './Select';
-export { SelectTrigger, SelectValue, SelectContent, SelectItem } from './Select';
+export { default as Select } from './select';
+export type { SelectProps, SelectOption } from './select';
+export { SelectTrigger, SelectValue, SelectContent, SelectItem } from './select';
 
 // Badge - support both casing versions
-export { default as Badge } from './Badge';
-export type { BadgeProps } from './Badge';
+export { default as Badge } from './badge';
+export type { BadgeProps } from './badge';
 
 // Card - support both casing versions
-export { default as Card } from './Card';
-export { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './Card';
+export { default as Card } from './card';
+export { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './card';
 
 // Tabs - support both casing versions
-export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
 
 // Dialog components
 export {
@@ -57,13 +57,4 @@ export { Skeleton } from './skeleton';
 export { default as MobileNav } from './MobileNav';
 export { default as ServiceWorkerRegistration } from './ServiceWorkerRegistration';
 
-// Ensure lowercase versions are also exported
-import * as buttonLower from './button';
-import * as inputLower from './input';
-import * as badgeLower from './badge';
-import * as selectLower from './select';
-import * as tabsLower from './tabs';
-import * as cardLower from './card';
-
-// Re-export lowercase versions
-export { buttonLower, inputLower, badgeLower, selectLower, tabsLower, cardLower };
+// We're now using lowercase versions directly, so no need for these re-exports
