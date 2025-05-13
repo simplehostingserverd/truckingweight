@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <rect width="200" height="100" fill="#ffffff"/>
+  <g transform="translate(50, 25)">
+    <rect x="0" y="0" width="100" height="50" fill="#0066cc"/>
+    <text x="50" y="32" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff" text-anchor="middle">SAIA</text>
+  </g>
+</svg>

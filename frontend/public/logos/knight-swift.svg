@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <rect width="200" height="100" fill="#ffffff"/>
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="80" height="60" fill="#003366"/>
+    <rect x="80" y="0" width="80" height="60" fill="#cc0000"/>
+    <text x="40" y="35" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">KNIGHT</text>
+    <text x="120" y="35" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">SWIFT</text>
+  </g>
+</svg>

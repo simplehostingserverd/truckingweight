@@ -24,35 +24,35 @@ const FALLBACK_TRUCKING_LOGOS: Logo[] = [
   {
     id: 1,
     name: 'JB Hunt',
-    logo_url: '/logos/jb-hunt.png',
+    logo_url: '/logos/jb-hunt.svg',
     website: 'https://www.jbhunt.com',
     type: 'trucking',
   },
   {
     id: 2,
     name: 'Schneider',
-    logo_url: '/logos/schneider.png',
+    logo_url: '/logos/schneider.svg',
     website: 'https://schneider.com',
     type: 'trucking',
   },
   {
     id: 3,
     name: 'Swift Transportation',
-    logo_url: '/logos/swift.png',
+    logo_url: '/logos/swift.svg',
     website: 'https://www.swifttrans.com',
     type: 'trucking',
   },
   {
     id: 4,
     name: 'Werner Enterprises',
-    logo_url: '/logos/werner.png',
+    logo_url: '/logos/werner.svg',
     website: 'https://www.werner.com',
     type: 'trucking',
   },
   {
     id: 5,
     name: 'Knight-Swift',
-    logo_url: '/logos/knight-swift.png',
+    logo_url: '/logos/knight-swift.svg',
     website: 'https://www.knightswift.com',
     type: 'trucking',
   },
@@ -62,35 +62,35 @@ const FALLBACK_CITY_LOGOS: Logo[] = [
   {
     id: 6,
     name: 'Houston',
-    logo_url: '/logos/cities/houston.png',
+    logo_url: '/logos/cities/houston.svg',
     website: 'https://www.houstontx.gov',
     type: 'city',
   },
   {
     id: 7,
     name: 'Dallas',
-    logo_url: '/logos/cities/dallas.png',
+    logo_url: '/logos/cities/dallas.svg',
     website: 'https://www.dallascityhall.com',
     type: 'city',
   },
   {
     id: 8,
     name: 'San Antonio',
-    logo_url: '/logos/cities/san-antonio.png',
+    logo_url: '/logos/cities/san-antonio.svg',
     website: 'https://www.sanantonio.gov',
     type: 'city',
   },
   {
     id: 9,
     name: 'Austin',
-    logo_url: '/logos/cities/austin.png',
+    logo_url: '/logos/cities/austin.svg',
     website: 'https://www.austintexas.gov',
     type: 'city',
   },
   {
     id: 10,
     name: 'Fort Worth',
-    logo_url: '/logos/cities/fort-worth.png',
+    logo_url: '/logos/cities/fort-worth.svg',
     website: 'https://www.fortworthtexas.gov',
     type: 'city',
   },
@@ -184,6 +184,7 @@ export default function LogoCarousel({
                     alt={logo.name}
                     width={160}
                     height={80}
+                    loading="lazy"
                     className="max-h-16 md:max-h-20 w-auto object-contain"
                     onError={e => {
                       // Fallback to placeholder if image fails to load
@@ -213,6 +214,7 @@ export default function LogoCarousel({
                     alt={logo.name}
                     width={160}
                     height={80}
+                    loading="lazy"
                     className="max-h-16 md:max-h-20 w-auto object-contain"
                     onError={e => {
                       // Fallback to placeholder if image fails to load

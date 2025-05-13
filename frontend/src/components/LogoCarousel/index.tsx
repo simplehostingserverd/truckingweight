@@ -7,29 +7,29 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 
 // Logo data
 const TRUCKING_LOGOS = [
-  { name: 'JB Hunt', logo: '/logos/jb-hunt.png' },
-  { name: 'Schneider', logo: '/logos/schneider.png' },
-  { name: 'Swift Transportation', logo: '/logos/swift.png' },
-  { name: 'Werner Enterprises', logo: '/logos/werner.png' },
-  { name: 'Knight-Swift', logo: '/logos/knight-swift.png' },
-  { name: 'XPO Logistics', logo: '/logos/xpo.png' },
-  { name: 'Old Dominion', logo: '/logos/old-dominion.png' },
-  { name: 'Yellow', logo: '/logos/yellow.png' },
-  { name: 'Estes Express', logo: '/logos/estes.png' },
-  { name: 'Saia', logo: '/logos/saia.png' },
+  { name: 'JB Hunt', logo: '/logos/jb-hunt.svg' },
+  { name: 'Schneider', logo: '/logos/schneider.svg' },
+  { name: 'Swift Transportation', logo: '/logos/swift.svg' },
+  { name: 'Werner Enterprises', logo: '/logos/werner.svg' },
+  { name: 'Knight-Swift', logo: '/logos/knight-swift.svg' },
+  { name: 'XPO Logistics', logo: '/logos/xpo.svg' },
+  { name: 'Old Dominion', logo: '/logos/old-dominion.svg' },
+  { name: 'Yellow', logo: '/logos/yellow.svg' },
+  { name: 'Estes Express', logo: '/logos/estes.svg' },
+  { name: 'Saia', logo: '/logos/saia.svg' },
 ];
 
 const CITY_LOGOS = [
-  { name: 'Houston', logo: '/logos/cities/houston.png' },
-  { name: 'Dallas', logo: '/logos/cities/dallas.png' },
-  { name: 'San Antonio', logo: '/logos/cities/san-antonio.png' },
-  { name: 'Austin', logo: '/logos/cities/austin.png' },
-  { name: 'Fort Worth', logo: '/logos/cities/fort-worth.png' },
-  { name: 'El Paso', logo: '/logos/cities/el-paso.png' },
-  { name: 'Arlington', logo: '/logos/cities/arlington.png' },
-  { name: 'Corpus Christi', logo: '/logos/cities/corpus-christi.png' },
-  { name: 'Plano', logo: '/logos/cities/plano.png' },
-  { name: 'Lubbock', logo: '/logos/cities/lubbock.png' },
+  { name: 'Houston', logo: '/logos/cities/houston.svg' },
+  { name: 'Dallas', logo: '/logos/cities/dallas.svg' },
+  { name: 'San Antonio', logo: '/logos/cities/san-antonio.svg' },
+  { name: 'Austin', logo: '/logos/cities/austin.svg' },
+  { name: 'Fort Worth', logo: '/logos/cities/fort-worth.svg' },
+  { name: 'El Paso', logo: '/logos/cities/el-paso.svg' },
+  { name: 'Arlington', logo: '/logos/cities/arlington.svg' },
+  { name: 'Corpus Christi', logo: '/logos/cities/corpus-christi.svg' },
+  { name: 'Plano', logo: '/logos/cities/plano.svg' },
+  { name: 'Lubbock', logo: '/logos/cities/lubbock.svg' },
 ];
 
 // Placeholder image for missing logos
@@ -110,6 +110,7 @@ const LogoCarousel: React.FC<LogoCarouselProps> = ({ type, title, subtitle }) =>
                           alt={logo.name}
                           fill
                           sizes="128px"
+                          loading="lazy"
                           className="object-contain"
                           onError={e => {
                             // Fallback to placeholder if image fails to load

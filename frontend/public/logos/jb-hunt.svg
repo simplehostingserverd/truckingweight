@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <rect width="200" height="100" fill="#ffffff"/>
+  <g transform="translate(20, 20)">
+    <path d="M0,30 H30 V60 H0 Z" fill="#0066cc"/>
+    <path d="M35,30 H65 V60 H35 Z" fill="#0066cc"/>
+    <path d="M70,30 H160 V40 H70 Z" fill="#0066cc"/>
+    <path d="M70,45 H160 V55 H70 Z" fill="#0066cc"/>
+    <text x="80" y="20" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#0066cc">JB HUNT</text>
+  </g>
+</svg>

@@ -90,8 +90,63 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
             subtitle="Join these industry leaders who rely on our platform for their weight management needs"
           />
 
-          {/* Features Section */}
+          {/* Video Demo Section */}
           <section className="py-20 bg-white">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  See Our Platform in Action
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  Watch how our system helps trucking companies manage weights, ensure compliance,
+                  and optimize operations.
+                </p>
+              </div>
+
+              <div className="max-w-4xl mx-auto bg-gray-100 rounded-xl overflow-hidden shadow-lg mb-20">
+                <div className="aspect-w-16 aspect-h-9 relative">
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+                    <div className="text-center">
+                      <div className="w-20 h-20 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-primary-700 transition-colors">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-10 w-10 text-white"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      </div>
+                      <p className="text-white text-lg">Click to watch demo video</p>
+                    </div>
+                  </div>
+                  <Image
+                    src="/images/video-thumbnail.svg"
+                    alt="TruckingWeight Platform Demo"
+                    width={1280}
+                    height={720}
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Features Section */}
+          <section className="py-20 bg-gray-50">
             <div className="container mx-auto px-4">
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

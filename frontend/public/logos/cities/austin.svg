@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <rect width="200" height="100" fill="#ffffff"/>
+  <g transform="translate(20, 30)">
+    <rect x="0" y="0" width="160" height="40" rx="5" fill="#663399"/>
+    <text x="80" y="27" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#ffffff" text-anchor="middle">AUSTIN</text>
+    <circle cx="140" cy="10" r="5" fill="#ffffff"/>
+  </g>
+</svg>

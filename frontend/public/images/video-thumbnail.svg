@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#1e293b"/>
+  <g transform="translate(640, 360)">
+    <rect x="-400" y="-200" width="800" height="400" fill="#334155" rx="20"/>
+    <g transform="translate(0, -80)">
+      <rect x="-300" y="-50" width="600" height="30" fill="#475569" rx="5"/>
+      <rect x="-300" y="0" width="500" height="30" fill="#475569" rx="5"/>
+      <rect x="-300" y="50" width="400" height="30" fill="#475569" rx="5"/>
+    </g>
+    <g transform="translate(-150, 100)">
+      <rect x="0" y="0" width="300" height="60" fill="#0284c7" rx="10"/>
+      <text x="150" y="38" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff" text-anchor="middle">Watch Demo</text>
+    </g>
+    <g transform="translate(0, -150)">
+      <text x="0" y="0" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#ffffff" text-anchor="middle">TruckingWeight Platform Demo</text>
+    </g>
+    <g transform="translate(0, 0)">
+      <circle cx="0" cy="0" r="50" fill="#0284c7"/>
+      <polygon points="20,-25 20,25 -20,0" fill="#ffffff"/>
+    </g>
+  </g>
+</svg>
