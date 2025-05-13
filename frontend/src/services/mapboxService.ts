@@ -78,8 +78,8 @@ export interface RouteOptions {
  */
 const getMapboxToken = async (): Promise<string> => {
   // First try to get from environment variable
-  if (process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
-    return process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+  if (process.env.NEXT_PUBLIC_MAPBOX_TOKEN || process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
+    return process.env.NEXT_PUBLIC_MAPBOX_TOKEN || process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';
   }
 
   // If not available, try to get from Supabase
