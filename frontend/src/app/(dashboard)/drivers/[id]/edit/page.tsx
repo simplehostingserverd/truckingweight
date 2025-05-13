@@ -16,11 +16,11 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-type PageProps = {
+interface PageProps {
   params: {
     id: string;
   };
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams?: Record<string, string | string[] | undefined>;
 }
 
 export default function EditDriver({ params }: PageProps) {
