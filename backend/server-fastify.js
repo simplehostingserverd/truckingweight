@@ -26,6 +26,9 @@ const { swaggerOptions, swaggerUiOptions } = require('./config/swagger');
 // Import authentication middleware
 const { bearerAuthMiddleware, apiKeyAuthMiddleware } = require('./middleware/fastify/bearerAuth');
 
+// Import Paseto service for secure token handling
+const pasetoService = require('./services/pasetoService');
+
 // Register plugins
 async function registerPlugins() {
   // CORS
@@ -50,18 +53,25 @@ async function registerPlugins() {
     },
   });
 
-  // JWT Authentication
-  fastify.register(require('@fastify/jwt'), {
-    secret: process.env.JWT_SECRET || 'supersecretkey',
-    sign: {
-      expiresIn: '24h',
-    },
-  });
-
-  // Add authenticate decorator
+  // Add authenticate decorator using Paseto
   fastify.decorate('authenticate', async (request, reply) => {
     try {
-      await request.jwtVerify();
+      // Get token from header
+      const authHeader = request.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        throw new Error('No token provided');
+      }
+
+      const token = authHeader.split(' ')[1];
+
+      // Verify token using Paseto
+      const decoded = await pasetoService.decryptToken(token);
+      if (!decoded) {
+        throw new Error('Invalid token');
+      }
+
+      // Set user data in request
+      request.user = decoded.user;
     } catch (err) {
       reply.code(401).send({ message: 'Unauthorized' });
     }

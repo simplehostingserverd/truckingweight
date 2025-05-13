@@ -2,11 +2,12 @@
  * Bearer Authentication Middleware for Fastify
  * Validates bearer tokens from the Authorization header
  * Checks token validity in Redis or database
+ * Uses Paseto tokens for enhanced security
  */
 
-const jwt = require('jsonwebtoken');
 const { createClient } = require('@supabase/supabase-js');
 const { redisService } = require('../../services/redis');
+const pasetoService = require('../../services/pasetoService');
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -29,13 +30,14 @@ const extractBearerToken = authHeader => {
 };
 
 /**
- * Import token service for Redis validation
+ * Import token service for API key validation
+ * Note: We're using pasetoService for token validation now
  */
 const tokenService = require('../../services/tokenService');
 
 /**
  * Bearer authentication middleware
- * Validates JWT tokens and checks Redis for token validity
+ * Validates Paseto tokens and checks Redis for token validity
  */
 const bearerAuthMiddleware = async (request, reply) => {
   try {
@@ -57,11 +59,17 @@ const bearerAuthMiddleware = async (request, reply) => {
     }
 
     try {
-      // Verify JWT token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      // Decrypt and verify Paseto token
+      const decoded = await pasetoService.decryptToken(token);
+      if (!decoded) {
+        return reply.code(401).send({
+          error: 'Unauthorized',
+          message: 'Token is invalid or expired',
+        });
+      }
 
       // Check if token is valid in Redis
-      const sessionData = await tokenService.validateToken(token);
+      const sessionData = await pasetoService.validateToken(token);
       if (!sessionData) {
         return reply.code(401).send({
           error: 'Unauthorized',

@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const supabase = require('../../config/supabase');
+const pasetoService = require('../../services/pasetoService');
 
 // Register a user
 async function register(request, reply) {
@@ -56,8 +56,15 @@ async function register(request, reply) {
       },
     };
 
-    // Sign token
-    const token = jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: '24h' });
+    // Generate Paseto token
+    const token = await pasetoService.generateToken(payload);
+
+    // Store token in Redis for validation
+    await pasetoService.storeToken(token, {
+      userId: newUser.id,
+      companyId: newUser.company_id,
+      isAdmin: newUser.is_admin,
+    });
 
     return reply.send({ token });
   } catch (err) {
@@ -102,8 +109,15 @@ async function login(request, reply) {
       },
     };
 
-    // Sign token
-    const token = jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: '24h' });
+    // Generate Paseto token
+    const token = await pasetoService.generateToken(payload);
+
+    // Store token in Redis for validation
+    await pasetoService.storeToken(token, {
+      userId: user.id,
+      companyId: user.company_id,
+      isAdmin: user.is_admin,
+    });
 
     return reply.send({ token });
   } catch (err) {
