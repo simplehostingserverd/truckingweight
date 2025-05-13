@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const supabase = require('../config/supabase');
+const pasetoService = require('../services/pasetoService');
 
 // @desc    Register a user
 // @route   POST /api/auth/register
@@ -55,7 +55,7 @@ exports.register = async (req, res) => {
       return res.status(500).json({ msg: 'Server error' });
     }
 
-    // Create JWT payload
+    // Create Paseto payload
     const payload = {
       user: {
         id: newUser.id,
@@ -64,11 +64,22 @@ exports.register = async (req, res) => {
       },
     };
 
-    // Sign token
-    jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: '24h' }, (err, token) => {
-      if (err) throw err;
+    try {
+      // Generate Paseto token
+      const token = await pasetoService.generateToken(payload);
+
+      // Store token in Redis for validation
+      await pasetoService.storeToken(token, {
+        userId: newUser.id,
+        companyId: newUser.company_id,
+        isAdmin: newUser.is_admin,
+      });
+
       res.json({ token });
-    });
+    } catch (err) {
+      console.error('Error generating token:', err);
+      res.status(500).send('Server error');
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -109,7 +120,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
-    // Create JWT payload
+    // Create Paseto payload
     const payload = {
       user: {
         id: user.id,
@@ -118,11 +129,22 @@ exports.login = async (req, res) => {
       },
     };
 
-    // Sign token
-    jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: '24h' }, (err, token) => {
-      if (err) throw err;
+    try {
+      // Generate Paseto token
+      const token = await pasetoService.generateToken(payload);
+
+      // Store token in Redis for validation
+      await pasetoService.storeToken(token, {
+        userId: user.id,
+        companyId: user.company_id,
+        isAdmin: user.is_admin,
+      });
+
       res.json({ token });
-    });
+    } catch (err) {
+      console.error('Error generating token:', err);
+      res.status(500).send('Server error');
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
