@@ -68,7 +68,7 @@ const bearerAuthMiddleware = async (request, reply) => {
         });
       }
 
-      // Check if token is valid in Redis
+      // Check if token is valid in cache
       const sessionData = await pasetoService.validateToken(token);
       if (!sessionData) {
         return reply.code(401).send({
@@ -139,10 +139,10 @@ const apiKeyAuthMiddleware = async (request, reply) => {
       });
     }
 
-    // First check Redis cache for API key
+    // First check cache for API key
     let apiKeyData = await tokenService.validateApiKey(apiKey);
 
-    // If not in Redis, check database
+    // If not in cache, check database
     if (!apiKeyData) {
       const { data, error } = await supabase
         .from('api_keys')
@@ -166,7 +166,7 @@ const apiKeyAuthMiddleware = async (request, reply) => {
         });
       }
 
-      // Store in Redis for future requests
+      // Store in cache for future requests
       apiKeyData = data;
       await tokenService.storeApiKey(apiKey, apiKeyData);
     }

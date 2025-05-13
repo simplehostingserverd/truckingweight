@@ -1,13 +1,13 @@
 const supabase = require('../../config/supabase');
-const { redisService } = require('../../services/redis');
+const cacheService = require('../../services/cache');
 
 /**
  * Get sync status
  */
 async function getSyncStatus(request, reply) {
   try {
-    // Check Redis connection
-    const redisStatus = redisService.isReady() ? 'connected' : 'disconnected';
+    // Check cache status
+    const cacheStatus = 'connected'; // In-memory cache is always available
 
     // Get sync queue status
     const { count, error } = await supabase
