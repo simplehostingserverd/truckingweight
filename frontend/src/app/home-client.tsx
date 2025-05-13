@@ -105,7 +105,16 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
 
               <div className="max-w-4xl mx-auto bg-gray-100 rounded-xl overflow-hidden shadow-lg mb-20">
                 <div className="aspect-w-16 aspect-h-9 relative">
-                  <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+                  <video
+                    className="w-full h-full object-cover"
+                    poster="/images/video-thumbnail.svg"
+                    controls
+                    preload="none"
+                  >
+                    <source src="/videos/truck-highway.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 video-overlay pointer-events-none">
                     <div className="text-center">
                       <div className="w-20 h-20 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-primary-700 transition-colors">
                         <svg
@@ -129,19 +138,23 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                           />
                         </svg>
                       </div>
-                      <p className="text-white text-lg">Click to watch demo video</p>
+                      <p className="text-white text-lg font-bold drop-shadow-md">
+                        Click to watch demo video
+                      </p>
                     </div>
                   </div>
-                  <Image
-                    src="/images/video-thumbnail.svg"
-                    alt="TruckingWeight Platform Demo"
-                    width={1280}
-                    height={720}
-                    className="object-cover"
-                    priority
-                  />
                 </div>
               </div>
+
+              <style jsx>{`
+                .video-overlay {
+                  opacity: 1;
+                  transition: opacity 0.3s ease;
+                }
+                video:playing + .video-overlay {
+                  opacity: 0;
+                }
+              `}</style>
             </div>
           </section>
 
