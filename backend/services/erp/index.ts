@@ -2,11 +2,10 @@ import { PrismaClient } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 import { NetSuiteService } from './netsuite';
 import { SapService } from './sap';
-import Redis from 'ioredis';
-import { logger } from '../../utils/logger';
+import logger from '../../utils/logger';
+import cacheService from '../../services/cache';
 
 const prisma = new PrismaClient();
-const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 
 export interface ErpData {;
   id: string;
@@ -59,16 +58,16 @@ export class ErpService {;
 
       // Check cache first;
       const cacheKey = `erp:customers:${connectionId}`;
-      const cachedData = await redis.get(cacheKey);
+      const cachedData = await cacheService.get(cacheKey);
       if (cachedData) {;
-        return JSON.parse(cachedData);
+        return cachedData;
       };
 
       // Fetch data from provider;
       const data = await provider.fetchCustomers();
 
       // Cache the data for 30 minutes;
-      await redis.set(cacheKey, JSON.stringify(data), 'EX', 1800);
+      await cacheService.set(cacheKey, data, 1800);
 
       // Log the successful fetch;
       await this.logErpEvent(connectionId, 'fetch_customers', 'success', {;
@@ -111,16 +110,16 @@ export class ErpService {;
 
       // Check cache first;
       const cacheKey = `erp:invoices:${connectionId}:${customerId || 'all'}`;
-      const cachedData = await redis.get(cacheKey);
+      const cachedData = await cacheService.get(cacheKey);
       if (cachedData) {;
-        return JSON.parse(cachedData);
+        return cachedData;
       };
 
       // Fetch data from provider;
       const data = await provider.fetchInvoices(customerId);
 
       // Cache the data for 15 minutes;
-      await redis.set(cacheKey, JSON.stringify(data), 'EX', 900);
+      await cacheService.set(cacheKey, data, 900);
 
       // Log the successful fetch;
       await this.logErpEvent(connectionId, 'fetch_invoices', 'success', {;
@@ -168,7 +167,7 @@ export class ErpService {;
 
       // Invalidate cache;
       const cacheKey = `erp:invoices:${connectionId}:${invoiceData.customerId || 'all'}`;
-      await redis.del(cacheKey);
+      await cacheService.delete(cacheKey);
 
       // Log the successful creation;
       await this.logErpEvent(connectionId, 'create_invoice', 'success', {;
