@@ -1,5 +1,7 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import {
   ArrowRightIcon,
@@ -13,41 +15,72 @@ import {
   ScaleIcon,
   DocumentTextIcon,
 } from '@heroicons/react/24/outline';
+import type { Database } from '@/types/supabase';
 
-export default async function IntegrationsPage() {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+export default function IntegrationsPage() {
+  const [userData, setUserData] = useState<{ company_id: string; is_admin: boolean } | null>(null);
+  const [activeIntegrations, setActiveIntegrations] = useState<number>(0);
+  const [apiKeysCount, setApiKeysCount] = useState<number>(0);
+  const [webhooksCount, setWebhooksCount] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Get user data
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const { data: userData } = await supabase
-    .from('users')
-    .select('company_id, is_admin')
-    .eq('id', user?.id)
-    .single();
+  const supabase = createClientComponentClient<Database>();
 
-  // Get active integrations count
-  const { count: activeIntegrations } = await supabase
-    .from('integration_connections')
-    .select('*', { count: 'exact', head: true })
-    .eq('is_active', true)
-    .eq('company_id', userData?.company_id);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Get user data
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
 
-  // Get API keys count
-  const { count: apiKeysCount } = await supabase
-    .from('api_keys')
-    .select('*', { count: 'exact', head: true })
-    .eq('is_active', true)
-    .eq('company_id', userData?.company_id);
+        if (!user) return;
 
-  // Get webhooks count
-  const { count: webhooksCount } = await supabase
-    .from('webhook_subscriptions')
-    .select('*', { count: 'exact', head: true })
-    .eq('is_active', true)
-    .eq('company_id', userData?.company_id);
+        const { data: userDataResponse } = await supabase
+          .from('users')
+          .select('company_id, is_admin')
+          .eq('id', user.id)
+          .single();
+
+        if (userDataResponse) {
+          setUserData(userDataResponse);
+
+          // Get active integrations count
+          const { count: integrationsCount } = await supabase
+            .from('integration_connections')
+            .select('*', { count: 'exact', head: true })
+            .eq('is_active', true)
+            .eq('company_id', userDataResponse.company_id);
+
+          setActiveIntegrations(integrationsCount || 0);
+
+          // Get API keys count
+          const { count: keysCount } = await supabase
+            .from('api_keys')
+            .select('*', { count: 'exact', head: true })
+            .eq('is_active', true)
+            .eq('company_id', userDataResponse.company_id);
+
+          setApiKeysCount(keysCount || 0);
+
+          // Get webhooks count
+          const { count: hooksCount } = await supabase
+            .from('webhook_subscriptions')
+            .select('*', { count: 'exact', head: true })
+            .eq('is_active', true)
+            .eq('company_id', userDataResponse.company_id);
+
+          setWebhooksCount(hooksCount || 0);
+        }
+      } catch (error) {
+        console.error('Error fetching integration data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -71,9 +104,13 @@ export default async function IntegrationsPage() {
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Active Integrations
               </p>
-              <p className="text-2xl font-semibold text-gray-800 dark:text-white">
-                {activeIntegrations || 0}
-              </p>
+              {isLoading ? (
+                <div className="h-8 w-16 bg-gray-200 dark:bg-gray-700 animate-pulse rounded mt-1"></div>
+              ) : (
+                <p className="text-2xl font-semibold text-gray-800 dark:text-white">
+                  {activeIntegrations}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -85,9 +122,13 @@ export default async function IntegrationsPage() {
             </div>
             <div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">API Keys</p>
-              <p className="text-2xl font-semibold text-gray-800 dark:text-white">
-                {apiKeysCount || 0}
-              </p>
+              {isLoading ? (
+                <div className="h-8 w-16 bg-gray-200 dark:bg-gray-700 animate-pulse rounded mt-1"></div>
+              ) : (
+                <p className="text-2xl font-semibold text-gray-800 dark:text-white">
+                  {apiKeysCount}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -101,9 +142,13 @@ export default async function IntegrationsPage() {
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Webhook Subscriptions
               </p>
-              <p className="text-2xl font-semibold text-gray-800 dark:text-white">
-                {webhooksCount || 0}
-              </p>
+              {isLoading ? (
+                <div className="h-8 w-16 bg-gray-200 dark:bg-gray-700 animate-pulse rounded mt-1"></div>
+              ) : (
+                <p className="text-2xl font-semibold text-gray-800 dark:text-white">
+                  {webhooksCount}
+                </p>
+              )}
             </div>
           </div>
         </div>
