@@ -31,17 +31,18 @@ jobs:
       - name: Create frontend env file
         run: |
           echo "# Supabase Configuration" > frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://pczfmxigimuluacspxse.supabase.co' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Node Environment" >> frontend/.env.local
           echo "NODE_ENV=production" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Mapbox token for map visualizations" >> frontend/.env.local
-          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Cesium token for 3D Earth visualization" >> frontend/.env.local
-          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlYWE1OWUxNy1mMWZiLTQzZWUtODU5ZS01MWZjZTg4MDE3MmYiLCJpZCI6MjU5MiwiaWF0IjoxNjM2NzQ5NzMxfQ.aP6K-Jc8Tlf-2t9L2Lc0e7wzeJj7jZQ4ohc-5O3KqVk' }}" >> frontend/.env.local
 
       - name: Install root dependencies
         run: npm ci
@@ -80,17 +81,18 @@ jobs:
       - name: Create frontend env file
         run: |
           echo "# Supabase Configuration" > frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://pczfmxigimuluacspxse.supabase.co' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Node Environment" >> frontend/.env.local
           echo "NODE_ENV=test" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Mapbox token for map visualizations" >> frontend/.env.local
-          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Cesium token for 3D Earth visualization" >> frontend/.env.local
-          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlYWE1OWUxNy1mMWZiLTQzZWUtODU5ZS01MWZjZTg4MDE3MmYiLCJpZCI6MjU5MiwiaWF0IjoxNjM2NzQ5NzMxfQ.aP6K-Jc8Tlf-2t9L2Lc0e7wzeJj7jZQ4ohc-5O3KqVk' }}" >> frontend/.env.local
 
       - name: Install dependencies
         run: |
@@ -134,17 +136,18 @@ jobs:
       - name: Create frontend env file
         run: |
           echo "# Supabase Configuration" > frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://pczfmxigimuluacspxse.supabase.co' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Node Environment" >> frontend/.env.local
           echo "NODE_ENV=production" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Mapbox token for map visualizations" >> frontend/.env.local
-          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Cesium token for 3D Earth visualization" >> frontend/.env.local
-          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlYWE1OWUxNy1mMWZiLTQzZWUtODU5ZS01MWZjZTg4MDE3MmYiLCJpZCI6MjU5MiwiaWF0IjoxNjM2NzQ5NzMxfQ.aP6K-Jc8Tlf-2t9L2Lc0e7wzeJj7jZQ4ohc-5O3KqVk' }}" >> frontend/.env.local
 
       - name: Install dependencies
         run: |

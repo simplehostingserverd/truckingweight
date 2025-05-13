@@ -1,28 +1,28 @@
 // Export all UI components from this file for easier imports
 
 // Button
-export { default as Button } from './button';
-export type { ButtonProps } from './button';
+export { default as Button } from './Button';
+export type { ButtonProps } from './Button';
 
-// Input - support both casing versions
-export { default as Input } from './input';
-export type { InputProps } from './input';
+// Input
+export { default as Input } from './Input';
+export type { InputProps } from './Input';
 
-// Select - support both casing versions
-export { default as Select } from './select';
-export type { SelectProps, SelectOption } from './select';
-export { SelectTrigger, SelectValue, SelectContent, SelectItem } from './select';
+// Select
+export { default as Select } from './Select';
+export type { SelectProps, SelectOption } from './Select';
+export { SelectTrigger, SelectValue, SelectContent, SelectItem } from './Select';
 
-// Badge - support both casing versions
-export { default as Badge } from './badge';
-export type { BadgeProps } from './badge';
+// Badge
+export { default as Badge } from './Badge';
+export type { BadgeProps } from './Badge';
 
-// Card - support both casing versions
-export { default as Card } from './card';
-export { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './card';
+// Card
+export { default as Card } from './Card';
+export { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './Card';
 
-// Tabs - support both casing versions
-export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
+// Tabs
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
 
 // Dialog components
 export {
@@ -57,4 +57,21 @@ export { Skeleton } from './skeleton';
 export { default as MobileNav } from './MobileNav';
 export { default as ServiceWorkerRegistration } from './ServiceWorkerRegistration';
 
-// We're now using lowercase versions directly, so no need for these re-exports
+// Export dropdown menu components
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuGroup,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuRadioGroup,
+} from './dropdown-menu';
