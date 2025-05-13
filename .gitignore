@@ -84,3 +84,5 @@ scripts/fix-*.js
 scripts/fix-*.mjs
 scripts/check-*.js
 backup-files/
+~/bin/kill-hung-apps.sh
+~/.config/systemd/user.conf.d/timeout.conf

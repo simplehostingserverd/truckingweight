@@ -50,6 +50,7 @@
     "react-datepicker": "^6.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",
+    "react-hot-toast": "^2.5.2",
     "react-map-gl": "^8.0.4",
     "react-toastify": "^10.0.4",
     "recharts": "^2.15.3",
