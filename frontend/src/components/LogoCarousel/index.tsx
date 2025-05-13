@@ -59,19 +59,21 @@ const LogoCarousel: React.FC<LogoCarouselProps> = ({ type, title, subtitle }) =>
 
   // Get container width for animation
   useEffect(() => {
-    if (containerRef.current) {
-      setContainerWidth(containerRef.current.scrollWidth / 2);
-    }
-
-    const handleResize = () => {
+    const updateContainerWidth = () => {
       if (containerRef.current) {
         setContainerWidth(containerRef.current.scrollWidth / 2);
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [duplicatedLogos]);
+    // Initial measurement
+    updateContainerWidth();
+
+    // Add resize listener
+    window.addEventListener('resize', updateContainerWidth);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', updateContainerWidth);
+  }, []);
 
   return (
     <ErrorBoundary>

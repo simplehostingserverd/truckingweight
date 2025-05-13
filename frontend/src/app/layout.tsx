@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
-import localFont from 'next/font/local';
 import FontLoader from '@/components/FontLoader';
 
 // Load Inter font from Google Fonts with fallback options
@@ -12,35 +11,6 @@ const inter = Inter({
   variable: '--font-inter',
   fallback: ['system-ui', 'Arial', 'sans-serif'],
   preload: true,
-  adjustFontFallback: true, // Automatically adjust the font fallback
-});
-
-// Load local fallback font
-const interLocalFallback = localFont({
-  src: [
-    {
-      path: '../../public/fonts/Inter-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../../public/fonts/Inter-Medium.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../../public/fonts/Inter-SemiBold.woff2',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: '../../public/fonts/Inter-Bold.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-inter-local',
-  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -86,7 +56,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content="#0D2B4B" />
       </head>
-      <body className={`${inter.variable} ${interLocalFallback.variable} font-sans`}>
+      <body className={`${inter.variable} font-sans`}>
         <FontLoader />
         <Providers>{children}</Providers>
       </body>

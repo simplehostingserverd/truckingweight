@@ -21,77 +21,97 @@ export default function ServiceWorkerRegistration({
   const toast = useToastContext();
 
   useEffect(() => {
+    // Only run in production or when explicitly enabled
+    const shouldRegisterSW =
+      process.env.NODE_ENV === 'production' ||
+      process.env.NEXT_PUBLIC_ENABLE_SW === 'true';
+
     if (
       typeof window !== 'undefined' &&
       'serviceWorker' in navigator &&
-      window.workbox !== undefined
+      shouldRegisterSW
     ) {
-      const wb = new Workbox('/service-worker.js');
+      try {
+        const wb = new Workbox('/service-worker.js');
 
-      // Successful registration
-      wb.addEventListener('installed', event => {
-        logger.info('Service Worker installed successfully', { event }, 'ServiceWorker');
+        // Successful registration
+        wb.addEventListener('installed', event => {
+          logger.info('Service Worker installed successfully', { event }, 'ServiceWorker');
 
-        if (event.isUpdate) {
-          logger.info('New content is available, please refresh', {}, 'ServiceWorker');
-          setIsUpdateAvailable(true);
+          if (event.isUpdate) {
+            logger.info('New content is available, please refresh', {}, 'ServiceWorker');
+            setIsUpdateAvailable(true);
 
-          // Show toast notification for update
-          toast.info({
-            title: 'Update Available',
-            description: 'A new version is available. Click to refresh and use the latest version.',
-          });
+            // Show toast notification for update
+            toast.info({
+              title: 'Update Available',
+              description: 'A new version is available. Click to refresh and use the latest version.',
+            });
 
-          onUpdate?.();
-        } else {
-          logger.info('Content is cached for offline use', {}, 'ServiceWorker');
+            onUpdate?.();
+          } else {
+            logger.info('Content is cached for offline use', {}, 'ServiceWorker');
 
-          // Show toast notification for successful caching
-          toast.success({
-            title: 'Offline Ready',
-            description: 'App is now available offline',
-          });
+            // Show toast notification for successful caching
+            toast.success({
+              title: 'Offline Ready',
+              description: 'App is now available offline',
+            });
 
-          onSuccess?.();
-        }
-      });
-
-      // Registration error
-      wb.addEventListener('error', event => {
-        const error = new Error('Service worker registration failed');
-        logger.error('Service Worker registration failed', { event }, 'ServiceWorker');
-
-        // Show toast notification for error
-        toast.error({
-          title: 'Service Worker Error',
-          description: 'Failed to enable offline functionality',
+            onSuccess?.();
+          }
         });
 
-        onError?.(error);
-      });
+        // Registration error
+        wb.addEventListener('error', event => {
+          const error = new Error('Service worker registration failed');
+          logger.error('Service Worker registration failed', { event }, 'ServiceWorker');
 
-      // Controlling service worker
-      wb.addEventListener('controlling', () => {
-        logger.info('Service Worker is controlling the page', {}, 'ServiceWorker');
-        window.location.reload();
-      });
-
-      // Register the service worker
-      wb.register()
-        .then(registration => {
-          logger.info('Service Worker registered', { scope: registration.scope }, 'ServiceWorker');
-        })
-        .catch(error => {
-          logger.error('Service Worker registration failed', { error }, 'ServiceWorker');
-
-          // Show toast notification for registration error
+          // Show toast notification for error
           toast.error({
             title: 'Service Worker Error',
-            description: error.message || 'Failed to register service worker',
+            description: 'Failed to enable offline functionality',
           });
 
           onError?.(error);
         });
+
+        // Controlling service worker
+        wb.addEventListener('controlling', () => {
+          logger.info('Service Worker is controlling the page', {}, 'ServiceWorker');
+          // Use a more gentle approach than forced reload
+          if (confirm('A new version is available. Reload to update?')) {
+            window.location.reload();
+          }
+        });
+
+        // Register the service worker with a timeout
+        const registrationPromise = wb.register();
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Service Worker registration timed out')), 10000);
+        });
+
+        Promise.race([registrationPromise, timeoutPromise])
+          .then(registration => {
+            if (registration) {
+              logger.info('Service Worker registered', { scope: (registration as any).scope }, 'ServiceWorker');
+            }
+          })
+          .catch(error => {
+            logger.error('Service Worker registration failed', { error }, 'ServiceWorker');
+
+            // Show toast notification for registration error
+            toast.error({
+              title: 'Service Worker Error',
+              description: error.message || 'Failed to register service worker',
+            });
+
+            onError?.(error instanceof Error ? error : new Error(String(error)));
+          });
+      } catch (error) {
+        logger.error('Service Worker setup error', { error }, 'ServiceWorker');
+        onError?.(error instanceof Error ? error : new Error(String(error)));
+      }
     }
   }, [onUpdate, onSuccess, onError, toast]);
 

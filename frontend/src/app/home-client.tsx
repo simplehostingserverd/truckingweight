@@ -109,9 +109,24 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                     className="w-full h-full object-cover"
                     poster="/images/video-thumbnail.svg"
                     controls
-                    preload="none"
+                    preload="metadata"
+                    playsInline
+                    onError={(e) => {
+                      console.error('Video loading error:', e);
+                      // Add fallback image if video fails to load
+                      const videoElement = e.target as HTMLVideoElement;
+                      if (videoElement) {
+                        videoElement.style.display = 'none';
+                        const fallbackImg = document.createElement('img');
+                        fallbackImg.src = '/images/video-thumbnail.svg';
+                        fallbackImg.alt = 'Video thumbnail';
+                        fallbackImg.className = 'w-full h-full object-cover';
+                        videoElement.parentNode?.appendChild(fallbackImg);
+                      }
+                    }}
                   >
                     <source src="/videos/truck-highway.mp4" type="video/mp4" />
+                    <source src="/videos/truck-highway.webm" type="video/webm" />
                     Your browser does not support the video tag.
                   </video>
                   <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 video-overlay pointer-events-none">
