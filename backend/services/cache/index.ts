@@ -1,4 +1,4 @@
-import lru from 'tiny-lru';
+import tinyLRU from 'tiny-lru';
 import { logger } from '../../utils/logger';
 
 /**
@@ -6,13 +6,13 @@ import { logger } from '../../utils/logger';
  * Provides ultra-fast caching without external dependencies
  */
 class CacheService {
-  private lruCache: ReturnType<typeof lru>;
+  private lruCache: ReturnType<typeof tinyLRU>;
   private readonly defaultTTL: number = 3600; // 1 hour in seconds
 
   constructor() {
     // Initialize in-memory LRU cache
     // Default size: 5000 items, TTL: 10 minutes (600 seconds)
-    this.lruCache = lru(5000, 600 * 1000);
+    this.lruCache = tinyLRU(5000, 600 * 1000);
 
     logger.info('Initialized in-memory LRU cache service');
   }

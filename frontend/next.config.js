@@ -171,9 +171,6 @@ const nextConfig = {
 
     // Better scroll handling
     scrollRestoration: true,
-
-    // Improved font loading
-    fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
   },
 
   // Transpile UI libraries
