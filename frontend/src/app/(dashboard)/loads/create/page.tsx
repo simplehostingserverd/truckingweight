@@ -80,8 +80,9 @@ export default function CreateLoad() {
         setVehicles(vehiclesData || []);
         setDrivers(driversData || []);
       } catch (err: any) {
-        console.error('Error fetching data:', err);
-        setError('Failed to load data');
+        // Handle data fetching errors gracefully
+        const errorMessage = err.message || 'Failed to load data';
+        setError(errorMessage);
       } finally {
         setIsLoadingData(false);
       }
@@ -148,8 +149,9 @@ export default function CreateLoad() {
         ],
       });
     } catch (err: any) {
-      setError('Failed to calculate route: ' + (err.message || 'Unknown error'));
-      console.error('Route calculation error:', err);
+      // Handle route calculation errors with a user-friendly message
+      const errorMessage = err.message || 'Unknown error';
+      setError(`Failed to calculate route: ${errorMessage}`);
     } finally {
       setIsCalculatingRoute(false);
     }
@@ -213,8 +215,9 @@ export default function CreateLoad() {
       // Redirect to loads list
       router.push('/loads');
     } catch (err: any) {
-      setError(err.message || 'An error occurred while creating the load');
-      console.error('Create load error:', err);
+      // Handle load creation errors with a user-friendly message
+      const errorMessage = err.message || 'Unknown error';
+      setError(`An error occurred while creating the load: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
