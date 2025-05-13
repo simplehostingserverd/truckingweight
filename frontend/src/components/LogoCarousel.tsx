@@ -107,85 +107,34 @@ export default function LogoCarousel({
 }: LogoCarouselProps) {
   const [logos, setLogos] = useState<Logo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [useFallback, setUseFallback] = useState(false);
-  const supabase = createClientComponentClient();
   const { handleError } = useErrorHandler();
 
+  // Set logos based on type only once during component mount
+  // This prevents the maximum update depth exceeded error
   useEffect(() => {
-    const fetchLogos = async () => {
-      try {
-        setIsLoading(true);
+    setIsLoading(true);
 
-        // If we've already determined to use fallbacks, don't try to fetch from Supabase
-        if (useFallback) {
-          if (type === 'trucking') {
-            setLogos(FALLBACK_TRUCKING_LOGOS);
-          } else if (type === 'city') {
-            setLogos(FALLBACK_CITY_LOGOS);
-          } else {
-            // For 'all' type, combine both sets
-            setLogos([...FALLBACK_TRUCKING_LOGOS, ...FALLBACK_CITY_LOGOS]);
-          }
-          return;
-        }
-
-        let query = supabase.from('company_logos').select('*');
-
-        // Filter by type if specified
-        if (type !== 'all') {
-          query = query.eq('type', type);
-        }
-
-        const { data, error } = await query;
-
-        if (error) {
-          console.warn('Error fetching logos from Supabase:', error);
-          setUseFallback(true);
-
-          // Use fallback logos based on type
-          if (type === 'trucking') {
-            setLogos(FALLBACK_TRUCKING_LOGOS);
-          } else if (type === 'city') {
-            setLogos(FALLBACK_CITY_LOGOS);
-          } else {
-            // For 'all' type, combine both sets
-            setLogos([...FALLBACK_TRUCKING_LOGOS, ...FALLBACK_CITY_LOGOS]);
-          }
-          return;
-        }
-
-        if (data && data.length > 0) {
-          setLogos(data);
-        } else {
-          // If no data returned, use fallbacks
-          setUseFallback(true);
-          if (type === 'trucking') {
-            setLogos(FALLBACK_TRUCKING_LOGOS);
-          } else if (type === 'city') {
-            setLogos(FALLBACK_CITY_LOGOS);
-          } else {
-            setLogos([...FALLBACK_TRUCKING_LOGOS, ...FALLBACK_CITY_LOGOS]);
-          }
-        }
-      } catch (error) {
-        handleError(error, 'LogoCarousel');
-        setUseFallback(true);
-
-        // Use fallback logos based on type
-        if (type === 'trucking') {
-          setLogos(FALLBACK_TRUCKING_LOGOS);
-        } else if (type === 'city') {
-          setLogos(FALLBACK_CITY_LOGOS);
-        } else {
-          setLogos([...FALLBACK_TRUCKING_LOGOS, ...FALLBACK_CITY_LOGOS]);
-        }
-      } finally {
-        setIsLoading(false);
+    try {
+      // Always use fallback logos to prevent CORS issues
+      // This is a temporary solution until the Supabase CORS issue is fully resolved
+      if (type === 'trucking') {
+        setLogos(FALLBACK_TRUCKING_LOGOS);
+      } else if (type === 'city') {
+        setLogos(FALLBACK_CITY_LOGOS);
+      } else {
+        // For 'all' type, combine both sets
+        setLogos([...FALLBACK_TRUCKING_LOGOS, ...FALLBACK_CITY_LOGOS]);
       }
-    };
+    } catch (error) {
+      console.error('Error in LogoCarousel:', error);
+      // Don't call handleError here to avoid potential re-renders
+    } finally {
+      setIsLoading(false);
+    }
 
-    fetchLogos();
-  }, [supabase, type, handleError, useFallback]);
+    // Only run this effect once when the component mounts
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type]);
 
   if (isLoading) {
     return (
@@ -239,6 +188,8 @@ export default function LogoCarousel({
                     onError={e => {
                       // Fallback to placeholder if image fails to load
                       (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                      // Prevent infinite error loops
+                      (e.target as HTMLImageElement).onerror = null;
                     }}
                   />
                 </a>
@@ -266,6 +217,8 @@ export default function LogoCarousel({
                     onError={e => {
                       // Fallback to placeholder if image fails to load
                       (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                      // Prevent infinite error loops
+                      (e.target as HTMLImageElement).onerror = null;
                     }}
                   />
                 </a>

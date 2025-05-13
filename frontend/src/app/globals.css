@@ -320,4 +320,19 @@
   .animate-hover {
     @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-md;
   }
+
+  /* Logo Carousel Animation */
+  .animate-carousel {
+    @apply flex whitespace-nowrap;
+    animation: carousel 30s linear infinite;
+  }
+
+  @keyframes carousel {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
 }
