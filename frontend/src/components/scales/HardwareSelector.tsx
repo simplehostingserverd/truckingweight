@@ -28,7 +28,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, WifiIcon, BluetoothIcon, UsbIcon, EthernetIcon, ServerIcon } from 'lucide-react';
+import { Loader2, Wifi, Bluetooth, Usb, Network, Server } from 'lucide-react';
 import { useSupabase } from '@/hooks/useSupabase';
 
 interface HardwareOption {
@@ -192,17 +192,17 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
   const getConnectionIcon = (type: string) => {
     switch (type.toLowerCase()) {
       case 'wifi':
-        return <WifiIcon className="h-4 w-4" />;
+        return <Wifi className="h-4 w-4" />;
       case 'bluetooth':
-        return <BluetoothIcon className="h-4 w-4" />;
+        return <Bluetooth className="h-4 w-4" />;
       case 'usb':
-        return <UsbIcon className="h-4 w-4" />;
+        return <Usb className="h-4 w-4" />;
       case 'ethernet':
-        return <EthernetIcon className="h-4 w-4" />;
+        return <Network className="h-4 w-4" />;
       case 'serial':
-        return <ServerIcon className="h-4 w-4" />;
+        return <Server className="h-4 w-4" />;
       default:
-        return <ServerIcon className="h-4 w-4" />;
+        return <Server className="h-4 w-4" />;
     }
   };
 
