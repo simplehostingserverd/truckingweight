@@ -10,7 +10,7 @@
     "update-deps": "node scripts/update-dependencies.mjs",
     "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
     "install-deps": "node scripts/install-deps.mjs",
-    "prepare": "husky install || echo 'Skipping husky install'",
+    "prepare": "echo 'Prepare script'",
     "lint": "eslint . || echo 'Skipping eslint'",
     "lint:fix": "npm run lint:frontend:fix && npm run lint:backend:fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\" || echo 'Skipping prettier'",
@@ -24,7 +24,6 @@
     "lint:frontend:fix": "cd frontend && npm run lint:fix",
     "lint:backend:fix": "cd backend && npm run lint:fix",
     "lint:ci": "./lint-check.sh --auto-fix-all --no-types",
-    "postinstall": "npm run prepare || true",
     "setup-db": "node scripts/setup-database.mjs",
     "create-admin": "node scripts/create-admin.mjs",
     "reset-db": "node --experimental-modules scripts/reset-database.mjs",
@@ -39,7 +38,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "mapbox-gl": "^3.12.0",
-    "next": "^15.3.2",
+    "next": "^14.0.4",
     "pg": "^8.11.3",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -64,18 +63,21 @@
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
     "eslint": "^8.57.0",
-    "eslint-config-next": "^15.3.2",
+    "eslint-config-next": "^14.0.4",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0 <21.0.0",
+    "npm": ">=10.0.0"
   },
   "type": "module"
 }

@@ -1,3 +1,11 @@
+/**
+ * LEGACY FILE - NOT USED IN PRODUCTION
+ *
+ * This is the original Express.js server implementation.
+ * The application now uses server-fastify.js as the primary server.
+ * This file is kept for reference purposes only.
+ */
+
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');

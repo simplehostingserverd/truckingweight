@@ -1,3 +1,12 @@
+/**
+ * LEGACY FILE - NOT USED IN PRODUCTION
+ *
+ * This is the TypeScript Express.js server implementation.
+ * The application now uses server-fastify.js as the primary server.
+ * This file is kept for reference purposes only and may be used
+ * as a basis for a future TypeScript Fastify implementation.
+ */
+
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';

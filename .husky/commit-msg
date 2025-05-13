@@ -1,3 +1,0 @@
-# Check if commit message follows conventional commit format
-echo "Skipping commit-msg hooks due to missing npx"
-exit 0
