@@ -5,6 +5,9 @@ import { Dialog as HeadlessDialog } from '@headlessui/react';
 import { cn } from '@/lib/utils';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
+// Define DialogPrimitive as an alias for HeadlessDialog
+const DialogPrimitive = HeadlessDialog;
+
 // Create a custom Dialog component that accepts onOpenChange
 const Dialog = ({
   open,
