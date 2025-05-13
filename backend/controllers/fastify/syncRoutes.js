@@ -39,7 +39,7 @@ async function getSyncStatus(request, reply) {
       message: 'Sync service is running',
       pendingItems: count || 0,
       lastSuccessfulSync: lastSync?.created_at || null,
-      redisStatus,
+      cacheStatus,
     });
   } catch (err) {
     request.log.error('Error in getSyncStatus:', err);
