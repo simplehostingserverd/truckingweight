@@ -10,6 +10,12 @@
     "dev": "nodemon server-fastify.js",
     "dev:express": "nodemon server.js",
     "check-redis": "node scripts/check-redis.js",
+    "lint": "eslint .",
+    "lint:check": "eslint \"**/*.{js,ts}\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"generated/**\" --ignore-pattern \"prisma/**\"",
+    "lint:fix": "eslint \"**/*.{js,ts}\" --fix --ignore-pattern \"node_modules/**\" --ignore-pattern \"generated/**\" --ignore-pattern \"prisma/**\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "lint:all": "npm run lint:fix && npm run format:fix",
     "test": "jest"
   },
   "dependencies": {
