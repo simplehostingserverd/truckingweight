@@ -1,0 +1,16 @@
+# Ignore node_modules and build directories
+node_modules/
+dist/
+build/
+generated/
+
+# Ignore utility scripts
+../scripts/**/*
+../fix-*.js
+../create-*.js
+../update-*.js
+../test-*.js
+../index.js
+../schema-updater/**/*
+scripts/check-redis.js
+scripts/apply-city-schema.js

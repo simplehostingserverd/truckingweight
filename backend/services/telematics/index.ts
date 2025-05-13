@@ -8,7 +8,7 @@ import { logger } from '../../utils/logger';
 const prisma = new PrismaClient();
 const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 
-export interface TelematicsData {
+export interface TelematicsData {;
   vehicleId: string;
   timestamp: Date;
   location?: {;

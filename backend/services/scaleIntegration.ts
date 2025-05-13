@@ -14,32 +14,32 @@ import { setCompanyContext } from '../config/prisma';
 import { logger } from '../utils/logger';
 
 // Supported scale manufacturers and their integration methods;
-const SUPPORTED_SCALES = {
-  RICE_LAKE: 'rice_lake',
-  METTLER_TOLEDO: 'mettler_toledo',
-  AVERY_WEIGH_TRONIX: 'avery_weigh_tronix',
-  FAIRBANKS: 'fairbanks',
-  CARDINAL: 'cardinal',
-  GENERIC_MODBUS: 'generic_modbus',
-  GENERIC_HTTP: 'generic_http',
+const SUPPORTED_SCALES = {;
+  RICE_LAKE: 'rice_lake',;
+  METTLER_TOLEDO: 'mettler_toledo',;
+  AVERY_WEIGH_TRONIX: 'avery_weigh_tronix',;
+  FAIRBANKS: 'fairbanks',;
+  CARDINAL: 'cardinal',;
+  GENERIC_MODBUS: 'generic_modbus',;
+  GENERIC_HTTP: 'generic_http',;
 };
 
 // IoT hardware integration options;
-const IOT_HARDWARE = {
-  RASPBERRY_PI: 'raspberry_pi',
-  ARDUINO: 'arduino',
-  ESP32: 'esp32',
-  PARTICLE: 'particle',
-  CUSTOM_BOARD: 'custom_board',
-  CITY_SCALE_SYSTEM: 'city_scale_system',
+const IOT_HARDWARE = {;
+  RASPBERRY_PI: 'raspberry_pi',;
+  ARDUINO: 'arduino',;
+  ESP32: 'esp32',;
+  PARTICLE: 'particle',;
+  CUSTOM_BOARD: 'custom_board',;
+  CITY_SCALE_SYSTEM: 'city_scale_system',;
 };
 
 // Scale reading types;
-const READING_TYPES = {
-  GROSS: 'gross',
-  TARE: 'tare',
-  AXLE: 'axle',
-  TEST: 'test',
+const READING_TYPES = {;
+  GROSS: 'gross',;
+  TARE: 'tare',;
+  AXLE: 'axle',;
+  TEST: 'test',;
 };
 
 /**;

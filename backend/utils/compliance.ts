@@ -9,14 +9,14 @@ import { setCompanyContext } from '../config/prisma';
 import { logger } from './logger';
 
 // Federal weight limits (in pounds);
-const FEDERAL_WEIGHT_LIMITS = {
-  SINGLE_AXLE: 20000, // 20,000 lbs
-  TANDEM_AXLE: 34000, // 34,000 lbs
-  GROSS_WEIGHT: 80000, // 80,000 lbs
-  BRIDGE_FORMULA: {
-    // Bridge formula constants
-    W: (L: number, N: number) => 500 * ((L * N) / (N - 1) + 12 * N + 36),
-  },
+const FEDERAL_WEIGHT_LIMITS = {;
+  SINGLE_AXLE: 20000, // 20,000 lbs;
+  TANDEM_AXLE: 34000, // 34,000 lbs;
+  GROSS_WEIGHT: 80000, // 80,000 lbs;
+  BRIDGE_FORMULA: {;
+    // Bridge formula constants;
+    W: (L: number, N: number) => 500 * ((L * N) / (N - 1) + 12 * N + 36),;
+  },;
 };
 
 // State-specific weight limits for all US states;
