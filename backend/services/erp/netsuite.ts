@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ErpProvider, ErpData } from './index';
 import { logger } from '../../utils/logger';
 
-interface NetSuiteCredentials {;
+interface NetSuiteCredentials {
   accountId: string;
   consumerKey: string;
   consumerSecret: string;

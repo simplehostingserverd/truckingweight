@@ -16,10 +16,10 @@ import { logger } from '../utils/logger';
  * @param companyId - The company ID for context;
  * @param isAdmin - Whether the user is an admin;
  */;
-export const generateScaleQRCode = async (;
-  scaleId: number,;
-  companyId: number,;
-  isAdmin: boolean = false;
+export const generateScaleQRCode = async (
+  scaleId: number,
+  companyId: number,
+  isAdmin: boolean = false
 ): Promise<{ success: boolean; qrCodeDataUrl?: string; qrCodeUuid?: string; error?: string }> => {;
   try {;
     // Set company context for Prisma queries;

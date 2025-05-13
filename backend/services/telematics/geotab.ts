@@ -2,7 +2,7 @@ import axios from 'axios';
 import { TelematicsProvider, TelematicsData } from './index';
 import { logger } from '../../utils/logger';
 
-interface GeotabCredentials {;
+interface GeotabCredentials {
   database: string;
   username: string;
   password: string;

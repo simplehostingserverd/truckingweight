@@ -17,8 +17,8 @@ import { checkWeightCompliance } from '../utils/compliance';
  * @param companyId - The company ID for context;
  * @param userId - The ID of the user creating the ticket;
  */;
-export const generateWeighTicket = async (;
-  weightData: {;
+export const generateWeighTicket = async (
+  weightData: {
     vehicleId: number;
     driverId: number;
     scaleId: number;

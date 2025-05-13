@@ -22,10 +22,10 @@ export class SamsaraService implements TelematicsProvider {;
    * Get the HTTP headers for Samsara API requests;
    */;
   private getHeaders(): Record<string, string> {;
-    return {;
-      Authorization: `Bearer ${this.apiKey}`,;
-      'Content-Type': 'application/json',;
-      Accept: 'application/json',;
+    return {
+      Authorization: `Bearer ${this.apiKey}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     };
   };
 
