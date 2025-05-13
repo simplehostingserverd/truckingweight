@@ -76,16 +76,16 @@ export class TelematicsService {;
 
       // Check cache first;
       const cacheKey = `telematics:vehicle:${vehicleId}`;
-      const cachedData = await redis.get(cacheKey);
+      const cachedData = await cacheService.get(cacheKey);
       if (cachedData) {;
-        return JSON.parse(cachedData);
+        return cachedData;
       };
 
       // Fetch data from provider;
       const data = await provider.fetchVehicleData(vehicleId);
 
       // Cache the data for 5 minutes;
-      await redis.set(cacheKey, JSON.stringify(data), 'EX', 300);
+      await cacheService.set(cacheKey, data, 300);
 
       // Log the successful fetch;
       await this.logTelematicsEvent(connectionId, 'fetch_vehicle_data', 'success', {;
