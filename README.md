@@ -5,7 +5,7 @@
 ![TruckingSemis Banner](frontend/public/images/banner.svg)
 
 [![CI/CD Pipeline](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml/badge.svg)](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml)
-[![Next.js](https://img.shields.io/badge/Next.js-14.1.0-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.3.2-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white&labelColor=3ECF8E)](https://supabase.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=38B2AC)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
@@ -77,7 +77,7 @@
 
 ### Frontend
 
-![Next.js](https://img.shields.io/badge/Next.js-14.1.0-black?style=flat-square&logo=next.js&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-15.3.2-black?style=flat-square&logo=next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 
@@ -265,6 +265,7 @@ truckingweight/
   - [x] 3D truck visualization and tracking
 
 - [x] Phase 4: Final Polishing
+
   - [x] Mobile optimization with responsive design
   - [x] Progressive Web App capabilities
   - [x] Comprehensive testing and documentation
