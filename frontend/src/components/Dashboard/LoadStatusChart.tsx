@@ -79,7 +79,9 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
   if (error) {
     return (
       <div className="bg-red-900/20 p-4 rounded-md border border-red-800">
-        <p className="text-red-400 text-sm">{error}</p>
+        <p className="text-red-400 text-sm">
+          Error loading load status data. Please try again later.
+        </p>
       </div>
     );
   }

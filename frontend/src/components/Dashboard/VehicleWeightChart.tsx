@@ -92,7 +92,8 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
         // Try to recover by querying the database directly
         try {
           // Query vehicles directly from the database
-          let vehiclesQuery = supabase.from('vehicles').select('id, name, weight');
+          // Note: Using max_weight instead of weight as per the database schema
+          let vehiclesQuery = supabase.from('vehicles').select('id, name, max_weight');
 
           // If not admin and we have a company ID, filter by it
           if (!isAdmin && companyId) {
@@ -111,7 +112,7 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
             const vehicleWeights = {};
 
             vehicles.forEach(vehicle => {
-              const weightValue = parseFloat(vehicle.weight || '0');
+              const weightValue = parseFloat(vehicle.max_weight || '0');
 
               if (!isNaN(weightValue) && weightValue > 0) {
                 if (!vehicleWeights[vehicle.name]) {
@@ -181,7 +182,9 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
   if (error) {
     return (
       <div className="bg-red-900/20 p-4 rounded-md border border-red-800">
-        <p className="text-red-400 text-sm">{error}</p>
+        <p className="text-red-400 text-sm">
+          Error loading vehicle weight data. Please try again later.
+        </p>
       </div>
     );
   }

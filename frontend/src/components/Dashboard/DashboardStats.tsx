@@ -266,7 +266,9 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
   if (error) {
     return (
       <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-md mb-8">
-        <p className="text-red-700 dark:text-red-300">{error}</p>
+        <p className="text-red-700 dark:text-red-300">
+          Error loading dashboard statistics. Please try again later.
+        </p>
       </div>
     );
   }
