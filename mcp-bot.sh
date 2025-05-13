@@ -128,8 +128,8 @@ fix_typescript_syntax_errors() {
     # Create a backup directory
     mkdir -p .ts-syntax-backups
 
-    # Find TypeScript files with common syntax errors
-    local files_with_errors=$(grep -l -r "): Promise<" --include="*.ts" . 2>/dev/null || echo "")
+    # Find TypeScript files with common syntax errors - expanded patterns
+    local files_with_errors=$(grep -l -r -E "(\): Promise<|async [a-zA-Z0-9_]+\(.*\): Promise<)" --include="*.ts" . 2>/dev/null || echo "")
 
     if [ -n "$files_with_errors" ]; then
       print_message "${YELLOW}" "⚠️" "Found potential TypeScript syntax errors in backend"
@@ -142,17 +142,27 @@ fix_typescript_syntax_errors() {
         cp "$file" ".ts-syntax-backups/$(basename "$file").bak"
 
         # Fix common TypeScript syntax errors
-        # 1. Fix missing arrow functions in async methods returning Promise
-        sed -i 's/): Promise<\([^>]*\)> {/): Promise<\1> => {/g' "$file"
 
-        # 2. Fix interface declarations with trailing semicolons
+        # 1. Fix incorrect arrow function syntax (=> { instead of {)
+        sed -i 's/): Promise<\([^>]*\)> => {/): Promise<\1> {/g' "$file"
+
+        # 2. Fix missing arrow functions in async methods returning Promise
+        sed -i 's/): Promise<\([^>]*\)> {/): Promise<\1> {/g' "$file"
+
+        # 3. Fix interface declarations with trailing semicolons
         sed -i 's/interface \([A-Za-z0-9_]*\) {;/interface \1 {/g' "$file"
 
-        # 3. Fix object literals with trailing semicolons
+        # 4. Fix object literals with trailing semicolons
         sed -i 's/= {;/= {/g' "$file"
 
-        # 4. Fix missing semicolons at the end of statements
+        # 5. Fix missing semicolons at the end of statements
         sed -i 's/\([^;{]\)$/\1;/g' "$file"
+
+        # 6. Fix static async methods with arrow function syntax
+        sed -i 's/static async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> => {/static async \1\2): Promise<\2> {/g' "$file"
+
+        # 7. Fix async methods with arrow function syntax
+        sed -i 's/async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> => {/async \1\2): Promise<\2> {/g' "$file"
 
         print_message "${GREEN}" "✅" "Fixed potential syntax errors in $file"
       done
@@ -170,8 +180,8 @@ fix_typescript_syntax_errors() {
     # Create a backup directory
     mkdir -p .ts-syntax-backups
 
-    # Find TypeScript files with common syntax errors
-    local files_with_errors=$(grep -l -r "): Promise<" --include="*.ts" --include="*.tsx" src 2>/dev/null || echo "")
+    # Find TypeScript files with common syntax errors - expanded patterns
+    local files_with_errors=$(grep -l -r -E "(\): Promise<|async [a-zA-Z0-9_]+\(.*\): Promise<)" --include="*.ts" --include="*.tsx" src 2>/dev/null || echo "")
 
     if [ -n "$files_with_errors" ]; then
       print_message "${YELLOW}" "⚠️" "Found potential TypeScript syntax errors in frontend"
@@ -184,14 +194,80 @@ fix_typescript_syntax_errors() {
         cp "$file" ".ts-syntax-backups/$(basename "$file").bak"
 
         # Fix common TypeScript syntax errors
-        # 1. Fix missing arrow functions in async methods returning Promise
-        sed -i 's/): Promise<\([^>]*\)> {/): Promise<\1> => {/g' "$file"
+
+        # 1. Fix incorrect arrow function syntax (=> { instead of {)
+        sed -i 's/): Promise<\([^>]*\)> => {/): Promise<\1> {/g' "$file"
+
+        # 2. Fix missing arrow functions in async methods returning Promise
+        sed -i 's/): Promise<\([^>]*\)> {/): Promise<\1> {/g' "$file"
+
+        # 3. Fix static async methods with arrow function syntax
+        sed -i 's/static async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> => {/static async \1\2): Promise<\2> {/g' "$file"
+
+        # 4. Fix async methods with arrow function syntax
+        sed -i 's/async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> => {/async \1\2): Promise<\2> {/g' "$file"
 
         print_message "${GREEN}" "✅" "Fixed potential syntax errors in $file"
       done
     else
       print_message "${GREEN}" "✅" "No common TypeScript syntax errors found in frontend"
     fi
+
+    # Add a specific check for the files mentioned in the error messages
+    local specific_files=(
+      "src/services/weigh-ticket-service.ts"
+      "src/services/weight-capture/index.ts"
+      "src/services/weight-capture/providers/camera-provider.ts"
+      "src/services/weight-capture/providers/digital-scale-provider.ts"
+      "src/services/weight-capture/providers/iot-sensor-provider.ts"
+    )
+
+    for file in "${specific_files[@]}"; do
+      if [ -f "$file" ]; then
+        print_message "${BLUE}" "🔧" "Fixing specific file: $file"
+
+        # Create a backup
+        cp "$file" ".ts-syntax-backups/$(basename "$file").bak"
+
+        # Fix specific syntax errors
+        sed -i 's/): Promise<\([^>]*\)> => {/): Promise<\1> {/g' "$file"
+        sed -i 's/async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> => {/async \1\2): Promise<\2> {/g' "$file"
+        sed -i 's/static async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> => {/static async \1\2): Promise<\2> {/g' "$file"
+
+        print_message "${GREEN}" "✅" "Fixed specific syntax errors in $file"
+      fi
+    done
+
+    cd ..
+  fi
+
+  # Add a specific check for the files mentioned in the error messages (in case they're in the backend)
+  if [ -d "backend" ]; then
+    cd backend || handle_error "Could not change to backend directory"
+
+    local specific_files=(
+      "services/weigh-ticket-service.ts"
+      "services/weight-capture/index.ts"
+      "services/weight-capture/providers/camera-provider.ts"
+      "services/weight-capture/providers/digital-scale-provider.ts"
+      "services/weight-capture/providers/iot-sensor-provider.ts"
+    )
+
+    for file in "${specific_files[@]}"; do
+      if [ -f "$file" ]; then
+        print_message "${BLUE}" "🔧" "Fixing specific file: $file"
+
+        # Create a backup
+        cp "$file" ".ts-syntax-backups/$(basename "$file").bak"
+
+        # Fix specific syntax errors
+        sed -i 's/): Promise<\([^>]*\)> => {/): Promise<\1> {/g' "$file"
+        sed -i 's/async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> => {/async \1\2): Promise<\2> {/g' "$file"
+        sed -i 's/static async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> => {/static async \1\2): Promise<\2> {/g' "$file"
+
+        print_message "${GREEN}" "✅" "Fixed specific syntax errors in $file"
+      fi
+    done
 
     cd ..
   fi
