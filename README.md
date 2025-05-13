@@ -5,7 +5,7 @@
 ![TruckingSemis Banner](frontend/public/images/banner.svg)
 
 [![CI/CD Pipeline](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml/badge.svg)](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml)
-[![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-14.1.0-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white&labelColor=3ECF8E)](https://supabase.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=38B2AC)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
@@ -77,14 +77,14 @@
 
 ### Frontend
 
-![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black?style=flat-square&logo=next.js&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-14.1.0-black?style=flat-square&logo=next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 
 ### Backend
 
 ![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=flat-square&logo=node.js&logoColor=white)
-![Express](https://img.shields.io/badge/Express-4.18-000000?style=flat-square&logo=express&logoColor=white)
+![Fastify](https://img.shields.io/badge/Fastify-4.26-000000?style=flat-square&logo=fastify&logoColor=white)
 
 ### Database
 
@@ -229,11 +229,15 @@ truckingweight/
 │   │   ├── lib/             # Utility functions
 │   │   └── styles/          # CSS styles
 │   └── ...
-├── backend/                 # Node.js backend API
+├── backend/                 # Node.js backend API with Fastify
 │   ├── controllers/         # API controllers
+│   │   └── fastify/         # Fastify-specific controllers
 │   ├── routes/              # API routes
-│   ├── middleware/          # Express middleware
-│   ├── models/              # Data models
+│   │   └── fastify/         # Fastify-specific routes
+│   ├── middleware/          # Middleware functions
+│   │   └── fastify/         # Fastify-specific middleware
+│   ├── services/            # Business logic services
+│   ├── utils/               # Utility functions
 │   └── ...
 ├── scripts/                 # Utility scripts
 └── ...
@@ -253,16 +257,23 @@ truckingweight/
   - [x] Load tracking
   - [x] Basic reporting
 
-- [ ] Phase 3: Advanced Features
+- [x] Phase 3: Advanced Features
 
-  - [ ] Weight compliance checking with federal regulations
-  - [ ] Enhanced dashboard with data visualization
-  - [ ] Complete load management with route planning
+  - [x] Weight compliance checking with federal regulations
+  - [x] Enhanced dashboard with data visualization
+  - [x] Complete load management with route planning
+  - [x] 3D truck visualization and tracking
 
-- [ ] Phase 4: Final Polishing
-  - [ ] Mobile optimization
-  - [ ] Deployment preparation
-  - [ ] Final testing and documentation
+- [x] Phase 4: Final Polishing
+  - [x] Mobile optimization with responsive design
+  - [x] Progressive Web App capabilities
+  - [x] Comprehensive testing and documentation
+
+- [ ] Phase 5: Future Enhancements
+  - [ ] AI-powered weight prediction
+  - [ ] Real-time analytics dashboard
+  - [ ] Enhanced integration with telematics systems
+  - [ ] City-specific compliance modules
 
 ## 🤝 Contributing
 
@@ -310,10 +321,27 @@ git config --local hooks.enabled false
 
 When pre-push hooks fail, they provide valuable feedback about what needs to be fixed:
 
-1. **Linting Issues**: Run `npm run lint:fix` to automatically fix many common issues
-2. **Formatting Issues**: Run `npm run format` to apply consistent formatting
-3. **Type Errors**: Address TypeScript errors highlighted in the output
-4. **Test Failures**: Fix failing tests or update tests to match new functionality
+1. **Use MCP Bot**: Run `./mcp-bot.sh` to automatically fix linting, formatting, and common TypeScript syntax issues
+2. **Linting Issues**: Run `npm run lint:check:fix` to automatically fix many common issues
+3. **Formatting Issues**: Run `npm run format` to apply consistent formatting
+4. **Type Errors**: Address TypeScript errors highlighted in the output
+5. **Test Failures**: Fix failing tests or update tests to match new functionality
+
+#### 🤖 MCP Bot - Your Automated Code Quality Assistant
+
+We've created an MCP Bot that can automatically fix many common issues:
+
+```bash
+# Run the MCP Bot to fix issues and generate a report
+./mcp-bot.sh
+```
+
+The MCP Bot will:
+
+- Install missing packages
+- Fix common TypeScript syntax errors
+- Apply ESLint and Prettier fixes
+- Generate a comprehensive report of remaining issues
 
 #### 🔄 Cross-Platform Compatibility
 

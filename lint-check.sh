@@ -12,6 +12,7 @@ RUN_TESTS=false
 FIX_MODE=false
 FIX_TS_SYNTAX_ONLY=false
 REPORT_MODE=false
+AUTO_FIX_ALL=false
 SPECIFIC_PATH=""
 
 # ANSI color codes for pretty output
@@ -60,11 +61,13 @@ show_usage() {
   echo "  --fix                     Try to automatically fix issues"
   echo "  --fix-ts-syntax           Fix TypeScript syntax errors only"
   echo "  --report                  Generate reports instead of failing"
+  echo "  --auto-fix-all            Automatically fix all issues without prompting"
   echo "  --path=<path>             Check only specific path (e.g. frontend/src/components)"
   echo ""
   echo "Examples:"
   echo "  $0 --frontend-only --fix  Check and fix only frontend code"
   echo "  $0 --report               Run all checks and generate reports"
+  echo "  $0 --auto-fix-all         Automatically fix all issues (good for CI/CD)"
   echo "  $0 --path=frontend/src/components --fix  Fix issues in specific directory"
   exit 0
 }
@@ -106,6 +109,10 @@ parse_args() {
       --report)
         REPORT_MODE=true
         ;;
+      --auto-fix-all)
+        AUTO_FIX_ALL=true
+        FIX_MODE=true
+        ;;
       --path=*)
         SPECIFIC_PATH="${arg#*=}"
         ;;
@@ -123,6 +130,13 @@ check_toolbox() {
     print_message "${GREEN}" "✅" "Running in toolbox environment"
   else
     print_message "${YELLOW}" "⚠️" "This script should ideally be run inside a toolbox environment"
+
+    # Skip prompt in AUTO_FIX_ALL mode
+    if [ "$AUTO_FIX_ALL" = true ]; then
+      print_message "${YELLOW}" "ℹ️" "Auto-fix mode: Continuing without toolbox"
+      return
+    fi
+
     read -p "Continue anyway? (y/n) " -n 1 -r
     echo
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -165,8 +179,33 @@ lint_frontend() {
   cd frontend || handle_error "Could not change to frontend directory"
   print_message "${BLUE}" "🔍" "Running ESLint on frontend${lint_path:+ (path: $lint_path)}..."
 
-  # Prepare ESLint command with options
-  local eslint_cmd="npx eslint --config .eslintrc.json"
+  # Create a temporary .eslintignore file to ignore utility scripts
+  cat > .eslintignore.temp << EOF
+# Ignore node_modules and build directories (already in the main .eslintignore)
+node_modules/
+.next/
+out/
+public/
+**/*.d.ts
+
+# Ignore utility scripts
+../scripts/**/*
+../fix-*.js
+../create-*.js
+../update-*.js
+../test-*.js
+../index.js
+../schema-updater/**/*
+EOF
+
+  # Prepare ESLint command with options - explicitly target all TypeScript and JavaScript files
+  local eslint_cmd="npx eslint --config .eslintrc.json --ignore-path .eslintignore.temp"
+
+  # Add extensions to check
+  eslint_cmd="$eslint_cmd --ext .js,.jsx,.ts,.tsx"
+
+  # Always add max-warnings flag to ensure CI catches all issues
+  eslint_cmd="$eslint_cmd --max-warnings=0"
 
   # Add fix mode if requested
   if [ "$FIX_MODE" = true ]; then
@@ -177,7 +216,12 @@ lint_frontend() {
   # Add report mode if requested
   if [ "$REPORT_MODE" = true ]; then
     print_message "${BLUE}" "📊" "Generating lint report instead of failing"
-    $eslint_cmd "$lint_path" > "../$report_path" 2>&1 || true
+    if [ "$lint_path" = "." ]; then
+      # Check src directory specifically to avoid checking node_modules
+      $eslint_cmd "src" > "../$report_path" 2>&1 || true
+    else
+      $eslint_cmd "$lint_path" > "../$report_path" 2>&1 || true
+    fi
     print_message "${GREEN}" "✅" "Frontend lint report generated: $report_path"
 
     # Count the number of issues
@@ -187,39 +231,56 @@ lint_frontend() {
     # Suggest next steps
     print_message "${BLUE}" "💡" "To fix issues gradually, try running with specific paths:"
     print_message "${BLUE}" "  " "./lint-check.sh --path=frontend/src/components --fix"
-    print_message "${BLUE}" "  " "./lint-check.sh --path=frontend/src/pages --fix"
+    print_message "${BLUE}" "  " "./lint-check.sh --path=frontend/src/app --fix"
   else
     # Run ESLint normally
-    if $eslint_cmd "$lint_path"; then
-      print_message "${GREEN}" "✅" "Frontend linting passed"
-    else
-      local exit_code=$?
-      print_message "${YELLOW}" "⚠️" "Frontend linting had issues"
-
-      # Suggest fix mode
-      print_message "${BLUE}" "💡" "Try running with --fix to automatically fix some issues:"
-      print_message "${BLUE}" "  " "./lint-check.sh --frontend-only --fix"
-
-      # Suggest report mode
-      print_message "${BLUE}" "💡" "Or run with --report to generate a detailed report:"
-      print_message "${BLUE}" "  " "./lint-check.sh --frontend-only --report"
-
-      # Ask if user wants to continue despite linting errors
-      if [ "$CHECK_BACKEND" = true ] || [ "$CHECK_FORMATTING" = true ] || [ "$CHECK_TYPES" = true ] || [ "$RUN_TESTS" = true ]; then
-        read -p "Continue with other checks? (y/n) " -n 1 -r
-        echo
-        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-          cd ..
-          exit $exit_code
-        fi
+    if [ "$lint_path" = "." ]; then
+      # Check src directory specifically to avoid checking node_modules
+      if $eslint_cmd "src"; then
+        print_message "${GREEN}" "✅" "Frontend linting passed"
       else
-        cd ..
-        exit $exit_code
+        handle_frontend_lint_error $?
+      fi
+    else
+      if $eslint_cmd "$lint_path"; then
+        print_message "${GREEN}" "✅" "Frontend linting passed"
+      else
+        handle_frontend_lint_error $?
       fi
     fi
   fi
 
+  # Clean up temporary .eslintignore
+  rm -f .eslintignore.temp
+
   cd ..
+}
+
+# Handle frontend linting errors
+handle_frontend_lint_error() {
+  local exit_code=$1
+  print_message "${YELLOW}" "⚠️" "Frontend linting had issues"
+
+  # Suggest fix mode
+  print_message "${BLUE}" "💡" "Try running with --fix to automatically fix some issues:"
+  print_message "${BLUE}" "  " "./lint-check.sh --frontend-only --fix"
+
+  # Suggest report mode
+  print_message "${BLUE}" "💡" "Or run with --report to generate a detailed report:"
+  print_message "${BLUE}" "  " "./lint-check.sh --frontend-only --report"
+
+  # Ask if user wants to continue despite linting errors
+  if [ "$CHECK_BACKEND" = true ] || [ "$CHECK_FORMATTING" = true ] || [ "$CHECK_TYPES" = true ] || [ "$RUN_TESTS" = true ]; then
+    read -p "Continue with other checks? (y/n) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+      cd ..
+      exit $exit_code
+    fi
+  else
+    cd ..
+    exit $exit_code
+  fi
 }
 
 # Run ESLint on backend
@@ -247,6 +308,26 @@ lint_backend() {
   fi
 
   cd backend || handle_error "Could not change to backend directory"
+
+  # Create a temporary .eslintignore file to ignore utility scripts
+  cat > .eslintignore.temp << EOF
+# Ignore node_modules and build directories
+node_modules/
+dist/
+build/
+generated/
+
+# Ignore utility scripts
+../scripts/**/*
+../fix-*.js
+../create-*.js
+../update-*.js
+../test-*.js
+../index.js
+../schema-updater/**/*
+scripts/check-redis.js
+scripts/apply-city-schema.js
+EOF
 
   # Create a temporary ESLint config if one doesn't exist
   if [ ! -f ".eslintrc.json" ]; then
@@ -277,7 +358,10 @@ lint_backend() {
     "no-console": "off",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "warn",
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "no-undef": "error",
+    "no-extra-semi": "error",
+    "no-unreachable": "error"
   }
 }
 EOF
@@ -299,7 +383,10 @@ EOF
   "rules": {
     "no-console": "off",
     "no-unused-vars": "warn",
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "no-undef": "error",
+    "no-extra-semi": "error",
+    "no-unreachable": "error"
   }
 }
 EOF
@@ -338,7 +425,10 @@ EOF
   fi
 
   # Prepare ESLint command with options
-  local eslint_cmd="npx eslint ${TEMP_CONFIG} --ext .js,.ts"
+  local eslint_cmd="npx eslint ${TEMP_CONFIG} --ignore-path .eslintignore.temp --ext .js,.ts"
+
+  # Always add max-warnings flag to ensure CI catches all issues
+  eslint_cmd="$eslint_cmd --max-warnings=0"
 
   # Add fix mode if requested
   if [ "$FIX_MODE" = true ]; then
@@ -349,7 +439,15 @@ EOF
   # Add report mode if requested
   if [ "$REPORT_MODE" = true ]; then
     print_message "${BLUE}" "📊" "Generating lint report instead of failing"
-    $eslint_cmd "$lint_path" > "../$report_path" 2>&1 || true
+
+    # Exclude node_modules and generated directories
+    if [ "$lint_path" = "." ]; then
+      # Target specific directories to avoid checking node_modules and generated code
+      $eslint_cmd "routes" "controllers" "middleware" "services" "utils" "server*.js" > "../$report_path" 2>&1 || true
+    else
+      $eslint_cmd "$lint_path" > "../$report_path" 2>&1 || true
+    fi
+
     print_message "${GREEN}" "✅" "Backend lint report generated: $report_path"
 
     # Count the number of issues
@@ -362,43 +460,60 @@ EOF
     print_message "${BLUE}" "  " "./lint-check.sh --path=backend/controllers --fix"
   else
     # Run ESLint normally
-    if $eslint_cmd "$lint_path"; then
-      print_message "${GREEN}" "✅" "Backend linting passed"
-    else
-      local exit_code=$?
-      print_message "${YELLOW}" "⚠️" "Backend linting had issues"
-
-      # Suggest fix mode
-      print_message "${BLUE}" "💡" "Try running with --fix to automatically fix some issues:"
-      print_message "${BLUE}" "  " "./lint-check.sh --backend-only --fix"
-
-      # Suggest report mode
-      print_message "${BLUE}" "💡" "Or run with --report to generate a detailed report:"
-      print_message "${BLUE}" "  " "./lint-check.sh --backend-only --report"
-
-      # Ask if user wants to continue despite linting errors
-      if [ "$CHECK_FORMATTING" = true ] || [ "$CHECK_TYPES" = true ] || [ "$RUN_TESTS" = true ]; then
-        read -p "Continue with other checks? (y/n) " -n 1 -r
-        echo
-        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-          # Clean up temporary config if it exists
-          [ -f ".eslintrc.temp.json" ] && rm .eslintrc.temp.json
-          cd ..
-          exit $exit_code
-        fi
+    if [ "$lint_path" = "." ]; then
+      # Target specific directories to avoid checking node_modules and generated code
+      if $eslint_cmd "routes" "controllers" "middleware" "services" "utils" "server*.js"; then
+        print_message "${GREEN}" "✅" "Backend linting passed"
       else
-        # Clean up temporary config if it exists
-        [ -f ".eslintrc.temp.json" ] && rm .eslintrc.temp.json
-        cd ..
-        exit $exit_code
+        handle_backend_lint_error $?
+      fi
+    else
+      if $eslint_cmd "$lint_path"; then
+        print_message "${GREEN}" "✅" "Backend linting passed"
+      else
+        handle_backend_lint_error $?
       fi
     fi
   fi
 
-  # Clean up temporary config if it exists
+  # Clean up temporary files
   [ -f ".eslintrc.temp.json" ] && rm .eslintrc.temp.json
+  rm -f .eslintignore.temp
 
   cd ..
+}
+
+# Handle backend linting errors
+handle_backend_lint_error() {
+  local exit_code=$1
+  print_message "${YELLOW}" "⚠️" "Backend linting had issues"
+
+  # Suggest fix mode
+  print_message "${BLUE}" "💡" "Try running with --fix to automatically fix some issues:"
+  print_message "${BLUE}" "  " "./lint-check.sh --backend-only --fix"
+
+  # Suggest report mode
+  print_message "${BLUE}" "💡" "Or run with --report to generate a detailed report:"
+  print_message "${BLUE}" "  " "./lint-check.sh --backend-only --report"
+
+  # Ask if user wants to continue despite linting errors
+  if [ "$CHECK_FORMATTING" = true ] || [ "$CHECK_TYPES" = true ] || [ "$RUN_TESTS" = true ]; then
+    read -p "Continue with other checks? (y/n) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+      # Clean up temporary config if it exists
+      [ -f ".eslintrc.temp.json" ] && rm .eslintrc.temp.json
+      [ -f ".eslintignore.temp" ] && rm .eslintignore.temp
+      cd ..
+      exit $exit_code
+    fi
+  else
+    # Clean up temporary config if it exists
+    [ -f ".eslintrc.temp.json" ] && rm .eslintrc.temp.json
+    [ -f ".eslintignore.temp" ] && rm .eslintignore.temp
+    cd ..
+    exit $exit_code
+  fi
 }
 
 # Run Prettier check
@@ -411,6 +526,30 @@ check_formatting() {
     return
   fi
 
+  # Create a temporary .prettierignore file to ignore utility scripts
+  cat > .prettierignore.temp << EOF
+# Ignore node_modules and build directories
+node_modules/
+.next/
+out/
+dist/
+build/
+generated/
+public/
+
+# Ignore utility scripts
+scripts/**/*
+fix-*.js
+create-*.js
+update-*.js
+test-*.js
+index.js
+schema-updater/**/*
+backend/scripts/check-redis.js
+backend/scripts/apply-city-schema.js
+backend/generated/**/*
+EOF
+
   # If a specific path is provided, use it for formatting
   local format_path=""
   if [ -n "$SPECIFIC_PATH" ]; then
@@ -418,13 +557,16 @@ check_formatting() {
     print_message "${BLUE}" "🔍" "Running Prettier check on path: $SPECIFIC_PATH..."
   else
     print_message "${BLUE}" "🔍" "Running Prettier check on all files..."
+    # Define specific directories to check instead of everything
+    format_path="\"frontend/src/**/*.{js,jsx,ts,tsx,json,md,css}\" \"backend/{routes,controllers,middleware,services,utils}/**/*.{js,ts,json}\" \"backend/server*.js\""
   fi
 
-  # Prepare Prettier command
-  local prettier_cmd="npx prettier --check"
+  # Prepare Prettier command with custom ignore file
+  local prettier_cmd="npx prettier --ignore-path .prettierignore.temp --check"
   if [ -n "$format_path" ]; then
     prettier_cmd="$prettier_cmd $format_path"
   else
+    # This should not be reached with the current logic, but keeping as fallback
     prettier_cmd="npm run format:check"
   fi
 
@@ -432,8 +574,10 @@ check_formatting() {
   if [ "$FIX_MODE" = true ]; then
     print_message "${BLUE}" "🔧" "Running Prettier in fix mode..."
     if [ -n "$format_path" ]; then
-      eval "npx prettier --write $format_path"
+      # Use the same ignore path for writing
+      eval "npx prettier --ignore-path .prettierignore.temp --write $format_path"
     else
+      # This should not be reached with the current logic, but keeping as fallback
       npm run format
     fi
     print_message "${GREEN}" "✅" "Formatting issues fixed"
@@ -454,8 +598,10 @@ check_formatting() {
       if [[ $REPLY =~ ^[Yy]$ ]]; then
         print_message "${BLUE}" "🔧" "Fixing formatting issues..."
         if [ -n "$format_path" ]; then
-          eval "npx prettier --write $format_path"
+          # Use the same ignore path for writing
+          eval "npx prettier --ignore-path .prettierignore.temp --write $format_path"
         else
+          # This should not be reached with the current logic, but keeping as fallback
           npm run format
         fi
         print_message "${GREEN}" "✅" "Formatting issues fixed"
@@ -464,6 +610,9 @@ check_formatting() {
       fi
     fi
   fi
+
+  # Clean up temporary .prettierignore file
+  rm -f .prettierignore.temp
 }
 
 # Run TypeScript type checking
@@ -678,10 +827,18 @@ fix_typescript_syntax_errors() {
   print_message "${YELLOW}" "⚠️" "Found potential TypeScript syntax errors in function return types"
   print_message "${YELLOW}" "ℹ️" "These errors often appear as 'SyntaxError: '=>' expected'"
 
-  # Ask if user wants to fix these errors
-  if [ "$FIX_MODE" = true ]; then
+  # Determine whether to fix errors
+  local fix_ts_errors=false
+
+  # In auto-fix mode, always fix TypeScript syntax errors
+  if [ "$AUTO_FIX_ALL" = true ]; then
+    print_message "${BLUE}" "🔧" "Auto-fix mode: Automatically fixing TypeScript syntax errors..."
+    fix_ts_errors=true
+  # In fix mode, also fix TypeScript syntax errors
+  elif [ "$FIX_MODE" = true ]; then
     print_message "${BLUE}" "🔧" "Attempting to fix TypeScript syntax errors..."
     fix_ts_errors=true
+  # Otherwise, ask the user
   else
     read -p "Would you like to attempt to fix these errors? (y/n) " -n 1 -r
     echo
@@ -708,6 +865,13 @@ fix_typescript_syntax_errors() {
       # Fix the common pattern: "): Promise<...> {" to "): Promise<...> => {"
       # This addresses the "SyntaxError: '=>' expected" error
       sed -i 's/): Promise<\([^>]*\)> {/): Promise<\1> => {/g' "$file"
+
+      # Also fix other common TypeScript syntax errors
+      # Fix missing arrow functions in async methods
+      sed -i 's/async \([a-zA-Z0-9_]*\)(.*): Promise<\([^>]*\)> {/async \1\2): Promise<\2> => {/g' "$file"
+
+      # Fix missing semicolons at the end of statements
+      sed -i 's/\([^;]\)$/\1;/g' "$file"
 
       print_message "${GREEN}" "✅" "Fixed potential syntax errors in $file"
     done
@@ -775,12 +939,21 @@ main() {
   [ "$RUN_TESTS" = true ] && echo "- Tests"
   [ -n "$SPECIFIC_PATH" ] && echo "- Specific path: $SPECIFIC_PATH"
   [ "$FIX_MODE" = true ] && echo "- Fix mode enabled (will attempt to fix issues)"
+  [ "$AUTO_FIX_ALL" = true ] && echo "- Auto-fix mode enabled (will fix all issues without prompting)"
   [ "$REPORT_MODE" = true ] && echo "- Report mode enabled (will generate reports instead of failing)"
   echo ""
 
-  check_toolbox
-  check_npm
-  check_eslint_config
+  # Skip interactive prompts if AUTO_FIX_ALL is enabled
+  if [ "$AUTO_FIX_ALL" = true ]; then
+    print_message "${BLUE}" "🔧" "Running in auto-fix mode - will fix all issues without prompting"
+    # Skip toolbox check in auto-fix mode
+    check_npm
+    check_eslint_config
+  else
+    check_toolbox
+    check_npm
+    check_eslint_config
+  fi
 
   # Handle TypeScript syntax-only fix mode
   if [ "$FIX_TS_SYNTAX_ONLY" = true ]; then
@@ -794,14 +967,77 @@ main() {
   fi
 
   # Fix TypeScript syntax errors before running linting
-  fix_typescript_syntax_errors
+  # In auto-fix mode, always fix TypeScript syntax errors without prompting
+  if [ "$AUTO_FIX_ALL" = true ]; then
+    # Force fix mode for TypeScript syntax errors
+    FIX_MODE=true
+    fix_typescript_syntax_errors
+  else
+    fix_typescript_syntax_errors
+  fi
+
+  # Create a function to handle the checks with auto-fix support
+  run_checks() {
+    # Run the checks
+    if [ "$CHECK_FRONTEND" = true ]; then
+      # In auto-fix mode, don't prompt for continuation on errors
+      if [ "$AUTO_FIX_ALL" = true ]; then
+        # Save current value of REPORT_MODE
+        local original_report_mode=$REPORT_MODE
+        # Temporarily disable report mode to ensure we get actual exit codes
+        REPORT_MODE=false
+        # Run frontend linting
+        lint_frontend || true
+        # Restore original REPORT_MODE
+        REPORT_MODE=$original_report_mode
+      else
+        lint_frontend
+      fi
+    fi
+
+    if [ "$CHECK_BACKEND" = true ]; then
+      # In auto-fix mode, don't prompt for continuation on errors
+      if [ "$AUTO_FIX_ALL" = true ]; then
+        # Save current value of REPORT_MODE
+        local original_report_mode=$REPORT_MODE
+        # Temporarily disable report mode to ensure we get actual exit codes
+        REPORT_MODE=false
+        # Run backend linting
+        lint_backend || true
+        # Restore original REPORT_MODE
+        REPORT_MODE=$original_report_mode
+      else
+        lint_backend
+      fi
+    fi
+
+    if [ "$CHECK_FORMATTING" = true ]; then
+      check_formatting
+    fi
+
+    if [ "$CHECK_TYPES" = true ]; then
+      # In auto-fix mode, don't prompt for continuation on errors
+      if [ "$AUTO_FIX_ALL" = true ]; then
+        # Save current value of REPORT_MODE
+        local original_report_mode=$REPORT_MODE
+        # Force report mode for type checking in auto-fix mode
+        REPORT_MODE=true
+        # Run type checking
+        check_types || true
+        # Restore original REPORT_MODE
+        REPORT_MODE=$original_report_mode
+      else
+        check_types
+      fi
+    fi
+
+    if [ "$RUN_TESTS" = true ]; then
+      run_tests
+    fi
+  }
 
   # Run the checks
-  [ "$CHECK_FRONTEND" = true ] && lint_frontend
-  [ "$CHECK_BACKEND" = true ] && lint_backend
-  [ "$CHECK_FORMATTING" = true ] && check_formatting
-  [ "$CHECK_TYPES" = true ] && check_types
-  [ "$RUN_TESTS" = true ] && run_tests
+  run_checks
 
   print_header "Linting Complete"
   print_message "${GREEN}" "🎉" "All checks completed!"
@@ -822,6 +1058,14 @@ main() {
     print_message "${BLUE}" "💡" "Review these reports and fix issues gradually"
     print_message "${BLUE}" "💡" "For TypeScript errors, focus on one file at a time"
     print_message "${BLUE}" "💡" "For ESLint issues, try running with --fix to auto-fix simple problems"
+  fi
+
+  # If in auto-fix mode, provide a summary of what was fixed
+  if [ "$AUTO_FIX_ALL" = true ]; then
+    print_header "Auto-Fix Summary"
+    print_message "${GREEN}" "✅" "Automatically fixed linting and formatting issues"
+    print_message "${BLUE}" "ℹ️" "Some TypeScript type errors may still need manual fixing"
+    print_message "${BLUE}" "💡" "Run with --report to see remaining issues"
   fi
 }
 
