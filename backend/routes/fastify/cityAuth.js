@@ -16,6 +16,50 @@ const supabase = createClient(
 );
 
 // City auth route schemas
+const registerCitySchema = {
+  body: {
+    type: 'object',
+    required: ['name', 'state'],
+    properties: {
+      name: { type: 'string', minLength: 1 },
+      state: { type: 'string', minLength: 1 },
+      country: { type: 'string' },
+      address: { type: 'string' },
+      zip_code: { type: 'string' },
+      contact_email: { type: 'string', format: 'email' },
+      contact_phone: { type: 'string' },
+      website: { type: 'string' },
+    },
+  },
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        city: {
+          type: 'object',
+          properties: {
+            id: { type: 'number' },
+            name: { type: 'string' },
+            state: { type: 'string' },
+          },
+        },
+      },
+    },
+    400: {
+      type: 'object',
+      properties: {
+        msg: { type: 'string' },
+      },
+    },
+    500: {
+      type: 'object',
+      properties: {
+        msg: { type: 'string' },
+      },
+    },
+  },
+};
+
 const registerCityUserSchema = {
   body: {
     type: 'object',
@@ -105,6 +149,78 @@ const loginCityUserSchema = {
  * City Auth Routes
  */
 async function routes(fastify, options) {
+  /**
+   * @route   POST /api/city-auth/register-city
+   * @desc    Register a new city
+   * @access  Public
+   */
+  fastify.post('/register-city', { schema: registerCitySchema }, async (request, reply) => {
+    const {
+      name,
+      state,
+      country = 'USA',
+      address,
+      zip_code,
+      contact_email,
+      contact_phone,
+      website,
+    } = request.body;
+
+    try {
+      // Check if city already exists
+      const { data: existingCity, error: checkError } = await supabase
+        .from('cities')
+        .select('*')
+        .eq('name', name)
+        .eq('state', state)
+        .single();
+
+      if (checkError && checkError.code !== 'PGRST116') {
+        request.log.error('Error checking for existing city:', checkError);
+        return reply.code(500).send({ msg: 'Server error' });
+      }
+
+      if (existingCity) {
+        return reply.code(400).send({ msg: 'City already exists' });
+      }
+
+      // Create city record
+      const { data: newCity, error: createError } = await supabase
+        .from('cities')
+        .insert([
+          {
+            name,
+            state,
+            country,
+            address,
+            zip_code,
+            contact_email,
+            contact_phone,
+            website,
+            status: 'Active',
+          },
+        ])
+        .select()
+        .single();
+
+      if (createError) {
+        request.log.error('Error creating city record:', createError);
+        return reply.code(500).send({ msg: 'Error creating city' });
+      }
+
+      return reply.code(200).send({
+        city: {
+          id: newCity.id,
+          name: newCity.name,
+          state: newCity.state,
+        },
+      });
+    } catch (err) {
+      request.log.error('Server error in city registration:', err);
+      return reply.code(500).send({ msg: 'Server error' });
+    }
+  });
+
   /**
    * @route   POST /api/city-auth/register
    * @desc    Register a city user
