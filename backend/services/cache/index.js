@@ -1,6 +1,7 @@
 'use strict';
 
-const tinyLRU = require('tiny-lru');
+// Import tiny-lru correctly - it exports a function directly
+const createLRU = require('tiny-lru');
 const { logger } = require('../../utils/logger');
 
 /**
@@ -11,7 +12,7 @@ class CacheService {
   constructor() {
     // Initialize in-memory LRU cache
     // Default size: 5000 items, TTL: 10 minutes (600 seconds)
-    this.lruCache = tinyLRU(5000, 600 * 1000);
+    this.lruCache = createLRU(5000, 600 * 1000);
 
     logger.info('Initialized in-memory LRU cache service');
   }
