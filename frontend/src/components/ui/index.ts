@@ -58,6 +58,7 @@ export { default as MobileNav } from './MobileNav';
 export { default as ServiceWorkerRegistration } from './ServiceWorkerRegistration';
 
 // Ensure lowercase versions are also exported
+import * as buttonLower from './button';
 import * as inputLower from './input';
 import * as badgeLower from './badge';
 import * as selectLower from './select';
@@ -65,4 +66,4 @@ import * as tabsLower from './tabs';
 import * as cardLower from './card';
 
 // Re-export lowercase versions
-export { inputLower, badgeLower, selectLower, tabsLower, cardLower };
+export { buttonLower, inputLower, badgeLower, selectLower, tabsLower, cardLower };
