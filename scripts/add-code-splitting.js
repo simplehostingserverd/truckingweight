@@ -8,7 +8,7 @@ const readline = require('readline');
 // Create readline interface for user input
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
 // Path to frontend directory
@@ -21,7 +21,7 @@ const componentsToSplit = [
     name: 'Map3D',
     imports: [
       "import dynamic from 'next/dynamic';",
-      "import React, { useEffect, useRef, useState } from 'react';"
+      "import React, { useEffect, useRef, useState } from 'react';",
     ],
     dynamicImport: `
 // Dynamically import Cesium components with no SSR
@@ -40,13 +40,13 @@ function MapLoadingPlaceholder() {
       </div>
     </div>
   );
-}`
+}`,
   },
   {
     name: 'TruckVisualization',
     imports: [
       "import dynamic from 'next/dynamic';",
-      "import React, { useState, useEffect } from 'react';"
+      "import React, { useState, useEffect } from 'react';",
     ],
     dynamicImport: `
 // Dynamically import Three.js component with no SSR
@@ -65,14 +65,11 @@ function ModelLoadingPlaceholder() {
       </div>
     </div>
   );
-}`
+}`,
   },
   {
     name: 'PDFViewer',
-    imports: [
-      "import dynamic from 'next/dynamic';",
-      "import React from 'react';"
-    ],
+    imports: ["import dynamic from 'next/dynamic';", "import React from 'react';"],
     dynamicImport: `
 // Dynamically import PDF viewer with no SSR
 const PDFViewerComponent = dynamic(
@@ -90,14 +87,11 @@ function PDFLoadingPlaceholder() {
       </div>
     </div>
   );
-}`
+}`,
   },
   {
     name: 'DataGrid',
-    imports: [
-      "import dynamic from 'next/dynamic';",
-      "import React from 'react';"
-    ],
+    imports: ["import dynamic from 'next/dynamic';", "import React from 'react';"],
     dynamicImport: `
 // Dynamically import DataGrid component
 const DataGridComponent = dynamic(
@@ -115,14 +109,11 @@ function DataGridLoadingPlaceholder() {
       </div>
     </div>
   );
-}`
+}`,
   },
   {
     name: 'ChartComponent',
-    imports: [
-      "import dynamic from 'next/dynamic';",
-      "import React from 'react';"
-    ],
+    imports: ["import dynamic from 'next/dynamic';", "import React from 'react';"],
     dynamicImport: `
 // Dynamically import Chart.js component
 const Chart = dynamic(
@@ -140,8 +131,8 @@ function ChartLoadingPlaceholder() {
       </div>
     </div>
   );
-}`
-  }
+}`,
+  },
 ];
 
 // Function to check if a component file exists
@@ -153,10 +144,10 @@ function componentExists(componentName) {
 // Function to create a dynamic import component
 function createDynamicImportComponent(component) {
   const componentPath = path.join(componentsDir, `${component.name}.tsx`);
-  
+
   if (!componentExists(component.name)) {
     console.log(`Component ${component.name} does not exist. Creating a placeholder component.`);
-    
+
     // Create a placeholder component
     const placeholderContent = `import React from 'react';
 
@@ -169,50 +160,50 @@ export default function ${component.name}() {
   );
 }
 `;
-    
+
     fs.writeFileSync(componentPath, placeholderContent);
     console.log(`Created placeholder component: ${componentPath}`);
   }
-  
+
   // Read the existing component file
   const componentContent = fs.readFileSync(componentPath, 'utf8');
-  
+
   // Check if the component already has dynamic imports
   if (componentContent.includes('dynamic(')) {
     console.log(`Component ${component.name} already has dynamic imports. Skipping.`);
     return false;
   }
-  
+
   // Create the new component content with dynamic imports
   let newComponentContent = '';
-  
+
   // Add imports
   for (const importStatement of component.imports) {
     if (!componentContent.includes(importStatement)) {
       newComponentContent += importStatement + '\n';
     }
   }
-  
+
   // Add the rest of the original content
   newComponentContent += componentContent;
-  
+
   // Add dynamic import before the component definition
   newComponentContent = newComponentContent.replace(
     `export default function ${component.name}`,
     `${component.dynamicImport}\n\nexport default function ${component.name}`
   );
-  
+
   // Write the updated component file
   fs.writeFileSync(componentPath, newComponentContent);
   console.log(`Added dynamic imports to component: ${componentPath}`);
-  
+
   return true;
 }
 
 // Function to create a dynamic import wrapper component
 function createDynamicImportWrapper(component) {
   const wrapperPath = path.join(componentsDir, `${component.name}Wrapper.tsx`);
-  
+
   // Create the wrapper component
   const wrapperContent = `import React from 'react';
 import dynamic from 'next/dynamic';
@@ -238,27 +229,27 @@ export default function ${component.name}Wrapper(props) {
   return <${component.name} {...props} />;
 }
 `;
-  
+
   fs.writeFileSync(wrapperPath, wrapperContent);
   console.log(`Created dynamic import wrapper: ${wrapperPath}`);
-  
+
   return true;
 }
 
 // Function to add code splitting to pages
 function addCodeSplittingToPages() {
   const pagesDir = path.join(frontendDir, 'src', 'app', '(dashboard)');
-  
+
   // Find all page.tsx files
   const pageFiles = [];
-  
+
   function findPageFiles(dir) {
     const files = fs.readdirSync(dir);
-    
+
     for (const file of files) {
       const filePath = path.join(dir, file);
       const stat = fs.statSync(filePath);
-      
+
       if (stat.isDirectory()) {
         findPageFiles(filePath);
       } else if (file === 'page.tsx') {
@@ -266,28 +257,28 @@ function addCodeSplittingToPages() {
       }
     }
   }
-  
+
   findPageFiles(pagesDir);
-  
+
   console.log(`Found ${pageFiles.length} page files.`);
-  
+
   // Add dynamic imports to pages
   for (const pageFile of pageFiles) {
     console.log(`Processing page: ${pageFile}`);
-    
+
     // Read the page file
     const pageContent = fs.readFileSync(pageFile, 'utf8');
-    
+
     // Check if the page already has dynamic imports
     if (pageContent.includes('dynamic(')) {
       console.log(`Page ${pageFile} already has dynamic imports. Skipping.`);
       continue;
     }
-    
+
     // Check if the page imports any of the components to split
     let updatedPageContent = pageContent;
     let hasChanges = false;
-    
+
     for (const component of componentsToSplit) {
       // Check if the page imports the component
       if (pageContent.includes(`import ${component.name} from`)) {
@@ -296,11 +287,11 @@ function addCodeSplittingToPages() {
           `import ${component.name} from`,
           `import ${component.name} from`
         );
-        
+
         hasChanges = true;
       }
     }
-    
+
     if (hasChanges) {
       // Write the updated page file
       fs.writeFileSync(pageFile, updatedPageContent);
@@ -313,13 +304,13 @@ function addCodeSplittingToPages() {
 async function addCodeSplitting() {
   try {
     console.log('Starting code splitting process...');
-    
+
     // Create components directory if it doesn't exist
     if (!fs.existsSync(componentsDir)) {
       fs.mkdirSync(componentsDir, { recursive: true });
       console.log(`Created components directory: ${componentsDir}`);
     }
-    
+
     // Add dynamic imports to components
     for (const component of componentsToSplit) {
       if (componentExists(component.name)) {
@@ -328,10 +319,10 @@ async function addCodeSplitting() {
         createDynamicImportWrapper(component);
       }
     }
-    
+
     // Add code splitting to pages
     addCodeSplittingToPages();
-    
+
     console.log('Code splitting process completed successfully!');
     process.exit(0);
   } catch (error) {

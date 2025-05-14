@@ -2,14 +2,14 @@
  * Logger utility for consistent logging across the application
  */
 
-import winston from 'winston';
-import path from 'path';
-import fs from 'fs';
+import winston from 'winston'
+import path from 'path'
+import fs from 'fs'
 
 // Create logs directory if it doesn't exist
-const logsDir = path.join(__dirname, '../logs');
+const logsDir = path.join(__dirname, '../logs')
 if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir, { recursive: true });
+  fs.mkdirSync(logsDir, { recursive: true })
 }
 
 // Define log format
@@ -18,7 +18,7 @@ const logFormat = winston.format.combine(
   winston.format.errors({ stack: true }),
   winston.format.splat(),
   winston.format.json()
-);
+)
 
 // Create console format for readable logs
 const consoleFormat = winston.format.combine(
@@ -27,12 +27,12 @@ const consoleFormat = winston.format.combine(
   winston.format.printf(({ level, message, timestamp, ...meta }) => {
     return `${timestamp} ${level}: ${message} ${
       Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ''
-    }`;
+    }`
   })
-);
+)
 
 // Get log level from environment or default to 'info'
-const logLevel = process.env.LOG_LEVEL || 'info';
+const logLevel = process.env.LOG_LEVEL || 'info'
 
 // Create Winston logger
 const logger = winston.createLogger({
@@ -54,19 +54,19 @@ const logger = winston.createLogger({
       filename: path.join(logsDir, 'combined.log'),
     }),
   ],
-});
+})
 
 // Add stream for Morgan HTTP logger
 interface LoggerStream {
-  write(message: string): void;
+  write(message: string): void
 }
 
 const stream: LoggerStream = {
   write: (message: string) => {
-    logger.info(message.trim());
+    logger.info(message.trim())
   },
-};
+}
 
-logger.stream = stream;
+logger.stream = stream
 
-export default logger;
+export default logger

@@ -46,15 +46,15 @@ const latestVersions = {
       sharp: '^0.34.1',
       // Performance optimization packages
       '@vercel/analytics': '^1.2.2',
-      'compression': '^1.7.4',
-      'critters': '^0.0.20',
+      compression: '^1.7.4',
+      critters: '^0.0.20',
       'web-vitals': '^3.5.2',
       // Replace deprecated packages
       '@dnd-kit/core': '^6.3.1',
       '@dnd-kit/sortable': '^8.0.0',
       '@dnd-kit/utilities': '^3.2.2',
       // Add SWR for data fetching
-      'swr': '^2.3.3',
+      swr: '^2.3.3',
     },
     devDependencies: {
       typescript: '^5.3.3',
@@ -144,10 +144,10 @@ const latestVersions = {
 
 // Deprecated packages to update with overrides
 const deprecatedPackages = {
-  'glob': '^9.3.5',
+  glob: '^9.3.5',
   'sourcemap-codec': 'npm:@jridgewell/sourcemap-codec@^1.4.15',
   'react-beautiful-dnd': '@dnd-kit/core@^6.3.1 @dnd-kit/sortable@^8.0.0',
-  'redis': 'ioredis@^5.3.2'
+  redis: 'ioredis@^5.3.2',
 };
 
 // Function to update package.json

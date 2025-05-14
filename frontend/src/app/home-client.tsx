@@ -111,7 +111,7 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                     controls
                     preload="metadata"
                     playsInline
-                    onError={(e) => {
+                    onError={e => {
                       console.error('Video loading error:', e);
                       // Add fallback image if video fails to load
                       const videoElement = e.target as HTMLVideoElement;

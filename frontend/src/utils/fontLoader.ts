@@ -15,13 +15,13 @@ export const loadFont = (fontFamily: string, timeout = 3000): Promise<void> => {
       // Use the document.fonts API if available
       if ('fonts' in document) {
         const font = new FontFace(fontFamily, `local(${fontFamily})`);
-        
+
         // Set a timeout to prevent hanging
         const timeoutId = setTimeout(() => {
           console.warn(`Font loading timed out for ${fontFamily}`);
           resolve(); // Resolve anyway to continue with fallbacks
         }, timeout);
-        
+
         // Try to load the font
         document.fonts.ready.then(() => {
           clearTimeout(timeoutId);
@@ -71,7 +71,7 @@ export const preloadGoogleFont = (
         link.parentNode.removeChild(link);
       }
     };
-    
+
     // Add to document head
     document.head.appendChild(link);
   } catch (error) {

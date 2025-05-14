@@ -66,7 +66,8 @@ async function runMigrations() {
     }
 
     // Get all migration directories
-    const migrationDirs = fs.readdirSync(migrationsPath)
+    const migrationDirs = fs
+      .readdirSync(migrationsPath)
       .filter(dir => fs.statSync(path.join(migrationsPath, dir)).isDirectory())
       .sort(); // Sort to ensure migrations run in order
 

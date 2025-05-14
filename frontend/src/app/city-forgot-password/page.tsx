@@ -44,10 +44,10 @@ export default function ForgotPassword() {
     try {
       // This is a placeholder for the actual password reset functionality
       // In a real implementation, you would call an API endpoint to send a password reset email
-      
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       // Show success message
       setSuccess(true);
     } catch (err: any) {
@@ -193,8 +193,8 @@ export default function ForgotPassword() {
                     Password reset instructions have been sent to your email address.
                   </Alert>
                   <Typography level="body2" sx={{ mb: 3, color: 'text.secondary' }}>
-                    Please check your email and follow the instructions to reset your password.
-                    If you don't receive an email within a few minutes, please check your spam folder.
+                    Please check your email and follow the instructions to reset your password. If
+                    you don't receive an email within a few minutes, please check your spam folder.
                   </Typography>
                   <Button
                     startDecorator={<ArrowBackIcon />}

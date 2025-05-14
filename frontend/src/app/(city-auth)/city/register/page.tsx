@@ -186,7 +186,8 @@ export default function CityRegister() {
                 City Weighing Portal
               </Typography>
               <Typography sx={{ mb: 4, color: 'primary.200', fontSize: '1.25rem' }}>
-                Register your municipality to manage commercial vehicle weights, permits, and compliance.
+                Register your municipality to manage commercial vehicle weights, permits, and
+                compliance.
               </Typography>
               <Stack spacing={2}>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
@@ -280,7 +281,7 @@ export default function CityRegister() {
                     <FormLabel>City Name</FormLabel>
                     <Input
                       value={cityName}
-                      onChange={(e) => setCityName(e.target.value)}
+                      onChange={e => setCityName(e.target.value)}
                       placeholder="Enter city name"
                       startDecorator={<LocationCityIcon />}
                       required
@@ -291,7 +292,7 @@ export default function CityRegister() {
                     <FormLabel>State</FormLabel>
                     <Input
                       value={cityState}
-                      onChange={(e) => setCityState(e.target.value)}
+                      onChange={e => setCityState(e.target.value)}
                       placeholder="TX"
                       required
                     />
@@ -302,7 +303,7 @@ export default function CityRegister() {
                       <FormLabel>Address</FormLabel>
                       <Input
                         value={cityAddress}
-                        onChange={(e) => setCityAddress(e.target.value)}
+                        onChange={e => setCityAddress(e.target.value)}
                         placeholder="City Hall Address"
                       />
                     </FormControl>
@@ -310,7 +311,7 @@ export default function CityRegister() {
                       <FormLabel>ZIP Code</FormLabel>
                       <Input
                         value={cityZip}
-                        onChange={(e) => setCityZip(e.target.value)}
+                        onChange={e => setCityZip(e.target.value)}
                         placeholder="12345"
                       />
                     </FormControl>
@@ -322,7 +323,7 @@ export default function CityRegister() {
                       <Input
                         type="email"
                         value={cityEmail}
-                        onChange={(e) => setCityEmail(e.target.value)}
+                        onChange={e => setCityEmail(e.target.value)}
                         placeholder="city@example.gov"
                       />
                     </FormControl>
@@ -330,7 +331,7 @@ export default function CityRegister() {
                       <FormLabel>City Contact Phone</FormLabel>
                       <Input
                         value={cityPhone}
-                        onChange={(e) => setCityPhone(e.target.value)}
+                        onChange={e => setCityPhone(e.target.value)}
                         placeholder="(123) 456-7890"
                       />
                     </FormControl>
@@ -346,7 +347,7 @@ export default function CityRegister() {
                     <FormLabel>Full Name</FormLabel>
                     <Input
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={e => setName(e.target.value)}
                       placeholder="Enter your full name"
                       startDecorator={<PersonIcon />}
                       required
@@ -358,7 +359,7 @@ export default function CityRegister() {
                     <Input
                       type="email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={e => setEmail(e.target.value)}
                       placeholder="admin@example.gov"
                       startDecorator={<EmailIcon />}
                       required
@@ -371,7 +372,7 @@ export default function CityRegister() {
                       <Input
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={e => setPassword(e.target.value)}
                         placeholder="••••••••"
                         startDecorator={<LockIcon />}
                         required
@@ -382,7 +383,7 @@ export default function CityRegister() {
                       <Input
                         type="password"
                         value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        onChange={e => setConfirmPassword(e.target.value)}
                         placeholder="••••••••"
                         startDecorator={<LockIcon />}
                         required

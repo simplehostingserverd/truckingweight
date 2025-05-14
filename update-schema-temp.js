@@ -217,34 +217,34 @@ CREATE POLICY "Loads are deletable by company users" ON loads
 async function updateSchema() {
   try {
     console.log('Starting database schema update...');
-    
+
     // Step 1: Drop existing tables
     console.log('Dropping existing tables...');
     const { error: dropError } = await supabase.rpc('pgmoon.query', { query: dropTablesSQL });
-    
+
     if (dropError) {
       console.error('Error dropping tables:', dropError);
       return;
     }
-    
+
     // Step 2: Create tables in correct order
     console.log('Creating tables...');
     const { error: createError } = await supabase.rpc('pgmoon.query', { query: createTablesSQL });
-    
+
     if (createError) {
       console.error('Error creating tables:', createError);
       return;
     }
-    
+
     // Step 3: Apply RLS policies
     console.log('Applying Row Level Security policies...');
     const { error: rlsError } = await supabase.rpc('pgmoon.query', { query: rlsPoliciesSQL });
-    
+
     if (rlsError) {
       console.error('Error applying RLS policies:', rlsError);
       return;
     }
-    
+
     console.log('Schema updated successfully!');
     process.exit(0);
   } catch (error) {

@@ -35,8 +35,12 @@ const generateWeightData = (vehicleId, driverId, companyId, count = 10) => {
     date.setDate(date.getDate() - Math.floor(Math.random() * 30));
 
     // Generate a random time
-    const hours = Math.floor(Math.random() * 24).toString().padStart(2, '0');
-    const minutes = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+    const hours = Math.floor(Math.random() * 24)
+      .toString()
+      .padStart(2, '0');
+    const minutes = Math.floor(Math.random() * 60)
+      .toString()
+      .padStart(2, '0');
     const time = `${hours}:${minutes}`;
 
     // Generate a random weight between 15,000 and 80,000 pounds
@@ -87,7 +91,7 @@ const generateTelematicsData = (vehicleId, connectionId, count = 20) => {
 
     // Generate location (Dallas area)
     const latitude = 32.7767 + (Math.random() * 0.1 - 0.05);
-    const longitude = -96.7970 + (Math.random() * 0.1 - 0.05);
+    const longitude = -96.797 + (Math.random() * 0.1 - 0.05);
 
     // Generate speed (0-75 mph)
     const speed = Math.floor(Math.random() * 75);
@@ -99,7 +103,8 @@ const generateTelematicsData = (vehicleId, connectionId, count = 20) => {
     const status = statusOptions[Math.floor(Math.random() * statusOptions.length)];
 
     // Determine engine status
-    const engineStatus = engineStatusOptions[Math.floor(Math.random() * engineStatusOptions.length)];
+    const engineStatus =
+      engineStatusOptions[Math.floor(Math.random() * engineStatusOptions.length)];
 
     telematicsData.push({
       vehicle_id: vehicleId,
@@ -183,7 +188,7 @@ async function addRealisticData() {
               refresh_interval: 300,
               data_retention_days: 90,
             },
-          }
+          },
         ])
         .select();
 
@@ -204,9 +209,7 @@ async function addRealisticData() {
         );
 
         // Insert weight data
-        const { error: weightError } = await supabase
-          .from('weights')
-          .upsert(weightData);
+        const { error: weightError } = await supabase.from('weights').upsert(weightData);
 
         if (weightError) throw weightError;
 

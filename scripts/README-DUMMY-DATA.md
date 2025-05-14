@@ -51,6 +51,7 @@ The script will:
 ### ERP Connections
 
 The script adds one ERP connection per company, randomly selecting from:
+
 - NetSuite
 - QuickBooks
 - SAP
@@ -59,6 +60,7 @@ The script adds one ERP connection per company, randomly selecting from:
 ### Telematics Connections
 
 The script adds one telematics connection per company, randomly selecting from:
+
 - Geotab
 - Samsara
 - Fleet Complete
@@ -67,6 +69,7 @@ The script adds one telematics connection per company, randomly selecting from:
 ### Vehicles
 
 The script adds vehicles with:
+
 - Random types (Semi, Box Truck, Flatbed, Tanker, Dump Truck)
 - Random makes (Freightliner, Peterbilt, Kenworth, Volvo, Mack, International)
 - Random years (2015-2023)
@@ -75,6 +78,7 @@ The script adds vehicles with:
 ### Drivers
 
 The script adds drivers with:
+
 - Random names
 - Random license numbers and expiry dates
 - Contact information
@@ -83,6 +87,7 @@ The script adds drivers with:
 ### Weight Records
 
 The script adds weight records with:
+
 - Random dates within the last 30 days
 - Weights that are sometimes over the limit
 - Appropriate compliance status based on weight
@@ -91,6 +96,7 @@ The script adds weight records with:
 ### ERP Sync Logs
 
 The script adds 5 sync logs for each ERP connection with:
+
 - Different timestamps (every 2 days back from today)
 - Different statuses (success, warning, error)
 - Detailed information about the sync operation

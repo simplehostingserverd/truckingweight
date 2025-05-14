@@ -19,36 +19,36 @@ console.log('Backend directory:', backendDir);
 // Function to spawn a process
 function spawnProcess(command, args, options) {
   const proc = spawn(command, args, options);
-  
-  proc.stdout.on('data', (data) => {
+
+  proc.stdout.on('data', data => {
     console.log(`[${options.cwd}] ${data}`);
   });
-  
-  proc.stderr.on('data', (data) => {
+
+  proc.stderr.on('data', data => {
     console.error(`[${options.cwd}] ${data}`);
   });
-  
-  proc.on('close', (code) => {
+
+  proc.on('close', code => {
     console.log(`Process in ${options.cwd} exited with code ${code}`);
   });
-  
+
   return proc;
 }
 
 // Start frontend
 console.log('Starting frontend...');
-const frontendProc = spawnProcess('npm', ['run', 'dev'], { 
+const frontendProc = spawnProcess('npm', ['run', 'dev'], {
   cwd: frontendDir,
   stdio: 'pipe',
-  shell: true
+  shell: true,
 });
 
 // Start backend
 console.log('Starting backend...');
-const backendProc = spawnProcess('npm', ['run', 'dev'], { 
+const backendProc = spawnProcess('npm', ['run', 'dev'], {
   cwd: backendDir,
   stdio: 'pipe',
-  shell: true
+  shell: true,
 });
 
 // Handle process termination

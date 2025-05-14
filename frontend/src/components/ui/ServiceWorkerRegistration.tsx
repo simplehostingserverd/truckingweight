@@ -23,14 +23,9 @@ export default function ServiceWorkerRegistration({
   useEffect(() => {
     // Only run in production or when explicitly enabled
     const shouldRegisterSW =
-      process.env.NODE_ENV === 'production' ||
-      process.env.NEXT_PUBLIC_ENABLE_SW === 'true';
+      process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_ENABLE_SW === 'true';
 
-    if (
-      typeof window !== 'undefined' &&
-      'serviceWorker' in navigator &&
-      shouldRegisterSW
-    ) {
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator && shouldRegisterSW) {
       try {
         const wb = new Workbox('/service-worker.js');
 
@@ -45,7 +40,8 @@ export default function ServiceWorkerRegistration({
             // Show toast notification for update
             toast.info({
               title: 'Update Available',
-              description: 'A new version is available. Click to refresh and use the latest version.',
+              description:
+                'A new version is available. Click to refresh and use the latest version.',
             });
 
             onUpdate?.();
@@ -94,7 +90,11 @@ export default function ServiceWorkerRegistration({
         Promise.race([registrationPromise, timeoutPromise])
           .then(registration => {
             if (registration) {
-              logger.info('Service Worker registered', { scope: (registration as any).scope }, 'ServiceWorker');
+              logger.info(
+                'Service Worker registered',
+                { scope: (registration as any).scope },
+                'ServiceWorker'
+              );
             }
           })
           .catch(error => {

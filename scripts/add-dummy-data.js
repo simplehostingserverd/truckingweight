@@ -16,7 +16,9 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-  console.error('Error: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env');
+  console.error(
+    'Error: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env'
+  );
   process.exit(1);
 }
 
@@ -86,7 +88,9 @@ async function addDummyData() {
               password: 'demopassword',
               server: `api.${randomProvider}.com`,
             },
-            last_sync_at: new Date(Date.now() - Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000)).toISOString(),
+            last_sync_at: new Date(
+              Date.now() - Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000)
+            ).toISOString(),
           })
           .select();
 
@@ -121,24 +125,25 @@ async function addDummyData() {
       if (existingConnections.length === 0) {
         // Add telematics connections for this company
         const telematicsProviders = ['geotab', 'samsara', 'fleetcomplete', 'omnitracs'];
-        const randomProvider = telematicsProviders[Math.floor(Math.random() * telematicsProviders.length)];
+        const randomProvider =
+          telematicsProviders[Math.floor(Math.random() * telematicsProviders.length)];
 
-        const { error: connectionError } = await supabase
-          .from('integration_connections')
-          .insert({
-            name: `${company.name} ${randomProvider.charAt(0).toUpperCase() + randomProvider.slice(1)}`,
-            provider: randomProvider,
-            integration_type: 'telematics',
-            company_id: company.id,
-            is_active: true,
-            config: {
-              apiKey: uuidv4(),
-              username: 'demouser',
-              password: 'demopassword',
-              server: `api.${randomProvider}.com`,
-            },
-            last_sync_at: new Date(Date.now() - Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000)).toISOString(),
-          });
+        const { error: connectionError } = await supabase.from('integration_connections').insert({
+          name: `${company.name} ${randomProvider.charAt(0).toUpperCase() + randomProvider.slice(1)}`,
+          provider: randomProvider,
+          integration_type: 'telematics',
+          company_id: company.id,
+          is_active: true,
+          config: {
+            apiKey: uuidv4(),
+            username: 'demouser',
+            password: 'demopassword',
+            server: `api.${randomProvider}.com`,
+          },
+          last_sync_at: new Date(
+            Date.now() - Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000)
+          ).toISOString(),
+        });
 
         if (connectionError) {
           throw connectionError;
@@ -167,29 +172,34 @@ async function addDummyData() {
         // Add more vehicles
         const vehiclesToAdd = 5 - vehicles.length;
         const vehicleTypes = ['Semi', 'Box Truck', 'Flatbed', 'Tanker', 'Dump Truck'];
-        const vehicleMakes = ['Freightliner', 'Peterbilt', 'Kenworth', 'Volvo', 'Mack', 'International'];
+        const vehicleMakes = [
+          'Freightliner',
+          'Peterbilt',
+          'Kenworth',
+          'Volvo',
+          'Mack',
+          'International',
+        ];
 
         for (let i = 0; i < vehiclesToAdd; i++) {
           const randomType = vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
           const randomMake = vehicleMakes[Math.floor(Math.random() * vehicleMakes.length)];
           const randomYear = 2015 + Math.floor(Math.random() * 9); // 2015-2023
 
-          const { error: vehicleError } = await supabase
-            .from('vehicles')
-            .insert({
-              name: `Truck ${100 + vehicles.length + i}`,
-              type: randomType,
-              license_plate: `${company.name.substring(0, 3).toUpperCase()}-${1000 + i}`,
-              vin: `VIN${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
-              make: randomMake,
-              model: randomType === 'Semi' ? 'Class 8' : 'Medium Duty',
-              year: randomYear,
-              status: Math.random() > 0.2 ? 'Active' : 'Maintenance',
-              max_weight: randomType === 'Semi' ? '80,000 lbs' : '33,000 lbs',
-              company_id: company.id,
-              empty_weight: randomType === 'Semi' ? 35000 : 15000,
-              max_gross_weight: randomType === 'Semi' ? 80000 : 33000,
-            });
+          const { error: vehicleError } = await supabase.from('vehicles').insert({
+            name: `Truck ${100 + vehicles.length + i}`,
+            type: randomType,
+            license_plate: `${company.name.substring(0, 3).toUpperCase()}-${1000 + i}`,
+            vin: `VIN${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
+            make: randomMake,
+            model: randomType === 'Semi' ? 'Class 8' : 'Medium Duty',
+            year: randomYear,
+            status: Math.random() > 0.2 ? 'Active' : 'Maintenance',
+            max_weight: randomType === 'Semi' ? '80,000 lbs' : '33,000 lbs',
+            company_id: company.id,
+            empty_weight: randomType === 'Semi' ? 35000 : 15000,
+            max_gross_weight: randomType === 'Semi' ? 80000 : 33000,
+          });
 
           if (vehicleError) {
             throw vehicleError;
@@ -218,8 +228,30 @@ async function addDummyData() {
       if (drivers.length < 5) {
         // Add more drivers
         const driversToAdd = 5 - drivers.length;
-        const firstNames = ['John', 'Sarah', 'Michael', 'Emily', 'David', 'Jessica', 'Robert', 'Jennifer', 'William', 'Lisa'];
-        const lastNames = ['Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore', 'Taylor'];
+        const firstNames = [
+          'John',
+          'Sarah',
+          'Michael',
+          'Emily',
+          'David',
+          'Jessica',
+          'Robert',
+          'Jennifer',
+          'William',
+          'Lisa',
+        ];
+        const lastNames = [
+          'Smith',
+          'Johnson',
+          'Williams',
+          'Jones',
+          'Brown',
+          'Davis',
+          'Miller',
+          'Wilson',
+          'Moore',
+          'Taylor',
+        ];
 
         for (let i = 0; i < driversToAdd; i++) {
           const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];
@@ -230,17 +262,15 @@ async function addDummyData() {
           const expiryDate = new Date();
           expiryDate.setFullYear(expiryDate.getFullYear() + 1 + Math.floor(Math.random() * 3));
 
-          const { error: driverError } = await supabase
-            .from('drivers')
-            .insert({
-              name: fullName,
-              license_number: `DL${Math.random().toString().substring(2, 10)}`,
-              license_expiry: expiryDate.toISOString().split('T')[0],
-              phone: `555-${Math.floor(100 + Math.random() * 900)}-${Math.floor(1000 + Math.random() * 9000)}`,
-              email: `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}@example.com`,
-              status: Math.random() > 0.2 ? 'Active' : (Math.random() > 0.5 ? 'On Leave' : 'Inactive'),
-              company_id: company.id,
-            });
+          const { error: driverError } = await supabase.from('drivers').insert({
+            name: fullName,
+            license_number: `DL${Math.random().toString().substring(2, 10)}`,
+            license_expiry: expiryDate.toISOString().split('T')[0],
+            phone: `555-${Math.floor(100 + Math.random() * 900)}-${Math.floor(1000 + Math.random() * 9000)}`,
+            email: `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}@example.com`,
+            status: Math.random() > 0.2 ? 'Active' : Math.random() > 0.5 ? 'On Leave' : 'Inactive',
+            company_id: company.id,
+          });
 
           if (driverError) {
             throw driverError;
@@ -315,18 +345,16 @@ async function addDummyData() {
             status = 'Compliant';
           }
 
-          const { error: weightError } = await supabase
-            .from('weights')
-            .insert({
-              weight: totalWeight,
-              date: date.toISOString().split('T')[0],
-              time: `${Math.floor(Math.random() * 24)}:${Math.floor(Math.random() * 60)}`,
-              vehicle_id: randomVehicle.id,
-              driver_id: randomDriver.id,
-              status: status,
-              company_id: company.id,
-              created_at: date.toISOString(),
-            });
+          const { error: weightError } = await supabase.from('weights').insert({
+            weight: totalWeight,
+            date: date.toISOString().split('T')[0],
+            time: `${Math.floor(Math.random() * 24)}:${Math.floor(Math.random() * 60)}`,
+            vehicle_id: randomVehicle.id,
+            driver_id: randomDriver.id,
+            status: status,
+            company_id: company.id,
+            created_at: date.toISOString(),
+          });
 
           if (weightError) {
             throw weightError;
@@ -335,7 +363,9 @@ async function addDummyData() {
 
         console.log(`Added ${weightsToAdd} weights for ${company.name}`);
       } else {
-        console.log(`Company ${company.name} already has enough weights or missing vehicles/drivers.`);
+        console.log(
+          `Company ${company.name} already has enough weights or missing vehicles/drivers.`
+        );
       }
     }
 
@@ -379,10 +409,7 @@ async function addSyncLogs(connectionId, companyId) {
         recordsCreated: Math.floor(Math.random() * 10) + 2,
         recordsUpdated: Math.floor(Math.random() * 20) + 5,
         recordsSkipped: Math.floor(Math.random() * 30) + 5,
-        errors: [
-          'Invalid tax code for customer',
-          'Missing required field for invoice',
-        ],
+        errors: ['Invalid tax code for customer', 'Missing required field for invoice'],
         duration: `00:0${Math.floor(Math.random() * 9) + 1}:${Math.floor(Math.random() * 50) + 10}`,
       };
     } else {
@@ -391,16 +418,14 @@ async function addSyncLogs(connectionId, companyId) {
       };
     }
 
-    const { error } = await supabase
-      .from('integration_logs')
-      .insert({
-        integration_connection_id: connectionId,
-        status: randomStatus,
-        message: randomMessage,
-        details: details,
-        created_at: date.toISOString(),
-        company_id: companyId,
-      });
+    const { error } = await supabase.from('integration_logs').insert({
+      integration_connection_id: connectionId,
+      status: randomStatus,
+      message: randomMessage,
+      details: details,
+      created_at: date.toISOString(),
+      company_id: companyId,
+    });
 
     if (error) {
       throw error;

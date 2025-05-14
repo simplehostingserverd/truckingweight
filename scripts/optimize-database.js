@@ -6,7 +6,9 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-  console.error('Error: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env');
+  console.error(
+    'Error: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env'
+  );
   process.exit(1);
 }
 
@@ -28,7 +30,7 @@ async function optimizeDatabase() {
 
     // 1. Create indexes for frequently queried columns
     console.log('Creating indexes for frequently queried columns...');
-    
+
     // Weights table indexes
     await executeSql(`
       CREATE INDEX IF NOT EXISTS idx_weights_company_id ON weights (company_id);
@@ -38,32 +40,32 @@ async function optimizeDatabase() {
       CREATE INDEX IF NOT EXISTS idx_weights_status ON weights (status);
       CREATE INDEX IF NOT EXISTS idx_weights_created_at ON weights (created_at);
     `);
-    
+
     // Vehicles table indexes
     await executeSql(`
       CREATE INDEX IF NOT EXISTS idx_vehicles_company_id ON vehicles (company_id);
       CREATE INDEX IF NOT EXISTS idx_vehicles_status ON vehicles (status);
     `);
-    
+
     // Drivers table indexes
     await executeSql(`
       CREATE INDEX IF NOT EXISTS idx_drivers_company_id ON drivers (company_id);
       CREATE INDEX IF NOT EXISTS idx_drivers_status ON drivers (status);
     `);
-    
+
     // Users table indexes
     await executeSql(`
       CREATE INDEX IF NOT EXISTS idx_users_company_id ON users (company_id);
       CREATE INDEX IF NOT EXISTS idx_users_is_admin ON users (is_admin);
     `);
-    
+
     // Integration connections table indexes
     await executeSql(`
       CREATE INDEX IF NOT EXISTS idx_integration_connections_company_id ON integration_connections (company_id);
       CREATE INDEX IF NOT EXISTS idx_integration_connections_integration_type ON integration_connections (integration_type);
       CREATE INDEX IF NOT EXISTS idx_integration_connections_is_active ON integration_connections (is_active);
     `);
-    
+
     // Integration logs table indexes
     await executeSql(`
       CREATE INDEX IF NOT EXISTS idx_integration_logs_integration_connection_id ON integration_logs (integration_connection_id);
@@ -73,7 +75,7 @@ async function optimizeDatabase() {
 
     // 2. Add composite indexes for common query patterns
     console.log('Creating composite indexes for common query patterns...');
-    
+
     await executeSql(`
       CREATE INDEX IF NOT EXISTS idx_weights_company_date ON weights (company_id, date);
       CREATE INDEX IF NOT EXISTS idx_weights_company_status ON weights (company_id, status);
@@ -84,7 +86,7 @@ async function optimizeDatabase() {
 
     // 3. Add GIN indexes for JSON columns
     console.log('Creating GIN indexes for JSON columns...');
-    
+
     await executeSql(`
       CREATE INDEX IF NOT EXISTS idx_integration_connections_config_gin ON integration_connections USING GIN (config);
       CREATE INDEX IF NOT EXISTS idx_integration_logs_details_gin ON integration_logs USING GIN (details);
@@ -92,7 +94,7 @@ async function optimizeDatabase() {
 
     // 4. Optimize tables
     console.log('Optimizing tables...');
-    
+
     // Vacuum analyze to update statistics and reclaim space
     await executeSql('VACUUM ANALYZE weights;');
     await executeSql('VACUUM ANALYZE vehicles;');
@@ -103,7 +105,7 @@ async function optimizeDatabase() {
 
     // 5. Create materialized views for common reports
     console.log('Creating materialized views for common reports...');
-    
+
     // Materialized view for weight statistics by company
     await executeSql(`
       CREATE MATERIALIZED VIEW IF NOT EXISTS mv_weight_stats_by_company AS
@@ -122,7 +124,7 @@ async function optimizeDatabase() {
       
       CREATE UNIQUE INDEX IF NOT EXISTS idx_mv_weight_stats_by_company ON mv_weight_stats_by_company (company_id);
     `);
-    
+
     // Materialized view for weight statistics by vehicle
     await executeSql(`
       CREATE MATERIALIZED VIEW IF NOT EXISTS mv_weight_stats_by_vehicle AS
@@ -142,7 +144,7 @@ async function optimizeDatabase() {
       
       CREATE UNIQUE INDEX IF NOT EXISTS idx_mv_weight_stats_by_vehicle ON mv_weight_stats_by_vehicle (vehicle_id);
     `);
-    
+
     // Materialized view for weight statistics by driver
     await executeSql(`
       CREATE MATERIALIZED VIEW IF NOT EXISTS mv_weight_stats_by_driver AS
@@ -162,7 +164,7 @@ async function optimizeDatabase() {
       
       CREATE UNIQUE INDEX IF NOT EXISTS idx_mv_weight_stats_by_driver ON mv_weight_stats_by_driver (driver_id);
     `);
-    
+
     // Materialized view for monthly weight statistics
     await executeSql(`
       CREATE MATERIALIZED VIEW IF NOT EXISTS mv_weight_stats_monthly AS
@@ -183,7 +185,7 @@ async function optimizeDatabase() {
 
     // 6. Create a function to refresh materialized views
     console.log('Creating function to refresh materialized views...');
-    
+
     await executeSql(`
       CREATE OR REPLACE FUNCTION refresh_materialized_views()
       RETURNS void AS $$
@@ -198,7 +200,7 @@ async function optimizeDatabase() {
 
     // 7. Create a trigger to update materialized views when weights table changes
     console.log('Creating trigger to update materialized views...');
-    
+
     await executeSql(`
       CREATE OR REPLACE FUNCTION trigger_refresh_weight_stats()
       RETURNS trigger AS $$
@@ -219,7 +221,7 @@ async function optimizeDatabase() {
 
     // 8. Create a function to archive old data
     console.log('Creating function to archive old data...');
-    
+
     await executeSql(`
       CREATE OR REPLACE FUNCTION archive_old_data(days_to_keep integer)
       RETURNS void AS $$
@@ -244,7 +246,7 @@ async function optimizeDatabase() {
 
     // 9. Create a table for integration logs archive if it doesn't exist
     console.log('Creating archive tables...');
-    
+
     await executeSql(`
       CREATE TABLE IF NOT EXISTS integration_logs_archive (LIKE integration_logs);
     `);

@@ -61,23 +61,80 @@ const companies = [
 
 // Realistic vehicle data
 const vehicleTypes = [
-  'Kenworth T680', 'Peterbilt 579', 'Freightliner Cascadia', 'Volvo VNL 860',
-  'International LT Series', 'Mack Anthem', 'Western Star 5700XE'
+  'Kenworth T680',
+  'Peterbilt 579',
+  'Freightliner Cascadia',
+  'Volvo VNL 860',
+  'International LT Series',
+  'Mack Anthem',
+  'Western Star 5700XE',
 ];
 
 // Realistic driver data
 const firstNames = [
-  'James', 'Robert', 'John', 'Michael', 'William', 'David', 'Richard', 'Joseph',
-  'Thomas', 'Charles', 'Mary', 'Patricia', 'Jennifer', 'Linda', 'Elizabeth',
-  'Barbara', 'Susan', 'Jessica', 'Sarah', 'Karen', 'Miguel', 'José', 'Carlos',
-  'Juan', 'Luis', 'Jorge', 'Maria', 'Ana', 'Sofia', 'Isabella'
+  'James',
+  'Robert',
+  'John',
+  'Michael',
+  'William',
+  'David',
+  'Richard',
+  'Joseph',
+  'Thomas',
+  'Charles',
+  'Mary',
+  'Patricia',
+  'Jennifer',
+  'Linda',
+  'Elizabeth',
+  'Barbara',
+  'Susan',
+  'Jessica',
+  'Sarah',
+  'Karen',
+  'Miguel',
+  'José',
+  'Carlos',
+  'Juan',
+  'Luis',
+  'Jorge',
+  'Maria',
+  'Ana',
+  'Sofia',
+  'Isabella',
 ];
 
 const lastNames = [
-  'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis',
-  'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson',
-  'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin', 'Lee', 'Perez', 'Thompson',
-  'White', 'Harris', 'Sanchez', 'Clark', 'Ramirez', 'Lewis', 'Robinson'
+  'Smith',
+  'Johnson',
+  'Williams',
+  'Brown',
+  'Jones',
+  'Garcia',
+  'Miller',
+  'Davis',
+  'Rodriguez',
+  'Martinez',
+  'Hernandez',
+  'Lopez',
+  'Gonzalez',
+  'Wilson',
+  'Anderson',
+  'Thomas',
+  'Taylor',
+  'Moore',
+  'Jackson',
+  'Martin',
+  'Lee',
+  'Perez',
+  'Thompson',
+  'White',
+  'Harris',
+  'Sanchez',
+  'Clark',
+  'Ramirez',
+  'Lewis',
+  'Robinson',
 ];
 
 // Realistic customer reviews
@@ -86,35 +143,40 @@ const customerReviews = [
     name: 'Michael Thompson',
     company: 'Thompson Logistics',
     rating: 5,
-    review: 'TruckingWeight has completely transformed our weight compliance process. The real-time monitoring has saved us thousands in potential fines and improved our efficiency by 30%.',
+    review:
+      'TruckingWeight has completely transformed our weight compliance process. The real-time monitoring has saved us thousands in potential fines and improved our efficiency by 30%.',
     position: 'Fleet Manager',
   },
   {
     name: 'Sarah Rodriguez',
     company: 'Express Freight Solutions',
     rating: 5,
-    review: 'The analytics dashboard gives us insights we never had before. We can now make data-driven decisions that have improved our load efficiency and reduced overweight incidents to nearly zero.',
+    review:
+      'The analytics dashboard gives us insights we never had before. We can now make data-driven decisions that have improved our load efficiency and reduced overweight incidents to nearly zero.',
     position: 'Operations Director',
   },
   {
     name: 'David Chen',
     company: 'Pacific Northwest Transport',
     rating: 4,
-    review: 'Implementation was smooth and the support team was incredibly helpful. The system paid for itself within the first three months through avoided fines and improved route planning.',
+    review:
+      'Implementation was smooth and the support team was incredibly helpful. The system paid for itself within the first three months through avoided fines and improved route planning.',
     position: 'CEO',
   },
   {
     name: 'Jennifer Williams',
     company: 'Midwest Distribution Services',
     rating: 5,
-    review: 'The mobile app is a game-changer for our drivers. They can now verify weights before leaving facilities, which has dramatically reduced our compliance issues.',
+    review:
+      'The mobile app is a game-changer for our drivers. They can now verify weights before leaving facilities, which has dramatically reduced our compliance issues.',
     position: 'Compliance Manager',
   },
   {
     name: 'Robert Jackson',
     company: 'Southern Cargo Express',
     rating: 4,
-    review: "We've been using TruckingWeight for over a year now, and it has become an essential part of our operation. The integration with our existing systems was seamless.",
+    review:
+      "We've been using TruckingWeight for over a year now, and it has become an essential part of our operation. The integration with our existing systems was seamless.",
     position: 'Technology Director',
   },
 ];
@@ -186,7 +248,7 @@ async function seedDatabase() {
           year: getRandomInt(2015, 2023),
           status: getRandomElement(['active', 'maintenance', 'inactive']),
           last_latitude: 32.7767 + (Math.random() * 0.1 - 0.05),
-          last_longitude: -96.7970 + (Math.random() * 0.1 - 0.05),
+          last_longitude: -96.797 + (Math.random() * 0.1 - 0.05),
           last_location: 'Dallas, TX area',
           last_speed: getRandomInt(0, 75),
           fuel_level: getRandomInt(10, 100),
@@ -219,7 +281,9 @@ async function seedDatabase() {
           email: getRandomEmail(firstName, lastName),
           phone: getRandomPhone(),
           license_number: getRandomLicenseNumber(),
-          license_expiry: getRandomDate(new Date(), new Date(2026, 11, 31)).toISOString().split('T')[0],
+          license_expiry: getRandomDate(new Date(), new Date(2026, 11, 31))
+            .toISOString()
+            .split('T')[0],
           status: getRandomElement(['Active', 'On Leave', 'Inactive']),
         });
       }

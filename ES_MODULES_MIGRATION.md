@@ -9,14 +9,17 @@ The application had a mix of CommonJS and ECMAScript modules, which was causing 
 ## Changes Made
 
 1. **Updated package.json**
+
    - Added `"type": "module"` to indicate that all .js files should be treated as ES Modules
    - Updated scripts to use .mjs extension where needed
 
 2. **Converted Backend Configuration Files**
+
    - Converted `backend/config/database.js` to use ES Modules syntax
    - Backed up original files to `backup-files/` directory
 
 3. **Converted Script Files**
+
    - Converted the following scripts to use ES Modules:
      - `scripts/check-db-connection.js`
      - `scripts/fix-rls-improved.js`
@@ -24,6 +27,7 @@ The application had a mix of CommonJS and ECMAScript modules, which was causing 
      - `scripts/fix-city-module.js`
 
 4. **Fixed Code Issues**
+
    - Fixed duplicate keys in `backend/config/swagger.js`
    - Fixed unused variables in several controllers:
      - Removed unused `type` variable in `backend/controllers/admin.js`
@@ -37,10 +41,12 @@ The application had a mix of CommonJS and ECMAScript modules, which was causing 
 ## Remaining Issues
 
 1. **Prisma Generated Files**
+
    - There are still linting errors in Prisma-generated files
    - These can be ignored or added to `.eslintignore`
 
 2. **Console Statements**
+
    - Many console.log statements remain in the code, especially in scripts
    - These can be kept for debugging or removed if not needed
 
@@ -51,10 +57,12 @@ The application had a mix of CommonJS and ECMAScript modules, which was causing 
 ## Next Steps
 
 1. **Update TypeScript Configuration**
+
    - Ensure `tsconfig.json` is configured for ES Modules
    - Add `"module": "ESNext"` and `"moduleResolution": "node"`
 
 2. **Test the Application**
+
    - Run the application to ensure everything works with ES Modules
    - Test both frontend and backend functionality
 
@@ -65,12 +73,15 @@ The application had a mix of CommonJS and ECMAScript modules, which was causing 
 ## Benefits of ES Modules
 
 1. **Static Analysis**
+
    - ES Modules are statically analyzed, allowing for better tree-shaking and optimization
 
 2. **Asynchronous Loading**
+
    - ES Modules support asynchronous loading, improving performance
 
 3. **Compatibility with TypeScript**
+
    - ES Modules align well with TypeScript, which is used in the frontend
 
 4. **Future Compatibility**
@@ -91,17 +102,20 @@ This will start both the backend and frontend servers concurrently.
 If you encounter issues after the migration:
 
 1. **Module Not Found Errors**
+
    - Check import paths and make sure they're correct
    - Remember that ES Modules require file extensions in import paths
 
 2. **Require is Not Defined**
+
    - This error occurs when using CommonJS `require()` in an ES Module
    - Replace with `import` statements
 
 3. **Export is Not Defined**
+
    - This error occurs when using CommonJS `module.exports` in an ES Module
    - Replace with `export` or `export default` statements
 
-4. **__dirname is Not Defined**
+4. **\_\_dirname is Not Defined**
    - ES Modules don't have access to CommonJS globals like `__dirname`
    - Use `import.meta.url` and `path.dirname(fileURLToPath(import.meta.url))` instead

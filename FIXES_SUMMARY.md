@@ -30,6 +30,7 @@ A comprehensive script that runs all the individual fix scripts in sequence. It:
 - Fixes linting issues
 
 Usage:
+
 ```bash
 node fix-all-issues.js
 ```
@@ -44,6 +45,7 @@ Checks and diagnoses database connection issues:
 - Validates RLS functions
 
 Usage:
+
 ```bash
 node scripts/check-db-connection.js
 ```
@@ -58,6 +60,7 @@ Fixes Row Level Security (RLS) policies in the Supabase database:
 - Ensures proper access control for all tables
 
 Usage:
+
 ```bash
 node scripts/fix-rls-improved.js
 ```
@@ -71,6 +74,7 @@ Fixes issues in the frontend components:
 - Fixes issues with the landing page and dashboard
 
 Usage:
+
 ```bash
 node scripts/fix-frontend-issues.js
 ```
@@ -85,6 +89,7 @@ Fixes issues specific to the city module:
 - Ensures proper RLS policies for city tables
 
 Usage:
+
 ```bash
 node scripts/fix-city-module.js
 ```

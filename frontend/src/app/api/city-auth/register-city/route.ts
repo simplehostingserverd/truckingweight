@@ -6,10 +6,7 @@ export async function POST(request: NextRequest) {
     const { name, state, zip_code, address, contact_email, contact_phone } = await request.json();
 
     if (!name || !state) {
-      return NextResponse.json(
-        { error: 'City name and state are required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'City name and state are required' }, { status: 400 });
     }
 
     // Call the backend API to register the city
@@ -40,9 +37,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('City registration error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

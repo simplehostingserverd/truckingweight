@@ -83,7 +83,7 @@ export default function ResetPassword() {
 
       // Show success message
       setSuccess(true);
-      
+
       // Redirect to login page after a delay
       setTimeout(() => {
         router.push('/city/login');

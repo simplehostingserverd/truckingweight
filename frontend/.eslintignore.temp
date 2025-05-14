@@ -1,8 +1,9 @@
-# Ignore node_modules and build directories
+# Ignore node_modules and build directories (already in the main .eslintignore)
 node_modules/
-dist/
-build/
-generated/
+.next/
+out/
+public/
+**/*.d.ts
 
 # Ignore utility scripts
 ../scripts/**/*
@@ -12,5 +13,3 @@ generated/
 ../test-*.js
 ../index.js
 ../schema-updater/**/*
-scripts/check-redis.js
-scripts/apply-city-schema.js

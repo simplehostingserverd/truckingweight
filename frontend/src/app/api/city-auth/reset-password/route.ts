@@ -6,10 +6,7 @@ export async function POST(request: NextRequest) {
     const { token, password } = await request.json();
 
     if (!token || !password) {
-      return NextResponse.json(
-        { error: 'Token and password are required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Token and password are required' }, { status: 400 });
     }
 
     // Call the backend API to reset the password
@@ -33,9 +30,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Password reset successful' });
   } catch (error: any) {
     console.error('Password reset error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

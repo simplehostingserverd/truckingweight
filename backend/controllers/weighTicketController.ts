@@ -4,25 +4,25 @@
  * This controller handles API endpoints for weigh ticket management
  */
 
-import { Request, Response } from 'express';
-import prisma from '../config/prisma';
-import { setCompanyContext } from '../config/prisma';
-import { logger } from '../utils/logger';
+import { Request, Response } from 'express'
+import prisma from '../config/prisma'
+import { setCompanyContext } from '../config/prisma'
+import { logger } from '../utils/logger'
 import {
   generateWeighTicket,
   getWeighTicket,
   updateWeighTicket,
-} from '../services/weighTicketService';
-import { validateTicketQRCode } from '../services/qrCodeService';
-import { processCameraScannedTicket } from '../services/scaleIntegration';
+} from '../services/weighTicketService'
+import { validateTicketQRCode } from '../services/qrCodeService'
+import { processCameraScannedTicket } from '../services/scaleIntegration'
 
 // Define the authenticated request type
 interface AuthenticatedRequest extends Request {
   user?: {
-    id: string;
-    companyId?: number;
-    isAdmin?: boolean;
-  };
+    id: string
+    companyId?: number
+    isAdmin?: boolean
+  }
 }
 
 /**
@@ -32,20 +32,20 @@ interface AuthenticatedRequest extends Request {
  */
 export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId;
-    const isAdmin = req.user?.isAdmin === true;
+    const companyId = req.user?.companyId
+    const isAdmin = req.user?.isAdmin === true
 
     if (!companyId && !isAdmin) {
-      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' })
     }
 
     // Set company context for Prisma queries
-    setCompanyContext(companyId, isAdmin);
+    setCompanyContext(companyId, isAdmin)
 
     // Parse query parameters
-    const page = parseInt(req.query.page as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 10;
-    const skip = (page - 1) * limit;
+    const page = parseInt(req.query.page as string) || 1
+    const limit = parseInt(req.query.limit as string) || 10
+    const skip = (page - 1) * limit
 
     // Define filter based on user role
     const filter =
@@ -53,21 +53,21 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
         ? { company_id: parseInt(req.query.companyId as string) }
         : isAdmin
           ? {}
-          : { company_id: companyId };
+          : { company_id: companyId }
 
     // Add date range filter if provided
     if (req.query.startDate && req.query.endDate) {
       filter.created_at = {
         gte: new Date(req.query.startDate as string),
         lte: new Date(req.query.endDate as string),
-      };
+      }
     }
 
     // Add vehicle filter if provided
     if (req.query.vehicleId) {
       filter.weights = {
         vehicle_id: parseInt(req.query.vehicleId as string),
-      };
+      }
     }
 
     // Add driver filter if provided
@@ -75,13 +75,13 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
       filter.weights = {
         ...filter.weights,
         driver_id: parseInt(req.query.driverId as string),
-      };
+      }
     }
 
     // Get total count for pagination
     const totalCount = await prisma.weigh_tickets.count({
       where: filter,
-    });
+    })
 
     // Get weigh tickets
     const tickets = await prisma.weigh_tickets.findMany({
@@ -124,7 +124,7 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
             }
           : undefined,
       },
-    });
+    })
 
     res.json({
       tickets,
@@ -134,12 +134,12 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
         totalCount,
         totalPages: Math.ceil(totalCount / limit),
       },
-    });
+    })
   } catch (error: any) {
-    logger.error(`Error getting weigh tickets: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+    logger.error(`Error getting weigh tickets: ${error.message}`, { error })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
-};
+}
 
 /**
  * @desc    Get a weigh ticket by ID
@@ -148,27 +148,27 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
  */
 export const getWeighTicketById = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId;
-    const isAdmin = req.user?.isAdmin === true;
-    const ticketId = parseInt(req.params.id);
+    const companyId = req.user?.companyId
+    const isAdmin = req.user?.isAdmin === true
+    const ticketId = parseInt(req.params.id)
 
     if (!companyId && !isAdmin) {
-      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' })
     }
 
     // Get weigh ticket
-    const result = await getWeighTicket(ticketId, companyId, isAdmin);
+    const result = await getWeighTicket(ticketId, companyId, isAdmin)
 
     if (!result.success) {
-      return res.status(404).json({ message: result.error });
+      return res.status(404).json({ message: result.error })
     }
 
-    res.json(result.ticket);
+    res.json(result.ticket)
   } catch (error: any) {
-    logger.error(`Error getting weigh ticket: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+    logger.error(`Error getting weigh ticket: ${error.message}`, { error })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
-};
+}
 
 /**
  * @desc    Create a new weigh ticket
@@ -177,18 +177,18 @@ export const getWeighTicketById = async (req: AuthenticatedRequest, res: Respons
  */
 export const createWeighTicket = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId;
-    const userId = req.user?.id;
+    const companyId = req.user?.companyId
+    const userId = req.user?.id
 
     if (!companyId || !userId) {
-      return res.status(401).json({ message: 'Unauthorized - User information not found' });
+      return res.status(401).json({ message: 'Unauthorized - User information not found' })
     }
 
     // Validate required fields
-    const { vehicleId, driverId, scaleId, grossWeight, weighType, weighMethod } = req.body;
+    const { vehicleId, driverId, scaleId, grossWeight, weighType, weighMethod } = req.body
 
     if (!vehicleId || !driverId || !scaleId || !grossWeight || !weighType || !weighMethod) {
-      return res.status(400).json({ message: 'Missing required fields' });
+      return res.status(400).json({ message: 'Missing required fields' })
     }
 
     // Create weigh ticket
@@ -210,18 +210,18 @@ export const createWeighTicket = async (req: AuthenticatedRequest, res: Response
       },
       companyId,
       userId
-    );
+    )
 
     if (!result.success) {
-      return res.status(400).json({ message: result.error });
+      return res.status(400).json({ message: result.error })
     }
 
-    res.status(201).json(result.ticket);
+    res.status(201).json(result.ticket)
   } catch (error: any) {
-    logger.error(`Error creating weigh ticket: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+    logger.error(`Error creating weigh ticket: ${error.message}`, { error })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
-};
+}
 
 /**
  * @desc    Update a weigh ticket
@@ -230,12 +230,12 @@ export const createWeighTicket = async (req: AuthenticatedRequest, res: Response
  */
 export const updateWeighTicketById = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId;
-    const userId = req.user?.id;
-    const ticketId = parseInt(req.params.id);
+    const companyId = req.user?.companyId
+    const userId = req.user?.id
+    const ticketId = parseInt(req.params.id)
 
     if (!companyId || !userId) {
-      return res.status(401).json({ message: 'Unauthorized - User information not found' });
+      return res.status(401).json({ message: 'Unauthorized - User information not found' })
     }
 
     // Update weigh ticket
@@ -252,18 +252,18 @@ export const updateWeighTicketById = async (req: AuthenticatedRequest, res: Resp
       },
       companyId,
       userId
-    );
+    )
 
     if (!result.success) {
-      return res.status(400).json({ message: result.error });
+      return res.status(400).json({ message: result.error })
     }
 
-    res.json(result.ticket);
+    res.json(result.ticket)
   } catch (error: any) {
-    logger.error(`Error updating weigh ticket: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+    logger.error(`Error updating weigh ticket: ${error.message}`, { error })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
-};
+}
 
 /**
  * @desc    Process a camera-scanned ticket
@@ -272,31 +272,31 @@ export const updateWeighTicketById = async (req: AuthenticatedRequest, res: Resp
  */
 export const processCameraScan = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId;
+    const companyId = req.user?.companyId
 
     if (!companyId) {
-      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' })
     }
 
-    const { ticketImageUrl } = req.body;
+    const { ticketImageUrl } = req.body
 
     if (!ticketImageUrl) {
-      return res.status(400).json({ message: 'Ticket image URL is required' });
+      return res.status(400).json({ message: 'Ticket image URL is required' })
     }
 
     // Process camera-scanned ticket
-    const result = await processCameraScannedTicket(ticketImageUrl, companyId);
+    const result = await processCameraScannedTicket(ticketImageUrl, companyId)
 
     if (!result.success) {
-      return res.status(400).json({ message: result.error });
+      return res.status(400).json({ message: result.error })
     }
 
-    res.json(result.ticketData);
+    res.json(result.ticketData)
   } catch (error: any) {
-    logger.error(`Error processing camera-scanned ticket: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+    logger.error(`Error processing camera-scanned ticket: ${error.message}`, { error })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
-};
+}
 
 /**
  * @desc    Validate a QR code for a weigh ticket
@@ -305,28 +305,28 @@ export const processCameraScan = async (req: AuthenticatedRequest, res: Response
  */
 export const validateQRCode = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId;
+    const companyId = req.user?.companyId
 
     if (!companyId) {
-      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' })
     }
 
-    const { qrCodeData } = req.body;
+    const { qrCodeData } = req.body
 
     if (!qrCodeData) {
-      return res.status(400).json({ message: 'QR code data is required' });
+      return res.status(400).json({ message: 'QR code data is required' })
     }
 
     // Validate QR code
-    const result = await validateTicketQRCode(qrCodeData, companyId);
+    const result = await validateTicketQRCode(qrCodeData, companyId)
 
     if (!result.success) {
-      return res.status(400).json({ message: result.error });
+      return res.status(400).json({ message: result.error })
     }
 
-    res.json({ valid: true, ticket: result.ticket });
+    res.json({ valid: true, ticket: result.ticket })
   } catch (error: any) {
-    logger.error(`Error validating weigh ticket QR code: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+    logger.error(`Error validating weigh ticket QR code: ${error.message}`, { error })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
-};
+}

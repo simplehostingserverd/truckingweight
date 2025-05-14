@@ -2,7 +2,8 @@ const { createClient } = require('@supabase/supabase-js');
 
 // Updated Supabase credentials from the Supabase Management API
 const SUPABASE_URL = 'https://pczfmxigimuluacspxse.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w';
+const SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w';
 
 // Create Supabase client
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -56,7 +57,6 @@ async function testConnection() {
       console.log('Successfully retrieved project details!');
       console.log('Project data:', projectData);
     }
-
   } catch (error) {
     console.error('Unexpected error testing connection:', error);
   }

@@ -3,16 +3,16 @@
  * Handles permit creation, retrieval, and management
  */
 
-const { createClient } = require('@supabase/supabase-js');
-const { cityAuthMiddleware, cityRoleMiddleware } = require('../../middleware/fastify/cityAuth');
-const { logger } = require('../../utils/logger');
-const { generatePermitNumber } = require('../../utils/generators');
+const { createClient } = require('@supabase/supabase-js')
+const { cityAuthMiddleware, cityRoleMiddleware } = require('../../middleware/fastify/cityAuth')
+const { logger } = require('../../utils/logger')
+const { generatePermitNumber } = require('../../utils/generators')
 
 // Initialize Supabase client
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY
-);
+)
 
 // City permits route schemas
 const createPermitSchema = {
@@ -73,7 +73,7 @@ const createPermitSchema = {
       },
     },
   },
-};
+}
 
 const getPermitsSchema = {
   querystring: {
@@ -119,7 +119,7 @@ const getPermitsSchema = {
       },
     },
   },
-};
+}
 
 const getPermitByIdSchema = {
   params: {
@@ -171,7 +171,7 @@ const getPermitByIdSchema = {
       },
     },
   },
-};
+}
 
 const updatePermitSchema = {
   params: {
@@ -233,14 +233,14 @@ const updatePermitSchema = {
       },
     },
   },
-};
+}
 
 /**
  * City Permits Routes
  */
 async function routes(fastify, options) {
   // Add city auth middleware to all routes
-  fastify.addHook('preHandler', cityAuthMiddleware);
+  fastify.addHook('preHandler', cityAuthMiddleware)
 
   /**
    * @route   POST /api/city-permits
@@ -255,8 +255,8 @@ async function routes(fastify, options) {
     },
     async (/* request */, /* reply */) => {
       try {
-        const cityId = request.user.cityId;
-        const userId = request.user.id;
+        const cityId = request.user.cityId
+        const userId = request.user.id
         const {
           companyName,
           contactName,
@@ -271,10 +271,10 @@ async function routes(fastify, options) {
           feeAmount,
           paymentStatus = 'Pending',
           status = 'Active',
-        } = request.body;
+        } = request.body
 
         // Generate permit number
-        const permitNumber = await generatePermitNumber(cityId);
+        const permitNumber = await generatePermitNumber(cityId)
 
         // Create permit
         const { data: permit, error } = await supabase
@@ -300,11 +300,11 @@ async function routes(fastify, options) {
             },
           ])
           .select()
-          .single();
+          .single()
 
         if (error) {
-          request.log.error('Error creating permit:', error);
-          return reply.code(500).send({ msg: 'Error creating permit' });
+          request.log.error('Error creating permit:', error)
+          return reply.code(500).send({ msg: 'Error creating permit' })
         }
 
         return reply.code(201).send({
@@ -317,13 +317,13 @@ async function routes(fastify, options) {
             endDate: permit.end_date,
             status: permit.status,
           },
-        });
+        })
       } catch (err) {
-        request.log.error('Server error in create permit:', err);
-        return reply.code(500).send({ msg: 'Server error' });
+        request.log.error('Server error in create permit:', err)
+        return reply.code(500).send({ msg: 'Server error' })
       }
     }
-  );
+  )
 
   /**
    * @route   GET /api/city-permits
@@ -332,33 +332,33 @@ async function routes(fastify, options) {
    */
   fastify.get('/', { schema: getPermitsSchema }, async (/* request */, /* reply */) => {
     try {
-      const cityId = request.user.cityId;
-      const { status, permitType, limit = 20, offset = 0 } = request.query;
+      const cityId = request.user.cityId
+      const { status, permitType, limit = 20, offset = 0 } = request.query
 
       // Build query
       let query = supabase
         .from('city_permits')
         .select('*', { count: 'exact' })
-        .eq('city_id', cityId);
+        .eq('city_id', cityId)
 
       // Add filters
       if (status) {
-        query = query.eq('status', status);
+        query = query.eq('status', status)
       }
 
       if (permitType) {
-        query = query.eq('permit_type', permitType);
+        query = query.eq('permit_type', permitType)
       }
 
       // Add pagination
-      query = query.range(offset, offset + limit - 1).order('created_at', { ascending: false });
+      query = query.range(offset, offset + limit - 1).order('created_at', { ascending: false })
 
       // Execute query
-      const { data: permits, error, count } = await query;
+      const { data: permits, error, count } = await query
 
       if (error) {
-        request.log.error('Error fetching permits:', error);
-        return reply.code(500).send({ msg: 'Error fetching permits' });
+        request.log.error('Error fetching permits:', error)
+        return reply.code(500).send({ msg: 'Error fetching permits' })
       }
 
       // Format permits
@@ -375,17 +375,17 @@ async function routes(fastify, options) {
         paymentStatus: permit.payment_status,
         status: permit.status,
         createdAt: permit.created_at,
-      }));
+      }))
 
       return reply.code(200).send({
         permits: formattedPermits,
         total: count || 0,
-      });
+      })
     } catch (err) {
-      request.log.error('Server error in get permits:', err);
-      return reply.code(500).send({ msg: 'Server error' });
+      request.log.error('Server error in get permits:', err)
+      return reply.code(500).send({ msg: 'Server error' })
     }
-  });
+  })
 
   /**
    * @route   GET /api/city-permits/:id
@@ -394,22 +394,22 @@ async function routes(fastify, options) {
    */
   fastify.get('/:id', { schema: getPermitByIdSchema }, async (/* request */, /* reply */) => {
     try {
-      const cityId = request.user.cityId;
-      const permitId = parseInt(request.params.id);
+      const cityId = request.user.cityId
+      const permitId = parseInt(request.params.id)
 
       const { data: permit, error } = await supabase
         .from('city_permits')
         .select('*')
         .eq('id', permitId)
         .eq('city_id', cityId)
-        .single();
+        .single()
 
       if (error) {
         if (error.code === 'PGRST116') {
-          return reply.code(404).send({ msg: 'Permit not found' });
+          return reply.code(404).send({ msg: 'Permit not found' })
         }
-        request.log.error('Error fetching permit:', error);
-        return reply.code(500).send({ msg: 'Error fetching permit' });
+        request.log.error('Error fetching permit:', error)
+        return reply.code(500).send({ msg: 'Error fetching permit' })
       }
 
       return reply.code(200).send({
@@ -433,12 +433,12 @@ async function routes(fastify, options) {
           createdAt: permit.created_at,
           updatedAt: permit.updated_at,
         },
-      });
+      })
     } catch (err) {
-      request.log.error('Server error in get permit by ID:', err);
-      return reply.code(500).send({ msg: 'Server error' });
+      request.log.error('Server error in get permit by ID:', err)
+      return reply.code(500).send({ msg: 'Server error' })
     }
-  });
+  })
 
   /**
    * @route   PUT /api/city-permits/:id
@@ -453,9 +453,9 @@ async function routes(fastify, options) {
     },
     async (/* request */, /* reply */) => {
       try {
-        const cityId = request.user.cityId;
-        const permitId = parseInt(request.params.id);
-        const updateData = request.body;
+        const cityId = request.user.cityId
+        const permitId = parseInt(request.params.id)
+        const updateData = request.body
 
         // Check if permit exists
         const { data: existingPermit, error: checkError } = await supabase
@@ -463,40 +463,40 @@ async function routes(fastify, options) {
           .select('id, permit_number')
           .eq('id', permitId)
           .eq('city_id', cityId)
-          .single();
+          .single()
 
         if (checkError) {
           if (checkError.code === 'PGRST116') {
-            return reply.code(404).send({ msg: 'Permit not found' });
+            return reply.code(404).send({ msg: 'Permit not found' })
           }
-          request.log.error('Error checking permit:', checkError);
-          return reply.code(500).send({ msg: 'Error updating permit' });
+          request.log.error('Error checking permit:', checkError)
+          return reply.code(500).send({ msg: 'Error updating permit' })
         }
 
         // Prepare update data with snake_case keys
-        const updateFields = {};
+        const updateFields = {}
         if (updateData.companyName !== undefined)
-          updateFields.company_name = updateData.companyName;
+          updateFields.company_name = updateData.companyName
         if (updateData.contactName !== undefined)
-          updateFields.contact_name = updateData.contactName;
+          updateFields.contact_name = updateData.contactName
         if (updateData.contactEmail !== undefined)
-          updateFields.contact_email = updateData.contactEmail;
+          updateFields.contact_email = updateData.contactEmail
         if (updateData.contactPhone !== undefined)
-          updateFields.contact_phone = updateData.contactPhone;
+          updateFields.contact_phone = updateData.contactPhone
         if (updateData.vehicleInfo !== undefined)
-          updateFields.vehicle_info = updateData.vehicleInfo;
-        if (updateData.permitType !== undefined) updateFields.permit_type = updateData.permitType;
-        if (updateData.maxWeight !== undefined) updateFields.max_weight = updateData.maxWeight;
-        if (updateData.dimensions !== undefined) updateFields.dimensions = updateData.dimensions;
-        if (updateData.startDate !== undefined) updateFields.start_date = updateData.startDate;
-        if (updateData.endDate !== undefined) updateFields.end_date = updateData.endDate;
-        if (updateData.feeAmount !== undefined) updateFields.fee_amount = updateData.feeAmount;
+          updateFields.vehicle_info = updateData.vehicleInfo
+        if (updateData.permitType !== undefined) updateFields.permit_type = updateData.permitType
+        if (updateData.maxWeight !== undefined) updateFields.max_weight = updateData.maxWeight
+        if (updateData.dimensions !== undefined) updateFields.dimensions = updateData.dimensions
+        if (updateData.startDate !== undefined) updateFields.start_date = updateData.startDate
+        if (updateData.endDate !== undefined) updateFields.end_date = updateData.endDate
+        if (updateData.feeAmount !== undefined) updateFields.fee_amount = updateData.feeAmount
         if (updateData.paymentStatus !== undefined)
-          updateFields.payment_status = updateData.paymentStatus;
-        if (updateData.status !== undefined) updateFields.status = updateData.status;
+          updateFields.payment_status = updateData.paymentStatus
+        if (updateData.status !== undefined) updateFields.status = updateData.status
 
         // Add updated_at timestamp
-        updateFields.updated_at = new Date().toISOString();
+        updateFields.updated_at = new Date().toISOString()
 
         // Update permit
         const { data: updatedPermit, error: updateError } = await supabase
@@ -505,11 +505,11 @@ async function routes(fastify, options) {
           .eq('id', permitId)
           .eq('city_id', cityId)
           .select('id, permit_number, status, payment_status')
-          .single();
+          .single()
 
         if (updateError) {
-          request.log.error('Error updating permit:', updateError);
-          return reply.code(500).send({ msg: 'Error updating permit' });
+          request.log.error('Error updating permit:', updateError)
+          return reply.code(500).send({ msg: 'Error updating permit' })
         }
 
         return reply.code(200).send({
@@ -519,13 +519,13 @@ async function routes(fastify, options) {
             status: updatedPermit.status,
             paymentStatus: updatedPermit.payment_status,
           },
-        });
+        })
       } catch (err) {
-        request.log.error('Server error in update permit:', err);
-        return reply.code(500).send({ msg: 'Server error' });
+        request.log.error('Server error in update permit:', err)
+        return reply.code(500).send({ msg: 'Server error' })
       }
     }
-  );
+  )
 }
 
-module.exports = routes;
+module.exports = routes

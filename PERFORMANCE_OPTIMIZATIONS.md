@@ -185,16 +185,19 @@ This document outlines the performance optimizations implemented in the Trucking
 To apply these optimizations to your project, run the following scripts:
 
 1. **Update Dependencies**:
+
    ```bash
    node scripts/update-dependencies.js
    ```
 
 2. **Optimize Database**:
+
    ```bash
    node scripts/optimize-database.js
    ```
 
 3. **Add Code Splitting**:
+
    ```bash
    node scripts/add-code-splitting.js
    ```
