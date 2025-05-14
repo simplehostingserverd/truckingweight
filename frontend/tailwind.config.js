@@ -36,7 +36,11 @@ module.exports = {
   			slate: 'designTokens.colors.slate',
   			skyBlue: 'designTokens.colors.skyBlue',
   			alert: 'designTokens.colors.alertRed',
-  			success: 'designTokens.colors.successGreen',
+  			success: {
+                DEFAULT: 'hsl(var(--success))',
+                foreground: 'hsl(var(--success-foreground))',
+                ...designTokens.colors.successGreen
+              },
   			warning: 'designTokens.colors.warningOrange',
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',

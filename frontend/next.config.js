@@ -173,10 +173,10 @@ const nextConfig = {
     scrollRestoration: true,
 
     // Use Turbopack for faster development
-    turbo: process.env.NODE_ENV === 'development',
-
-    // Improve WebSocket stability
-    webSocketTimeout: 60000, // 60 seconds
+    turbo: process.env.NODE_ENV === 'development' ? { 
+      loaders: {}, 
+      resolvers: {} 
+    } : false,
   },
 
   // Transpile UI libraries
