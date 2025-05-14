@@ -260,7 +260,7 @@ async function routes(fastify, options) {
    * @desc    Get city dashboard stats
    * @access  Private (City Users)
    */
-  fastify.get('/stats', { schema: dashboardStatsSchema }, async (/* request */, /* reply */) => {
+  fastify.get('/stats', { schema: dashboardStatsSchema }, async (request, reply) => {
     try {
       const cityId = request.user.cityId
 
