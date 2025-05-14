@@ -58,7 +58,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.push('/login');
+    router.push({ pathname: '/login' });
     router.refresh();
   };
 

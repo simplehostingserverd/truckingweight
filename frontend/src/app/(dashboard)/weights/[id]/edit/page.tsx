@@ -31,7 +31,7 @@ export default function EditWeight({ params }: { params: { id: string } }) {
         } = await supabase.auth.getSession();
 
         if (!session) {
-          router.push('/login');
+          router.push({ pathname: '/login' });
           return;
         }
 
@@ -141,7 +141,7 @@ export default function EditWeight({ params }: { params: { id: string } }) {
       }
 
       // Redirect to weight detail
-      router.push(`/weights/${id}`);
+      router.push({ pathname: `/weights/${id}` });
     } catch (err: any) {
       setError(err.message || 'An error occurred while updating the weight record');
       console.error('Update weight error:', err);

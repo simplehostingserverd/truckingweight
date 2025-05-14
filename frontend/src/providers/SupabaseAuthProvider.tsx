@@ -65,7 +65,7 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
       });
 
       if (!error) {
-        router.push('/dashboard');
+        router.push({ pathname: '/dashboard' });
         router.refresh();
       }
 
@@ -79,7 +79,7 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
   // Sign out function
   const signOut = async () => {
     await supabase.auth.signOut();
-    router.push('/login');
+    router.push({ pathname: '/login' });
     router.refresh();
   };
 

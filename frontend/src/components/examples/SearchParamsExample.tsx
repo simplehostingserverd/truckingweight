@@ -26,13 +26,15 @@ export default function SearchParamsExample() {
 
   // Update URL when filters change
   const updateFilters = () => {
-    const params = createSearchParams({
-      query: searchQuery,
-      page: currentPage,
-      category: selectedCategory !== 'all' ? selectedCategory : undefined,
+    // Create a pathname object for the router
+    router.push({
+      pathname: window.location.pathname,
+      query: {
+        query: searchQuery,
+        page: currentPage,
+        ...(selectedCategory !== 'all' ? { category: selectedCategory } : {}),
+      },
     });
-
-    router.push(`?${params.toString()}`);
   };
 
   // Handle search form submission

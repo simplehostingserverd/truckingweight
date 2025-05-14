@@ -35,7 +35,7 @@ export default function NewWeight() {
         } = await supabase.auth.getSession();
 
         if (!session) {
-          router.push('/login');
+          router.push({ pathname: '/login' });
           return;
         }
 
@@ -113,7 +113,7 @@ export default function NewWeight() {
       } = await supabase.auth.getSession();
 
       if (!session) {
-        router.push('/login');
+        router.push({ pathname: '/login' });
         return;
       }
 
@@ -158,7 +158,7 @@ export default function NewWeight() {
       }
 
       // Redirect to weights list
-      router.push('/weights');
+      router.push({ pathname: '/weights' });
     } catch (err: any) {
       setError(err.message || 'An error occurred while creating the weight record');
       console.error('Create weight error:', err);
