@@ -1,15 +1,15 @@
 /**
  * Weigh Ticket Service
- * 
+ *
  * This service handles the generation and management of weigh tickets
  */
 
-import { v4 as uuidv4 } from 'uuid'
-import prisma from '../config/prisma'
-import { setCompanyContext } from '../config/prisma'
-import { logger } from '../utils/logger'
-import { generateTicketQRCode } from './qrCodeService'
-import { checkWeightCompliance } from '../utils/compliance'
+import { v4 as uuidv4 } from 'uuid';
+import prisma from '../config/prisma';
+import { setCompanyContext } from '../config/prisma';
+import { logger } from '../utils/logger';
+import { generateTicketQRCode } from './qrCodeService';
+import { checkWeightCompliance } from '../utils/compliance';
 
 /**
  * Generate a new weigh ticket
@@ -17,34 +17,40 @@ import { checkWeightCompliance } from '../utils/compliance'
  * @param companyId - The company ID for context
  * @param userId - The ID of the user creating the ticket
  */
-export const export function generateWeighTicket = async (
+export function generateWeighTicket(
   weightData: {
-    vehicleId: number
-    driverId: number
-    scaleId: number
-    grossWeight: number
-    tareWeight?: number
-    axleWeights?: Array<{ axleNumber: number; weight: number; axleType?: string }>
+    vehicleId: number;
+    driverId: number;
+    scaleId: number;
+    grossWeight: number;
+    tareWeight?: number;
+    axleWeights?: Array<{ axleNumber: number; weight: number; axleType?: string }>;
     weighType: string; // 'gross_only', 'tare_only', 'gross_tare', 'split_weigh'
     weighMethod: string; // 'scale_api', 'manual_entry', 'camera_scan', 'iot_sensor'
-    notes?: string
-    ticketImageUrl?: string
-    signatureImageUrl?: string
-    signatureName?: string
-    signatureRole?: string
+    notes?: string;
+    ticketImageUrl?: string;
+    signatureImageUrl?: string;
+    signatureName?: string;
+    signatureRole?: string;
   },
   companyId: number,
   userId: string
-): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ success: boolean; ticket?: any; error?: string }> => {> {> { {> { {> {
+): Promise<{ success: boolean; ticket?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
-    setCompanyContext(companyId)
+    setCompanyContext(companyId);
 
     // Generate a unique ticket number
-    const ticketNumber = `TKT-${companyId}-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`
+    const ticketNumber = `TKT-${companyId}-${Date.now().toString().slice(-6)}-${Math.floor(
+      Math.random() * 1000
+    )
+      .toString()
+      .padStart(3, '0')}`;
 
     // Calculate net weight if both gross and tare are provided
-    const netWeight = weightData.tareWeight ? weightData.grossWeight - weightData.tareWeight : undefined
+    const netWeight = weightData.tareWeight
+      ? weightData.grossWeight - weightData.tareWeight
+      : undefined;
 
     // Create a new weight record
     const weight = await prisma.weights.create({
@@ -60,7 +66,7 @@ export const export function generateWeighTicket = async (
         company_id: companyId,
         created_by: userId,
       },
-    })
+    });
 
     // Create axle weight records if provided
     if (weightData.axleWeights && weightData.axleWeights.length > 0) {
@@ -71,7 +77,7 @@ export const export function generateWeighTicket = async (
           axle_weight: axle.weight,
           axle_type: axle.axleType,
         })),
-      })
+      });
     }
 
     // Create the weigh ticket
@@ -88,7 +94,7 @@ export const export function generateWeighTicket = async (
         notes: weightData.notes,
         company_id: companyId,
       },
-    })
+    });
 
     // Save ticket image if provided
     if (weightData.ticketImageUrl) {
@@ -99,7 +105,7 @@ export const export function generateWeighTicket = async (
           image_type: 'ticket',
           captured_by: userId,
         },
-      })
+      });
     }
 
     // Save signature if provided
@@ -111,17 +117,17 @@ export const export function generateWeighTicket = async (
           name: weightData.signatureName,
           role: weightData.signatureRole,
         },
-      })
+      });
     }
 
     // Check compliance
-    const complianceResult = await checkWeightCompliance(weight.id, companyId)
+    const complianceResult = await checkWeightCompliance(weight.id, companyId);
 
     // Update weight status based on compliance check
     await prisma.weights.update({
       where: { id: weight.id },
       data: { status: complianceResult.status },
-    })
+    });
 
     // Create compliance issues if any
     if (complianceResult.issues && complianceResult.issues.length > 0) {
@@ -133,11 +139,11 @@ export const export function generateWeighTicket = async (
           severity: issue.severity,
           recommendation: issue.recommendation,
         })),
-      })
+      });
     }
 
     // Generate QR code for the ticket
-    const qrCodeResult = await generateTicketQRCode(ticket.id, companyId)
+    const qrCodeResult = await generateTicketQRCode(ticket.id, companyId);
 
     // Return the created ticket with additional information
     const completeTicket = await prisma.weigh_tickets.findUnique({
@@ -155,7 +161,7 @@ export const export function generateWeighTicket = async (
         ticket_images: true,
         ticket_signatures: true,
       },
-    })
+    });
 
     return {
       success: true,
@@ -163,10 +169,10 @@ export const export function generateWeighTicket = async (
         ...completeTicket,
         qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,
       },
-    }
+    };
   } catch (error: any) {
-    logger.error(`Error generating weigh ticket: ${error.message}`, { error })
-    return { success: false, error: error.message }
+    logger.error(`Error generating weigh ticket: ${error.message}`, { error });
+    return { success: false, error: error.message };
   }
 }
 
@@ -176,14 +182,14 @@ export const export function generateWeighTicket = async (
  * @param companyId - The company ID for context
  * @param isAdmin - Whether the user is an admin
  */
-export const export const getWeighTicket = async (
+export function getWeighTicket(
   ticketId: number,
   companyId: number,
   isAdmin: boolean = false
-): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ success: boolean; ticket?: any; error?: string }> => {> {> { {> { {> {
+): Promise<{ success: boolean; ticket?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
-    setCompanyContext(companyId, isAdmin)
+    setCompanyContext(companyId, isAdmin);
 
     // Get the ticket
     const ticket = await prisma.weigh_tickets.findUnique({
@@ -201,14 +207,14 @@ export const export const getWeighTicket = async (
         ticket_images: true,
         ticket_signatures: true,
       },
-    })
+    });
 
     if (!ticket) {
-      return { success: false, error: 'Ticket not found' }
+      return { success: false, error: 'Ticket not found' };
     }
 
     // Generate QR code for the ticket
-    const qrCodeResult = await generateTicketQRCode(ticket.id, companyId, isAdmin)
+    const qrCodeResult = await generateTicketQRCode(ticket.id, companyId, isAdmin);
 
     return {
       success: true,
@@ -216,10 +222,10 @@ export const export const getWeighTicket = async (
         ...ticket,
         qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,
       },
-    }
+    };
   } catch (error: any) {
-    logger.error(`Error getting weigh ticket: ${error.message}`, { error })
-    return { success: false, error: error.message }
+    logger.error(`Error getting weigh ticket: ${error.message}`, { error });
+    return { success: false, error: error.message };
   }
 }
 
@@ -230,23 +236,23 @@ export const export const getWeighTicket = async (
  * @param companyId - The company ID for context
  * @param userId - The ID of the user updating the ticket
  */
-export const export const updateWeighTicket = async (
+export function updateWeighTicket(
   ticketId: number,
   updateData: {
-    grossWeight?: number
-    tareWeight?: number
-    notes?: string
-    ticketImageUrl?: string
-    signatureImageUrl?: string
-    signatureName?: string
-    signatureRole?: string
+    grossWeight?: number;
+    tareWeight?: number;
+    notes?: string;
+    ticketImageUrl?: string;
+    signatureImageUrl?: string;
+    signatureName?: string;
+    signatureRole?: string;
   },
   companyId: number,
   userId: string
-): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ success: boolean; ticket?: any; error?: string }> => {> {> { {> { {> {
+): Promise<{ success: boolean; ticket?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
-    setCompanyContext(companyId)
+    setCompanyContext(companyId);
 
     // Get the existing ticket
     const existingTicket = await prisma.weigh_tickets.findUnique({
@@ -254,16 +260,16 @@ export const export const updateWeighTicket = async (
       include: {
         weights: true,
       },
-    })
+    });
 
     if (!existingTicket) {
-      return { success: false, error: 'Ticket not found' }
+      return { success: false, error: 'Ticket not found' };
     }
 
     // Calculate net weight if both gross and tare are provided
-    const grossWeight = updateData.grossWeight || existingTicket.gross_weight
-    const tareWeight = updateData.tareWeight || existingTicket.tare_weight
-    const netWeight = tareWeight ? grossWeight - tareWeight : undefined
+    const grossWeight = updateData.grossWeight || existingTicket.gross_weight;
+    const tareWeight = updateData.tareWeight || existingTicket.tare_weight;
+    const netWeight = tareWeight ? grossWeight - tareWeight : undefined;
 
     // Update the ticket
     const updatedTicket = await prisma.weigh_tickets.update({
@@ -275,7 +281,7 @@ export const export const updateWeighTicket = async (
         notes: updateData.notes,
         updated_at: new Date(),
       },
-    })
+    });
 
     // Update the weight record
     if (existingTicket.weight_id) {
@@ -286,21 +292,21 @@ export const export const updateWeighTicket = async (
           notes: updateData.notes,
           updated_at: new Date(),
         },
-      })
+      });
 
       // Re-check compliance
-      const complianceResult = await checkWeightCompliance(existingTicket.weight_id, companyId)
+      const complianceResult = await checkWeightCompliance(existingTicket.weight_id, companyId);
 
       // Update weight status based on compliance check
       await prisma.weights.update({
         where: { id: existingTicket.weight_id },
         data: { status: complianceResult.status },
-      })
+      });
 
       // Clear existing compliance issues
       await prisma.compliance_issues.deleteMany({
         where: { weigh_ticket_id: ticketId },
-      })
+      });
 
       // Create new compliance issues if any
       if (complianceResult.issues && complianceResult.issues.length > 0) {
@@ -312,7 +318,7 @@ export const export const updateWeighTicket = async (
             severity: issue.severity,
             recommendation: issue.recommendation,
           })),
-        })
+        });
       }
     }
 
@@ -325,7 +331,7 @@ export const export const updateWeighTicket = async (
           image_type: 'ticket',
           captured_by: userId,
         },
-      })
+      });
     }
 
     // Save new signature if provided
@@ -337,7 +343,7 @@ export const export const updateWeighTicket = async (
           name: updateData.signatureName,
           role: updateData.signatureRole,
         },
-      })
+      });
     }
 
     // Get the updated ticket with all related data
@@ -356,11 +362,11 @@ export const export const updateWeighTicket = async (
         ticket_images: true,
         ticket_signatures: true,
       },
-    })
+    });
 
-    return { success: true, ticket: completeTicket }
+    return { success: true, ticket: completeTicket };
   } catch (error: any) {
-    logger.error(`Error updating weigh ticket: ${error.message}`, { error })
-    return { success: false, error: error.message }
+    logger.error(`Error updating weigh ticket: ${error.message}`, { error });
+    return { success: false, error: error.message };
   }
 }

@@ -4,11 +4,11 @@
  * This service handles generation and validation of QR codes for scales and weigh tickets
  */
 
-import QRCode from 'qrcode'
-import { v4 as uuidv4 } from 'uuid'
-import prisma from '../config/prisma'
-import { setCompanyContext } from '../config/prisma'
-import { logger } from '../utils/logger'
+import QRCode from 'qrcode';
+import { v4 as uuidv4 } from 'uuid';
+import prisma from '../config/prisma';
+import { setCompanyContext } from '../config/prisma';
+import { logger } from '../utils/logger';
 
 /**
  * Generate a QR code for a scale
@@ -23,26 +23,26 @@ export function generateScaleQRCode(
 ): Promise<{ success: boolean; qrCodeDataUrl?: string; qrCodeUuid?: string; error?: string }> {
   try {
     // Set company context for Prisma queries
-    setCompanyContext(companyId, isAdmin)
+    setCompanyContext(companyId, isAdmin);
 
     // Get scale information
     const scale = await prisma.scales.findUnique({
       where: { id: scaleId },
-    })
+    });
 
     if (!scale) {
-      return { success: false, error: 'Scale not found' }
+      return { success: false, error: 'Scale not found' };
     }
 
     // Generate a UUID for the QR code if one doesn't exist
-    const qrCodeUuid = scale.qr_code_uuid || uuidv4()
+    const qrCodeUuid = scale.qr_code_uuid || uuidv4();
 
     // Update the scale with the QR code UUID if needed
     if (!scale.qr_code_uuid) {
       await prisma.scales.update({
         where: { id: scaleId },
         data: { qr_code_uuid: qrCodeUuid },
-      })
+      });
     }
 
     // Create the QR code data
@@ -53,19 +53,19 @@ export function generateScaleQRCode(
       name: scale.name,
       companyId,
       timestamp: new Date().toISOString(),
-    }
+    };
 
     // Generate the QR code as a data URL
     const qrCodeDataUrl = await QRCode.toDataURL(JSON.stringify(qrCodeData), {
       errorCorrectionLevel: 'H',
       margin: 1,
       width: 300,
-    })
+    });
 
-    return { success: true, qrCodeDataUrl, qrCodeUuid }
+    return { success: true, qrCodeDataUrl, qrCodeUuid };
   } catch (error: any) {
-    logger.error(`Error generating scale QR code: ${error.message}`, { error })
-    return { success: false, error: error.message }
+    logger.error(`Error generating scale QR code: ${error.message}`, { error });
+    return { success: false, error: error.message };
   }
 }
 
@@ -82,7 +82,7 @@ export function generateTicketQRCode(
 ): Promise<{ success: boolean; qrCodeDataUrl?: string; error?: string }> {
   try {
     // Set company context for Prisma queries
-    setCompanyContext(companyId, isAdmin)
+    setCompanyContext(companyId, isAdmin);
 
     // Get ticket information
     const ticket = await prisma.weigh_tickets.findUnique({
@@ -95,10 +95,10 @@ export function generateTicketQRCode(
           },
         },
       },
-    })
+    });
 
     if (!ticket) {
-      return { success: false, error: 'Ticket not found' }
+      return { success: false, error: 'Ticket not found' };
     }
 
     // Create the QR code data
@@ -116,19 +116,19 @@ export function generateTicketQRCode(
       driverName: ticket.weights?.drivers?.name,
       companyId,
       timestamp: new Date().toISOString(),
-    }
+    };
 
     // Generate the QR code as a data URL
     const qrCodeDataUrl = await QRCode.toDataURL(JSON.stringify(qrCodeData), {
       errorCorrectionLevel: 'H',
       margin: 1,
       width: 300,
-    })
+    });
 
-    return { success: true, qrCodeDataUrl }
+    return { success: true, qrCodeDataUrl };
   } catch (error: any) {
-    logger.error(`Error generating ticket QR code: ${error.message}`, { error })
-    return { success: false, error: error.message }
+    logger.error(`Error generating ticket QR code: ${error.message}`, { error });
+    return { success: false, error: error.message };
   }
 }
 
@@ -137,20 +137,20 @@ export function generateTicketQRCode(
  * @param qrCodeData - The data from the scanned QR code
  * @param companyId - The company ID for context
  */
-export const export const validateScaleQRCode = async (
+export function validateScaleQRCode(
   qrCodeData: any,
   companyId: number
-): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ success: boolean; scale?: any; error?: string }> => {> {> { {> { {> {
+): Promise<{ success: boolean; scale?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
-    setCompanyContext(companyId)
+    setCompanyContext(companyId);
 
     // Parse the QR code data
-    const parsedData = typeof qrCodeData === 'string' ? JSON.parse(qrCodeData) : qrCodeData
+    const parsedData = typeof qrCodeData === 'string' ? JSON.parse(qrCodeData) : qrCodeData;
 
     // Validate the QR code type
     if (parsedData.type !== 'scale') {
-      return { success: false, error: 'Invalid QR code type' }
+      return { success: false, error: 'Invalid QR code type' };
     }
 
     // Get the scale by UUID
@@ -159,21 +159,21 @@ export const export const validateScaleQRCode = async (
         qr_code_uuid: parsedData.uuid,
         company_id: companyId,
       },
-    })
+    });
 
     if (!scale) {
-      return { success: false, error: 'Scale not found or not authorized' }
+      return { success: false, error: 'Scale not found or not authorized' };
     }
 
     // Check if scale is active
     if (scale.status !== 'Active') {
-      return { success: false, error: `Scale is ${scale.status}` }
+      return { success: false, error: `Scale is ${scale.status}` };
     }
 
-    return { success: true, scale }
+    return { success: true, scale };
   } catch (error: any) {
-    logger.error(`Error validating scale QR code: ${error.message}`, { error })
-    return { success: false, error: error.message }
+    logger.error(`Error validating scale QR code: ${error.message}`, { error });
+    return { success: false, error: error.message };
   }
 }
 
@@ -182,20 +182,20 @@ export const export const validateScaleQRCode = async (
  * @param qrCodeData - The data from the scanned QR code
  * @param companyId - The company ID for context
  */
-export const export const validateTicketQRCode = async (
+export function validateTicketQRCode(
   qrCodeData: any,
   companyId: number
-): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ success: boolean; ticket?: any; error?: string }> => {> {> { {> { {> {
+): Promise<{ success: boolean; ticket?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
-    setCompanyContext(companyId)
+    setCompanyContext(companyId);
 
     // Parse the QR code data
-    const parsedData = typeof qrCodeData === 'string' ? JSON.parse(qrCodeData) : qrCodeData
+    const parsedData = typeof qrCodeData === 'string' ? JSON.parse(qrCodeData) : qrCodeData;
 
     // Validate the QR code type
     if (parsedData.type !== 'ticket') {
-      return { success: false, error: 'Invalid QR code type' }
+      return { success: false, error: 'Invalid QR code type' };
     }
 
     // Get the ticket by ID and company ID
@@ -212,15 +212,15 @@ export const export const validateTicketQRCode = async (
           },
         },
       },
-    })
+    });
 
     if (!ticket) {
-      return { success: false, error: 'Ticket not found or not authorized' }
+      return { success: false, error: 'Ticket not found or not authorized' };
     }
 
-    return { success: true, ticket }
+    return { success: true, ticket };
   } catch (error: any) {
-    logger.error(`Error validating ticket QR code: ${error.message}`, { error })
-    return { success: false, error: error.message }
+    logger.error(`Error validating ticket QR code: ${error.message}`, { error });
+    return { success: false, error: error.message };
   }
 }
