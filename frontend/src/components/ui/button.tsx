@@ -1,126 +1,57 @@
-'use client';
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
 
-import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils"
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /**
-   * Button variant
-   */
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-9 px-4 py-2",
+        sm: "h-8 rounded-md px-3 text-xs",
+        lg: "h-10 rounded-md px-8",
+        icon: "h-9 w-9",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
 
-  /**
-   * Button size
-   */
-  size?: 'sm' | 'md' | 'lg';
-
-  /**
-   * Optional icon to display before the button text
-   */
-  icon?: React.ReactNode;
-
-  /**
-   * Optional icon to display after the button text
-   */
-  trailingIcon?: React.ReactNode;
-
-  /**
-   * Whether the button is in a loading state
-   */
-  isLoading?: boolean;
-
-  /**
-   * Text to display when loading
-   */
-  loadingText?: string;
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
 }
 
-/**
- * Primary UI component for user interaction
- */
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      variant = 'primary',
-      size = 'md',
-      icon,
-      trailingIcon,
-      isLoading = false,
-      loadingText,
-      children,
-      disabled,
-      ...props
-    },
-    ref
-  ) => {
-    // Determine the CSS classes based on the variant and size
-    const variantClasses = {
-      primary: 'btn-primary',
-      secondary: 'btn-secondary',
-      outline: 'btn-outline',
-      ghost: 'btn-ghost',
-      link: 'btn-link',
-    };
-
-    const sizeClasses = {
-      sm: 'btn-sm',
-      md: 'btn-md',
-      lg: 'btn-lg',
-    };
-
-    // Combine all classes
-    const buttonClasses = cn(
-      'btn',
-      variantClasses[variant],
-      sizeClasses[size],
-      isLoading && 'opacity-70 pointer-events-none',
-      className
-    );
-
-    // Loading spinner SVG
-    const LoadingSpinner = () => (
-      <svg
-        className="animate-spin -ml-1 mr-2 h-4 w-4"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle
-          className="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="4"
-        ></circle>
-        <path
-          className="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-        ></path>
-      </svg>
-    );
-
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
     return (
-      <button ref={ref} className={buttonClasses} disabled={disabled || isLoading} {...props}>
-        {isLoading ? (
-          <>
-            <LoadingSpinner />
-            {loadingText || children}
-          </>
-        ) : (
-          <>
-            {icon && <span className="mr-2">{icon}</span>}
-            {children}
-            {trailingIcon && <span className="ml-2">{trailingIcon}</span>}
-          </>
-        )}
-      </button>
-    );
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
   }
-);
+)
+Button.displayName = "Button"
 
-Button.displayName = 'Button';
-
-export default Button;
+export { Button, buttonVariants }
