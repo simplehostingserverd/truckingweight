@@ -1,6 +1,8 @@
 /**
- * Enhanced Cleanup script to ensure all processes are properly terminated
- * when the application is stopped.
+ * Prestart Cleanup Script
+ * 
+ * This script runs before the application starts to clean up any lingering processes
+ * from previous runs. It's designed to be run as a separate process before npm run dev.
  */
 
 import { exec } from 'child_process';
@@ -15,9 +17,7 @@ const PROCESS_PATTERNS = [
   'next dev',
   'nodemon server-fastify',
   'truckingsemis-frontend',
-  'truckingsemis-backend',
-  'concurrently',
-  'npm run dev',
+  'truckingsemis-backend'
 ];
 
 const PORTS_TO_CHECK = [3000, 3001, 3002, 3003, 3004, 3005, 5000];
@@ -25,35 +25,25 @@ const PORTS_TO_CHECK = [3000, 3001, 3002, 3003, 3004, 3005, 5000];
 // Function to find and kill processes by pattern
 async function findAndKillProcessesByPattern() {
   try {
-    // Get current process ID to exclude it from killing
-    const currentPid = process.pid.toString();
-
     // Get a list of all processes
     const { stdout } = await execAsync('ps aux');
-
+    
     // Parse the output to find PIDs
     const lines = stdout.split('\n');
     const pidsByPattern = {};
     const allPids = [];
-
+    
     // Find PIDs for each pattern
     for (const pattern of PROCESS_PATTERNS) {
       pidsByPattern[pattern] = [];
-
+      
       for (const line of lines) {
-        if (line.includes(pattern)) {
+        if (line.includes(pattern) && !line.includes('prestart-cleanup.js')) {
           // Extract the PID (second column in ps aux output)
           const parts = line.trim().split(/\s+/);
           if (parts.length >= 2) {
             const pid = parts[1];
-            // Skip the current process and its parent
-            if (
-              pid &&
-              !isNaN(parseInt(pid)) &&
-              !allPids.includes(pid) &&
-              pid !== currentPid &&
-              pid !== process.ppid?.toString()
-            ) {
+            if (pid && !isNaN(parseInt(pid)) && !allPids.includes(pid)) {
               pidsByPattern[pattern].push(pid);
               allPids.push(pid);
             }
@@ -61,13 +51,13 @@ async function findAndKillProcessesByPattern() {
         }
       }
     }
-
+    
     // Kill processes for each pattern
     let killedCount = 0;
     for (const [pattern, pids] of Object.entries(pidsByPattern)) {
       if (pids.length > 0) {
         console.log(`Found ${pids.length} processes matching "${pattern}": ${pids.join(', ')}`);
-
+        
         for (const pid of pids) {
           try {
             await execAsync(`kill -9 ${pid}`);
@@ -78,7 +68,7 @@ async function findAndKillProcessesByPattern() {
         }
       }
     }
-
+    
     if (killedCount > 0) {
       console.log(`Terminated ${killedCount} processes by pattern`);
       // Wait a moment for processes to fully terminate
@@ -95,15 +85,15 @@ async function findAndKillProcessesByPattern() {
 async function findAndKillProcessesByPort() {
   try {
     let killedCount = 0;
-
+    
     for (const port of PORTS_TO_CHECK) {
       try {
         const { stdout } = await execAsync(`lsof -i :${port} -t`);
         const pids = stdout.trim().split('\n').filter(Boolean);
-
+        
         if (pids.length > 0) {
           console.log(`Found processes using port ${port}: ${pids.join(', ')}`);
-
+          
           for (const pid of pids) {
             try {
               await execAsync(`kill -9 ${pid}`);
@@ -119,7 +109,7 @@ async function findAndKillProcessesByPort() {
         // This is expected, so we ignore this error
       }
     }
-
+    
     if (killedCount > 0) {
       console.log(`Terminated ${killedCount} processes by port`);
       // Wait a moment for processes to fully terminate
@@ -132,18 +122,19 @@ async function findAndKillProcessesByPort() {
   }
 }
 
-// Run the enhanced cleanup
-async function runEnhancedCleanup() {
-  console.log('Starting enhanced cleanup...');
-
+// Run the prestart cleanup
+async function runPrestartCleanup() {
+  console.log('Starting prestart cleanup...');
+  
   // First kill processes by pattern
   await findAndKillProcessesByPattern();
-
+  
   // Then kill processes by port
   await findAndKillProcessesByPort();
-
-  console.log('Enhanced cleanup completed');
+  
+  console.log('Prestart cleanup completed');
 }
 
 // Run the cleanup
-runEnhancedCleanup().catch(err => console.error('Cleanup failed:', err));
+runPrestartCleanup()
+  .catch(err => console.error('Prestart cleanup failed:', err));

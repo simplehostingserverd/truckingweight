@@ -20,9 +20,9 @@ The following improvements have been made to ensure proper process management:
 
 1. **Kill-Others Options**: The `concurrently` command now includes the `--kill-others-on-fail` and `--kill-others` options, which ensure that if one process fails or is terminated, all other processes are also terminated.
 
-2. **Cleanup Script**: A cleanup script has been added at `scripts/cleanup.js` that finds and terminates any lingering processes related to the application.
+2. **Enhanced Cleanup Script**: A comprehensive cleanup script has been added at `scripts/cleanup.js` that finds and terminates any lingering processes related to the application, using both process name pattern matching and port usage detection.
 
-3. **Velociraptor Port Cleaner**: An aggressive port-clearing script has been added at `scripts/velociraptor.js` that hunts down and terminates any processes using the ports required by the application (3000-3002 for frontend, 5000 for backend).
+3. **Velociraptor Process Hunter**: An aggressive process-hunting script has been added at `scripts/velociraptor.js` that hunts down and terminates any processes related to the application, both by process name pattern and by port usage (3000-3005 for frontend, 5000 for backend).
 
 4. **Pre/Post Hooks**: The `predev` and `postdev` npm scripts have been added to run the cleanup and velociraptor scripts before starting and the cleanup script after stopping the application.
 
