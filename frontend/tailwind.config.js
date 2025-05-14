@@ -28,20 +28,24 @@ module.exports = {
   			ring: 'hsl(var(--ring))',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
-  			deepBlue: 'designTokens.colors.deepBlue',
-  			highwayYellow: 'designTokens.colors.highwayYellow',
-  			steelGray: 'designTokens.colors.steelGray',
-  			forestGreen: 'designTokens.colors.forestGreen',
-  			brickRed: 'designTokens.colors.brickRed',
-  			slate: 'designTokens.colors.slate',
-  			skyBlue: 'designTokens.colors.skyBlue',
-  			alert: 'designTokens.colors.alertRed',
+  			deepBlue: designTokens.colors.deepBlue,
+  			highwayYellow: designTokens.colors.highwayYellow,
+  			steelGray: designTokens.colors.steelGray,
+  			forestGreen: designTokens.colors.forestGreen,
+  			brickRed: designTokens.colors.brickRed,
+  			slate: designTokens.colors.slate,
+  			skyBlue: designTokens.colors.skyBlue,
+  			alert: designTokens.colors.alertRed,
   			success: {
                 DEFAULT: 'hsl(var(--success))',
                 foreground: 'hsl(var(--success-foreground))',
                 ...designTokens.colors.successGreen
               },
-  			warning: 'designTokens.colors.warningOrange',
+  			warning: {
+                DEFAULT: 'hsl(var(--warning))',
+                foreground: 'hsl(var(--warning-foreground))',
+                ...designTokens.colors.warningOrange
+              },
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))',
@@ -82,22 +86,22 @@ module.exports = {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
-  		fontFamily: 'designTokens.typography.fontFamily',
-  		fontSize: 'designTokens.typography.fontSize',
-  		fontWeight: 'designTokens.typography.fontWeight',
-  		lineHeight: 'designTokens.typography.lineHeight',
-  		letterSpacing: 'designTokens.typography.letterSpacing',
+  		fontFamily: designTokens.typography.fontFamily,
+  		fontSize: designTokens.typography.fontSize,
+  		fontWeight: designTokens.typography.fontWeight,
+  		lineHeight: designTokens.typography.lineHeight,
+  		letterSpacing: designTokens.typography.letterSpacing,
   		borderRadius: {
                 ...designTokens.borderRadius,
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-  		boxShadow: 'designTokens.shadows',
-  		spacing: 'designTokens.spacing',
-  		zIndex: 'designTokens.zIndex',
-  		transitionDuration: 'designTokens.transitions.duration',
-  		transitionTimingFunction: 'designTokens.transitions.timing',
+  		boxShadow: designTokens.shadows,
+  		spacing: designTokens.spacing,
+  		zIndex: designTokens.zIndex,
+  		transitionDuration: designTokens.transitions.duration,
+  		transitionTimingFunction: designTokens.transitions.timing,
   		keyframes: {
   			'accordion-down': {
   				from: {

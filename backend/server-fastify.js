@@ -144,8 +144,8 @@ async function registerRoutes() {
   const apiKeyRoutes = require('./routes/fastify/apiKeys')
   const healthRoutes = require('./routes/fastify/health')
 
-  // Import example routes
-  const cacheExampleRoutes = require('./routes/fastify/examples/cacheExample')
+  // Import example routes - commented out as file doesn't exist
+  // const cacheExampleRoutes = require('./routes/fastify/examples/cacheExample')
 
   // Import city route handlers
   const cityAuthRoutes = require('./routes/fastify/cityAuth')
@@ -171,8 +171,8 @@ async function registerRoutes() {
   fastify.register(cityDashboardRoutes, { prefix: '/api/city-dashboard' })
   fastify.register(cityPermitsRoutes, { prefix: '/api/city-permits' })
 
-  // Register example routes
-  fastify.register(cacheExampleRoutes, { prefix: '/api/examples' })
+  // Register example routes - commented out as file doesn't exist
+  // fastify.register(cacheExampleRoutes, { prefix: '/api/examples' })
 
   // Root route
   fastify.get('/', async (request, reply) => {

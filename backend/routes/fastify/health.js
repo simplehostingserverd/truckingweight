@@ -15,12 +15,12 @@ const cacheService = require('../../services/cache')
  */
 async function routes(fastify, options) {
   // Basic health check
-  fastify.get('/', async (/* request */, /* reply */) => {
+  fastify.get('/', async (request, reply) => {
     return { status: 'ok', timestamp: new Date().toISOString() }
   })
 
   // Detailed health check
-  fastify.get('/detailed', async (/* request */, /* reply */) => {
+  fastify.get('/detailed', async (request, reply) => {
     // Check database connection
     let dbStatus = { connected: false }
     try {
@@ -58,7 +58,7 @@ async function routes(fastify, options) {
   })
 
   // Cache health check
-  fastify.get('/cache', async (/* request */, /* reply */) => {
+  fastify.get('/cache', async (request, reply) => {
     try {
       // Test cache by setting and getting a value
       const testKey = 'health-check-test'
@@ -84,7 +84,7 @@ async function routes(fastify, options) {
   })
 
   // Database health check
-  fastify.get('/database', async (/* request */, /* reply */) => {
+  fastify.get('/database', async (request, reply) => {
     try {
       const result = await db.testConnection()
       return {

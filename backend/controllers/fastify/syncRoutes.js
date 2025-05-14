@@ -4,7 +4,7 @@ const supabase = require('../../config/supabase')
 /**
  * Get sync status
  */
-async function getSyncStatus(/* request */, /* reply */) {
+async function getSyncStatus(request, reply) {
   try {
     // Check cache status
     const cacheStatus = 'connected'; // In-memory cache is always available
@@ -50,7 +50,7 @@ async function getSyncStatus(/* request */, /* reply */) {
 /**
  * Sync data
  */
-async function syncData(/* request */, /* reply */) {
+async function syncData(request, reply) {
   try {
     const { table, action, data, companyId } = request.body
 
@@ -122,7 +122,7 @@ async function syncData(/* request */, /* reply */) {
 /**
  * Get sync history
  */
-async function getSyncHistory(/* request */, /* reply */) {
+async function getSyncHistory(request, reply) {
   try {
     const { limit = 50, offset = 0, status } = request.query
 
