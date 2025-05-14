@@ -170,7 +170,7 @@ const deleteDriverSchema = {
 };
 
 // Driver routes
-async function routes(fastify, options) {
+async function routes(fastify /* options */) {
   // Get all drivers
   fastify.get(
     '/',

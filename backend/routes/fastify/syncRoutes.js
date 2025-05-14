@@ -11,7 +11,7 @@ const syncStatusSchema = {
         message: { type: 'string' },
         pendingItems: { type: 'integer' },
         lastSuccessfulSync: { type: ['string', 'null'], format: 'date-time' },
-        redisStatus: { type: 'string' },
+        cacheStatus: { type: 'string' },
       },
     },
     500: {
@@ -109,7 +109,7 @@ const syncHistorySchema = {
 };
 
 // Sync routes
-async function routes(fastify, options) {
+async function routes(fastify /* options */) {
   // Get sync status
   fastify.get(
     '/status',

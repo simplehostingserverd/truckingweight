@@ -4,7 +4,7 @@
  */
 
 const { createClient } = require('@supabase/supabase-js');
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
 const { logger } = require('../../utils/logger');
 const pasetoService = require('../../services/pasetoService');
@@ -215,7 +215,7 @@ async function routes(fastify, options) {
    * @desc    Register a new city
    * @access  Public
    */
-  fastify.post('/register-city', { schema: registerCitySchema }, async (request, reply) => {
+  fastify.post('/register-city', { schema: registerCitySchema }, async (/* request */, /* reply */) => {
     const {
       name,
       state,
@@ -287,7 +287,7 @@ async function routes(fastify, options) {
    * @desc    Register a city user
    * @access  Public
    */
-  fastify.post('/register', { schema: registerCityUserSchema }, async (request, reply) => {
+  fastify.post('/register', { schema: registerCityUserSchema }, async (/* request */, /* reply */) => {
     const { name, email, password, cityId, role } = request.body;
 
     try {
@@ -391,7 +391,7 @@ async function routes(fastify, options) {
    * @desc    Authenticate city user & get token
    * @access  Public
    */
-  fastify.post('/login', { schema: loginCityUserSchema }, async (request, reply) => {
+  fastify.post('/login', { schema: loginCityUserSchema }, async (/* request */, /* reply */) => {
     const { email, password } = request.body;
 
     try {
@@ -454,7 +454,7 @@ async function routes(fastify, options) {
    * @desc    Get current city user
    * @access  Private
    */
-  fastify.get('/me', { preHandler: [fastify.authenticate] }, async (request, reply) => {
+  fastify.get('/me', { preHandler: [fastify.authenticate] }, async (/* request */, /* reply */) => {
     try {
       // Check if user is a city user
       if (request.user.userType !== 'city') {
@@ -497,7 +497,7 @@ async function routes(fastify, options) {
    * @desc    Send password reset email
    * @access  Public
    */
-  fastify.post('/forgot-password', { schema: forgotPasswordSchema }, async (request, reply) => {
+  fastify.post('/forgot-password', { schema: forgotPasswordSchema }, async (/* request */, /* reply */) => {
     const { email } = request.body;
 
     try {
@@ -540,7 +540,7 @@ async function routes(fastify, options) {
    * @desc    Reset user password
    * @access  Public
    */
-  fastify.post('/reset-password', { schema: resetPasswordSchema }, async (request, reply) => {
+  fastify.post('/reset-password', { schema: resetPasswordSchema }, async (/* request */, /* reply */) => {
     const { token, password } = request.body;
 
     try {

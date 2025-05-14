@@ -260,7 +260,7 @@ async function routes(fastify, options) {
    * @desc    Get city dashboard stats
    * @access  Private (City Users)
    */
-  fastify.get('/stats', { schema: dashboardStatsSchema }, async (request, reply) => {
+  fastify.get('/stats', { schema: dashboardStatsSchema }, async (/* request */, /* reply */) => {
     try {
       const cityId = request.user.cityId;
 
@@ -371,7 +371,7 @@ async function routes(fastify, options) {
    * @desc    Get recent weighings for city
    * @access  Private (City Users)
    */
-  fastify.get('/recent-weighings', { schema: recentWeighingsSchema }, async (request, reply) => {
+  fastify.get('/recent-weighings', { schema: recentWeighingsSchema }, async (/* request */, /* reply */) => {
     try {
       const cityId = request.user.cityId;
       const limit = request.query.limit || 10;
@@ -427,7 +427,7 @@ async function routes(fastify, options) {
    * @desc    Get compliance data for charts
    * @access  Private (City Users)
    */
-  fastify.get('/compliance-data', { schema: complianceDataSchema }, async (request, reply) => {
+  fastify.get('/compliance-data', { schema: complianceDataSchema }, async (/* request */, /* reply */) => {
     try {
       const cityId = request.user.cityId;
       const days = request.query.days || 30;
@@ -493,7 +493,7 @@ async function routes(fastify, options) {
    * @desc    Get revenue data for charts
    * @access  Private (City Users)
    */
-  fastify.get('/revenue-data', { schema: revenueDataSchema }, async (request, reply) => {
+  fastify.get('/revenue-data', { schema: revenueDataSchema }, async (/* request */, /* reply */) => {
     try {
       const cityId = request.user.cityId;
       const months = request.query.months || 6;

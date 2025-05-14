@@ -34,7 +34,7 @@ const generateToken = async (payload, type = 'access') => {
 };
 
 /**
- * Store token in Redis
+ * Store token in cache
  * @param {string} token - Paseto token
  * @param {Object} userData - User data to store with token
  * @param {string} type - Token type ('access' or 'refresh')
@@ -46,7 +46,7 @@ const storeToken = async (token, userData, type = 'access') => {
 };
 
 /**
- * Validate token in Redis
+ * Validate token in cache
  * @param {string} token - Paseto token
  * @returns {Promise<Object|null>} - User data if valid, null otherwise
  * @deprecated Use pasetoService.validateToken directly

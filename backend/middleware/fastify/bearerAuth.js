@@ -6,7 +6,7 @@
  */
 
 const { createClient } = require('@supabase/supabase-js');
-const cacheService = require('../../services/cache');
+// const cacheService = require('../../services/cache');
 const pasetoService = require('../../services/pasetoService');
 
 // Initialize Supabase client
@@ -39,7 +39,7 @@ const tokenService = require('../../services/tokenService');
  * Bearer authentication middleware
  * Validates Paseto tokens and checks for token validity
  */
-const bearerAuthMiddleware = async (request, reply) => {
+const bearerAuthMiddleware = async (/* request */, /* reply */) => {
   try {
     // Skip authentication for public routes
     if (request.routeOptions.config && request.routeOptions.config.public) {
@@ -121,7 +121,7 @@ const bearerAuthMiddleware = async (request, reply) => {
  * API Key authentication middleware
  * Validates API keys from the x-api-key header
  */
-const apiKeyAuthMiddleware = async (request, reply) => {
+const apiKeyAuthMiddleware = async (/* request */, /* reply */) => {
   try {
     // Skip authentication for public routes
     if (request.routeOptions.config && request.routeOptions.config.public) {

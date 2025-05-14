@@ -88,7 +88,7 @@ function convertPrismaToSQL(prismaSchema) {
           /(\w+)\s+(\w+).*@relation\(fields:\s*\[(\w+)\],\s*references:\s*\[(\w+)\]/
         );
         if (relationMatch) {
-          const [, relatedType, fieldName, localField, foreignField] = relationMatch;
+          const [, relatedType /* fieldName */, , localField, foreignField] = relationMatch;
           constraints.push(
             `FOREIGN KEY (${localField}) REFERENCES ${relatedType}(${foreignField})`
           );

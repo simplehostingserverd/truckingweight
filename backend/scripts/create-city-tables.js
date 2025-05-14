@@ -6,10 +6,7 @@ require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 
 // Initialize Supabase client
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 async function createCityTables() {
   try {
@@ -126,7 +123,9 @@ async function createCityTables() {
     });
 
     if (createCityWeighTicketsTable.error) {
-      throw new Error(`Error creating city_weigh_tickets table: ${createCityWeighTicketsTable.error.message}`);
+      throw new Error(
+        `Error creating city_weigh_tickets table: ${createCityWeighTicketsTable.error.message}`
+      );
     }
 
     console.log('City weigh tickets table created successfully');
@@ -194,7 +193,9 @@ async function createCityTables() {
     });
 
     if (createCityViolationsTable.error) {
-      throw new Error(`Error creating city_violations table: ${createCityViolationsTable.error.message}`);
+      throw new Error(
+        `Error creating city_violations table: ${createCityViolationsTable.error.message}`
+      );
     }
 
     console.log('City violations table created successfully');

@@ -253,7 +253,7 @@ async function routes(fastify, options) {
       preHandler: [cityRoleMiddleware(['admin', 'operator'])],
       schema: createPermitSchema,
     },
-    async (request, reply) => {
+    async (/* request */, /* reply */) => {
       try {
         const cityId = request.user.cityId;
         const userId = request.user.id;
@@ -330,7 +330,7 @@ async function routes(fastify, options) {
    * @desc    Get all permits for city
    * @access  Private (City Users)
    */
-  fastify.get('/', { schema: getPermitsSchema }, async (request, reply) => {
+  fastify.get('/', { schema: getPermitsSchema }, async (/* request */, /* reply */) => {
     try {
       const cityId = request.user.cityId;
       const { status, permitType, limit = 20, offset = 0 } = request.query;
@@ -392,7 +392,7 @@ async function routes(fastify, options) {
    * @desc    Get permit by ID
    * @access  Private (City Users)
    */
-  fastify.get('/:id', { schema: getPermitByIdSchema }, async (request, reply) => {
+  fastify.get('/:id', { schema: getPermitByIdSchema }, async (/* request */, /* reply */) => {
     try {
       const cityId = request.user.cityId;
       const permitId = parseInt(request.params.id);
@@ -451,7 +451,7 @@ async function routes(fastify, options) {
       preHandler: [cityRoleMiddleware(['admin', 'operator'])],
       schema: updatePermitSchema,
     },
-    async (request, reply) => {
+    async (/* request */, /* reply */) => {
       try {
         const cityId = request.user.cityId;
         const permitId = parseInt(request.params.id);

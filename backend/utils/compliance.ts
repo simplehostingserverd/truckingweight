@@ -353,7 +353,7 @@ export const ISSUE_SEVERITY = {;
  * @param weightId - The ID of the weight record;
  * @param companyId - The company ID for context;
  */;
-export const checkWeightCompliance = async (;
+export const export const checkWeightCompliance = async (;
   weightId: number,;
   companyId: number;
 ): Promise<{;

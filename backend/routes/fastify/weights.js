@@ -181,7 +181,7 @@ const deleteWeightSchema = {
 };
 
 // Weight routes
-async function routes(fastify, options) {
+async function routes(fastify /* options */) {
   // Get all weights
   fastify.get(
     '/',

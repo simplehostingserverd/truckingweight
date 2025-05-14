@@ -7,7 +7,7 @@ import cacheService from '../../services/cache';
 
 const prisma = new PrismaClient();
 
-export interface TelematicsData {;
+export interface interface TelematicsData {;
   vehicleId: string;
   timestamp: Date;
   location?: {;
@@ -31,7 +31,7 @@ export interface TelematicsData {;
   }[];
 };
 
-export interface TelematicsProvider {;
+export interface interface TelematicsProvider {;
   fetchVehicleData(vehicleId: string): Promise<TelematicsData>;
   fetchDriverData(driverId: string): Promise<any>;
   fetchEvents(startTime: Date, endTime: Date): Promise<any[]>;

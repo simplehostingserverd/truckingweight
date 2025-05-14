@@ -239,7 +239,7 @@ const testWebhookSchema = {
 };
 
 // Webhooks routes
-async function routes(fastify, options) {
+async function routes(fastify /* options */) {
   // Get all webhooks
   fastify.get(
     '/',

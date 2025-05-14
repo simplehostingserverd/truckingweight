@@ -212,7 +212,7 @@ const testIntegrationSchema = {
 };
 
 // Integrations routes
-async function routes(fastify, options) {
+async function routes(fastify /* options */) {
   // Get all integrations
   fastify.get(
     '/',

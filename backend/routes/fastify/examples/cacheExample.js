@@ -30,7 +30,7 @@ async function routes(fastify, options) {
         public: true, // No authentication required
       },
     },
-    async (request, reply) => {
+    async (/* request */, /* reply */) => {
       const cacheKey = 'example-data';
 
       // Try to get data from cache first (ultra-fast)
@@ -80,7 +80,7 @@ async function routes(fastify, options) {
         public: true, // No authentication required
       },
     },
-    async (request, reply) => {
+    async (/* request */, /* reply */) => {
       await cacheService.clear();
 
       return {

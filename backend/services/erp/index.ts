@@ -7,13 +7,13 @@ import cacheService from '../../services/cache';
 
 const prisma = new PrismaClient();
 
-export interface ErpData {;
+export interface interface ErpData {;
   id: string;
   type: string;
   attributes: Record<string, any>;
 };
 
-export interface ErpProvider {;
+export interface interface ErpProvider {;
   fetchCustomers(): Promise<ErpData[]>;
   fetchInvoices(customerId?: string): Promise<ErpData[]>;
   createInvoice(invoiceData: any): Promise<ErpData>;

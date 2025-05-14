@@ -54,7 +54,7 @@ async function registerPlugins() {
   });
 
   // Add authenticate decorator using Paseto
-  fastify.decorate('authenticate', async (request, reply) => {
+  fastify.decorate('authenticate', async (/* request */, /* reply */) => {
     try {
       // Get token from header
       const authHeader = request.headers.authorization;
@@ -102,7 +102,7 @@ async function registerPlugins() {
   await fastify.register(require('@fastify/swagger-ui'), swaggerUiOptions);
 
   // Add global hooks for authentication
-  fastify.addHook('onRequest', async (request, reply) => {
+  fastify.addHook('onRequest', async (/* request */, /* reply */) => {
     // Skip authentication for Swagger UI and documentation
     if (
       request.url.startsWith('/documentation') ||
@@ -119,12 +119,12 @@ async function registerPlugins() {
 
     // Check for API key authentication first
     if (request.headers['x-api-key']) {
-      await apiKeyAuthMiddleware(request, reply);
+      await apiKeyAuthMiddleware(/* request */, /* reply */);
       return;
     }
 
     // Fall back to bearer token authentication
-    await bearerAuthMiddleware(request, reply);
+    await bearerAuthMiddleware(/* request */, /* reply */);
   });
 }
 
@@ -175,12 +175,12 @@ async function registerRoutes() {
   fastify.register(cacheExampleRoutes, { prefix: '/api/examples' });
 
   // Root route
-  fastify.get('/', async (request, reply) => {
+  fastify.get('/', async (/* request */, /* reply */) => {
     return { message: 'Welcome to TruckingSemis API' };
   });
 
   // Error handler
-  fastify.setErrorHandler((error, request, reply) => {
+  fastify.setErrorHandler((error, request, /* reply */) => {
     fastify.log.error(error);
     reply.status(500).send({
       message: 'Something went wrong!',

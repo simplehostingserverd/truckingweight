@@ -19,7 +19,7 @@ const supabase = createClient(
  * @param {number} companyId - Company ID
  * @returns {string} - Unique ticket number
  */
-const generateTicketNumber = async companyId => {
+const generateTicketNumber = async (/* companyId */) => {
   try {
     const date = new Date();
     const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
