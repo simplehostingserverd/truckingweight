@@ -46,7 +46,7 @@ class CacheService {
    * @param {number} ttl - Time to live in seconds (default: 3600)
    * @returns {Promise<boolean>} - Success status
    */
-  async set(key, value, /* ttl */ = 3600) {
+  async set(key, value, ttl = 3600) {
     try {
       const serialized = JSON.stringify(value);
 
