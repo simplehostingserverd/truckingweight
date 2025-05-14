@@ -8,7 +8,7 @@
     "push-schema": "node scripts/push-schema.mjs",
     "update-schema": "node scripts/update-schema.mjs",
     "update-deps": "node scripts/update-dependencies.mjs",
-    "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
+    "dev": "concurrently --kill-others-on-fail --kill-others \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
     "install-deps": "node scripts/install-deps.mjs",
     "prepare": "echo 'Prepare script'",
     "lint": "eslint . || echo 'Skipping eslint'",
@@ -30,7 +30,11 @@
     "seed-data": "node --experimental-modules scripts/seed-realistic-data.mjs",
     "add-data": "node --experimental-modules scripts/add-realistic-data.mjs",
     "add-logos": "node --experimental-modules scripts/add-company-logos.mjs",
-    "setup-all": "npm run setup-db && npm run seed-data && npm run add-data && npm run add-logos"
+    "setup-all": "npm run setup-db && npm run seed-data && npm run add-data && npm run add-logos",
+    "cleanup": "node scripts/cleanup.js",
+    "velociraptor": "node scripts/velociraptor.js",
+    "predev": "npm run cleanup && npm run velociraptor",
+    "postdev": "npm run cleanup"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
