@@ -17,6 +17,9 @@ const __dirname = path.dirname(__filename);
 // Load environment variables from .env file in the backend directory
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+// Import environment validator
+import { validateAllConfig } from './utils/envValidator.js';
+
 // Import database connection
 import * as db from './config/database.js';
 
