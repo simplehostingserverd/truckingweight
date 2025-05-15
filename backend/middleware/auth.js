@@ -1,6 +1,6 @@
-import pasetoService from '../services/pasetoService.js';
+import * as pasetoService from '../services/pasetoService.js';
 
-export default async; function (req, res, next) {
+export default async function (req, res, next) {
   // Get token from header
   const token = req.header('x-auth-token');
 
@@ -22,4 +22,4 @@ export default async; function (req, res, next) {
   } catch (err) {
     res.status(401).json({ msg: 'Token is not valid' });
   }
-};
+}
