@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import EmailValidationFeedback from '@/components/ui/EmailValidationFeedback';
+import { validateEmail } from '@/utils/validation/emailValidator';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -140,6 +142,14 @@ export default function Register() {
     e.preventDefault();
     setIsLoading(true);
     setError('');
+
+    // Validate email before submission
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid || emailValidation.isDisposable) {
+      setError(emailValidation.message);
+      setIsLoading(false);
+      return;
+    }
 
     try {
       // 1. Create user in Supabase Auth
@@ -309,6 +319,7 @@ export default function Register() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
+              <EmailValidationFeedback email={email} />
             </div>
 
             <div>

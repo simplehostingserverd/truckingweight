@@ -14,6 +14,8 @@ import {
   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import EmailValidationFeedback from '@/components/ui/EmailValidationFeedback';
+import { validateEmail } from '@/utils/validation/emailValidator';
 
 export default function CreateDriver() {
   const [name, setName] = useState('');
@@ -34,6 +36,16 @@ export default function CreateDriver() {
     setIsLoading(true);
     setError('');
     setIsSuccess(false);
+
+    // Validate email if provided
+    if (email) {
+      const emailValidation = validateEmail(email);
+      if (!emailValidation.isValid || emailValidation.isDisposable) {
+        setError(emailValidation.message);
+        setIsLoading(false);
+        return;
+      }
+    }
 
     try {
       // Get user's company ID
@@ -252,6 +264,7 @@ export default function CreateDriver() {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                 />
+                <EmailValidationFeedback email={email} />
               </div>
             </div>
           </div>
