@@ -1,6 +1,6 @@
 /**
  * License Plate Recognition (LPR) Camera Integration Utility
- * 
+ *
  * This module provides integration with common LPR camera systems used by cities
  * for vehicle monitoring and enforcement. It supports multiple vendors and
  * gracefully handles missing configurations.
@@ -46,10 +46,7 @@ export interface LPRCaptureResult {
 export async function getLPRCameras(): Promise<LPRCameraConfig[]> {
   try {
     const supabase = createClient();
-    const { data, error } = await supabase
-      .from('lpr_cameras')
-      .select('*')
-      .eq('is_active', true);
+    const { data, error } = await supabase.from('lpr_cameras').select('*').eq('is_active', true);
 
     if (error) {
       console.error('Error fetching LPR cameras:', error);
@@ -178,10 +175,10 @@ async function captureFromGenetec(camera: LPRCameraConfig): Promise<LPRCaptureRe
   try {
     // Genetec Security Center API integration
     // In a real implementation, this would use the Genetec SDK or REST API
-    
+
     // Simulate a successful capture for testing
     const mockResult = simulateLPRCapture(camera);
-    
+
     // In production, this would be:
     // const response = await fetch(`https://${camera.ipAddress}:${camera.port || 443}/api/v1/cameras/${camera.id}/capture`, {
     //   method: 'POST',
@@ -191,7 +188,7 @@ async function captureFromGenetec(camera: LPRCameraConfig): Promise<LPRCaptureRe
     //   },
     // });
     // const data = await response.json();
-    
+
     return mockResult;
   } catch (error: any) {
     console.error('Error capturing from Genetec camera:', error);
@@ -273,7 +270,7 @@ function simulateLPRCapture(camera: LPRCameraConfig): LPRCaptureResult {
   // Generate a random license plate for testing
   const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
   const numbers = '0123456789';
-  
+
   let licensePlate = '';
   for (let i = 0; i < 3; i++) {
     licensePlate += letters.charAt(Math.floor(Math.random() * letters.length));
@@ -282,21 +279,33 @@ function simulateLPRCapture(camera: LPRCameraConfig): LPRCaptureResult {
   for (let i = 0; i < 3; i++) {
     licensePlate += numbers.charAt(Math.floor(Math.random() * numbers.length));
   }
-  
+
   // 90% chance of success
   const success = Math.random() < 0.9;
-  
+
   if (success) {
+    // Generate a random license plate image URL from our Supabase storage
+    // In a real implementation, this would be the actual image captured by the camera
+    const supabase = createClient();
+    const timestamp = Date.now();
+    const imageFileName = `lpr_${camera.id}_${timestamp}.jpg`;
+
+    // In a real implementation, we would upload the actual image from the camera
+    // For simulation, we'll just return a URL that would point to our bucket
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from('license-plate-images').getPublicUrl(imageFileName);
+
     return {
       success: true,
       licensePlate,
       confidence: 75 + Math.floor(Math.random() * 25), // 75-99% confidence
-      imageUrl: `https://example.com/lpr/${camera.id}/${Date.now()}.jpg`, // Placeholder URL
+      imageUrl: publicUrl || `https://example.com/lpr/${camera.id}/${timestamp}.jpg`, // Fallback URL
       timestamp: new Date().toISOString(),
       cameraId: camera.id,
       rawData: {
         vendor: camera.vendor,
-        captureTime: Date.now(),
+        captureTime: timestamp,
         location: camera.location || 'Unknown',
       },
     };

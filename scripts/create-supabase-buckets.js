@@ -57,6 +57,13 @@ const BUCKETS = [
     fileSizeLimit: 5 * 1024 * 1024, // 5MB
   },
   {
+    name: 'license-plate-images',
+    public: true,
+    description: 'Storage for license plate images captured by LPR cameras',
+    allowedMimeTypes: ['image/png', 'image/jpeg', 'image/webp'],
+    fileSizeLimit: 3 * 1024 * 1024, // 3MB
+  },
+  {
     name: 'driver-photos',
     public: true,
     description: 'Storage for driver profile photos',
