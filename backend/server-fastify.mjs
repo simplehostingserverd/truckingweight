@@ -130,6 +130,11 @@ async function registerPlugins() {
       return;
     }
 
+    // Skip authentication for health routes
+    if (request.url.startsWith('/health')) {
+      return;
+    }
+
     // Skip authentication for public routes
     if (request.routeOptions.config && request.routeOptions.config.public) {
       return;
