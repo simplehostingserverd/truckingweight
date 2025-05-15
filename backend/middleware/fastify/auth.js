@@ -24,6 +24,8 @@ async function authMiddleware(request, reply) {
   }
 }
 
+export { authMiddleware };
+
 export default {
   authMiddleware,
 };
