@@ -4,9 +4,9 @@
  * Paseto (Platform-Agnostic Security Tokens) is a more secure alternative to JWT
  */
 
-const { V4 } = require('paseto');
-const crypto = require('crypto');
-const cacheService = require('./cache');
+import { V4 } from 'paseto';
+import crypto from 'crypto';
+import cacheService from './cache.js';
 
 // Generate a secure key for Paseto tokens
 let secretKey;
@@ -188,7 +188,7 @@ const invalidateToken = async token => {
   }
 };
 
-module.exports = {
+export {
   generateToken,
   decryptToken,
   storeToken,

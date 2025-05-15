@@ -5,8 +5,8 @@
  * It is kept for backward compatibility with API keys only
  */
 
-const cacheService = require('./cache');
-const pasetoService = require('./pasetoService');
+import cacheService from './cache.js';
+import * as pasetoService from './pasetoService.js';
 
 // Token expiration times (in seconds)
 const TOKEN_EXPIRY = {
@@ -119,7 +119,7 @@ const validateApiKey = async apiKey => {
   }
 };
 
-module.exports = {
+export {
   generateToken,
   storeToken,
   validateToken,

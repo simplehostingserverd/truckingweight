@@ -28,15 +28,17 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Cache dependencies
+      - name: Cache dependencies and Next.js build
         uses: actions/cache@v4
         with:
           path: |
             **/node_modules
             ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+            ${{ github.workspace }}/frontend/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('frontend/**/*.js', 'frontend/**/*.jsx', 'frontend/**/*.ts', 'frontend/**/*.tsx') }}
           restore-keys: |
-            ${{ runner.os }}-npm-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+            ${{ runner.os }}-nextjs-
 
       - name: Create frontend env file
         run: |
@@ -149,15 +151,17 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Cache dependencies
+      - name: Cache dependencies and Next.js build
         uses: actions/cache@v4
         with:
           path: |
             **/node_modules
             ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+            ${{ github.workspace }}/frontend/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('frontend/**/*.js', 'frontend/**/*.jsx', 'frontend/**/*.ts', 'frontend/**/*.tsx') }}
           restore-keys: |
-            ${{ runner.os }}-npm-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+            ${{ runner.os }}-nextjs-
 
       - name: Create frontend env file
         run: |
@@ -185,14 +189,7 @@ jobs:
           cd frontend && npm ci --prefer-offline --no-audit
           cd ../backend && npm ci --prefer-offline --no-audit
 
-      - name: Cache Next.js build
-        uses: actions/cache@v4
-        with:
-          path: |
-            frontend/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('frontend/**/*.js', 'frontend/**/*.jsx', 'frontend/**/*.ts', 'frontend/**/*.tsx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-
+      # Next.js build cache is already included in the dependencies cache above
 
       - name: Build frontend
         working-directory: ./frontend
