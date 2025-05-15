@@ -7,27 +7,27 @@ const fastify = require('fastify')({
       useDefaults: true,
     },
   },
-})
-const dotenv = require('dotenv')
-const path = require('path')
+});
+const dotenv = require('dotenv');
+const path = require('path');
 
 // Load environment variables from .env file in the backend directory
-dotenv.config({ path: path.resolve(__dirname, '.env') })
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 // Import database connection
-const db = require('./config/database')
+const db = require('./config/database');
 
 // Import high-performance LRU cache service
-const cacheService = require('./services/cache')
+const cacheService = require('./services/cache');
 
 // Import Swagger configuration
-const { swaggerOptions, swaggerUiOptions } = require('./config/swagger')
+const { swaggerOptions, swaggerUiOptions } = require('./config/swagger');
 
 // Import authentication middleware
-const { bearerAuthMiddleware, apiKeyAuthMiddleware } = require('./middleware/fastify/bearerAuth')
+const { bearerAuthMiddleware, apiKeyAuthMiddleware } = require('./middleware/fastify/bearerAuth');
 
 // Import Paseto service for secure token handling
-const pasetoService = require('./services/pasetoService')
+const pasetoService = require('./services/pasetoService');
 
 // Register plugins
 async function registerPlugins() {
@@ -36,10 +36,10 @@ async function registerPlugins() {
     origin: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token', 'x-api-key'],
-  })
+  });
 
   // Compression
-  await fastify.register(require('@fastify/compress'), { global: true })
+  await fastify.register(require('@fastify/compress'), { global: true });
 
   // Helmet for security headers
   await fastify.register(require('@fastify/helmet'), {
@@ -51,37 +51,37 @@ async function registerPlugins() {
         imgSrc: ["'self'", 'data:'],
       },
     },
-  })
+  });
 
   // Add authenticate decorator using Paseto
   fastify.decorate('authenticate', async (request, reply) => {
     try {
       // Get token from header
-      const authHeader = request.headers.authorization
+      const authHeader = request.headers.authorization;
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new Error('No token provided')
+        throw new Error('No token provided');
       }
 
-      const token = authHeader.split(' ')[1]
+      const token = authHeader.split(' ')[1];
 
       // Verify token using Paseto
-      const decoded = await pasetoService.decryptToken(token)
+      const decoded = await pasetoService.decryptToken(token);
       if (!decoded) {
-        throw new Error('Invalid token')
+        throw new Error('Invalid token');
       }
 
       // Set user data in request
-      request.user = decoded.user
+      request.user = decoded.user;
     } catch (err) {
-      reply.code(401).send({ message: 'Unauthorized' })
+      reply.code(401).send({ message: 'Unauthorized' });
     }
-  })
+  });
 
   // Rate limiting
   await fastify.register(require('@fastify/rate-limit'), {
     max: 100,
     timeWindow: '1 minute',
-  })
+  });
 
   // Multipart for file uploads
   await fastify.register(require('@fastify/multipart'), {
@@ -93,13 +93,13 @@ async function registerPlugins() {
       files: 5, // Max number of file fields
       headerPairs: 2000, // Max number of header key=>value pairs
     },
-  })
+  });
 
   // Register Swagger
-  await fastify.register(require('@fastify/swagger'), swaggerOptions)
+  await fastify.register(require('@fastify/swagger'), swaggerOptions);
 
   // Register Swagger UI
-  await fastify.register(require('@fastify/swagger-ui'), swaggerUiOptions)
+  await fastify.register(require('@fastify/swagger-ui'), swaggerUiOptions);
 
   // Add global hooks for authentication
   fastify.addHook('onRequest', async (request, reply) => {
@@ -109,135 +109,143 @@ async function registerPlugins() {
       request.url === '/swagger.json' ||
       request.url === '/swagger.yaml'
     ) {
-      return
+      return;
     }
 
     // Skip authentication for public routes
     if (request.routeOptions.config && request.routeOptions.config.public) {
-      return
+      return;
     }
 
     // Check for API key authentication first
     if (request.headers['x-api-key']) {
-      await apiKeyAuthMiddleware(request, reply)
-      return
+      await apiKeyAuthMiddleware(request, reply);
+      return;
     }
 
     // Fall back to bearer token authentication
-    await bearerAuthMiddleware(request, reply)
-  })
+    await bearerAuthMiddleware(request, reply);
+  });
 }
 
 // Register routes
 async function registerRoutes() {
   // Import route handlers
-  const authRoutes = require('./routes/fastify/auth')
-  const weightRoutes = require('./routes/fastify/weights')
-  const loadRoutes = require('./routes/fastify/loads')
-  const companyRoutes = require('./routes/fastify/companies')
-  const vehicleRoutes = require('./routes/fastify/vehicles')
-  const driverRoutes = require('./routes/fastify/drivers')
-  const adminRoutes = require('./routes/fastify/admin')
-  const syncRoutes = require('./routes/fastify/syncRoutes')
-  const integrationRoutes = require('./routes/fastify/integrations')
-  const webhookRoutes = require('./routes/fastify/webhooks')
-  const apiKeyRoutes = require('./routes/fastify/apiKeys')
-  const healthRoutes = require('./routes/fastify/health')
+  const authRoutes = require('./routes/fastify/auth');
+  const weightRoutes = require('./routes/fastify/weights');
+  const loadRoutes = require('./routes/fastify/loads');
+  const companyRoutes = require('./routes/fastify/companies');
+  const vehicleRoutes = require('./routes/fastify/vehicles');
+  const driverRoutes = require('./routes/fastify/drivers');
+  const adminRoutes = require('./routes/fastify/admin');
+  const syncRoutes = require('./routes/fastify/syncRoutes');
+  const integrationRoutes = require('./routes/fastify/integrations');
+  const webhookRoutes = require('./routes/fastify/webhooks');
+  const apiKeyRoutes = require('./routes/fastify/apiKeys');
+  const healthRoutes = require('./routes/fastify/health');
 
   // Import example routes - commented out as file doesn't exist
   // const cacheExampleRoutes = require('./routes/fastify/examples/cacheExample')
 
   // Import city route handlers
-  const cityAuthRoutes = require('./routes/fastify/cityAuth')
-  const cityDashboardRoutes = require('./routes/fastify/cityDashboard')
-  const cityPermitsRoutes = require('./routes/fastify/cityPermits')
+  const cityAuthRoutes = require('./routes/fastify/cityAuth');
+  const cityDashboardRoutes = require('./routes/fastify/cityDashboard');
+  const cityPermitsRoutes = require('./routes/fastify/cityPermits');
+  const cityUsersRoutes = require('./routes/fastify/cityUsers');
+
+  // Import LPR cameras routes
+  const lprCamerasRoutes = require('./routes/fastify/lprCameras');
 
   // Register routes
-  fastify.register(authRoutes, { prefix: '/api/auth' })
-  fastify.register(weightRoutes, { prefix: '/api/weights' })
-  fastify.register(loadRoutes, { prefix: '/api/loads' })
-  fastify.register(companyRoutes, { prefix: '/api/companies' })
-  fastify.register(vehicleRoutes, { prefix: '/api/vehicles' })
-  fastify.register(driverRoutes, { prefix: '/api/drivers' })
-  fastify.register(adminRoutes, { prefix: '/api/admin' })
-  fastify.register(syncRoutes, { prefix: '/api/sync' })
-  fastify.register(integrationRoutes, { prefix: '/api/integrations' })
-  fastify.register(webhookRoutes, { prefix: '/api/webhooks' })
-  fastify.register(apiKeyRoutes, { prefix: '/api/api-keys' })
-  fastify.register(healthRoutes, { prefix: '/health' })
+  fastify.register(authRoutes, { prefix: '/api/auth' });
+  fastify.register(weightRoutes, { prefix: '/api/weights' });
+  fastify.register(loadRoutes, { prefix: '/api/loads' });
+  fastify.register(companyRoutes, { prefix: '/api/companies' });
+  fastify.register(vehicleRoutes, { prefix: '/api/vehicles' });
+  fastify.register(driverRoutes, { prefix: '/api/drivers' });
+  fastify.register(adminRoutes, { prefix: '/api/admin' });
+  fastify.register(syncRoutes, { prefix: '/api/sync' });
+  fastify.register(integrationRoutes, { prefix: '/api/integrations' });
+  fastify.register(webhookRoutes, { prefix: '/api/webhooks' });
+  fastify.register(apiKeyRoutes, { prefix: '/api/api-keys' });
+  fastify.register(healthRoutes, { prefix: '/health' });
 
   // Register city routes
-  fastify.register(cityAuthRoutes, { prefix: '/api/city-auth' })
-  fastify.register(cityDashboardRoutes, { prefix: '/api/city-dashboard' })
-  fastify.register(cityPermitsRoutes, { prefix: '/api/city-permits' })
+  fastify.register(cityAuthRoutes, { prefix: '/api/city-auth' });
+  fastify.register(cityDashboardRoutes, { prefix: '/api/city-dashboard' });
+  fastify.register(cityPermitsRoutes, { prefix: '/api/city-permits' });
+  fastify.register(cityUsersRoutes, { prefix: '/api/city-users' });
+
+  // Register LPR cameras routes
+  fastify.register(lprCamerasRoutes, { prefix: '/api/lpr-cameras' });
 
   // Register example routes - commented out as file doesn't exist
   // fastify.register(cacheExampleRoutes, { prefix: '/api/examples' })
 
   // Root route
   fastify.get('/', async (request, reply) => {
-    return { message: 'Welcome to TruckingSemis API' }
-  })
+    return { message: 'Welcome to TruckingSemis API' };
+  });
 
   // Error handler
   fastify.setErrorHandler((error, request, reply) => {
-    fastify.log.error(error)
+    fastify.log.error(error);
     reply.status(500).send({
       message: 'Something went wrong!',
       error: process.env.NODE_ENV === 'production' ? {} : error,
-    })
-  })
+    });
+  });
 }
 
 // Start the server
 async function start() {
   try {
-    await registerPlugins()
-    await registerRoutes()
+    await registerPlugins();
+    await registerRoutes();
 
-    const PORT = process.env.PORT || 5000
-    await fastify.listen({ port: PORT, host: '0.0.0.0' })
-    fastify.log.info(`Server running on port ${PORT}`)
+    const PORT = process.env.PORT || 5000;
+    await fastify.listen({ port: PORT, host: '0.0.0.0' });
+    fastify.log.info(`Server running on port ${PORT}`);
   } catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
+    fastify.log.error(err);
+    process.exit(1);
   }
 }
 
 // Handle graceful shutdown
 process.on('SIGTERM', async () => {
-  fastify.log.info('SIGTERM signal received: closing HTTP server')
-  await fastify.close()
-  fastify.log.info('HTTP server closed')
+  fastify.log.info('SIGTERM signal received: closing HTTP server');
+  await fastify.close();
+  fastify.log.info('HTTP server closed');
 
   // Close database connections
-  await db.closeConnections()
-  fastify.log.info('Database connections closed')
+  await db.closeConnections();
+  fastify.log.info('Database connections closed');
 
   // Clear cache
-  await cacheService.clear()
-  fastify.log.info('Cache cleared')
+  await cacheService.clear();
+  fastify.log.info('Cache cleared');
 
-  process.exit(0)
-})
+  process.exit(0);
+});
 
 process.on('SIGINT', async () => {
-  fastify.log.info('SIGINT signal received: closing HTTP server')
-  await fastify.close()
-  fastify.log.info('HTTP server closed')
+  fastify.log.info('SIGINT signal received: closing HTTP server');
+  await fastify.close();
+  fastify.log.info('HTTP server closed');
 
   // Close database connections
-  await db.closeConnections()
-  fastify.log.info('Database connections closed')
+  await db.closeConnections();
+  fastify.log.info('Database connections closed');
 
   // Clear cache
-  await cacheService.clear()
-  fastify.log.info('Cache cleared')
+  await cacheService.clear();
+  fastify.log.info('Cache cleared');
 
-  process.exit(0)
-})
+  process.exit(0);
+});
 
 // Start the server
-start()
+start();
 
-module.exports = fastify
+module.exports = fastify;

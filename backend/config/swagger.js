@@ -42,6 +42,8 @@ const swaggerOptions = {
       { name: 'City Auth', description: 'City authentication endpoints' },
       { name: 'City Dashboard', description: 'City dashboard endpoints' },
       { name: 'City Permits', description: 'City permit management endpoints' },
+      { name: 'City Users', description: 'City user management endpoints' },
+      { name: 'LPR Cameras', description: 'License Plate Recognition camera management endpoints' },
     ],
     securityDefinitions: {
       bearerAuth: {
