@@ -18,10 +18,10 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 // Import database connection
-import db from './config/database.js';
+import * as db from './config/database.js';
 
 // Import high-performance LRU cache service
-import cacheService from './services/cache.js';
+import * as cacheService from './services/cache.js';
 
 // Import Swagger configuration
 import { swaggerOptions, swaggerUiOptions } from './config/swagger.js';
@@ -30,7 +30,7 @@ import { swaggerOptions, swaggerUiOptions } from './config/swagger.js';
 import { bearerAuthMiddleware, apiKeyAuthMiddleware } from './middleware/fastify/bearerAuth.js';
 
 // Import Paseto service for secure token handling
-import pasetoService from './services/pasetoService.js';
+import * as pasetoService from './services/pasetoService.js';
 
 // Create Fastify instance
 const fastify = Fastify({

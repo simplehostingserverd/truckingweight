@@ -1,6 +1,6 @@
-const bcrypt = require('bcryptjs');
-const supabase = require('../../config/supabase');
-const pasetoService = require('../../services/pasetoService');
+import bcrypt from 'bcryptjs';
+import supabase from '../../config/supabase.js';
+import * as pasetoService from '../../services/pasetoService.js';
 
 // Register a user
 async function register(request, reply) {
@@ -152,7 +152,7 @@ async function getUser(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   register,
   login,
   getUser,

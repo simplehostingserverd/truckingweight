@@ -90,6 +90,17 @@ class CacheService {
   }
 }
 
-// Create and export a singleton instance
+// Create a singleton instance
 const cacheService = new CacheService();
+
+// Export individual methods
+export const set = cacheService.set.bind(cacheService);
+export const get = cacheService.get.bind(cacheService);
+export const has = cacheService.has.bind(cacheService);
+export const remove = cacheService.delete.bind(cacheService); // Renamed from delete (reserved keyword)
+export const clear = cacheService.clear.bind(cacheService);
+export const size = cacheService.size.bind(cacheService);
+export const getOrSet = cacheService.getOrSet.bind(cacheService);
+
+// Also export the instance as default
 export default cacheService;

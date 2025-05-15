@@ -1,5 +1,5 @@
-const authController = require('../../controllers/fastify/auth');
-const { authMiddleware } = require('../../middleware/fastify/auth');
+import authController from '../../controllers/fastify/auth.js';
+import { authMiddleware } from '../../middleware/fastify/auth.js';
 
 // Auth route schemas
 const registerSchema = {
@@ -119,4 +119,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

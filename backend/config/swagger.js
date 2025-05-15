@@ -83,7 +83,4 @@ const swaggerUiOptions = {
   },
 };
 
-module.exports = {
-  swaggerOptions,
-  swaggerUiOptions,
-};
+export { swaggerOptions, swaggerUiOptions };
