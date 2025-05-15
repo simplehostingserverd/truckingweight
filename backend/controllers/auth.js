@@ -1,12 +1,12 @@
 import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
 import supabase from '../config/supabase.js';
-import pasetoService from '../services/pasetoService.js';
+import * as pasetoService from '../services/pasetoService.js';
 
 // @desc    Register a user
 // @route   POST /api/auth/register
 // @access  Public
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -89,7 +89,7 @@ exports.register = async (req, res) => {
 // @desc    Authenticate user & get token
 // @route   POST /api/auth/login
 // @access  Public
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -154,7 +154,7 @@ exports.login = async (req, res) => {
 // @desc    Get user data
 // @route   GET /api/auth/user
 // @access  Private
-exports.getUser = async (req, res) => {
+export const getUser = async (req, res) => {
   try {
     // Find user by ID
     const { data: user, error } = await supabase
