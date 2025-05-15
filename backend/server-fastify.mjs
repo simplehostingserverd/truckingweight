@@ -212,6 +212,12 @@ async function registerRoutes() {
 // Start the server
 async function start() {
   try {
+    // Validate environment variables
+    if (!validateAllConfig()) {
+      fastify.log.error('Environment validation failed. Please check your .env file.');
+      process.exit(1);
+    }
+
     await registerPlugins();
     await registerRoutes();
 
