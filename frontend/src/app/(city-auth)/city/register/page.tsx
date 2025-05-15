@@ -260,7 +260,7 @@ export default function CityRegister() {
                 <Typography level="h2" sx={{ mb: 1, color: 'primary.400', fontWeight: 'bold' }}>
                   Register Your Municipality
                 </Typography>
-                <Typography level="body1" sx={{ color: 'text.secondary' }}>
+                <Typography level="body-md" sx={{ color: 'text.secondary' }}>
                   Create a city account to manage commercial vehicle weights and permits
                 </Typography>
               </Box>
@@ -434,11 +434,12 @@ export default function CityRegister() {
                   </Button>
 
                   <Box sx={{ textAlign: 'center' }}>
-                    <Typography level="body2" sx={{ color: 'text.secondary' }}>
+                    <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
                       Already have an account?{' '}
                       <Link href="/city/login" style={{ textDecoration: 'none' }}>
                         <Typography
                           component="span"
+                          level="body-sm"
                           sx={{ color: 'primary.400', fontWeight: 500, textDecoration: 'none' }}
                         >
                           Sign in

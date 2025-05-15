@@ -187,7 +187,7 @@ export default function CityLogin() {
                 <Typography level="h2" sx={{ mb: 1, color: 'primary.400', fontWeight: 'bold' }}>
                   City Weighing Portal
                 </Typography>
-                <Typography level="body1" sx={{ color: 'text.secondary' }}>
+                <Typography level="body-md" sx={{ color: 'text.secondary' }}>
                   Please sign in to your municipal account
                 </Typography>
               </Box>
@@ -234,7 +234,7 @@ export default function CityLogin() {
                     >
                       <FormLabel>Password</FormLabel>
                       <Link href="/city/forgot-password" style={{ textDecoration: 'none' }}>
-                        <Typography level="body3" sx={{ color: 'primary.400' }}>
+                        <Typography level="body-xs" sx={{ color: 'primary.400' }}>
                           Forgot password?
                         </Typography>
                       </Link>
@@ -297,11 +297,12 @@ export default function CityLogin() {
                   </Divider>
 
                   <Box sx={{ textAlign: 'center' }}>
-                    <Typography level="body2" sx={{ color: 'text.secondary' }}>
+                    <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
                       Don't have an account?{' '}
                       <Link href="/city/register" style={{ textDecoration: 'none' }}>
                         <Typography
                           component="span"
+                          level="body-sm"
                           sx={{ color: 'primary.400', fontWeight: 500, textDecoration: 'none' }}
                         >
                           Contact your administrator

@@ -167,7 +167,7 @@ export default function ForgotPassword() {
                 <Typography level="h2" sx={{ mb: 1, color: 'primary.400', fontWeight: 'bold' }}>
                   Reset Your Password
                 </Typography>
-                <Typography level="body1" sx={{ color: 'text.secondary' }}>
+                <Typography level="body-md" sx={{ color: 'text.secondary' }}>
                   Enter your email address and we'll send you instructions to reset your password
                 </Typography>
               </Box>
@@ -193,7 +193,7 @@ export default function ForgotPassword() {
                   >
                     Password reset instructions have been sent to your email address.
                   </Alert>
-                  <Typography level="body2" sx={{ mb: 3, color: 'text.secondary' }}>
+                  <Typography level="body-sm" sx={{ mb: 3, color: 'text.secondary' }}>
                     Please check your email and follow the instructions to reset your password. If
                     you don't receive an email within a few minutes, please check your spam folder.
                   </Typography>
@@ -254,12 +254,12 @@ export default function ForgotPassword() {
                     </Button>
 
                     <Box sx={{ textAlign: 'center' }}>
-                      <Typography level="body2" sx={{ color: 'text.secondary' }}>
+                      <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
                         Remember your password?{' '}
                         <Link href="/city/login" style={{ textDecoration: 'none' }}>
                           <Typography
                             component="span"
-                            level="body2"
+                            level="body-sm"
                             sx={{ color: 'primary.400', fontWeight: 500, textDecoration: 'none' }}
                           >
                             Back to Login

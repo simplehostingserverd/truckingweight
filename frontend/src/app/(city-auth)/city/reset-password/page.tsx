@@ -205,7 +205,7 @@ export default function ResetPassword() {
                 <Typography level="h2" sx={{ mb: 1, color: 'primary.400', fontWeight: 'bold' }}>
                   Reset Your Password
                 </Typography>
-                <Typography level="body1" sx={{ color: 'text.secondary' }}>
+                <Typography level="body-md" sx={{ color: 'text.secondary' }}>
                   Enter your new password below
                 </Typography>
               </Box>
@@ -231,7 +231,7 @@ export default function ResetPassword() {
                   >
                     Your password has been reset successfully!
                   </Alert>
-                  <Typography level="body2" sx={{ mb: 3, color: 'text.secondary' }}>
+                  <Typography level="body-sm" sx={{ mb: 3, color: 'text.secondary' }}>
                     You will be redirected to the login page in a few seconds.
                   </Typography>
                   <Button
@@ -309,11 +309,12 @@ export default function ResetPassword() {
                     </Button>
 
                     <Box sx={{ textAlign: 'center' }}>
-                      <Typography level="body2" sx={{ color: 'text.secondary' }}>
+                      <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
                         Remember your password?{' '}
                         <Link href="/city/login" style={{ textDecoration: 'none' }}>
                           <Typography
                             component="span"
+                            level="body-sm"
                             sx={{ color: 'primary.400', fontWeight: 500, textDecoration: 'none' }}
                           >
                             Back to Login

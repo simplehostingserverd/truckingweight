@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Backend for TruckingSemis weight management system",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node server-fastify.js",
+    "start": "node server-fastify.mjs",
     "start:express": "node server.js",
-    "dev": "nodemon server-fastify.js",
+    "dev": "nodemon server-fastify.mjs",
     "dev:express": "nodemon server.js",
     "lint": "eslint .",
     "lint:check": "eslint \"**/*.{js,ts}\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"generated/**\" --ignore-pattern \"prisma/**\"",
