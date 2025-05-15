@@ -19,12 +19,62 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Bucket names
 const BUCKETS = [
+  // City Dashboard Buckets
   {
     name: 'city-logos',
     public: true,
     description: 'Storage for city logos',
     allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/webp'],
     fileSizeLimit: 2 * 1024 * 1024, // 2MB
+  },
+  {
+    name: 'city-documents',
+    public: false,
+    description: 'Storage for city permits, violations, and other documents',
+    allowedMimeTypes: [
+      'application/pdf',
+      'image/png',
+      'image/jpeg',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ],
+    fileSizeLimit: 10 * 1024 * 1024, // 10MB
+  },
+
+  // Trucking Dashboard Buckets
+  {
+    name: 'company-logos',
+    public: true,
+    description: 'Storage for trucking company logos',
+    allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/webp'],
+    fileSizeLimit: 2 * 1024 * 1024, // 2MB
+  },
+  {
+    name: 'vehicle-images',
+    public: true,
+    description: 'Storage for vehicle images',
+    allowedMimeTypes: ['image/png', 'image/jpeg', 'image/webp'],
+    fileSizeLimit: 5 * 1024 * 1024, // 5MB
+  },
+  {
+    name: 'driver-photos',
+    public: true,
+    description: 'Storage for driver profile photos',
+    allowedMimeTypes: ['image/png', 'image/jpeg', 'image/webp'],
+    fileSizeLimit: 2 * 1024 * 1024, // 2MB
+  },
+  {
+    name: 'trucking-documents',
+    public: false,
+    description: 'Storage for weight tickets, permits, and other trucking documents',
+    allowedMimeTypes: [
+      'application/pdf',
+      'image/png',
+      'image/jpeg',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ],
+    fileSizeLimit: 10 * 1024 * 1024, // 10MB
   },
   {
     name: 'signatures',
