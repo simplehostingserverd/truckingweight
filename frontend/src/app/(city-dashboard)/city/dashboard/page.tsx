@@ -3,6 +3,7 @@
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import {
   ScaleIcon,
   DocumentTextIcon,
@@ -34,7 +35,8 @@ import {
   Cell,
 } from 'recharts';
 
-export default function CityDashboardPage() {
+// Create a client-side only component to avoid hydration issues
+const CityDashboardPageClient = () => {
   const [dashboardData, setDashboardData] = useState({
     totalScales: 0,
     activeScales: 0,
@@ -63,16 +65,23 @@ export default function CityDashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     fetchDashboardData();
   }, []);
 
   const fetchDashboardData = async () => {
+    if (!isMounted) return;
+
     setIsLoading(true);
     setError('');
 
     try {
+      // Safely access localStorage only on the client side
+      if (typeof window === 'undefined') return;
+
       const cityToken = localStorage.getItem('cityToken');
 
       if (!cityToken) {
@@ -601,4 +610,11 @@ export default function CityDashboardPage() {
       </div>
     </ErrorBoundary>
   );
-}
+};
+
+// Use dynamic import with SSR disabled to avoid hydration issues
+const CityDashboardPage = dynamic(() => Promise.resolve(CityDashboardPageClient), {
+  ssr: false,
+});
+
+export default CityDashboardPage;

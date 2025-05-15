@@ -2,7 +2,7 @@
 
 import ErrorBoundary from '@/components/ErrorBoundary';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -39,10 +39,22 @@ export default function CityLogin() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+
+  // This ensures we only access browser APIs after component mount
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Safety check - only proceed if component is mounted
+    if (!isMounted) {
+      return;
+    }
+
     setIsLoading(true);
     setError('');
 
@@ -74,11 +86,14 @@ export default function CityLogin() {
           role: 'admin',
         };
 
-        // Store the token in localStorage
-        localStorage.setItem('cityToken', mockToken);
+        // Safely store data in localStorage (client-side only)
+        if (typeof window !== 'undefined') {
+          // Store the token in localStorage
+          localStorage.setItem('cityToken', mockToken);
 
-        // Store user data in localStorage
-        localStorage.setItem('cityUser', JSON.stringify(mockUser));
+          // Store user data in localStorage
+          localStorage.setItem('cityUser', JSON.stringify(mockUser));
+        }
 
         // Redirect to city dashboard
         router.push('/city/dashboard');
@@ -100,11 +115,14 @@ export default function CityLogin() {
         throw new Error(data.error || data.msg || 'Login failed');
       }
 
-      // Store the token in localStorage
-      localStorage.setItem('cityToken', data.token);
+      // Safely store data in localStorage (client-side only)
+      if (typeof window !== 'undefined') {
+        // Store the token in localStorage
+        localStorage.setItem('cityToken', data.token);
 
-      // Store user data in localStorage
-      localStorage.setItem('cityUser', JSON.stringify(data.user));
+        // Store user data in localStorage
+        localStorage.setItem('cityUser', JSON.stringify(data.user));
+      }
 
       // Redirect to city dashboard
       router.push('/city/dashboard');

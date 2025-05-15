@@ -2,80 +2,97 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import CityDashboardHeader from '@/components/CityDashboard/CityDashboardHeader';
 import CityDashboardSidebar from '@/components/CityDashboard/CityDashboardSidebar';
 
-export default function CityDashboardLayout({ children }: { children: React.ReactNode }) {
+// Create a client-side only component to avoid hydration issues
+const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<any>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    setIsMounted(true);
+
     // Check if user is authenticated as a city user
-    const cityToken = localStorage.getItem('cityToken');
-    const cityUser = localStorage.getItem('cityUser');
+    if (typeof window !== 'undefined') {
+      const cityToken = localStorage.getItem('cityToken');
+      const cityUser = localStorage.getItem('cityUser');
 
-    if (!cityToken || !cityUser) {
-      router.push('/city/login');
-      return;
-    }
+      if (!cityToken || !cityUser) {
+        router.push('/city/login');
+        return;
+      }
 
-    // Parse user data
-    try {
-      const parsedUserData = JSON.parse(cityUser);
-      setUserData(parsedUserData);
-    } catch (error) {
-      console.error('Error parsing city user data:', error);
-      localStorage.removeItem('cityToken');
-      localStorage.removeItem('cityUser');
-      router.push('/city/login');
-      return;
-    }
-
-    // Check if this is a test token
-    if (cityToken.startsWith('test-city-token-')) {
-      console.log('Using test token for city dashboard');
-      // Use the parsed user data directly
-      setIsLoading(false);
-      return;
-    }
-
-    // Verify token with backend
-    const verifyToken = async () => {
+      // Parse user data
       try {
-        const response = await fetch('/api/city-auth/me', {
-          headers: {
-            Authorization: `Bearer ${cityToken}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Invalid token');
-        }
-
-        const data = await response.json();
-        setUserData(data.user);
-        setIsLoading(false);
+        const parsedUserData = JSON.parse(cityUser);
+        setUserData(parsedUserData);
       } catch (error) {
-        console.error('Error verifying city token:', error);
-
-        // For development/testing, allow using the parsed user data even if token verification fails
-        if (process.env.NODE_ENV !== 'production') {
-          console.log('Using local user data for development');
-          setIsLoading(false);
-          return;
-        }
-
+        console.error('Error parsing city user data:', error);
         localStorage.removeItem('cityToken');
         localStorage.removeItem('cityUser');
         router.push('/city/login');
+        return;
       }
-    };
+    }
 
-    verifyToken();
-  }, [router]);
+    // Check if we have the token and we're mounted
+    if (isMounted && typeof window !== 'undefined') {
+      const cityToken = localStorage.getItem('cityToken');
 
-  if (isLoading) {
+      // Check if this is a test token
+      if (cityToken && cityToken.startsWith('test-city-token-')) {
+        console.log('Using test token for city dashboard');
+        // Use the parsed user data directly
+        setIsLoading(false);
+        return;
+      }
+
+      // Verify token with backend if we have a token
+      if (cityToken) {
+        const verifyToken = async () => {
+          try {
+            const response = await fetch('/api/city-auth/me', {
+              headers: {
+                Authorization: `Bearer ${cityToken}`,
+              },
+            });
+
+            if (!response.ok) {
+              throw new Error('Invalid token');
+            }
+
+            const data = await response.json();
+            setUserData(data.user);
+            setIsLoading(false);
+          } catch (error) {
+            console.error('Error verifying city token:', error);
+
+            // For development/testing, allow using the parsed user data even if token verification fails
+            if (process.env.NODE_ENV !== 'production') {
+              console.log('Using local user data for development');
+              setIsLoading(false);
+              return;
+            }
+
+            if (typeof window !== 'undefined') {
+              localStorage.removeItem('cityToken');
+              localStorage.removeItem('cityUser');
+            }
+            router.push('/city/login');
+          }
+        };
+
+        verifyToken();
+      }
+    }
+  }, [router, isMounted]);
+
+  // Show loading state if not mounted or still loading
+  if (!isMounted || isLoading) {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-900">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
@@ -94,4 +111,13 @@ export default function CityDashboardLayout({ children }: { children: React.Reac
       </div>
     </div>
   );
+};
+
+// Use dynamic import with SSR disabled to avoid hydration issues
+const CityDashboardLayout = dynamic(() => Promise.resolve(CityDashboardLayoutClient), {
+  ssr: false,
+});
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <CityDashboardLayout>{children}</CityDashboardLayout>;
 }
