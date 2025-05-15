@@ -25,6 +25,7 @@ export interface LPRCameraConfig {
   isActive: boolean;
   location?: string;
   notes?: string;
+  cityId?: number;
 }
 
 // LPR Capture Result
@@ -67,6 +68,7 @@ export async function getLPRCameras(): Promise<LPRCameraConfig[]> {
       isActive: camera.is_active,
       location: camera.location,
       notes: camera.notes,
+      cityId: camera.city_id,
     }));
   } catch (error) {
     console.error('Error in getLPRCameras:', error);
@@ -112,6 +114,7 @@ export async function captureLPRImage(cameraId: string): Promise<LPRCaptureResul
       isActive: camera.is_active,
       location: camera.location,
       notes: camera.notes,
+      cityId: camera.city_id,
     };
 
     // Call the appropriate vendor-specific capture function
