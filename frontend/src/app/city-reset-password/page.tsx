@@ -129,6 +129,7 @@ export default function ResetPassword() {
               src="/images/city-weighing-bg.jpg"
               alt="City Weighing System"
               fill
+              sizes="(max-width: 1200px) 100vw, 50vw"
               style={{ objectFit: 'cover' }}
               priority
             />

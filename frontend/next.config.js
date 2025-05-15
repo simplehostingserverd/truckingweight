@@ -10,9 +10,9 @@ const withBundleAnalyzer =
 const withPWA = config => config;
 
 // Configure webpack for Cesium
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
+const { configureCesiumWebpack } = require('./src/utils/cesium-webpack-config');
 
 // Check if SSL certificates exist
 const sslCertPath = path.join(__dirname, '../ssl/localhost.crt');
@@ -33,32 +33,9 @@ const nextConfig = {
     : {}),
   // Webpack configuration for Cesium
   webpack: (config, { isServer }) => {
-    if (!isServer) {
-      // Add copy plugin to copy Cesium assets
-      config.plugins.push(
-        new CopyWebpackPlugin({
-          patterns: [
-            {
-              from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/Workers'),
-              to: 'static/chunks/cesium/Workers',
-            },
-            {
-              from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/ThirdParty'),
-              to: 'static/chunks/cesium/ThirdParty',
-            },
-            {
-              from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/Assets'),
-              to: 'static/chunks/cesium/Assets',
-            },
-            {
-              from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/Widgets'),
-              to: 'static/chunks/cesium/Widgets',
-            },
-          ],
-        })
-      );
-    }
-
+    // Configure webpack for Cesium
+    config = configureCesiumWebpack(config, isServer);
+    
     return config;
   },
   // Core settings

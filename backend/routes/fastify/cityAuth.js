@@ -215,7 +215,10 @@ async function routes(fastify, options) {
    * @desc    Register a new city
    * @access  Public
    */
-  fastify.post('/register-city', { schema: registerCitySchema }, async (request, reply) => {
+  fastify.post('/register-city', { 
+    schema: registerCitySchema,
+    config: { public: true } // Mark this route as public to bypass authentication middleware
+  }, async (request, reply) => {
     const {
       name,
       state,
@@ -287,7 +290,10 @@ async function routes(fastify, options) {
    * @desc    Register a city user
    * @access  Public
    */
-  fastify.post('/register', { schema: registerCityUserSchema }, async (request, reply) => {
+  fastify.post('/register', { 
+    schema: registerCityUserSchema,
+    config: { public: true } // Mark this route as public to bypass authentication middleware
+  }, async (request, reply) => {
     const { name, email, password, cityId, role } = request.body;
 
     try {
@@ -391,7 +397,10 @@ async function routes(fastify, options) {
    * @desc    Authenticate city user & get token
    * @access  Public
    */
-  fastify.post('/login', { schema: loginCityUserSchema }, async (request, reply) => {
+  fastify.post('/login', { 
+    schema: loginCityUserSchema,
+    config: { public: true } // Mark this route as public to bypass authentication middleware
+  }, async (request, reply) => {
     const { email, password } = request.body;
 
     try {
@@ -497,7 +506,10 @@ async function routes(fastify, options) {
    * @desc    Send password reset email
    * @access  Public
    */
-  fastify.post('/forgot-password', { schema: forgotPasswordSchema }, async (request, reply) => {
+  fastify.post('/forgot-password', { 
+    schema: forgotPasswordSchema,
+    config: { public: true } // Mark this route as public to bypass authentication middleware
+  }, async (request, reply) => {
     const { email } = request.body;
 
     try {
@@ -540,7 +552,10 @@ async function routes(fastify, options) {
    * @desc    Reset user password
    * @access  Public
    */
-  fastify.post('/reset-password', { schema: resetPasswordSchema }, async (request, reply) => {
+  fastify.post('/reset-password', { 
+    schema: resetPasswordSchema,
+    config: { public: true } // Mark this route as public to bypass authentication middleware
+  }, async (request, reply) => {
     const { token, password } = request.body;
 
     try {

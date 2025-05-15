@@ -1,8 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import * as Cesium from 'cesium';
+import { initCesium } from '@/utils/cesium-config';
 
-// Set Cesium ion access token
-Cesium.Ion.defaultAccessToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN || '';
+// Initialize Cesium configuration
+initCesium();
+
+// Import Cesium dynamically to avoid SSR issues
+let Cesium: any;
+if (typeof window !== 'undefined') {
+  Cesium = require('cesium');
+  // Set Cesium ion access token
+  Cesium.Ion.defaultAccessToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN || '';
+}
 
 interface CesiumMapProps {
   latitude: number;
