@@ -31,8 +31,33 @@ const nextConfig = {
       }
     : {}),
   // Webpack configuration
-  webpack: (config, { isServer }) => {
+  webpack: (config, { dev, isServer }) => {
     // We're using Cesium from CDN, so we don't need to process it
+
+    // Only enable these optimizations in production
+    if (!dev) {
+      // Enable terser compression
+      config.optimization.minimize = true;
+
+      // Split chunks for better caching
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        maxInitialRequests: Infinity,
+        minSize: 20000,
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module) {
+              // Get the name of the npm package
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+              // Return a nice name for the chunk
+              return `npm.${packageName.replace('@', '')}`;
+            },
+          },
+        },
+      };
+    }
+
     return config;
   },
   // Core settings
