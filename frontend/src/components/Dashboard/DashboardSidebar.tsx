@@ -15,6 +15,8 @@ import {
   ServerIcon,
   SignalIcon,
   MapPinIcon,
+  DocumentIcon,
+  PencilIcon,
 } from '@heroicons/react/24/outline';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { cn } from '@/lib/utils';
@@ -77,6 +79,8 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
     { name: 'Vehicles', href: '/vehicles', icon: TruckIcon },
     { name: 'Drivers', href: '/drivers', icon: UserGroupIcon },
     { name: 'Driver Tracking', href: '/driver-tracking', icon: TruckIcon },
+    { name: 'Documents', href: '/documents', icon: DocumentIcon },
+    { name: 'Signatures', href: '/signatures', icon: PencilIcon },
     { name: 'ERP Integration', href: '/erp', icon: ServerIcon },
     { name: 'Telematics', href: '/telematics', icon: SignalIcon },
     { name: 'Reports', href: '/reports', icon: ChartBarIcon },
@@ -87,6 +91,11 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
     { name: 'Companies', href: '/admin/companies', icon: BuildingOfficeIcon },
     { name: 'City Dashboard', href: '/city-weighing', icon: MapPinIcon },
     { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
+  ];
+
+  // Company-specific navigation
+  const companyNavigation = [
+    { name: 'Company Profile', href: '/company/profile', icon: BuildingOfficeIcon },
   ];
 
   // Don't render sidebar on mobile as we use the mobile navigation instead
@@ -125,6 +134,48 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
 
         <nav className="mt-2 flex-1 px-3 space-y-1">
           {navigation.map(item => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                  'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150'
+                )}
+              >
+                <item.icon
+                  className={cn(
+                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                    'flex-shrink-0 h-5 w-5',
+                    collapsed ? 'mx-auto' : 'mr-3'
+                  )}
+                  aria-hidden="true"
+                />
+                {!collapsed && <span>{item.name}</span>}
+                {collapsed && <span className="sr-only">{item.name}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Company Navigation */}
+        <div className="px-3 mt-6 mb-2">
+          {!collapsed ? (
+            <>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">
+                Company
+              </h3>
+              <div className="h-px bg-gray-800"></div>
+            </>
+          ) : (
+            <div className="h-px bg-gray-800"></div>
+          )}
+        </div>
+        <nav className="mt-2 flex-1 px-3 space-y-1">
+          {companyNavigation.map(item => {
             const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link

@@ -17,6 +17,8 @@ import {
   ChartBarIcon,
   UsersIcon,
   BuildingOfficeIcon,
+  DocumentIcon,
+  PencilIcon,
 } from '@heroicons/react/24/outline';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { useTheme } from 'next-themes';
@@ -74,6 +76,8 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
     { name: 'Loads', href: '/loads', icon: TruckIcon },
     { name: 'Vehicles', href: '/vehicles', icon: TruckIcon },
     { name: 'Drivers', href: '/drivers', icon: UserGroupIcon },
+    { name: 'Documents', href: '/documents', icon: DocumentIcon },
+    { name: 'Signatures', href: '/signatures', icon: PencilIcon },
     { name: 'Reports', href: '/reports', icon: ChartBarIcon },
   ];
 
@@ -81,6 +85,11 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
     { name: 'Users', href: '/admin/users', icon: UsersIcon },
     { name: 'Companies', href: '/admin/companies', icon: BuildingOfficeIcon },
     { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
+  ];
+
+  // Company-specific navigation for mobile
+  const companyNavigation = [
+    { name: 'Company Profile', href: '/company/profile', icon: BuildingOfficeIcon },
   ];
 
   return (
@@ -93,6 +102,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
               <MobileNav
                 navigation={navigation}
                 adminNavigation={adminNavigation}
+                companyNavigation={companyNavigation}
                 isAdmin={isAdmin}
               />
             )}

@@ -14,6 +14,8 @@ import {
   ScaleIcon,
   PhotoIcon,
   ArrowPathIcon,
+  CameraIcon,
+  VideoCameraIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,8 +23,25 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { uploadVehicleImage } from '@/utils/supabase/storage';
+import { captureLPRImage, getLPRCameras, LPRCameraConfig } from '@/utils/lpr';
 import { Database } from '@/types/supabase';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface VehicleDetailsProps {
   id: string;
@@ -37,6 +56,11 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
   const [activeTab, setActiveTab] = useState('details');
   const [imageUploading, setImageUploading] = useState(false);
   const [imageType, setImageType] = useState('main');
+  const [showLPRDialog, setShowLPRDialog] = useState(false);
+  const [lprCameras, setLPRCameras] = useState<LPRCameraConfig[]>([]);
+  const [selectedCamera, setSelectedCamera] = useState<string>('');
+  const [isCapturing, setIsCapturing] = useState(false);
+  const [captureResult, setCaptureResult] = useState<any>(null);
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
@@ -44,7 +68,23 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
     if (!initialData) {
       fetchVehicleData();
     }
+
+    // Fetch LPR cameras
+    fetchLPRCameras();
   }, [id, initialData]);
+
+  const fetchLPRCameras = async () => {
+    try {
+      const cameras = await getLPRCameras();
+      setLPRCameras(cameras);
+
+      if (cameras.length > 0) {
+        setSelectedCamera(cameras[0].id);
+      }
+    } catch (err: any) {
+      console.error('Error fetching LPR cameras:', err);
+    }
+  };
 
   const fetchVehicleData = async () => {
     try {
@@ -144,6 +184,82 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
       setError(err.message || 'Failed to upload vehicle image');
     } finally {
       setImageUploading(false);
+    }
+  };
+
+  const handleLPRCapture = async () => {
+    if (!selectedCamera) {
+      setError('Please select a camera');
+      return;
+    }
+
+    try {
+      setIsCapturing(true);
+      setError('');
+      setCaptureResult(null);
+
+      // Capture image from LPR camera
+      const result = await captureLPRImage(selectedCamera);
+      setCaptureResult(result);
+
+      if (result.success && result.imageUrl) {
+        // Convert the image URL to a file
+        const response = await fetch(result.imageUrl);
+        const blob = await response.blob();
+        const file = new File([blob], `lpr_capture_${Date.now()}.jpg`, { type: 'image/jpeg' });
+
+        // Upload the image to Supabase Storage
+        const imageUrl = await uploadVehicleImage(parseInt(id), file, imageType);
+
+        // Update vehicle record with new image URL and license plate if available
+        const updateData: any = {
+          [`image_${imageType}_url`]: imageUrl,
+          updated_at: new Date().toISOString(),
+        };
+
+        // If license plate was recognized and vehicle doesn't have a license plate set, update it
+        if (result.licensePlate && (!vehicle.license_plate || vehicle.license_plate === '')) {
+          updateData.license_plate = result.licensePlate;
+        }
+
+        const { error: updateError } = await supabase
+          .from('vehicles')
+          .update(updateData)
+          .eq('id', id);
+
+        if (updateError) {
+          throw updateError;
+        }
+
+        // Update local state
+        setVehicle({
+          ...vehicle,
+          [`image_${imageType}_url`]: imageUrl,
+          ...(updateData.license_plate ? { license_plate: updateData.license_plate } : {}),
+        });
+
+        // Show success message
+        setSuccess(
+          `Vehicle ${imageType} image captured successfully${
+            updateData.license_plate
+              ? ` and license plate updated to ${updateData.license_plate}`
+              : ''
+          }`
+        );
+
+        // Close the dialog
+        setShowLPRDialog(false);
+
+        // Refresh the page data
+        fetchVehicleData();
+      } else {
+        setError(result.error || 'Failed to capture image from LPR camera');
+      }
+    } catch (err: any) {
+      console.error('Error capturing from LPR camera:', err);
+      setError(err.message || 'Failed to capture from LPR camera');
+    } finally {
+      setIsCapturing(false);
     }
   };
 
@@ -365,7 +481,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
                             </div>
                           )}
                         </div>
-                        <div>
+                        <div className="space-y-2">
                           <input
                             id="main-image-upload"
                             type="file"
@@ -376,15 +492,117 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
                               handleImageUpload(e);
                             }}
                           />
-                          <Button
-                            variant="outline"
-                            className="w-full"
-                            onClick={() => document.getElementById('main-image-upload')?.click()}
-                            disabled={imageUploading}
-                          >
-                            <PhotoIcon className="h-5 w-5 mr-2" />
-                            {vehicle.image_main_url ? 'Change Image' : 'Upload Image'}
-                          </Button>
+                          <div className="flex space-x-2">
+                            <Button
+                              variant="outline"
+                              className="flex-1"
+                              onClick={() => document.getElementById('main-image-upload')?.click()}
+                              disabled={imageUploading}
+                            >
+                              <PhotoIcon className="h-5 w-5 mr-2" />
+                              {vehicle.image_main_url ? 'Change Image' : 'Upload Image'}
+                            </Button>
+
+                            <Dialog open={showLPRDialog} onOpenChange={setShowLPRDialog}>
+                              <DialogTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  onClick={() => {
+                                    setImageType('main');
+                                    setCaptureResult(null);
+                                  }}
+                                  disabled={imageUploading || lprCameras.length === 0}
+                                >
+                                  <CameraIcon className="h-5 w-5 mr-2" />
+                                  LPR Camera
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent>
+                                <DialogHeader>
+                                  <DialogTitle>Capture from LPR Camera</DialogTitle>
+                                  <DialogDescription>
+                                    Capture an image from a connected LPR camera system
+                                  </DialogDescription>
+                                </DialogHeader>
+
+                                <div className="space-y-4 py-4">
+                                  <div className="space-y-2">
+                                    <label className="text-sm font-medium">Select Camera</label>
+                                    <Select
+                                      value={selectedCamera}
+                                      onValueChange={setSelectedCamera}
+                                      disabled={isCapturing || lprCameras.length === 0}
+                                    >
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select a camera" />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        {lprCameras.map(camera => (
+                                          <SelectItem key={camera.id} value={camera.id}>
+                                            {camera.name} ({camera.vendor})
+                                          </SelectItem>
+                                        ))}
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+
+                                  {captureResult && (
+                                    <div className="space-y-2 border rounded-md p-4">
+                                      <h3 className="text-lg font-medium">
+                                        {captureResult.success
+                                          ? 'Capture Successful'
+                                          : 'Capture Failed'}
+                                      </h3>
+
+                                      {captureResult.success ? (
+                                        <div className="space-y-2">
+                                          {captureResult.imageUrl && (
+                                            <div className="border rounded-md overflow-hidden">
+                                              <img
+                                                src={captureResult.imageUrl}
+                                                alt="Captured from LPR"
+                                                className="w-full h-48 object-contain"
+                                              />
+                                            </div>
+                                          )}
+
+                                          {captureResult.licensePlate && (
+                                            <div>
+                                              <p className="text-sm font-medium">License Plate:</p>
+                                              <p className="text-lg font-bold">
+                                                {captureResult.licensePlate}
+                                              </p>
+                                              <p className="text-xs text-gray-500">
+                                                Confidence: {captureResult.confidence}%
+                                              </p>
+                                            </div>
+                                          )}
+                                        </div>
+                                      ) : (
+                                        <p className="text-red-500">{captureResult.error}</p>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+
+                                <DialogFooter>
+                                  <Button
+                                    variant="outline"
+                                    onClick={() => setShowLPRDialog(false)}
+                                    disabled={isCapturing}
+                                  >
+                                    Cancel
+                                  </Button>
+                                  <Button
+                                    onClick={handleLPRCapture}
+                                    disabled={isCapturing || !selectedCamera}
+                                  >
+                                    {isCapturing ? 'Capturing...' : 'Capture'}
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
+                          </div>
                         </div>
                       </div>
 
@@ -474,11 +692,22 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
                       </div>
                     )}
 
-                    <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
+                    <div className="mt-6 text-sm text-gray-500 dark:text-gray-400 space-y-2">
                       <p>
                         <strong>Note:</strong> Images should be clear and show the vehicle from
                         different angles. Maximum file size is 5MB.
                       </p>
+                      <p>
+                        <strong>LPR Camera Integration:</strong> You can capture images directly
+                        from connected License Plate Recognition (LPR) cameras. The system will
+                        automatically detect and populate the license plate field if available.
+                      </p>
+                      {lprCameras.length === 0 && (
+                        <p className="text-amber-500">
+                          <strong>No LPR cameras configured.</strong> Contact your administrator to
+                          set up LPR camera integration.
+                        </p>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

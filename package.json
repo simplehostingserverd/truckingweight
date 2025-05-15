@@ -37,7 +37,8 @@
     "prestart-cleanup": "node scripts/prestart-cleanup.js",
     "predev": "node scripts/velociraptor.js && node scripts/kill-nodejs.js",
     "postdev": "node scripts/cleanup.js",
-    "setup-supabase-buckets": "node scripts/create-supabase-buckets.js"
+    "setup-supabase-buckets": "node scripts/create-supabase-buckets.js",
+    "setup-lpr-cameras": "node scripts/migrations/create-lpr-cameras-table.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",

@@ -31,7 +31,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { uploadTruckingDocument } from '@/utils/supabase/storage';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
@@ -48,7 +54,7 @@ export default function DocumentsPage() {
   const [documentName, setDocumentName] = useState('');
   const [documentFile, setDocumentFile] = useState<File | null>(null);
   const [companyId, setCompanyId] = useState<number | null>(null);
-  
+
   const supabase = createClientComponentClient<Database>();
 
   useEffect(() => {
@@ -168,7 +174,7 @@ export default function DocumentsPage() {
 
     const file = e.target.files[0];
     setDocumentFile(file);
-    
+
     // Auto-fill document name from filename if not already set
     if (!documentName) {
       const fileName = file.name.split('.')[0];
@@ -204,11 +210,7 @@ export default function DocumentsPage() {
       }
 
       // Upload the document file to Supabase Storage
-      const fileUrl = await uploadTruckingDocument(
-        newDocument.id,
-        documentFile,
-        documentType
-      );
+      const fileUrl = await uploadTruckingDocument(newDocument.id, documentFile, documentType);
 
       // Update the document record with the file URL
       const { error: updateError } = await supabase
@@ -224,15 +226,15 @@ export default function DocumentsPage() {
 
       // Add the new document to the state
       setDocuments([{ ...newDocument, file_url: fileUrl }, ...documents]);
-      
+
       // Show success message
       setSuccess('Document uploaded successfully');
-      
+
       // Reset form
       setDocumentName('');
       setDocumentFile(null);
       setShowUploadDialog(false);
-      
+
       // Refresh documents list
       fetchDocuments();
     } catch (err: any) {
@@ -248,10 +250,7 @@ export default function DocumentsPage() {
       setError('');
 
       // Delete document record
-      const { error: deleteError } = await supabase
-        .from('documents')
-        .delete()
-        .eq('id', documentId);
+      const { error: deleteError } = await supabase.from('documents').delete().eq('id', documentId);
 
       if (deleteError) {
         throw deleteError;
@@ -297,12 +296,12 @@ export default function DocumentsPage() {
     if (activeTab !== 'all' && doc.type !== activeTab) {
       return false;
     }
-    
+
     // Filter by search query
     if (searchQuery && !doc.name.toLowerCase().includes(searchQuery.toLowerCase())) {
       return false;
     }
-    
+
     return true;
   });
 
@@ -312,9 +311,7 @@ export default function DocumentsPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Documents</h1>
-            <p className="text-gray-500 dark:text-gray-400 mt-1">
-              Manage your company documents
-            </p>
+            <p className="text-gray-500 dark:text-gray-400 mt-1">Manage your company documents</p>
           </div>
           <div className="flex space-x-2">
             <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
@@ -411,3 +408,122 @@ export default function DocumentsPage() {
             </Dialog>
           </div>
         </div>
+
+        {error && (
+          <Alert variant="destructive" className="mb-6">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
+        {success && (
+          <Alert className="mb-6 bg-green-900/20 border-green-800 text-green-300">
+            <AlertDescription>{success}</AlertDescription>
+          </Alert>
+        )}
+
+        <div className="mb-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="relative flex-1">
+              <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Input
+                placeholder="Search documents..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full md:w-auto">
+              <TabsList>
+                <TabsTrigger value="all">All</TabsTrigger>
+                <TabsTrigger value="weight_ticket">Weight Tickets</TabsTrigger>
+                <TabsTrigger value="permit">Permits</TabsTrigger>
+                <TabsTrigger value="invoice">Invoices</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Document Library</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {isLoading ? (
+              <div className="space-y-4">
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+              </div>
+            ) : filteredDocuments.length > 0 ? (
+              <div className="space-y-4">
+                {filteredDocuments.map(doc => (
+                  <div
+                    key={doc.id}
+                    className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+                  >
+                    <div className="flex items-center space-x-4">
+                      {getDocumentTypeIcon(doc.type)}
+                      <div>
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+                          {doc.name}
+                        </h3>
+                        <div className="flex items-center space-x-4 mt-1">
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {getDocumentTypeLabel(doc.type)}
+                          </span>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {new Date(doc.created_at).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex space-x-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => window.open(doc.file_url, '_blank')}
+                      >
+                        <ArrowDownTrayIcon className="h-4 w-4 mr-2" />
+                        Download
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleDeleteDocument(doc.id)}
+                      >
+                        <TrashIcon className="h-4 w-4 mr-2" />
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <FolderIcon className="h-12 w-12 mx-auto text-gray-400" />
+                <h3 className="mt-2 text-lg font-medium text-gray-900 dark:text-white">
+                  No documents found
+                </h3>
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  {searchQuery
+                    ? 'No documents match your search criteria'
+                    : activeTab !== 'all'
+                      ? `You don't have any ${getDocumentTypeLabel(
+                          activeTab
+                        ).toLowerCase()} documents yet`
+                      : "You don't have any documents yet"}
+                </p>
+                <div className="mt-6">
+                  <Button onClick={() => setShowUploadDialog(true)}>
+                    <PlusIcon className="h-5 w-5 mr-2" />
+                    Upload Document
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </ErrorBoundary>
+  );
+}

@@ -18,12 +18,18 @@ interface MobileNavProps {
     href: string;
     icon: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
   }[];
+  companyNavigation?: {
+    name: string;
+    href: string;
+    icon: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
+  }[];
   isAdmin?: boolean;
 }
 
 export default function MobileNav({
   navigation,
   adminNavigation = [],
+  companyNavigation = [],
   isAdmin = false,
 }: MobileNavProps) {
   const [open, setOpen] = useState(false);
@@ -122,6 +128,44 @@ export default function MobileNav({
                         </Link>
                       );
                     })}
+
+                    {companyNavigation.length > 0 && (
+                      <>
+                        <div className="border-t border-gray-200 dark:border-gray-700 my-5"></div>
+                        <h3 className="px-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                          Company
+                        </h3>
+
+                        {companyNavigation.map(item => {
+                          const isActive =
+                            pathname === item.href || pathname.startsWith(`${item.href}/`);
+                          return (
+                            <Link
+                              key={item.name}
+                              href={item.href}
+                              className={cn(
+                                isActive
+                                  ? 'bg-primary-100 text-primary-900 dark:bg-primary-900 dark:text-primary-100'
+                                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white',
+                                'group flex items-center px-2 py-2 text-base font-medium rounded-md'
+                              )}
+                              onClick={() => setOpen(false)}
+                            >
+                              <item.icon
+                                className={cn(
+                                  isActive
+                                    ? 'text-primary-600 dark:text-primary-400'
+                                    : 'text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-300',
+                                  'mr-4 flex-shrink-0 h-6 w-6'
+                                )}
+                                aria-hidden="true"
+                              />
+                              {item.name}
+                            </Link>
+                          );
+                        })}
+                      </>
+                    )}
 
                     {isAdmin && adminNavigation.length > 0 && (
                       <>
