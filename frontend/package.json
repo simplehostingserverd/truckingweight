@@ -4,10 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "copy-cesium": "node scripts/copy-cesium.js",
-    "create-cesium-stub": "node scripts/create-cesium-stub.js",
-    "prepare-cesium": "npm run copy-cesium && npm run create-cesium-stub",
-    "build": "npm run prepare-cesium && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "lint:check": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",

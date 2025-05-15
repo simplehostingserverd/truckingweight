@@ -32,19 +32,7 @@ const nextConfig = {
     : {}),
   // Webpack configuration
   webpack: (config, { isServer }) => {
-    // Exclude Cesium from the build
-    if (!isServer) {
-      // Add Cesium to the list of externals
-      config.externals = config.externals || {};
-      config.externals['cesium'] = 'Cesium';
-
-      // Add CSS processing
-      config.module.rules.push({
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
-      });
-    }
-
+    // We're using Cesium from CDN, so we don't need to process it
     return config;
   },
   // Core settings

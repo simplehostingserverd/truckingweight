@@ -10,9 +10,8 @@ export default function Document(props) {
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* Add Cesium script and CSS */}
-        <script src="/cesium/Cesium.js" defer></script>
-        <link rel="stylesheet" href="/cesium/Widgets/widgets.css" />
+        {/* Preconnect to Cesium CDN */}
+        <link rel="preconnect" href="https://cesium.com" />
 
         {/*
           We're not loading the font directly here anymore.
