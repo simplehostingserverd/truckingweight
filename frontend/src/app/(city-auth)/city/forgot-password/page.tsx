@@ -167,7 +167,7 @@ export default function ForgotPassword() {
                 <Typography level="h2" sx={{ mb: 1, color: 'primary.400', fontWeight: 'bold' }}>
                   Reset Your Password
                 </Typography>
-                <Typography level="body1" sx={{ color: 'text.secondary' }}>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                   Enter your email address and we'll send you instructions to reset your password
                 </Typography>
               </Box>
