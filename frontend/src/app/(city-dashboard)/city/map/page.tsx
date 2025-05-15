@@ -23,6 +23,14 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 
+// Import MapTiler components
+import MapTilerProvider from '@/providers/MapTilerProvider';
+// Dynamically import the MapTilerMap component to avoid SSR issues
+const MapTilerMap = dynamic(() => import('@/components/MapTiler/MapTilerMap'), {
+  ssr: false,
+  loading: () => <Skeleton className="h-[600px] w-full bg-gray-700" />,
+});
+
 // Create a client-side only component to avoid hydration issues
 const CityMapPageClient = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -348,31 +356,63 @@ const CityMapPageClient = () => {
           <div className="lg:col-span-3">
             <Card className="bg-gray-800 border-gray-700">
               <CardContent className="p-0">
-                {isLoading ? (
-                  <Skeleton className="h-[600px] w-full bg-gray-700" />
-                ) : (
-                  <div className="relative">
-                    <div className="h-[600px] bg-gray-700 flex items-center justify-center">
-                      <div className="text-center">
-                        <MapPinIcon className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-                        <p className="text-gray-400">
-                          Map would be displayed here with markers for scales, violations, and
-                          vehicles.
-                        </p>
-                        <p className="text-gray-500 text-sm mt-2">
-                          This is a placeholder for an interactive map component.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="absolute top-4 right-4 bg-gray-900/80 p-2 rounded-md">
-                      <p className="text-xs text-gray-300">
-                        Showing {filteredScales.length} scales,
-                        {showViolations ? ` ${mapData.violations.length} violations,` : ''}
-                        {showActiveVehicles ? ` ${mapData.activeVehicles.length} vehicles` : ''}
-                      </p>
-                    </div>
+                <div className="relative">
+                  <MapTilerProvider>
+                    <MapTilerMap
+                      latitude={29.7604}
+                      longitude={-95.3698}
+                      zoom={11}
+                      markers={[
+                        ...filteredScales.map(scale => ({
+                          id: scale.id.toString(),
+                          latitude: scale.coordinates.lat,
+                          longitude: scale.coordinates.lng,
+                          title: scale.name,
+                          type: 'scale',
+                          status: scale.status,
+                          data: scale,
+                        })),
+                        ...(showViolations
+                          ? mapData.violations.map(violation => ({
+                              id: `violation-${violation.id}`,
+                              latitude: violation.coordinates.lat,
+                              longitude: violation.coordinates.lng,
+                              title: violation.violationNumber,
+                              type: 'violation',
+                              status: violation.status,
+                              data: violation,
+                            }))
+                          : []),
+                        ...(showActiveVehicles
+                          ? mapData.activeVehicles.map(vehicle => ({
+                              id: `vehicle-${vehicle.id}`,
+                              latitude: vehicle.coordinates.lat,
+                              longitude: vehicle.coordinates.lng,
+                              title: vehicle.vehicleId,
+                              type: 'vehicle',
+                              status: vehicle.status,
+                              data: vehicle,
+                            }))
+                          : []),
+                      ]}
+                      showHeatmap={showHeatmap}
+                      onMarkerClick={(id, type, data) => {
+                        // Set the active tab based on the marker type
+                        if (type === 'scale') setActiveTab('scales');
+                        else if (type === 'violation') setActiveTab('violations');
+                        else if (type === 'vehicle') setActiveTab('vehicles');
+                      }}
+                      height="600px"
+                    />
+                  </MapTilerProvider>
+                  <div className="absolute top-4 right-4 bg-gray-900/80 p-2 rounded-md">
+                    <p className="text-xs text-gray-300">
+                      Showing {filteredScales.length} scales,
+                      {showViolations ? ` ${mapData.violations.length} violations,` : ''}
+                      {showActiveVehicles ? ` ${mapData.activeVehicles.length} vehicles` : ''}
+                    </p>
                   </div>
-                )}
+                </div>
               </CardContent>
             </Card>
 

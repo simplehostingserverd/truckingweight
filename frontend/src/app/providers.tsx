@@ -8,6 +8,7 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import logger from '@/utils/logger';
 import { SupabaseAuthProvider } from '@/providers/SupabaseAuthProvider';
 import { CesiumProvider } from '@/providers/CesiumProvider';
+import MapTilerProvider from '@/providers/MapTilerProvider';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme/theme';
@@ -54,38 +55,42 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SupabaseAuthProvider>
       <CesiumProvider>
-        <MUIThemeProvider theme={theme}>
-          <CssBaseline />
-          <NextThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <ToastProvider>
-              <ErrorBoundary>
-                {children}
-                {/* Only render offline banner after client-side hydration */}
-                {typeof isOnline === 'boolean' && !isOnline && (
-                  <div
-                    style={{
-                      position: 'fixed',
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      backgroundColor: theme.palette.warning.main,
-                      color: theme.palette.warning.contrastText,
-                      padding: '8px',
-                      textAlign: 'center',
-                      zIndex: 9999,
-                    }}
-                  >
-                    You are currently offline. Some features may be limited.
-                  </div>
-                )}
-                <ServiceWorkerRegistration
-                  onUpdate={handleServiceWorkerUpdate}
-                  onError={error => logger.error('Service worker error', { error }, 'ServiceWorker')}
-                />
-              </ErrorBoundary>
-            </ToastProvider>
-          </NextThemeProvider>
-        </MUIThemeProvider>
+        <MapTilerProvider>
+          <MUIThemeProvider theme={theme}>
+            <CssBaseline />
+            <NextThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+              <ToastProvider>
+                <ErrorBoundary>
+                  {children}
+                  {/* Only render offline banner after client-side hydration */}
+                  {typeof isOnline === 'boolean' && !isOnline && (
+                    <div
+                      style={{
+                        position: 'fixed',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        backgroundColor: theme.palette.warning.main,
+                        color: theme.palette.warning.contrastText,
+                        padding: '8px',
+                        textAlign: 'center',
+                        zIndex: 9999,
+                      }}
+                    >
+                      You are currently offline. Some features may be limited.
+                    </div>
+                  )}
+                  <ServiceWorkerRegistration
+                    onUpdate={handleServiceWorkerUpdate}
+                    onError={error =>
+                      logger.error('Service worker error', { error }, 'ServiceWorker')
+                    }
+                  />
+                </ErrorBoundary>
+              </ToastProvider>
+            </NextThemeProvider>
+          </MUIThemeProvider>
+        </MapTilerProvider>
       </CesiumProvider>
     </SupabaseAuthProvider>
   );

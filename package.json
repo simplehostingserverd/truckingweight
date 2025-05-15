@@ -41,6 +41,7 @@
     "setup-lpr-cameras": "node scripts/migrations/create-lpr-cameras-table.mjs"
   },
   "dependencies": {
+    "@maptiler/sdk": "^3.2.2",
     "@supabase/supabase-js": "^2.49.4",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",

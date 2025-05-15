@@ -99,7 +99,7 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co https://images.pexels.com https://upload.wikimedia.org; connect-src 'self' https://*.supabase.co https://api.truckingsemis.com wss://*.supabase.co; frame-ancestors 'none';",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co https://*.maptiler.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.maptiler.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co https://images.pexels.com https://upload.wikimedia.org https://*.maptiler.com; connect-src 'self' https://*.supabase.co https://api.truckingsemis.com wss://*.supabase.co https://*.maptiler.com; frame-ancestors 'none';",
           },
           {
             key: 'Strict-Transport-Security',
@@ -145,6 +145,7 @@ const nextConfig = {
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     NEXT_PUBLIC_MAPBOX_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
     NEXT_PUBLIC_CESIUM_TOKEN: process.env.NEXT_PUBLIC_CESIUM_TOKEN,
+    NEXT_PUBLIC_MAPTILER_KEY: process.env.NEXT_PUBLIC_MAPTILER_KEY || 'WPXCcZzL6zr6JzGBzMUK',
   },
 
   // Image optimization
