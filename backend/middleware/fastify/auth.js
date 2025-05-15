@@ -24,8 +24,36 @@ async function authMiddleware(request, reply) {
   }
 }
 
-export { authMiddleware };
+// City Admin middleware for Fastify
+async function cityAdminMiddleware(request, reply) {
+  // Check if user exists (should be set by authMiddleware)
+  if (!request.user) {
+    return reply.code(401).send({ msg: 'Authorization denied' });
+  }
+
+  // Check if user is a city admin
+  if (request.user.role !== 'admin' || !request.user.city_id) {
+    return reply.code(403).send({ msg: 'Access denied. City admin privileges required' });
+  }
+}
+
+// Admin middleware for Fastify
+async function adminMiddleware(request, reply) {
+  // Check if user exists (should be set by authMiddleware)
+  if (!request.user) {
+    return reply.code(401).send({ msg: 'Authorization denied' });
+  }
+
+  // Check if user is an admin
+  if (request.user.role !== 'admin') {
+    return reply.code(403).send({ msg: 'Access denied. Admin privileges required' });
+  }
+}
+
+export { authMiddleware, cityAdminMiddleware, adminMiddleware };
 
 export default {
   authMiddleware,
+  cityAdminMiddleware,
+  adminMiddleware,
 };

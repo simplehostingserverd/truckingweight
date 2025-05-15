@@ -7,7 +7,10 @@ import { createClient } from '@supabase/supabase-js';
 import logger from '../../utils/logger.js';
 
 // Initialize Supabase client
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY
+);
 
 /**
  * Get all city users
