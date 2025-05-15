@@ -9,6 +9,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'City name and state are required' }, { status: 400 });
     }
 
+    // Validate contact email domain if provided - only .gov domains are allowed
+    if (contact_email && !contact_email.toLowerCase().endsWith('.gov')) {
+      return NextResponse.json(
+        { error: 'Only .gov email domains are allowed for city contact email' },
+        { status: 400 }
+      );
+    }
+
     // Call the backend API to register the city
     const response = await fetch(`${process.env.BACKEND_URL}/api/city-auth/register-city`, {
       method: 'POST',

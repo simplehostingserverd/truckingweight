@@ -145,6 +145,20 @@ const nextConfig = {
 
     // Better scroll handling
     scrollRestoration: true,
+
+    // Enable concurrent features for faster builds
+    concurrentFeatures: true,
+
+    // Enable on-demand ISR for better caching
+    isrMemoryCacheSize: 50,
+
+    // Optimize fonts
+    optimizeFonts: true,
+
+    // Enable webpack caching for CI/CD
+    turbotrace: {
+      logLevel: 'error',
+    },
   },
 
   // Transpile UI libraries

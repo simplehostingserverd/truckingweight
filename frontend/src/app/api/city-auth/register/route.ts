@@ -12,6 +12,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate email domain - only .gov domains are allowed
+    if (!email.toLowerCase().endsWith('.gov')) {
+      return NextResponse.json(
+        { error: 'Only .gov email domains are allowed for city registration' },
+        { status: 400 }
+      );
+    }
+
     // Call the backend API to register the city user
     const response = await fetch(`${process.env.BACKEND_URL}/api/city-auth/register`, {
       method: 'POST',

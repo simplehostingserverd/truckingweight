@@ -72,6 +72,20 @@ export default function CityRegister() {
       return;
     }
 
+    // Validate email domain - only .gov domains are allowed
+    if (!email.toLowerCase().endsWith('.gov')) {
+      setError('Only .gov email domains are allowed for city registration');
+      setIsLoading(false);
+      return;
+    }
+
+    // Validate city email domain if provided
+    if (cityEmail && !cityEmail.toLowerCase().endsWith('.gov')) {
+      setError('Only .gov email domains are allowed for city contact email');
+      setIsLoading(false);
+      return;
+    }
+
     try {
       // First, create the city
       const cityResponse = await fetch('/api/city-auth/register-city', {

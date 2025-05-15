@@ -215,248 +215,274 @@ async function routes(fastify, options) {
    * @desc    Register a new city
    * @access  Public
    */
-  fastify.post('/register-city', { 
-    schema: registerCitySchema,
-    config: { public: true } // Mark this route as public to bypass authentication middleware
-  }, async (request, reply) => {
-    const {
-      name,
-      state,
-      country = 'USA',
-      address,
-      zip_code,
-      contact_email,
-      contact_phone,
-      website,
-    } = request.body;
+  fastify.post(
+    '/register-city',
+    {
+      schema: registerCitySchema,
+      config: { public: true }, // Mark this route as public to bypass authentication middleware
+    },
+    async (request, reply) => {
+      const {
+        name,
+        state,
+        country = 'USA',
+        address,
+        zip_code,
+        contact_email,
+        contact_phone,
+        website,
+      } = request.body;
 
-    try {
-      // Check if city already exists
-      const { data: existingCity, error: checkError } = await supabase
-        .from('cities')
-        .select('*')
-        .eq('name', name)
-        .eq('state', state)
-        .single();
+      try {
+        // Validate contact email domain if provided - only .gov domains are allowed
+        if (contact_email && !contact_email.toLowerCase().endsWith('.gov')) {
+          return reply
+            .code(400)
+            .send({ msg: 'Only .gov email domains are allowed for city contact email' });
+        }
 
-      if (checkError && checkError.code !== 'PGRST116') {
-        request.log.error('Error checking for existing city:', checkError);
+        // Check if city already exists
+        const { data: existingCity, error: checkError } = await supabase
+          .from('cities')
+          .select('*')
+          .eq('name', name)
+          .eq('state', state)
+          .single();
+
+        if (checkError && checkError.code !== 'PGRST116') {
+          request.log.error('Error checking for existing city:', checkError);
+          return reply.code(500).send({ msg: 'Server error' });
+        }
+
+        if (existingCity) {
+          return reply.code(400).send({ msg: 'City already exists' });
+        }
+
+        // Create city record
+        const { data: newCity, error: createError } = await supabase
+          .from('cities')
+          .insert([
+            {
+              name,
+              state,
+              country,
+              address,
+              zip_code,
+              contact_email,
+              contact_phone,
+              website,
+              status: 'Active',
+            },
+          ])
+          .select()
+          .single();
+
+        if (createError) {
+          request.log.error('Error creating city record:', createError);
+          return reply.code(500).send({ msg: 'Error creating city' });
+        }
+
+        return reply.code(200).send({
+          city: {
+            id: newCity.id,
+            name: newCity.name,
+            state: newCity.state,
+          },
+        });
+      } catch (err) {
+        request.log.error('Server error in city registration:', err);
         return reply.code(500).send({ msg: 'Server error' });
       }
-
-      if (existingCity) {
-        return reply.code(400).send({ msg: 'City already exists' });
-      }
-
-      // Create city record
-      const { data: newCity, error: createError } = await supabase
-        .from('cities')
-        .insert([
-          {
-            name,
-            state,
-            country,
-            address,
-            zip_code,
-            contact_email,
-            contact_phone,
-            website,
-            status: 'Active',
-          },
-        ])
-        .select()
-        .single();
-
-      if (createError) {
-        request.log.error('Error creating city record:', createError);
-        return reply.code(500).send({ msg: 'Error creating city' });
-      }
-
-      return reply.code(200).send({
-        city: {
-          id: newCity.id,
-          name: newCity.name,
-          state: newCity.state,
-        },
-      });
-    } catch (err) {
-      request.log.error('Server error in city registration:', err);
-      return reply.code(500).send({ msg: 'Server error' });
     }
-  });
+  );
 
   /**
    * @route   POST /api/city-auth/register
    * @desc    Register a city user
    * @access  Public
    */
-  fastify.post('/register', { 
-    schema: registerCityUserSchema,
-    config: { public: true } // Mark this route as public to bypass authentication middleware
-  }, async (request, reply) => {
-    const { name, email, password, cityId, role } = request.body;
+  fastify.post(
+    '/register',
+    {
+      schema: registerCityUserSchema,
+      config: { public: true }, // Mark this route as public to bypass authentication middleware
+    },
+    async (request, reply) => {
+      const { name, email, password, cityId, role } = request.body;
 
-    try {
-      // Check if user already exists
-      const { data: existingUser, error: checkError } = await supabase
-        .from('city_users')
-        .select('*')
-        .eq('email', email)
-        .single();
+      try {
+        // Validate email domain - only .gov domains are allowed
+        if (!email.toLowerCase().endsWith('.gov')) {
+          return reply
+            .code(400)
+            .send({ msg: 'Only .gov email domains are allowed for city registration' });
+        }
 
-      if (checkError && checkError.code !== 'PGRST116') {
-        request.log.error('Error checking for existing city user:', checkError);
+        // Check if user already exists
+        const { data: existingUser, error: checkError } = await supabase
+          .from('city_users')
+          .select('*')
+          .eq('email', email)
+          .single();
+
+        if (checkError && checkError.code !== 'PGRST116') {
+          request.log.error('Error checking for existing city user:', checkError);
+          return reply.code(500).send({ msg: 'Server error' });
+        }
+
+        if (existingUser) {
+          return reply.code(400).send({ msg: 'User already exists' });
+        }
+
+        // Check if city exists
+        const { data: city, error: cityError } = await supabase
+          .from('cities')
+          .select('*')
+          .eq('id', cityId)
+          .single();
+
+        if (cityError || !city) {
+          return reply.code(400).send({ msg: 'City not found' });
+        }
+
+        // Create user in Supabase Auth
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              name,
+              city_id: cityId,
+              role,
+              user_type: 'city',
+            },
+          },
+        });
+
+        if (authError) {
+          request.log.error('Error creating city user in auth:', authError);
+          return reply.code(500).send({ msg: 'Error creating user' });
+        }
+
+        // Create city user record
+        const userId = authData.user.id;
+        const { data: newUser, error: createError } = await supabase
+          .from('city_users')
+          .insert([
+            {
+              id: userId,
+              name,
+              email,
+              city_id: cityId,
+              role,
+            },
+          ])
+          .select()
+          .single();
+
+        if (createError) {
+          request.log.error('Error creating city user record:', createError);
+          return reply.code(500).send({ msg: 'Error creating user record' });
+        }
+
+        // Create and return Paseto token
+        const payload = {
+          user: {
+            id: newUser.id,
+            cityId: newUser.city_id,
+            role: newUser.role,
+            userType: 'city',
+          },
+        };
+
+        const token = await pasetoService.generateToken(payload);
+
+        return reply.code(200).send({
+          token,
+          user: {
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email,
+            cityId: newUser.city_id,
+            role: newUser.role,
+          },
+        });
+      } catch (err) {
+        request.log.error('Server error in city user registration:', err);
         return reply.code(500).send({ msg: 'Server error' });
       }
-
-      if (existingUser) {
-        return reply.code(400).send({ msg: 'User already exists' });
-      }
-
-      // Check if city exists
-      const { data: city, error: cityError } = await supabase
-        .from('cities')
-        .select('*')
-        .eq('id', cityId)
-        .single();
-
-      if (cityError || !city) {
-        return reply.code(400).send({ msg: 'City not found' });
-      }
-
-      // Create user in Supabase Auth
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            name,
-            city_id: cityId,
-            role,
-            user_type: 'city',
-          },
-        },
-      });
-
-      if (authError) {
-        request.log.error('Error creating city user in auth:', authError);
-        return reply.code(500).send({ msg: 'Error creating user' });
-      }
-
-      // Create city user record
-      const userId = authData.user.id;
-      const { data: newUser, error: createError } = await supabase
-        .from('city_users')
-        .insert([
-          {
-            id: userId,
-            name,
-            email,
-            city_id: cityId,
-            role,
-          },
-        ])
-        .select()
-        .single();
-
-      if (createError) {
-        request.log.error('Error creating city user record:', createError);
-        return reply.code(500).send({ msg: 'Error creating user record' });
-      }
-
-      // Create and return Paseto token
-      const payload = {
-        user: {
-          id: newUser.id,
-          cityId: newUser.city_id,
-          role: newUser.role,
-          userType: 'city',
-        },
-      };
-
-      const token = await pasetoService.generateToken(payload);
-
-      return reply.code(200).send({
-        token,
-        user: {
-          id: newUser.id,
-          name: newUser.name,
-          email: newUser.email,
-          cityId: newUser.city_id,
-          role: newUser.role,
-        },
-      });
-    } catch (err) {
-      request.log.error('Server error in city user registration:', err);
-      return reply.code(500).send({ msg: 'Server error' });
     }
-  });
+  );
 
   /**
    * @route   POST /api/city-auth/login
    * @desc    Authenticate city user & get token
    * @access  Public
    */
-  fastify.post('/login', { 
-    schema: loginCityUserSchema,
-    config: { public: true } // Mark this route as public to bypass authentication middleware
-  }, async (request, reply) => {
-    const { email, password } = request.body;
+  fastify.post(
+    '/login',
+    {
+      schema: loginCityUserSchema,
+      config: { public: true }, // Mark this route as public to bypass authentication middleware
+    },
+    async (request, reply) => {
+      const { email, password } = request.body;
 
-    try {
-      // Sign in with Supabase Auth
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      try {
+        // Sign in with Supabase Auth
+        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-      if (authError) {
-        return reply.code(400).send({ msg: 'Invalid credentials' });
+        if (authError) {
+          return reply.code(400).send({ msg: 'Invalid credentials' });
+        }
+
+        // Get city user data
+        const { data: userData, error: userError } = await supabase
+          .from('city_users')
+          .select('*')
+          .eq('id', authData.user.id)
+          .single();
+
+        if (userError || !userData) {
+          return reply.code(400).send({ msg: 'User not found' });
+        }
+
+        // Check if user is active
+        if (!userData.is_active) {
+          return reply.code(400).send({ msg: 'Account is inactive' });
+        }
+
+        // Create and return Paseto token
+        const payload = {
+          user: {
+            id: userData.id,
+            cityId: userData.city_id,
+            role: userData.role,
+            userType: 'city',
+          },
+        };
+
+        const token = await pasetoService.generateToken(payload);
+
+        return reply.code(200).send({
+          token,
+          user: {
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+            cityId: userData.city_id,
+            role: userData.role,
+          },
+        });
+      } catch (err) {
+        request.log.error('Server error in city user login:', err);
+        return reply.code(500).send({ msg: 'Server error' });
       }
-
-      // Get city user data
-      const { data: userData, error: userError } = await supabase
-        .from('city_users')
-        .select('*')
-        .eq('id', authData.user.id)
-        .single();
-
-      if (userError || !userData) {
-        return reply.code(400).send({ msg: 'User not found' });
-      }
-
-      // Check if user is active
-      if (!userData.is_active) {
-        return reply.code(400).send({ msg: 'Account is inactive' });
-      }
-
-      // Create and return Paseto token
-      const payload = {
-        user: {
-          id: userData.id,
-          cityId: userData.city_id,
-          role: userData.role,
-          userType: 'city',
-        },
-      };
-
-      const token = await pasetoService.generateToken(payload);
-
-      return reply.code(200).send({
-        token,
-        user: {
-          id: userData.id,
-          name: userData.name,
-          email: userData.email,
-          cityId: userData.city_id,
-          role: userData.role,
-        },
-      });
-    } catch (err) {
-      request.log.error('Server error in city user login:', err);
-      return reply.code(500).send({ msg: 'Server error' });
     }
-  });
+  );
 
   /**
    * @route   GET /api/city-auth/me
@@ -506,82 +532,90 @@ async function routes(fastify, options) {
    * @desc    Send password reset email
    * @access  Public
    */
-  fastify.post('/forgot-password', { 
-    schema: forgotPasswordSchema,
-    config: { public: true } // Mark this route as public to bypass authentication middleware
-  }, async (request, reply) => {
-    const { email } = request.body;
+  fastify.post(
+    '/forgot-password',
+    {
+      schema: forgotPasswordSchema,
+      config: { public: true }, // Mark this route as public to bypass authentication middleware
+    },
+    async (request, reply) => {
+      const { email } = request.body;
 
-    try {
-      // Check if user exists
-      const { data: user, error: userError } = await supabase
-        .from('city_users')
-        .select('*')
-        .eq('email', email)
-        .single();
+      try {
+        // Check if user exists
+        const { data: user, error: userError } = await supabase
+          .from('city_users')
+          .select('*')
+          .eq('email', email)
+          .single();
 
-      if (userError && userError.code !== 'PGRST116') {
-        request.log.error('Error checking for city user:', userError);
+        if (userError && userError.code !== 'PGRST116') {
+          request.log.error('Error checking for city user:', userError);
+          return reply.code(500).send({ msg: 'Server error' });
+        }
+
+        // For security reasons, always return success even if user doesn't exist
+        if (!user) {
+          return reply.code(200).send({ msg: 'Password reset email sent if account exists' });
+        }
+
+        // Send password reset email using Supabase Auth
+        const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${process.env.FRONTEND_URL}/city-reset-password`,
+        });
+
+        if (resetError) {
+          request.log.error('Error sending password reset email:', resetError);
+          return reply.code(500).send({ msg: 'Error sending password reset email' });
+        }
+
+        return reply.code(200).send({ msg: 'Password reset email sent' });
+      } catch (err) {
+        request.log.error('Server error in forgot password:', err);
         return reply.code(500).send({ msg: 'Server error' });
       }
-
-      // For security reasons, always return success even if user doesn't exist
-      if (!user) {
-        return reply.code(200).send({ msg: 'Password reset email sent if account exists' });
-      }
-
-      // Send password reset email using Supabase Auth
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.FRONTEND_URL}/city-reset-password`,
-      });
-
-      if (resetError) {
-        request.log.error('Error sending password reset email:', resetError);
-        return reply.code(500).send({ msg: 'Error sending password reset email' });
-      }
-
-      return reply.code(200).send({ msg: 'Password reset email sent' });
-    } catch (err) {
-      request.log.error('Server error in forgot password:', err);
-      return reply.code(500).send({ msg: 'Server error' });
     }
-  });
+  );
 
   /**
    * @route   POST /api/city-auth/reset-password
    * @desc    Reset user password
    * @access  Public
    */
-  fastify.post('/reset-password', { 
-    schema: resetPasswordSchema,
-    config: { public: true } // Mark this route as public to bypass authentication middleware
-  }, async (request, reply) => {
-    const { token, password } = request.body;
+  fastify.post(
+    '/reset-password',
+    {
+      schema: resetPasswordSchema,
+      config: { public: true }, // Mark this route as public to bypass authentication middleware
+    },
+    async (request, reply) => {
+      const { token, password } = request.body;
 
-    try {
-      // Update password using Supabase Auth
-      const { error: updateError } = await supabase.auth.updateUser(
-        {
-          password,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      try {
+        // Update password using Supabase Auth
+        const { error: updateError } = await supabase.auth.updateUser(
+          {
+            password,
           },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (updateError) {
+          request.log.error('Error resetting password:', updateError);
+          return reply.code(400).send({ msg: 'Invalid or expired token' });
         }
-      );
 
-      if (updateError) {
-        request.log.error('Error resetting password:', updateError);
-        return reply.code(400).send({ msg: 'Invalid or expired token' });
+        return reply.code(200).send({ msg: 'Password reset successful' });
+      } catch (err) {
+        request.log.error('Server error in reset password:', err);
+        return reply.code(500).send({ msg: 'Server error' });
       }
-
-      return reply.code(200).send({ msg: 'Password reset successful' });
-    } catch (err) {
-      request.log.error('Server error in reset password:', err);
-      return reply.code(500).send({ msg: 'Server error' });
     }
-  });
+  );
 }
 
 module.exports = routes;
