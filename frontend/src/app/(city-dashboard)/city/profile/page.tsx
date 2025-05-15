@@ -19,17 +19,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { uploadCityLogo } from '@/utils/supabase/storage';
 
 // Create a client-side only component to avoid hydration issues
 const CityProfilePageClient = () => {
@@ -38,6 +31,7 @@ const CityProfilePageClient = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [logoUploading, setLogoUploading] = useState(false);
   const [cityProfile, setCityProfile] = useState({
     id: 0,
     name: '',
@@ -129,7 +123,7 @@ const CityProfilePageClient = () => {
         website: data.city.website || '',
         logo_url: data.city.logo_url || '',
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error fetching city profile:', err);
       setError(err.message || 'Failed to load city profile');
       // Generate dummy data for testing
@@ -156,7 +150,7 @@ const CityProfilePageClient = () => {
       created_at: '2023-01-01T00:00:00Z',
       updated_at: '2023-11-15T00:00:00Z',
     };
-    
+
     setCityProfile(dummyProfile);
     setFormData({
       name: dummyProfile.name,
@@ -177,17 +171,60 @@ const CityProfilePageClient = () => {
   }, []);
 
   // Handle form input changes
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle logo upload
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      return;
+    }
+
+    const file = e.target.files[0];
+
+    // Validate file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      setError('Logo file size must be less than 2MB');
+      return;
+    }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setError('File must be an image');
+      return;
+    }
+
+    try {
+      setLogoUploading(true);
+      setError('');
+
+      // Upload logo to Supabase Storage
+      const logoUrl = await uploadCityLogo(cityProfile.id, file);
+
+      // Update form data with new logo URL
+      setFormData({
+        ...formData,
+        logo_url: logoUrl,
+      });
+
+      // Show success message
+      setSuccess('Logo uploaded successfully');
+    } catch (err: any) {
+      console.error('Error uploading logo:', err);
+      setError(err.message || 'Failed to upload logo');
+    } finally {
+      setLogoUploading(false);
+    }
+  };
+
   // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setSuccess('');
-    
+
     try {
       // Safely access localStorage only on the client side
       if (typeof window === 'undefined') return;
@@ -198,17 +235,28 @@ const CityProfilePageClient = () => {
         throw new Error('No authentication token found');
       }
 
-      // In a real implementation, we would submit to the API
-      // For now, we'll just update the local state
-      setCityProfile({
-        ...cityProfile,
-        ...formData,
-        updated_at: new Date().toISOString(),
+      // Call the API to update the city profile
+      const response = await fetch('/api/city-profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cityToken}`,
+        },
+        body: JSON.stringify(formData),
       });
-      
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to update city profile');
+      }
+
+      // Update local state with the new data
+      const data = await response.json();
+      setCityProfile(data.city);
+
       setSuccess('City profile updated successfully');
       setIsEditing(false);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error updating city profile:', err);
       setError(err.message || 'Failed to update city profile');
     }
@@ -491,7 +539,7 @@ const CityProfilePageClient = () => {
                       src={cityProfile.logo_url}
                       alt={`${cityProfile.name} Logo`}
                       className="max-w-full max-h-full object-contain"
-                      onError={(e) => {
+                      onError={e => {
                         e.currentTarget.src = '/images/placeholder-logo.png';
                       }}
                     />
@@ -508,10 +556,27 @@ const CityProfilePageClient = () => {
                       Upload New Logo
                     </Label>
                     <div className="mt-2">
-                      <Button variant="outline" className="w-full">
+                      <input
+                        id="logo-upload"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleLogoUpload}
+                      />
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => document.getElementById('logo-upload')?.click()}
+                      >
                         <PhotoIcon className="h-5 w-5 mr-2" />
                         Choose File
                       </Button>
+                      {logoUploading && (
+                        <div className="mt-2 flex items-center justify-center">
+                          <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-500 mr-2"></div>
+                          <span className="text-sm text-gray-400">Uploading...</span>
+                        </div>
+                      )}
                       <p className="text-xs text-gray-400 mt-2">
                         Recommended size: 200x200px. Max file size: 2MB.
                       </p>

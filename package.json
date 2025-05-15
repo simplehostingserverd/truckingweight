@@ -36,7 +36,8 @@
     "kill-nodejs": "node scripts/kill-nodejs.js",
     "prestart-cleanup": "node scripts/prestart-cleanup.js",
     "predev": "node scripts/velociraptor.js && node scripts/kill-nodejs.js",
-    "postdev": "node scripts/cleanup.js"
+    "postdev": "node scripts/cleanup.js",
+    "setup-supabase-buckets": "node scripts/create-supabase-buckets.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",

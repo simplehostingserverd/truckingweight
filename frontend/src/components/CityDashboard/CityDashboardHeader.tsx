@@ -8,6 +8,7 @@ import {
   Cog6ToothIcon,
   UserCircleIcon,
   ArrowRightOnRectangleIcon,
+  BuildingOfficeIcon,
 } from '@heroicons/react/24/outline';
 import {
   DropdownMenu,
@@ -29,6 +30,7 @@ interface CityDashboardHeaderProps {
     city?: {
       name: string;
       state: string;
+      logo_url?: string;
     };
   };
 }
@@ -79,18 +81,31 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
     <header className="bg-gray-800 border-b border-gray-700 py-3 px-4 md:px-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <h1 className="text-xl font-semibold text-white mr-4">
-            {user?.city?.name || 'City'} Municipal Weighing System
-          </h1>
-          <Badge variant="outline" className="bg-blue-900 text-blue-200 border-blue-700">
-            {user?.role === 'admin'
-              ? 'Administrator'
-              : user?.role === 'operator'
-                ? 'Operator'
-                : user?.role === 'inspector'
-                  ? 'Inspector'
-                  : 'Viewer'}
-          </Badge>
+          {user?.city?.logo_url ? (
+            <div className="mr-3 flex-shrink-0">
+              <img
+                src={user.city.logo_url}
+                alt={`${user?.city?.name || 'City'} Logo`}
+                className="h-10 w-10 object-contain rounded-md"
+              />
+            </div>
+          ) : (
+            <BuildingOfficeIcon className="h-8 w-8 text-gray-400 mr-3" />
+          )}
+          <div>
+            <h1 className="text-xl font-semibold text-white">
+              {user?.city?.name || 'City'} Municipal Weighing System
+            </h1>
+            <Badge variant="outline" className="bg-blue-900 text-blue-200 border-blue-700 mt-1">
+              {user?.role === 'admin'
+                ? 'Administrator'
+                : user?.role === 'operator'
+                  ? 'Operator'
+                  : user?.role === 'inspector'
+                    ? 'Inspector'
+                    : 'Viewer'}
+            </Badge>
+          </div>
         </div>
 
         <div className="flex items-center space-x-4">
