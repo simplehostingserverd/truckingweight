@@ -1,6 +1,6 @@
-const companyController = require('../../controllers/fastify/companies');
-const { authMiddleware } = require('../../middleware/fastify/auth');
-const { adminMiddleware } = require('../../middleware/fastify/admin');
+import companyController from '../../controllers/fastify/companies.js';
+import { authMiddleware } from '../../middleware/fastify/auth.js';
+import { adminMiddleware } from '../../middleware/fastify/admin.js';
 
 // Company schema
 const companySchema = {
@@ -248,4 +248,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

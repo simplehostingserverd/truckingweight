@@ -1,13 +1,13 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { check } = require('express-validator');
+import { check } from 'express-validator';
 
 // Import controllers
-const companyController = require('../controllers/companies');
+import companyController from '../controllers/companies.js';
 
 // Import middleware
-const auth = require('../middleware/auth');
-const admin = require('../middleware/admin');
+import auth from '../middleware/auth.js';
+import admin from '../middleware/admin.js';
 
 // @route   GET api/companies
 // @desc    Get all companies (admin only)
@@ -47,4 +47,4 @@ router.put('/:id', [auth, admin], companyController.updateCompany);
 // @access  Private/Admin
 router.delete('/:id', [auth, admin], companyController.deleteCompany);
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-const vehicleController = require('../../controllers/fastify/vehicles');
-const { authMiddleware } = require('../../middleware/fastify/auth');
+import vehicleController from '../../controllers/fastify/vehicles.js';
+import { authMiddleware } from '../../middleware/fastify/auth.js';
 
 // Vehicle schema
 const vehicleSchema = {
@@ -231,4 +231,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

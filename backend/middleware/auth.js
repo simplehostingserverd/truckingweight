@@ -1,6 +1,6 @@
-const pasetoService = require('../services/pasetoService');
+import pasetoService from '../services/pasetoService.js';
 
-module.exports = async function (req, res, next) {
+export default async; function (req, res, next) {
   // Get token from header
   const token = req.header('x-auth-token');
 

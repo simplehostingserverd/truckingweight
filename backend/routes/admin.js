@@ -1,13 +1,13 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { check } = require('express-validator');
+import { check } from 'express-validator';
 
 // Import controllers
-const adminController = require('../controllers/admin');
+import adminController from '../controllers/admin.js';
 
 // Import middleware
-const auth = require('../middleware/auth');
-const admin = require('../middleware/admin');
+import auth from '../middleware/auth.js';
+import admin from '../middleware/admin.js';
 
 // @route   GET api/admin/dashboard
 // @desc    Get admin dashboard data
@@ -68,4 +68,4 @@ router.get('/reports/compliance', [auth, admin], adminController.getComplianceRe
 // @access  Private/Admin
 router.get('/export/:type', [auth, admin], adminController.exportData);
 
-module.exports = router;
+export default router;

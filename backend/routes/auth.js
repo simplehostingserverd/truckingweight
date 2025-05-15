@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { check } = require('express-validator');
+import { check } from 'express-validator';
 
 // Import controllers
-const authController = require('../controllers/auth');
+import authController from '../controllers/auth.js';
 
 // Import middleware
-const auth = require('../middleware/auth');
+import auth from '../middleware/auth.js';
 
 // @route   POST api/auth/register
 // @desc    Register a user
@@ -39,4 +39,4 @@ router.post(
 // @access  Private
 router.get('/user', auth, authController.getUser);
 
-module.exports = router;
+export default router;

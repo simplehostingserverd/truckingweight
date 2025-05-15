@@ -1,4 +1,4 @@
-const supabase = require('../../config/supabase');
+import supabase from '../../config/supabase.js';
 
 /**
  * Get all vehicles for the company
@@ -180,7 +180,7 @@ async function deleteVehicle(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getAllVehicles,
   getVehicleById,
   createVehicle,

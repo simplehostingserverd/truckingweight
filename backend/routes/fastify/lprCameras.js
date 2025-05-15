@@ -3,8 +3,8 @@
  * Handles CRUD operations for License Plate Recognition cameras
  */
 
-const lprCameraController = require('../../controllers/fastify/lprCameras');
-const { authMiddleware, adminMiddleware } = require('../../middleware/fastify/auth');
+import lprCameraController from '../../controllers/fastify/lprCameras.js';
+import { authMiddleware, adminMiddleware } from '../../middleware/fastify/auth.js';
 
 // LPR camera schema
 const lprCameraSchema = {
@@ -323,4 +323,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

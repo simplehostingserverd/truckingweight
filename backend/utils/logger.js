@@ -2,9 +2,9 @@
  * Logger utility for consistent logging across the application
  */
 
-const winston = require('winston');
-const path = require('path');
-const fs = require('fs');
+import winston from 'winston';
+import path from 'path';
+import fs from 'fs';
 
 // Create logs directory if it doesn't exist
 const logsDir = path.join(__dirname, '../logs');
@@ -63,4 +63,4 @@ logger.stream = {
   },
 };
 
-module.exports = logger;
+export default logger;

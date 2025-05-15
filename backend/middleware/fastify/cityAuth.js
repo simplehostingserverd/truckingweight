@@ -3,9 +3,9 @@
  * Verifies Paseto tokens for city users and sets user data in request
  */
 
-const { createClient } = require('@supabase/supabase-js');
-const { logger } = require('../../utils/logger');
-const pasetoService = require('../../services/pasetoService');
+import { createClient } from '@supabase/supabase-js';
+import { logger } from '../../utils/logger.js';
+import * as pasetoService from '../../services/pasetoService.js';
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -128,7 +128,7 @@ const cityRoleMiddleware = roles => {
   };
 };
 
-module.exports = {
+export default {
   cityAuthMiddleware,
   cityAdminMiddleware,
   cityRoleMiddleware,

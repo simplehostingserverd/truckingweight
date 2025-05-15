@@ -1,5 +1,5 @@
-const weightController = require('../../controllers/fastify/weights');
-const { authMiddleware } = require('../../middleware/fastify/auth');
+import weightController from '../../controllers/fastify/weights.js';
+import { authMiddleware } from '../../middleware/fastify/auth.js';
 
 // Weight schemas
 const weightSchema = {
@@ -233,4 +233,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

@@ -3,11 +3,11 @@
  * Handles city user registration, login, and authentication
  */
 
-const { createClient } = require('@supabase/supabase-js');
-// const bcrypt = require('bcryptjs')
-const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../../utils/logger');
-const pasetoService = require('../../services/pasetoService');
+import { createClient } from '@supabase/supabase-js';
+// import bcrypt from 'bcryptjs';
+import { v4 as uuidv4 } from 'uuid';
+import { logger } from '../../utils/logger.js';
+import * as pasetoService from '../../services/pasetoService.js';
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -618,4 +618,4 @@ async function routes(fastify, options) {
   );
 }
 
-module.exports = routes;
+export default routes;

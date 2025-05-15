@@ -3,9 +3,9 @@
  * Functions for generating unique identifiers and numbers
  */
 
-const { createClient } = require('@supabase/supabase-js');
+import { createClient } from '@supabase/supabase-js';
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('./logger');
+import { logger } from './logger.js';
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -184,7 +184,7 @@ const generateCityWeighTicketNumber = async cityId => {
   }
 };
 
-module.exports = {
+export default {
   generateTicketNumber,
   generatePermitNumber,
   generateViolationNumber,

@@ -1,6 +1,6 @@
-const { validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs');
-const supabase = require('../config/supabase');
+import { validationResult } from 'express-validator';
+import bcrypt from 'bcryptjs';
+import supabase from '../config/supabase.js';
 
 // @desc    Get admin dashboard data
 // @route   GET /api/admin/dashboard

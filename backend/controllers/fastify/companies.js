@@ -1,4 +1,4 @@
-const supabase = require('../../config/supabase');
+import supabase from '../../config/supabase.js';
 
 /**
  * Get all companies (admin only)
@@ -209,7 +209,7 @@ async function deleteCompany(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getAllCompanies,
   getCompanyById,
   createCompany,

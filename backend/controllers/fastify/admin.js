@@ -1,5 +1,5 @@
-const bcrypt = require('bcryptjs');
-const supabase = require('../../config/supabase');
+import bcrypt from 'bcryptjs';
+import supabase from '../../config/supabase.js';
 
 /**
  * Get admin dashboard data
@@ -643,7 +643,7 @@ async function exportData(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getDashboardData,
   getAllUsers,
   createUser,

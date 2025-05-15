@@ -3,8 +3,8 @@
  * Handles CRUD operations for License Plate Recognition cameras
  */
 
-const { createClient } = require('@supabase/supabase-js');
-const logger = require('../../utils/logger');
+import { createClient } from '@supabase/supabase-js';
+import logger from '../../utils/logger.js';
 
 // Initialize Supabase client
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
@@ -369,7 +369,7 @@ async function deleteLPRCamera(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getAllLPRCameras,
   getLPRCameraById,
   createLPRCamera,

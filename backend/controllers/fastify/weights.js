@@ -1,4 +1,4 @@
-const supabase = require('../../config/supabase');
+import supabase from '../../config/supabase.js';
 
 // Get all weights for the company
 async function getAllWeights(request, reply) {
@@ -204,7 +204,7 @@ async function deleteWeight(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getAllWeights,
   getWeightById,
   createWeight,

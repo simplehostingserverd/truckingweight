@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 /**
  * @route   GET /api/api-keys
@@ -119,4 +119,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

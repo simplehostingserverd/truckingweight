@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { check } = require('express-validator');
+import { check } from 'express-validator';
 
 // Import controllers
-const vehicleController = require('../controllers/vehicles');
+import vehicleController from '../controllers/vehicles.js';
 
 // Import middleware
-const auth = require('../middleware/auth');
+import auth from '../middleware/auth.js';
 
 // @route   GET api/vehicles
 // @desc    Get all vehicles for the company
@@ -44,4 +44,4 @@ router.put('/:id', auth, vehicleController.updateVehicle);
 // @access  Private
 router.delete('/:id', auth, vehicleController.deleteVehicle);
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-const { validationResult } = require('express-validator');
-const supabase = require('../config/supabase');
+import { validationResult } from 'express-validator';
+import supabase from '../config/supabase.js';
 
 // @desc    Get all vehicles for the company
 // @route   GET /api/vehicles

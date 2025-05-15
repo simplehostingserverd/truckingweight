@@ -4,10 +4,10 @@
  * This file defines the API routes for data synchronization
  */
 
-const express = require('express');
-const { processSyncQueue } = require('../services/syncService');
-const { protect } = require('../middleware/authMiddleware');
-const supabase = require('../config/supabase');
+import express from 'express';
+import { processSyncQueue } from '../services/syncService.js';
+import { protect } from '../middleware/authMiddleware.js';
+import supabase from '../config/supabase.js';
 
 const router = express.Router();
 
@@ -104,4 +104,4 @@ router.get('/status', protect, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

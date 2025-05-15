@@ -1,4 +1,4 @@
-const supabase = require('../../config/supabase');
+import supabase from '../../config/supabase.js';
 
 /**
  * Get all drivers for the company
@@ -177,7 +177,7 @@ async function deleteDriver(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getAllDrivers,
   getDriverById,
   createDriver,

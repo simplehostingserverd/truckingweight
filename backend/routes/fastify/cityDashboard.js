@@ -3,10 +3,10 @@
  * Provides data for the city weighing dashboard
  */
 
-const { createClient } = require('@supabase/supabase-js');
-const { cityAuthMiddleware } = require('../../middleware/fastify/cityAuth');
-const { logger } = require('../../utils/logger');
-const { bearerAuthMiddleware } = require('../../middleware/fastify/bearerAuth');
+import { createClient } from '@supabase/supabase-js';
+import { cityAuthMiddleware } from '../../middleware/fastify/cityAuth.js';
+import { logger } from '../../utils/logger.js';
+import { bearerAuthMiddleware } from '../../middleware/fastify/bearerAuth.js';
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -571,4 +571,4 @@ async function routes(fastify, options) {
   });
 }
 
-module.exports = routes;
+export default routes;

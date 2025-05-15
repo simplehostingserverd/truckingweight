@@ -3,10 +3,10 @@
  * Handles permit creation, retrieval, and management
  */
 
-const { createClient } = require('@supabase/supabase-js');
-const { cityAuthMiddleware, cityRoleMiddleware } = require('../../middleware/fastify/cityAuth');
-const { logger } = require('../../utils/logger');
-const { generatePermitNumber } = require('../../utils/generators');
+import { createClient } from '@supabase/supabase-js';
+import { cityAuthMiddleware, cityRoleMiddleware } from '../../middleware/fastify/cityAuth.js';
+import { logger } from '../../utils/logger.js';
+import { generatePermitNumber } from '../../utils/generators.js';
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -528,4 +528,4 @@ async function routes(fastify, options) {
   );
 }
 
-module.exports = routes;
+export default routes;

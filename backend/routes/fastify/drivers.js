@@ -1,5 +1,5 @@
-const driverController = require('../../controllers/fastify/drivers');
-const { authMiddleware } = require('../../middleware/fastify/auth');
+import driverController from '../../controllers/fastify/drivers.js';
+import { authMiddleware } from '../../middleware/fastify/auth.js';
 
 // Driver schema
 const driverSchema = {
@@ -222,4 +222,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

@@ -4,9 +4,9 @@
  * This middleware handles authentication and authorization for API routes.
  */
 
-const pasetoService = require('../services/pasetoService');
-const supabase = require('../config/supabase');
-const logger = require('../utils/logger');
+import * as pasetoService from '../services/pasetoService.js';
+import supabase from '../config/supabase.js';
+import logger from '../utils/logger.js';
 
 /**
  * Protect routes - require authentication
@@ -123,7 +123,7 @@ const sameCompany = (req, res, next) => {
   }
 };
 
-module.exports = {
+export default {
   protect,
   admin,
   sameCompany,

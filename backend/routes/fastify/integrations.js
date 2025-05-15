@@ -1,6 +1,6 @@
-const integrationController = require('../../controllers/fastify/integrations');
-const { authMiddleware } = require('../../middleware/fastify/auth');
-const { adminMiddleware } = require('../../middleware/fastify/admin');
+import integrationController from '../../controllers/fastify/integrations.js';
+import { authMiddleware } from '../../middleware/fastify/auth.js';
+import { adminMiddleware } from '../../middleware/fastify/admin.js';
 
 // Integration schema
 const integrationSchema = {
@@ -274,4 +274,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

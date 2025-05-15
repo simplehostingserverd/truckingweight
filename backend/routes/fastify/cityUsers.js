@@ -3,8 +3,8 @@
  * Handles CRUD operations for city users
  */
 
-const cityUserController = require('../../controllers/fastify/cityUsers');
-const { authMiddleware, cityAdminMiddleware } = require('../../middleware/fastify/auth');
+import cityUserController from '../../controllers/fastify/cityUsers.js';
+import { authMiddleware, cityAdminMiddleware } from '../../middleware/fastify/auth.js';
 
 // City user schema
 const cityUserSchema = {
@@ -321,4 +321,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

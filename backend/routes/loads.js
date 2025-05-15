@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { check } = require('express-validator');
+import { check } from 'express-validator';
 
 // Import controllers
-const loadController = require('../controllers/loads');
+import loadController from '../controllers/loads.js';
 
 // Import middleware
-const auth = require('../middleware/auth');
+import auth from '../middleware/auth.js';
 
 // @route   GET api/loads
 // @desc    Get all loads for the company
@@ -46,4 +46,4 @@ router.put('/:id', auth, loadController.updateLoad);
 // @access  Private
 router.delete('/:id', auth, loadController.deleteLoad);
 
-module.exports = router;
+export default router;

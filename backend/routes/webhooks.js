@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 /**
@@ -88,4 +88,4 @@ router.post('/:id/regenerate-secret', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

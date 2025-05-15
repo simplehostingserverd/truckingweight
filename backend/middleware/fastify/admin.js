@@ -6,6 +6,6 @@ async function adminMiddleware(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   adminMiddleware,
 };

@@ -5,8 +5,8 @@
  * and its dependencies like the database.
  */
 
-const db = require('../../config/database')
-const cacheService = require('../../services/cache')
+import db from '../../config/database.js';
+import cacheService from '../../services/cache.js';
 
 /**
  * Register health check routes
@@ -103,4 +103,4 @@ async function routes(fastify, options) {
   })
 }
 
-module.exports = routes
+export default routes;

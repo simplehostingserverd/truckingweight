@@ -1,5 +1,5 @@
-const supabase = require('../../config/supabase');
-const crypto = require('crypto');
+import supabase from '../../config/supabase.js';
+import crypto from 'crypto';
 
 /**
  * Get all API keys for the company
@@ -299,7 +299,7 @@ async function verifyApiKey(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getAllApiKeys,
   getApiKeyById,
   createApiKey,

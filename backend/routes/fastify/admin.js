@@ -1,6 +1,6 @@
-const adminController = require('../../controllers/fastify/admin');
-const { authMiddleware } = require('../../middleware/fastify/auth');
-const { adminMiddleware } = require('../../middleware/fastify/admin');
+import adminController from '../../controllers/fastify/admin.js';
+import { authMiddleware } from '../../middleware/fastify/auth.js';
+import { adminMiddleware } from '../../middleware/fastify/admin.js';
 
 // User schema
 const userSchema = {
@@ -283,4 +283,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

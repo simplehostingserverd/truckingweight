@@ -4,8 +4,8 @@
  * This service processes the sync queue and applies changes to the database.
  */
 
-const supabase = require('../config/supabase');
-const logger = require('../utils/logger');
+import supabase from '../config/supabase.js';
+import logger from '../utils/logger.js';
 
 /**
  * Process all pending sync queue items
@@ -172,6 +172,6 @@ async function processDeleteAction(item) {
   logger.info(`  Record deleted from ${item.table_name}`);
 }
 
-module.exports = {
+export default {
   processSyncQueue,
 };

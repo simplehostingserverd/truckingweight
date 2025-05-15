@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { check } = require('express-validator');
+import { check } from 'express-validator';
 
 // Import controllers
-const weightController = require('../controllers/weights');
+import weightController from '../controllers/weights.js';
 
 // Import middleware
-const auth = require('../middleware/auth');
+import auth from '../middleware/auth.js';
 
 // @route   GET api/weights
 // @desc    Get all weights for the company
@@ -45,4 +45,4 @@ router.put('/:id', auth, weightController.updateWeight);
 // @access  Private
 router.delete('/:id', auth, weightController.deleteWeight);
 
-module.exports = router;
+export default router;

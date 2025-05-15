@@ -1,5 +1,5 @@
-const webhookController = require('../../controllers/fastify/webhooks');
-const { authMiddleware } = require('../../middleware/fastify/auth');
+import webhookController from '../../controllers/fastify/webhooks.js';
+import { authMiddleware } from '../../middleware/fastify/auth.js';
 
 // Webhook schema
 const webhookSchema = {
@@ -310,4 +310,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

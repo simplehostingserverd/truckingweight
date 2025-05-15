@@ -1,6 +1,6 @@
-const apiKeyController = require('../../controllers/fastify/apiKeys');
-const { authMiddleware } = require('../../middleware/fastify/auth');
-const { adminMiddleware } = require('../../middleware/fastify/admin');
+import apiKeyController from '../../controllers/fastify/apiKeys.js';
+import { authMiddleware } from '../../middleware/fastify/auth.js';
+import { adminMiddleware } from '../../middleware/fastify/admin.js';
 
 // API Key schema
 const apiKeySchema = {
@@ -283,4 +283,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

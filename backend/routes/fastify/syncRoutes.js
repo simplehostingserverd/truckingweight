@@ -1,5 +1,5 @@
-const syncController = require('../../controllers/fastify/syncRoutes');
-const { authMiddleware } = require('../../middleware/fastify/auth');
+import syncController from '../../controllers/fastify/syncRoutes.js';
+import { authMiddleware } from '../../middleware/fastify/auth.js';
 
 // Sync status schema
 const syncStatusSchema = {
@@ -141,4 +141,4 @@ async function routes(fastify /* options */) {
   );
 }
 
-module.exports = routes;
+export default routes;

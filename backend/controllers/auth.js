@@ -1,7 +1,7 @@
-const bcrypt = require('bcryptjs');
-const { validationResult } = require('express-validator');
-const supabase = require('../config/supabase');
-const pasetoService = require('../services/pasetoService');
+import bcrypt from 'bcryptjs';
+import { validationResult } from 'express-validator';
+import supabase from '../config/supabase.js';
+import pasetoService from '../services/pasetoService.js';
 
 // @desc    Register a user
 // @route   POST /api/auth/register

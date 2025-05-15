@@ -1,5 +1,5 @@
-const supabase = require('../../config/supabase');
-const crypto = require('crypto');
+import supabase from '../../config/supabase.js';
+import crypto from 'crypto';
 
 /**
  * Get all webhooks for the company
@@ -297,7 +297,7 @@ async function testWebhook(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getAllWebhooks,
   getWebhookById,
   createWebhook,

@@ -1,5 +1,5 @@
-const supabase = require('../../config/supabase');
-const crypto = require('crypto');
+import supabase from '../../config/supabase.js';
+import crypto from 'crypto';
 
 /**
  * Get all integrations for the company
@@ -237,7 +237,7 @@ async function testIntegration(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getAllIntegrations,
   getIntegrationById,
   createIntegration,

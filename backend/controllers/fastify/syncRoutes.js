@@ -1,5 +1,5 @@
-const supabase = require('../../config/supabase')
-// const cacheService = require('../../services/cache')
+import supabase from '../../config/supabase.js';
+// import cacheService from '../../services/cache.js';
 
 /**
  * Get sync status
@@ -170,8 +170,8 @@ async function getSyncHistory(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getSyncStatus,
   syncData,
   getSyncHistory,
-}
+};

@@ -1,4 +1,4 @@
-const supabase = require('../../config/supabase');
+import supabase from '../../config/supabase.js';
 
 /**
  * Get all loads for the company
@@ -289,7 +289,7 @@ async function deleteLoad(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   getAllLoads,
   getLoadById,
   createLoad,

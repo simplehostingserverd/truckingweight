@@ -1,4 +1,4 @@
-const pasetoService = require('../../services/pasetoService');
+import * as pasetoService from '../../services/pasetoService.js';
 
 // Auth middleware for Fastify
 async function authMiddleware(request, reply) {
@@ -24,6 +24,6 @@ async function authMiddleware(request, reply) {
   }
 }
 
-module.exports = {
+export default {
   authMiddleware,
 };

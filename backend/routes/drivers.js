@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { check } = require('express-validator');
+import { check } from 'express-validator';
 
 // Import controllers
-const driverController = require('../controllers/drivers');
+import driverController from '../controllers/drivers.js';
 
 // Import middleware
-const auth = require('../middleware/auth');
+import auth from '../middleware/auth.js';
 
 // @route   GET api/drivers
 // @desc    Get all drivers for the company
@@ -44,4 +44,4 @@ router.put('/:id', auth, driverController.updateDriver);
 // @access  Private
 router.delete('/:id', auth, driverController.deleteDriver);
 
-module.exports = router;
+export default router;
