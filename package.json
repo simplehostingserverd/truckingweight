@@ -33,8 +33,9 @@
     "setup-all": "npm run setup-db && npm run seed-data && npm run add-data && npm run add-logos",
     "cleanup": "node scripts/cleanup.js",
     "velociraptor": "node scripts/velociraptor.js",
+    "kill-nodejs": "node scripts/kill-nodejs.js",
     "prestart-cleanup": "node scripts/prestart-cleanup.js",
-    "predev": "node scripts/prestart-cleanup.js",
+    "predev": "node scripts/kill-nodejs.js && node scripts/prestart-cleanup.js",
     "postdev": "node scripts/cleanup.js"
   },
   "dependencies": {

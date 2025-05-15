@@ -24,7 +24,9 @@ The following improvements have been made to ensure proper process management:
 
 3. **Velociraptor Process Hunter**: An aggressive process-hunting script has been added at `scripts/velociraptor.js` that hunts down and terminates any processes related to the application, both by process name pattern and by port usage (3000-3005 for frontend, 5000 for backend).
 
-4. **Pre/Post Hooks**: The `predev` and `postdev` npm scripts have been added to run the cleanup and velociraptor scripts before starting and the cleanup script after stopping the application.
+4. **Node.js Process Killer**: A specialized script has been added at `scripts/kill-nodejs.js` that specifically targets all Node.js processes before starting the application. This ensures that no lingering Node.js processes from previous runs will cause port conflicts.
+
+5. **Pre/Post Hooks**: The `predev` and `postdev` npm scripts have been updated to run the Node.js process killer and cleanup scripts before starting, and the cleanup script after stopping the application.
 
 ## Troubleshooting
 
@@ -36,6 +38,9 @@ npm run cleanup
 
 # To aggressively clear ports needed by the application
 npm run velociraptor
+
+# To kill all Node.js processes
+npm run kill-nodejs
 ```
 
 ### Common Issues

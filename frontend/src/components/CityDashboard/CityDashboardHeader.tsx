@@ -66,7 +66,7 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
     localStorage.removeItem('cityUser');
 
     // Redirect to login page
-    router.push({ pathname: '/city/login' });
+    router.push('/city/login');
   };
 
   const markAllAsRead = () => {
