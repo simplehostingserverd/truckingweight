@@ -643,6 +643,18 @@ async function exportData(request, reply) {
   }
 }
 
+export {
+  getDashboardData,
+  getAllUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  getWeightReports,
+  getLoadReports,
+  getComplianceReports,
+  exportData,
+};
+
 export default {
   getDashboardData,
   getAllUsers,

@@ -5,8 +5,8 @@
  * and its dependencies like the database.
  */
 
-import db from '../../config/database.js';
-import cacheService from '../../services/cache.js';
+import * as db from '../../config/database.js';
+import * as cacheService from '../../services/cache.js';
 
 /**
  * Register health check routes
@@ -16,28 +16,28 @@ import cacheService from '../../services/cache.js';
 async function routes(fastify, options) {
   // Basic health check
   fastify.get('/', async (request, reply) => {
-    return { status: 'ok', timestamp: new Date().toISOString() }
-  })
+    return { status: 'ok', timestamp: new Date().toISOString() };
+  });
 
   // Detailed health check
   fastify.get('/detailed', async (request, reply) => {
     // Check database connection
-    let dbStatus = { connected: false }
+    let dbStatus = { connected: false };
     try {
-      const dbResult = await db.testConnection()
+      const dbResult = await db.testConnection();
       dbStatus = {
         connected: true,
         version: dbResult?.version || 'unknown',
-      }
+      };
     } catch (err) {
-      dbStatus.error = err.message
+      dbStatus.error = err.message;
     }
 
     // Check cache status
     const cacheStatus = {
       available: true,
       type: 'in-memory LRU',
-    }
+    };
 
     // System info
     const systemInfo = {
@@ -46,7 +46,7 @@ async function routes(fastify, options) {
       nodeVersion: process.version,
       platform: process.platform,
       arch: process.arch,
-    }
+    };
 
     return {
       status: dbStatus.connected ? 'healthy' : 'degraded',
@@ -54,53 +54,53 @@ async function routes(fastify, options) {
       cache: cacheStatus,
       database: dbStatus,
       system: systemInfo,
-    }
-  })
+    };
+  });
 
   // Cache health check
   fastify.get('/cache', async (request, reply) => {
     try {
       // Test cache by setting and getting a value
-      const testKey = 'health-check-test'
-      const testValue = { timestamp: new Date().toISOString() }
+      const testKey = 'health-check-test';
+      const testValue = { timestamp: new Date().toISOString() };
 
-      await cacheService.set(testKey, testValue)
-      const retrieved = await cacheService.get(testKey)
+      await cacheService.set(testKey, testValue);
+      const retrieved = await cacheService.get(testKey);
 
       if (retrieved && retrieved.timestamp) {
         return {
           status: 'ok',
           message: 'Cache is working properly',
           type: 'in-memory LRU',
-        }
+        };
       } else {
-        reply.code(503)
-        return { status: 'error', message: 'Cache retrieval failed' }
+        reply.code(503);
+        return { status: 'error', message: 'Cache retrieval failed' };
       }
     } catch (err) {
-      reply.code(503)
-      return { status: 'error', message: 'Cache operation failed', error: err.message }
+      reply.code(503);
+      return { status: 'error', message: 'Cache operation failed', error: err.message };
     }
-  })
+  });
 
   // Database health check
   fastify.get('/database', async (request, reply) => {
     try {
-      const result = await db.testConnection()
+      const result = await db.testConnection();
       return {
         status: 'ok',
         message: 'Database connection successful',
         version: result?.version || 'unknown',
-      }
+      };
     } catch (err) {
-      reply.code(503)
+      reply.code(503);
       return {
         status: 'error',
         message: 'Database connection failed',
         error: err.message,
-      }
+      };
     }
-  })
+  });
 }
 
 export default routes;

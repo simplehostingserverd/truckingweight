@@ -128,6 +128,8 @@ const cityRoleMiddleware = roles => {
   };
 };
 
+export { cityAuthMiddleware, cityAdminMiddleware, cityRoleMiddleware };
+
 export default {
   cityAuthMiddleware,
   cityAdminMiddleware,

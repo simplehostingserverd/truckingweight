@@ -13,11 +13,11 @@ async function getSyncStatus(request, reply) {
     const { count, error } = await supabase
       .from('sync_queue')
       .select('*', { count: 'exact', head: true })
-      .eq('status', 'pending')
+      .eq('status', 'pending');
 
     if (error) {
-      request.log.error('Error checking sync queue:', error)
-      return reply.code(500).send({ msg: 'Server error' })
+      request.log.error('Error checking sync queue:', error);
+      return reply.code(500).send({ msg: 'Server error' });
     }
 
     // Get last successful sync
@@ -27,11 +27,11 @@ async function getSyncStatus(request, reply) {
       .eq('status', 'completed')
       .order('created_at', { ascending: false })
       .limit(1)
-      .single()
+      .single();
 
     if (lastSyncError && lastSyncError.code !== 'PGRST116') {
-      request.log.error('Error checking last sync:', lastSyncError)
-      return reply.code(500).send({ msg: 'Server error' })
+      request.log.error('Error checking last sync:', lastSyncError);
+      return reply.code(500).send({ msg: 'Server error' });
     }
 
     return reply.send({
@@ -40,10 +40,10 @@ async function getSyncStatus(request, reply) {
       pendingItems: count || 0,
       lastSuccessfulSync: lastSync?.created_at || null,
       cacheStatus,
-    })
+    });
   } catch (err) {
-    request.log.error('Error in getSyncStatus:', err)
-    return reply.code(500).send({ msg: 'Server error' })
+    request.log.error('Error in getSyncStatus:', err);
+    return reply.code(500).send({ msg: 'Server error' });
   }
 }
 
@@ -52,24 +52,24 @@ async function getSyncStatus(request, reply) {
  */
 async function syncData(request, reply) {
   try {
-    const { table, action, data, companyId } = request.body
+    const { table, action, data, companyId } = request.body;
 
     if (!table || !action || !data || !companyId) {
       return reply.code(400).send({
         msg: 'Missing required fields. Required: table, action, data, companyId',
-      })
+      });
     }
 
     // Validate action
-    const validActions = ['create', 'update', 'delete']
+    const validActions = ['create', 'update', 'delete'];
     if (!validActions.includes(action)) {
       return reply.code(400).send({
         msg: 'Invalid action. Must be one of: create, update, delete',
-      })
+      });
     }
 
     // Generate a unique ID for the sync item
-    const syncId = `${table}_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`
+    const syncId = `${table}_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
 
     // Add to sync queue
     const { error } = await supabase
@@ -86,11 +86,11 @@ async function syncData(request, reply) {
         },
       ])
       .select()
-      .single()
+      .single();
 
     if (error) {
-      request.log.error('Error adding to sync queue:', error)
-      return reply.code(500).send({ msg: 'Server error' })
+      request.log.error('Error adding to sync queue:', error);
+      return reply.code(500).send({ msg: 'Server error' });
     }
 
     // Trigger sync process (in a real implementation, this would be handled by a background worker)
@@ -101,10 +101,10 @@ async function syncData(request, reply) {
         status: 'completed',
         updated_at: new Date().toISOString(),
       })
-      .eq('id', syncId)
+      .eq('id', syncId);
 
     if (updateError) {
-      request.log.error('Error updating sync status:', updateError)
+      request.log.error('Error updating sync status:', updateError);
       // We don't return an error here since the item was added to the queue successfully
     }
 
@@ -112,10 +112,10 @@ async function syncData(request, reply) {
       msg: 'Data queued for synchronization',
       syncId,
       status: 'pending',
-    })
+    });
   } catch (err) {
-    request.log.error('Error in syncData:', err)
-    return reply.code(500).send({ msg: 'Server error' })
+    request.log.error('Error in syncData:', err);
+    return reply.code(500).send({ msg: 'Server error' });
   }
 }
 
@@ -124,36 +124,36 @@ async function syncData(request, reply) {
  */
 async function getSyncHistory(request, reply) {
   try {
-    const { limit = 50, offset = 0, status } = request.query
+    const { limit = 50, offset = 0, status } = request.query;
 
     // Build query
     let query = supabase
       .from('sync_queue')
       .select('*')
       .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1)
+      .range(offset, offset + limit - 1);
 
     // Add status filter if provided
     if (status) {
-      query = query.eq('status', status)
+      query = query.eq('status', status);
     }
 
     // Execute query
-    const { data, error } = await query
+    const { data, error } = await query;
 
     if (error) {
-      request.log.error('Error fetching sync history:', error)
-      return reply.code(500).send({ msg: 'Server error' })
+      request.log.error('Error fetching sync history:', error);
+      return reply.code(500).send({ msg: 'Server error' });
     }
 
     // Get total count
     const { count: totalCount, error: countError } = await supabase
       .from('sync_queue')
-      .select('*', { count: 'exact', head: true })
+      .select('*', { count: 'exact', head: true });
 
     if (countError) {
-      request.log.error('Error counting sync items:', countError)
-      return reply.code(500).send({ msg: 'Server error' })
+      request.log.error('Error counting sync items:', countError);
+      return reply.code(500).send({ msg: 'Server error' });
     }
 
     return reply.send({
@@ -163,12 +163,14 @@ async function getSyncHistory(request, reply) {
         limit: parseInt(limit),
         offset: parseInt(offset),
       },
-    })
+    });
   } catch (err) {
-    request.log.error('Error in getSyncHistory:', err)
-    return reply.code(500).send({ msg: 'Server error' })
+    request.log.error('Error in getSyncHistory:', err);
+    return reply.code(500).send({ msg: 'Server error' });
   }
 }
+
+export { getSyncStatus, syncData, getSyncHistory };
 
 export default {
   getSyncStatus,

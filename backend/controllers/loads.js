@@ -11,7 +11,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
  * @route   GET /api/loads
  * @access  Private
  */
-exports.getAllLoads = async (req, res) => {
+export const getAllLoads = async (req, res) => {
   try {
     // Get user's company_id
     const { data: userData, error: userError } = await supabase
@@ -62,7 +62,7 @@ exports.getAllLoads = async (req, res) => {
  * @route   GET /api/loads/:id
  * @access  Private
  */
-exports.getLoadById = async (req, res) => {
+export const getLoadById = async (req, res) => {
   try {
     // Get user's company_id
     const { data: userData, error: userError } = await supabase
@@ -118,7 +118,7 @@ exports.getLoadById = async (req, res) => {
  * @route   POST /api/loads
  * @access  Private
  */
-exports.createLoad = async (req, res) => {
+export const createLoad = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -184,7 +184,7 @@ exports.createLoad = async (req, res) => {
  * @route   PUT /api/loads/:id
  * @access  Private
  */
-exports.updateLoad = async (req, res) => {
+export const updateLoad = async (req, res) => {
   const {
     description,
     origin,
@@ -257,7 +257,7 @@ exports.updateLoad = async (req, res) => {
  * @route   DELETE /api/loads/:id
  * @access  Private
  */
-exports.deleteLoad = async (req, res) => {
+export const deleteLoad = async (req, res) => {
   try {
     // Get user's company_id
     const { data: userData, error: userError } = await supabase

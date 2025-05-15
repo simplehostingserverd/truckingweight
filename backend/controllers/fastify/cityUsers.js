@@ -20,10 +20,7 @@ async function getAllCityUsers(request, reply) {
     const { limit = 50, offset = 0, role, status } = request.query;
 
     // Build query
-    let query = supabase
-      .from('city_users')
-      .select('*', { count: 'exact' })
-      .eq('city_id', cityId);
+    let query = supabase.from('city_users').select('*', { count: 'exact' }).eq('city_id', cityId);
 
     // Add filters
     if (role) {
@@ -257,7 +254,10 @@ async function updateCityUser(request, reply) {
       if (role) authUpdateData.data.role = role;
       if (email) authUpdateData.email = email;
 
-      const { error: authUpdateError } = await supabase.auth.admin.updateUserById(userId, authUpdateData);
+      const { error: authUpdateError } = await supabase.auth.admin.updateUserById(
+        userId,
+        authUpdateData
+      );
 
       if (authUpdateError) {
         request.log.error('Error updating user in auth:', authUpdateError);
@@ -341,6 +341,8 @@ async function deleteCityUser(request, reply) {
     return reply.code(500).send({ msg: 'Server error' });
   }
 }
+
+export { getAllCityUsers, getCityUserById, createCityUser, updateCityUser, deleteCityUser };
 
 export default {
   getAllCityUsers,

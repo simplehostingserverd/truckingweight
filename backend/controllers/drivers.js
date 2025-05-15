@@ -4,7 +4,7 @@ import supabase from '../config/supabase.js';
 // @desc    Get all drivers for the company
 // @route   GET /api/drivers
 // @access  Private
-exports.getAllDrivers = async (req, res) => {
+export const getAllDrivers = async (req, res) => {
   try {
     // Get drivers for the company from Supabase
     const { data: drivers, error } = await supabase
@@ -28,7 +28,7 @@ exports.getAllDrivers = async (req, res) => {
 // @desc    Get driver by ID
 // @route   GET /api/drivers/:id
 // @access  Private
-exports.getDriverById = async (req, res) => {
+export const getDriverById = async (req, res) => {
   try {
     // Get driver by ID from Supabase
     const { data: driver, error } = await supabase
@@ -57,7 +57,7 @@ exports.getDriverById = async (req, res) => {
 // @desc    Create a new driver
 // @route   POST /api/drivers
 // @access  Private
-exports.createDriver = async (req, res) => {
+export const createDriver = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -99,7 +99,7 @@ exports.createDriver = async (req, res) => {
 // @desc    Update a driver
 // @route   PUT /api/drivers/:id
 // @access  Private
-exports.updateDriver = async (req, res) => {
+export const updateDriver = async (req, res) => {
   try {
     // Check if driver exists and belongs to the company
     const { data: existingDriver, error: checkError } = await supabase
@@ -145,7 +145,7 @@ exports.updateDriver = async (req, res) => {
 // @desc    Delete a driver
 // @route   DELETE /api/drivers/:id
 // @access  Private
-exports.deleteDriver = async (req, res) => {
+export const deleteDriver = async (req, res) => {
   try {
     // Check if driver exists and belongs to the company
     const { data: existingDriver, error: checkError } = await supabase

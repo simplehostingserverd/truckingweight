@@ -180,6 +180,8 @@ async function deleteVehicle(request, reply) {
   }
 }
 
+export { getAllVehicles, getVehicleById, createVehicle, updateVehicle, deleteVehicle };
+
 export default {
   getAllVehicles,
   getVehicleById,

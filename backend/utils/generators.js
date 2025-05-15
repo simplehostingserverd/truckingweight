@@ -184,6 +184,13 @@ const generateCityWeighTicketNumber = async cityId => {
   }
 };
 
+export {
+  generateTicketNumber,
+  generatePermitNumber,
+  generateViolationNumber,
+  generateCityWeighTicketNumber,
+};
+
 export default {
   generateTicketNumber,
   generatePermitNumber,

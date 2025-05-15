@@ -237,6 +237,15 @@ async function testIntegration(request, reply) {
   }
 }
 
+export {
+  getAllIntegrations,
+  getIntegrationById,
+  createIntegration,
+  updateIntegration,
+  deleteIntegration,
+  testIntegration,
+};
+
 export default {
   getAllIntegrations,
   getIntegrationById,

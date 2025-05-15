@@ -297,6 +297,16 @@ async function testWebhook(request, reply) {
   }
 }
 
+export {
+  getAllWebhooks,
+  getWebhookById,
+  createWebhook,
+  updateWebhook,
+  deleteWebhook,
+  processWebhookCallback,
+  testWebhook,
+};
+
 export default {
   getAllWebhooks,
   getWebhookById,

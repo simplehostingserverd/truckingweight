@@ -177,6 +177,8 @@ async function deleteDriver(request, reply) {
   }
 }
 
+export { getAllDrivers, getDriverById, createDriver, updateDriver, deleteDriver };
+
 export default {
   getAllDrivers,
   getDriverById,

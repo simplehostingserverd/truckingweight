@@ -6,6 +6,8 @@ async function adminMiddleware(request, reply) {
   }
 }
 
+export { adminMiddleware };
+
 export default {
   adminMiddleware,
 };

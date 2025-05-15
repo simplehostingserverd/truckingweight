@@ -5,7 +5,7 @@ import supabase from '../config/supabase.js';
 // @desc    Get admin dashboard data
 // @route   GET /api/admin/dashboard
 // @access  Private/Admin
-exports.getDashboardData = async (req, res) => {
+export const getDashboardData = async (req, res) => {
   try {
     // Get counts for various entities
     const [
@@ -106,7 +106,7 @@ exports.getDashboardData = async (req, res) => {
 // @desc    Get all users
 // @route   GET /api/admin/users
 // @access  Private/Admin
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     // Get all users from Supabase
     const { data: users, error } = await supabase
@@ -129,7 +129,7 @@ exports.getAllUsers = async (req, res) => {
 // @desc    Create a new user
 // @route   POST /api/admin/users
 // @access  Private/Admin
-exports.createUser = async (req, res) => {
+export const createUser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -188,7 +188,7 @@ exports.createUser = async (req, res) => {
 // @desc    Update a user
 // @route   PUT /api/admin/users/:id
 // @access  Private/Admin
-exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const { name, email, companyId, isAdmin, password } = req.body;
 
@@ -246,7 +246,7 @@ exports.updateUser = async (req, res) => {
 // @desc    Delete a user
 // @route   DELETE /api/admin/users/:id
 // @access  Private/Admin
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     // Check if user exists
     const { data: existingUser, error: checkError } = await supabase
@@ -282,7 +282,7 @@ exports.deleteUser = async (req, res) => {
 // @desc    Get weight reports
 // @route   GET /api/admin/reports/weights
 // @access  Private/Admin
-exports.getWeightReports = async (req, res) => {
+export const getWeightReports = async (req, res) => {
   try {
     // Get weight data with aggregations
     const { data: weights, error } = await supabase
@@ -359,7 +359,7 @@ exports.getWeightReports = async (req, res) => {
 // @desc    Get load reports
 // @route   GET /api/admin/reports/loads
 // @access  Private/Admin
-exports.getLoadReports = async (req, res) => {
+export const getLoadReports = async (req, res) => {
   try {
     // Get load data with aggregations
     const { data: loads, error } = await supabase
@@ -443,7 +443,7 @@ exports.getLoadReports = async (req, res) => {
 // @desc    Get compliance reports
 // @route   GET /api/admin/reports/compliance
 // @access  Private/Admin
-exports.getComplianceReports = async (req, res) => {
+export const getComplianceReports = async (req, res) => {
   try {
     // Get weight data for compliance analysis
     const { data: weights, error } = await supabase
@@ -535,7 +535,7 @@ exports.getComplianceReports = async (req, res) => {
 // @desc    Export data (CSV, PDF)
 // @route   GET /api/admin/export/:type
 // @access  Private/Admin
-exports.exportData = async (req, res) => {
+export const exportData = async (req, res) => {
   try {
     // type parameter is not used in this implementation
     const { entity, format } = req.query;

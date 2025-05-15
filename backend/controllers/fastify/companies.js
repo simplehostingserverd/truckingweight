@@ -209,6 +209,8 @@ async function deleteCompany(request, reply) {
   }
 }
 
+export { getAllCompanies, getCompanyById, createCompany, updateCompany, deleteCompany };
+
 export default {
   getAllCompanies,
   getCompanyById,

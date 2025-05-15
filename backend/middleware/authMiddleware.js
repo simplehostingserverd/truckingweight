@@ -123,6 +123,8 @@ const sameCompany = (req, res, next) => {
   }
 };
 
+export { protect, admin, sameCompany };
+
 export default {
   protect,
   admin,

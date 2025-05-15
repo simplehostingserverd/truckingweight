@@ -172,6 +172,8 @@ async function processDeleteAction(item) {
   logger.info(`  Record deleted from ${item.table_name}`);
 }
 
+export { processSyncQueue };
+
 export default {
   processSyncQueue,
 };

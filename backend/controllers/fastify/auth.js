@@ -152,6 +152,8 @@ async function getUser(request, reply) {
   }
 }
 
+export { register, login, getUser };
+
 export default {
   register,
   login,

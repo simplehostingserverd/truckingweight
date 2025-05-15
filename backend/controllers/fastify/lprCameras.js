@@ -60,14 +60,14 @@ async function getAllLPRCameras(request, reply) {
     const formattedCameras = cameras.map(camera => {
       // Clone the camera object
       const formattedCamera = { ...camera };
-      
+
       // If not admin, mask sensitive fields
       if (!isAdmin) {
         formattedCamera.username = formattedCamera.username ? '********' : null;
         formattedCamera.password = formattedCamera.password ? '********' : null;
         formattedCamera.api_key = formattedCamera.api_key ? '********' : null;
       }
-      
+
       return formattedCamera;
     });
 
@@ -352,10 +352,7 @@ async function deleteLPRCamera(request, reply) {
     }
 
     // Delete camera from database
-    const { error: deleteError } = await supabase
-      .from('lpr_cameras')
-      .delete()
-      .eq('id', cameraId);
+    const { error: deleteError } = await supabase.from('lpr_cameras').delete().eq('id', cameraId);
 
     if (deleteError) {
       request.log.error('Error deleting LPR camera:', deleteError);
@@ -368,6 +365,8 @@ async function deleteLPRCamera(request, reply) {
     return reply.code(500).send({ msg: 'Server error' });
   }
 }
+
+export { getAllLPRCameras, getLPRCameraById, createLPRCamera, updateLPRCamera, deleteLPRCamera };
 
 export default {
   getAllLPRCameras,

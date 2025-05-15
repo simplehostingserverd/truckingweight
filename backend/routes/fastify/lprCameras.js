@@ -122,7 +122,10 @@ const createLPRCameraSchema = {
     required: ['name', 'vendor', 'ip_address'],
     properties: {
       name: { type: 'string', minLength: 1 },
-      vendor: { type: 'string', enum: ['genetec', 'axis', 'hikvision', 'dahua', 'bosch', 'hanwha', 'custom'] },
+      vendor: {
+        type: 'string',
+        enum: ['genetec', 'axis', 'hikvision', 'dahua', 'bosch', 'hanwha', 'custom'],
+      },
       ip_address: { type: 'string', minLength: 1 },
       port: { type: ['integer', 'null'] },
       username: { type: ['string', 'null'] },
@@ -181,7 +184,10 @@ const updateLPRCameraSchema = {
     type: 'object',
     properties: {
       name: { type: 'string', minLength: 1 },
-      vendor: { type: 'string', enum: ['genetec', 'axis', 'hikvision', 'dahua', 'bosch', 'hanwha', 'custom'] },
+      vendor: {
+        type: 'string',
+        enum: ['genetec', 'axis', 'hikvision', 'dahua', 'bosch', 'hanwha', 'custom'],
+      },
       ip_address: { type: 'string', minLength: 1 },
       port: { type: ['integer', 'null'] },
       username: { type: ['string', 'null'] },

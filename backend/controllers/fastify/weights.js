@@ -204,6 +204,8 @@ async function deleteWeight(request, reply) {
   }
 }
 
+export { getAllWeights, getWeightById, createWeight, updateWeight, deleteWeight };
+
 export default {
   getAllWeights,
   getWeightById,

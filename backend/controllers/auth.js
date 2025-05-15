@@ -179,6 +179,8 @@ export const getUser = async (req, res) => {
   }
 };
 
+export { register, login, getUser };
+
 export default {
   register,
   login,

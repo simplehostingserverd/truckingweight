@@ -299,6 +299,8 @@ async function verifyApiKey(request, reply) {
   }
 }
 
+export { getAllApiKeys, getApiKeyById, createApiKey, updateApiKey, deleteApiKey, verifyApiKey };
+
 export default {
   getAllApiKeys,
   getApiKeyById,

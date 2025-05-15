@@ -289,6 +289,8 @@ async function deleteLoad(request, reply) {
   }
 }
 
+export { getAllLoads, getLoadById, createLoad, updateLoad, deleteLoad };
+
 export default {
   getAllLoads,
   getLoadById,

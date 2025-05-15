@@ -4,7 +4,7 @@ import supabase from '../config/supabase.js';
 // @desc    Get all vehicles for the company
 // @route   GET /api/vehicles
 // @access  Private
-exports.getAllVehicles = async (req, res) => {
+export const getAllVehicles = async (req, res) => {
   try {
     // Get vehicles for the company from Supabase
     const { data: vehicles, error } = await supabase
@@ -28,7 +28,7 @@ exports.getAllVehicles = async (req, res) => {
 // @desc    Get vehicle by ID
 // @route   GET /api/vehicles/:id
 // @access  Private
-exports.getVehicleById = async (req, res) => {
+export const getVehicleById = async (req, res) => {
   try {
     // Get vehicle by ID from Supabase
     const { data: vehicle, error } = await supabase
@@ -57,7 +57,7 @@ exports.getVehicleById = async (req, res) => {
 // @desc    Create a new vehicle
 // @route   POST /api/vehicles
 // @access  Private
-exports.createVehicle = async (req, res) => {
+export const createVehicle = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -102,7 +102,7 @@ exports.createVehicle = async (req, res) => {
 // @desc    Update a vehicle
 // @route   PUT /api/vehicles/:id
 // @access  Private
-exports.updateVehicle = async (req, res) => {
+export const updateVehicle = async (req, res) => {
   try {
     // Check if vehicle exists and belongs to the company
     const { data: existingVehicle, error: checkError } = await supabase
@@ -148,7 +148,7 @@ exports.updateVehicle = async (req, res) => {
 // @desc    Delete a vehicle
 // @route   DELETE /api/vehicles/:id
 // @access  Private
-exports.deleteVehicle = async (req, res) => {
+export const deleteVehicle = async (req, res) => {
   try {
     // Check if vehicle exists and belongs to the company
     const { data: existingVehicle, error: checkError } = await supabase

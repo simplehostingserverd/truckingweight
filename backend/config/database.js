@@ -126,3 +126,12 @@ const testConnection = async () => {
 };
 
 export { getDirectPool, getPooledPool, queryDirect, queryPooled, closeConnections, testConnection };
+
+export default {
+  getDirectPool,
+  getPooledPool,
+  queryDirect,
+  queryPooled,
+  closeConnections,
+  testConnection,
+};

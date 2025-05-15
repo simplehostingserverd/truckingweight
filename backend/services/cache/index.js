@@ -97,4 +97,4 @@ class CacheService {
 }
 
 // Export singleton instance
-export default new; CacheService();
+export default new CacheService();

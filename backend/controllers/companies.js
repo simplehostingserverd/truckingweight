@@ -11,7 +11,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
  * @route   GET /api/companies
  * @access  Private/Admin
  */
-exports.getAllCompanies = async (req, res) => {
+export const getAllCompanies = async (req, res) => {
   try {
     const { data: companies, error } = await supabase.from('companies').select('*').order('name');
 
@@ -31,7 +31,7 @@ exports.getAllCompanies = async (req, res) => {
  * @route   GET /api/companies/:id
  * @access  Private
  */
-exports.getCompanyById = async (req, res) => {
+export const getCompanyById = async (req, res) => {
   try {
     // Get user's company_id
     const { data: userData, error: userError } = await supabase
@@ -75,7 +75,7 @@ exports.getCompanyById = async (req, res) => {
  * @route   POST /api/companies
  * @access  Private/Admin
  */
-exports.createCompany = async (req, res) => {
+export const createCompany = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -133,7 +133,7 @@ exports.createCompany = async (req, res) => {
  * @route   PUT /api/companies/:id
  * @access  Private/Admin
  */
-exports.updateCompany = async (req, res) => {
+export const updateCompany = async (req, res) => {
   const {
     name,
     address,
@@ -197,7 +197,7 @@ exports.updateCompany = async (req, res) => {
  * @route   DELETE /api/companies/:id
  * @access  Private/Admin
  */
-exports.deleteCompany = async (req, res) => {
+export const deleteCompany = async (req, res) => {
   try {
     // Check if company exists
     const { data: existingCompany, error: companyError } = await supabase

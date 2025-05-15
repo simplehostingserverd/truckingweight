@@ -4,7 +4,7 @@ import supabase from '../config/supabase.js';
 // @desc    Get all weights for the company
 // @route   GET /api/weights
 // @access  Private
-exports.getAllWeights = async (req, res) => {
+export const getAllWeights = async (req, res) => {
   try {
     // Get weights for the company from Supabase
     const { data: weights, error } = await supabase
@@ -28,7 +28,7 @@ exports.getAllWeights = async (req, res) => {
 // @desc    Get weight by ID
 // @route   GET /api/weights/:id
 // @access  Private
-exports.getWeightById = async (req, res) => {
+export const getWeightById = async (req, res) => {
   try {
     // Find weight by ID
     const { data: weight, error } = await supabase
@@ -62,7 +62,7 @@ exports.getWeightById = async (req, res) => {
 // @desc    Create a new weight entry
 // @route   POST /api/weights
 // @access  Private
-exports.createWeight = async (req, res) => {
+export const createWeight = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -113,7 +113,7 @@ exports.createWeight = async (req, res) => {
 // @desc    Update a weight entry
 // @route   PUT /api/weights/:id
 // @access  Private
-exports.updateWeight = async (req, res) => {
+export const updateWeight = async (req, res) => {
   try {
     // First, check if the weight exists and belongs to the user's company
     const { data: existingWeight, error: fetchError } = await supabase
@@ -178,7 +178,7 @@ exports.updateWeight = async (req, res) => {
 // @desc    Delete a weight entry
 // @route   DELETE /api/weights/:id
 // @access  Private
-exports.deleteWeight = async (req, res) => {
+export const deleteWeight = async (req, res) => {
   try {
     // First, check if the weight exists and belongs to the user's company
     const { data: existingWeight, error: fetchError } = await supabase
