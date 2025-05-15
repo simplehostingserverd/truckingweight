@@ -21,8 +21,9 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (!response.ok) {
+      console.log('Backend login error response:', data);
       return NextResponse.json(
-        { error: data.msg || 'Authentication failed' },
+        { error: data.msg || data.error || 'Authentication failed' },
         { status: response.status }
       );
     }

@@ -11,6 +11,30 @@ export async function GET(request: NextRequest) {
 
     const token = authHeader.split(' ')[1];
 
+    // Check if this is a test token
+    if (token.startsWith('test-city-token-')) {
+      console.log('Using test data for city dashboard revenue data');
+
+      // Generate dummy revenue data
+      const monthLabels = Array.from({ length: 6 }, (_, i) => {
+        const date = new Date();
+        date.setMonth(date.getMonth() - (5 - i));
+        return date.toLocaleString('default', { month: 'short', year: 'numeric' });
+      });
+
+      const permitRevenue = Array.from(
+        { length: 6 },
+        () => Math.floor(Math.random() * 10000) + 5000
+      );
+      const fineRevenue = Array.from({ length: 6 }, () => Math.floor(Math.random() * 5000) + 1000);
+
+      return NextResponse.json({
+        labels: monthLabels,
+        permitRevenue,
+        fineRevenue,
+      });
+    }
+
     // Get query parameters
     const searchParams = request.nextUrl.searchParams;
     const months = searchParams.get('months') || '6';

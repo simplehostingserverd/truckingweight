@@ -123,15 +123,15 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
 
-  // API rewrites - commented out to use local API routes
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: '/api/:path*',
-  //       destination: 'http://localhost:5000/api/:path*',
-  //     },
-  //   ];
-  // },
+  // API rewrites to proxy requests to the backend server
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:5000/api/:path*',
+      },
+    ];
+  },
 
   // Compiler optimizations
   compiler: {

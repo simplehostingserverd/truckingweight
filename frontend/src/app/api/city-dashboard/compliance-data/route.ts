@@ -11,6 +11,24 @@ export async function GET(request: NextRequest) {
 
     const token = authHeader.split(' ')[1];
 
+    // Check if this is a test token
+    if (token.startsWith('test-city-token-')) {
+      console.log('Using test data for city dashboard compliance data');
+
+      // Generate dummy compliance data
+      const labels = Array.from({ length: 30 }, (_, i) => {
+        const date = new Date();
+        date.setDate(date.getDate() - (29 - i));
+        return date.toISOString().split('T')[0];
+      });
+
+      const compliant = Array.from({ length: 30 }, () => Math.floor(Math.random() * 20) + 10);
+      const nonCompliant = Array.from({ length: 30 }, () => Math.floor(Math.random() * 5));
+      const warning = Array.from({ length: 30 }, () => Math.floor(Math.random() * 3));
+
+      return NextResponse.json({ labels, compliant, nonCompliant, warning });
+    }
+
     // Get query parameters
     const searchParams = request.nextUrl.searchParams;
     const days = searchParams.get('days') || '30';

@@ -11,6 +11,37 @@ export async function GET(request: NextRequest) {
 
     const token = authHeader.split(' ')[1];
 
+    // Check if this is a test token
+    if (token.startsWith('test-city-token-')) {
+      console.log('Using test data for city dashboard recent weighings');
+
+      // Generate dummy recent weighings data
+      const dummyWeighings = Array.from({ length: 10 }, (_, i) => {
+        const date = new Date();
+        date.setHours(date.getHours() - i * 2);
+
+        const grossWeight = Math.floor(Math.random() * 30000) + 20000;
+        const tareWeight = Math.floor(Math.random() * 10000) + 10000;
+
+        return {
+          id: `dummy-${i}`,
+          ticket_number: `WT-${100000 + i}`,
+          vehicle_info: `Truck ${['Peterbilt', 'Kenworth', 'Freightliner', 'Mack'][i % 4]} ${['379', '389', 'W900', 'Cascadia'][i % 4]}`,
+          company_name: `${['ABC Trucking', 'XYZ Logistics', 'Fast Freight', 'Eagle Transport'][i % 4]}`,
+          gross_weight: grossWeight,
+          tare_weight: tareWeight,
+          net_weight: grossWeight - tareWeight,
+          weigh_date: date.toISOString(),
+          status: ['Compliant', 'Compliant', 'Compliant', 'Warning', 'Non-Compliant'][i % 5],
+          city_scales: {
+            name: `Scale ${(i % 3) + 1}`,
+          },
+        };
+      });
+
+      return NextResponse.json({ weighings: dummyWeighings });
+    }
+
     // Get query parameters
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit') || '10';
