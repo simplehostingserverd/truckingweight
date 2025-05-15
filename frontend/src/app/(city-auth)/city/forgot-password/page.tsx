@@ -110,7 +110,7 @@ export default function ForgotPassword() {
                 <ApartmentIcon sx={{ fontSize: 48, color: 'primary.300' }} />
               </Box>
               <Typography
-                level="h1"
+                variant="h1"
                 sx={{ mb: 2, color: 'white', fontSize: '2.5rem', fontWeight: 'bold' }}
               >
                 City Weighing Portal
@@ -164,7 +164,7 @@ export default function ForgotPassword() {
               }}
             >
               <Box sx={{ textAlign: 'center', mb: 4 }}>
-                <Typography level="h2" sx={{ mb: 1, color: 'primary.400', fontWeight: 'bold' }}>
+                <Typography variant="h2" sx={{ mb: 1, color: 'primary.400', fontWeight: 'bold' }}>
                   Reset Your Password
                 </Typography>
                 <Typography variant="body1" sx={{ color: 'text.secondary' }}>
@@ -193,7 +193,7 @@ export default function ForgotPassword() {
                   >
                     Password reset instructions have been sent to your email address.
                   </Alert>
-                  <Typography level="body2" sx={{ mb: 3, color: 'text.secondary' }}>
+                  <Typography variant="body2" sx={{ mb: 3, color: 'text.secondary' }}>
                     Please check your email and follow the instructions to reset your password. If
                     you don't receive an email within a few minutes, please check your spam folder.
                   </Typography>
@@ -254,7 +254,7 @@ export default function ForgotPassword() {
                     </Button>
 
                     <Box sx={{ textAlign: 'center' }}>
-                      <Typography level="body2" sx={{ color: 'text.secondary' }}>
+                      <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                         Remember your password?{' '}
                         <Link href="/city/login" style={{ textDecoration: 'none' }}>
                           <Typography

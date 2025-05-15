@@ -1,25 +1,33 @@
 // Export all UI components from this file for easier imports
 
 // Button
-export { default as Button } from './button';
+export { Button, buttonVariants } from './button';
 export type { ButtonProps } from './button';
 
 // Input
-export { default as Input } from './input';
+export { Input } from './input';
 export type { InputProps } from './input';
 
 // Select
-export { default as Select } from './select';
-export type { SelectProps, SelectOption } from './select';
-export { SelectTrigger, SelectValue, SelectContent, SelectItem } from './select';
+export {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+  SelectGroup,
+  SelectLabel,
+  SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
+} from './select';
 
 // Badge
-export { default as Badge } from './badge';
+export { Badge } from './badge';
 export type { BadgeProps } from './badge';
 
 // Card
-export { default as Card } from './card';
-export { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './card';
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './card';
 
 // Tabs
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';

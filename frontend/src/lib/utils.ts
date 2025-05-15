@@ -73,3 +73,33 @@ export function getStatusColor(status: string): string {
   // Default color for unknown status
   return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
 }
+
+/**
+ * Truncate text to a specified length and add ellipsis
+ * @param text Text to truncate
+ * @param length Maximum length before truncation
+ * @returns Truncated text with ellipsis if needed
+ */
+export function truncateText(text: string, length: number = 50): string {
+  if (!text) return '';
+  if (text.length <= length) return text;
+  return text.substring(0, length) + '...';
+}
+
+/**
+ * Convert an object to a URL search parameter string
+ * @param params Object containing search parameters
+ * @returns URL search parameter string
+ */
+export function toSearchParamString(params: Record<string, any>): string {
+  const searchParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      searchParams.append(key, String(value));
+    }
+  });
+
+  const paramString = searchParams.toString();
+  return paramString ? `?${paramString}` : '';
+}
