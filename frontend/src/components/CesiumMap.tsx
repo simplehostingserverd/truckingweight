@@ -1,16 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { initCesium } from '@/utils/cesium-config';
 
-// Initialize Cesium configuration
-initCesium();
-
-// Import Cesium dynamically to avoid SSR issues
-let Cesium: any;
-if (typeof window !== 'undefined') {
-  Cesium = require('cesium');
-  // Set Cesium ion access token
-  Cesium.Ion.defaultAccessToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN || '';
-}
+// Declare Cesium as any type
+declare const Cesium: any;
 
 interface CesiumMapProps {
   latitude: number;
@@ -38,7 +29,12 @@ const CesiumMap: React.FC<CesiumMapProps> = ({
 
   // Initialize Cesium viewer
   useEffect(() => {
-    if (!mapRef.current) return;
+    if (!mapRef.current || typeof Cesium === 'undefined') return;
+
+    // Set Cesium ion access token
+    if (process.env.NEXT_PUBLIC_CESIUM_TOKEN) {
+      Cesium.Ion.defaultAccessToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN;
+    }
 
     // Create viewer
     const viewer = new Cesium.Viewer(mapRef.current, {

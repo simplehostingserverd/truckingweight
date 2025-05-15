@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { initCesium } from '@/utils/cesium-config';
-
-// Initialize Cesium configuration
-initCesium();
 
 // Dynamically import Cesium components with no SSR
 const CesiumMap = dynamic(() => import('./CesiumMap'), {

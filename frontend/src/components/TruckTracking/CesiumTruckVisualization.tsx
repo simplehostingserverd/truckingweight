@@ -1,17 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { initCesium } from '@/utils/cesium-config';
-import 'cesium/Build/Cesium/Widgets/widgets.css';
 
-// Initialize Cesium configuration
-initCesium();
-
-// Import Cesium dynamically to avoid SSR issues
-let Cesium: any;
-if (typeof window !== 'undefined') {
-  Cesium = require('cesium');
-}
+// Declare Cesium as any type
+declare const Cesium: any;
 
 interface RoutePoint {
   lat: number;

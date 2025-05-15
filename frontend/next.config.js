@@ -9,10 +9,9 @@ const withBundleAnalyzer =
 // Temporarily disable PWA support until next-pwa is installed
 const withPWA = config => config;
 
-// Configure webpack for Cesium
+// Import required modules
 const path = require('path');
 const fs = require('fs');
-const { configureCesiumWebpack } = require('./src/utils/cesium-webpack-config');
 
 // Check if SSL certificates exist
 const sslCertPath = path.join(__dirname, '../ssl/localhost.crt');
@@ -31,11 +30,21 @@ const nextConfig = {
         },
       }
     : {}),
-  // Webpack configuration for Cesium
+  // Webpack configuration
   webpack: (config, { isServer }) => {
-    // Configure webpack for Cesium
-    config = configureCesiumWebpack(config, isServer);
-    
+    // Exclude Cesium from the build
+    if (!isServer) {
+      // Add Cesium to the list of externals
+      config.externals = config.externals || {};
+      config.externals['cesium'] = 'Cesium';
+
+      // Add CSS processing
+      config.module.rules.push({
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      });
+    }
+
     return config;
   },
   // Core settings
@@ -148,12 +157,6 @@ const nextConfig = {
 
     // Better scroll handling
     scrollRestoration: true,
-
-    // Use Turbopack for faster development
-    turbo: process.env.NODE_ENV === 'development' ? { 
-      loaders: {}, 
-      resolvers: {} 
-    } : false,
   },
 
   // Transpile UI libraries

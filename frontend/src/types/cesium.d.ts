@@ -3,71 +3,55 @@
  * This file provides TypeScript type definitions for Cesium when used with Next.js
  */
 
-declare module 'cesium' {
-  export const Ion: any;
-  export const Viewer: any;
-  export const Cartesian3: any;
-  export const HeadingPitchRoll: any;
-  export const Transforms: any;
-  export const VerticalOrigin: any;
-  export const LabelStyle: any;
-  export const Cartesian2: any;
-  export const Color: any;
-  export const Math: any;
-  export const createWorldTerrain: any;
-  export const createWorldTerrainAsync: any;
-  export const Entity: any;
-  export const PolylineGraphics: any;
-  export const PolylineDashMaterialProperty: any;
-  export const CallbackProperty: any;
-  export const JulianDate: any;
-  export const ClockRange: any;
-  export const TimeIntervalCollection: any;
-  export const TimeInterval: any;
-  export const SampledPositionProperty: any;
-  export const HorizontalOrigin: any;
-  export const BillboardCollection: any;
-  export const ImageMaterialProperty: any;
-  export const PolygonGraphics: any;
-  export const PolygonHierarchy: any;
-  export const Material: any;
-  export const MaterialProperty: any;
-  export const PolylineArrowMaterialProperty: any;
-  export const PolylineGlowMaterialProperty: any;
-  export const PolylineOutlineMaterialProperty: any;
-  export const ColorMaterialProperty: any;
-  export const PolylineMaterialAppearance: any;
-  export const PerInstanceColorAppearance: any;
-  export const GeometryInstance: any;
-  export const PolylineGeometry: any;
-  export const Primitive: any;
-  export const PrimitiveCollection: any;
-  export const Appearance: any;
-  export const Material: any;
-  export const MaterialAppearance: any;
-  export const EllipsoidSurfaceAppearance: any;
-  export const PerInstanceColorAppearance: any;
-  export const DebugAppearance: any;
-  export const PolylineMaterialAppearance: any;
-  export const PolylineColorAppearance: any;
-  export const PolylineArrowMaterialProperty: any;
-  export const PolylineGlowMaterialProperty: any;
-  export const PolylineOutlineMaterialProperty: any;
-  export const ColorMaterialProperty: any;
-  export const PolylineMaterialAppearance: any;
-  export const PerInstanceColorAppearance: any;
-  export const GeometryInstance: any;
-  export const PolylineGeometry: any;
-  export const Primitive: any;
-  export const PrimitiveCollection: any;
-  export const Appearance: any;
-  export const Material: any;
-  export const MaterialAppearance: any;
-  export const EllipsoidSurfaceAppearance: any;
-  export const PerInstanceColorAppearance: any;
-  export const DebugAppearance: any;
-  export const PolylineMaterialAppearance: any;
-  export const PolylineColorAppearance: any;
+// We're not using the module import approach anymore, so we don't need to declare the module
+// Instead, we're using a global declaration for Cesium
+
+declare namespace Cesium {
+  const Ion: any;
+  const Viewer: any;
+  const Cartesian3: any;
+  const HeadingPitchRoll: any;
+  const Transforms: any;
+  const VerticalOrigin: any;
+  const LabelStyle: any;
+  const Cartesian2: any;
+  const Color: any;
+  const Math: any;
+  const createWorldTerrain: any;
+  const createWorldTerrainAsync: any;
+  const Entity: any;
+  const PolylineGraphics: any;
+  const PolylineDashMaterialProperty: any;
+  const CallbackProperty: any;
+  const JulianDate: any;
+  const ClockRange: any;
+  const TimeIntervalCollection: any;
+  const TimeInterval: any;
+  const SampledPositionProperty: any;
+  const HorizontalOrigin: any;
+  const BillboardCollection: any;
+  const ImageMaterialProperty: any;
+  const PolygonGraphics: any;
+  const PolygonHierarchy: any;
+  const Material: any;
+  const MaterialProperty: any;
+  const PolylineArrowMaterialProperty: any;
+  const PolylineGlowMaterialProperty: any;
+  const PolylineOutlineMaterialProperty: any;
+  const ColorMaterialProperty: any;
+  const PolylineMaterialAppearance: any;
+  const PerInstanceColorAppearance: any;
+  const GeometryInstance: any;
+  const PolylineGeometry: any;
+  const Primitive: any;
+  const PrimitiveCollection: any;
+  const Appearance: any;
+  const ScreenSpaceEventHandler: any;
+  const ScreenSpaceEventType: any;
+  const defined: any;
+  const ConstantPositionProperty: any;
+  const SampledProperty: any;
+  const Quaternion: any;
 }
 
 declare global {
