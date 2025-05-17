@@ -1,29 +1,34 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
- * 
+ *
  * Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
  */
 
-const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron');
-const path = require('path');
-const fs = require('fs');
-const crypto = require('crypto');
-const { nanoid } = require('nanoid');
-const { DateTime } = require('luxon');
-const Store = require('electron-store');
-const { v4: uuidv4 } = require('uuid');
-const forge = require('node-forge');
-const { Stripe } = require('stripe');
-const axios = require('axios');
+import { app, BrowserWindow, ipcMain, dialog, Menu } from 'electron';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+import crypto from 'crypto';
+import { nanoid } from 'nanoid';
+import { DateTime } from 'luxon';
+import Store from 'electron-store';
+import { v4 as uuidv4 } from 'uuid';
+import forge from 'node-forge';
+import { Stripe } from 'stripe';
+import axios from 'axios';
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Initialize store for settings
 const store = new Store({
@@ -50,15 +55,15 @@ if (!store.has('privateKey') || !store.has('publicKey')) {
       console.error('Error generating key pair:', err);
       return;
     }
-    
+
     // Convert to PEM format
     const privateKeyPem = forge.pki.privateKeyToPem(keypair.privateKey);
     const publicKeyPem = forge.pki.publicKeyToPem(keypair.publicKey);
-    
+
     // Store keys
     store.set('privateKey', privateKeyPem);
     store.set('publicKey', publicKeyPem);
-    
+
     console.log('New RSA key pair generated and stored');
   });
 } else {
@@ -172,7 +177,7 @@ function exportLicenseDatabase() {
       if (filePath) {
         const licenses = store.get('licenses') || [];
         const customers = store.get('customers') || [];
-        
+
         // Create export data with encrypted sensitive information
         const exportData = {
           licenses: licenses.map(license => ({
@@ -183,9 +188,9 @@ function exportLicenseDatabase() {
           exportDate: new Date().toISOString(),
           version: '1.0',
         };
-        
+
         fs.writeFileSync(filePath, JSON.stringify(exportData, null, 2));
-        
+
         dialog.showMessageBox(mainWindow, {
           type: 'info',
           title: 'Export Successful',
@@ -212,7 +217,7 @@ function importLicenseDatabase() {
       if (filePaths && filePaths.length > 0) {
         try {
           const data = JSON.parse(fs.readFileSync(filePaths[0], 'utf8'));
-          
+
           // Decrypt sensitive information
           if (data.licenses) {
             data.licenses = data.licenses.map(license => ({
@@ -220,7 +225,7 @@ function importLicenseDatabase() {
               key: decrypt(license.key), // Decrypt license keys
             }));
           }
-          
+
           // Confirm import
           dialog
             .showMessageBox(mainWindow, {
@@ -239,21 +244,24 @@ function importLicenseDatabase() {
                 // Save imported data
                 store.set('licenses', data.licenses || []);
                 store.set('customers', data.customers || []);
-                
+
                 dialog.showMessageBox(mainWindow, {
                   type: 'info',
                   title: 'Import Successful',
                   message: 'License database imported successfully.',
                   buttons: ['OK'],
                 });
-                
+
                 // Refresh UI
                 mainWindow.webContents.send('refresh-data');
               }
             });
         } catch (err) {
           console.error('Error importing license database:', err);
-          dialog.showErrorBox('Import Error', 'Failed to import license database. Invalid file format.');
+          dialog.showErrorBox(
+            'Import Error',
+            'Failed to import license database. Invalid file format.'
+          );
         }
       }
     })
@@ -283,7 +291,7 @@ function decrypt(text) {
   try {
     const encryptionKey = store.get('encryptionKey');
     if (!encryptionKey) return text;
-    
+
     const textParts = text.split(':');
     const iv = Buffer.from(textParts.shift(), 'hex');
     const encryptedText = Buffer.from(textParts.join(':'), 'hex');
@@ -324,7 +332,7 @@ ipcMain.handle('generate-license', async (event, customerData) => {
     // Generate a unique license key
     const licenseId = nanoid(12).toUpperCase();
     const licenseKey = `CEG-${licenseId}-${nanoid(8).toUpperCase()}`;
-    
+
     // Create license object
     const license = {
       id: uuidv4(),
@@ -334,7 +342,9 @@ ipcMain.handle('generate-license', async (event, customerData) => {
       customerEmail: customerData.email,
       plan: customerData.plan,
       createdAt: new Date().toISOString(),
-      expiresAt: DateTime.now().plus({ days: customerData.duration || 365 }).toISO(),
+      expiresAt: DateTime.now()
+        .plus({ days: customerData.duration || 365 })
+        .toISO(),
       maxUsers: customerData.maxUsers || 10,
       maxTenants: customerData.maxTenants || 1,
       features: customerData.features || ['basic'],
@@ -343,12 +353,12 @@ ipcMain.handle('generate-license', async (event, customerData) => {
       domains: customerData.domains || [],
       notes: customerData.notes || '',
     };
-    
+
     // Save license to store
     const licenses = store.get('licenses') || [];
     licenses.push(license);
     store.set('licenses', licenses);
-    
+
     // Return the license
     return license;
   } catch (error) {
@@ -390,18 +400,18 @@ ipcMain.handle('revoke-license', async (event, licenseId) => {
   try {
     const licenses = store.get('licenses') || [];
     const licenseIndex = licenses.findIndex(license => license.id === licenseId);
-    
+
     if (licenseIndex === -1) {
       throw new Error('License not found');
     }
-    
+
     // Update license status
     licenses[licenseIndex].status = 'revoked';
     licenses[licenseIndex].revokedAt = new Date().toISOString();
-    
+
     // Save updated licenses
     store.set('licenses', licenses);
-    
+
     // If connected to Stripe, cancel subscription
     if (stripe && licenses[licenseIndex].stripeSubscriptionId) {
       try {
@@ -410,7 +420,7 @@ ipcMain.handle('revoke-license', async (event, licenseId) => {
         console.error('Error cancelling Stripe subscription:', stripeError);
       }
     }
-    
+
     return licenses[licenseIndex];
   } catch (error) {
     console.error('Error revoking license:', error);
@@ -425,12 +435,12 @@ ipcMain.handle('save-settings', async (event, settings) => {
     Object.entries(settings).forEach(([key, value]) => {
       store.set(key, value);
     });
-    
+
     // Reinitialize Stripe if API key was updated
     if (settings.stripeApiKey) {
       stripe = new Stripe(settings.stripeApiKey);
     }
-    
+
     return { success: true };
   } catch (error) {
     console.error('Error saving settings:', error);

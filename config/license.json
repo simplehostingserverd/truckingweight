@@ -1,0 +1,13 @@
+{
+  "licenseKey": "CEG-7NANHMX_G71E-XYGNCLZY",
+  "customer": {
+    "name": "Horizon Freight Systems",
+    "email": "admin@horizonfreight.com",
+    "company": "Horizon Freight Systems"
+  },
+  "plan": "enterprise",
+  "features": ["basic", "advanced", "api", "premium"],
+  "maxUsers": 50,
+  "maxTenants": 5,
+  "expiresAt": "2026-05-17T03:42:28.100-05:00"
+}

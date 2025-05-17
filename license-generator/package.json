@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "License Generator for Cosmo Exploit Group LLC Weight Management System",
   "main": "main.js",
+  "type": "module",
   "private": true,
   "scripts": {
     "start": "electron .",
