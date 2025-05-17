@@ -1,0 +1,20 @@
+{
+  "name": "cosmo-license-tools",
+  "version": "1.0.0",
+  "description": "License management tools for Cosmo Exploit Group LLC",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node license-generator.js"
+  },
+  "author": "Cosmo Exploit Group LLC",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.3",
+    "boxen": "^7.1.1",
+    "chalk": "^5.3.0",
+    "dotenv": "^16.4.1",
+    "luxon": "^3.4.4",
+    "nanoid": "^5.0.4"
+  }
+}

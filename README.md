@@ -152,6 +152,30 @@ Ready to transform your weight management? Visit our booth at the convention for
 
 7. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### Deployment to Netlify
+
+We've included a Netlify configuration file (`netlify.toml`) for easy deployment:
+
+1. Install the Netlify CLI:
+
+   ```bash
+   npm install -g netlify-cli
+   ```
+
+2. Login to Netlify:
+
+   ```bash
+   netlify login
+   ```
+
+3. Deploy to Netlify:
+
+   ```bash
+   netlify deploy --prod
+   ```
+
+For detailed deployment instructions, see the [Linux Netlify Deployment Guide](Information/LINUX_NETLIFY_DEPLOYMENT.md).
+
 ## 📊 Project Structure
 
 ```text

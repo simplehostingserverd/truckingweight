@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -26,12 +25,13 @@ import MapTilerProvider from '@/providers/MapTilerProvider';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme/theme';
+import { initializeLicense, isKillSwitchActivated } from '@/utils/license';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   // Use undefined as initial state to avoid hydration mismatch
   const [isOnline, setIsOnline] = useState<boolean | undefined>(undefined);
 
-  // Monitor online/offline status
+  // Monitor online/offline status and initialize license
   useEffect(() => {
     // Set initial online status
     setIsOnline(navigator.onLine);
@@ -52,6 +52,22 @@ export function Providers({ children }: { children: React.ReactNode }) {
     // Add event listeners
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
+
+    // Initialize license verification
+    if (typeof window !== 'undefined') {
+      // Check if kill switch is already activated
+      if (isKillSwitchActivated()) {
+        // Redirect to license error page if not already there
+        if (!window.location.pathname.includes('/license-error')) {
+          window.location.href = '/license-error';
+        }
+      } else {
+        // Initialize license verification
+        initializeLicense().catch(error => {
+          logger.error('License initialization error', { error }, 'License');
+        });
+      }
+    }
 
     // Clean up
     return () => {
