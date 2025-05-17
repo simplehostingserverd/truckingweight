@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -87,6 +86,20 @@ export default function CityRegister() {
     }
 
     try {
+      // Validate email domain - only .gov domains are allowed
+      if (!email.toLowerCase().endsWith('.gov')) {
+        setError('Only .gov email domains are allowed for city registration');
+        setIsLoading(false);
+        return;
+      }
+
+      // Validate city email domain if provided
+      if (cityEmail && !cityEmail.toLowerCase().endsWith('.gov')) {
+        setError('Only .gov email domains are allowed for city contact email');
+        setIsLoading(false);
+        return;
+      }
+
       // First, create the city
       const cityResponse = await fetch('/api/city-auth/register-city', {
         method: 'POST',
@@ -133,7 +146,7 @@ export default function CityRegister() {
       // Show success message and redirect after a delay
       setSuccess(true);
       setTimeout(() => {
-        router.push({ pathname: '/city-login' });
+        router.push('/city-login');
       }, 3000);
     } catch (err: any) {
       setError(err.message || 'An error occurred during registration');

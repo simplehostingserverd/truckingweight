@@ -192,4 +192,4 @@ GitHub: [https://github.com/simplehostingserverd/truckingweight](https://github.
 ---
 
 © 2025 Cosmo Exploit Group LLC. All Rights Reserved.
-Built with ❤️ by Cosmo Exploit Group LLC
+Designed and built with ❤️ by Michael Anthony Trevino Jr., Lead Full-Stack Developer at Cosmo Exploit Group LLC
