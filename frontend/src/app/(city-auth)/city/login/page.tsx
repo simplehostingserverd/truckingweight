@@ -39,6 +39,7 @@ export default function CityLogin() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [showDemoLogin, setShowDemoLogin] = useState(process.env.NODE_ENV === 'development');
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -78,6 +79,35 @@ export default function CityLogin() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Handle demo login with test credentials
+  const handleDemoLogin = () => {
+    setIsLoading(true);
+    setError('');
+
+    // Create a demo token and user
+    const demoToken = 'test-city-token-' + Date.now();
+    const demoUser = {
+      id: 'demo-city-user',
+      name: 'Demo City Admin',
+      email: 'cityadmin@example.gov',
+      cityId: 1,
+      role: 'admin',
+    };
+
+    // Store the token and user data in localStorage
+    localStorage.setItem('cityToken', demoToken);
+    localStorage.setItem('cityUser', JSON.stringify(demoUser));
+
+    // Short delay to simulate API call
+    setTimeout(() => {
+      // Redirect to city dashboard
+      router.push({
+        pathname: '/city/dashboard',
+      });
+      setIsLoading(false);
+    }, 800);
   };
 
   return (
@@ -298,6 +328,27 @@ export default function CityLogin() {
                     </Typography>
                   </Divider>
 
+                  {showDemoLogin && (
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      color="neutral"
+                      onClick={handleDemoLogin}
+                      disabled={isLoading}
+                      sx={{
+                        mb: 2,
+                        borderColor: 'primary.300',
+                        color: 'primary.300',
+                        '&:hover': {
+                          borderColor: 'primary.400',
+                          backgroundColor: 'primary.800',
+                        },
+                      }}
+                    >
+                      Demo Login (No Password Required)
+                    </Button>
+                  )}
+
                   <Box sx={{ textAlign: 'center' }}>
                     <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
                       Don't have an account?{' '}
@@ -312,6 +363,31 @@ export default function CityLogin() {
                       </Link>
                     </Typography>
                   </Box>
+
+                  {/* Credentials hint for development */}
+                  {process.env.NODE_ENV === 'development' && (
+                    <Box
+                      sx={{
+                        mt: 2,
+                        p: 1.5,
+                        borderRadius: 1,
+                        bgcolor: 'background.level2',
+                        border: '1px dashed',
+                        borderColor: 'primary.700',
+                      }}
+                    >
+                      <Typography level="body-xs" sx={{ color: 'text.secondary', mb: 0.5 }}>
+                        <InfoIcon sx={{ fontSize: 14, mr: 0.5, verticalAlign: 'text-bottom' }} />
+                        <strong>Development Credentials:</strong>
+                      </Typography>
+                      <Typography level="body-xs" sx={{ color: 'text.secondary', ml: 2 }}>
+                        Email: cityadmin@example.gov
+                      </Typography>
+                      <Typography level="body-xs" sx={{ color: 'text.secondary', ml: 2 }}>
+                        Password: CityAdmin123!
+                      </Typography>
+                    </Box>
+                  )}
                 </Stack>
               </form>
             </Card>
