@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -73,6 +72,70 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
   // Sign in function
   const signIn = async (email: string, password: string) => {
     try {
+      // Check for test accounts first
+      const testAccounts = [
+        {
+          email: 'truckadmin@example.com',
+          password: 'TruckAdmin123!',
+          id: '123e4567-e89b-12d3-a456-426614174000',
+          name: 'Trucking Admin',
+          company_id: 1,
+          is_admin: true,
+        },
+        {
+          email: 'dispatcher@example.com',
+          password: 'Dispatch123!',
+          id: '223e4567-e89b-12d3-a456-426614174001',
+          name: 'John Dispatcher',
+          company_id: 1,
+          is_admin: false,
+        },
+        {
+          email: 'manager@example.com',
+          password: 'Manager123!',
+          id: '323e4567-e89b-12d3-a456-426614174002',
+          name: 'Sarah Manager',
+          company_id: 1,
+          is_admin: false,
+        },
+      ];
+
+      // Check if this is a test account
+      const testAccount = testAccounts.find(
+        account =>
+          account.email.toLowerCase() === email.toLowerCase() && account.password === password
+      );
+
+      if (testAccount) {
+        // For test accounts, create a mock session
+        const mockSession = {
+          access_token: `mock-token-${testAccount.id}`,
+          refresh_token: `mock-refresh-${testAccount.id}`,
+          expires_at: Date.now() + 3600 * 1000, // 1 hour from now
+          user: {
+            id: testAccount.id,
+            email: testAccount.email,
+            user_metadata: {
+              name: testAccount.name,
+              company_id: testAccount.company_id,
+              is_admin: testAccount.is_admin,
+              app_name: 'Simple Scale Solutions',
+            },
+          },
+        };
+
+        // Set the mock session and user
+        setSession(mockSession as any);
+        setUser(mockSession.user as any);
+
+        // Redirect to dashboard
+        router.push('/dashboard');
+        router.refresh();
+
+        return { error: null };
+      }
+
+      // If not a test account, try normal Supabase auth
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,

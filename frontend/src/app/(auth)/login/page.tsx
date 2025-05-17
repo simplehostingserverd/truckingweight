@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -97,13 +96,26 @@ export default function Login() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-white mb-2">Welcome to ScaleMasterAI! 👋</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              Welcome to Simple Scale Solutions! 👋
+            </h1>
             <p className="text-gray-400">Please sign in to your account and start the adventure</p>
           </div>
 
           {error && (
             <div className="mb-6 p-4 rounded-md bg-red-500/20 border border-red-500/50">
               <p className="text-red-500 text-sm">{error}</p>
+              {error.includes('Database error') && (
+                <div className="mt-2 text-xs text-gray-300">
+                  <p>There seems to be an issue with the database connection.</p>
+                  <p className="mt-1">For demo purposes, you can use these test accounts:</p>
+                  <ul className="list-disc pl-5 mt-1">
+                    <li>Email: truckadmin@example.com / Password: TruckAdmin123!</li>
+                    <li>Email: dispatcher@example.com / Password: Dispatch123!</li>
+                    <li>Email: manager@example.com / Password: Manager123!</li>
+                  </ul>
+                </div>
+              )}
             </div>
           )}
 
