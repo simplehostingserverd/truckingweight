@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
 });
 
 // Error handling middleware
-app.use((err, req, res, /* next */) => {
+app.use((err, req, res /* next */) => {
   console.error(err.stack);
   res.status(500).json({
     message: 'Something went wrong!',
@@ -76,7 +76,7 @@ const server = app.listen(PORT, () => {
 });
 
 // Import cache service
-const cacheService = require('./services/cache');
+const cacheService = require('./services/cache/index.js');
 
 // Handle graceful shutdown
 process.on('SIGTERM', () => {

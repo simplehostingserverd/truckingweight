@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { NetSuiteService } from './netsuite'
 import { SapService } from './sap'
 import logger from '../../utils/logger'
-import cacheService from '../../services/cache'
+import cacheService from '../../services/cache/index.js'
 
 const prisma = new PrismaClient()
 

@@ -1,5 +1,5 @@
 import supabase from '../../config/supabase.js';
-// import cacheService from '../../services/cache.js';
+// import cacheService from '../../services/cache/index.js';
 
 /**
  * Get sync status

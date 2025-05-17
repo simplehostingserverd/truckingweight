@@ -1,18 +1,26 @@
-'use strict';
+/**
+ * High-performance LRU cache service for the TruckingSemis API
+ * This service provides caching capabilities to improve API performance
+ */
 
-// Import tiny-lru correctly - it exports an object with lru factory function
 import { lru } from 'tiny-lru';
 import logger from '../../utils/logger.js';
+
+// Default cache options
+const DEFAULT_OPTIONS = {
+  max: 5000, // Maximum number of items to store in the cache
+  ttl: 600 * 1000, // Time to live in milliseconds (10 minutes)
+};
 
 /**
  * High-performance in-memory LRU caching service
  * Provides ultra-fast caching without external dependencies
  */
 class CacheService {
-  constructor() {
+  constructor(options = {}) {
+    this.options = { ...DEFAULT_OPTIONS, ...options };
     // Initialize in-memory LRU cache
-    // Default size: 5000 items, TTL: 10 minutes (600 seconds)
-    this.lruCache = lru(5000, 600 * 1000);
+    this.lruCache = lru(this.options.max, this.options.ttl);
 
     logger.info('Initialized in-memory LRU cache service');
   }
@@ -61,6 +69,15 @@ class CacheService {
   }
 
   /**
+   * Check if a key exists in the cache
+   * @param {string} key - The cache key
+   * @returns {boolean} - True if the key exists
+   */
+  has(key) {
+    return this.lruCache.has(key);
+  }
+
+  /**
    * Delete a value from cache
    *
    * @param {string} key - Cache key
@@ -94,7 +111,35 @@ class CacheService {
       return false;
     }
   }
+
+  /**
+   * Get the number of items in the cache
+   * @returns {number} - The number of items
+   */
+  size() {
+    return this.lruCache.size;
+  }
+
+  /**
+   * Get or set a value with a function if not in cache
+   * @param {string} key - The cache key
+   * @param {Function} fn - Function to call if key is not in cache
+   * @param {Object} options - Optional cache options
+   * @returns {Promise<any>} - The cached or computed value
+   */
+  async getOrSet(key, fn, options = {}) {
+    if (this.has(key)) {
+      return this.get(key);
+    }
+
+    const value = await fn();
+    this.set(key, value, options);
+    return value;
+  }
 }
 
-// Export singleton instance
-export default new CacheService();
+// Create a singleton instance
+const cacheService = new CacheService();
+
+// Export the instance as default
+export default cacheService;
