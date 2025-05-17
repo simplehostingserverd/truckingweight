@@ -135,7 +135,22 @@ Ready to transform your weight management? Visit our booth at the convention for
    npm run dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Set up the database:
+
+   ```bash
+   npm run setup-db
+   ```
+
+6. Run the necessary migrations:
+
+   ```bash
+   # Add telematics columns to the vehicles table
+   # This is required for the telematics functionality to work properly
+   # See scripts/migrations/README.md for manual instructions if needed
+   npm run add-telematics-columns
+   ```
+
+7. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📊 Project Structure
 

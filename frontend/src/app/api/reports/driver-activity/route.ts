@@ -48,6 +48,20 @@ interface VehicleData {
   color?: string;
 }
 
+interface LoadInfo {
+  loadId: string;
+  broker: string;
+  origin: string;
+  destination: string;
+  commodity: string;
+  weight: number;
+  rate: number;
+  pickupTime: string;
+  deliveryTime: string;
+  status: string;
+  specialInstructions?: string;
+}
+
 interface DriverActivityResponse {
   driverId: string | number;
   driverName: string;
@@ -56,6 +70,7 @@ interface DriverActivityResponse {
   currentPosition: RoutePoint;
   stats: DriverStats;
   vehicle: VehicleData;
+  loadInfo?: LoadInfo;
 }
 
 /**
@@ -241,7 +256,21 @@ function getRouteWaypoints(driverId: string): Waypoint[] {
       { lat: 31.9973, lng: -102.0779, name: 'Odessa, TX' },
       { lat: 32.0022, lng: -102.1014, name: 'Midland, TX' },
     ],
+    // DAT Loading Board connected route - special route for driver 1
+    'dat-route': [
+      { lat: 33.749, lng: -84.388, name: 'Atlanta, GA (DAT Pickup)' },
+      { lat: 33.5186, lng: -86.8104, name: 'Birmingham, AL' },
+      { lat: 32.3668, lng: -88.7032, name: 'Meridian, MS' },
+      { lat: 32.2988, lng: -90.1848, name: 'Jackson, MS' },
+      { lat: 32.5252, lng: -93.7502, name: 'Shreveport, LA' },
+      { lat: 32.7767, lng: -96.797, name: 'Dallas, TX (DAT Delivery)' },
+    ],
   };
+
+  // Special case for driver 1 - always use the DAT route
+  if (driverId === '1') {
+    return routes['dat-route'];
+  }
 
   // Select a route based on driver ID or randomly
   const routeKeys = Object.keys(routes);
@@ -260,6 +289,32 @@ function getRouteWaypoints(driverId: string): Waypoint[] {
 }
 
 function generateDetailedRoute(routeWaypoints: Waypoint[]): RoutePoint[] {
+  // Check if routeWaypoints is undefined or empty
+  if (!routeWaypoints || routeWaypoints.length === 0) {
+    // Return a default route if no waypoints are provided
+    const defaultRoute: RoutePoint[] = [
+      {
+        lat: 32.7767,
+        lng: -96.797,
+        name: 'Dallas, TX',
+        timestamp: new Date().toISOString(),
+        speed: 65,
+        fuelLevel: 75,
+        engineTemp: 195,
+      },
+      {
+        lat: 32.3513,
+        lng: -95.3011,
+        name: 'Tyler, TX',
+        timestamp: new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString(),
+        speed: 60,
+        fuelLevel: 70,
+        engineTemp: 198,
+      },
+    ];
+    return defaultRoute;
+  }
+
   // Generate intermediate points for a smoother route
   const detailedRoute: Waypoint[] = [];
 
@@ -294,15 +349,21 @@ function generateDetailedRoute(routeWaypoints: Waypoint[]): RoutePoint[] {
     }
   }
 
-  // Always add the final destination
-  detailedRoute.push(routeWaypoints[routeWaypoints.length - 1]);
+  // Always add the final destination if we have waypoints
+  if (routeWaypoints.length > 0) {
+    detailedRoute.push(routeWaypoints[routeWaypoints.length - 1]);
+  }
 
   // Add timestamps for each waypoint (starting 6 hours ago, ending in 1 hour)
   const now = new Date();
   const startTime = new Date(now.getTime() - 6 * 60 * 60 * 1000); // 6 hours ago
   const endTime = new Date(now.getTime() + 1 * 60 * 60 * 1000); // 1 hour from now
 
-  const timeStep = (endTime.getTime() - startTime.getTime()) / (detailedRoute.length - 1);
+  // Ensure we don't divide by zero if detailedRoute is empty
+  const timeStep =
+    detailedRoute.length > 1
+      ? (endTime.getTime() - startTime.getTime()) / (detailedRoute.length - 1)
+      : 0;
 
   return detailedRoute.map((waypoint, index) => {
     const timestamp = new Date(startTime.getTime() + timeStep * index);
@@ -378,10 +439,50 @@ function getMockDriverActivity(driverId: string): DriverActivityResponse {
   const routeData = generateRouteData(driverId);
   const driverIdNum = parseInt(driverId);
 
-  // Return mock data structure
+  // Special case for driver 1 - DAT Loading Board connected driver
+  if (driverId === '1') {
+    return {
+      driverId: driverIdNum,
+      driverName: 'John Driver',
+      date: new Date().toISOString().split('T')[0],
+      route: routeData.route,
+      currentPosition: routeData.currentPosition,
+      stats: generateDriverStats(),
+      vehicle: {
+        id: driverIdNum,
+        name: 'Truck 101',
+        type: 'Semi-Truck',
+        model: 'Peterbilt 579',
+        year: 2022,
+        licensePlate: 'TX-10001',
+        vin: '1XPBD49X1MD100001',
+        status: 'Active',
+        lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split('T')[0],
+        color: '#3366CC',
+      },
+      // DAT Loading Board information
+      loadInfo: {
+        loadId: 'DAT-12345678',
+        broker: 'DAT Solutions LLC',
+        origin: 'Atlanta, GA',
+        destination: 'Dallas, TX',
+        commodity: 'Electronics',
+        weight: 42000,
+        rate: 3.75,
+        pickupTime: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+        deliveryTime: new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString(),
+        status: 'In Transit',
+        specialInstructions: 'Call dispatch upon arrival. Fragile cargo.',
+      },
+    };
+  }
+
+  // Return mock data structure for other drivers
   return {
     driverId: driverIdNum,
-    driverName: driverId === '1' ? 'John Driver' : 'Sarah Smith',
+    driverName: driverId === '2' ? 'Sarah Smith' : `Driver ${driverIdNum}`,
     date: new Date().toISOString().split('T')[0],
     route: routeData.route,
     currentPosition: routeData.currentPosition,
@@ -390,12 +491,13 @@ function getMockDriverActivity(driverId: string): DriverActivityResponse {
       id: driverIdNum,
       name: `Truck ${100 + driverIdNum}`,
       type: 'Semi-Truck',
-      model: driverId === '1' ? 'Peterbilt 579' : 'Kenworth T680',
-      year: driverId === '1' ? 2022 : 2021,
+      model: driverId === '2' ? 'Kenworth T680' : 'Freightliner Cascadia',
+      year: driverId === '2' ? 2021 : 2020,
       licensePlate: `TX-${10000 + driverIdNum}`,
       vin: `1XPBD49X1MD${100000 + driverIdNum}`,
       status: 'Active',
       lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      color: driverId === '2' ? '#CC3366' : '#33CC66',
     },
   };
 }

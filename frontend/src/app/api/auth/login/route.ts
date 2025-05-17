@@ -10,6 +10,58 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { email, password } = body;
 
+    // Predefined test accounts
+    const testAccounts = [
+      {
+        email: 'truckadmin@example.com',
+        password: 'TruckAdmin123!',
+        id: '123e4567-e89b-12d3-a456-426614174000',
+        name: 'Trucking Admin',
+        company_id: 1,
+        is_admin: true,
+      },
+      {
+        email: 'dispatcher@example.com',
+        password: 'Dispatch123!',
+        id: '223e4567-e89b-12d3-a456-426614174001',
+        name: 'John Dispatcher',
+        company_id: 1,
+        is_admin: false,
+      },
+      {
+        email: 'manager@example.com',
+        password: 'Manager123!',
+        id: '323e4567-e89b-12d3-a456-426614174002',
+        name: 'Sarah Manager',
+        company_id: 1,
+        is_admin: false,
+      },
+    ];
+
+    // Check for test accounts first
+    const testAccount = testAccounts.find(
+      account =>
+        account.email.toLowerCase() === email.toLowerCase() && account.password === password
+    );
+
+    if (testAccount) {
+      // Return success response with test account session
+      return NextResponse.json({
+        user: {
+          id: testAccount.id,
+          email: testAccount.email,
+          name: testAccount.name,
+          company_id: testAccount.company_id,
+          is_admin: testAccount.is_admin,
+        },
+        session: {
+          access_token: `mock-access-token-${testAccount.id}`,
+          refresh_token: `mock-refresh-token-${testAccount.id}`,
+          expires_at: Date.now() + 3600 * 1000, // 1 hour from now
+        },
+      });
+    }
+
     // For demo purposes, accept any email with a password of "password"
     if (password === 'password') {
       // Create a mock user and session

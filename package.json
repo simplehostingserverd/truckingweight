@@ -38,7 +38,9 @@
     "predev": "node scripts/velociraptor.mjs && node scripts/kill-nodejs.mjs",
     "postdev": "node scripts/cleanup.mjs",
     "setup-supabase-buckets": "node scripts/create-supabase-buckets.mjs",
-    "setup-lpr-cameras": "node scripts/migrations/create-lpr-cameras-table.mjs"
+    "setup-lpr-cameras": "node scripts/migrations/create-lpr-cameras-table.mjs",
+    "add-telematics-columns": "node scripts/migrations/add-telematics-columns.mjs",
+    "add-trucking-data": "node scripts/add-trucking-dashboard-data.mjs"
   },
   "dependencies": {
     "@maptiler/sdk": "^3.2.2",
