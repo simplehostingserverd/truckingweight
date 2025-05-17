@@ -49,12 +49,23 @@ const nextConfig = {
             test: /[\\/]node_modules[\\/]/,
             name(module) {
               // Get the name of the npm package
-              // Add null check to prevent errors when module.context is null or match fails
-              if (!module.context) return 'npm.vendor';
-              const match = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
-              const packageName = match && match[1] ? match[1] : 'vendor';
-              // Return a nice name for the chunk
-              return `npm.${packageName.replace('@', '')}`;
+              // Add comprehensive null checks to prevent errors
+              if (!module || !module.context) return 'npm.vendor';
+
+              try {
+                const match = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+                // Ensure match and match[1] exist before accessing
+                const packageName =
+                  match && Array.isArray(match) && match.length > 1 && match[1]
+                    ? match[1]
+                    : 'vendor';
+
+                // Return a nice name for the chunk
+                return `npm.${packageName.replace('@', '')}`;
+              } catch (error) {
+                // Fallback in case of any errors
+                return 'npm.vendor';
+              }
             },
           },
         },
