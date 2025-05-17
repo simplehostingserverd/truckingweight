@@ -4,7 +4,7 @@ import { handleApiError, AppError } from '@/utils/errorHandler';
 import logger from '@/utils/logger';
 
 // Create a fetcher function that uses axios with error handling
-const axiosFetcher = async function <T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+const axiosFetcher = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
   try {
     const response: AxiosResponse<T> = await axios(url, config);
     return response.data;
