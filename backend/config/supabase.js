@@ -20,6 +20,7 @@ dotenv.config();
 // Initialize Supabase client
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+const supabaseJwtSecret = process.env.SUPABASE_JWT_SECRET;
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('Missing Supabase credentials. Please check your .env file.');
@@ -29,6 +30,27 @@ if (!supabaseUrl || !supabaseKey) {
   }
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Create Supabase client with JWT options if available
+const supabaseOptions = {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: false,
+  },
+  global: {
+    headers: {
+      'X-Client-Info': 'supabase-js/backend',
+    },
+  },
+};
+
+// Add JWT configuration if available
+if (supabaseJwtSecret) {
+  console.log('Using Supabase JWT authentication');
+} else {
+  console.warn('SUPABASE_JWT_SECRET not found. JWT authentication may not work properly.');
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey, supabaseOptions);
 
 export default supabase;

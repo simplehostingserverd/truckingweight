@@ -15,16 +15,41 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import type { Database } from '@/types/supabase';
-import { getSupabaseConfig } from './config';
+import { getSupabaseConfig, getSupabaseServerConfig } from './config';
 
 // Create a Supabase client for use in server components
 export const createClient = () => {
-  // Get Supabase configuration
-  const { supabaseUrl, supabaseKey } = getSupabaseConfig();
+  // Get Supabase configuration with JWT secret for server-side
+  const { supabaseUrl, supabaseKey, supabaseJwtSecret } = getSupabaseServerConfig();
 
   return createServerComponentClient<Database>({
     cookies,
     supabaseUrl,
     supabaseKey,
+    options: {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: false,
+        flowType: 'pkce',
+      },
+      global: {
+        headers: {
+          'X-Client-Info': 'supabase-auth-helpers-nextjs/server',
+        },
+      },
+      // Add JWT secret if available
+      ...(supabaseJwtSecret && { 
+        db: { 
+          schema: 'public' 
+        },
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: false,
+          flowType: 'pkce',
+        },
+      }),
+    },
   });
 };

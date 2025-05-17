@@ -73,7 +73,7 @@ export async function middleware(req: NextRequest) {
     'camera=(), microphone=(), geolocation=(), interest-cohort=()'
   );
 
-  // Get Supabase configuration
+  // Get Supabase configuration with JWT secret for server-side
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
   // Create the client with explicit URL and key
@@ -84,6 +84,19 @@ export async function middleware(req: NextRequest) {
     cookies: () => cookieStore,
     supabaseUrl,
     supabaseKey,
+    options: {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        flowType: 'pkce',
+      },
+      global: {
+        headers: {
+          'X-Client-Info': 'supabase-auth-helpers-nextjs/middleware',
+        },
+      },
+    },
   });
 
   try {

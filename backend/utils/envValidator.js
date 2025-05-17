@@ -66,6 +66,14 @@ export function validateSupabaseConfig() {
     );
     return false;
   }
+  
+  // Check for Supabase JWT secret
+  if (!process.env.SUPABASE_JWT_SECRET) {
+    logger.warn('Missing SUPABASE_JWT_SECRET environment variable');
+    logger.warn('JWT authentication may not work properly without this secret');
+    logger.warn('Please add SUPABASE_JWT_SECRET to your .env file');
+    // Don't fail validation, just warn
+  }
 
   return true;
 }

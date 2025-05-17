@@ -59,6 +59,7 @@ jobs:
           echo "# Supabase Configuration" > frontend/.env.local
           echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://pczfmxigimuluacspxse.supabase.co' }}" >> frontend/.env.local
           echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w' }}" >> frontend/.env.local
+          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET || '5KYUyCsHvxw3vG7QTtOywMFazTGpWE5VvbPNYgPXK+xiQCybFn9ts4ZLMU2QiGKAVfWuU2SR+N4fJuiJxwQx9Q==' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Backend API URL" >> frontend/.env.local
           echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.truckingsemis.com' }}" >> frontend/.env.local
@@ -112,6 +113,7 @@ jobs:
           echo "# Supabase Configuration" > frontend/.env.local
           echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://pczfmxigimuluacspxse.supabase.co' }}" >> frontend/.env.local
           echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w' }}" >> frontend/.env.local
+          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET || '5KYUyCsHvxw3vG7QTtOywMFazTGpWE5VvbPNYgPXK+xiQCybFn9ts4ZLMU2QiGKAVfWuU2SR+N4fJuiJxwQx9Q==' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Backend API URL" >> frontend/.env.local
           echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.truckingsemis.com' }}" >> frontend/.env.local
@@ -182,6 +184,7 @@ jobs:
           echo "# Supabase Configuration" > frontend/.env.local
           echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://pczfmxigimuluacspxse.supabase.co' }}" >> frontend/.env.local
           echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w' }}" >> frontend/.env.local
+          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET || '5KYUyCsHvxw3vG7QTtOywMFazTGpWE5VvbPNYgPXK+xiQCybFn9ts4ZLMU2QiGKAVfWuU2SR+N4fJuiJxwQx9Q==' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Backend API URL" >> frontend/.env.local
           echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.truckingsemis.com' }}" >> frontend/.env.local

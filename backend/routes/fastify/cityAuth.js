@@ -21,11 +21,26 @@ import { createClient } from '@supabase/supabase-js';
 // import bcrypt from 'bcryptjs';
 import * as pasetoService from '../../services/pasetoService.js';
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY
-);
+// Initialize Supabase client with JWT options
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY;
+const supabaseJwtSecret = process.env.SUPABASE_JWT_SECRET;
+
+// Create Supabase client with JWT options if available
+const supabaseOptions = {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: false,
+  },
+  global: {
+    headers: {
+      'X-Client-Info': 'supabase-js/city-auth',
+    },
+  },
+};
+
+const supabase = createClient(supabaseUrl, supabaseKey, supabaseOptions);
 
 // City auth route schemas
 const registerCitySchema = {
@@ -397,7 +412,7 @@ async function routes(fastify, _options) {
           return reply.code(500).send({ msg: 'Error creating user record' });
         }
 
-        // Create and return Paseto token
+        // Create Paseto token for backward compatibility
         const payload = {
           user: {
             id: newUser.id,
@@ -407,10 +422,34 @@ async function routes(fastify, _options) {
           },
         };
 
-        const token = await pasetoService.generateToken(payload);
+        const pasetoToken = await pasetoService.generateToken(payload);
+        
+        // Get Supabase session tokens
+        const { data: sessionData, error: sessionError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        
+        if (sessionError) {
+          request.log.error('Error getting session tokens:', sessionError);
+          // Continue with just the Paseto token if there's an error
+          return reply.code(200).send({
+            token: pasetoToken,
+            user: {
+              id: newUser.id,
+              name: newUser.name,
+              email: newUser.email,
+              cityId: newUser.city_id,
+              role: newUser.role,
+            },
+          });
+        }
 
+        // Return both tokens - Supabase JWT token and Paseto token for backward compatibility
         return reply.code(200).send({
-          token,
+          token: pasetoToken, // For backward compatibility
+          supabaseToken: sessionData.session.access_token, // Supabase JWT token
+          refreshToken: sessionData.session.refresh_token, // Supabase refresh token
           user: {
             id: newUser.id,
             name: newUser.name,
@@ -467,7 +506,7 @@ async function routes(fastify, _options) {
           return reply.code(400).send({ msg: 'Account is inactive' });
         }
 
-        // Create and return Paseto token
+        // Create Paseto token for backward compatibility
         const payload = {
           user: {
             id: userData.id,
@@ -477,10 +516,13 @@ async function routes(fastify, _options) {
           },
         };
 
-        const token = await pasetoService.generateToken(payload);
-
+        const pasetoToken = await pasetoService.generateToken(payload);
+        
+        // Return both tokens - Supabase JWT token and Paseto token for backward compatibility
         return reply.code(200).send({
-          token,
+          token: pasetoToken, // For backward compatibility
+          supabaseToken: authData.session.access_token, // Supabase JWT token
+          refreshToken: authData.session.refresh_token, // Supabase refresh token
           user: {
             id: userData.id,
             name: userData.name,

@@ -135,13 +135,20 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
         return { error: null };
       }
 
-      // If not a test account, try normal Supabase auth
-      const { error } = await supabase.auth.signInWithPassword({
+      // If not a test account, try normal Supabase auth with JWT
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (!error) {
+      if (!error && data.session) {
+        // Get the session to ensure JWT is properly set
+        console.log('Successfully authenticated with Supabase JWT');
+        
+        // Set the session and user
+        setSession(data.session);
+        setUser(data.user);
+        
         router.push('/dashboard');
         router.refresh();
       }
