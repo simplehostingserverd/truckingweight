@@ -63,7 +63,47 @@ export default function CityLogin() {
     setError('');
 
     try {
-      // Call the city login API
+      // Import Supabase client dynamically to avoid SSR issues
+      const { createClient } = await import('@/utils/supabase/client');
+      const supabase = createClient();
+      
+      // First try direct Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (!authError && authData.session) {
+        console.log('Successfully authenticated with Supabase JWT');
+        
+        // For backward compatibility, also call the API to get the Paseto token
+        try {
+          const response = await fetch('/api/city-auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            // Store the token in localStorage for backward compatibility
+            localStorage.setItem('cityToken', data.token);
+            // Store user data in localStorage for backward compatibility
+            localStorage.setItem('cityUser', JSON.stringify(data.user));
+          }
+        } catch (apiError) {
+          console.warn('Failed to get legacy tokens, but JWT auth succeeded:', apiError);
+        }
+        
+        // Redirect to city dashboard
+        router.push(createSafeUrl('/city/dashboard'));
+        router.refresh(); // Important to refresh the router
+        return;
+      }
+      
+      // If Supabase Auth fails, fall back to the API
       const response = await fetch('/api/city-auth/login', {
         method: 'POST',
         headers: {
@@ -75,17 +115,30 @@ export default function CityLogin() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.msg || 'Login failed');
+        throw new Error(data.msg || data.error || 'Login failed');
       }
 
-      // Store the token in localStorage
+      // Store the token in localStorage for backward compatibility
       localStorage.setItem('cityToken', data.token);
-
-      // Store user data in localStorage
+      // Store user data in localStorage for backward compatibility
       localStorage.setItem('cityUser', JSON.stringify(data.user));
+      
+      // If the API returned Supabase tokens, use them to set the session
+      if (data.supabaseToken) {
+        try {
+          // Set the session manually
+          await supabase.auth.setSession({
+            access_token: data.supabaseToken,
+            refresh_token: data.refreshToken || '',
+          });
+        } catch (sessionError) {
+          console.warn('Failed to set Supabase session:', sessionError);
+        }
+      }
 
       // Redirect to city dashboard
       router.push(createSafeUrl('/city/dashboard'));
+      router.refresh(); // Important to refresh the router
     } catch (err: any) {
       setError(err.message || 'Invalid email or password');
       console.error('City login error:', err);
@@ -95,30 +148,68 @@ export default function CityLogin() {
   };
 
   // Handle demo login with test credentials
-  const handleDemoLogin = () => {
+  const handleDemoLogin = async () => {
     setIsLoading(true);
     setError('');
-
-    // Create a demo token and user
-    const demoToken = 'test-city-token-' + Date.now();
-    const demoUser = {
-      id: 'demo-city-user',
-      name: 'Demo City Admin',
-      email: 'cityadmin@example.gov',
-      cityId: 1,
-      role: 'admin',
-    };
-
-    // Store the token and user data in localStorage
-    localStorage.setItem('cityToken', demoToken);
-    localStorage.setItem('cityUser', JSON.stringify(demoUser));
-
-    // Short delay to simulate API call
-    setTimeout(() => {
+    
+    try {
+      // Import Supabase client dynamically to avoid SSR issues
+      const { createClient } = await import('@/utils/supabase/client');
+      const supabase = createClient();
+      
+      // Try to sign in with demo credentials
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email: 'cityadmin@example.gov',
+        password: 'CityAdmin123!',
+      });
+      
+      if (!authError && authData.session) {
+        console.log('Successfully authenticated demo user with Supabase JWT');
+        
+        // For backward compatibility, also create local storage items
+        const demoUser = {
+          id: authData.user.id,
+          name: 'Demo City Admin',
+          email: 'cityadmin@example.gov',
+          cityId: 1,
+          role: 'admin',
+        };
+        
+        // Store the token and user data in localStorage for backward compatibility
+        localStorage.setItem('cityToken', authData.session.access_token);
+        localStorage.setItem('cityUser', JSON.stringify(demoUser));
+        
+        // Redirect to city dashboard
+        router.push(createSafeUrl('/city/dashboard'));
+        router.refresh(); // Important to refresh the router
+        return;
+      }
+      
+      // If Supabase Auth fails, fall back to the old method
+      console.warn('Supabase Auth failed for demo login, using fallback method');
+      
+      // Create a demo token and user
+      const demoToken = 'test-city-token-' + Date.now();
+      const demoUser = {
+        id: 'demo-city-user',
+        name: 'Demo City Admin',
+        email: 'cityadmin@example.gov',
+        cityId: 1,
+        role: 'admin',
+      };
+      
+      // Store the token and user data in localStorage
+      localStorage.setItem('cityToken', demoToken);
+      localStorage.setItem('cityUser', JSON.stringify(demoUser));
+      
       // Redirect to city dashboard
       router.push(createSafeUrl('/city/dashboard'));
+    } catch (error) {
+      console.error('Error during demo login:', error);
+      setError('Demo login failed. Please try again.');
+    } finally {
       setIsLoading(false);
-    }, 800);
+    }
   };
 
   return (

@@ -77,13 +77,29 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
 
   const router = useRouter();
 
-  const handleLogout = () => {
-    // Clear local storage
-    localStorage.removeItem('cityToken');
-    localStorage.removeItem('cityUser');
+  const handleLogout = async () => {
+    try {
+      // Import Supabase client dynamically to avoid SSR issues
+      const { createClient } = await import('@/utils/supabase/client');
+      const supabase = createClient();
+      
+      // Sign out using Supabase Auth
+      await supabase.auth.signOut();
+      
+      // Also clear local storage for backward compatibility
+      localStorage.removeItem('cityToken');
+      localStorage.removeItem('cityUser');
 
-    // Redirect to login page
-    router.push(createSafeUrl('/city/login'));
+      // Redirect to login page
+      router.push(createSafeUrl('/city/login'));
+      router.refresh(); // Important to refresh the router
+    } catch (error) {
+      console.error('Error during logout:', error);
+      // Fallback to manual logout if Supabase Auth fails
+      localStorage.removeItem('cityToken');
+      localStorage.removeItem('cityUser');
+      router.push(createSafeUrl('/city/login'));
+    }
   };
 
   const markAllAsRead = () => {

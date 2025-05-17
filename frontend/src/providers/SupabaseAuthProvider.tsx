@@ -162,9 +162,35 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
 
   // Sign out function
   const signOut = async () => {
-    await supabase.auth.signOut();
-    router.push('/login');
-    router.refresh();
+    try {
+      // Sign out using Supabase Auth
+      await supabase.auth.signOut();
+      
+      // Also clear local storage for backward compatibility
+      localStorage.removeItem('cityToken');
+      localStorage.removeItem('cityUser');
+      
+      // Clear state
+      setUser(null);
+      setSession(null);
+      
+      // Redirect to login page
+      router.push('/login');
+      router.refresh(); // Important to refresh the router
+    } catch (error) {
+      console.error('Error signing out:', error);
+      
+      // Fallback to manual logout if Supabase Auth fails
+      localStorage.removeItem('cityToken');
+      localStorage.removeItem('cityUser');
+      
+      // Clear state
+      setUser(null);
+      setSession(null);
+      
+      router.push('/login');
+      router.refresh();
+    }
   };
 
   // Effect to handle auth state changes

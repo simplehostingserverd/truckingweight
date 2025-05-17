@@ -73,9 +73,26 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
   }, []);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push('/login');
-    router.refresh();
+    try {
+      // Sign out using Supabase Auth
+      await supabase.auth.signOut();
+      
+      // Also clear local storage for backward compatibility
+      localStorage.removeItem('cityToken');
+      localStorage.removeItem('cityUser');
+      
+      // Redirect to login page
+      router.push('/login');
+      router.refresh(); // Important to refresh the router
+    } catch (error) {
+      console.error('Error signing out:', error);
+      
+      // Fallback to manual logout if Supabase Auth fails
+      localStorage.removeItem('cityToken');
+      localStorage.removeItem('cityUser');
+      router.push('/login');
+      router.refresh();
+    }
   };
 
   const toggleTheme = () => {

@@ -28,10 +28,24 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({ className }) => {
 
   const handleLogout = async () => {
     try {
+      // Sign out using Supabase Auth
       await supabase.auth.signOut();
-      router.push({ pathname: '/login' });
+      
+      // Also clear local storage for backward compatibility
+      localStorage.removeItem('cityToken');
+      localStorage.removeItem('cityUser');
+      
+      // Redirect to login page
+      router.push('/login');
+      router.refresh(); // Important to refresh the router
     } catch (error) {
       console.error('Error logging out:', error);
+      
+      // Fallback to manual logout if Supabase Auth fails
+      localStorage.removeItem('cityToken');
+      localStorage.removeItem('cityUser');
+      router.push('/login');
+      router.refresh();
     }
   };
 

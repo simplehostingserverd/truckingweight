@@ -30,79 +30,128 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     setIsMounted(true);
-
-    // Check if user is authenticated as a city user
-    if (typeof window !== 'undefined') {
-      const cityToken = localStorage.getItem('cityToken');
-      const cityUser = localStorage.getItem('cityUser');
-
-      if (!cityToken || !cityUser) {
-        router.push(createSafeUrl('/city/login'));
-        return;
-      }
-
-      // Parse user data
+    
+    const checkAuth = async () => {
       try {
-        const parsedUserData = JSON.parse(cityUser);
-        setUserData(parsedUserData);
-      } catch (error) {
-        console.error('Error parsing city user data:', error);
-        localStorage.removeItem('cityToken');
-        localStorage.removeItem('cityUser');
-        router.push(createSafeUrl('/city/login'));
-        return;
-      }
-    }
-
-    // Check if we have the token and we're mounted
-    if (isMounted && typeof window !== 'undefined') {
-      const cityToken = localStorage.getItem('cityToken');
-
-      // Check if this is a test token
-      if (cityToken && cityToken.startsWith('test-city-token-')) {
-        console.log('Using test token for city dashboard');
-        // Use the parsed user data directly
-        setIsLoading(false);
-        return;
-      }
-
-      // Verify token with backend if we have a token
-      if (cityToken) {
-        const verifyToken = async () => {
-          try {
-            const response = await fetch('/api/city-auth/me', {
-              headers: {
-                Authorization: `Bearer ${cityToken}`,
-              },
-            });
-
-            if (!response.ok) {
-              throw new Error('Invalid token');
+        // First try to use Supabase Auth
+        const { createClient } = await import('@/utils/supabase/client');
+        const supabase = createClient();
+        
+        // Get the current session
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        
+        if (session && !sessionError) {
+          // Get user metadata
+          const { data: { user }, error: userError } = await supabase.auth.getUser();
+          
+          if (user && !userError) {
+            // Check if this is a city user
+            const userMetadata = user.user_metadata;
+            
+            if (userMetadata && userMetadata.user_type === 'city') {
+              // Get city user data from Supabase
+              const { data: cityUserData, error: cityUserError } = await supabase
+                .from('city_users')
+                .select('*, cities(*)')
+                .eq('id', user.id)
+                .single();
+              
+              if (cityUserData && !cityUserError) {
+                // Format the user data
+                const formattedUserData = {
+                  id: cityUserData.id,
+                  name: cityUserData.name,
+                  email: cityUserData.email,
+                  cityId: cityUserData.city_id,
+                  role: cityUserData.role,
+                  city: cityUserData.cities,
+                };
+                
+                setUserData(formattedUserData);
+                setIsLoading(false);
+                return;
+              }
             }
+          }
+        }
+        
+        // Fallback to localStorage if Supabase Auth fails
+        console.log('Falling back to localStorage for city auth');
+        
+        // Check if user is authenticated as a city user using localStorage
+        if (typeof window !== 'undefined') {
+          const cityToken = localStorage.getItem('cityToken');
+          const cityUser = localStorage.getItem('cityUser');
 
-            const data = await response.json();
-            setUserData(data.user);
-            setIsLoading(false);
-          } catch (error) {
-            console.error('Error verifying city token:', error);
+          if (!cityToken || !cityUser) {
+            router.push(createSafeUrl('/city/login'));
+            return;
+          }
 
-            // For development/testing, allow using the parsed user data even if token verification fails
-            if (process.env.NODE_ENV !== 'production') {
-              console.log('Using local user data for development');
+          // Parse user data
+          try {
+            const parsedUserData = JSON.parse(cityUser);
+            setUserData(parsedUserData);
+            
+            // Check if this is a test token
+            if (cityToken && cityToken.startsWith('test-city-token-')) {
+              console.log('Using test token for city dashboard');
+              // Use the parsed user data directly
               setIsLoading(false);
               return;
             }
+            
+            // Verify token with backend if we have a token
+            const verifyToken = async () => {
+              try {
+                const response = await fetch('/api/city-auth/me', {
+                  headers: {
+                    Authorization: `Bearer ${cityToken}`,
+                  },
+                });
 
-            if (typeof window !== 'undefined') {
-              localStorage.removeItem('cityToken');
-              localStorage.removeItem('cityUser');
-            }
+                if (!response.ok) {
+                  throw new Error('Invalid token');
+                }
+
+                const data = await response.json();
+                setUserData(data.user);
+                setIsLoading(false);
+              } catch (error) {
+                console.error('Error verifying city token:', error);
+
+                // For development/testing, allow using the parsed user data even if token verification fails
+                if (process.env.NODE_ENV !== 'production') {
+                  console.log('Using local user data for development');
+                  setIsLoading(false);
+                  return;
+                }
+
+                if (typeof window !== 'undefined') {
+                  localStorage.removeItem('cityToken');
+                  localStorage.removeItem('cityUser');
+                }
+                router.push(createSafeUrl('/city/login'));
+              }
+            };
+
+            await verifyToken();
+          } catch (error) {
+            console.error('Error parsing city user data:', error);
+            localStorage.removeItem('cityToken');
+            localStorage.removeItem('cityUser');
             router.push(createSafeUrl('/city/login'));
+            return;
           }
-        };
-
-        verifyToken();
+        }
+      } catch (error) {
+        console.error('Error checking auth:', error);
+        router.push(createSafeUrl('/city/login'));
       }
+    };
+    
+    if (isMounted) {
+      checkAuth();
     }
   }, [router, isMounted]);
 
