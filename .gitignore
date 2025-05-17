@@ -80,9 +80,8 @@ debug.log
 # Fix scripts and temporary files
 fix-*.js
 fix-*.mjs
-scripts/fix-*.js
-scripts/fix-*.mjs
-scripts/check-*.js
+# Ignore entire scripts directory
+scripts/
 backup-files/
 ~/bin/kill-hung-apps.sh
 ~/.config/systemd/user.conf.d/timeout.conf
