@@ -1,5 +1,7 @@
 # 🚚 TruckingSemis - Weight Management System
 
+<div align="center">
+
 ![TruckingSemis Banner](frontend/public/images/banner.svg)
 
 [![CI/CD Pipeline](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml/badge.svg)](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml)
@@ -8,9 +10,26 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=38B2AC)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
+  <p align="center">
+    <a href="#demo">View Demo</a>
+    ·
+    <a href="#key-features">Key Features</a>
+    ·
+    <a href="#installation">Installation</a>
+    ·
+    <a href="#usage">Usage</a>
+    ·
+    <a href="#roadmap">Roadmap</a>
+  </p>
+</div>
+
 ## 📋 Overview
 
 TruckingSemis started as our weekend project back in 2022 and grew into what you see today - a weight management system built by truckers, for truckers. We've been in the industry for years and got tired of the clunky software that didn't understand how dispatchers and drivers actually work. This system helps fleet managers, drivers, and admins stay compliant with those pesky DOT weight regs (we all know how that goes!) while making load management way less of a headache. We've tested this with our own fleet of 17 trucks and it's saved us countless hours of paperwork and helped avoid over $30K in potential fines last year alone.
+
+<div align="center">
+  <img src="frontend/public/images/dashboard-preview.svg" alt="Dashboard Preview" width="80%">
+</div>
 
 ## 💼 Why Trucking Companies Choose Us
 
@@ -24,15 +43,21 @@ Look, we all know the pain of DOT inspections and weight station checks. Our sys
 
 ## 🖼️ Application Screenshots
 
-### City Portal
+<div align="center">
+  <h3>City Portal</h3>
+  <img src="frontend/public/images/screenshots/city-login.svg" alt="City Login" width="80%">
+  <p><em>City Login Screen</em></p>
 
-![City Login](frontend/public/images/screenshots/city-login.svg)
-![City Dashboard](frontend/public/images/screenshots/city-dashboard.svg)
+  <img src="frontend/public/images/screenshots/city-dashboard.svg" alt="City Dashboard" width="80%">
+  <p><em>City Dashboard</em></p>
 
-### Trucking Portal
+  <h3>Trucking Portal</h3>
+  <img src="frontend/public/images/screenshots/trucking-login.svg" alt="Trucking Login" width="80%">
+  <p><em>Trucking Login Screen</em></p>
 
-![Trucking Login](frontend/public/images/screenshots/trucking-login.svg)
-![Trucking Dashboard](frontend/public/images/screenshots/trucking-dashboard.svg)
+  <img src="frontend/public/images/screenshots/trucking-dashboard.svg" alt="Trucking Dashboard" width="80%">
+  <p><em>Trucking Dashboard</em></p>
+</div>
 
 ## ✨ Key Features
 
@@ -51,15 +76,19 @@ Look, we all know the pain of DOT inspections and weight station checks. Our sys
 We've built this with tech we actually enjoy using (no legacy PHP nightmares here!). Our stack:
 
 ### Frontend
+
 Next.js 15.3.2 and React 18 for blazing-fast performance. The routing in Next.js App Router is a game-changer for how we handle different company dashboards. Tailwind CSS saved us months of custom CSS work.
 
 ### Backend
+
 Node.js 20 with Fastify 4.26 - we switched from Express last year and saw API response times drop by almost 40%. Worth the migration pain.
 
 ### Database
+
 Supabase (PostgreSQL) - we tried MongoDB first but the relational nature of trucking data (vehicles→loads→weights→etc.) made Postgres the obvious choice. Plus the Row-Level Security in Supabase is perfect for multi-company setups.
 
 ### DevOps
+
 Docker containers with GitHub Actions for CI/CD. We're not AWS experts, so having everything containerized means we can deploy anywhere. Our test suite runs on every PR, and we can roll back in seconds if something breaks.
 
 ## 💰 ROI for Trucking Companies
@@ -76,28 +105,32 @@ Our customers see real, measurable returns:
 
 ### For Trucking Companies
 
-Ready to transform your weight management? Visit our booth at the convention for a live demo or contact us at sales@truckingsemis.com to schedule a personalized demonstration.
+Ready to transform your weight management? Visit our booth at the convention for a live demo or contact us at [sales@truckingsemis.com](mailto:sales@truckingsemis.com) to schedule a personalized demonstration.
 
 ### For Developers
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/simplehostingserverd/truckingweight.git
    cd truckingweight
    ```
 
 2. Install dependencies:
+
    ```bash
    npm run install-deps
    ```
 
 3. Set up environment variables:
+
    ```bash
    cp frontend/.env.example frontend/.env.local
    cp backend/.env.example backend/.env
    ```
 
 4. Run the development server:
+
    ```bash
    npm run dev
    ```
@@ -106,7 +139,7 @@ Ready to transform your weight management? Visit our booth at the convention for
 
 ## 📊 Project Structure
 
-```
+```text
 truckingweight/
 ├── frontend/                # Next.js frontend application
 │   ├── public/              # Static assets
@@ -132,8 +165,8 @@ This project is licensed under the MIT License - see the [LICENSE](Information/L
 
 Visit us at Booth #42 at the Trucking Convention this weekend!
 
-Email: info@truckingsemis.com  
-Website: [https://truckingsemis.com](https://truckingsemis.com)  
+Email: [info@truckingsemis.com](mailto:info@truckingsemis.com)
+Website: [https://truckingsemis.com](https://truckingsemis.com)
 GitHub: [https://github.com/simplehostingserverd/truckingweight](https://github.com/simplehostingserverd/truckingweight)
 
 ---
