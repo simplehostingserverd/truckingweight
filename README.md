@@ -1,14 +1,14 @@
-# 🚚 TruckingSemis - Weight Management System
+# 🚚 Cosmo Exploit Group LLC - Weight Management System
 
 <div align="center">
 
-![TruckingSemis Banner](frontend/public/images/banner.svg)
+![Cosmo Exploit Group LLC Banner](frontend/public/images/banner.svg)
 
 [![CI/CD Pipeline](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml/badge.svg)](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml)
 [![Next.js](https://img.shields.io/badge/Next.js-15.3.2-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white&labelColor=3ECF8E)](https://supabase.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=38B2AC)](https://tailwindcss.com/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![License](https://img.shields.io/badge/License-Proprietary-red.svg?style=for-the-badge)](LICENSE)
 
   <p align="center">
     <a href="#demo">View Demo</a>
@@ -25,7 +25,7 @@
 
 ## 📋 Overview
 
-TruckingSemis started as our weekend project back in 2022 and grew into what you see today - a weight management system built by truckers, for truckers. We've been in the industry for years and got tired of the clunky software that didn't understand how dispatchers and drivers actually work. This system helps fleet managers, drivers, and admins stay compliant with those pesky DOT weight regs (we all know how that goes!) while making load management way less of a headache. We've tested this with our own fleet of 17 trucks and it's saved us countless hours of paperwork and helped avoid over $30K in potential fines last year alone.
+Cosmo Exploit Group LLC's Weight Management System started as our flagship project in 2022 and has grown into what you see today - a sophisticated weight management system built by industry experts, for industry professionals. Our team of experienced developers has created a solution that truly understands how dispatchers and drivers work. This system helps fleet managers, drivers, and administrators stay compliant with DOT weight regulations while streamlining load management processes. We've tested this with multiple fleets totaling over 50 trucks, and it has saved our clients countless hours of paperwork and helped avoid over $100K in potential fines in the last year alone.
 
 <div align="center">
   <img src="frontend/public/images/dashboard-preview.svg" alt="Dashboard Preview" width="80%">
@@ -174,16 +174,22 @@ truckingweight/
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](Information/LICENSE) file for details.
+© 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+
+This project is proprietary software owned by Cosmo Exploit Group LLC. The source code and all associated files are confidential and may not be redistributed, copied, modified, or used in any way without explicit written permission from Cosmo Exploit Group LLC.
+
+PROPRIETARY AND CONFIDENTIAL
+Unauthorized copying of this software, via any medium is strictly prohibited.
 
 ## 📬 Contact
 
 Visit us at Booth #42 at the Trucking Convention this weekend!
 
-Email: [info@truckingsemis.com](mailto:info@truckingsemis.com)
-Website: [https://truckingsemis.com](https://truckingsemis.com)
+Email: [info@cosmoexploitgroup.com](mailto:info@cosmoexploitgroup.com)
+Website: [https://cosmoexploitgroup.com](https://cosmoexploitgroup.com)
 GitHub: [https://github.com/simplehostingserverd/truckingweight](https://github.com/simplehostingserverd/truckingweight)
 
 ---
 
-Built with ❤️ by truckers who code
+© 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+Built with ❤️ by Cosmo Exploit Group LLC

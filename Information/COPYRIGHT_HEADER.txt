@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
  * 
  * PROPRIETARY AND CONFIDENTIAL
@@ -10,18 +10,3 @@
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-rgb: 240, 240, 240;
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
-}

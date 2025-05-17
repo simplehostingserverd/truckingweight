@@ -1,3 +1,19 @@
+<!--
+
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * 
+ * PROPRIETARY AND CONFIDENTIAL
+ * 
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * 
+ * This file contains proprietary and confidential information of 
+ * Cosmo Exploit Group LLC and may not be copied, distributed, or used
+ * in any way without explicit written permission.
+ 
+
+-->
+
 # Velociraptor Port Killer
 
 The Velociraptor Port Killer is an extremely aggressive process termination tool designed to ensure that ports (especially port 3000) are freed up before starting the application. It's named after the clever and relentless predator from Jurassic Park, as it hunts down and eliminates processes with extreme prejudice.

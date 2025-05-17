@@ -1,7 +1,21 @@
+// 
+//  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+//  * 
+//  * PROPRIETARY AND CONFIDENTIAL
+//  * 
+//  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
+//  * Unauthorized copying of this file, via any medium is strictly prohibited.
+//  * 
+//  * This file contains proprietary and confidential information of 
+//  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
+//  * in any way without explicit written permission.
+//  
+// 
+
 {
-  "name": "truckingsemis",
-  "version": "1.0.0",
-  "description": "A modern web-based application for trucking companies to manage weight checking and load management.",
+  "name": "cosmo-exploit-weight-management",
+  "version": "2.0.0",
+  "description": "A proprietary weight management system by Cosmo Exploit Group LLC for trucking companies to manage weight checking and load management.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -40,7 +54,8 @@
     "setup-supabase-buckets": "node scripts/create-supabase-buckets.mjs",
     "setup-lpr-cameras": "node scripts/migrations/create-lpr-cameras-table.mjs",
     "add-telematics-columns": "node scripts/migrations/add-telematics-columns.mjs",
-    "add-trucking-data": "node scripts/add-trucking-dashboard-data.mjs"
+    "add-trucking-data": "node scripts/add-trucking-dashboard-data.mjs",
+    "add-copyright": "node scripts/add-copyright-headers.mjs"
   },
   "dependencies": {
     "@maptiler/sdk": "^3.2.2",
@@ -57,19 +72,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simplehostingsolutions/truckingsemis.git"
+    "url": "git+https://github.com/simplehostingserverd/truckingweight.git"
   },
   "keywords": [
     "trucking",
     "weight-management",
     "logistics"
   ],
-  "author": "simplehostingsolutions",
-  "license": "MIT",
+  "author": "Cosmo Exploit Group LLC",
+  "license": "UNLICENSED",
+  "private": true,
   "bugs": {
-    "url": "https://github.com/simplehostingsolutions/truckingsemis/issues"
+    "url": "https://github.com/simplehostingserverd/truckingweight/issues"
   },
-  "homepage": "https://github.com/simplehostingsolutions/truckingsemis#readme",
+  "homepage": "https://github.com/simplehostingserverd/truckingweight#readme",
   "devDependencies": {
     "@commitlint/cli": "^18.6.1",
     "@commitlint/config-conventional": "^18.6.2",
