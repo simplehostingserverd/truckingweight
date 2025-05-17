@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { createSafeUrl } from '@/utils/navigation';
 
 // MUI Joy UI components
 import { CssVarsProvider } from '@mui/joy/styles';
@@ -70,9 +71,7 @@ export default function CityLogin() {
       localStorage.setItem('cityUser', JSON.stringify(data.user));
 
       // Redirect to city dashboard
-      router.push({
-        pathname: '/city/dashboard',
-      });
+      router.push(createSafeUrl('/city/dashboard'));
     } catch (err: any) {
       setError(err.message || 'Invalid email or password');
       console.error('City login error:', err);
@@ -103,9 +102,7 @@ export default function CityLogin() {
     // Short delay to simulate API call
     setTimeout(() => {
       // Redirect to city dashboard
-      router.push({
-        pathname: '/city/dashboard',
-      });
+      router.push(createSafeUrl('/city/dashboard'));
       setIsLoading(false);
     }, 800);
   };

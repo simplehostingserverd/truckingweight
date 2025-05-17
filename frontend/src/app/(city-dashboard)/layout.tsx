@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import CityDashboardHeader from '@/components/CityDashboard/CityDashboardHeader';
 import CityDashboardSidebar from '@/components/CityDashboard/CityDashboardSidebar';
+import { createSafeUrl } from '@/utils/navigation';
 
 // Create a client-side only component to avoid hydration issues
 const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) => {
@@ -22,7 +23,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
       const cityUser = localStorage.getItem('cityUser');
 
       if (!cityToken || !cityUser) {
-        router.push('/city/login');
+        router.push(createSafeUrl('/city/login'));
         return;
       }
 
@@ -34,7 +35,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
         console.error('Error parsing city user data:', error);
         localStorage.removeItem('cityToken');
         localStorage.removeItem('cityUser');
-        router.push('/city/login');
+        router.push(createSafeUrl('/city/login'));
         return;
       }
     }
@@ -82,7 +83,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
               localStorage.removeItem('cityToken');
               localStorage.removeItem('cityUser');
             }
-            router.push('/city/login');
+            router.push(createSafeUrl('/city/login'));
           }
         };
 

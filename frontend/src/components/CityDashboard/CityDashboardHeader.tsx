@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { createSafeUrl } from '@/utils/navigation';
 import {
   BellIcon,
   Cog6ToothIcon,
@@ -68,7 +69,7 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
     localStorage.removeItem('cityUser');
 
     // Redirect to login page
-    router.push({ pathname: '/city/login' });
+    router.push(createSafeUrl('/city/login'));
   };
 
   const markAllAsRead = () => {

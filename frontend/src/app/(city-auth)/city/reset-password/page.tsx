@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { createSafeUrl } from '@/utils/navigation';
 
 // MUI Joy UI components
 import { CssVarsProvider } from '@mui/joy/styles';
@@ -86,7 +87,7 @@ export default function ResetPassword() {
 
       // Redirect to login page after a delay
       setTimeout(() => {
-        router.push('/city/login');
+        router.push(createSafeUrl('/city/login'));
       }, 3000);
     } catch (err: any) {
       setError(err.message || 'Failed to reset password');
@@ -236,7 +237,7 @@ export default function ResetPassword() {
                   </Typography>
                   <Button
                     startDecorator={<ArrowBackIcon />}
-                    onClick={() => router.push('/city/login')}
+                    onClick={() => router.push(createSafeUrl('/city/login'))}
                     sx={{
                       bgcolor: 'primary.500',
                       color: 'white',

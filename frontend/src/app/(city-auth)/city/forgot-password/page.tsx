@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { createSafeUrl } from '@/utils/navigation';
 
 // MUI Joy UI components
 import { CssVarsProvider } from '@mui/joy/styles';
@@ -208,7 +209,7 @@ export default function ForgotPassword() {
                   </Typography>
                   <Button
                     startDecorator={<ArrowBackIcon />}
-                    onClick={() => router.push('/city/login')}
+                    onClick={() => router.push(createSafeUrl('/city/login'))}
                     sx={{
                       bgcolor: 'primary.500',
                       color: 'white',
