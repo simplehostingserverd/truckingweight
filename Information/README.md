@@ -161,6 +161,22 @@ This project uses GitHub Actions for continuous integration and deployment:
 
 ## 📖 Usage
 
+### Application Screenshots
+
+<div align="center">
+  <h4>City Login</h4>
+  <img src="frontend/public/images/screenshots/city-login.svg" alt="City Login" width="80%">
+
+  <h4>City Dashboard</h4>
+  <img src="frontend/public/images/screenshots/city-dashboard.svg" alt="City Dashboard" width="80%">
+
+  <h4>Trucking Login</h4>
+  <img src="frontend/public/images/screenshots/trucking-login.svg" alt="Trucking Login" width="80%">
+
+  <h4>Trucking Dashboard</h4>
+  <img src="frontend/public/images/screenshots/trucking-dashboard.svg" alt="Trucking Dashboard" width="80%">
+</div>
+
 ### Weight Management
 
 Record and track weight information for your vehicles:

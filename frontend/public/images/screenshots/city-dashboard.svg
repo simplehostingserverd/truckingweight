@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#111827" />
+  
+  <!-- Sidebar -->
+  <rect x="0" y="0" width="240" height="800" fill="#1f2937" />
+  
+  <!-- Sidebar content -->
+  <g transform="translate(20, 30)">
+    <!-- Logo -->
+    <rect x="0" y="0" width="40" height="40" rx="5" fill="#3b82f6" />
+    <text x="50" y="25" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">City Portal</text>
+    
+    <!-- Navigation items -->
+    <g transform="translate(0, 80)">
+      <!-- Dashboard -->
+      <rect x="0" y="0" width="200" height="40" rx="5" fill="#2563eb" />
+      <text x="40" y="25" font-family="Arial, sans-serif" font-size="14" fill="white">Dashboard</text>
+      
+      <!-- Scales -->
+      <rect x="0" y="50" width="200" height="40" rx="5" fill="transparent" />
+      <text x="40" y="75" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Scales</text>
+      
+      <!-- Violations -->
+      <rect x="0" y="100" width="200" height="40" rx="5" fill="transparent" />
+      <text x="40" y="125" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Violations</text>
+      
+      <!-- Permits -->
+      <rect x="0" y="150" width="200" height="40" rx="5" fill="transparent" />
+      <text x="40" y="175" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Permits</text>
+      
+      <!-- Reports -->
+      <rect x="0" y="200" width="200" height="40" rx="5" fill="transparent" />
+      <text x="40" y="225" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Reports</text>
+      
+      <!-- Settings -->
+      <rect x="0" y="250" width="200" height="40" rx="5" fill="transparent" />
+      <text x="40" y="275" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Settings</text>
+    </g>
+    
+    <!-- User profile -->
+    <g transform="translate(0, 700)">
+      <circle cx="20" cy="20" r="20" fill="#4b5563" />
+      <text x="50" y="20" font-family="Arial, sans-serif" font-size="14" fill="white">City Admin</text>
+      <text x="50" y="40" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af">Administrator</text>
+    </g>
+  </g>
+  
+  <!-- Main content -->
+  <g transform="translate(260, 20)">
+    <!-- Header -->
+    <text x="0" y="30" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">City Dashboard</text>
+    <text x="0" y="60" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Overview of municipal weighing operations and compliance</text>
+    
+    <!-- Refresh button -->
+    <rect x="800" y="20" width="120" height="40" rx="5" stroke="#4b5563" stroke-width="2" fill="transparent" />
+    <text x="860" y="45" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Refresh Data</text>
+    
+    <!-- Stats cards -->
+    <g transform="translate(0, 80)">
+      <!-- Total Weighings -->
+      <rect x="0" y="0" width="220" height="120" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1" />
+      <text x="20" y="30" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Total Weighings</text>
+      <text x="20" y="70" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">24,521</text>
+      <text x="20" y="90" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">All time</text>
+      
+      <!-- Active Scales -->
+      <rect x="240" y="0" width="220" height="120" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1" />
+      <text x="260" y="30" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Active Scales</text>
+      <text x="260" y="70" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">18</text>
+      <text x="260" y="90" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">Out of 22 total</text>
+      
+      <!-- Compliance Rate -->
+      <rect x="480" y="0" width="220" height="120" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1" />
+      <text x="500" y="30" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Compliance Rate</text>
+      <text x="500" y="70" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">92.7%</text>
+      <text x="500" y="90" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">Last 30 days</text>
+      
+      <!-- Revenue Collected -->
+      <rect x="720" y="0" width="220" height="120" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1" />
+      <text x="740" y="30" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Revenue Collected</text>
+      <text x="740" y="70" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">$128,450</text>
+      <text x="740" y="90" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">This year</text>
+    </g>
+    
+    <!-- Charts -->
+    <g transform="translate(0, 220)">
+      <!-- Weighings by Scale -->
+      <rect x="0" y="0" width="460" height="300" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1" />
+      <text x="20" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Weighings by Scale</text>
+      
+      <!-- Bar chart -->
+      <g transform="translate(40, 60)">
+        <!-- Y-axis -->
+        <line x1="0" y1="0" x2="0" y2="200" stroke="#4b5563" stroke-width="1" />
+        <text x="-10" y="10" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af" text-anchor="end">5000</text>
+        <text x="-10" y="70" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af" text-anchor="end">3000</text>
+        <text x="-10" y="130" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af" text-anchor="end">1000</text>
+        <text x="-10" y="190" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af" text-anchor="end">0</text>
+        
+        <!-- X-axis -->
+        <line x1="0" y1="200" x2="380" y2="200" stroke="#4b5563" stroke-width="1" />
+        
+        <!-- Bars -->
+        <rect x="30" y="40" width="30" height="160" fill="#3b82f6" />
+        <rect x="80" y="20" width="30" height="180" fill="#3b82f6" />
+        <rect x="130" y="60" width="30" height="140" fill="#3b82f6" />
+        <rect x="180" y="90" width="30" height="110" fill="#3b82f6" />
+        <rect x="230" y="70" width="30" height="130" fill="#3b82f6" />
+        <rect x="280" y="110" width="30" height="90" fill="#3b82f6" />
+        <rect x="330" y="50" width="30" height="150" fill="#3b82f6" />
+        
+        <!-- Labels -->
+        <text x="45" y="220" font-family="Arial, sans-serif" font-size="10" fill="#9ca3af" text-anchor="middle">Scale 1</text>
+        <text x="95" y="220" font-family="Arial, sans-serif" font-size="10" fill="#9ca3af" text-anchor="middle">Scale 2</text>
+        <text x="145" y="220" font-family="Arial, sans-serif" font-size="10" fill="#9ca3af" text-anchor="middle">Scale 3</text>
+        <text x="195" y="220" font-family="Arial, sans-serif" font-size="10" fill="#9ca3af" text-anchor="middle">Scale 4</text>
+        <text x="245" y="220" font-family="Arial, sans-serif" font-size="10" fill="#9ca3af" text-anchor="middle">Scale 5</text>
+        <text x="295" y="220" font-family="Arial, sans-serif" font-size="10" fill="#9ca3af" text-anchor="middle">Scale 6</text>
+        <text x="345" y="220" font-family="Arial, sans-serif" font-size="10" fill="#9ca3af" text-anchor="middle">Scale 7</text>
+      </g>
+      
+      <!-- Compliance Trend -->
+      <rect x="480" y="0" width="460" height="300" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1" />
+      <text x="500" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Compliance Trend</text>
+      
+      <!-- Line chart -->
+      <g transform="translate(520, 60)">
+        <!-- Y-axis -->
+        <line x1="0" y1="0" x2="0" y2="200" stroke="#4b5563" stroke-width="1" />
+        <text x="-10" y="10" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af" text-anchor="end">100%</text>
+        <text x="-10" y="70" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af" text-anchor="end">75%</text>
+        <text x="-10" y="130" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af" text-anchor="end">50%</text>
+        <text x="-10" y="190" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af" text-anchor="end">25%</text>
+        
+        <!-- X-axis -->
+        <line x1="0" y1="200" x2="380" y2="200" stroke="#4b5563" stroke-width="1" />
+        
+        <!-- Lines -->
+        <polyline points="0,40 60,30 120,50 180,20 240,35 300,25 380,15" stroke="#10b981" stroke-width="3" fill="none" />
+        <polyline points="0,60 60,70 120,80 180,50 240,65 300,55 380,45" stroke="#ef4444" stroke-width="3" fill="none" />
+        
+        <!-- Legend -->
+        <circle cx="300" cy="240" r="5" fill="#10b981" />
+        <text x="310" y="245" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af">Compliant</text>
+        
+        <circle cx="370" cy="240" r="5" fill="#ef4444" />
+        <text x="380" y="245" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af">Non-compliant</text>
+      </g>
+    </g>
+    
+    <!-- Recent Activity -->
+    <g transform="translate(0, 540)">
+      <rect x="0" y="0" width="940" height="220" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1" />
+      <text x="20" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Recent Activity</text>
+      
+      <!-- Table headers -->
+      <rect x="20" y="50" width="900" height="30" fill="#374151" />
+      <text x="40" y="70" font-family="Arial, sans-serif" font-size="14" fill="white">Date</text>
+      <text x="180" y="70" font-family="Arial, sans-serif" font-size="14" fill="white">Scale</text>
+      <text x="320" y="70" font-family="Arial, sans-serif" font-size="14" fill="white">Vehicle</text>
+      <text x="460" y="70" font-family="Arial, sans-serif" font-size="14" fill="white">Weight</text>
+      <text x="600" y="70" font-family="Arial, sans-serif" font-size="14" fill="white">Status</text>
+      <text x="740" y="70" font-family="Arial, sans-serif" font-size="14" fill="white">Action</text>
+      
+      <!-- Table rows -->
+      <g transform="translate(20, 90)">
+        <!-- Row 1 -->
+        <text x="20" y="10" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">2025-05-17 09:45</text>
+        <text x="160" y="10" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">Main St Scale</text>
+        <text x="300" y="10" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">TX-4582-LK</text>
+        <text x="440" y="10" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">34,250 lbs</text>
+        <rect x="580" y="-5" width="80" height="20" rx="10" fill="#10b981" opacity="0.2" />
+        <text x="620" y="10" font-family="Arial, sans-serif" font-size="14" fill="#10b981" text-anchor="middle">Compliant</text>
+        <rect x="720" y="-5" width="80" height="20" rx="5" fill="#3b82f6" />
+        <text x="760" y="10" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">View</text>
+        
+        <!-- Row 2 -->
+        <text x="20" y="40" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">2025-05-17 09:32</text>
+        <text x="160" y="40" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">Highway 10</text>
+        <text x="300" y="40" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">CA-7891-AB</text>
+        <text x="440" y="40" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">42,100 lbs</text>
+        <rect x="580" y="25" width="80" height="20" rx="10" fill="#ef4444" opacity="0.2" />
+        <text x="620" y="40" font-family="Arial, sans-serif" font-size="14" fill="#ef4444" text-anchor="middle">Violation</text>
+        <rect x="720" y="25" width="80" height="20" rx="5" fill="#3b82f6" />
+        <text x="760" y="40" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">View</text>
+        
+        <!-- Row 3 -->
+        <text x="20" y="70" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">2025-05-17 09:18</text>
+        <text x="160" y="70" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">Industrial Pkwy</text>
+        <text x="300" y="70" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">TX-2201-MN</text>
+        <text x="440" y="70" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">28,750 lbs</text>
+        <rect x="580" y="55" width="80" height="20" rx="10" fill="#10b981" opacity="0.2" />
+        <text x="620" y="70" font-family="Arial, sans-serif" font-size="14" fill="#10b981" text-anchor="middle">Compliant</text>
+        <rect x="720" y="55" width="80" height="20" rx="5" fill="#3b82f6" />
+        <text x="760" y="70" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">View</text>
+        
+        <!-- Row 4 -->
+        <text x="20" y="100" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">2025-05-17 09:05</text>
+        <text x="160" y="100" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">Main St Scale</text>
+        <text x="300" y="100" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">FL-3367-PQ</text>
+        <text x="440" y="100" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">36,820 lbs</text>
+        <rect x="580" y="85" width="80" height="20" rx="10" fill="#f59e0b" opacity="0.2" />
+        <text x="620" y="100" font-family="Arial, sans-serif" font-size="14" fill="#f59e0b" text-anchor="middle">Warning</text>
+        <rect x="720" y="85" width="80" height="20" rx="5" fill="#3b82f6" />
+        <text x="760" y="100" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">View</text>
+      </g>
+    </g>
+  </g>
+</svg>
