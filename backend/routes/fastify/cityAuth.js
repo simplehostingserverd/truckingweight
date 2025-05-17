@@ -5,8 +5,6 @@
 
 import { createClient } from '@supabase/supabase-js';
 // import bcrypt from 'bcryptjs';
-import { v4 as uuidv4 } from 'uuid';
-import { logger } from '../../utils/logger.js';
 import * as pasetoService from '../../services/pasetoService.js';
 
 // Initialize Supabase client
@@ -209,7 +207,7 @@ const resetPasswordSchema = {
 /**
  * City Auth Routes
  */
-async function routes(fastify, options) {
+async function routes(fastify, _options) {
   /**
    * @route   POST /api/city-auth/register-city
    * @desc    Register a new city

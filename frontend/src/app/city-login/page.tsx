@@ -96,7 +96,9 @@ export default function CityLogin() {
         }
 
         // Redirect to city dashboard
-        router.push('/city/dashboard');
+        router.push({
+          pathname: '/city/dashboard',
+        });
         return;
       }
 
@@ -125,7 +127,9 @@ export default function CityLogin() {
       }
 
       // Redirect to city dashboard
-      router.push('/city/dashboard');
+      router.push({
+        pathname: '/city/dashboard',
+      });
     } catch (err: any) {
       setError(err.message || 'Invalid email or password');
       console.error('City login error:', err);

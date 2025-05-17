@@ -4,7 +4,6 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
-import logger from '../../utils/logger.js';
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -21,7 +20,6 @@ async function getAllLPRCameras(request, reply) {
   try {
     const { limit = 50, offset = 0, vendor, is_active, city_id } = request.query;
     const isAdmin = request.user.isAdmin;
-    const userCompanyId = request.user.companyId;
 
     // Build query
     let query = supabase.from('lpr_cameras').select('*', { count: 'exact' });
@@ -90,7 +88,6 @@ async function getLPRCameraById(request, reply) {
   try {
     const cameraId = request.params.id;
     const isAdmin = request.user.isAdmin;
-    const userCompanyId = request.user.companyId;
 
     // Get camera from database
     const { data: camera, error } = await supabase
@@ -219,7 +216,6 @@ async function updateLPRCamera(request, reply) {
   try {
     const cameraId = request.params.id;
     const isAdmin = request.user.isAdmin;
-    const userCompanyId = request.user.companyId;
 
     // Check if camera exists
     const { data: existingCamera, error: checkError } = await supabase
@@ -323,7 +319,6 @@ async function deleteLPRCamera(request, reply) {
   try {
     const cameraId = request.params.id;
     const isAdmin = request.user.isAdmin;
-    const userCompanyId = request.user.companyId;
 
     // Check if camera exists
     const { data: existingCamera, error: checkError } = await supabase

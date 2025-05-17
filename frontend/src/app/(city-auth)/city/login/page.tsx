@@ -69,7 +69,9 @@ export default function CityLogin() {
       localStorage.setItem('cityUser', JSON.stringify(data.user));
 
       // Redirect to city dashboard
-      router.push('/city/dashboard');
+      router.push({
+        pathname: '/city/dashboard',
+      });
     } catch (err: any) {
       setError(err.message || 'Invalid email or password');
       console.error('City login error:', err);

@@ -5,7 +5,6 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { cityAuthMiddleware, cityRoleMiddleware } from '../../middleware/fastify/cityAuth.js';
-import { logger } from '../../utils/logger.js';
 import { generatePermitNumber } from '../../utils/generators.js';
 
 // Initialize Supabase client
@@ -238,7 +237,7 @@ const updatePermitSchema = {
 /**
  * City Permits Routes
  */
-async function routes(fastify, options) {
+async function routes(fastify, _options) {
   // Add city auth middleware to all routes
   fastify.addHook('preHandler', cityAuthMiddleware);
 
@@ -458,7 +457,7 @@ async function routes(fastify, options) {
         const updateData = request.body;
 
         // Check if permit exists
-        const { data: existingPermit, error: checkError } = await supabase
+        const { data: _existingPermit, error: checkError } = await supabase
           .from('city_permits')
           .select('id, permit_number')
           .eq('id', permitId)

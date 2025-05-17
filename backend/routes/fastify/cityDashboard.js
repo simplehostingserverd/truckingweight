@@ -4,9 +4,6 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
-import { cityAuthMiddleware } from '../../middleware/fastify/cityAuth.js';
-import { logger } from '../../utils/logger.js';
-import { bearerAuthMiddleware } from '../../middleware/fastify/bearerAuth.js';
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -251,7 +248,7 @@ const revenueDataSchema = {
 /**
  * City Dashboard Routes
  */
-async function routes(fastify, options) {
+async function routes(fastify, _options) {
   // We're using the global bearer auth middleware now
   // This will validate the token and set the user in the request
 
@@ -276,26 +273,26 @@ async function routes(fastify, options) {
       }
 
       // Get active scales count
-      const { count: activeScales, error: activeScalesError } = await supabase
+      const { count: activeScales, error: _activeScalesError } = await supabase
         .from('city_scales')
         .select('*', { count: 'exact', head: true })
         .eq('city_id', cityId)
         .eq('status', 'Active');
 
       // Get total weighings count
-      const { count: totalWeighings, error: weighingsError } = await supabase
+      const { count: totalWeighings, error: _weighingsError } = await supabase
         .from('city_weigh_tickets')
         .select('*', { count: 'exact', head: true })
         .eq('city_id', cityId);
 
       // Get revenue collected (sum of permit fees and violation fines)
-      const { data: permitRevenue, error: permitRevenueError } = await supabase
+      const { data: permitRevenue, error: _permitRevenueError } = await supabase
         .from('city_permits')
         .select('fee_amount')
         .eq('city_id', cityId)
         .eq('payment_status', 'Paid');
 
-      const { data: fineRevenue, error: fineRevenueError } = await supabase
+      const { data: fineRevenue, error: _fineRevenueError } = await supabase
         .from('city_violations')
         .select('fine_amount')
         .eq('city_id', cityId)
@@ -313,7 +310,7 @@ async function routes(fastify, options) {
       const revenueCollected = totalPermitRevenue + totalFineRevenue;
 
       // Get compliance rate
-      const { data: complianceData, error: complianceError } = await supabase
+      const { data: complianceData, error: _complianceError } = await supabase
         .from('city_weigh_tickets')
         .select('status')
         .eq('city_id', cityId);
@@ -327,14 +324,14 @@ async function routes(fastify, options) {
       }
 
       // Get pending permits count
-      const { count: pendingPermits, error: pendingPermitsError } = await supabase
+      const { count: pendingPermits, error: _pendingPermitsError } = await supabase
         .from('city_permits')
         .select('*', { count: 'exact', head: true })
         .eq('city_id', cityId)
         .eq('payment_status', 'Pending');
 
       // Get active permits count
-      const { count: activePermits, error: activePermitsError } = await supabase
+      const { count: activePermits, error: _activePermitsError } = await supabase
         .from('city_permits')
         .select('*', { count: 'exact', head: true })
         .eq('city_id', cityId)
@@ -344,7 +341,7 @@ async function routes(fastify, options) {
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-      const { count: recentViolations, error: recentViolationsError } = await supabase
+      const { count: recentViolations, error: _recentViolationsError } = await supabase
         .from('city_violations')
         .select('*', { count: 'exact', head: true })
         .eq('city_id', cityId)

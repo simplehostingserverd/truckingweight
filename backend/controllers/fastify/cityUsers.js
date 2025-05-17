@@ -4,7 +4,6 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
-import logger from '../../utils/logger.js';
 
 // Initialize Supabase client
 const supabase = createClient(

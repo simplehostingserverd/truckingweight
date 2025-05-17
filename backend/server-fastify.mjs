@@ -24,7 +24,7 @@ import { validateAllConfig } from './utils/envValidator.js';
 import * as db from './config/database.js';
 
 // Import high-performance LRU cache service
-import * as cacheService from './services/cache.js';
+import cacheService from './services/cache/index.js';
 
 // Import Swagger configuration
 import { swaggerOptions, swaggerUiOptions } from './config/swagger.js';
@@ -200,7 +200,7 @@ async function registerRoutes() {
   fastify.register(lprCamerasRoutes.default, { prefix: '/api/lpr-cameras' });
 
   // Root route
-  fastify.get('/', async (request, reply) => {
+  fastify.get('/', async (_request, _reply) => {
     return { message: 'Welcome to TruckingSemis API' };
   });
 

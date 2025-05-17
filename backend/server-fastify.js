@@ -183,7 +183,7 @@ async function registerRoutes() {
   // fastify.register(cacheExampleRoutes, { prefix: '/api/examples' })
 
   // Root route
-  fastify.get('/', async (request, reply) => {
+  fastify.get('/', async (_request, _reply) => {
     return { message: 'Welcome to TruckingSemis API' };
   });
 

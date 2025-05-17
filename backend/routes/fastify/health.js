@@ -6,21 +6,21 @@
  */
 
 import * as db from '../../config/database.js';
-import * as cacheService from '../../services/cache.js';
+import cacheService from '../../services/cache/index.js';
 
 /**
  * Register health check routes
  * @param {import('fastify').FastifyInstance} fastify - Fastify instance
  * @param {Object} options - Route options
  */
-async function routes(fastify, options) {
+async function routes(fastify, _options) {
   // Basic health check
-  fastify.get('/', async (request, reply) => {
+  fastify.get('/', async (_request, _reply) => {
     return { status: 'ok', timestamp: new Date().toISOString() };
   });
 
   // Detailed health check
-  fastify.get('/detailed', async (request, reply) => {
+  fastify.get('/detailed', async (_request, _reply) => {
     // Check database connection
     let dbStatus = { connected: false };
     try {
