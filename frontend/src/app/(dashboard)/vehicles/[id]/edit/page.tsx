@@ -102,7 +102,7 @@ export default function EditVehicle({ params }: { params: { id: string } }) {
 
       // Redirect to vehicle details after a short delay
       setTimeout(() => {
-        router.push(`/vehicles/${id}`);
+        router.push({ pathname: `/vehicles/${id}` });
         router.refresh();
       }, 1500);
     } catch (err: any) {

@@ -60,7 +60,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
         } = await supabase.auth.getSession();
 
         if (!session) {
-          router.push('/login');
+          router.push({ pathname: '/login' });
           return;
         }
 

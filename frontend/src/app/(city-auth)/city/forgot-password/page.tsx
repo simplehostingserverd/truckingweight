@@ -42,11 +42,20 @@ export default function ForgotPassword() {
     setError('');
 
     try {
-      // This is a placeholder for the actual password reset functionality
-      // In a real implementation, you would call an API endpoint to send a password reset email
+      // Call the API endpoint to send a password reset email
+      const response = await fetch('/api/city-auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send password reset email');
+      }
 
       // Show success message
       setSuccess(true);

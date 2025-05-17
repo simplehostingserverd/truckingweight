@@ -15,7 +15,7 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({ className }) => {
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
-      router.push('/login');
+      router.push({ pathname: '/login' });
     } catch (error) {
       console.error('Error logging out:', error);
     }

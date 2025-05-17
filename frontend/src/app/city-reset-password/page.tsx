@@ -86,7 +86,7 @@ export default function ResetPassword() {
 
       // Redirect to login page after a delay
       setTimeout(() => {
-        router.push('/city-login');
+        router.push({ pathname: '/city-login' });
       }, 3000);
     } catch (err: any) {
       setError(err.message || 'Failed to reset password');
@@ -236,7 +236,7 @@ export default function ResetPassword() {
                   </Typography>
                   <Button
                     startDecorator={<ArrowBackIcon />}
-                    onClick={() => router.push('/city-login')}
+                    onClick={() => router.push({ pathname: '/city-login' })}
                     sx={{
                       bgcolor: 'primary.500',
                       color: 'white',

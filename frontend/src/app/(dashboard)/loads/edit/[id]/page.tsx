@@ -128,7 +128,7 @@ export default function EditLoad({ params }: { params: { id: string } }) {
       }
 
       // Redirect to load detail
-      router.push(`/loads/${id}`);
+      router.push({ pathname: `/loads/${id}` });
     } catch (err: any) {
       setError(err.message || 'An error occurred while updating the load');
       console.error('Update load error:', err);

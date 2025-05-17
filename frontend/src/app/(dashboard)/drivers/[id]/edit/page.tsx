@@ -100,7 +100,7 @@ export default function EditDriver({ params }: PageProps) {
 
       // Redirect to driver details after a short delay
       setTimeout(() => {
-        router.push(`/drivers/${id}`);
+        router.push({ pathname: `/drivers/${id}` });
         router.refresh();
       }, 1500);
     } catch (err: any) {

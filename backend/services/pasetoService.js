@@ -6,7 +6,7 @@
 
 import { V4 } from 'paseto';
 import crypto from 'crypto';
-import cacheService from './cache.js';
+import cacheService from './cache/index.js';
 
 // Generate a secure key for Paseto tokens
 let secretKey;

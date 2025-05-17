@@ -5,7 +5,7 @@
  * It is kept for backward compatibility with API keys only
  */
 
-import cacheService from './cache.js';
+import cacheService from './cache/index.js';
 import * as pasetoService from './pasetoService.js';
 
 // Token expiration times (in seconds)

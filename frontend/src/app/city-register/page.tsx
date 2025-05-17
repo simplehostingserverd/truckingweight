@@ -119,7 +119,7 @@ export default function CityRegister() {
       // Show success message and redirect after a delay
       setSuccess(true);
       setTimeout(() => {
-        router.push('/city-login');
+        router.push({ pathname: '/city-login' });
       }, 3000);
     } catch (err: any) {
       setError(err.message || 'An error occurred during registration');

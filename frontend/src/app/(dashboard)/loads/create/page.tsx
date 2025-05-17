@@ -170,7 +170,7 @@ export default function CreateLoad() {
       } = await supabase.auth.getUser();
 
       if (authError || !user) {
-        router.push('/login');
+        router.push({ pathname: '/login' });
         return;
       }
 
