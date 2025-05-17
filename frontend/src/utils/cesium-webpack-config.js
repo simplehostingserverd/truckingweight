@@ -3,9 +3,9 @@
  * This file provides utility functions for configuring webpack to work with Cesium
  */
 
-const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const webpack = require('webpack');
+import path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import webpack from 'webpack';
 
 /**
  * Configure webpack for Cesium
@@ -24,19 +24,31 @@ function configureCesiumWebpack(config, isServer) {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/Workers'),
+          from: path.join(
+            path.dirname(new URL('cesium', import.meta.url).pathname),
+            'Build/Cesium/Workers'
+          ),
           to: 'static/chunks/cesium/Workers',
         },
         {
-          from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/ThirdParty'),
+          from: path.join(
+            path.dirname(new URL('cesium', import.meta.url).pathname),
+            'Build/Cesium/ThirdParty'
+          ),
           to: 'static/chunks/cesium/ThirdParty',
         },
         {
-          from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/Assets'),
+          from: path.join(
+            path.dirname(new URL('cesium', import.meta.url).pathname),
+            'Build/Cesium/Assets'
+          ),
           to: 'static/chunks/cesium/Assets',
         },
         {
-          from: path.join(path.dirname(require.resolve('cesium')), 'Build/Cesium/Widgets'),
+          from: path.join(
+            path.dirname(new URL('cesium', import.meta.url).pathname),
+            'Build/Cesium/Widgets'
+          ),
           to: 'static/chunks/cesium/Widgets',
         },
       ],
@@ -63,6 +75,4 @@ function configureCesiumWebpack(config, isServer) {
   return config;
 }
 
-module.exports = {
-  configureCesiumWebpack,
-};
+export { configureCesiumWebpack };
