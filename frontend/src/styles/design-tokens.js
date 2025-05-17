@@ -381,7 +381,7 @@ const transitions = {
 };
 
 // Export all tokens
-module.exports = {
+export default {
   colors,
   typography,
   spacing,
