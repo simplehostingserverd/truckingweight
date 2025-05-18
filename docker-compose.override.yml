@@ -1,0 +1,32 @@
+version: '3.8'
+
+# This override file is for Fedora Workstation
+# It adds SELinux labels to volumes for compatibility
+
+services:
+  frontend:
+    security_opt:
+      - label=type:container_runtime_t
+    volumes:
+      - ./frontend:/app:Z
+      - frontend-node-modules:/app/node_modules:Z
+
+  backend:
+    security_opt:
+      - label=type:container_runtime_t
+    volumes:
+      - ./backend:/app:Z
+      - backend-node-modules:/app/node_modules:Z
+
+  grafana:
+    security_opt:
+      - label=type:container_runtime_t
+    volumes:
+      - grafana-storage:/var/lib/grafana:Z
+
+  prometheus:
+    security_opt:
+      - label=type:container_runtime_t
+    volumes:
+      - ./monitoring/prometheus:/etc/prometheus:Z
+      - prometheus-data:/prometheus:Z

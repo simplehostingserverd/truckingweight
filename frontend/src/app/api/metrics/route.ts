@@ -1,18 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { collectDefaultMetrics, Registry, Counter, Histogram } from 'prom-client';
+import pkg from 'prom-client';
+const { collectDefaultMetrics, Registry, Counter, Histogram } = pkg;
 
 // Create a registry to register the metrics
 const register = new Registry();
@@ -55,10 +56,10 @@ export async function GET(request: NextRequest) {
   try {
     // Record this metrics request
     apiRequestsCounter.inc({ method: 'GET', endpoint: '/api/metrics', status: '200' });
-    
+
     // Get metrics
     const metrics = await register.metrics();
-    
+
     // Return metrics
     return new NextResponse(metrics, {
       headers: {

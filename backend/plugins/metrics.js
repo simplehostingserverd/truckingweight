@@ -1,18 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
 import fp from 'fastify-plugin';
-import { collectDefaultMetrics, Registry, Counter, Histogram, Gauge } from 'prom-client';
+import pkg from 'prom-client';
+const { collectDefaultMetrics, Registry, Counter, Histogram, Gauge } = pkg;
 
 // Create a Registry to register the metrics
 const register = new Registry();
@@ -43,44 +44,47 @@ const activeConnections = new Gauge({
 });
 
 // Metrics plugin
-export default fp(async function (fastify, opts) {
-  // Increment active connections on connection
-  fastify.addHook('onRequest', async (request, reply) => {
-    activeConnections.inc();
-  });
-
-  // Decrement active connections on response
-  fastify.addHook('onResponse', async (request, reply) => {
-    activeConnections.dec();
-    
-    // Record request metrics
-    const { method, routerPath } = request;
-    const { statusCode } = reply;
-    
-    httpRequestsTotal.inc({
-      method,
-      route: routerPath || request.url,
-      status_code: statusCode,
+export default fp(
+  async function (fastify, opts) {
+    // Increment active connections on connection
+    fastify.addHook('onRequest', async (request, reply) => {
+      activeConnections.inc();
     });
-    
-    // Calculate request duration
-    const responseTime = reply.getResponseTime();
-    httpRequestDurationSeconds.observe(
-      {
+
+    // Decrement active connections on response
+    fastify.addHook('onResponse', async (request, reply) => {
+      activeConnections.dec();
+
+      // Record request metrics
+      const { method, routerPath } = request;
+      const { statusCode } = reply;
+
+      httpRequestsTotal.inc({
         method,
         route: routerPath || request.url,
         status_code: statusCode,
-      },
-      responseTime / 1000
-    );
-  });
+      });
 
-  // Expose metrics endpoint
-  fastify.get('/metrics', async (request, reply) => {
-    reply.header('Content-Type', register.contentType);
-    return register.metrics();
-  });
-}, {
-  name: 'metrics',
-  dependencies: [],
-});
+      // Calculate request duration
+      const responseTime = reply.getResponseTime();
+      httpRequestDurationSeconds.observe(
+        {
+          method,
+          route: routerPath || request.url,
+          status_code: statusCode,
+        },
+        responseTime / 1000
+      );
+    });
+
+    // Expose metrics endpoint
+    fastify.get('/metrics', async (request, reply) => {
+      reply.header('Content-Type', register.contentType);
+      return register.metrics();
+    });
+  },
+  {
+    name: 'metrics',
+    dependencies: [],
+  }
+);
