@@ -15,7 +15,14 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Import prom-client dynamically to avoid issues with Next.js bundling
 // This ensures the module is only loaded on the server side
-let collectDefaultMetrics: any, Registry: any, Counter: any, Histogram: any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let collectDefaultMetrics: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Registry: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Counter: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Histogram: any;
 
 // Only import and initialize in a server context
 if (typeof window === 'undefined') {
@@ -31,9 +38,13 @@ if (typeof window === 'undefined') {
 }
 
 // Initialize metrics only if we're on the server
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let register: any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let pageViewsCounter: any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let apiRequestsCounter: any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let apiRequestDuration: any;
 
 // Only initialize metrics on the server
@@ -82,7 +93,7 @@ if (typeof window === 'undefined' && Registry && Counter && Histogram) {
 }
 
 // Metrics endpoint
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // Check if metrics are initialized
     if (!register) {
