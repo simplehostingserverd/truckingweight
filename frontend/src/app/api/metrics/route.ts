@@ -49,14 +49,10 @@ if (typeof window === 'undefined') {
 }
 
 // Initialize metrics only if we're on the server
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let register: any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let pageViewsCounter: any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let apiRequestsCounter: any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let apiRequestDuration: any;
+let register: PrometheusRegistry | null = null;
+let pageViewsCounter: PrometheusCounter | null = null;
+let apiRequestsCounter: PrometheusCounter | null = null;
+let apiRequestDuration: PrometheusHistogram | null = null;
 
 // Only initialize metrics on the server
 if (typeof window === 'undefined' && Registry && Counter && Histogram) {
@@ -104,7 +100,7 @@ if (typeof window === 'undefined' && Registry && Counter && Histogram) {
 }
 
 // Metrics endpoint
-export async function GET(_request: NextRequest) {
+export async function GET(_: NextRequest) {
   try {
     // Check if metrics are initialized
     if (!register) {
