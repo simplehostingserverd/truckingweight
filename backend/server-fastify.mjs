@@ -196,6 +196,9 @@ async function registerRoutes() {
   // Import LPR cameras routes
   const lprCamerasRoutes = await import('./routes/fastify/lprCameras.js');
 
+  // Import Grafana integration routes
+  const grafanaRoutes = await import('./routes/fastify/grafana.js');
+
   // Register routes
   fastify.register(authRoutes.default, { prefix: '/api/auth' });
   fastify.register(weightRoutes.default, { prefix: '/api/weights' });
@@ -221,6 +224,9 @@ async function registerRoutes() {
 
   // Register LPR cameras routes
   fastify.register(lprCamerasRoutes.default, { prefix: '/api/lpr-cameras' });
+
+  // Register Grafana integration routes
+  fastify.register(grafanaRoutes.default, { prefix: '/api/grafana' });
 
   // Root route
   fastify.get('/', async (_request, _reply) => {
