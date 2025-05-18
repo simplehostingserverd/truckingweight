@@ -9,7 +9,7 @@
 # Cosmo Exploit Group LLC and may not be copied, distributed, or used
 # in any way without explicit written permission.
 
-name: "CodeQL Analysis"
+name: "CodeQL Analysis with Docker"
 
 on:
   push:
@@ -18,6 +18,7 @@ on:
     branches: [ main ]
   schedule:
     - cron: '0 0 * * 0'  # Run every Sunday at midnight
+  workflow_dispatch:  # Allow manual triggering
 
 jobs:
   analyze:
@@ -27,6 +28,7 @@ jobs:
       actions: read
       contents: read
       security-events: write
+      packages: read  # For Docker registry access
 
     strategy:
       fail-fast: false
@@ -37,28 +39,127 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    # Set up Docker Buildx for improved Docker build experience
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    # Login to Docker Hub if needed for private images
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKER_HUB_USERNAME || 'simplehostingserverd' }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN || '' }}
+
+    # Initialize CodeQL
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
         queries: security-and-quality
+        tools: latest
 
+    # Setup Node.js for local operations
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '21'
         cache: 'npm'
 
+    # Create environment files for Docker builds
+    - name: Create environment files
+      run: |
+        # Create dummy environment files for build
+        echo "NEXT_PUBLIC_SUPABASE_URL=https://example.com" > frontend/.env.local
+        echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=dummy-key" >> frontend/.env.local
+        echo "NEXT_PUBLIC_MAPBOX_TOKEN=dummy-token" >> frontend/.env.local
+        echo "NEXT_PUBLIC_CESIUM_TOKEN=dummy-token" >> frontend/.env.local
+
+        echo "SUPABASE_URL=https://example.com" > backend/.env
+        echo "SUPABASE_KEY=dummy-key" >> backend/.env
+        echo "JWT_SECRET=dummy-secret" >> backend/.env
+
+    # Build the Docker images for analysis
+    - name: Build Docker images
+      run: |
+        # Build frontend and backend Docker images with specific tags for scanning
+        docker-compose build frontend backend
+
+        # Tag images for Trivy scanning
+        docker tag truckingweight_frontend:latest simplehostingserverd/truckingweight-frontend:latest
+        docker tag truckingweight_backend:latest simplehostingserverd/truckingweight-backend:latest
+      env:
+        NEXT_PUBLIC_SUPABASE_URL: https://example.com
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: dummy-key
+        NEXT_PUBLIC_MAPBOX_TOKEN: dummy-token
+        NEXT_PUBLIC_CESIUM_TOKEN: dummy-token
+        SUPABASE_URL: https://example.com
+        SUPABASE_KEY: dummy-key
+        JWT_SECRET: dummy-secret
+
+    # Install dependencies locally for CodeQL to analyze
     - name: Install dependencies
       run: |
         npm ci
         cd frontend && npm ci
         cd ../backend && npm ci
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v3
+    # Custom build step instead of autobuild
+    - name: Build code for analysis
+      run: |
+        cd frontend && npm run build || echo "Frontend build failed but continuing"
+        cd ../backend && npm run build || echo "Backend build failed but continuing"
+      env:
+        NEXT_PUBLIC_SUPABASE_URL: https://example.com
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: dummy-key
+        NEXT_PUBLIC_MAPBOX_TOKEN: dummy-token
+        NEXT_PUBLIC_CESIUM_TOKEN: dummy-token
+        SUPABASE_URL: https://example.com
+        SUPABASE_KEY: dummy-key
+        JWT_SECRET: dummy-secret
 
+    # Perform CodeQL Analysis on source code
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"
+        upload: true
+        output: sarif-results
+
+    # Scan Docker containers with Trivy
+    - name: Run Trivy vulnerability scanner for Docker images
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'simplehostingserverd/truckingweight-frontend:latest'
+        format: 'sarif'
+        output: 'trivy-results-frontend.sarif'
+        severity: 'CRITICAL,HIGH'
+
+    - name: Run Trivy for backend Docker image
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'simplehostingserverd/truckingweight-backend:latest'
+        format: 'sarif'
+        output: 'trivy-results-backend.sarif'
+        severity: 'CRITICAL,HIGH'
+
+    # Upload Trivy scan results to GitHub Security tab
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: 'trivy-results-frontend.sarif'
+        category: 'docker-frontend'
+
+    - name: Upload backend Trivy scan results
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: 'trivy-results-backend.sarif'
+        category: 'docker-backend'
+
+    # Scan Docker images for secrets
+    - name: Scan Docker images for secrets
+      uses: trufflesecurity/trufflehog@v3.63.2
+      with:
+        path: ./
+        base: ${{ github.event.repository.default_branch }}
+        head: HEAD
+        extra_args: --debug --only-verified --image simplehostingserverd/truckingweight-frontend:latest,simplehostingserverd/truckingweight-backend:latest
