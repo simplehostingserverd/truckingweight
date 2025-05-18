@@ -60,7 +60,7 @@ const auth = async (req: AuthenticatedRequest, res: Response, next: NextFunction
     // Set user data in request
     req.user = decoded.user;
     next();
-  } catch (_err) {
+  } catch {
     res.status(401).json({ message: 'Token is not valid' });
   }
 };

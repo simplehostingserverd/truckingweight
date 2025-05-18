@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * Weigh Ticket Service
@@ -18,7 +17,7 @@
  * This service handles the generation and management of weigh tickets
  */
 
-import { v4 as uuidv4 } from 'uuid';
+// UUID import removed as it's not used in this file
 import prisma from '../config/prisma';
 import { setCompanyContext } from '../config/prisma';
 import { logger } from '../utils/logger';
@@ -49,6 +48,7 @@ export function generateWeighTicket(
   },
   companyId: number,
   userId: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<{ success: boolean; ticket?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
@@ -184,7 +184,11 @@ export function generateWeighTicket(
         qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,
       },
     };
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    error: any /* @ts-expect-error Catching unknown error type */
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error generating weigh ticket: ${error.message}`, { error });
     return { success: false, error: error.message };
   }
@@ -200,6 +204,7 @@ export function getWeighTicket(
   ticketId: number,
   companyId: number,
   isAdmin: boolean = false
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<{ success: boolean; ticket?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
@@ -237,7 +242,11 @@ export function getWeighTicket(
         qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,
       },
     };
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    error: any /* @ts-expect-error Catching unknown error type */
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error getting weigh ticket: ${error.message}`, { error });
     return { success: false, error: error.message };
   }
@@ -263,6 +272,7 @@ export function updateWeighTicket(
   },
   companyId: number,
   userId: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<{ success: boolean; ticket?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
@@ -286,16 +296,17 @@ export function updateWeighTicket(
     const netWeight = tareWeight ? grossWeight - tareWeight : undefined;
 
     // Update the ticket
-    const updatedTicket /* eslint-disable-line @typescript-eslint/no-unused-vars */ = await prisma.weigh_tickets.update({
-      where: { id: ticketId },
-      data: {
-        gross_weight: grossWeight,
-        tare_weight: tareWeight,
-        net_weight: netWeight,
-        notes: updateData.notes,
-        updated_at: new Date(),
-      },
-    });
+    const updatedTicket /* eslint-disable-line @typescript-eslint/no-unused-vars */ =
+      await prisma.weigh_tickets.update({
+        where: { id: ticketId },
+        data: {
+          gross_weight: grossWeight,
+          tare_weight: tareWeight,
+          net_weight: netWeight,
+          notes: updateData.notes,
+          updated_at: new Date(),
+        },
+      });
 
     // Update the weight record
     if (existingTicket.weight_id) {
@@ -379,7 +390,11 @@ export function updateWeighTicket(
     });
 
     return { success: true, ticket: completeTicket };
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    error: any /* @ts-expect-error Catching unknown error type */
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error updating weigh ticket: ${error.message}`, { error });
     return { success: false, error: error.message };
   }

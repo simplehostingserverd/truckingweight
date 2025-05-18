@@ -111,7 +111,8 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
       complianceRate,
       nonCompliantWeights,
     });
-  } catch (err: any /* @ts-ignore */ ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any /* @ts-expect-error Catching unknown error type */) {
     console.error('Error fetching dashboard stats:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
   } finally {
@@ -171,7 +172,8 @@ export const getRecentWeights = async (req: AuthenticatedRequest, res: Response)
     });
 
     res.json(recentWeights);
-  } catch (err: any /* @ts-ignore */ ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any /* @ts-expect-error Catching unknown error type */) {
     console.error('Error fetching recent weights:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
   } finally {
@@ -325,7 +327,8 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
 
       res.json(complianceData);
     }
-  } catch (err: any /* @ts-ignore */ ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any /* @ts-expect-error Catching unknown error type */) {
     console.error('Error fetching compliance data:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
   } finally {
@@ -549,7 +552,8 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
 
       res.json(weightsByVehicleArray);
     }
-  } catch (err: any /* @ts-ignore */ ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any /* @ts-expect-error Catching unknown error type */) {
     console.error('Error fetching vehicle weight data:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
   } finally {
@@ -600,7 +604,8 @@ export const getLoadStatusData = async (req: AuthenticatedRequest, res: Response
     }));
 
     res.json(loadsByStatusArray);
-  } catch (err: any /* @ts-ignore */ ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any /* @ts-expect-error Catching unknown error type */) {
     console.error('Error fetching load status data:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
   } finally {

@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * QR Code Service
@@ -77,7 +76,11 @@ export function generateScaleQRCode(
     });
 
     return { success: true, qrCodeDataUrl, qrCodeUuid };
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    error: any /* @ts-expect-error Catching unknown error type */
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error generating scale QR code: ${error.message}`, { error });
     return { success: false, error: error.message };
   }
@@ -140,7 +143,11 @@ export function generateTicketQRCode(
     });
 
     return { success: true, qrCodeDataUrl };
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    error: any /* @ts-expect-error Catching unknown error type */
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error generating ticket QR code: ${error.message}`, { error });
     return { success: false, error: error.message };
   }
@@ -152,8 +159,10 @@ export function generateTicketQRCode(
  * @param companyId - The company ID for context
  */
 export function validateScaleQRCode(
-  qrCodeData: any /* @ts-ignore */ ,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  qrCodeData: any /* @ts-expect-error Unknown QR code data format */,
   companyId: number
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<{ success: boolean; scale?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
@@ -185,7 +194,11 @@ export function validateScaleQRCode(
     }
 
     return { success: true, scale };
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    error: any /* @ts-expect-error Catching unknown error type */
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error validating scale QR code: ${error.message}`, { error });
     return { success: false, error: error.message };
   }
@@ -197,8 +210,10 @@ export function validateScaleQRCode(
  * @param companyId - The company ID for context
  */
 export function validateTicketQRCode(
-  qrCodeData: any /* @ts-ignore */ ,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  qrCodeData: any /* @ts-expect-error Unknown QR code data format */,
   companyId: number
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<{ success: boolean; ticket?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
@@ -233,7 +248,11 @@ export function validateTicketQRCode(
     }
 
     return { success: true, ticket };
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    error: any /* @ts-expect-error Catching unknown error type */
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error validating ticket QR code: ${error.message}`, { error });
     return { success: false, error: error.message };
   }

@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
@@ -122,7 +121,8 @@ export const getWebhookSubscription = async (req: Request, res: Response) => {
     }
 
     // Remove secret key before returning
-    const { secret_key, ...safeWebhook } = webhook;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { secret_key: _, ...safeWebhook } = webhook;
 
     return res.status(200).json(safeWebhook);
   } catch (error) {
@@ -237,7 +237,8 @@ export const updateWebhookSubscription = async (req: Request, res: Response) => 
     });
 
     // Remove secret key before returning
-    const { secret_key, ...safeWebhook } = webhook;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { secret_key: _, ...safeWebhook } = webhook;
 
     return res.status(200).json(safeWebhook);
   } catch (error) {

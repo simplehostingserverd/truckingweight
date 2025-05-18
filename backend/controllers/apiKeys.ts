@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
@@ -122,11 +121,15 @@ export const getApiKey = async (req: Request, res: Response) => {
     }
 
     // Remove actual key before returning
-    const { key, ...safeApiKey } = apiKey;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { key: _, ...safeApiKey } = apiKey;
 
     return res.status(200).json(safeApiKey);
   } catch (error) {
-    console.error('Error fetching API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:', error);
+    console.error(
+      'Error fetching API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:',
+      error
+    );
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -176,7 +179,10 @@ export const createApiKey = async (req: Request, res: Response) => {
       message: 'Store this API key securely. It will not be shown again.',
     });
   } catch (error) {
-    console.error('Error creating API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:', error);
+    console.error(
+      'Error creating API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:',
+      error
+    );
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -236,11 +242,15 @@ export const updateApiKey = async (req: Request, res: Response) => {
     });
 
     // Remove actual key before returning
-    const { key, ...safeApiKey } = apiKey;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { key: _, ...safeApiKey } = apiKey;
 
     return res.status(200).json(safeApiKey);
   } catch (error) {
-    console.error('Error updating API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:', error);
+    console.error(
+      'Error updating API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:',
+      error
+    );
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -284,7 +294,10 @@ export const deleteApiKey = async (req: Request, res: Response) => {
 
     return res.status(204).send();
   } catch (error) {
-    console.error('Error deleting API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:', error);
+    console.error(
+      'Error deleting API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:',
+      error
+    );
     return res.status(500).json({ message: 'Internal server error' });
   }
 };

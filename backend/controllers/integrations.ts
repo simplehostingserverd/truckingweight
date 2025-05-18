@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
@@ -23,7 +22,9 @@ const prisma = new PrismaClient();
 const createConnectionSchema = z.object({
   integration_type: z.string().min(1).max(50),
   provider: z.string().min(1).max(50),
-  credentials /* eslint-disable-line @typescript-eslint/no-unused-vars */: z.record(z.any()).optional(),
+  credentials /* eslint-disable-line @typescript-eslint/no-unused-vars */: z
+    .record(z.any())
+    .optional(),
   settings: z.record(z.any()).optional(),
   is_active: z.boolean().optional().default(true),
 });
@@ -31,7 +32,9 @@ const createConnectionSchema = z.object({
 const updateConnectionSchema = z.object({
   integration_type: z.string().min(1).max(50).optional(),
   provider: z.string().min(1).max(50).optional(),
-  credentials /* eslint-disable-line @typescript-eslint/no-unused-vars */: z.record(z.any()).optional(),
+  credentials /* eslint-disable-line @typescript-eslint/no-unused-vars */: z
+    .record(z.any())
+    .optional(),
   settings: z.record(z.any()).optional(),
   is_active: z.boolean().optional(),
 });
@@ -124,7 +127,8 @@ export const getIntegrationConnection = async (req: Request, res: Response) => {
     }
 
     // Remove sensitive credentials before returning
-    const { credentials, ...safeConnection } = connection;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { credentials: _, ...safeConnection } = connection;
 
     return res.status(200).json(safeConnection);
   } catch (error) {
@@ -182,7 +186,10 @@ export const createIntegrationConnection = async (req: Request, res: Response) =
     });
 
     // Remove sensitive credentials before returning
-    const { credentials /* eslint-disable-line @typescript-eslint/no-unused-vars */: _, ...safeConnection } = connection;
+    const {
+      credentials /* eslint-disable-line @typescript-eslint/no-unused-vars */: _,
+      ...safeConnection
+    } = connection;
 
     return res.status(201).json(safeConnection);
   } catch (error) {
@@ -259,7 +266,10 @@ export const updateIntegrationConnection = async (req: Request, res: Response) =
     });
 
     // Remove sensitive credentials before returning
-    const { credentials /* eslint-disable-line @typescript-eslint/no-unused-vars */: _, ...safeConnection } = connection;
+    const {
+      credentials /* eslint-disable-line @typescript-eslint/no-unused-vars */: _,
+      ...safeConnection
+    } = connection;
 
     return res.status(200).json(safeConnection);
   } catch (error) {
