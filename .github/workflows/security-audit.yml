@@ -1,21 +1,19 @@
-/**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
- * PROPRIETARY AND CONFIDENTIAL
- * 
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
- * Cosmo Exploit Group LLC and may not be copied, distributed, or used
- * in any way without explicit written permission.
- */
+# Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+#
+# PROPRIETARY AND CONFIDENTIAL
+#
+# This file is part of the Cosmo Exploit Group LLC Weight Management System.
+# Unauthorized copying of this file, via any medium is strictly prohibited.
+#
+# This file contains proprietary and confidential information of
+# Cosmo Exploit Group LLC and may not be copied, distributed, or used
+# in any way without explicit written permission.
 
 name: Security Audit
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - 'package.json'
       - 'package-lock.json'
@@ -24,7 +22,7 @@ on:
       - 'backend/package.json'
       - 'backend/package-lock.json'
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths:
       - 'package.json'
       - 'package-lock.json'
@@ -33,7 +31,7 @@ on:
       - 'backend/package.json'
       - 'backend/package-lock.json'
   schedule:
-    - cron: '0 0 * * 0'  # Run every Sunday at midnight
+    - cron: '0 0 * * 0' # Run every Sunday at midnight
   workflow_dispatch:
 
 jobs:
