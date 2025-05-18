@@ -18,10 +18,10 @@ services:
       - frontend-node-modules:/app/node_modules
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
-      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
-      - NEXT_PUBLIC_MAPBOX_TOKEN=${NEXT_PUBLIC_MAPBOX_TOKEN}
-      - NEXT_PUBLIC_CESIUM_TOKEN=${NEXT_PUBLIC_CESIUM_TOKEN}
+      - NEXT_PUBLIC_SUPABASE_URL
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY
+      - NEXT_PUBLIC_MAPBOX_TOKEN
+      - NEXT_PUBLIC_CESIUM_TOKEN
     depends_on:
       - backend
     restart: unless-stopped
@@ -50,9 +50,9 @@ services:
       - backend-node-modules:/app/node_modules
     environment:
       - NODE_ENV=development
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_KEY=${SUPABASE_KEY}
-      - JWT_SECRET=${JWT_SECRET}
+      - SUPABASE_URL
+      - SUPABASE_KEY
+      - JWT_SECRET
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--spider", "http://localhost:5000/health"]

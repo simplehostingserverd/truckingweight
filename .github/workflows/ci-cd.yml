@@ -1,16 +1,16 @@
-// 
+//
 //  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
-//  * 
+//  *
 //  * PROPRIETARY AND CONFIDENTIAL
-//  * 
+//  *
 //  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
 //  * Unauthorized copying of this file, via any medium is strictly prohibited.
-//  * 
-//  * This file contains proprietary and confidential information of 
+//  *
+//  * This file contains proprietary and confidential information of
 //  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
 //  * in any way without explicit written permission.
-//  
-// 
+//
+//
 
 name: CI/CD Pipeline
 
@@ -57,9 +57,9 @@ jobs:
       - name: Create frontend env file
         run: |
           echo "# Supabase Configuration" > frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://pczfmxigimuluacspxse.supabase.co' }}" >> frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w' }}" >> frontend/.env.local
-          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET || '5KYUyCsHvxw3vG7QTtOywMFazTGpWE5VvbPNYgPXK+xiQCybFn9ts4ZLMU2QiGKAVfWuU2SR+N4fJuiJxwQx9Q==' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> frontend/.env.local
+          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Backend API URL" >> frontend/.env.local
           echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.truckingsemis.com' }}" >> frontend/.env.local
@@ -68,11 +68,11 @@ jobs:
           echo "NODE_ENV=production" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Mapbox token for map visualizations" >> frontend/.env.local
-          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
-          echo "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Cesium token for 3D Earth visualization" >> frontend/.env.local
-          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlYWE1OWUxNy1mMWZiLTQzZWUtODU5ZS01MWZjZTg4MDE3MmYiLCJpZCI6MjU5MiwiaWF0IjoxNjM2NzQ5NzMxfQ.aP6K-Jc8Tlf-2t9L2Lc0e7wzeJj7jZQ4ohc-5O3KqVk' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN }}" >> frontend/.env.local
 
       - name: Install root dependencies
         run: npm ci
@@ -111,9 +111,9 @@ jobs:
       - name: Create frontend env file
         run: |
           echo "# Supabase Configuration" > frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://pczfmxigimuluacspxse.supabase.co' }}" >> frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w' }}" >> frontend/.env.local
-          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET || '5KYUyCsHvxw3vG7QTtOywMFazTGpWE5VvbPNYgPXK+xiQCybFn9ts4ZLMU2QiGKAVfWuU2SR+N4fJuiJxwQx9Q==' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> frontend/.env.local
+          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Backend API URL" >> frontend/.env.local
           echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.truckingsemis.com' }}" >> frontend/.env.local
@@ -122,11 +122,11 @@ jobs:
           echo "NODE_ENV=test" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Mapbox token for map visualizations" >> frontend/.env.local
-          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
-          echo "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Cesium token for 3D Earth visualization" >> frontend/.env.local
-          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlYWE1OWUxNy1mMWZiLTQzZWUtODU5ZS01MWZjZTg4MDE3MmYiLCJpZCI6MjU5MiwiaWF0IjoxNjM2NzQ5NzMxfQ.aP6K-Jc8Tlf-2t9L2Lc0e7wzeJj7jZQ4ohc-5O3KqVk' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN }}" >> frontend/.env.local
 
       - name: Install dependencies
         run: |
@@ -182,9 +182,9 @@ jobs:
       - name: Create frontend env file
         run: |
           echo "# Supabase Configuration" > frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://pczfmxigimuluacspxse.supabase.co' }}" >> frontend/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w' }}" >> frontend/.env.local
-          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET || '5KYUyCsHvxw3vG7QTtOywMFazTGpWE5VvbPNYgPXK+xiQCybFn9ts4ZLMU2QiGKAVfWuU2SR+N4fJuiJxwQx9Q==' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> frontend/.env.local
+          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Backend API URL" >> frontend/.env.local
           echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.truckingsemis.com' }}" >> frontend/.env.local
@@ -193,11 +193,11 @@ jobs:
           echo "NODE_ENV=production" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Mapbox token for map visualizations" >> frontend/.env.local
-          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
-          echo "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN || 'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Cesium token for 3D Earth visualization" >> frontend/.env.local
-          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlYWE1OWUxNy1mMWZiLTQzZWUtODU5ZS01MWZjZTg4MDE3MmYiLCJpZCI6MjU5MiwiaWF0IjoxNjM2NzQ5NzMxfQ.aP6K-Jc8Tlf-2t9L2Lc0e7wzeJj7jZQ4ohc-5O3KqVk' }}" >> frontend/.env.local
+          echo "NEXT_PUBLIC_CESIUM_TOKEN=${{ secrets.NEXT_PUBLIC_CESIUM_TOKEN }}" >> frontend/.env.local
 
       - name: Install dependencies
         run: |
@@ -215,6 +215,16 @@ jobs:
       - name: Build backend
         working-directory: ./backend
         run: npm run build || echo "No build script found for backend"
+
+      - name: Clean sensitive data from build artifacts
+        run: |
+          echo "Cleaning sensitive data from build artifacts..."
+          # Remove .env files from build artifacts
+          find frontend/.next -type f -name "*.env*" -delete || true
+          find frontend/.next -type f -exec grep -l "SUPABASE_" {} \; | xargs -r rm || true
+          find frontend/.next -type f -exec grep -l "JWT_SECRET" {} \; | xargs -r rm || true
+          find frontend/.next -type f -exec grep -l "MAPBOX_TOKEN" {} \; | xargs -r rm || true
+          find frontend/.next -type f -exec grep -l "CESIUM_TOKEN" {} \; | xargs -r rm || true
 
       - name: Upload frontend build artifacts
         uses: actions/upload-artifact@v4
