@@ -51,6 +51,16 @@ const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     // We're using Cesium from CDN, so we don't need to process it
 
+    // Ensure config and config.optimization exist
+    if (!config) {
+      console.error('Webpack config is null or undefined');
+      return {};
+    }
+
+    if (!config.optimization) {
+      config.optimization = {};
+    }
+
     // Only enable these optimizations in production
     if (!dev) {
       // Enable terser compression
