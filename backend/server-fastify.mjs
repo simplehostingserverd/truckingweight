@@ -190,6 +190,9 @@ async function registerRoutes() {
   const cityPermitsRoutes = await import('./routes/fastify/cityPermits.js');
   const cityUsersRoutes = await import('./routes/fastify/cityUsers.js');
 
+  // Import trucking route handlers
+  const truckingAuthRoutes = await import('./routes/fastify/truckingAuth.js');
+
   // Import LPR cameras routes
   const lprCamerasRoutes = await import('./routes/fastify/lprCameras.js');
 
@@ -212,6 +215,9 @@ async function registerRoutes() {
   fastify.register(cityDashboardRoutes.default, { prefix: '/api/city-dashboard' });
   fastify.register(cityPermitsRoutes.default, { prefix: '/api/city-permits' });
   fastify.register(cityUsersRoutes.default, { prefix: '/api/city-users' });
+
+  // Register trucking routes
+  fastify.register(truckingAuthRoutes.default, { prefix: '/api/trucking-auth' });
 
   // Register LPR cameras routes
   fastify.register(lprCamerasRoutes.default, { prefix: '/api/lpr-cameras' });
