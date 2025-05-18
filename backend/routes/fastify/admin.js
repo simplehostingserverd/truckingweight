@@ -209,7 +209,7 @@ const deleteUserSchema = {
 };
 
 // Admin routes
-async function routes(fastify /* options */) {
+async function routes(fastify, _options) {
   // Get admin dashboard data
   fastify.get(
     '/dashboard',

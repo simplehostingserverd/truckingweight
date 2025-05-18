@@ -115,7 +115,7 @@ const getUserSchema = {
 };
 
 // Auth routes
-async function routes(fastify /* options */) {
+async function routes(fastify, _options) {
   // Register a user
   fastify.post('/register', { schema: registerSchema }, authController.register);
 

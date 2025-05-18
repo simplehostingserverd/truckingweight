@@ -193,7 +193,7 @@ const deleteVehicleSchema = {
 };
 
 // Vehicle routes
-async function routes(fastify /* options */) {
+async function routes(fastify, _options) {
   // Get all vehicles
   fastify.get(
     '/',

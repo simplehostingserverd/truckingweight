@@ -213,7 +213,7 @@ const deleteLoadSchema = {
 };
 
 // Load routes
-async function routes(fastify /* options */) {
+async function routes(fastify, _options) {
   // Get all loads
   fastify.get(
     '/',

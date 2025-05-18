@@ -234,7 +234,7 @@ async function registerRoutes() {
   });
 
   // Error handler
-  fastify.setErrorHandler((error, request, reply) => {
+  fastify.setErrorHandler((error, _request, reply) => {
     fastify.log.error(error);
     reply.status(500).send({
       message: 'Something went wrong!',

@@ -123,7 +123,7 @@ const syncHistorySchema = {
 };
 
 // Sync routes
-async function routes(fastify /* options */) {
+async function routes(fastify, _options) {
   // Get sync status
   fastify.get(
     '/status',

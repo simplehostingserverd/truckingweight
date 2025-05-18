@@ -18,7 +18,6 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
-// import bcrypt from 'bcryptjs';
 import * as pasetoService from '../../services/pasetoService.js';
 
 // Initialize Supabase client with JWT options

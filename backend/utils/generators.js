@@ -30,10 +30,9 @@ const supabase = createClient(
 /**
  * Generate a unique ticket number for weigh tickets
  * Format: WT-YYYYMMDD-XXXX (e.g., WT-20230615-0001)
- * @param {number} companyId - Company ID
  * @returns {string} - Unique ticket number
  */
-const generateTicketNumber = async (/* companyId */) => {
+const generateTicketNumber = async () => {
   try {
     const date = new Date();
     const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');

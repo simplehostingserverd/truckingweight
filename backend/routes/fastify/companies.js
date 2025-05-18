@@ -210,7 +210,7 @@ const deleteCompanySchema = {
 };
 
 // Company routes
-async function routes(fastify /* options */) {
+async function routes(fastify, _options) {
   // Get all companies (admin only)
   fastify.get(
     '/',

@@ -20,7 +20,6 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
-// import cacheService from '../../services/cache/index.js';
 import * as pasetoService from '../../services/pasetoService.js';
 
 // Initialize Supabase client

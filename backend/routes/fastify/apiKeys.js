@@ -236,7 +236,7 @@ const verifyApiKeySchema = {
 };
 
 // API Keys routes
-async function routes(fastify /* options */) {
+async function routes(fastify, _options) {
   // Get all API keys
   fastify.get(
     '/',

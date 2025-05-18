@@ -72,7 +72,7 @@ async function routes(fastify, _options) {
   });
 
   // Cache health check
-  fastify.get('/cache', async (request, reply) => {
+  fastify.get('/cache', async (_request, reply) => {
     try {
       // Test cache by setting and getting a value
       const testKey = 'health-check-test';
@@ -98,7 +98,7 @@ async function routes(fastify, _options) {
   });
 
   // Database health check
-  fastify.get('/database', async (request, reply) => {
+  fastify.get('/database', async (_request, reply) => {
     try {
       const result = await db.testConnection();
       return {
