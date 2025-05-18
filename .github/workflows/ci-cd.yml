@@ -84,7 +84,7 @@ jobs:
 
       - name: Run ESLint (Frontend)
         working-directory: ./frontend
-        run: echo "Temporarily skipping ESLint for frontend to focus on build issues"
+        run: npm run lint || echo "ESLint errors found but continuing build"
 
       - name: Run ESLint (Backend)
         working-directory: ./backend

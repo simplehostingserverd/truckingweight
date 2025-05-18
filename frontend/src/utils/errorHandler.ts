@@ -40,7 +40,7 @@ export function createError(
   type: ErrorType = ErrorType.UNKNOWN,
   statusCode?: number,
   // @ts-ignore - Suppressing the any type warning as this is a generic error details field
-  details?: any /* @ts-ignore */ 
+  details?: any /* @ts-ignore */
 ): AppError {
   const error = new Error(message) as AppError;
   error.type = type;
@@ -50,7 +50,7 @@ export function createError(
 }
 
 // Function to handle API errors
-export function handleApiError(error: any /* @ts-ignore */ ): AppError {
+export function handleApiError(error: any /* @ts-ignore */): AppError {
   // Network errors
   if (error.name === 'AbortError') {
     return createError('Request was aborted', ErrorType.NETWORK);
@@ -130,7 +130,7 @@ export function handleApiError(error: any /* @ts-ignore */ ): AppError {
 export function useErrorHandler() {
   const toast = useToastContext();
 
-  const handleError = (error: any /* @ts-ignore */ , context?: string) => {
+  const handleError = (error: unknown, context?: string) => {
     const appError = handleApiError(error);
 
     // Log the error

@@ -18,6 +18,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import bundleAnalyzer from '@next/bundle-analyzer';
+import withPWA from '@ducanh2912/next-pwa';
 
 // Get __dirname equivalent in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -26,9 +27,6 @@ const __dirname = path.dirname(__filename);
 // Add bundle analyzer in analyze mode
 const withBundleAnalyzer =
   process.env.ANALYZE === 'true' ? bundleAnalyzer({ enabled: true }) : config => config;
-
-// Temporarily disable PWA support until next-pwa is installed
-const withPWA = config => config;
 
 // Check if SSL certificates exist
 const sslCertPath = path.join(__dirname, '../ssl/localhost.crt');
@@ -105,6 +103,37 @@ const nextConfig = {
               }
             },
           },
+          // Separate React and related packages into their own chunk
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types)[\\/]/,
+            name: 'npm.react',
+            priority: 20, // Higher priority than vendor
+          },
+          // Separate MUI components into their own chunk
+          mui: {
+            test: /[\\/]node_modules[\\/](@mui|@emotion)[\\/]/,
+            name: 'npm.mui',
+            priority: 15,
+          },
+          // Separate utility libraries into their own chunk
+          utils: {
+            test: /[\\/]node_modules[\\/](lodash|date-fns|axios|swr)[\\/]/,
+            name: 'npm.utils',
+            priority: 10,
+          },
+        },
+      };
+
+      // Add module concatenation for better tree shaking
+      config.optimization.concatenateModules = true;
+    }
+
+    // Add cache groups for development to speed up rebuilds
+    if (dev) {
+      config.cache = {
+        type: 'filesystem',
+        buildDependencies: {
+          config: [__filename],
         },
       };
     }
@@ -150,7 +179,7 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co https://*.maptiler.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.maptiler.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co https://images.pexels.com https://upload.wikimedia.org https://*.maptiler.com; connect-src 'self' https://*.supabase.co https://api.truckingsemis.com wss://*.supabase.co https://*.maptiler.com; frame-ancestors 'none';",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co https://*.maptiler.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.maptiler.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co https://images.pexels.com https://upload.wikimedia.org https://*.maptiler.com; connect-src 'self' https://*.supabase.co https://api.truckingsemis.com wss://*.supabase.co https://*.maptiler.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; block-all-mixed-content;",
           },
           {
             key: 'Strict-Transport-Security',
@@ -256,7 +285,27 @@ const nextConfig = {
     // Enable webpack caching for CI/CD
     turbotrace: {
       logLevel: 'error',
+      memoryLimit: 4000, // Increase memory limit for better performance
     },
+
+    // Improved type checking
+    typedRoutes: true,
+
+    // Serverless improvements
+    serverComponentsExternalPackages: ['sharp'],
+
+    // Improved image optimization
+    workerThreads: true,
+
+    // Improved memory usage
+    optimizePackageImports: [
+      '@mui/material',
+      '@mui/icons-material',
+      '@mui/joy',
+      'lucide-react',
+      'date-fns',
+      'recharts',
+    ],
   },
 
   // Memory cache size (renamed from isrMemoryCacheSize)
@@ -267,4 +316,11 @@ const nextConfig = {
 };
 
 // Apply bundle analyzer and PWA wrappers
-export default withBundleAnalyzer(withPWA(nextConfig));
+export default withBundleAnalyzer(
+  withPWA({
+    dest: 'public',
+    disable: process.env.NODE_ENV === 'development',
+    register: true,
+    skipWaiting: true,
+  })(nextConfig)
+);

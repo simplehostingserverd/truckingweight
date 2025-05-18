@@ -44,5 +44,5 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": ["node_modules/", ".next/", "out/", "public/", "!src/"]
+  "ignorePatterns": ["node_modules/", ".next/", "out/", "public/"]
 }
