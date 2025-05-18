@@ -1,0 +1,35 @@
+# This file defines the code owners for the repository
+# Code owners are automatically requested for review when someone opens a PR
+# that modifies code they own
+
+# Default owners for everything in the repo
+* @simplehostingserverd
+
+# Frontend code
+/frontend/ @simplehostingserverd
+
+# Backend code
+/backend/ @simplehostingserverd
+
+# Infrastructure and CI/CD
+/.github/ @simplehostingserverd
+/docker-compose*.yml @simplehostingserverd
+/Dockerfile @simplehostingserverd
+/frontend/Dockerfile @simplehostingserverd
+/backend/Dockerfile @simplehostingserverd
+
+# Security-sensitive files
+/SECURITY.md @simplehostingserverd
+/.github/workflows/codeql-analysis.yml @simplehostingserverd
+/.github/workflows/secret-scanning.yml @simplehostingserverd
+/.github/dependabot.yml @simplehostingserverd
+
+# Database migrations and schema
+/backend/prisma/ @simplehostingserverd
+/backend/migrations/ @simplehostingserverd
+/backend/schema/ @simplehostingserverd
+
+# Configuration files
+*.config.js @simplehostingserverd
+*.config.mjs @simplehostingserverd
+/frontend/next.config.mjs @simplehostingserverd

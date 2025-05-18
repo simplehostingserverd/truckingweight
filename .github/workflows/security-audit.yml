@@ -1,0 +1,86 @@
+/**
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * 
+ * PROPRIETARY AND CONFIDENTIAL
+ * 
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * 
+ * This file contains proprietary and confidential information of 
+ * Cosmo Exploit Group LLC and may not be copied, distributed, or used
+ * in any way without explicit written permission.
+ */
+
+name: Security Audit
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'frontend/package.json'
+      - 'frontend/package-lock.json'
+      - 'backend/package.json'
+      - 'backend/package-lock.json'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'frontend/package.json'
+      - 'frontend/package-lock.json'
+      - 'backend/package.json'
+      - 'backend/package-lock.json'
+  schedule:
+    - cron: '0 0 * * 0'  # Run every Sunday at midnight
+  workflow_dispatch:
+
+jobs:
+  audit-root:
+    name: Audit Root Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Audit dependencies
+        run: npm audit --production
+
+  audit-frontend:
+    name: Audit Frontend Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Audit dependencies
+        run: cd frontend && npm audit --production
+
+  audit-backend:
+    name: Audit Backend Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Audit dependencies
+        run: cd backend && npm audit --production

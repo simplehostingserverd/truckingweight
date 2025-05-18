@@ -1,0 +1,50 @@
+/**
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * 
+ * PROPRIETARY AND CONFIDENTIAL
+ * 
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * 
+ * This file contains proprietary and confidential information of 
+ * Cosmo Exploit Group LLC and may not be copied, distributed, or used
+ * in any way without explicit written permission.
+ */
+
+name: Branch Protection
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'  # Run every Sunday at midnight
+
+jobs:
+  enforce-branch-protection:
+    name: Enforce Branch Protection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure Branch Protection
+        uses: relaxdiego/branch-protection-bot@v1.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          enforce-admins: true
+          branch: main
+          required-status-checks: |
+            lint
+            test
+            build
+            analyze
+            secret-scan
+            CodeQL
+          required-pull-request-reviews: |
+            required_approving_review_count: 1
+            dismiss_stale_reviews: true
+            require_code_owner_reviews: true
+          restrictions: |
+            users: []
+            teams: []
+            apps: []
