@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 import Link from 'next/link';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -58,30 +57,24 @@ export default async function Weights() {
     weights = response.data || [];
     error = response.error;
   } else {
-    console.warn('No company_id found for user, using mock data');
-    // Use mock data if no company_id
-    weights = [
-      {
-        id: 1,
-        weight: '32,500 lbs',
-        date: '2023-11-15',
-        time: '14:30',
-        status: 'Compliant',
-        created_at: '2023-11-15T14:30:00Z',
-        vehicles: { id: 1, name: 'Truck 101' },
-        drivers: { id: 1, name: 'John Driver' },
-      },
-      {
-        id: 2,
-        weight: '34,200 lbs',
-        date: '2023-11-15',
-        time: '11:15',
-        status: 'Warning',
-        created_at: '2023-11-15T11:15:00Z',
-        vehicles: { id: 2, name: 'Truck 102' },
-        drivers: { id: 2, name: 'Sarah Smith' },
-      },
-    ];
+    console.warn('No company_id found for user, attempting to fetch all weights');
+    // Try to fetch all weights if no company_id (admin user)
+    const { data: allWeights, error: allWeightsError } = await supabase
+      .from('weights')
+      .select('*, vehicles(*), drivers(*)')
+      .order('created_at', { ascending: false })
+      .limit(10);
+
+    if (allWeightsError) {
+      console.error('Error fetching all weights:', allWeightsError);
+    } else {
+      weights = allWeights || [];
+    }
+
+    // If still no weights, return empty array
+    if (!weights || weights.length === 0) {
+      weights = [];
+    }
   }
 
   if (error) {

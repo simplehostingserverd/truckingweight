@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 import { NextRequest, NextResponse } from 'next/server';
 import { toSearchParamString } from '@/utils/searchParams';
@@ -200,22 +199,11 @@ export async function GET(request: NextRequest, { params }: { params: { route: s
     } catch (recoveryError) {
       console.error(`Recovery attempt failed for ${route}:`, recoveryError);
 
-      // Last resort: return mock data based on the route
-      console.warn(`Using mock data as last resort for ${route}`);
-      switch (route) {
-        case 'stats':
-          return NextResponse.json(getMockStats());
-        case 'load-status':
-          return NextResponse.json(getMockLoadStatus());
-        case 'compliance':
-          return NextResponse.json(getMockComplianceData(dateRange));
-        case 'vehicle-weights':
-          return NextResponse.json(getMockVehicleWeights(dateRange));
-        case 'recent-weights':
-          return NextResponse.json(getMockRecentWeights());
-        default:
-          return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 });
-      }
+      // Return error response instead of mock data for production
+      return NextResponse.json(
+        { error: `Failed to fetch ${route} data from server` },
+        { status: 500 }
+      );
     }
   }
 }

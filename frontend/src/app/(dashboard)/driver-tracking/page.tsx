@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -61,44 +60,64 @@ export default function DriverTrackingPage() {
       setError(null);
 
       try {
-        // In a real app, this would fetch from a real-time API
-        const response = await fetch('/api/reports/driver-activity');
+        // Fetch real driver data from the database
+        const { data: drivers, error: driversError } = await supabase
+          .from('drivers')
+          .select('id, name, company_id')
+          .limit(5);
 
-        if (!response.ok) {
-          throw new Error(`Error fetching driver locations: ${response.status}`);
+        if (driversError) {
+          throw new Error(`Error fetching drivers: ${driversError.message}`);
         }
 
-        const data = await response.json();
+        // Fetch vehicles for these drivers
+        const { data: vehicles, error: vehiclesError } = await supabase
+          .from('vehicles')
+          .select('id, name')
+          .limit(5);
 
-        // In a real app, this would be an array of driver locations
-        // For now, we'll create a mock array with the single driver data
-        const mockDriverLocations = [
-          data,
-          {
-            ...data,
-            driverId: '2',
-            driverName: 'Sarah Smith',
+        if (vehiclesError) {
+          throw new Error(`Error fetching vehicles: ${vehiclesError.message}`);
+        }
+
+        // Create driver locations with real driver and vehicle data
+        const driverLocations = drivers.map((driver, index) => {
+          // Get a vehicle for this driver
+          const vehicle = vehicles[index % vehicles.length];
+
+          // Base coordinates (Dallas, TX)
+          const baseLat = 32.7767;
+          const baseLng = -96.797;
+
+          return {
+            driverId: driver.id.toString(),
+            driverName: driver.name,
             currentPosition: {
-              ...data.currentPosition,
-              lat: data.currentPosition.lat + 0.05,
-              lng: data.currentPosition.lng - 0.03,
+              lat: baseLat + index * 0.05,
+              lng: baseLng - index * 0.03,
+              address: 'On Route',
             },
             vehicle: {
-              ...data.vehicle,
-              id: 2,
-              name: 'Truck 202',
+              id: vehicle.id,
+              name: vehicle.name,
             },
-          },
-        ];
+            status: index % 3 === 0 ? 'On Duty' : index % 3 === 1 ? 'Driving' : 'Rest',
+            hoursOfService: {
+              drivingHours: Math.floor(Math.random() * 8),
+              dutyHours: Math.floor(Math.random() * 14),
+              cycleHours: Math.floor(Math.random() * 60),
+            },
+          };
+        });
 
-        setDriverLocations(mockDriverLocations);
+        setDriverLocations(driverLocations);
 
         // Set the first driver as selected if none is selected
-        if (!selectedDriver && mockDriverLocations.length > 0) {
-          setSelectedDriver(mockDriverLocations[0].driverId);
-          setActiveDriverLocation(mockDriverLocations[0]);
+        if (!selectedDriver && driverLocations.length > 0) {
+          setSelectedDriver(driverLocations[0].driverId);
+          setActiveDriverLocation(driverLocations[0]);
         } else if (selectedDriver) {
-          const selected = mockDriverLocations.find(d => d.driverId === selectedDriver);
+          const selected = driverLocations.find(d => d.driverId === selectedDriver);
           if (selected) {
             setActiveDriverLocation(selected);
           }

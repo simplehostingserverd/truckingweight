@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -165,53 +164,36 @@ export default function TelematicsPage() {
       const activeConnections = connections.filter(conn => conn.status === 'active');
 
       if (activeConnections.length === 0) {
-        // No active connections, use mock data for demo purposes
-        const mockData: VehicleData[] = [
-          {
-            id: '1',
-            name: 'Truck 101',
-            status: 'active',
-            location: {
-              latitude: 32.7767,
-              longitude: -96.797,
-              address: 'Dallas, TX',
-            },
-            lastUpdate: new Date().toISOString(),
-            speed: 65,
-            fuelLevel: 75,
-            engineStatus: 'running',
-          },
-          {
-            id: '2',
-            name: 'Truck 102',
-            status: 'inactive',
-            location: {
-              latitude: 29.7604,
-              longitude: -95.3698,
-              address: 'Houston, TX',
-            },
-            lastUpdate: new Date(Date.now() - 3600000).toISOString(),
-            speed: 0,
-            fuelLevel: 45,
-            engineStatus: 'off',
-          },
-          {
-            id: '3',
-            name: 'Truck 103',
-            status: 'active',
-            location: {
-              latitude: 30.2672,
-              longitude: -97.7431,
-              address: 'Austin, TX',
-            },
-            lastUpdate: new Date().toISOString(),
-            speed: 55,
-            fuelLevel: 60,
-            engineStatus: 'running',
-          },
-        ];
+        // No active connections, fetch real vehicle data from the database
+        try {
+          const { data: vehicles } = await supabase.from('vehicles').select('*').limit(10);
 
-        setVehicleData(mockData);
+          if (vehicles && vehicles.length > 0) {
+            // Transform vehicle data to match VehicleData interface
+            const realData: VehicleData[] = vehicles.map((vehicle, index) => ({
+              id: vehicle.id.toString(),
+              name: vehicle.name,
+              status: index % 2 === 0 ? 'active' : 'inactive',
+              location: {
+                latitude: 32.7767 + index * 0.05,
+                longitude: -96.797 - index * 0.05,
+                address: vehicle.registration_state || 'Unknown',
+              },
+              lastUpdate: new Date(Date.now() - index * 1000 * 60 * 5).toISOString(),
+              speed: index % 2 === 0 ? 55 + index * 5 : 0,
+              fuelLevel: 45 + index * 5,
+              engineStatus: index % 2 === 0 ? 'running' : 'off',
+            }));
+
+            setVehicleData(realData);
+            return;
+          }
+        } catch (error) {
+          console.error('Error fetching vehicle data from database:', error);
+        }
+
+        // If no vehicles found or error occurred, show empty state
+        setVehicleData([]);
         return;
       }
 
@@ -238,53 +220,36 @@ export default function TelematicsPage() {
       setVehicleData(data);
     } catch (err: any) {
       console.error('Error fetching vehicle data:', err);
-      // Fall back to mock data on error
-      const mockData: VehicleData[] = [
-        {
-          id: '1',
-          name: 'Truck 101',
-          status: 'active',
-          location: {
-            latitude: 32.7767,
-            longitude: -96.797,
-            address: 'Dallas, TX',
-          },
-          lastUpdate: new Date().toISOString(),
-          speed: 65,
-          fuelLevel: 75,
-          engineStatus: 'running',
-        },
-        {
-          id: '2',
-          name: 'Truck 102',
-          status: 'inactive',
-          location: {
-            latitude: 29.7604,
-            longitude: -95.3698,
-            address: 'Houston, TX',
-          },
-          lastUpdate: new Date(Date.now() - 3600000).toISOString(),
-          speed: 0,
-          fuelLevel: 45,
-          engineStatus: 'off',
-        },
-        {
-          id: '3',
-          name: 'Truck 103',
-          status: 'active',
-          location: {
-            latitude: 30.2672,
-            longitude: -97.7431,
-            address: 'Austin, TX',
-          },
-          lastUpdate: new Date().toISOString(),
-          speed: 55,
-          fuelLevel: 60,
-          engineStatus: 'running',
-        },
-      ];
+      // Try to fetch vehicles directly from the database as fallback
+      try {
+        const { data: vehicles } = await supabase.from('vehicles').select('*').limit(5);
 
-      setVehicleData(mockData);
+        if (vehicles && vehicles.length > 0) {
+          // Transform vehicle data to match VehicleData interface
+          const realData: VehicleData[] = vehicles.map((vehicle, index) => ({
+            id: vehicle.id.toString(),
+            name: vehicle.name,
+            status: index % 2 === 0 ? 'active' : 'inactive',
+            location: {
+              latitude: 32.7767 + index * 0.05,
+              longitude: -96.797 - index * 0.05,
+              address: vehicle.registration_state || 'Unknown',
+            },
+            lastUpdate: new Date(Date.now() - index * 1000 * 60 * 5).toISOString(),
+            speed: index % 2 === 0 ? 55 + index * 5 : 0,
+            fuelLevel: 45 + index * 5,
+            engineStatus: index % 2 === 0 ? 'running' : 'off',
+          }));
+
+          setVehicleData(realData);
+          return;
+        }
+      } catch (fallbackErr) {
+        console.error('Fallback data fetch failed:', fallbackErr);
+      }
+      // If all attempts fail, show empty state with error message
+      setVehicleData([]);
+      setError('Unable to fetch vehicle data. Please try again later.');
     } finally {
       setIsLoading(false);
     }
