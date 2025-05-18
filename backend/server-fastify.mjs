@@ -229,7 +229,7 @@ async function registerRoutes() {
   fastify.register(grafanaRoutes.default, { prefix: '/api/grafana' });
 
   // Root route
-  fastify.get('/', async (_request, _reply) => {
+  fastify.get('/', async () => {
     return { message: 'Welcome to TruckingSemis API' };
   });
 

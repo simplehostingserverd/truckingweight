@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /** @type {import('next').NextConfig} */
 
@@ -71,22 +70,22 @@ const nextConfig = {
               if (typeof module !== 'object') return 'npm.vendor';
               if (!module.context) return 'npm.vendor';
               if (typeof module.context !== 'string') return 'npm.vendor';
-              
+
               try {
                 // Safely extract package name from node_modules path
                 const nodeModulesRegex = /[\\/]node_modules[\\/](.*?)([\\/]|$)/;
                 const match = module.context.match(nodeModulesRegex);
-                
+
                 // Extensive validation of the match result
                 if (!match) return 'npm.vendor';
                 if (!Array.isArray(match)) return 'npm.vendor';
                 if (match.length < 2) return 'npm.vendor';
                 if (typeof match[1] !== 'string') return 'npm.vendor';
                 if (match[1].trim() === '') return 'npm.vendor';
-                
+
                 // Get package name and sanitize it
                 const packageName = match[1].trim();
-                
+
                 // Handle scoped packages (@org/pkg) by removing @ symbol
                 return `npm.${packageName.replace('@', '')}`;
               } catch (error) {
@@ -183,10 +182,15 @@ const nextConfig = {
 
   // Environment variables
   env: {
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    NEXT_PUBLIC_MAPBOX_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
-    NEXT_PUBLIC_CESIUM_TOKEN: process.env.NEXT_PUBLIC_CESIUM_TOKEN,
+    NEXT_PUBLIC_SUPABASE_URL:
+      process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://pczfmxigimuluacspxse.supabase.co',
+    NEXT_PUBLIC_SUPABASE_ANON_KEY:
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w',
+    NEXT_PUBLIC_MAPBOX_TOKEN:
+      process.env.NEXT_PUBLIC_MAPBOX_TOKEN ||
+      'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ',
+    NEXT_PUBLIC_CESIUM_TOKEN: process.env.NEXT_PUBLIC_CESIUM_TOKEN || '',
     NEXT_PUBLIC_MAPTILER_KEY: process.env.NEXT_PUBLIC_MAPTILER_KEY || 'WPXCcZzL6zr6JzGBzMUK',
   },
 
