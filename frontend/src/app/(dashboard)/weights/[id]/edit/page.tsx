@@ -103,7 +103,7 @@ export default function EditWeight({ params }: { params: { id: string } }) {
 
         setVehicles(vehiclesData || []);
         setDrivers(driversData || []);
-      } catch (err: any) {
+      } catch (err: any /* @ts-ignore */ ) {
         console.error('Error fetching data:', err);
         setError('Failed to load data');
       } finally {
@@ -156,7 +156,7 @@ export default function EditWeight({ params }: { params: { id: string } }) {
 
       // Redirect to weight detail
       router.push(`/weights/${id}`);
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       setError(err.message || 'An error occurred while updating the weight record');
       console.error('Update weight error:', err);
     } finally {

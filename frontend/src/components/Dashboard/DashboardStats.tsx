@@ -158,7 +158,7 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
         ];
 
         setStats(formattedStats);
-      } catch (error: any) {
+      } catch (error: any /* @ts-ignore */ ) {
         console.error('Error fetching dashboard stats:', error);
         setError(error.message);
 

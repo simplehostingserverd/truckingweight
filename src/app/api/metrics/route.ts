@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 /**
  * GET handler for metrics API
  * Returns system metrics in Prometheus format
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Fetch metrics from backend
     const backendUrl = process.env.BACKEND_URL || 'http://localhost:3001';
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching metrics:', error);
-    
+
     // Return default metrics if backend is unavailable
     const defaultMetrics = `
 # HELP api_requests_total Total number of API requests

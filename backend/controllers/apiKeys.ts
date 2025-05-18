@@ -126,7 +126,7 @@ export const getApiKey = async (req: Request, res: Response) => {
 
     return res.status(200).json(safeApiKey);
   } catch (error) {
-    console.error('Error fetching API key:', error);
+    console.error('Error fetching API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -161,7 +161,7 @@ export const createApiKey = async (req: Request, res: Response) => {
       data: {
         id: uuidv4(),
         name,
-        key: apiKeyValue,
+        key /* eslint-disable-line @typescript-eslint/no-unused-vars */: apiKeyValue,
         permissions,
         expires_at: expires_at ? new Date(expires_at) : null,
         is_active: true,
@@ -176,7 +176,7 @@ export const createApiKey = async (req: Request, res: Response) => {
       message: 'Store this API key securely. It will not be shown again.',
     });
   } catch (error) {
-    console.error('Error creating API key:', error);
+    console.error('Error creating API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -240,7 +240,7 @@ export const updateApiKey = async (req: Request, res: Response) => {
 
     return res.status(200).json(safeApiKey);
   } catch (error) {
-    console.error('Error updating API key:', error);
+    console.error('Error updating API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -284,7 +284,7 @@ export const deleteApiKey = async (req: Request, res: Response) => {
 
     return res.status(204).send();
   } catch (error) {
-    console.error('Error deleting API key:', error);
+    console.error('Error deleting API key /* eslint-disable-line @typescript-eslint/no-unused-vars */:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };

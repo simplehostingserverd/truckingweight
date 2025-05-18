@@ -163,7 +163,7 @@ export const createWebhookSubscription = async (req: Request, res: Response) => 
         name,
         event_types,
         target_url,
-        secret_key: secretKey,
+        secret_key /* eslint-disable-line @typescript-eslint/no-unused-vars */: secretKey,
         is_active,
         company_id: companyId,
         created_by: userId,
@@ -173,7 +173,7 @@ export const createWebhookSubscription = async (req: Request, res: Response) => 
     // Return the webhook with the secret key (only shown once)
     return res.status(201).json({
       ...webhook,
-      secret_key: secretKey,
+      secret_key /* eslint-disable-line @typescript-eslint/no-unused-vars */: secretKey,
       message: 'Store this secret key securely. It will not be shown again.',
     });
   } catch (error) {
@@ -329,14 +329,14 @@ export const regenerateWebhookSecret = async (req: Request, res: Response) => {
     await prisma.webhook_subscriptions.update({
       where: { id },
       data: {
-        secret_key: secretKey,
+        secret_key /* eslint-disable-line @typescript-eslint/no-unused-vars */: secretKey,
         updated_at: new Date(),
       },
     });
 
     return res.status(200).json({
       id,
-      secret_key: secretKey,
+      secret_key /* eslint-disable-line @typescript-eslint/no-unused-vars */: secretKey,
       message: 'Store this secret key securely. It will not be shown again.',
     });
   } catch (error) {

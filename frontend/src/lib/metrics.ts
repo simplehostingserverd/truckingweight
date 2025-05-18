@@ -1,51 +1,48 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- *
+ * 
  * PROPRIETARY AND CONFIDENTIAL
- *
+ * 
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- *
- * This file contains proprietary and confidential information of
+ * 
+ * This file contains proprietary and confidential information of 
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+// This file contains server-side only code for metrics
+// It should never be imported on the client side
 
-// Import prom-client dynamically to avoid issues with Next.js bundling
-// This ensures the module is only loaded on the server side
-let collectDefaultMetrics: any, Registry: any, Counter: any, Histogram: any;
+// Define types for metrics to help with TypeScript
+export type MetricsRegistry = any;
+export type MetricsCounter = any;
+export type MetricsHistogram = any;
 
-// Only import and initialize in a server context
-if (typeof window === 'undefined') {
-  try {
-    const pkg = require('prom-client');
-    collectDefaultMetrics = pkg.collectDefaultMetrics;
-    Registry = pkg.Registry;
-    Counter = pkg.Counter;
-    Histogram = pkg.Histogram;
-  } catch (error) {
-    console.error('Error importing prom-client:', error);
+// Variables to hold metrics objects
+let register: MetricsRegistry | null = null;
+let pageViewsCounter: MetricsCounter | null = null;
+let apiRequestsCounter: MetricsCounter | null = null;
+let apiRequestDuration: MetricsHistogram | null = null;
+let isInitialized = false;
+
+// Initialize metrics - only call this on the server
+export function initializeMetrics() {
+  // Only initialize once and only on the server
+  if (isInitialized || typeof window !== 'undefined') {
+    return;
   }
-}
 
-// Initialize metrics only if we're on the server
-let register: any;
-let pageViewsCounter: any;
-let apiRequestsCounter: any;
-let apiRequestDuration: any;
-
-// Only initialize metrics on the server
-if (typeof window === 'undefined' && Registry && Counter && Histogram) {
   try {
-    // Create a registry to register the metrics
+    // Dynamically import prom-client
+    const promClient = require('prom-client');
+    const { collectDefaultMetrics, Registry, Counter, Histogram } = promClient;
+
+    // Create a registry
     register = new Registry();
 
     // Add default metrics
-    if (collectDefaultMetrics) {
-      collectDefaultMetrics({ register });
-    }
+    collectDefaultMetrics({ register });
 
     // Create custom metrics
     pageViewsCounter = new Counter({
@@ -70,62 +67,60 @@ if (typeof window === 'undefined' && Registry && Counter && Histogram) {
       registers: [register],
     });
 
-    // Initialize metrics with some sample data
+    // Add some sample data
     pageViewsCounter.inc({ page: '/dashboard' }, 10);
     pageViewsCounter.inc({ page: '/city/dashboard' }, 5);
     apiRequestsCounter.inc({ method: 'GET', endpoint: '/api/weights', status: '200' }, 15);
     apiRequestsCounter.inc({ method: 'POST', endpoint: '/api/weights', status: '201' }, 5);
     apiRequestDuration.observe({ method: 'GET', endpoint: '/api/weights' }, 0.3);
+
+    isInitialized = true;
   } catch (error) {
     console.error('Error initializing metrics:', error);
   }
 }
 
-// Metrics endpoint
-export async function GET(request: NextRequest) {
-  try {
-    // Check if metrics are initialized
-    if (!register) {
-      return NextResponse.json({ error: 'Metrics not initialized' }, { status: 503 });
-    }
-
-    // Record this metrics request
-    if (apiRequestsCounter) {
-      apiRequestsCounter.inc({ method: 'GET', endpoint: '/api/metrics', status: '200' });
-    }
-
-    // Get metrics
-    const metrics = await register.metrics();
-
-    // Return metrics
-    return new NextResponse(metrics, {
-      headers: {
-        'Content-Type': register.contentType,
-      },
-    });
-  } catch (error) {
-    console.error('Error generating metrics:', error);
-    return NextResponse.json({ error: 'Failed to generate metrics' }, { status: 500 });
-  }
+// Get metrics registry
+export function getMetricsRegistry() {
+  return register;
 }
 
-// Function to record page view
+// Record page view
 export function recordPageView(page: string) {
   if (pageViewsCounter) {
     pageViewsCounter.inc({ page });
   }
 }
 
-// Function to record API request
+// Record API request
 export function recordApiRequest(method: string, endpoint: string, status: string) {
   if (apiRequestsCounter) {
     apiRequestsCounter.inc({ method, endpoint, status });
   }
 }
 
-// Function to record API request duration
+// Record API request duration
 export function recordApiRequestDuration(method: string, endpoint: string, duration: number) {
   if (apiRequestDuration) {
     apiRequestDuration.observe({ method, endpoint }, duration);
   }
+}
+
+// Get metrics as string
+export async function getMetrics() {
+  if (!register) {
+    return null;
+  }
+  
+  try {
+    return await register.metrics();
+  } catch (error) {
+    console.error('Error getting metrics:', error);
+    return null;
+  }
+}
+
+// Get content type
+export function getMetricsContentType() {
+  return register ? register.contentType : 'text/plain';
 }

@@ -43,7 +43,7 @@ export default function ResetPassword() {
       }
 
       setMessage('Check your email for the password reset link');
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       setError(err.message || 'An error occurred while sending the reset link');
       console.error('Reset password error:', err);
     } finally {

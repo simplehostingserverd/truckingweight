@@ -81,7 +81,7 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
   const complianceData = complianceApiData?.overall
     ? selectedCompany === 'overall'
       ? complianceApiData.overall
-      : companyData.find((c: any) => c.companyId.toString() === selectedCompany)?.data || []
+      : companyData.find((c: any /* @ts-ignore */ ) => c.companyId.toString() === selectedCompany)?.data || []
     : complianceApiData || [];
 
   const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

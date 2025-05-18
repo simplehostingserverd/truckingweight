@@ -66,7 +66,7 @@ export default function AdminCompanySelector({
 
         const companiesData = await response.json();
         setCompanies(companiesData);
-      } catch (error: any) {
+      } catch (error: any /* @ts-ignore */ ) {
         console.error('Error fetching companies:', error);
         setError(error.message);
       } finally {

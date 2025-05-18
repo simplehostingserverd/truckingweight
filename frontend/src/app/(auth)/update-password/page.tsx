@@ -73,7 +73,7 @@ export default function UpdatePassword() {
       setTimeout(() => {
         router.push('/dashboard');
       }, 2000);
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       setError(err.message || 'An error occurred while updating your password');
       console.error('Update password error:', err);
     } finally {

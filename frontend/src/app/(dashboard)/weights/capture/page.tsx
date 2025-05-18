@@ -122,7 +122,7 @@ export default function WeightCapturePage() {
         const scalesData = await scalesResponse.json();
 
         // Filter only active scales
-        const activeScales = scalesData.filter((scale: any) => scale.status === 'Active');
+        const activeScales = scalesData.filter((scale: any /* @ts-ignore */ ) => scale.status === 'Active');
         setScales(activeScales);
       } catch (error) {
         console.error('Error fetching data:', error);

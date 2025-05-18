@@ -52,7 +52,7 @@ export function MapTilerProvider({ children }: { children: React.ReactNode }) {
 // Add global type definition for MapTiler SDK
 declare global {
   interface Window {
-    maptilersdk: any;
+    maptilersdk: any /* @ts-ignore */ ;
   }
 }
 

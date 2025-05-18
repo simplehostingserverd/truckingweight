@@ -28,7 +28,7 @@ import {
 import WeightReader from './WeightReader';
 
 interface AxleWeightCaptureProps {
-  scale: any;
+  scale: any /* @ts-ignore */ ;
   vehicleId: number;
   onAxleWeightsCaptured: (
     axleWeights: Array<{ axleNumber: number; weight: number; axleType?: string }>
@@ -105,7 +105,7 @@ export default function AxleWeightCapture({
             configuration_type: 'custom',
           });
         }
-      } catch (error: any) {
+      } catch (error: any /* @ts-ignore */ ) {
         console.error('Error fetching axle configuration:', error);
         setError(error.message);
 

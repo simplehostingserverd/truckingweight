@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     console.error('City login error:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }

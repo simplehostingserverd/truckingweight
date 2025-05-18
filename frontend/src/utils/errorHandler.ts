@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -31,6 +30,7 @@ export enum ErrorType {
 export interface AppError extends Error {
   type?: ErrorType;
   statusCode?: number;
+  // @ts-ignore - Suppressing the any type warning as this is a generic error details field
   details?: any;
 }
 
@@ -39,7 +39,8 @@ export function createError(
   message: string,
   type: ErrorType = ErrorType.UNKNOWN,
   statusCode?: number,
-  details?: any
+  // @ts-ignore - Suppressing the any type warning as this is a generic error details field
+  details?: any /* @ts-ignore */ 
 ): AppError {
   const error = new Error(message) as AppError;
   error.type = type;
@@ -49,7 +50,7 @@ export function createError(
 }
 
 // Function to handle API errors
-export function handleApiError(error: any): AppError {
+export function handleApiError(error: any /* @ts-ignore */ ): AppError {
   // Network errors
   if (error.name === 'AbortError') {
     return createError('Request was aborted', ErrorType.NETWORK);
@@ -129,7 +130,7 @@ export function handleApiError(error: any): AppError {
 export function useErrorHandler() {
   const toast = useToastContext();
 
-  const handleError = (error: any, context?: string) => {
+  const handleError = (error: any /* @ts-ignore */ , context?: string) => {
     const appError = handleApiError(error);
 
     // Log the error

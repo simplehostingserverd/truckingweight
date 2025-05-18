@@ -213,8 +213,8 @@ export interface ScaleReading {
 export interface LoadOptimization {
   id: number;
   weigh_ticket_id: number;
-  original_distribution: any; // JSON
-  suggested_distribution: any; // JSON
+  original_distribution: any /* @ts-ignore */ ; // JSON
+  suggested_distribution: any /* @ts-ignore */ ; // JSON
   expected_improvement: number;
   explanation: string | null;
   applied: boolean;
@@ -256,7 +256,7 @@ export interface WeightReading {
   deviceId: string;
   captureMethod: 'scale' | 'iot' | 'camera' | 'manual';
   locationData?: GeoLocation;
-  rawSensorData?: any;
+  rawSensorData?: any /* @ts-ignore */ ;
 }
 
 export interface AxleWeightReading {

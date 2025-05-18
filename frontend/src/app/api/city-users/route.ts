@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     console.error('Error fetching city users:', error);
 
     // Return mock data for development/demo purposes
@@ -197,7 +197,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     console.error('Error creating city user:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }

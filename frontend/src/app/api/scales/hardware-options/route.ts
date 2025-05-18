@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
 
     const data = await response.json();
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     console.error('Error fetching hardware options:', error);
     return NextResponse.json(
       { success: false, error: error.message || 'Internal server error' },

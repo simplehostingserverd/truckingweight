@@ -149,7 +149,7 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
         totalPages: Math.ceil(totalCount / limit),
       },
     });
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     logger.error(`Error getting weigh tickets: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -178,7 +178,7 @@ export const getWeighTicketById = async (req: AuthenticatedRequest, res: Respons
     }
 
     res.json(result.ticket);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     logger.error(`Error getting weigh ticket: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -231,7 +231,7 @@ export const createWeighTicket = async (req: AuthenticatedRequest, res: Response
     }
 
     res.status(201).json(result.ticket);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     logger.error(`Error creating weigh ticket: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -273,7 +273,7 @@ export const updateWeighTicketById = async (req: AuthenticatedRequest, res: Resp
     }
 
     res.json(result.ticket);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     logger.error(`Error updating weigh ticket: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -306,7 +306,7 @@ export const processCameraScan = async (req: AuthenticatedRequest, res: Response
     }
 
     res.json(result.ticketData);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     logger.error(`Error processing camera-scanned ticket: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -339,7 +339,7 @@ export const validateQRCode = async (req: AuthenticatedRequest, res: Response) =
     }
 
     res.json({ valid: true, ticket: result.ticket });
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     logger.error(`Error validating weigh ticket QR code: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }

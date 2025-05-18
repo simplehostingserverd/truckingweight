@@ -157,7 +157,7 @@ export default function RoutePlanner({
             estimatedArrival: arrival.toISOString(),
           });
         }
-      } catch (err: any) {
+      } catch (err: any /* @ts-ignore */ ) {
         // Log error for debugging but handle gracefully for users
         const errorMessage = err.message || 'Failed to calculate route';
         setError(errorMessage);

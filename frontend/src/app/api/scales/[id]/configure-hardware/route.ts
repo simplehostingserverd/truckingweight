@@ -83,7 +83,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
     const data = await response.json();
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     console.error('Error configuring hardware:', error);
     return NextResponse.json(
       { success: false, error: error.message || 'Internal server error' },

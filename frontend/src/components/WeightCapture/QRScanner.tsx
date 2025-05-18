@@ -97,7 +97,7 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
 
       // Call the onScaleSelect callback
       onScaleSelect(data.scale.id, data.scale.name);
-    } catch (error: any) {
+    } catch (error: any /* @ts-ignore */ ) {
       console.error('Error validating QR code:', error);
       setError(error.message);
       setValidationResult({

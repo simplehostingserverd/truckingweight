@@ -34,7 +34,7 @@ const FEDERAL_WEIGHT_LIMITS = {
 }
 
 // State-specific weight limits for all US states
-export const STATE_WEIGHT_LIMITS: Record<string, {
+const STATE_WEIGHT_LIMITS: Record<string, {
   SINGLE_AXLE: number,
   TANDEM_AXLE: number,
   GROSS_WEIGHT: number
@@ -348,14 +348,14 @@ export const STATE_WEIGHT_LIMITS: Record<string, {
 }
 
 // Compliance status types
-export const COMPLIANCE_STATUS = {
+const COMPLIANCE_STATUS = {
   COMPLIANT: 'Compliant',
   WARNING: 'Warning',
   NON_COMPLIANT: 'Non-Compliant',
 }
 
 // Issue severity types
-export const ISSUE_SEVERITY = {
+const ISSUE_SEVERITY = {
   LOW: 'Low',
   MEDIUM: 'Medium',
   HIGH: 'High',
@@ -367,7 +367,7 @@ export const ISSUE_SEVERITY = {
  * @param weightId - The ID of the weight record
  * @param companyId - The company ID for context
  */
-export const checkWeightCompliance = async (
+const checkWeightCompliance = async (
   weightId: number,
   companyId: number
 ): Promise<{
@@ -543,10 +543,13 @@ export const checkWeightCompliance = async (
  * Parse weight string to number
  * @param weightStr - Weight string (e.g., "32,500 lbs")
  */
-export const parseWeight = (weightStr: string): number => {
+const parseWeight = (weightStr: string): number => {
   if (!weightStr) return 0
 
   // Remove non-numeric characters except decimal point
   const numericStr = weightStr.replace(/[^\d.]/g, '')
   return parseFloat(numericStr) || 0
 }
+
+
+export { FEDERAL_WEIGHT_LIMITS, STATE_WEIGHT_LIMITS, COMPLIANCE_STATUS, ISSUE_SEVERITY, checkWeightCompliance, weight, issues, grossWeight, stateCode, applicableGrossLimit, applicableSingleAxleLimit, applicableTandemAxleLimit, axleWeight, axleType, nextAxleWeight, tandemWeight, axleCount, axleSpacing, wheelbaseLength, bridgeFormulaLimit, parseWeight, numericStr };

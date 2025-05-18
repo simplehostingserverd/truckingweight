@@ -214,7 +214,7 @@ export default function Register() {
 
       // Redirect to login page
       router.push('/login?registered=true');
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       setError(err.message || 'An error occurred during registration');
       console.error('Registration error:', err);
     } finally {

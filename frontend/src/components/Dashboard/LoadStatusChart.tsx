@@ -71,7 +71,7 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
 
         // Set the load data
         setLoadData(loadData);
-      } catch (error: any) {
+      } catch (error: any /* @ts-ignore */ ) {
         console.error('Error fetching load status data:', error);
         setError(error.message);
       } finally {

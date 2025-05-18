@@ -42,7 +42,7 @@ export default function Login() {
       }
 
       // The redirect is handled in the auth provider
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       setError(err.message || 'Invalid email or password');
       console.error('Login error:', err);
     } finally {

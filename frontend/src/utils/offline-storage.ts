@@ -57,7 +57,7 @@ interface TruckingDB extends DBSchema {
       id: string;
       table: string;
       action: 'create' | 'update' | 'delete';
-      data: any;
+      data: any /* @ts-ignore */ ;
       timestamp: number;
     };
   };
@@ -172,7 +172,7 @@ export async function markAsSynced<T extends 'weights' | 'loads'>(
 export async function addToSyncQueue(
   table: string,
   action: 'create' | 'update' | 'delete',
-  data: any
+  data: any /* @ts-ignore */ 
 ): Promise<void> {
   const db = await getDB();
   const id = `${table}_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;

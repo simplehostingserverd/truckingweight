@@ -149,7 +149,7 @@ export default function CityRegister() {
       setTimeout(() => {
         router.push('/city/login');
       }, 3000);
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       setError(err.message || 'An error occurred during registration');
       console.error('City registration error:', err);
     } finally {

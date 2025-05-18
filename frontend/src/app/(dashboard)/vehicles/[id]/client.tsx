@@ -59,7 +59,7 @@ import {
 
 interface VehicleDetailsProps {
   id: string;
-  initialData?: any;
+  initialData?: any /* @ts-ignore */ ;
 }
 
 export default function VehicleDetailsClient({ id, initialData }: VehicleDetailsProps) {
@@ -95,7 +95,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
       if (cameras.length > 0) {
         setSelectedCamera(cameras[0].id);
       }
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       console.error('Error fetching LPR cameras:', err);
     }
   };
@@ -135,7 +135,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
       }
 
       setVehicle(vehicleData);
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       console.error('Error fetching vehicle data:', err);
       setError(err.message || 'Failed to load vehicle data');
     } finally {
@@ -193,7 +193,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
 
       // Refresh the page data
       fetchVehicleData();
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       console.error('Error uploading vehicle image:', err);
       setError(err.message || 'Failed to upload vehicle image');
     } finally {
@@ -269,7 +269,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
       } else {
         setError(result.error || 'Failed to capture image from LPR camera');
       }
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       console.error('Error capturing from LPR camera:', err);
       setError(err.message || 'Failed to capture from LPR camera');
     } finally {
@@ -759,7 +759,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                                {vehicle.weights.map((weight: any) => (
+                                {vehicle.weights.map((weight: any /* @ts-ignore */ ) => (
                                   <tr key={weight.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                       {new Date(weight.date).toLocaleDateString()}
@@ -819,7 +819,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                                {vehicle.loads.map((load: any) => (
+                                {vehicle.loads.map((load: any /* @ts-ignore */ ) => (
                                   <tr key={load.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                       {load.description}

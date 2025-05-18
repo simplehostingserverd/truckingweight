@@ -120,7 +120,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
             setQrCode(qrData.qrCode);
           }
         }
-      } catch (err: any) {
+      } catch (err: any /* @ts-ignore */ ) {
         console.error('Error fetching scale:', err);
         setError('Failed to load scale data');
       } finally {
@@ -141,7 +141,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
       }
 
       router.push('/scales');
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       console.error('Error deleting scale:', err);
       setError('Failed to delete scale');
     } finally {

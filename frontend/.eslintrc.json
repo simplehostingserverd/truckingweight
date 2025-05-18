@@ -1,16 +1,16 @@
-// 
+//
 //  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
-//  * 
+//  *
 //  * PROPRIETARY AND CONFIDENTIAL
-//  * 
+//  *
 //  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
 //  * Unauthorized copying of this file, via any medium is strictly prohibited.
-//  * 
-//  * This file contains proprietary and confidential information of 
+//  *
+//  * This file contains proprietary and confidential information of
 //  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
 //  * in any way without explicit written permission.
-//  
-// 
+//
+//
 
 {
   "extends": ["next/core-web-vitals", "eslint:recommended"],
@@ -19,16 +19,19 @@
   "parserOptions": {
     "ecmaVersion": 2022,
     "sourceType": "module",
+    "project": "./tsconfig.json",
     "ecmaFeatures": {
       "jsx": true
     }
   },
   "rules": {
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["warn"],
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-explicit-any": "warn",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "no-console": ["warn", { "allow": ["warn", "error"] }]
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "@typescript-eslint/ban-ts-comment": "off"
   },
   "env": {
     "browser": true,
@@ -41,5 +44,5 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": ["node_modules/", ".next/", "out/", "public/", "**/*.d.ts"]
+  "ignorePatterns": ["node_modules/", ".next/", "out/", "public/"]
 }

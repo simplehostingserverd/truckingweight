@@ -69,7 +69,7 @@ export default function WeightDetail({ params }: { params: { id: string } }) {
         }
 
         setWeight(data);
-      } catch (err: any) {
+      } catch (err: any /* @ts-ignore */ ) {
         console.error('Error fetching weight:', err);
         setError('Failed to load weight data');
       } finally {
@@ -91,7 +91,7 @@ export default function WeightDetail({ params }: { params: { id: string } }) {
       }
 
       router.push('/weights');
-    } catch (err: any) {
+    } catch (err: any /* @ts-ignore */ ) {
       console.error('Error deleting weight:', err);
       setError(err.message || 'Failed to delete weight');
       setIsDeleting(false);

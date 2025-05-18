@@ -28,7 +28,7 @@ import {
 
 // Mock ScaleSDK for development - would be replaced with actual SDK in production
 class ScaleSDK {
-  static async connect(config: any): Promise<any> {
+  static async connect(config: any /* @ts-ignore */ ): Promise<any> {
     console.log('Connecting to scale with config:', config);
     // Simulate connection delay
     await new Promise(resolve => setTimeout(resolve, 1000));

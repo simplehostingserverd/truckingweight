@@ -63,7 +63,7 @@ const READING_TYPES = {
  * @param companyId - The company ID for context
  * @param isAdmin - Whether the user is an admin
  */
-export const getScaleReading = async (
+const getScaleReading = async (
   scaleId: number,
   readingType: string,
   companyId: number,
@@ -146,7 +146,7 @@ export const getScaleReading = async (
  * @param scaleId - The ID of the scale
  * @param companyId - The company ID for context
  */
-export const processIoTSensorData = async (
+const processIoTSensorData = async (
   sensorData: any,
   scaleId: number,
   companyId: number
@@ -195,7 +195,7 @@ export const processIoTSensorData = async (
  * @param ticketImageUrl - URL to the scanned ticket image
  * @param companyId - The company ID for context
  */
-export const processCameraScannedTicket = async (
+const processCameraScannedTicket = async (
   ticketImageUrl: string,
   companyId: number
 ): Promise<{ success: boolean; ticketData?: any; error?: string }> {
@@ -226,7 +226,7 @@ export const processCameraScannedTicket = async (
  * Get available IoT hardware integration options
  * @returns List of available hardware options with details
  */
-export const getAvailableHardwareOptions = (): { success: boolean; options?: any[]; error?: string } => {
+const getAvailableHardwareOptions = (): { success: boolean; options?: any[]; error?: string } => {
   try {
     const options = [
       {
@@ -300,7 +300,7 @@ export const getAvailableHardwareOptions = (): { success: boolean; options?: any
  * @param companyId - The company ID for context
  * @param isAdmin - Whether the user is an admin
  */
-export const configureIoTHardware = async (
+const configureIoTHardware = async (
   scaleId: number,
   hardwareType: string,
   config: any,
@@ -432,3 +432,6 @@ async function getGenericModbusReading(scale: any, readingType: string): Promise
     rawData: { weight: 32500, unit: 'lb', timestamp: new Date().toISOString() },
   }
 }
+
+
+export { SUPPORTED_SCALES, IOT_HARDWARE, READING_TYPES, getScaleReading, scale, scaleReading, processIoTSensorData, scale, reading, processCameraScannedTicket, ticketData, getAvailableHardwareOptions, options, configureIoTHardware, scale, hardwareOptions, validHardware, response, response, reading };

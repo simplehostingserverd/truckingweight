@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     console.error('Error fetching compliance data:', error);
 
     // Return mock data for development/demo purposes

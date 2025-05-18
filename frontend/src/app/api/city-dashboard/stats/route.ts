@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error: any /* @ts-ignore */ ) {
     console.error('Error fetching city dashboard stats:', error);
 
     // Return mock data for development/demo purposes
