@@ -15,14 +15,25 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Import prom-client dynamically to avoid issues with Next.js bundling
 // This ensures the module is only loaded on the server side
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let collectDefaultMetrics: any,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Registry: any,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Counter: any,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Histogram: any;
+// Define types for Prometheus client
+type PrometheusRegistry = {
+  metrics: () => Promise<string>;
+  contentType: string;
+};
+
+type PrometheusCounter = {
+  inc: (labels?: Record<string, string>, value?: number) => void;
+};
+
+type PrometheusHistogram = {
+  observe: (labels: Record<string, string>, value: number) => void;
+};
+
+// Use dynamic imports for server-side only code
+let collectDefaultMetrics: ((options: { register: PrometheusRegistry }) => void) | null = null;
+let Registry: any = null;
+let Counter: any = null;
+let Histogram: any = null;
 
 // Only import and initialize in a server context
 if (typeof window === 'undefined') {

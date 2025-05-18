@@ -1,22 +1,22 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { createSafeUrl } from '@/utils/navigation';
 import {
   BellIcon,
@@ -82,10 +82,10 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
       // Import Supabase client dynamically to avoid SSR issues
       const { createClient } = await import('@/utils/supabase/client');
       const supabase = createClient();
-      
+
       // Sign out using Supabase Auth
       await supabase.auth.signOut();
-      
+
       // Also clear local storage for backward compatibility
       localStorage.removeItem('cityToken');
       localStorage.removeItem('cityUser');
@@ -114,10 +114,13 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
         <div className="flex items-center">
           {user?.city?.logo_url ? (
             <div className="mr-3 flex-shrink-0">
-              <img
+              <Image
                 src={user.city.logo_url}
                 alt={`${user?.city?.name || 'City'} Logo`}
-                className="h-10 w-10 object-contain rounded-md"
+                width={40}
+                height={40}
+                priority
+                className="object-contain rounded-md"
               />
             </div>
           ) : (
