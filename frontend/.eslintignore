@@ -18,6 +18,3 @@ next.config.mjs
 tailwind.config.cjs
 postcss.config.js
 jest.config.cjs
-
-# Don't ignore src directory
-!src/
