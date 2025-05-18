@@ -45,9 +45,9 @@ const activeConnections = new Gauge({
 
 // Metrics plugin
 export default fp(
-  async function (fastify, opts) {
+  async function (fastify, _opts) {
     // Increment active connections on connection
-    fastify.addHook('onRequest', async (request, reply) => {
+    fastify.addHook('onRequest', async (_request, _reply) => {
       activeConnections.inc();
     });
 

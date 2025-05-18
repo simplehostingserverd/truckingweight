@@ -18,8 +18,8 @@
  * and sets it in the global context for Prisma to use with RLS policies
  */
 
-import { Request, Response, NextFunction } from 'express'
-import { setCompanyContext } from '../config/prisma'
+import { Request, Response, NextFunction } from 'express';
+import { setCompanyContext } from '../config/prisma';
 
 interface AuthenticatedRequest extends Request {
   user?: {
@@ -40,24 +40,24 @@ export const setCompanyContextMiddleware = (
   // If user is authenticated
   if (req.user) {
     // Check if user is admin
-    const isAdmin = req.user.isAdmin === true
+    const isAdmin = req.user.isAdmin === true;
 
     // Set company context with admin flag
     if (req.user.companyId) {
-      setCompanyContext(req.user.companyId, isAdmin)
+      setCompanyContext(req.user.companyId, isAdmin);
     } else if (isAdmin) {
       // Admin without company ID can still see all data
-      setCompanyContext(undefined, true)
+      setCompanyContext(undefined, true);
     } else {
       // Clear the context if not admin and no company ID
-      setCompanyContext(undefined, false)
+      setCompanyContext(undefined, false);
     }
   } else {
     // Clear the company context if no user
-    setCompanyContext(undefined, false)
+    setCompanyContext(undefined, false);
   }
 
-  next()
-}
+  next();
+};
 
-export default setCompanyContextMiddleware
+export default setCompanyContextMiddleware;

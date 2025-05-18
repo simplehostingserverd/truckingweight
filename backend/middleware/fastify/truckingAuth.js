@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -17,7 +17,7 @@ import { logger } from '../../utils/logger.js';
 // Initialize Supabase client with JWT options
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY;
-const supabaseJwtSecret = process.env.SUPABASE_JWT_SECRET;
+// JWT secret is used by Supabase internally for token verification
 
 // Create Supabase client with JWT options if available
 const supabaseOptions = {
@@ -57,7 +57,7 @@ const truckingAuthMiddleware = async (request, reply) => {
     try {
       // Verify with Supabase Auth
       const { data: sessionData, error: sessionError } = await supabase.auth.getUser(token);
-      
+
       if (!sessionError && sessionData.user) {
         // Get user from database
         const { data: user, error } = await supabase

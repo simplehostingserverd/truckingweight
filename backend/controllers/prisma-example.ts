@@ -17,9 +17,9 @@
  * This demonstrates how to use Prisma with the dedicated role for database operations
  */
 
-import { Request, Response } from 'express'
-import { validationResult } from 'express-validator'
-import prisma from '../config/prisma'
+import { Request, Response } from 'express';
+import { validationResult } from 'express-validator';
+import prisma from '../config/prisma';
 
 interface AuthenticatedRequest extends Request {
   user?: {
@@ -49,14 +49,14 @@ export const getAllVehicles = async (req: AuthenticatedRequest, res: Response) =
           },
         },
       },
-    })
+    });
 
-    res.json(vehicles)
+    res.json(vehicles);
   } catch (err) {
-    console.error('Error fetching vehicles:', err)
-    res.status(500).json({ message: 'Server error' })
+    console.error('Error fetching vehicles:', err);
+    res.status(500).json({ message: 'Server error' });
   }
-}
+};
 
 /**
  * @desc    Get a vehicle by ID using Prisma
@@ -65,7 +65,7 @@ export const getAllVehicles = async (req: AuthenticatedRequest, res: Response) =
  */
 export const getVehicleById = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const { id } = req.params
+    const { id } = req.params;
 
     const vehicle = await prisma.vehicles.findUnique({
       where: {
@@ -78,23 +78,23 @@ export const getVehicleById = async (req: AuthenticatedRequest, res: Response) =
           },
         },
       },
-    })
+    });
 
     if (!vehicle) {
-      return res.status(404).json({ message: 'Vehicle not found' })
+      return res.status(404).json({ message: 'Vehicle not found' });
     }
 
     // Additional security check (in case RLS doesn't catch it)
     if (vehicle.company_id !== req.user?.companyId && !req.user?.isAdmin) {
-      return res.status(403).json({ message: 'Not authorized to access this vehicle' })
+      return res.status(403).json({ message: 'Not authorized to access this vehicle' });
     }
 
-    res.json(vehicle)
+    res.json(vehicle);
   } catch (err) {
-    console.error('Error fetching vehicle:', err)
-    res.status(500).json({ message: 'Server error' })
+    console.error('Error fetching vehicle:', err);
+    res.status(500).json({ message: 'Server error' });
   }
-}
+};
 
 /**
  * @desc    Create a new vehicle using Prisma
@@ -102,9 +102,9 @@ export const getVehicleById = async (req: AuthenticatedRequest, res: Response) =
  * @access  Private
  */
 export const createVehicle = async (req: AuthenticatedRequest, res: Response) => {
-  const errors = validationResult(req)
+  const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
+    return res.status(400).json({ errors: errors.array() });
   }
 
   try {
@@ -124,7 +124,7 @@ export const createVehicle = async (req: AuthenticatedRequest, res: Response) =>
       telematics_id,
       eld_integration,
       axle_configuration_id,
-    } = req.body
+    } = req.body;
 
     // Create new vehicle with Prisma
     const newVehicle = await prisma.vehicles.create({
@@ -147,11 +147,11 @@ export const createVehicle = async (req: AuthenticatedRequest, res: Response) =>
         company_id: req.user?.companyId || null,
         created_at: new Date(),
       },
-    })
+    });
 
-    res.status(201).json(newVehicle)
+    res.status(201).json(newVehicle);
   } catch (err) {
-    console.error('Error creating vehicle:', err)
-    res.status(500).json({ message: 'Server error' })
+    console.error('Error creating vehicle:', err);
+    res.status(500).json({ message: 'Server error' });
   }
-}
+};

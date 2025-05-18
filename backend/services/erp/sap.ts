@@ -1,37 +1,36 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
-import axios from 'axios'
-import { ErpProvider, ErpData } from './index'
-import { logger } from '../../utils/logger'
+import axios from 'axios';
+import { ErpProvider, ErpData } from './index';
+import { logger } from '../../utils/logger';
 
 interface SapCredentials {
-  baseUrl: string
-  username: string
-  password: string
-  clientId: string
-  apiKey?: string
+  baseUrl: string;
+  username: string;
+  password: string;
+  clientId: string;
+  apiKey?: string;
 }
 
 export class SapService implements ErpProvider {
-  private credentials: SapCredentials | null = null
-  private token: string | null = null
-  private tokenExpiry: Date | null = null
+  private credentials: SapCredentials | null = null;
+  private token: string | null = null;
+  private tokenExpiry: Date | null = null;
 
   constructor(credentials?: SapCredentials) {
     if (credentials) {
-      this.credentials = credentials
+      this.credentials = credentials;
     }
   }
 
@@ -39,22 +38,22 @@ export class SapService implements ErpProvider {
    * Set the credentials for SAP
    */
   setCredentials(credentials: SapCredentials): void {
-    this.credentials = credentials
-    this.token = null
-    this.tokenExpiry = null
+    this.credentials = credentials;
+    this.token = null;
+    this.tokenExpiry = null;
   }
 
   /**
    * Authenticate with SAP API
    */
-  private async authenticate(): Promise<): Promise<): Promise<): Promise<): ): ): Promise<string> => {> {> { {> { {> {
+  private async authenticate(): Promise<string> {
     if (!this.credentials) {
-      throw new Error('SAP credentials not configured')
+      throw new Error('SAP credentials not configured');
     }
 
     // Check if we have a valid token
     if (this.token && this.tokenExpiry && this.tokenExpiry > new Date()) {
-      return this.token
+      return this.token;
     }
 
     try {
@@ -71,96 +70,96 @@ export class SapService implements ErpProvider {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
         }
-      )
+      );
 
-      this.token = response.data.access_token
+      this.token = response.data.access_token;
 
       // Set token expiry (typically 1 hour)
-      const expiresIn = response.data.expires_in || 3600
-      this.tokenExpiry = new Date(Date.now() + expiresIn * 1000)
+      const expiresIn = response.data.expires_in || 3600;
+      this.tokenExpiry = new Date(Date.now() + expiresIn * 1000);
 
-      return this.token
+      return this.token;
     } catch (error) {
-      logger.error('Error authenticating with SAP:', error)
-      throw new Error(`Failed to authenticate with SAP: ${error.message}`)
+      logger.error('Error authenticating with SAP:', error);
+      throw new Error(`Failed to authenticate with SAP: ${error.message}`);
     }
   }
 
   /**
    * Make an authenticated call to SAP API
    */
-  private async callApi(endpoint: string, method: string = 'GET', data?: any): Promise<): Promise<): Promise<): Promise<): ): ): Promise<any> => {> {> { {> { {> {
-    const token = await this.authenticate()
+  private async callApi(endpoint: string, method: string = 'GET', data?: any): Promise<any> {
+    const token = await this.authenticate();
 
     try {
-      const url = `${this.credentials?.baseUrl}${endpoint}`
+      const url = `${this.credentials?.baseUrl}${endpoint}`;
       const headers = {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
-      }
+      };
 
       // Add API key if available
       if (this.credentials?.apiKey) {
-        headers['APIKey'] = this.credentials.apiKey
+        headers['APIKey'] = this.credentials.apiKey;
       }
 
-      let response
+      let response;
       if (method === 'GET') {
-        response = await axios.get(url, { headers })
+        response = await axios.get(url, { headers });
       } else if (method === 'POST') {
-        response = await axios.post(url, data, { headers })
+        response = await axios.post(url, data, { headers });
       } else if (method === 'PUT') {
-        response = await axios.put(url, data, { headers })
+        response = await axios.put(url, data, { headers });
       } else {
-        throw new Error(`Unsupported HTTP method: ${method}`)
+        throw new Error(`Unsupported HTTP method: ${method}`);
       }
 
-      return response.data
+      return response.data;
     } catch (error) {
       // If token expired, try to re-authenticate once
       if (error.response && error.response.status === 401) {
-        this.token = null
-        this.tokenExpiry = null
+        this.token = null;
+        this.tokenExpiry = null;
 
-        const newToken = await this.authenticate()
+        const newToken = await this.authenticate();
 
-        const url = `${this.credentials?.baseUrl}${endpoint}`
+        const url = `${this.credentials?.baseUrl}${endpoint}`;
         const headers = {
           Authorization: `Bearer ${newToken}`,
           'Content-Type': 'application/json',
           Accept: 'application/json',
-        }
+        };
 
         // Add API key if available
         if (this.credentials?.apiKey) {
-          headers['APIKey'] = this.credentials.apiKey
+          headers['APIKey'] = this.credentials.apiKey;
         }
 
-        let retryResponse
+        let retryResponse;
         if (method === 'GET') {
-          retryResponse = await axios.get(url, { headers })
+          retryResponse = await axios.get(url, { headers });
         } else if (method === 'POST') {
-          retryResponse = await axios.post(url, data, { headers })
+          retryResponse = await axios.post(url, data, { headers });
         } else if (method === 'PUT') {
-          retryResponse = await axios.put(url, data, { headers })
+          retryResponse = await axios.put(url, data, { headers });
         }
 
-        return retryResponse.data
+        return retryResponse.data;
       }
 
-      logger.error(`Error calling SAP API:`, error)
-      throw new Error(`Failed to call SAP API: ${error.message}`)
+      logger.error(`Error calling SAP API:`, error);
+      throw new Error(`Failed to call SAP API: ${error.message}`);
     }
   }
 
   /**
    * Fetch customers from SAP
    */
-  async fetchCustomers(): Promise<): Promise<): Promise<): Promise<): ): ): Promise<ErpData[]> => {> {> { {> { {> {
+  async fetchCustomers(): Promise<ErpData[]> {
     try {
       // Call SAP API to get customers (Business Partners)
-      const response = await this.callApi('/API_BUSINESS_PARTNER/A_BusinessPartner')
+      const response = await this.callApi('/API_BUSINESS_PARTNER/A_BusinessPartner');
 
       // Transform the response to our standard format
       return response.value.map(customer => ({
@@ -182,26 +181,26 @@ export class SapService implements ErpProvider {
           email: customer.EmailAddress,
           taxId: customer.TaxNumber,
         },
-      }))
+      }));
     } catch (error) {
-      logger.error('Error fetching customers from SAP:', error)
-      throw new Error(`Failed to fetch customers from SAP: ${error.message}`)
+      logger.error('Error fetching customers from SAP:', error);
+      throw new Error(`Failed to fetch customers from SAP: ${error.message}`);
     }
   }
 
   /**
    * Fetch invoices from SAP
    */
-  async fetchInvoices(customerId?: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<ErpData[]> => {> {> { {> { {> {
+  async fetchInvoices(customerId?: string): Promise<ErpData[]> {
     try {
       // Build the endpoint with filter if customerId is provided
-      let endpoint = '/API_BILLING_DOCUMENT/A_BillingDocument'
+      let endpoint = '/API_BILLING_DOCUMENT/A_BillingDocument';
       if (customerId) {
-        endpoint += `?$filter=BillToParty eq '${customerId}'`
+        endpoint += `?$filter=BillToParty eq '${customerId}'`;
       }
 
       // Call SAP API to get invoices
-      const response = await this.callApi(endpoint)
+      const response = await this.callApi(endpoint);
 
       // Transform the response to our standard format
       return response.value.map(invoice => ({
@@ -226,17 +225,17 @@ export class SapService implements ErpProvider {
               }))
             : [],
         },
-      }))
+      }));
     } catch (error) {
-      logger.error('Error fetching invoices from SAP:', error)
-      throw new Error(`Failed to fetch invoices from SAP: ${error.message}`)
+      logger.error('Error fetching invoices from SAP:', error);
+      throw new Error(`Failed to fetch invoices from SAP: ${error.message}`);
     }
   }
 
   /**
    * Create an invoice in SAP
    */
-  async createInvoice(invoiceData: any): Promise<): Promise<): Promise<): Promise<): ): ): Promise<ErpData> => {> {> { {> { {> {
+  async createInvoice(invoiceData: any): Promise<ErpData> {
     try {
       // Transform our data to SAP format
       const sapInvoice = {
@@ -253,14 +252,14 @@ export class SapService implements ErpProvider {
             NetAmount: item.amount,
           })),
         },
-      }
+      };
 
       // Call SAP API to create invoice
       const response = await this.callApi(
         '/API_BILLING_DOCUMENT/A_BillingDocument',
         'POST',
         sapInvoice
-      )
+      );
 
       // Transform the response to our standard format
       return {
@@ -275,17 +274,17 @@ export class SapService implements ErpProvider {
           currency: response.TransactionCurrency,
           status: 'Active',
         },
-      }
+      };
     } catch (error) {
-      logger.error('Error creating invoice in SAP:', error)
-      throw new Error(`Failed to create invoice in SAP: ${error.message}`)
+      logger.error('Error creating invoice in SAP:', error);
+      throw new Error(`Failed to create invoice in SAP: ${error.message}`);
     }
   }
 
   /**
    * Sync a weigh ticket to SAP
    */
-  async syncWeighTicket(ticketId: string, ticketData: any): Promise<): Promise<): Promise<): Promise<): ): ): Promise<ErpData> => {> {> { {> { {> {
+  async syncWeighTicket(ticketId: string, ticketData: any): Promise<ErpData> {
     try {
       // Transform weigh ticket data to SAP format
       const sapTicket = {
@@ -300,10 +299,10 @@ export class SapService implements ErpProvider {
         DriverID: ticketData.drivers?.id,
         MaterialDescription: ticketData.cargo?.[0]?.description || 'General Cargo',
         Notes: ticketData.notes,
-      }
+      };
 
       // Call SAP API to sync weigh ticket (custom endpoint)
-      const response = await this.callApi('/API_SCALE_MASTER/WeighTicket', 'POST', sapTicket)
+      const response = await this.callApi('/API_SCALE_MASTER/WeighTicket', 'POST', sapTicket);
 
       // Transform the response to our standard format
       return {
@@ -317,10 +316,10 @@ export class SapService implements ErpProvider {
           documentId: response.RelatedDocument,
           syncDate: new Date().toISOString(),
         },
-      }
+      };
     } catch (error) {
-      logger.error('Error syncing weigh ticket to SAP:', error)
-      throw new Error(`Failed to sync weigh ticket to SAP: ${error.message}`)
+      logger.error('Error syncing weigh ticket to SAP:', error);
+      throw new Error(`Failed to sync weigh ticket to SAP: ${error.message}`);
     }
   }
 }

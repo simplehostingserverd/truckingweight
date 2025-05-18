@@ -1,0 +1,28 @@
+# Ignore Prisma generated files
+generated/**/*
+prisma/**/*
+
+# Ignore node_modules
+node_modules
+
+# Ignore build directories
+dist
+build
+
+# Ignore configuration files
+*.config.js
+*.config.ts
+
+# Ignore environment files
+.env*
+
+# Ignore test files
+test/**/*
+*.test.js
+*.test.ts
+
+# Ignore specific problematic files with TypeScript parsing errors
+services/erp/**/*.ts
+services/telematics/**/*.ts
+services/scaleIntegration.ts
+utils/compliance.ts

@@ -1,32 +1,31 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * Dashboard controller using Prisma
  * This controller provides data for the dashboard components
  */
 
-import { Request, Response } from 'express'
-import prisma from '../config/prisma'
-import { setCompanyContext } from '../config/prisma'
+import { Request, Response } from 'express';
+import prisma from '../config/prisma';
+import { setCompanyContext } from '../config/prisma';
 
 interface AuthenticatedRequest extends Request {
   user?: {
-    id: string
-    companyId?: number
-    isAdmin?: boolean
-  }
+    id: string;
+    companyId?: number;
+    isAdmin?: boolean;
+  };
 }
 
 /**
@@ -36,23 +35,23 @@ interface AuthenticatedRequest extends Request {
  */
 export const getDashboardStats = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId
-    const isAdmin = req.user?.isAdmin === true
+    const companyId = req.user?.companyId;
+    const isAdmin = req.user?.isAdmin === true;
 
     // For non-admin users, company ID is required
     if (!companyId && !isAdmin) {
-      return res.status(401).json({ message: 'Unauthorized - Company ID not found' })
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
     }
 
     // Set company context for Prisma queries with admin flag
-    setCompanyContext(companyId, isAdmin)
+    setCompanyContext(companyId, isAdmin);
 
     // Get today's date for filtering
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
     // Define where clauses based on user role
-    const companyFilter = isAdmin ? {} : { company_id: companyId }
+    const companyFilter = isAdmin ? {} : { company_id: companyId };
 
     // Run queries in parallel for better performance
     const [vehicleCount, driverCount, activeLoads, weightsToday, weights] = await Promise.all([
@@ -92,16 +91,16 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
         where: companyFilter,
         select: { status: true },
       }),
-    ])
+    ]);
 
     // Calculate compliance rate
-    const totalWeights = weights.length
-    const compliantWeights = weights.filter(w => w.status === 'Compliant').length
+    const totalWeights = weights.length;
+    const compliantWeights = weights.filter(w => w.status === 'Compliant').length;
     const complianceRate =
-      totalWeights > 0 ? Math.round((compliantWeights / totalWeights) * 100) : 0
+      totalWeights > 0 ? Math.round((compliantWeights / totalWeights) * 100) : 0;
 
     // Get non-compliant weights count
-    const nonCompliantWeights = weights.filter(w => w.status === 'Non-Compliant').length
+    const nonCompliantWeights = weights.filter(w => w.status === 'Non-Compliant').length;
 
     // Return dashboard stats
     res.json({
@@ -111,15 +110,15 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
       weightsToday,
       complianceRate,
       nonCompliantWeights,
-    })
+    });
   } catch (err: any) {
-    console.error('Error fetching dashboard stats:', err)
-    res.status(500).json({ message: 'Server error', error: err.message })
+    console.error('Error fetching dashboard stats:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   } finally {
     // Clear company context
-    setCompanyContext(undefined)
+    setCompanyContext(undefined);
   }
-}
+};
 
 /**
  * @desc    Get recent weight measurements
@@ -128,19 +127,19 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
  */
 export const getRecentWeights = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId
-    const isAdmin = req.user?.isAdmin === true
+    const companyId = req.user?.companyId;
+    const isAdmin = req.user?.isAdmin === true;
 
     // For non-admin users, company ID is required
     if (!companyId && !isAdmin) {
-      return res.status(401).json({ message: 'Unauthorized - Company ID not found' })
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
     }
 
     // Set company context for Prisma queries with admin flag
-    setCompanyContext(companyId, isAdmin)
+    setCompanyContext(companyId, isAdmin);
 
     // Define where clause based on user role
-    const companyFilter = isAdmin ? {} : { company_id: companyId }
+    const companyFilter = isAdmin ? {} : { company_id: companyId };
 
     // Get recent weights with vehicle and driver info
     const recentWeights = await prisma.weights.findMany({
@@ -169,17 +168,17 @@ export const getRecentWeights = async (req: AuthenticatedRequest, res: Response)
             }
           : undefined,
       },
-    })
+    });
 
-    res.json(recentWeights)
+    res.json(recentWeights);
   } catch (err: any) {
-    console.error('Error fetching recent weights:', err)
-    res.status(500).json({ message: 'Server error', error: err.message })
+    console.error('Error fetching recent weights:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   } finally {
     // Clear company context
-    setCompanyContext(undefined)
+    setCompanyContext(undefined);
   }
-}
+};
 
 /**
  * @desc    Get compliance data for chart
@@ -188,51 +187,57 @@ export const getRecentWeights = async (req: AuthenticatedRequest, res: Response)
  */
 export const getComplianceData = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId
-    const isAdmin = req.user?.isAdmin === true
-    const { dateRange = 'week', companyFilter: specificCompanyId } = req.query
+    const companyId = req.user?.companyId;
+    const isAdmin = req.user?.isAdmin === true;
+    const { dateRange = 'week', companyFilter: specificCompanyId } = req.query;
 
     // For non-admin users, company ID is required
     if (!companyId && !isAdmin) {
-      return res.status(401).json({ message: 'Unauthorized - Company ID not found' })
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
     }
 
     // Set company context for Prisma queries with admin flag
-    setCompanyContext(companyId, isAdmin)
+    setCompanyContext(companyId, isAdmin);
 
     // Calculate date range
-    const today = new Date()
-    let startDate = new Date()
+    const today = new Date();
+    const startDate = new Date();
 
     switch (dateRange) {
       case 'week':
-        startDate.setDate(today.getDate() - 7)
-        break
+        startDate.setDate(today.getDate() - 7);
+        break;
       case 'month':
-        startDate.setMonth(today.getMonth() - 1)
-        break
+        startDate.setMonth(today.getMonth() - 1);
+        break;
       case 'year':
-        startDate.setFullYear(today.getFullYear() - 1)
-        break
+        startDate.setFullYear(today.getFullYear() - 1);
+        break;
       default:
-        startDate.setDate(today.getDate() - 7)
+        startDate.setDate(today.getDate() - 7);
     }
 
     // Define where clause based on user role and query parameters
-    let whereClause: any = {
+    const whereClause: {
+      date: {
+        gte: string;
+        lte: string;
+      };
+      company_id?: number;
+    } = {
       date: {
         gte: startDate.toISOString().split('T')[0],
         lte: today.toISOString().split('T')[0],
       },
-    }
+    };
 
     // If admin and specific company filter is provided
     if (isAdmin && specificCompanyId) {
-      whereClause.company_id = Number(specificCompanyId)
+      whereClause.company_id = Number(specificCompanyId);
     }
     // If not admin, filter by user's company
     else if (!isAdmin) {
-      whereClause.company_id = companyId
+      whereClause.company_id = companyId;
     }
 
     // Get weights within date range
@@ -242,27 +247,27 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
         status: true,
         company_id: isAdmin, // Include company_id for admins to group by company
       },
-    })
+    });
 
     // For admin users, we might want to group by company
     if (isAdmin && !specificCompanyId) {
       // Group weights by company and status
-      const companyWeights = new Map()
+      const companyWeights = new Map();
 
       for (const weight of weights) {
-        const companyId = weight.company_id
+        const companyId = weight.company_id;
         if (!companyWeights.has(companyId)) {
           companyWeights.set(companyId, {
             compliant: 0,
             warning: 0,
             nonCompliant: 0,
-          })
+          });
         }
 
-        const stats = companyWeights.get(companyId)
-        if (weight.status === 'Compliant') stats.compliant++
-        else if (weight.status === 'Warning') stats.warning++
-        else if (weight.status === 'Non-Compliant') stats.nonCompliant++
+        const stats = companyWeights.get(companyId);
+        if (weight.status === 'Compliant') stats.compliant++;
+        else if (weight.status === 'Warning') stats.warning++;
+        else if (weight.status === 'Non-Compliant') stats.nonCompliant++;
       }
 
       // Get company names
@@ -271,13 +276,13 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
           id: true,
           name: true,
         },
-      })
+      });
 
       // Format data for chart
-      const complianceByCompany = []
+      const complianceByCompany = [];
       for (const [companyId, stats] of companyWeights.entries()) {
-        const company = companies.find(c => c.id === companyId)
-        const companyName = company ? company.name : `Company ${companyId}`
+        const company = companies.find(c => c.id === companyId);
+        const companyName = company ? company.name : `Company ${companyId}`;
 
         complianceByCompany.push({
           companyId,
@@ -287,47 +292,47 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
             { name: 'Warning', value: stats.warning },
             { name: 'Non-Compliant', value: stats.nonCompliant },
           ],
-        })
+        });
       }
 
       // Also include overall stats
-      const totalCompliant = weights.filter(w => w.status === 'Compliant').length
-      const totalWarning = weights.filter(w => w.status === 'Warning').length
-      const totalNonCompliant = weights.filter(w => w.status === 'Non-Compliant').length
+      const totalCompliant = weights.filter(w => w.status === 'Compliant').length;
+      const totalWarning = weights.filter(w => w.status === 'Warning').length;
+      const totalNonCompliant = weights.filter(w => w.status === 'Non-Compliant').length;
 
       const overallData = [
         { name: 'Compliant', value: totalCompliant },
         { name: 'Warning', value: totalWarning },
         { name: 'Non-Compliant', value: totalNonCompliant },
-      ]
+      ];
 
       res.json({
         byCompany: complianceByCompany,
         overall: overallData,
-      })
+      });
     } else {
       // Regular user or admin with specific company filter
       // Calculate compliance statistics
-      const compliantCount = weights.filter(w => w.status === 'Compliant').length
-      const warningCount = weights.filter(w => w.status === 'Warning').length
-      const nonCompliantCount = weights.filter(w => w.status === 'Non-Compliant').length
+      const compliantCount = weights.filter(w => w.status === 'Compliant').length;
+      const warningCount = weights.filter(w => w.status === 'Warning').length;
+      const nonCompliantCount = weights.filter(w => w.status === 'Non-Compliant').length;
 
       const complianceData = [
         { name: 'Compliant', value: compliantCount },
         { name: 'Warning', value: warningCount },
         { name: 'Non-Compliant', value: nonCompliantCount },
-      ]
+      ];
 
-      res.json(complianceData)
+      res.json(complianceData);
     }
   } catch (err: any) {
-    console.error('Error fetching compliance data:', err)
-    res.status(500).json({ message: 'Server error', error: err.message })
+    console.error('Error fetching compliance data:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   } finally {
     // Clear company context
-    setCompanyContext(undefined)
+    setCompanyContext(undefined);
   }
-}
+};
 
 /**
  * @desc    Get vehicle weight distribution data for chart
@@ -336,55 +341,63 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
  */
 export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId
-    const isAdmin = req.user?.isAdmin === true
-    const { dateRange = 'week', companyFilter: specificCompanyId } = req.query
+    const companyId = req.user?.companyId;
+    const isAdmin = req.user?.isAdmin === true;
+    const { dateRange = 'week', companyFilter: specificCompanyId } = req.query;
 
     // For non-admin users, company ID is required
     if (!companyId && !isAdmin) {
-      return res.status(401).json({ message: 'Unauthorized - Company ID not found' })
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
     }
 
     // Set company context for Prisma queries with admin flag
-    setCompanyContext(companyId, isAdmin)
+    setCompanyContext(companyId, isAdmin);
 
     // Calculate date range
-    const today = new Date()
-    let startDate = new Date()
+    const today = new Date();
+    const startDate = new Date();
 
     switch (dateRange) {
       case 'week':
-        startDate.setDate(today.getDate() - 7)
-        break
+        startDate.setDate(today.getDate() - 7);
+        break;
       case 'month':
-        startDate.setMonth(today.getMonth() - 1)
-        break
+        startDate.setMonth(today.getMonth() - 1);
+        break;
       case 'year':
-        startDate.setFullYear(today.getFullYear() - 1)
-        break
+        startDate.setFullYear(today.getFullYear() - 1);
+        break;
       default:
-        startDate.setDate(today.getDate() - 7)
+        startDate.setDate(today.getDate() - 7);
     }
 
     // Define where clauses based on user role and query parameters
-    let weightsWhereClause: any = {
+    const weightsWhereClause: {
+      date: {
+        gte: string;
+        lte: string;
+      };
+      company_id?: number;
+    } = {
       date: {
         gte: startDate.toISOString().split('T')[0],
         lte: today.toISOString().split('T')[0],
       },
-    }
+    };
 
-    let vehiclesWhereClause: any = {}
+    const vehiclesWhereClause: {
+      company_id?: number;
+    } = {};
 
     // If admin and specific company filter is provided
     if (isAdmin && specificCompanyId) {
-      weightsWhereClause.company_id = Number(specificCompanyId)
-      vehiclesWhereClause.company_id = Number(specificCompanyId)
+      weightsWhereClause.company_id = Number(specificCompanyId);
+      vehiclesWhereClause.company_id = Number(specificCompanyId);
     }
     // If not admin, filter by user's company
     else if (!isAdmin) {
-      weightsWhereClause.company_id = companyId
-      vehiclesWhereClause.company_id = companyId
+      weightsWhereClause.company_id = companyId;
+      vehiclesWhereClause.company_id = companyId;
     }
 
     // Get weights and vehicles
@@ -416,78 +429,79 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
             },
           })
         : null,
-    ])
+    ]);
 
     // For admin users, we might want to group by company
     if (isAdmin && !specificCompanyId) {
       // Group weights by company and vehicle
-      const companyVehicleWeights = new Map()
+      const companyVehicleWeights = new Map();
 
       weights.forEach(weight => {
-        const companyId = weight.company_id
+        const companyId = weight.company_id;
         if (!companyVehicleWeights.has(companyId)) {
-          companyVehicleWeights.set(companyId, new Map())
+          companyVehicleWeights.set(companyId, new Map());
         }
 
         const vehicle = vehicles.find(
           v => v.id === weight.vehicle_id && v.company_id === companyId
-        )
+        );
         if (vehicle) {
-          const vehicleMap = companyVehicleWeights.get(companyId)
-          const vehicleName = vehicle.name
+          const vehicleMap = companyVehicleWeights.get(companyId);
+          const vehicleName = vehicle.name;
           // Parse weight value (assuming it's stored as a string like "32,500 lbs")
-          const weightValue = parseFloat(weight.weight.replace(/[^\d.]/g, ''))
+          const weightValue = parseFloat(weight.weight.replace(/[^\d.]/g, ''));
 
           if (vehicleMap.has(vehicleName)) {
-            vehicleMap.set(vehicleName, vehicleMap.get(vehicleName) + weightValue)
+            const currentValue = vehicleMap.get(vehicleName) || 0;
+            vehicleMap.set(vehicleName, currentValue + weightValue);
           } else {
-            vehicleMap.set(vehicleName, weightValue)
+            vehicleMap.set(vehicleName, weightValue);
           }
         }
-      })
+      });
 
       // Format data for chart
-      const weightsByCompany = []
+      const weightsByCompany = [];
       for (const [companyId, vehicleMap] of companyVehicleWeights.entries()) {
-        const company = companies?.find(c => c.id === companyId)
-        const companyName = company ? company.name : `Company ${companyId}`
+        const company = companies?.find(c => c.id === companyId);
+        const companyName = company ? company.name : `Company ${companyId}`;
 
         const vehicleWeights = Array.from(vehicleMap.entries())
           .map(([name, weight]) => ({
             name,
-            weight: Math.round(weight as number),
+            weight: Math.round(weight),
           }))
           .sort((a, b) => b.weight - a.weight)
-          .slice(0, 5)
+          .slice(0, 5);
 
         if (vehicleWeights.length > 0) {
           weightsByCompany.push({
             companyId,
             companyName,
             data: vehicleWeights,
-          })
+          });
         }
       }
 
       // Also calculate overall top vehicles
-      const overallVehicleMap = new Map<string, number>()
+      const overallVehicleMap = new Map<string, number>();
 
       weights.forEach(weight => {
-        const vehicle = vehicles.find(v => v.id === weight.vehicle_id)
+        const vehicle = vehicles.find(v => v.id === weight.vehicle_id);
         if (vehicle) {
-          const vehicleName = `${vehicle.name} (${companies?.find(c => c.id === vehicle.company_id)?.name || 'Unknown'})`
-          const weightValue = parseFloat(weight.weight.replace(/[^\d.]/g, ''))
+          const vehicleName = `${vehicle.name} (${companies?.find(c => c.id === vehicle.company_id)?.name || 'Unknown'})`;
+          const weightValue = parseFloat(weight.weight.replace(/[^\d.]/g, ''));
 
           if (overallVehicleMap.has(vehicleName)) {
             overallVehicleMap.set(
               vehicleName,
               (overallVehicleMap.get(vehicleName) || 0) + weightValue
-            )
+            );
           } else {
-            overallVehicleMap.set(vehicleName, weightValue)
+            overallVehicleMap.set(vehicleName, weightValue);
           }
         }
-      })
+      });
 
       const overallData = Array.from(overallVehicleMap.entries())
         .map(([name, weight]) => ({
@@ -495,34 +509,34 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
           weight: Math.round(weight),
         }))
         .sort((a, b) => b.weight - a.weight)
-        .slice(0, 5)
+        .slice(0, 5);
 
       res.json({
         byCompany: weightsByCompany,
         overall: overallData,
-      })
+      });
     } else {
       // Regular user or admin with specific company filter
       // Calculate weights by vehicle
-      const weightsByVehicleMap = new Map<string, number>()
+      const weightsByVehicleMap = new Map<string, number>();
 
       weights.forEach(weight => {
-        const vehicle = vehicles.find(v => v.id === weight.vehicle_id)
+        const vehicle = vehicles.find(v => v.id === weight.vehicle_id);
         if (vehicle) {
-          const vehicleName = vehicle.name
+          const vehicleName = vehicle.name;
           // Parse weight value (assuming it's stored as a string like "32,500 lbs")
-          const weightValue = parseFloat(weight.weight.replace(/[^\d.]/g, ''))
+          const weightValue = parseFloat(weight.weight.replace(/[^\d.]/g, ''));
 
           if (weightsByVehicleMap.has(vehicleName)) {
             weightsByVehicleMap.set(
               vehicleName,
               (weightsByVehicleMap.get(vehicleName) || 0) + weightValue
-            )
+            );
           } else {
-            weightsByVehicleMap.set(vehicleName, weightValue)
+            weightsByVehicleMap.set(vehicleName, weightValue);
           }
         }
-      })
+      });
 
       // Convert to array and sort by weight
       const weightsByVehicleArray = Array.from(weightsByVehicleMap.entries())
@@ -531,18 +545,18 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
           weight: Math.round(weight),
         }))
         .sort((a, b) => b.weight - a.weight)
-        .slice(0, 5)
+        .slice(0, 5);
 
-      res.json(weightsByVehicleArray)
+      res.json(weightsByVehicleArray);
     }
   } catch (err: any) {
-    console.error('Error fetching vehicle weight data:', err)
-    res.status(500).json({ message: 'Server error', error: err.message })
+    console.error('Error fetching vehicle weight data:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   } finally {
     // Clear company context
-    setCompanyContext(undefined)
+    setCompanyContext(undefined);
   }
-}
+};
 
 /**
  * @desc    Get load status distribution data for chart
@@ -551,46 +565,46 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
  */
 export const getLoadStatusData = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const companyId = req.user?.companyId
+    const companyId = req.user?.companyId;
 
     if (!companyId) {
-      return res.status(401).json({ message: 'Unauthorized - Company ID not found' })
+      return res.status(401).json({ message: 'Unauthorized - Company ID not found' });
     }
 
     // Set company context for Prisma queries
-    setCompanyContext(companyId)
+    setCompanyContext(companyId);
 
     // Get loads grouped by status
     const loads = await prisma.loads.findMany({
       where: { company_id: companyId },
       select: { status: true },
-    })
+    });
 
     // Calculate loads by status
-    const loadsByStatusMap = new Map<string, number>()
+    const loadsByStatusMap = new Map<string, number>();
 
     loads.forEach(load => {
-      const status = load.status || 'Unknown'
+      const status = load.status || 'Unknown';
 
       if (loadsByStatusMap.has(status)) {
-        loadsByStatusMap.set(status, (loadsByStatusMap.get(status) || 0) + 1)
+        loadsByStatusMap.set(status, (loadsByStatusMap.get(status) || 0) + 1);
       } else {
-        loadsByStatusMap.set(status, 1)
+        loadsByStatusMap.set(status, 1);
       }
-    })
+    });
 
     // Convert to array format for chart
     const loadsByStatusArray = Array.from(loadsByStatusMap.entries()).map(([name, value]) => ({
       name,
       value,
-    }))
+    }));
 
-    res.json(loadsByStatusArray)
+    res.json(loadsByStatusArray);
   } catch (err: any) {
-    console.error('Error fetching load status data:', err)
-    res.status(500).json({ message: 'Server error', error: err.message })
+    console.error('Error fetching load status data:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   } finally {
     // Clear company context
-    setCompanyContext(undefined)
+    setCompanyContext(undefined);
   }
-}
+};

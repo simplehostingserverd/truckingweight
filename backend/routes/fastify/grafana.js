@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -23,40 +23,40 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 /**
  * Grafana integration routes
  * @param {import('fastify').FastifyInstance} fastify - Fastify instance
- * @param {Object} options - Plugin options
+ * @param {Object} _options - Plugin options (unused)
  */
-export default async function (fastify, options) {
+export default async function (fastify, _options) {
   // Get weight statistics for Grafana
   fastify.get('/weight-stats', async (request, reply) => {
     try {
       // Get query parameters
       const { timeRange = '7d', cityId } = request.query;
-      
+
       // Calculate time range
       let timeFilter = '';
       switch (timeRange) {
         case '24h':
-          timeFilter = 'created_at > now() - interval \'24 hours\'';
+          timeFilter = "created_at > now() - interval '24 hours'";
           break;
         case '7d':
-          timeFilter = 'created_at > now() - interval \'7 days\'';
+          timeFilter = "created_at > now() - interval '7 days'";
           break;
         case '30d':
-          timeFilter = 'created_at > now() - interval \'30 days\'';
+          timeFilter = "created_at > now() - interval '30 days'";
           break;
         case '90d':
-          timeFilter = 'created_at > now() - interval \'90 days\'';
+          timeFilter = "created_at > now() - interval '90 days'";
           break;
         case '1y':
-          timeFilter = 'created_at > now() - interval \'1 year\'';
+          timeFilter = "created_at > now() - interval '1 year'";
           break;
         default:
-          timeFilter = 'created_at > now() - interval \'7 days\'';
+          timeFilter = "created_at > now() - interval '7 days'";
       }
-      
+
       // Build query
       let query = `
-        SELECT 
+        SELECT
           date_trunc('day', created_at) as day,
           COUNT(*) as total_weighings,
           AVG(gross_weight) as avg_gross_weight,
@@ -64,39 +64,39 @@ export default async function (fastify, options) {
         FROM weights
         WHERE ${timeFilter}
       `;
-      
+
       // Add city filter if provided
       if (cityId) {
         query += ` AND city_id = ${cityId}`;
       }
-      
+
       // Group by day
       query += ` GROUP BY day ORDER BY day`;
-      
+
       // Execute query
       const { data, error } = await supabase.rpc('run_sql', { query });
-      
+
       if (error) {
         logger.error('Error getting weight statistics:', error);
         return reply.code(500).send({ error: 'Failed to get weight statistics' });
       }
-      
+
       return reply.code(200).send(data);
     } catch (err) {
       logger.error('Error in weight statistics endpoint:', err);
       return reply.code(500).send({ error: 'Server error' });
     }
   });
-  
+
   // Get vehicle statistics for Grafana
   fastify.get('/vehicle-stats', async (request, reply) => {
     try {
       // Get query parameters
       const { companyId } = request.query;
-      
+
       // Build query
       let query = `
-        SELECT 
+        SELECT
           v.make,
           v.model,
           COUNT(*) as vehicle_count,
@@ -105,36 +105,36 @@ export default async function (fastify, options) {
         FROM vehicles v
         LEFT JOIN weights w ON v.id = w.vehicle_id
       `;
-      
+
       // Add company filter if provided
       if (companyId) {
         query += ` WHERE v.company_id = ${companyId}`;
       }
-      
+
       // Group by make and model
       query += ` GROUP BY v.make, v.model ORDER BY vehicle_count DESC`;
-      
+
       // Execute query
       const { data, error } = await supabase.rpc('run_sql', { query });
-      
+
       if (error) {
         logger.error('Error getting vehicle statistics:', error);
         return reply.code(500).send({ error: 'Failed to get vehicle statistics' });
       }
-      
+
       return reply.code(200).send(data);
     } catch (err) {
       logger.error('Error in vehicle statistics endpoint:', err);
       return reply.code(500).send({ error: 'Server error' });
     }
   });
-  
+
   // Get city statistics for Grafana
   fastify.get('/city-stats', async (request, reply) => {
     try {
       // Build query
       const query = `
-        SELECT 
+        SELECT
           c.name as city_name,
           c.state,
           COUNT(w.id) as weighing_count,
@@ -145,28 +145,28 @@ export default async function (fastify, options) {
         GROUP BY c.name, c.state
         ORDER BY weighing_count DESC
       `;
-      
+
       // Execute query
       const { data, error } = await supabase.rpc('run_sql', { query });
-      
+
       if (error) {
         logger.error('Error getting city statistics:', error);
         return reply.code(500).send({ error: 'Failed to get city statistics' });
       }
-      
+
       return reply.code(200).send(data);
     } catch (err) {
       logger.error('Error in city statistics endpoint:', err);
       return reply.code(500).send({ error: 'Server error' });
     }
   });
-  
+
   // Get company statistics for Grafana
   fastify.get('/company-stats', async (request, reply) => {
     try {
       // Build query
       const query = `
-        SELECT 
+        SELECT
           tc.name as company_name,
           COUNT(DISTINCT v.id) as vehicle_count,
           COUNT(DISTINCT d.id) as driver_count,
@@ -180,15 +180,15 @@ export default async function (fastify, options) {
         GROUP BY tc.name
         ORDER BY weighing_count DESC
       `;
-      
+
       // Execute query
       const { data, error } = await supabase.rpc('run_sql', { query });
-      
+
       if (error) {
         logger.error('Error getting company statistics:', error);
         return reply.code(500).send({ error: 'Failed to get company statistics' });
       }
-      
+
       return reply.code(200).send(data);
     } catch (err) {
       logger.error('Error in company statistics endpoint:', err);

@@ -1,35 +1,34 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
+import axios from 'axios';
+import { TelematicsProvider, TelematicsData } from './index';
+import { logger } from '../../utils/logger';
 
-import axios from 'axios'
-import { TelematicsProvider, TelematicsData } from './index'
-import { logger } from '../../utils/logger'
-
-const SAMSARA_API_BASE_URL = 'https://api.samsara.com/v1'
+const SAMSARA_API_BASE_URL = 'https://api.samsara.com/v1';
 
 export class SamsaraService implements TelematicsProvider {
-  private apiKey: string
+  private apiKey: string;
 
   constructor(apiKey?: string) {
-    this.apiKey = apiKey || process.env.SAMSARA_API_KEY || ''
+    this.apiKey = apiKey || process.env.SAMSARA_API_KEY || '';
   }
 
   /**
    * Set the API key for Samsara
    */
   setApiKey(apiKey: string): void {
-    this.apiKey = apiKey
+    this.apiKey = apiKey;
   }
 
   /**
@@ -40,34 +39,34 @@ export class SamsaraService implements TelematicsProvider {
       Authorization: `Bearer ${this.apiKey}`,
       'Content-Type': 'application/json',
       Accept: 'application/json',
-    }
+    };
   }
 
   /**
    * Fetch vehicle data from Samsara
    */
-  async fetchVehicleData(vehicleId: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<TelematicsData> => {> {> { {> { {> {
+  async fetchVehicleData(vehicleId: string): Promise<TelematicsData> {
     try {
       // Validate API key
       if (!this.apiKey) {
-        throw new Error('Samsara API key not configured')
+        throw new Error('Samsara API key not configured');
       }
 
       // Fetch vehicle location
       const locationResponse = await axios.get(
         `${SAMSARA_API_BASE_URL}/fleet/vehicles/${vehicleId}/locations`,
         { headers: this.getHeaders() }
-      )
+      );
 
       // Fetch vehicle stats
       const statsResponse = await axios.get(
         `${SAMSARA_API_BASE_URL}/fleet/vehicles/${vehicleId}/stats`,
         { headers: this.getHeaders() }
-      )
+      );
 
       // Extract and transform the data
-      const location = locationResponse.data.location
-      const stats = statsResponse.data
+      const location = locationResponse.data.location;
+      const stats = statsResponse.data;
 
       return {
         vehicleId,
@@ -81,37 +80,37 @@ export class SamsaraService implements TelematicsProvider {
         fuelLevel: stats.fuelLevelPercent,
         odometer: stats.odometerMeters / 1609.34, // Convert meters to miles
         diagnosticCodes: stats.faultCodes?.map(code => code.faultCode) || [],
-      }
+      };
     } catch (error) {
-      logger.error('Error fetching vehicle data from Samsara:', error)
-      throw new Error(`Failed to fetch vehicle data from Samsara: ${error.message}`)
+      logger.error('Error fetching vehicle data from Samsara:', error);
+      throw new Error(`Failed to fetch vehicle data from Samsara: ${error.message}`);
     }
   }
 
   /**
    * Fetch driver data from Samsara
    */
-  async fetchDriverData(driverId: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<any> => {> {> { {> { {> {
+  async fetchDriverData(driverId: string): Promise<any> {
     try {
       // Validate API key
       if (!this.apiKey) {
-        throw new Error('Samsara API key not configured')
+        throw new Error('Samsara API key not configured');
       }
 
       // Fetch driver details
       const driverResponse = await axios.get(`${SAMSARA_API_BASE_URL}/fleet/drivers/${driverId}`, {
         headers: this.getHeaders(),
-      })
+      });
 
       // Fetch driver HOS (Hours of Service)
       const hosResponse = await axios.get(
         `${SAMSARA_API_BASE_URL}/fleet/drivers/${driverId}/hos_daily_logs`,
         { headers: this.getHeaders() }
-      )
+      );
 
       // Extract and transform the data
-      const driver = driverResponse.data
-      const hos = hosResponse.data
+      const driver = driverResponse.data;
+      const hos = hosResponse.data;
 
       return {
         driverId,
@@ -128,26 +127,26 @@ export class SamsaraService implements TelematicsProvider {
           cycleRemaining: hos.cycleRemainingMs / 3600000,
           status: hos.status,
         },
-      }
+      };
     } catch (error) {
-      logger.error('Error fetching driver data from Samsara:', error)
-      throw new Error(`Failed to fetch driver data from Samsara: ${error.message}`)
+      logger.error('Error fetching driver data from Samsara:', error);
+      throw new Error(`Failed to fetch driver data from Samsara: ${error.message}`);
     }
   }
 
   /**
    * Fetch events from Samsara
    */
-  async fetchEvents(startTime: Date, endTime: Date): Promise<): Promise<): Promise<): Promise<): ): ): Promise<any[]> => {> {> { {> { {> {
+  async fetchEvents(startTime: Date, endTime: Date): Promise<any[]> {
     try {
       // Validate API key
       if (!this.apiKey) {
-        throw new Error('Samsara API key not configured')
+        throw new Error('Samsara API key not configured');
       }
 
       // Convert dates to Unix timestamps (ms)
-      const startMs = startTime.getTime()
-      const endMs = endTime.getTime()
+      const startMs = startTime.getTime();
+      const endMs = endTime.getTime();
 
       // Fetch events
       const response = await axios.get(`${SAMSARA_API_BASE_URL}/events`, {
@@ -157,7 +156,7 @@ export class SamsaraService implements TelematicsProvider {
           startMs,
           endMs,
         },
-      })
+      });
 
       return response.data.events.map(event => ({
         type: event.type,
@@ -170,38 +169,38 @@ export class SamsaraService implements TelematicsProvider {
           eventType: event.eventType,
           description: event.description,
         },
-      }))
+      }));
     } catch (error) {
-      logger.error('Error fetching events from Samsara:', error)
-      throw new Error(`Failed to fetch events from Samsara: ${error.message}`)
+      logger.error('Error fetching events from Samsara:', error);
+      throw new Error(`Failed to fetch events from Samsara: ${error.message}`);
     }
   }
 
   /**
    * Subscribe to events from Samsara
    */
-  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<any> => {> {> { {> { {> {
+  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<any> {
     try {
       // Validate API key
       if (!this.apiKey) {
-        throw new Error('Samsara API key not configured')
+        throw new Error('Samsara API key not configured');
       }
 
       // Map our event types to Samsara event types
       const samsaraEventTypes = eventTypes.map(type => {
         switch (type) {
           case 'vehicle_location':
-            return 'vehicle.location'
+            return 'vehicle.location';
           case 'driver_hours':
-            return 'driver.hours_of_service'
+            return 'driver.hours_of_service';
           case 'safety_event':
-            return 'safety.event'
+            return 'safety.event';
           case 'diagnostic_fault':
-            return 'vehicle.diagnostic_fault'
+            return 'vehicle.diagnostic_fault';
           default:
-            return type
+            return type;
         }
-      })
+      });
 
       // Create webhook subscription
       const response = await axios.post(
@@ -212,16 +211,16 @@ export class SamsaraService implements TelematicsProvider {
           eventTypes: samsaraEventTypes,
         },
         { headers: this.getHeaders() }
-      )
+      );
 
       return {
         subscriptionId: response.data.id,
         status: response.data.status,
         eventTypes: response.data.eventTypes,
-      }
+      };
     } catch (error) {
-      logger.error('Error subscribing to Samsara events:', error)
-      throw new Error(`Failed to subscribe to Samsara events: ${error.message}`)
+      logger.error('Error subscribing to Samsara events:', error);
+      throw new Error(`Failed to subscribe to Samsara events: ${error.message}`);
     }
   }
 }

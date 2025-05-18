@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -63,12 +63,12 @@ const READING_TYPES = {
  * @param companyId - The company ID for context
  * @param isAdmin - Whether the user is an admin
  */
-export const export const getScaleReading = async (
+export const getScaleReading = async (
   scaleId: number,
   readingType: string,
   companyId: number,
   isAdmin: boolean = false
-): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ success: boolean; reading?: number; error?: string; rawData?: any }> => {> {> { {> { {> {
+): Promise<{ success: boolean; reading?: number; error?: string; rawData?: any }> {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId, isAdmin)
@@ -146,11 +146,11 @@ export const export const getScaleReading = async (
  * @param scaleId - The ID of the scale
  * @param companyId - The company ID for context
  */
-export const export const processIoTSensorData = async (
+export const processIoTSensorData = async (
   sensorData: any,
   scaleId: number,
   companyId: number
-): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ success: boolean; reading?: number; error?: string }> => {> {> { {> { {> {
+): Promise<{ success: boolean; reading?: number; error?: string }> {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId)
@@ -195,10 +195,10 @@ export const export const processIoTSensorData = async (
  * @param ticketImageUrl - URL to the scanned ticket image
  * @param companyId - The company ID for context
  */
-export const export const processCameraScannedTicket = async (
+export const processCameraScannedTicket = async (
   ticketImageUrl: string,
   companyId: number
-): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ success: boolean; ticketData?: any; error?: string }> => {> {> { {> { {> {
+): Promise<{ success: boolean; ticketData?: any; error?: string }> {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId)
@@ -300,13 +300,13 @@ export const getAvailableHardwareOptions = (): { success: boolean; options?: any
  * @param companyId - The company ID for context
  * @param isAdmin - Whether the user is an admin
  */
-export const export const configureIoTHardware = async (
+export const configureIoTHardware = async (
   scaleId: number,
   hardwareType: string,
   config: any,
   companyId: number,
   isAdmin: boolean = false
-): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ success: boolean; message?: string; error?: string }> => {> {> { {> { {> {
+): Promise<{ success: boolean; message?: string; error?: string }> {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId, isAdmin)
@@ -351,7 +351,7 @@ export const export const configureIoTHardware = async (
 // Implementation of scale-specific reading functions
 // These would be implemented based on each manufacturer's API specifications
 
-async function getRiceLakeReading(scale: any, readingType: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ reading?: number; rawData?: any }> => {> {> { {> { {> {
+async function getRiceLakeReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
   try {
     // Mock implementation - would be replaced with actual API call
     const response = await axios.get(`${scale.api_endpoint}/weight`, {
@@ -371,7 +371,7 @@ async function getRiceLakeReading(scale: any, readingType: string): Promise<): P
   }
 }
 
-async function getMettlerToledoReading(scale: any, readingType: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ reading?: number; rawData?: any }> => {> {> { {> { {> {
+async function getMettlerToledoReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
   // Mock implementation
   return {
     reading: 32500,
@@ -379,7 +379,7 @@ async function getMettlerToledoReading(scale: any, readingType: string): Promise
   }
 }
 
-async function getAveryWeighTronixReading(scale: any, readingType: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ reading?: number; rawData?: any }> => {> {> { {> { {> {
+async function getAveryWeighTronixReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
   // Mock implementation
   return {
     reading: 32500,
@@ -387,7 +387,7 @@ async function getAveryWeighTronixReading(scale: any, readingType: string): Prom
   }
 }
 
-async function getFairbanksReading(scale: any, readingType: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ reading?: number; rawData?: any }> => {> {> { {> { {> {
+async function getFairbanksReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
   // Mock implementation
   return {
     reading: 32500,
@@ -395,7 +395,7 @@ async function getFairbanksReading(scale: any, readingType: string): Promise<): 
   }
 }
 
-async function getCardinalReading(scale: any, readingType: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ reading?: number; rawData?: any }> => {> {> { {> { {> {
+async function getCardinalReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
   // Mock implementation
   return {
     reading: 32500,
@@ -403,7 +403,7 @@ async function getCardinalReading(scale: any, readingType: string): Promise<): P
   }
 }
 
-async function getGenericHttpReading(scale: any, readingType: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ reading?: number; rawData?: any }> => {> {> { {> { {> {
+async function getGenericHttpReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
   try {
     const response = await axios.get(scale.api_endpoint, {
       headers: {
@@ -425,7 +425,7 @@ async function getGenericHttpReading(scale: any, readingType: string): Promise<)
   }
 }
 
-async function getGenericModbusReading(scale: any, readingType: string): Promise<): Promise<): Promise<): Promise<): ): ): Promise<{ reading?: number; rawData?: any }> => {> {> { {> { {> {
+async function getGenericModbusReading(scale: any, readingType: string): Promise<{ reading?: number; rawData?: any }> {
   // Mock implementation - would require a Modbus TCP/IP client library
   return {
     reading: 32500,

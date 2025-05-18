@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * City Dashboard Routes
@@ -287,26 +286,26 @@ async function routes(fastify, _options) {
       }
 
       // Get active scales count
-      const { count: activeScales, error: _activeScalesError } = await supabase
+      const { count: activeScales } = await supabase
         .from('city_scales')
         .select('*', { count: 'exact', head: true })
         .eq('city_id', cityId)
         .eq('status', 'Active');
 
       // Get total weighings count
-      const { count: totalWeighings, error: _weighingsError } = await supabase
+      const { count: totalWeighings } = await supabase
         .from('city_weigh_tickets')
         .select('*', { count: 'exact', head: true })
         .eq('city_id', cityId);
 
       // Get revenue collected (sum of permit fees and violation fines)
-      const { data: permitRevenue, error: _permitRevenueError } = await supabase
+      const { data: permitRevenue } = await supabase
         .from('city_permits')
         .select('fee_amount')
         .eq('city_id', cityId)
         .eq('payment_status', 'Paid');
 
-      const { data: fineRevenue, error: _fineRevenueError } = await supabase
+      const { data: fineRevenue } = await supabase
         .from('city_violations')
         .select('fine_amount')
         .eq('city_id', cityId)
@@ -324,7 +323,7 @@ async function routes(fastify, _options) {
       const revenueCollected = totalPermitRevenue + totalFineRevenue;
 
       // Get compliance rate
-      const { data: complianceData, error: _complianceError } = await supabase
+      const { data: complianceData } = await supabase
         .from('city_weigh_tickets')
         .select('status')
         .eq('city_id', cityId);
@@ -338,14 +337,14 @@ async function routes(fastify, _options) {
       }
 
       // Get pending permits count
-      const { count: pendingPermits, error: _pendingPermitsError } = await supabase
+      const { count: pendingPermits } = await supabase
         .from('city_permits')
         .select('*', { count: 'exact', head: true })
         .eq('city_id', cityId)
         .eq('payment_status', 'Pending');
 
       // Get active permits count
-      const { count: activePermits, error: _activePermitsError } = await supabase
+      const { count: activePermits } = await supabase
         .from('city_permits')
         .select('*', { count: 'exact', head: true })
         .eq('city_id', cityId)
@@ -355,7 +354,7 @@ async function routes(fastify, _options) {
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-      const { count: recentViolations, error: _recentViolationsError } = await supabase
+      const { count: recentViolations } = await supabase
         .from('city_violations')
         .select('*', { count: 'exact', head: true })
         .eq('city_id', cityId)
