@@ -31,7 +31,22 @@
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "no-console": ["warn", { "allow": ["warn", "error"] }],
-    "@typescript-eslint/ban-ts-comment": "off"
+    "@typescript-eslint/ban-ts-comment": "off",
+    "no-extra-semi": "error",
+    "semi": ["error", "always"],
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "never" }],
+    "react/jsx-no-duplicate-props": "error",
+    "jsx-quotes": ["error", "prefer-double"],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "never"
+      }
+    ]
   },
   "env": {
     "browser": true,

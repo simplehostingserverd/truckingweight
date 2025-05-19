@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run typecheck && npm run lint",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
@@ -14,7 +15,10 @@
     "format:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "lint:all": "npm run lint:fix && npm run format:fix",
     "analyze": "cross-env ANALYZE=true next build",
-    "test": "jest || echo 'No tests found'"
+    "test": "jest || echo 'No tests found'",
+    "typecheck": "tsc --noEmit",
+    "validate": "npm run lint && npm run format:check && npm run typecheck",
+    "prepare-commit": "npm run lint:fix && npm run format:fix && npm run typecheck"
   },
   "dependencies": {
     "@cesium/engine": "^17.0.0",
