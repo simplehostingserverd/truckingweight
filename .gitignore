@@ -110,3 +110,16 @@ frontend/public/cesium/
 *.so
 *.dylib
 *.node
+
+# Additional files to ignore (added by cleanup script)
+*.cache
+*.log
+*.tmp
+.DS_Store
+frontend/debug_output.log
+frontend/public/videos/
+frontend/public/cesium/
+# Large image files
+frontend/public/images/city-weighing-bg.jpg
+frontend/public/logos/cities/austin.jpeg
+frontend/public/images/truck_PNG16270.png
