@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,15 +14,15 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { AxleWeight, ComplianceIssue, WeighTicket } from '@/types/scale-master';
 import {
-  CheckCircleIcon,
-  ExclamationTriangleIcon,
-  ExclamationCircleIcon,
-  InformationCircleIcon,
+    CheckCircleIcon,
+    ExclamationCircleIcon,
+    ExclamationTriangleIcon,
+    InformationCircleIcon,
 } from '@heroicons/react/24/outline';
-import { WeighTicket, AxleWeight, ComplianceIssue } from '@/types/scale-master';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useEffect, useState } from 'react';
 
 interface ComplianceCheckProps {
   ticketId: number;
@@ -39,6 +39,13 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
   // Load ticket and compliance data
   useEffect(() => {
     const fetchData = async () => {
+      // Don't attempt to fetch if ticketId is invalid
+      if (!ticketId || isNaN(Number(ticketId))) {
+        setError('Invalid ticket ID provided');
+        setIsLoading(false);
+        return;
+      }
+
       try {
         setIsLoading(true);
         setError(null);
@@ -61,6 +68,10 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
           throw new Error(`Failed to fetch ticket: ${ticketError.message}`);
         }
 
+        if (!ticketData) {
+          throw new Error('Ticket not found');
+        }
+
         setTicket(ticketData);
         setAxleWeights(ticketData.axle_weights || []);
         setComplianceIssues(ticketData.compliance_issues || []);
@@ -80,6 +91,10 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
         setError(
           `Failed to load compliance data: ${error instanceof Error ? error.message : 'Unknown error'}`
         );
+        // Reset state on error
+        setTicket(null);
+        setAxleWeights([]);
+        setComplianceIssues([]);
       } finally {
         setIsLoading(false);
       }
@@ -91,10 +106,18 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
   // Generate compliance issues based on axle weights
   const generateComplianceIssues = async (ticket: WeighTicket, axleWeights: AxleWeight[]) => {
     try {
+      // Validate inputs
+      if (!ticket || !axleWeights || axleWeights.length === 0) {
+        console.warn('Invalid inputs for compliance issue generation');
+        return;
+      }
+
       const issues: Omit<ComplianceIssue, 'id' | 'created_at'>[] = [];
 
       // Check for overweight axles
-      const overweightAxles = axleWeights.filter(aw => aw.weight > aw.max_legal_weight);
+      const overweightAxles = axleWeights.filter(aw =>
+        aw.weight && aw.max_legal_weight && aw.weight > aw.max_legal_weight
+      );
 
       if (overweightAxles.length > 0) {
         // Add an issue for each overweight axle
@@ -114,9 +137,10 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
 
       // Check for gross weight issues
       if (ticket.gross_weight && ticket.vehicle?.max_gross_weight) {
-        const maxGrossWeight = parseInt(ticket.vehicle.max_gross_weight);
+        // Ensure max_gross_weight is a valid number
+        const maxGrossWeight = parseInt(String(ticket.vehicle.max_gross_weight));
 
-        if (ticket.gross_weight > maxGrossWeight) {
+        if (!isNaN(maxGrossWeight) && ticket.gross_weight > maxGrossWeight) {
           const overAmount = ticket.gross_weight - maxGrossWeight;
           const overPercent = Math.round((overAmount / maxGrossWeight) * 100);
 
@@ -152,10 +176,13 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
           throw new Error(`Failed to save compliance issues: ${error.message}`);
         }
 
-        setComplianceIssues(savedIssues);
+        if (savedIssues) {
+          setComplianceIssues(savedIssues);
+        }
       }
     } catch (error) {
       console.error('Error generating compliance issues:', error);
+      setError(`Error generating compliance issues: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
@@ -203,32 +230,28 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <div className="flex justify-center items-center h-40">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <div className="p-4 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 rounded-md">
-          <ExclamationCircleIcon className="h-6 w-6 inline mr-2" />
-          {error}
-        </div>
-      </div>
-    );
-  }
-
+  // Render the component with a consistent outer container
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
       <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Compliance Check</h2>
 
-      {ticket && (
+      {/* Loading state */}
+      {isLoading && (
+        <div className="flex justify-center items-center h-40">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+        </div>
+      )}
+
+      {/* Error state */}
+      {!isLoading && error && (
+        <div className="p-4 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 rounded-md">
+          <ExclamationCircleIcon className="h-6 w-6 inline mr-2" />
+          {error}
+        </div>
+      )}
+
+      {/* Content when data is loaded successfully */}
+      {!isLoading && !error && ticket && (
         <div className="space-y-6">
           {/* Overall Compliance Status */}
           <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
@@ -336,6 +359,14 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
               No specific compliance issues found.
             </div>
           )}
+        </div>
+      )}
+
+      {/* No data state - when not loading, no error, but no ticket */}
+      {!isLoading && !error && !ticket && (
+        <div className="p-4 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-300 rounded-lg">
+          <InformationCircleIcon className="h-6 w-6 inline mr-2" />
+          No compliance data available for this ticket.
         </div>
       )}
     </div>

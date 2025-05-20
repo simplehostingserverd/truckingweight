@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,9 +14,9 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { toSearchParamNumber, toSearchParamString } from '@/utils/searchParams';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { toSearchParamString, toSearchParamNumber, createSearchParams } from '@/utils/searchParams';
+import { useState } from 'react';
 
 /**
  * Example component demonstrating safe search parameter handling
@@ -40,15 +40,25 @@ export default function SearchParamsExample() {
 
   // Update URL when filters change
   const updateFilters = () => {
-    // Create a pathname object for the router
-    router.push({
-      pathname: window.location.pathname,
-      query: {
-        query: searchQuery,
-        page: currentPage,
-        ...(selectedCategory !== 'all' ? { category: selectedCategory } : {}),
-      },
-    });
+    // Create a URLSearchParams object
+    const params = new URLSearchParams();
+
+    // Add parameters only if they have values
+    if (searchQuery) {
+      params.set('query', searchQuery);
+    }
+
+    params.set('page', currentPage.toString());
+
+    if (selectedCategory !== 'all') {
+      params.set('category', selectedCategory);
+    }
+
+    // Create the URL with search parameters
+    const url = `${window.location.pathname}?${params.toString()}`;
+
+    // Navigate to the new URL
+    router.push(url);
   };
 
   // Handle search form submission

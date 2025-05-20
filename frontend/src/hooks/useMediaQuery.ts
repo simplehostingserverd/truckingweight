@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,13 +14,7 @@
 
 'use client';
 
-/**
- * TEMPORARY IMPLEMENTATION
- *
- * This is a placeholder implementation to avoid React errors.
- * All hooks return false to prevent any rendering issues.
- * Components should implement their own responsive logic directly.
- */
+import { useEffect, useState } from 'react';
 
 // Predefined breakpoints based on Tailwind CSS defaults
 export const breakpoints = {
@@ -31,22 +25,62 @@ export const breakpoints = {
   '2xl': '(min-width: 1536px)',
 };
 
-// Placeholder implementation that always returns false
-export function useMediaQuery(_query: string): boolean {
-  return false;
+/**
+ * Hook to check if a media query matches
+ * @param query Media query string to check
+ * @returns Boolean indicating if the media query matches
+ */
+export function useMediaQuery(query: string): boolean {
+  // Initialize with null to avoid hydration mismatch
+  const [matches, setMatches] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    // Set initial value after component mounts to avoid hydration mismatch
+    setMatches(window.matchMedia(query).matches);
+
+    // Create media query list
+    const mediaQueryList = window.matchMedia(query);
+
+    // Define callback for media query change
+    const handleChange = (event: MediaQueryListEvent) => {
+      setMatches(event.matches);
+    };
+
+    // Add listener for media query changes
+    mediaQueryList.addEventListener('change', handleChange);
+
+    // Cleanup function
+    return () => {
+      mediaQueryList.removeEventListener('change', handleChange);
+    };
+  }, [query]);
+
+  // Return false during SSR to avoid hydration mismatch
+  return matches === null ? false : matches;
 }
 
-// Hooks for common breakpoints - all return false to avoid React errors
+/**
+ * Hook to check if the viewport is mobile size (< 768px)
+ * @returns Boolean indicating if the viewport is mobile size
+ */
 export function useIsMobile(): boolean {
-  return false;
+  return useMediaQuery(`(max-width: 767px)`);
 }
 
+/**
+ * Hook to check if the viewport is tablet size (768px - 1023px)
+ * @returns Boolean indicating if the viewport is tablet size
+ */
 export function useIsTablet(): boolean {
-  return false;
+  return useMediaQuery(`(min-width: 768px) and (max-width: 1023px)`);
 }
 
+/**
+ * Hook to check if the viewport is desktop size (>= 1024px)
+ * @returns Boolean indicating if the viewport is desktop size
+ */
 export function useIsDesktop(): boolean {
-  return false;
+  return useMediaQuery(`(min-width: 1024px)`);
 }
 
 export default useMediaQuery;

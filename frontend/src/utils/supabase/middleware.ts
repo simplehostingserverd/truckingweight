@@ -1,23 +1,23 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
 
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 import type { Database } from '@/types/supabase';
-import { getSupabaseConfig } from './config';
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import { getSupabaseConfig } from './config';
 
 // This middleware refreshes the user's session and must be run
 // for any Server Component route that uses a Supabase client
@@ -27,19 +27,30 @@ export async function middleware(req: NextRequest) {
   // Apply security headers
 
   // Content-Security-Policy - Helps prevent XSS attacks
-  // More permissive in development mode to help with debugging
-  if (process.env.NODE_ENV === 'production') {
-    res.headers.set(
-      'Content-Security-Policy',
-      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co; img-src 'self' data: https://images.pexels.com https://*.supabase.co; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; frame-src 'self';"
-    );
-  } else {
-    // More permissive for development
-    res.headers.set(
-      'Content-Security-Policy',
-      "default-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';"
-    );
-  }
+  // Use a balanced approach that works for both development and production
+  // but is still secure
+  const cspValue = [
+    // Default fallback - restrict to same origin
+    "default-src 'self'",
+    // Scripts - allow inline and eval for development tools and libraries
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co",
+    // Connect - allow Supabase and API connections
+    "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.mapbox.com https://events.mapbox.com",
+    // Images - allow various sources including data URIs
+    "img-src 'self' data: blob: https://images.pexels.com https://*.supabase.co https://upload.wikimedia.org https://*.mapbox.com",
+    // Styles - allow inline for component libraries
+    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+    // Fonts - allow data URIs and CDNs
+    "font-src 'self' data: https://cdn.jsdelivr.net",
+    // Frames - restrict to same origin
+    "frame-src 'self'",
+    // Media - restrict to same origin and data URIs
+    "media-src 'self' data:",
+    // Object - restrict completely
+    "object-src 'none'",
+  ].join('; ');
+
+  res.headers.set('Content-Security-Policy', cspValue);
 
   // Add CORS headers to allow Supabase requests
   res.headers.set('Access-Control-Allow-Origin', '*');
