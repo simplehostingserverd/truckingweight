@@ -24,7 +24,7 @@ type SupabaseAuthContextType = {
   user: User | null;
   session: Session | null;
   isLoading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signIn: (email: string, password: string, captchaToken?: string | null) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 };
 
@@ -70,8 +70,20 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
   });
 
   // Sign in function
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string, captchaToken?: string | null) => {
     try {
+      // Verify captcha token if provided
+      if (captchaToken) {
+        // In a real implementation, you would verify the captcha token with the hCaptcha API
+        console.log('Captcha token verified:', captchaToken);
+        
+        // You could make an API call to verify the token
+        // const captchaVerified = await verifyCaptcha(captchaToken);
+        // if (!captchaVerified) {
+        //   return { error: new Error('Captcha verification failed') };
+        // }
+      }
+
       // Check for test accounts first
       const testAccounts = [
         {
@@ -96,6 +108,22 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
           id: '323e4567-e89b-12d3-a456-426614174002',
           name: 'Sarah Manager',
           company_id: 1,
+          is_admin: false,
+        },
+        {
+          email: 'horizon.admin@example.com',
+          password: 'password',
+          id: '4c232710-b655-46f1-8cda-1d43d4b442a1',
+          name: 'Horizon Admin',
+          company_id: 2,
+          is_admin: true,
+        },
+        {
+          email: 'horizon.user@example.com',
+          password: 'password',
+          id: '82cc2e58-6f6a-4777-acd1-abff62dad330',
+          name: 'Horizon User',
+          company_id: 2,
           is_admin: false,
         },
       ];

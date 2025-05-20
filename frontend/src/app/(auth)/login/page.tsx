@@ -14,10 +14,11 @@
 'use client';
 
 import { useSupabaseAuth } from '@/providers/SupabaseAuthProvider';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -25,6 +26,9 @@ export default function Login() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState('');
+  const captchaRef = useRef<HCaptcha>(null);
   const router = useRouter();
   const { signIn } = useSupabaseAuth();
 
@@ -32,10 +36,18 @@ export default function Login() {
     e.preventDefault();
     setIsLoading(true);
     setError('');
+    setCaptchaError('');
+
+    // Validate captcha
+    if (!captchaToken) {
+      setCaptchaError('Please complete the captcha verification');
+      setIsLoading(false);
+      return;
+    }
 
     try {
       // Use our custom auth provider to sign in
-      const { error } = await signIn(email, password);
+      const { error } = await signIn(email, password, captchaToken);
 
       if (error) {
         throw error;
@@ -45,9 +57,29 @@ export default function Login() {
     } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'Invalid email or password');
       console.error('Login error:', err);
+      
+      // Reset captcha on error
+      captchaRef.current?.resetCaptcha();
+      setCaptchaToken(null);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const onCaptchaVerify = (token: string) => {
+    setCaptchaToken(token);
+    setCaptchaError('');
+  };
+
+  const onCaptchaError = (err: Error) => {
+    console.error('hCaptcha error:', err);
+    setCaptchaError('Captcha verification failed. Please try again.');
+    setCaptchaToken(null);
+  };
+
+  const onCaptchaExpire = () => {
+    setCaptchaToken(null);
+    setCaptchaError('Captcha expired. Please verify again.');
   };
 
   return (
@@ -171,9 +203,26 @@ export default function Login() {
               </label>
             </div>
 
+            {/* hCaptcha component */}
+            <div className="flex justify-center">
+              <HCaptcha
+                sitekey="10000000-ffff-ffff-ffff-000000000001" // Replace with your actual site key
+                onVerify={onCaptchaVerify}
+                onError={onCaptchaError}
+                onExpire={onCaptchaExpire}
+                ref={captchaRef}
+                theme="dark"
+                size="normal"
+              />
+            </div>
+            
+            {captchaError && (
+              <div className="text-red-500 text-sm text-center">{captchaError}</div>
+            )}
+
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || !captchaToken}
               className="w-full py-3 px-4 rounded-md bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-white font-medium transition-colors disabled:opacity-70"
             >
               {isLoading ? 'Signing in...' : 'Login'}
