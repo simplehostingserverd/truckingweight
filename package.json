@@ -2,7 +2,7 @@
   "name": "cosmo-exploit-weight-management",
   "version": "2.0.0",
   "description": "A proprietary weight management system by Cosmo Exploit Group LLC for trucking companies to manage weight checking and load management.",
-  "main": "index.js",
+  "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "push-schema": "node scripts/push-schema.mjs",

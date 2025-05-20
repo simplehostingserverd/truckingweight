@@ -50,20 +50,27 @@ export async function POST(request: NextRequest) {
           return NextResponse.json({ success: true });
         }
 
-        return NextResponse.json({
-          success: false,
-          error: 'Invalid captcha',
-          details: data['error-codes']
-        }, { status: 400 });
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'Invalid captcha',
+            details: data['error-codes'],
+          },
+          { status: 400 }
+        );
       }
 
       // Verification successful
-    return NextResponse.json({ success: true });
+      return NextResponse.json({ success: true });
+    } catch (error) {
+      console.error('Error verifying captcha:', error);
+      return NextResponse.json(
+        { success: false, error: 'Failed to verify captcha' },
+        { status: 500 }
+      );
+    }
   } catch (error) {
-    console.error('Error verifying captcha:', error);
-    return NextResponse.json(
-      { success: false, error: 'Failed to verify captcha' },
-      { status: 500 }
-    );
+    console.error('Error processing request:', error);
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }
