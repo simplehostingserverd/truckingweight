@@ -13,18 +13,22 @@
 
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Session, User } from '@supabase/supabase-js';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { getSupabaseConfig } from '@/utils/supabase/config';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Session, User } from '@supabase/supabase-js';
+import { useRouter } from 'next/navigation';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 // Define the context type
 type SupabaseAuthContextType = {
   user: User | null;
   session: Session | null;
   isLoading: boolean;
-  signIn: (email: string, password: string, captchaToken?: string | null) => Promise<{ error: any }>;
+  signIn: (
+    email: string,
+    password: string,
+    captchaToken?: string | null
+  ) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 };
 
@@ -74,14 +78,27 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
     try {
       // Verify captcha token if provided
       if (captchaToken) {
-        // In a real implementation, you would verify the captcha token with the hCaptcha API
-        console.log('Captcha token verified:', captchaToken);
-        
-        // You could make an API call to verify the token
-        // const captchaVerified = await verifyCaptcha(captchaToken);
-        // if (!captchaVerified) {
-        //   return { error: new Error('Captcha verification failed') };
-        // }
+        try {
+          // Verify the captcha token with our API
+          const response = await fetch('/api/verify-captcha', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token: captchaToken }),
+          });
+
+          const data = await response.json();
+
+          if (!data.success) {
+            return { error: new Error('Captcha verification failed') };
+          }
+
+          console.log('Captcha token verified successfully');
+        } catch (error) {
+          console.error('Error verifying captcha:', error);
+          return { error: new Error('Captcha verification failed') };
+        }
       }
 
       // Check for test accounts first
@@ -172,11 +189,11 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
       if (!error && data.session) {
         // Get the session to ensure JWT is properly set
         console.log('Successfully authenticated with Supabase JWT');
-        
+
         // Set the session and user
         setSession(data.session);
         setUser(data.user);
-        
+
         router.push('/dashboard');
         router.refresh();
       }
@@ -193,29 +210,29 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
     try {
       // Sign out using Supabase Auth
       await supabase.auth.signOut();
-      
+
       // Also clear local storage for backward compatibility
       localStorage.removeItem('cityToken');
       localStorage.removeItem('cityUser');
-      
+
       // Clear state
       setUser(null);
       setSession(null);
-      
+
       // Redirect to login page
       router.push('/login');
       router.refresh(); // Important to refresh the router
     } catch (error) {
       console.error('Error signing out:', error);
-      
+
       // Fallback to manual logout if Supabase Auth fails
       localStorage.removeItem('cityToken');
       localStorage.removeItem('cityUser');
-      
+
       // Clear state
       setUser(null);
       setSession(null);
-      
+
       router.push('/login');
       router.refresh();
     }

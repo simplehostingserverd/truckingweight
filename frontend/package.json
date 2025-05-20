@@ -2,7 +2,6 @@
   "name": "truckingsemis-frontend",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "next dev",
     "prebuild": "npm run typecheck && npm run lint",
@@ -18,7 +17,11 @@
     "test": "jest || echo 'No tests found'",
     "typecheck": "tsc --noEmit",
     "validate": "npm run lint && npm run format:check && npm run typecheck",
-    "prepare-commit": "npm run lint:fix && npm run format:fix && npm run typecheck"
+    "prepare-commit": "npm run lint:fix && npm run format:fix && npm run typecheck",
+    "pages:dev": "wrangler pages dev .next --compatibility-date=2023-10-30 --compatibility-flag=nodejs_compat",
+    "pages:deploy": "wrangler pages deploy .next --project-name=simple-scale-solutions",
+    "pages:deploy:staging": "wrangler pages deploy .next --project-name=simple-scale-solutions --branch=staging",
+    "cloudflare:build": "next build && @cloudflare/next-on-pages"
   },
   "dependencies": {
     "@cesium/engine": "^17.0.0",
@@ -53,6 +56,7 @@
     "chart.js": "^4.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cookie": "^1.0.2",
     "date-fns": "^3.3.1",
     "deck.gl": "^9.1.11",
     "helmet": "^8.1.0",
@@ -62,8 +66,8 @@
     "lucide-react": "^0.363.0",
     "mapbox-gl": "^3.12.0",
     "next": "^14.0.4",
-    "next-themes": "^0.2.1",
     "next-seo": "^6.7.1",
+    "next-themes": "^0.2.1",
     "nodemailer": "^7.0.2",
     "postcss": "^8.5.3",
     "prom-client": "^15.1.0",

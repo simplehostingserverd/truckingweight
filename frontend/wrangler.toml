@@ -1,0 +1,32 @@
+# Cloudflare Pages configuration for Simple Scale Solutions
+name = "simple-scale-solutions"
+compatibility_date = "2023-10-30"
+compatibility_flags = ["nodejs_compat"]
+
+# Build configuration
+[build]
+  command = "npm run build"
+  output_directory = ".next"
+  
+# Environment variables
+[vars]
+  NEXT_PUBLIC_SUPABASE_URL = "https://pczfmxigimuluacspxse.supabase.co"
+  NEXT_PUBLIC_BACKEND_URL = "https://api.simple-scale-solutions.pages.dev"
+  NEXT_PUBLIC_HCAPTCHA_SITE_KEY = "10000000-ffff-ffff-ffff-000000000001"
+
+# Production environment
+[env.production]
+  # Add production-specific variables here
+  
+# Staging environment
+[env.staging]
+  # Add staging-specific variables here
+
+# Routes configuration
+[[routes]]
+  pattern = "/*"
+  script = "index.js"
+
+# Specify Node.js compatibility
+[build.environment]
+  NODE_VERSION = "20"

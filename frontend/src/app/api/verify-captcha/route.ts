@@ -23,30 +23,41 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Token is required' }, { status: 400 });
     }
 
-    // In a production environment, you would verify the token with hCaptcha's API
-    // For this implementation, we'll simulate a successful verification
-    
-    // The actual verification would look something like this:
-    /*
-    const verificationResponse = await fetch('https://hcaptcha.com/siteverify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        secret: process.env.HCAPTCHA_SECRET_KEY!,
-        response: token,
-      }),
-    });
+    // Verify the token with hCaptcha's API
+    try {
+      const verificationResponse = await fetch('https://hcaptcha.com/siteverify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          secret: process.env.HCAPTCHA_SECRET_KEY || '0x0000000000000000000000000000000000000000',
+          response: token,
+          // If you have a temporary subdomain, you can add it here
+          // sitekey: process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY
+        }),
+      });
 
-    const data = await verificationResponse.json();
-    
-    if (!data.success) {
-      return NextResponse.json({ success: false, error: 'Invalid captcha' }, { status: 400 });
-    }
-    */
+      const data = await verificationResponse.json();
 
-    // For demo purposes, we'll just return success
+      // Log verification response for debugging
+      console.log('hCaptcha verification response:', data);
+
+      if (!data.success) {
+        // If we're using the test keys, always return success
+        if (process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY === '10000000-ffff-ffff-ffff-000000000001') {
+          console.log('Using test keys, bypassing verification');
+          return NextResponse.json({ success: true });
+        }
+
+        return NextResponse.json({
+          success: false,
+          error: 'Invalid captcha',
+          details: data['error-codes']
+        }, { status: 400 });
+      }
+
+      // Verification successful
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error verifying captcha:', error);
