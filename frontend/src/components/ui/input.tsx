@@ -1,88 +1,147 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- *
+ * 
  * PROPRIETARY AND CONFIDENTIAL
- *
+ * 
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- *
- * This file contains proprietary and confidential information of
+ * 
+ * This file contains proprietary and confidential information of 
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-import * as React from 'react';
 
+'use client';
+
+import React from 'react';
 import { cn } from '@/lib/utils';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  /** Error message to display */
+  /**
+   * Label for the input
+   */
+  label?: string;
+
+  /**
+   * Helper text to display below the input
+   */
+  helperText?: string;
+
+  /**
+   * Error message to display
+   */
   error?: string;
-  /** Whether the input is in a loading state */
-  isLoading?: boolean;
-  /** Icon to display at the start of the input */
+
+  /**
+   * Icon to display at the start of the input
+   */
   startIcon?: React.ReactNode;
-  /** Icon to display at the end of the input */
+
+  /**
+   * Icon to display at the end of the input
+   */
   endIcon?: React.ReactNode;
+
+  /**
+   * Whether the input is in a loading state
+   */
+  isLoading?: boolean;
 }
 
+/**
+ * Input component for forms
+ */
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, error, isLoading, startIcon, endIcon, disabled, id, ...props }, ref) => {
-    // Generate a unique ID for the input if not provided
-    const inputId = id || React.useId();
-
-    // Generate an ID for the error message if there is an error
-    const errorId = error ? `${inputId}-error` : undefined;
-
-    // Determine if input is disabled (either explicitly or due to loading)
-    const isDisabled = disabled || isLoading;
+  (
+    {
+      className,
+      label,
+      helperText,
+      error,
+      startIcon,
+      endIcon,
+      isLoading = false,
+      id,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
+    // Generate a unique ID if one is not provided
+    const inputId = id || `input-${Math.random().toString(36).substring(2, 9)}`;
 
     return (
-      <div className="relative">
-        {startIcon && (
-          <div
-            className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-            aria-hidden="true"
-          >
-            {startIcon}
-          </div>
+      <div className="space-y-2">
+        {label && (
+          <label htmlFor={inputId} className="block text-sm font-medium text-foreground">
+            {label}
+          </label>
         )}
 
-        <input
-          id={inputId}
-          type={type}
-          className={cn(
-            'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-            error && 'border-destructive focus-visible:ring-destructive',
-            startIcon && 'pl-10',
-            endIcon && 'pr-10',
-            className
+        <div className="relative">
+          {startIcon && (
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              {startIcon}
+            </div>
           )}
-          ref={ref}
-          disabled={isDisabled}
-          aria-invalid={error ? 'true' : 'false'}
-          aria-describedby={errorId}
-          {...props}
-        />
 
-        {endIcon && (
-          <div
-            className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none"
-            aria-hidden="true"
-          >
-            {endIcon}
-          </div>
-        )}
+          <input
+            ref={ref}
+            id={inputId}
+            className={cn(
+              'form-input',
+              startIcon && 'pl-10',
+              endIcon && 'pr-10',
+              error && 'border-alert-DEFAULT focus-visible:ring-alert-DEFAULT',
+              className
+            )}
+            disabled={disabled || isLoading}
+            {...props}
+          />
 
-        {error && (
-          <div id={errorId} className="mt-1 text-sm text-destructive" aria-live="polite">
-            {error}
-          </div>
+          {endIcon && (
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              {endIcon}
+            </div>
+          )}
+
+          {isLoading && (
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg
+                className="animate-spin h-4 w-4 text-muted-foreground"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </div>
+          )}
+        </div>
+
+        {(helperText || error) && (
+          <p className={cn('text-xs', error ? 'text-alert-DEFAULT' : 'text-muted-foreground')}>
+            {error || helperText}
+          </p>
         )}
       </div>
     );
   }
 );
+
 Input.displayName = 'Input';
 
-export { Input };
+export default Input;
