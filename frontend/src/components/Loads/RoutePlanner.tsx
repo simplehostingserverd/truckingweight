@@ -1,28 +1,28 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import mapboxService, { MapboxProfile, Route, Waypoint } from '@/services/mapboxService';
+import { formatDistance, formatDuration } from '@/utils/formatters';
 import {
-  DndContext,
   closestCenter,
+  DndContext,
+  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
-  DragEndEvent,
 } from '@dnd-kit/core';
 import {
   arrayMove,
@@ -32,9 +32,8 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { PlusIcon, MinusIcon, ArrowsUpDownIcon, MapPinIcon } from '@heroicons/react/24/outline';
-import mapboxService, { Waypoint, MapboxProfile, Route } from '@/services/mapboxService';
-import { formatDistance, formatDuration } from '@/utils/formatters';
+import { ArrowsUpDownIcon, MapPinIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { useEffect, useRef, useState } from 'react';
 
 interface RoutePlannerProps {
   initialOrigin?: string;
@@ -157,7 +156,7 @@ export default function RoutePlanner({
             estimatedArrival: arrival.toISOString(),
           });
         }
-      } catch (err: any /* @ts-ignore */ ) {
+      } catch (err: any /* @ts-ignore */) {
         // Log error for debugging but handle gracefully for users
         const errorMessage = err.message || 'Failed to calculate route';
         setError(errorMessage);
@@ -247,42 +246,63 @@ export default function RoutePlanner({
       transform: CSS.Transform.toString(transform),
       transition,
       opacity: isDragging ? 0.5 : 1,
+      position: 'relative' as const,
+      zIndex: isDragging ? 1 : 0,
     };
+
+    const isFixed = waypoint.id === 'origin' || waypoint.id === 'destination';
+    const waypointLabel =
+      waypoint.id === 'origin'
+        ? 'Origin'
+        : waypoint.id === 'destination'
+          ? 'Destination'
+          : `Waypoint ${index}`;
 
     return (
       <div
         ref={setNodeRef}
         style={style}
         className="flex items-center space-x-2 bg-gray-800 p-3 rounded-lg border border-gray-700"
+        role="listitem"
+        aria-roledescription={isFixed ? 'fixed waypoint' : 'sortable waypoint'}
       >
-        <div {...attributes} {...listeners} className="text-gray-400 cursor-grab">
-          <ArrowsUpDownIcon className="h-5 w-5" />
+        <div
+          {...attributes}
+          {...listeners}
+          className={`text-gray-400 ${isFixed ? 'cursor-not-allowed opacity-50' : 'cursor-grab'}`}
+          tabIndex={isFixed ? -1 : 0}
+          role={isFixed ? 'presentation' : 'button'}
+          aria-label={isFixed ? undefined : `Drag ${waypointLabel}`}
+          aria-disabled={isFixed}
+        >
+          <ArrowsUpDownIcon className="h-5 w-5" aria-hidden="true" />
         </div>
 
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-300 mb-1">
-            {waypoint.id === 'origin'
-              ? 'Origin'
-              : waypoint.id === 'destination'
-                ? 'Destination'
-                : `Waypoint ${index}`}
+          <label
+            htmlFor={`waypoint-${waypoint.id}`}
+            className="block text-sm font-medium text-gray-300 mb-1"
+          >
+            {waypointLabel}
           </label>
           <input
+            id={`waypoint-${waypoint.id}`}
             type="text"
             value={waypoint.address || ''}
             onChange={e => handleAddressChange(waypoint.id, e.target.value)}
             placeholder="Enter address"
             className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label={`Address for ${waypointLabel}`}
           />
         </div>
 
         {waypoint.id !== 'origin' && waypoint.id !== 'destination' && (
           <button
             onClick={() => removeWaypoint(waypoint.id)}
-            className="p-1.5 rounded-full bg-gray-700 text-gray-400 hover:bg-red-600 hover:text-white transition-colors"
-            aria-label="Remove waypoint"
+            className="p-1.5 rounded-full bg-gray-700 text-gray-400 hover:bg-red-600 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+            aria-label={`Remove ${waypointLabel}`}
           >
-            <MinusIcon className="h-4 w-4" />
+            <MinusIcon className="h-4 w-4" aria-hidden="true" />
           </button>
         )}
       </div>
@@ -310,22 +330,42 @@ export default function RoutePlanner({
             </button>
           </div>
 
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext
-              items={waypoints.map(wp => wp.id)}
-              strategy={verticalListSortingStrategy}
+          <div role="region" aria-label="Route waypoints">
+            <div className="sr-only" id="waypoint-instructions">
+              Use space or enter to select a waypoint, then use arrow keys to move it, and space or
+              enter again to drop it. Origin and destination waypoints cannot be reordered.
+            </div>
+
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+              accessibility={{
+                announcements: {
+                  onDragStart: ({ active }) => `Picked up waypoint ${active.id}`,
+                  onDragOver: ({ active, over }) =>
+                    over ? `Waypoint ${active.id} is over position ${over.id}` : '',
+                  onDragEnd: ({ active, over }) =>
+                    over
+                      ? `Waypoint ${active.id} was dropped over position ${over.id}`
+                      : 'Waypoint was dropped',
+                  onDragCancel: ({ active }) =>
+                    `Dragging was cancelled. Waypoint ${active.id} was returned to its starting position`,
+                },
+              }}
             >
-              <div className="space-y-3">
-                {waypoints.map((waypoint, index) => (
-                  <SortableWaypoint key={waypoint.id} waypoint={waypoint} index={index} />
-                ))}
-              </div>
-            </SortableContext>
-          </DndContext>
+              <SortableContext
+                items={waypoints.map(wp => wp.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                <div className="space-y-3" role="list" aria-describedby="waypoint-instructions">
+                  {waypoints.map((waypoint, index) => (
+                    <SortableWaypoint key={waypoint.id} waypoint={waypoint} index={index} />
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
+          </div>
 
           {/* Departure Time */}
           <div className="mt-6 space-y-4">

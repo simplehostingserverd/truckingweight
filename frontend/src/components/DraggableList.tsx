@@ -1,26 +1,24 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
-import React, { useState } from 'react';
 import {
-  DndContext,
   closestCenter,
+  DndContext,
+  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
-  DragEndEvent,
 } from '@dnd-kit/core';
 import {
   arrayMove,
@@ -30,6 +28,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import React, { useState } from 'react';
 
 // Define the item type
 interface Item {
@@ -39,7 +38,9 @@ interface Item {
 
 // Sortable item component
 const SortableItem = ({ id, content }: Item) => {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -51,11 +52,27 @@ const SortableItem = ({ id, content }: Item) => {
     borderRadius: '4px',
     cursor: 'grab',
     userSelect: 'none' as const,
+    position: 'relative' as const,
+    zIndex: isDragging ? 1 : 0,
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {content}
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      role="listitem"
+      aria-roledescription="sortable item"
+      aria-label={`Draggable item ${content}. Press space or enter to lift, arrow keys to move, space or enter to drop.`}
+      tabIndex={0}
+    >
+      <div className="flex items-center">
+        <span className="mr-2" aria-hidden="true">
+          ☰
+        </span>
+        <span>{content}</span>
+      </div>
     </div>
   );
 };
@@ -100,15 +117,37 @@ const DraggableList: React.FC<DraggableListProps> = ({ items: initialItems, onRe
   };
 
   return (
-    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext items={items.map(item => item.id)} strategy={verticalListSortingStrategy}>
-        <div>
-          {items.map(item => (
-            <SortableItem key={item.id} id={item.id} content={item.content} />
-          ))}
-        </div>
-      </SortableContext>
-    </DndContext>
+    <div role="region" aria-label="Sortable list" className="draggable-list-container">
+      <div className="sr-only" id="drag-instructions">
+        Use space or enter to select an item, then use arrow keys to move it, and space or enter
+        again to drop it.
+      </div>
+
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+        accessibility={{
+          announcements: {
+            onDragStart: ({ active }) => `Picked up item ${active.id}`,
+            onDragOver: ({ active, over }) =>
+              over ? `Item ${active.id} is over position ${over.id}` : '',
+            onDragEnd: ({ active, over }) =>
+              over ? `Item ${active.id} was dropped over position ${over.id}` : 'Item was dropped',
+            onDragCancel: ({ active }) =>
+              `Dragging was cancelled. Item ${active.id} was returned to its starting position`,
+          },
+        }}
+      >
+        <SortableContext items={items.map(item => item.id)} strategy={verticalListSortingStrategy}>
+          <div role="list" aria-describedby="drag-instructions">
+            {items.map((item, index) => (
+              <SortableItem key={item.id} id={item.id} content={item.content} />
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
+    </div>
   );
 };
 

@@ -15,6 +15,7 @@
 
 import ErrorBoundary from '@/components/ErrorBoundary';
 import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration';
+import { AccessibilityProvider } from '@/providers/AccessibilityProvider';
 import { CesiumProvider } from '@/providers/CesiumProvider';
 import MapTilerProvider from '@/providers/MapTilerProvider';
 import { SupabaseAuthProvider } from '@/providers/SupabaseAuthProvider';

@@ -1,37 +1,36 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
 import {
-  TruckIcon,
-  ScaleIcon,
+  CalendarDaysIcon,
   CheckCircleIcon,
   ClockIcon,
-  CalendarDaysIcon,
   ExclamationTriangleIcon,
+  ScaleIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import React, { useEffect, useState } from 'react';
 
 interface DashboardStatsProps {
   initialUserName: string;
   companyId?: number | null;
 }
 
-export default function DashboardStats({ initialUserName, companyId }: DashboardStatsProps) {
+function DashboardStats({ initialUserName, companyId }: DashboardStatsProps) {
   const supabase = createClientComponentClient<Database>();
   const [stats, setStats] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -158,7 +157,7 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
         ];
 
         setStats(formattedStats);
-      } catch (error: any /* @ts-ignore */ ) {
+      } catch (error: any /* @ts-ignore */) {
         console.error('Error fetching dashboard stats:', error);
         setError(error.message);
 
@@ -305,3 +304,6 @@ export default function DashboardStats({ initialUserName, companyId }: Dashboard
     </div>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default React.memo(DashboardStats);

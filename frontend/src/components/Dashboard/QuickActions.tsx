@@ -1,29 +1,23 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import { DocumentTextIcon, PlusIcon, ScaleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import {
-  PlusIcon,
-  DocumentTextIcon,
-  ArrowPathIcon,
-  ScaleIcon,
-  TruckIcon,
-} from '@heroicons/react/24/outline';
+import React from 'react';
 
-export default function QuickActions() {
+function QuickActions() {
   return (
     <div className="p-6">
       <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
@@ -80,3 +74,6 @@ export default function QuickActions() {
     </div>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default React.memo(QuickActions);

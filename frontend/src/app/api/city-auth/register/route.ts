@@ -1,19 +1,17 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -46,6 +44,7 @@ export async function POST(request: NextRequest) {
         password,
         cityId,
         role,
+        status: 'pending', // Set initial status to pending for security review
       }),
     });
 
@@ -59,7 +58,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     console.error('City user registration error:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }

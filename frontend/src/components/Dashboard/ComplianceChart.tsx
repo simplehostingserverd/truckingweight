@@ -1,40 +1,42 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import { useState } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import useSWRFetch from '@/hooks/useSWRFetch';
+import { Database } from '@/types/supabase';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import React, { useMemo, useState } from 'react';
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 interface ComplianceChartProps {
   companyId?: number | null;
 }
 
-export default function ComplianceChart({ companyId }: ComplianceChartProps) {
+function ComplianceChart({ companyId }: ComplianceChartProps) {
   const supabase = createClientComponentClient<Database>();
   const [dateRange, setDateRange] = useState('week'); // 'week', 'month', 'year'
   const [selectedCompany, setSelectedCompany] = useState<string>('overall');
 
-  // Colors for compliance status
-  const COLORS = {
-    Compliant: '#22c55e', // bright green
-    Warning: '#f59e0b', // amber
-    'Non-Compliant': '#ef4444', // red
-  };
+  // Colors for compliance status - memoized to prevent recreation on each render
+  const COLORS = useMemo(
+    () => ({
+      Compliant: '#22c55e', // bright green
+      Warning: '#f59e0b', // amber
+      'Non-Compliant': '#ef4444', // red
+    }),
+    []
+  );
 
   // Fetch auth token for API requests
   const { data: session, error: sessionError } = useSWRFetch('/api/auth/session');
@@ -76,13 +78,23 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
     }
   );
 
-  // Process the data based on admin status
-  const companyData = complianceApiData?.byCompany || [];
-  const complianceData = complianceApiData?.overall
-    ? selectedCompany === 'overall'
-      ? complianceApiData.overall
-      : companyData.find((c: any /* @ts-ignore */ ) => c.companyId.toString() === selectedCompany)?.data || []
-    : complianceApiData || [];
+  // Process the data based on admin status - memoized to prevent recalculation on each render
+  const companyData = useMemo(() => complianceApiData?.byCompany || [], [complianceApiData]);
+
+  // Memoize the compliance data to prevent unnecessary recalculations
+  const complianceData = useMemo(() => {
+    if (complianceApiData?.overall) {
+      if (selectedCompany === 'overall') {
+        return complianceApiData.overall;
+      } else {
+        return (
+          companyData.find((c: any /* @ts-ignore */) => c.companyId.toString() === selectedCompany)
+            ?.data || []
+        );
+      }
+    }
+    return complianceApiData || [];
+  }, [complianceApiData, selectedCompany, companyData]);
 
   const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDateRange(e.target.value);
@@ -188,3 +200,6 @@ export default function ComplianceChart({ companyId }: ComplianceChartProps) {
     </div>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default React.memo(ComplianceChart);

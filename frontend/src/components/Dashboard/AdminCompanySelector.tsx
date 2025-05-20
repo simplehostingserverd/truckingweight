@@ -1,23 +1,23 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useSWROptimized } from '@/hooks/useSWROptimized';
 import { Database } from '@/types/supabase';
 import { BuildingOfficeIcon } from '@heroicons/react/24/outline';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import React from 'react';
 
 interface Company {
   id: number;
@@ -29,53 +29,47 @@ interface AdminCompanySelectorProps {
   selectedCompanyId: number | null;
 }
 
-export default function AdminCompanySelector({
-  onCompanyChange,
-  selectedCompanyId,
-}: AdminCompanySelectorProps) {
+function AdminCompanySelector({ onCompanyChange, selectedCompanyId }: AdminCompanySelectorProps) {
   const supabase = createClientComponentClient<Database>();
-  const [companies, setCompanies] = useState<Company[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchCompanies = async () => {
-      try {
-        setIsLoading(true);
+  // Use the optimized SWR hook for data fetching with caching
+  const fetchCompanies = async (key: string) => {
+    // Get auth token from supabase
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-        // Get auth token from supabase
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
+    if (!session) {
+      throw new Error('No active session');
+    }
 
-        if (!session) {
-          throw new Error('No active session');
-        }
+    // Fetch companies
+    const response = await fetch('/api/admin/companies', {
+      headers: {
+        'x-auth-token': session.access_token,
+      },
+    });
 
-        // Fetch companies
-        const response = await fetch('/api/admin/companies', {
-          headers: {
-            'x-auth-token': session.access_token,
-          },
-        });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to fetch companies');
+    }
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to fetch companies');
-        }
+    return response.json();
+  };
 
-        const companiesData = await response.json();
-        setCompanies(companiesData);
-      } catch (error: any /* @ts-ignore */ ) {
-        console.error('Error fetching companies:', error);
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCompanies();
-  }, [supabase]);
+  // Use SWR for data fetching with caching and revalidation
+  const {
+    data: companies,
+    error,
+    isLoading,
+  } = useSWROptimized<Company[]>('admin-companies', fetchCompanies, {
+    localCache: true,
+    localCacheTtl: 3600, // Cache for 1 hour
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    dedupingInterval: 60000, // 1 minute
+  });
 
   const handleCompanyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -94,7 +88,9 @@ export default function AdminCompanySelector({
   if (error) {
     return (
       <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-md">
-        <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+        <p className="text-red-700 dark:text-red-300 text-sm">
+          {error.message || 'Failed to load companies'}
+        </p>
       </div>
     );
   }
@@ -119,7 +115,7 @@ export default function AdminCompanySelector({
             onChange={handleCompanyChange}
           >
             <option value="all">All Companies</option>
-            {companies.map(company => (
+            {companies?.map(company => (
               <option key={company.id} value={company.id.toString()}>
                 {company.name}
               </option>
@@ -130,3 +126,6 @@ export default function AdminCompanySelector({
     </div>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default React.memo(AdminCompanySelector);

@@ -1,34 +1,33 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
 import {
-  ScaleIcon,
-  ArrowPathIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  TruckIcon,
   ArrowDownIcon,
+  ArrowPathIcon,
   ArrowUpIcon,
+  CheckCircleIcon,
+  ScaleIcon,
+  TruckIcon,
+  XCircleIcon,
 } from '@heroicons/react/24/outline';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useCallback, useEffect, useState } from 'react';
 
 interface WeightReaderProps {
-  scale: any /* @ts-ignore */ ;
+  scale: any /* @ts-ignore */;
   readingType: 'gross' | 'tare' | 'axle';
   axleNumber?: number;
   onWeightCaptured: (weight: number) => void;
@@ -95,7 +94,7 @@ export default function WeightReader({
       } else {
         throw new Error('Invalid reading from scale');
       }
-    } catch (error: any /* @ts-ignore */ ) {
+    } catch (error: any /* @ts-ignore */) {
       console.error('Error getting weight reading:', error);
       setError(error.message);
     } finally {
@@ -103,26 +102,29 @@ export default function WeightReader({
     }
   }, [supabase, scale.id, readingType, axleNumber]);
 
-  // Check if weight is stable (all readings within 20 pounds)
-  useEffect(() => {
+  // Memoize the weight stability calculation
+  const isWeightStable = useMemo(() => {
     if (weightHistory.length >= 3) {
-      const isStable = weightHistory.every((w, i, arr) => {
+      return weightHistory.every((w, i, arr) => {
         if (i === 0) return true;
         return Math.abs(w - arr[i - 1]) < 20;
       });
-
-      setWeightStable(isStable);
-
-      // Auto-capture if weight is stable and auto-capture is enabled
-      if (isStable && autoCapture && !captured && weight !== null) {
-        setCaptured(true);
-        onWeightCaptured(weight);
-        setPolling(false);
-      }
-    } else {
-      setWeightStable(false);
     }
-  }, [weightHistory, autoCapture, captured, weight, onWeightCaptured]);
+    return false;
+  }, [weightHistory]);
+
+  // Effect to handle weight stability and auto-capture
+  useEffect(() => {
+    // Update the stable state
+    setWeightStable(isWeightStable);
+
+    // Auto-capture if weight is stable and auto-capture is enabled
+    if (isWeightStable && autoCapture && !captured && weight !== null) {
+      setCaptured(true);
+      onWeightCaptured(weight);
+      setPolling(false);
+    }
+  }, [isWeightStable, autoCapture, captured, weight, onWeightCaptured]);
 
   // Polling effect
   useEffect(() => {
@@ -140,26 +142,27 @@ export default function WeightReader({
     getWeightReading();
   }, [getWeightReading]);
 
-  const handleCapture = () => {
+  // Memoize event handlers to prevent unnecessary re-creations
+  const handleCapture = useCallback(() => {
     if (weight !== null) {
       setCaptured(true);
       onWeightCaptured(weight);
       setPolling(false);
     }
-  };
+  }, [weight, onWeightCaptured]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setCaptured(false);
     setWeight(null);
     setWeightHistory([]);
     setWeightStable(false);
     getWeightReading();
     setPolling(autoCapture);
-  };
+  }, [getWeightReading, autoCapture]);
 
-  const togglePolling = () => {
-    setPolling(!polling);
-  };
+  const togglePolling = useCallback(() => {
+    setPolling(prevPolling => !prevPolling);
+  }, []);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">

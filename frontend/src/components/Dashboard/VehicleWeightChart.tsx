@@ -1,39 +1,37 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import React, { useEffect, useState } from 'react';
 import {
-  BarChart,
   Bar,
-  XAxis,
-  YAxis,
+  BarChart,
   CartesianGrid,
-  Tooltip,
   Legend,
   ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from 'recharts';
-import { parseWeight } from '@/utils/compliance';
 
 interface VehicleWeightChartProps {
   companyId?: number | null;
 }
 
-export default function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
+function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
   const supabase = createClientComponentClient<Database>();
   const [weightData, setWeightData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -99,7 +97,7 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
           // Regular user view or admin with specific company filter
           setWeightData(data);
         }
-      } catch (error: any /* @ts-ignore */ ) {
+      } catch (error: any /* @ts-ignore */) {
         console.error('Error fetching vehicle weight data:', error);
         setError(error.message);
 
@@ -266,3 +264,6 @@ export default function VehicleWeightChart({ companyId }: VehicleWeightChartProp
     </div>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default React.memo(VehicleWeightChart);

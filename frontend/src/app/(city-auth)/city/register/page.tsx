@@ -1,52 +1,46 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
 import ErrorBoundary from '@/components/ErrorBoundary';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 // MUI Joy UI components
-import { CssVarsProvider } from '@mui/joy/styles';
+import Alert from '@mui/joy/Alert';
 import Box from '@mui/joy/Box';
-import Typography from '@mui/joy/Typography';
+import Button from '@mui/joy/Button';
+import Card from '@mui/joy/Card';
+import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
-import Alert from '@mui/joy/Alert';
-import Card from '@mui/joy/Card';
 import Stack from '@mui/joy/Stack';
-import Select from '@mui/joy/Select';
-import Option from '@mui/joy/Option';
-import Divider from '@mui/joy/Divider';
-import CircularProgress from '@mui/joy/CircularProgress';
+import { CssVarsProvider } from '@mui/joy/styles';
+import Typography from '@mui/joy/Typography';
 
 // MUI Icons
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EmailIcon from '@mui/icons-material/Email';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
-import LocationCityIcon from '@mui/icons-material/LocationCity';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ApartmentIcon from '@mui/icons-material/Apartment';
 import WarningIcon from '@mui/icons-material/Warning';
-import InfoIcon from '@mui/icons-material/Info';
 
 // Custom theme
 import cityTheme from '@/theme/cityTheme';
@@ -135,6 +129,7 @@ export default function CityRegister() {
           password,
           cityId: cityData.city.id,
           role,
+          status: 'pending', // Set initial status to pending for security review
         }),
       });
 
@@ -144,12 +139,9 @@ export default function CityRegister() {
         throw new Error(userData.error || 'Failed to register user');
       }
 
-      // Show success message and redirect after a delay
+      // Show success message without redirect - user needs to wait for approval
       setSuccess(true);
-      setTimeout(() => {
-        router.push('/city/login');
-      }, 3000);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'An error occurred during registration');
       console.error('City registration error:', err);
     } finally {
@@ -297,7 +289,9 @@ export default function CityRegister() {
                   startDecorator={<CheckCircleIcon />}
                   sx={{ mb: 3 }}
                 >
-                  Registration successful! Redirecting to login page...
+                  Registration submitted successfully! Your account is pending approval by our
+                  security team. You will receive an email notification once your account is
+                  activated.
                 </Alert>
               )}
 
@@ -369,7 +363,11 @@ export default function CityRegister() {
                   <Divider />
 
                   <Typography level="title-md" sx={{ color: 'primary.400', mt: 2 }}>
-                    Administrator Account
+                    City Account Registration
+                  </Typography>
+                  <Typography level="body-xs" sx={{ color: 'text.tertiary', mb: 1 }}>
+                    Your registration will be reviewed by our team for security verification before
+                    activation
                   </Typography>
 
                   <FormControl required>
@@ -420,19 +418,7 @@ export default function CityRegister() {
                     </FormControl>
                   </Box>
 
-                  <FormControl required>
-                    <FormLabel>Role</FormLabel>
-                    <Select
-                      value={role}
-                      onChange={(_, newValue) => setRole(newValue as string)}
-                      startDecorator={<AdminPanelSettingsIcon />}
-                    >
-                      <Option value="admin">Administrator</Option>
-                    </Select>
-                    <Typography level="body-xs" sx={{ mt: 0.5, color: 'text.tertiary' }}>
-                      The first user must be an administrator
-                    </Typography>
-                  </FormControl>
+                  {/* Role is hardcoded to admin for the initial city registration */}
 
                   <Button
                     type="submit"
@@ -444,7 +430,7 @@ export default function CityRegister() {
                       '&:hover': { bgcolor: 'primary.600' },
                     }}
                   >
-                    {isLoading ? 'Registering...' : 'Register Municipality'}
+                    {isLoading ? 'Submitting Registration...' : 'Submit Registration for Approval'}
                   </Button>
 
                   <Box sx={{ textAlign: 'center' }}>

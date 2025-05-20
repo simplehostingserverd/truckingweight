@@ -1,25 +1,25 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import { Fragment, useState } from 'react';
+import { useIsMobile } from '@/hooks/useMediaQuery';
+import { cn } from '@/lib/utils';
+import { Dialog, Transition } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
-import { cn } from '@/lib/utils';
+import { Fragment, useEffect, useState } from 'react';
 
 interface MobileNavProps {
   navigation: {
@@ -48,6 +48,19 @@ export default function MobileNav({
 }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const isMobile = useIsMobile();
+
+  // Close the mobile menu when the screen size changes to desktop
+  useEffect(() => {
+    if (!isMobile && open) {
+      setOpen(false);
+    }
+  }, [isMobile, open]);
+
+  // Close the mobile menu when the route changes
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <>
@@ -56,6 +69,9 @@ export default function MobileNav({
         type="button"
         className="inline-flex items-center justify-center rounded-md p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 lg:hidden"
         onClick={() => setOpen(true)}
+        aria-label="Open menu"
+        aria-expanded={open}
+        aria-controls="mobile-menu"
       >
         <span className="sr-only">Open menu</span>
         <Bars3Icon className="h-6 w-6" aria-hidden="true" />
@@ -86,7 +102,10 @@ export default function MobileNav({
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white dark:bg-gray-800 pt-5 pb-4">
+              <Dialog.Panel
+                className="relative flex w-full max-w-xs flex-1 flex-col bg-white dark:bg-gray-800 pt-5 pb-4"
+                id="mobile-menu"
+              >
                 <Transition.Child
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -101,6 +120,7 @@ export default function MobileNav({
                       type="button"
                       className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                       onClick={() => setOpen(false)}
+                      aria-label="Close menu"
                     >
                       <span className="sr-only">Close sidebar</span>
                       <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
@@ -109,7 +129,7 @@ export default function MobileNav({
                 </Transition.Child>
                 <div className="flex flex-shrink-0 items-center px-4">
                   <span className="text-xl font-bold text-primary-600 dark:text-primary-400">
-                    TruckingSemis
+                    CargoFlex
                   </span>
                 </div>
                 <div className="mt-5 h-0 flex-1 overflow-y-auto">

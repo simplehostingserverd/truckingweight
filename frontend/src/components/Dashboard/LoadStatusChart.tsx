@@ -1,41 +1,43 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 interface LoadStatusChartProps {
   companyId?: number | null;
 }
 
-export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
+function LoadStatusChart({ companyId }: LoadStatusChartProps) {
   const supabase = createClientComponentClient<Database>();
   const [loadData, setLoadData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Colors for load status
-  const COLORS = {
-    Pending: '#3b82f6', // blue
-    'In Transit': '#8b5cf6', // purple
-    Delivered: '#22c55e', // green
-    Cancelled: '#6b7280', // gray
-  };
+  // Colors for load status - memoized to prevent recreation on each render
+  const COLORS = useMemo(
+    () => ({
+      Pending: '#3b82f6', // blue
+      'In Transit': '#8b5cf6', // purple
+      Delivered: '#22c55e', // green
+      Cancelled: '#6b7280', // gray
+    }),
+    []
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,7 +73,7 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
 
         // Set the load data
         setLoadData(loadData);
-      } catch (error: any /* @ts-ignore */ ) {
+      } catch (error: any /* @ts-ignore */) {
         console.error('Error fetching load status data:', error);
         setError(error.message);
       } finally {
@@ -152,3 +154,6 @@ export default function LoadStatusChart({ companyId }: LoadStatusChartProps) {
     </div>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default React.memo(LoadStatusChart);

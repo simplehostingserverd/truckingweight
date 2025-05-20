@@ -8,7 +8,7 @@
     "push-schema": "node scripts/push-schema.mjs",
     "update-schema": "node scripts/update-schema.mjs",
     "update-deps": "node scripts/update-dependencies.mjs",
-    "dev": "concurrently --kill-others-on-fail --kill-others \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && next dev\"",
     "install-deps": "node scripts/install-deps.mjs",
     "prepare": "husky",
     "lint": "eslint . || echo 'Skipping eslint'",
