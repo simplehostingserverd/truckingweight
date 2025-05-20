@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,8 +14,8 @@
 
 'use client';
 
-import { useState, useCallback } from 'react';
-import { ToastType } from '@/components/ui/Toast';
+import { ToastType } from '@/components/ui/toast';
+import { useCallback, useState } from 'react';
 
 export interface Toast {
   id: string;
@@ -23,6 +23,7 @@ export interface Toast {
   description?: string;
   type: ToastType;
   duration?: number;
+  onDismiss: (id: string) => void;
 }
 
 export interface ToastOptions {

@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,9 +14,9 @@
 
 'use client';
 
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import { ToastContainer } from '@/components/ui/Toast';
+import { ToastContainer } from '@/components/ui/toast';
 import { Toast, ToastOptions } from '@/hooks/useToast';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 
 interface ToastContextType {
   toast: (options: ToastOptions) => string;
@@ -41,6 +41,11 @@ export const useToastContext = () => {
 export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
+  // Define dismiss function first to avoid circular reference
+  const dismiss = useCallback((id: string) => {
+    setToasts(prevToasts => prevToasts.filter(toast => toast.id !== id));
+  }, []);
+
   const toast = useCallback((options: ToastOptions) => {
     const id = Math.random().toString(36).substring(2, 9);
     const newToast: Toast = {
@@ -49,15 +54,12 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       description: options.description,
       type: options.type || 'info',
       duration: options.duration || 5000,
+      onDismiss: dismiss, // Add the onDismiss property
     };
 
     setToasts(prevToasts => [...prevToasts, newToast]);
     return id;
-  }, []);
-
-  const dismiss = useCallback((id: string) => {
-    setToasts(prevToasts => prevToasts.filter(toast => toast.id !== id));
-  }, []);
+  }, [dismiss]);
 
   const dismissAll = useCallback(() => {
     setToasts([]);
