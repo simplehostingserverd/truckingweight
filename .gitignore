@@ -80,8 +80,9 @@ debug.log
 # Fix scripts and temporary files
 fix-*.js
 fix-*.mjs
-# Ignore entire scripts directory
-scripts/
+# Ignore scripts directory except for specific utility scripts
+scripts/*
+!scripts/remove-large-files.sh
 backup-files/
 ~/bin/kill-hung-apps.sh
 ~/.config/systemd/user.conf.d/timeout.conf
@@ -91,3 +92,21 @@ license-generator/
 license-tools/
 *license*.js
 verify-license.cjs
+
+# Large media files
+frontend/public/videos/*.mp4
+frontend/public/videos/*.webm
+frontend/public/videos/*.mov
+frontend/public/videos/*.avi
+frontend/public/videos/*.mkv
+frontend/public/videos/*.wmv
+
+# Cesium assets (should be loaded from CDN in production)
+frontend/public/cesium/
+
+# Large binary files
+*.exe
+*.dll
+*.so
+*.dylib
+*.node

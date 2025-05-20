@@ -1,0 +1,77 @@
+#!/bin/sh
+# Pre-push hook to prevent pushing large files to GitHub
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
+
+echo "${YELLOW}Running pre-push hook to check for large files...${NC}"
+
+# Maximum allowed file size in bytes (10MB)
+MAX_SIZE_BYTES=$((10 * 1024 * 1024))
+
+# Check if any files being pushed are larger than the maximum allowed size
+large_files=$(git diff --cached --name-only --diff-filter=ACM | xargs -I{} sh -c "if [ -f \"{}\" ] && [ \$(stat -c%s \"{}\") -gt $MAX_SIZE_BYTES ]; then echo {}; fi")
+
+if [ -n "$large_files" ]; then
+  echo "${RED}Error: Attempting to push files larger than 10MB:${NC}"
+  echo "$large_files" | while read file; do
+    size=$(stat -c%s "$file")
+    size_mb=$(echo "scale=2; $size / 1048576" | bc)
+    echo "${RED}- $file (${size_mb}MB)${NC}"
+  done
+  echo "${YELLOW}Please remove these files from your commit or use Git LFS for large files.${NC}"
+  echo "${YELLOW}You can remove these files from your commit with:${NC}"
+  echo "${GREEN}git reset HEAD <file>${NC}"
+  exit 1
+fi
+
+# Check for binary files that should not be pushed
+binary_extensions=("mp4" "webm" "mov" "avi" "mkv" "wmv" "exe" "dll" "so" "dylib" "node")
+binary_files=""
+
+for ext in "${binary_extensions[@]}"; do
+  found_files=$(git diff --cached --name-only --diff-filter=ACM | grep -i "\\.$ext$" || true)
+  if [ -n "$found_files" ]; then
+    binary_files="$binary_files$found_files
+"
+  fi
+done
+
+if [ -n "$binary_files" ]; then
+  echo "${RED}Error: Attempting to push binary files that should be excluded:${NC}"
+  echo "$binary_files" | while read file; do
+    if [ -n "$file" ]; then
+      echo "${RED}- $file${NC}"
+    fi
+  done
+  echo "${YELLOW}Please remove these files from your commit or add them to .gitignore.${NC}"
+  echo "${YELLOW}You can remove these files from your commit with:${NC}"
+  echo "${GREEN}git reset HEAD <file>${NC}"
+  exit 1
+fi
+
+# Check for large directories that should not be pushed
+large_dirs=("frontend/public/videos" "frontend/public/cesium" "node_modules" "license-generator")
+for dir in "${large_dirs[@]}"; do
+  dir_files=$(git diff --cached --name-only --diff-filter=ACM | grep -i "^$dir/" || true)
+  if [ -n "$dir_files" ]; then
+    echo "${RED}Error: Attempting to push files from directory that should be excluded: $dir${NC}"
+    echo "$dir_files" | head -n 5 | while read file; do
+      echo "${RED}- $file${NC}"
+    done
+    count=$(echo "$dir_files" | wc -l)
+    if [ $count -gt 5 ]; then
+      echo "${RED}... and $((count - 5)) more files${NC}"
+    fi
+    echo "${YELLOW}Please remove these files from your commit or add them to .gitignore.${NC}"
+    echo "${YELLOW}You can remove these files from your commit with:${NC}"
+    echo "${GREEN}git reset HEAD $dir/${NC}"
+    exit 1
+  fi
+done
+
+echo "${GREEN}No large files detected. Push can proceed.${NC}"
+exit 0
