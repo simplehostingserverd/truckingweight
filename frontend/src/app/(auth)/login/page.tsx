@@ -18,7 +18,7 @@ import HCaptcha from '@hcaptcha/react-hcaptcha';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -57,7 +57,7 @@ export default function Login() {
     } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'Invalid email or password');
       console.error('Login error:', err);
-      
+
       // Reset captcha on error
       captchaRef.current?.resetCaptcha();
       setCaptchaToken(null);
@@ -206,7 +206,10 @@ export default function Login() {
             {/* hCaptcha component */}
             <div className="flex justify-center">
               <HCaptcha
-                sitekey="10000000-ffff-ffff-ffff-000000000001" // Replace with your actual site key
+                sitekey={
+                  process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY ||
+                  '10000000-ffff-ffff-ffff-000000000001'
+                }
                 onVerify={onCaptchaVerify}
                 onError={onCaptchaError}
                 onExpire={onCaptchaExpire}
@@ -215,10 +218,8 @@ export default function Login() {
                 size="normal"
               />
             </div>
-            
-            {captchaError && (
-              <div className="text-red-500 text-sm text-center">{captchaError}</div>
-            )}
+
+            {captchaError && <div className="text-red-500 text-sm text-center">{captchaError}</div>}
 
             <button
               type="submit"
