@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -17,6 +17,67 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
+      scales: {
+        Row: {
+          id: number;
+          name: string;
+          scale_type: string;
+          location: string | null;
+          manufacturer: string | null;
+          model: string | null;
+          serial_number: string | null;
+          max_capacity: number | null;
+          precision: number | null;
+          calibration_date: string | null;
+          next_calibration_date: string | null;
+          status: string;
+          company_id: number | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: number;
+          name: string;
+          scale_type: string;
+          location?: string | null;
+          manufacturer?: string | null;
+          model?: string | null;
+          serial_number?: string | null;
+          max_capacity?: number | null;
+          precision?: number | null;
+          calibration_date?: string | null;
+          next_calibration_date?: string | null;
+          status?: string;
+          company_id?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: number;
+          name?: string;
+          scale_type?: string;
+          location?: string | null;
+          manufacturer?: string | null;
+          model?: string | null;
+          serial_number?: string | null;
+          max_capacity?: number | null;
+          precision?: number | null;
+          calibration_date?: string | null;
+          next_calibration_date?: string | null;
+          status?: string;
+          company_id?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'scales_company_id_fkey';
+            columns: ['company_id'];
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
       companies: {
         Row: {
           id: number;

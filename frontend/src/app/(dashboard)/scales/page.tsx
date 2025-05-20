@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,51 +14,45 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import type { Database } from '@/types/supabase';
 import {
-  Add as PlusIcon,
-  Search as MagnifyingGlassIcon,
-  Refresh as ArrowPathIcon,
-  Scale as ScaleIcon,
-  QrCode as QrCodeIcon,
-  Settings as SettingsIcon,
-  Sync as SyncIcon,
+    Refresh as ArrowPathIcon,
+    Search as MagnifyingGlassIcon,
+    Add as PlusIcon,
+    Scale as ScaleIcon,
+    Sync as SyncIcon
 } from '@mui/icons-material';
 import {
-  Button,
-  TextField,
-  Card,
-  CardContent,
-  CardHeader,
-  Chip,
-  Alert,
-  AlertTitle,
-  Tabs,
-  Tab,
-  Box,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  CircularProgress,
-  Typography,
-  Grid,
-  Tooltip,
-  IconButton,
-  Skeleton,
-  Badge,
-  Snackbar,
+    Alert,
+    AlertTitle,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Chip,
+    CircularProgress,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Paper,
+    Select,
+    Snackbar,
+    Tab,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Tabs,
+    TextField,
+    Typography
 } from '@mui/material';
-import type { Database } from '@/types/supabase';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function ScalesPage() {
   const [scales, setScales] = useState<any[]>([]);
@@ -115,13 +109,8 @@ export default function ScalesPage() {
       const user =
         userData && userData.length > 0 ? userData[0] : { company_id: 1, is_admin: true };
 
-      let query = supabase.from('scales').select(`
-          *,
-          companies(
-            id,
-            name
-          )
-        `);
+      // Use type-safe query with the updated Database type
+      let query = supabase.from('scales').select('*, companies(id, name)');
 
       // If not admin, filter by company
       if (!user.is_admin) {
@@ -419,7 +408,7 @@ export default function ScalesPage() {
             ) : (
               <Grid container spacing={3}>
                 {filteredScales.map(scale => (
-                  <Grid item xs={12} md={6} lg={4} key={scale.id}>
+                  <Grid size={{ xs: 12, md: 6, lg: 4 }} key={scale.id}>
                     <Link href={`/scales/${scale.id}`} style={{ textDecoration: 'none' }}>
                       <Card
                         sx={{
@@ -520,7 +509,7 @@ export default function ScalesPage() {
       <Card sx={{ mt: 4, mb: 2, bgcolor: 'primary.dark' }}>
         <CardContent>
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Typography variant="h6" color="white">
                 Scale System Status
               </Typography>
@@ -529,9 +518,7 @@ export default function ScalesPage() {
               </Typography>
             </Grid>
             <Grid
-              item
-              xs={12}
-              md={6}
+              size={{ xs: 12, md: 6 }}
               sx={{ display: 'flex', justifyContent: { xs: 'flex-start', md: 'flex-end' } }}
             >
               <Link href="/weights/capture" style={{ textDecoration: 'none' }}>

@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,43 +14,39 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import {
-  ArrowBack as ArrowLeftIcon,
-  Edit as PencilIcon,
-  Delete as TrashIcon,
-  QrCode as QrCodeIcon,
-  Scale as ScaleIcon,
-} from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Typography,
-  Chip,
-  Alert,
-  AlertTitle,
-  Tabs,
-  Tab,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  CircularProgress,
-  Grid,
-  Paper,
-  Divider,
-} from '@mui/material';
-import { QRCodeSVG } from 'qrcode.react';
 import HardwareSelector from '@/components/scales/HardwareSelector';
 import { toSearchParamString } from '@/lib/utils';
 import type { Database } from '@/types/supabase';
+import {
+    ArrowBack as ArrowLeftIcon,
+    Edit as PencilIcon,
+    QrCode as QrCodeIcon,
+    Delete as TrashIcon
+} from '@mui/icons-material';
+import {
+    Alert,
+    AlertTitle,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Chip,
+    CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Grid,
+    Tab,
+    Tabs,
+    Typography
+} from '@mui/material';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function ScaleDetail({ params }: { params: { id: string } }) {
   const [scale, setScale] = useState<any>(null);
@@ -234,13 +230,13 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
             <CardHeader title="Scale Information" subheader="Details about this scale" />
             <CardContent>
               <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Type
                   </Typography>
                   <Typography variant="body2">{scale.scale_type}</Typography>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Status
                   </Typography>
@@ -250,37 +246,37 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
                     size="small"
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Location
                   </Typography>
                   <Typography variant="body2">{scale.location || 'N/A'}</Typography>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Company
                   </Typography>
                   <Typography variant="body2">{scale.companies?.name || 'N/A'}</Typography>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Manufacturer
                   </Typography>
                   <Typography variant="body2">{scale.manufacturer || 'N/A'}</Typography>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Model
                   </Typography>
                   <Typography variant="body2">{scale.model || 'N/A'}</Typography>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Serial Number
                   </Typography>
                   <Typography variant="body2">{scale.serial_number || 'N/A'}</Typography>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Max Capacity
                   </Typography>
@@ -288,7 +284,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
                     {scale.max_capacity ? `${scale.max_capacity.toLocaleString()} lbs` : 'N/A'}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Precision
                   </Typography>
@@ -296,7 +292,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
                     {scale.precision ? `${scale.precision} lbs` : 'N/A'}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Last Calibration
                   </Typography>
@@ -306,7 +302,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
                       : 'N/A'}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" color="text.secondary">
                     Next Calibration
                   </Typography>
