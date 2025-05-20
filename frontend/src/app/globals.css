@@ -189,6 +189,19 @@
     outline-offset: 2px !important;
   }
 
+  /* System font fallback for low-memory devices or when fonts fail to load */
+  .use-system-fonts {
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      sans-serif !important;
+  }
+
   /* Modern Typography */
   h1,
   .h1 {

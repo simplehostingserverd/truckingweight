@@ -11,13 +11,18 @@
  * in any way without explicit written permission.
  */
 
+import FontLoader from '@/components/FontLoader';
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
-import FontLoader from '@/components/FontLoader';
 
-// Load Inter font from Google Fonts with fallback options
+// Load Inter font from Google Fonts with optimizations for low-memory devices
+// This uses next/font to:
+// 1. Automatically self-host the font files (no external requests)
+// 2. Optimize font loading and prevent layout shifts
+// 3. Provide system font fallbacks for low-memory devices
+// 4. Reduce memory usage by loading only what's needed
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',

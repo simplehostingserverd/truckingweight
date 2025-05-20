@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * TruckingWeight Design System Tokens
@@ -231,10 +230,13 @@ const colors = {
 };
 
 // Typography - Modern 2024 Design System
+// Note: Primary font (Inter) is loaded via next/font/google in layout.tsx
+// This ensures optimal font loading and performance, especially for low-memory devices
 const typography = {
   fontFamily: {
+    // Primary font stack - uses CSS variable from next/font
     sans: [
-      'Inter',
+      'var(--font-inter)',
       'system-ui',
       '-apple-system',
       'BlinkMacSystemFont',
@@ -242,7 +244,9 @@ const typography = {
       'Roboto',
       'sans-serif',
     ],
-    brand: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+    // Brand font stack - also uses the primary font as fallback
+    brand: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+    // Monospace font stack for code and technical content
     mono: [
       'JetBrains Mono',
       'Menlo',
