@@ -1,22 +1,21 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
+import DashboardHeader from '@/components/Dashboard/DashboardHeader';
+import DashboardSidebar from '@/components/Dashboard/DashboardSidebar';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import DashboardHeader from '@/components/Dashboard/DashboardHeader';
-import DashboardSidebar from '@/components/Dashboard/DashboardSidebar';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
@@ -41,10 +40,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   return (
     <div className="flex h-screen bg-black text-white">
+      <SkipToContent />
       <DashboardSidebar isAdmin={userData?.is_admin || false} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <DashboardHeader user={userData} isAdmin={userData?.is_admin || false} />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-[#121212]">
+        <main id="main-content" className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-[#121212]">
           <div className="max-w-7xl mx-auto">{children}</div>
         </main>
       </div>

@@ -1,25 +1,24 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
 import CityDashboardHeader from '@/components/CityDashboard/CityDashboardHeader';
 import CityDashboardSidebar from '@/components/CityDashboard/CityDashboardSidebar';
 import { createSafeUrl } from '@/utils/navigation';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 // Create a client-side only component to avoid hydration issues
 const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) => {
@@ -30,24 +29,30 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     setIsMounted(true);
-    
+
     const checkAuth = async () => {
       try {
         // First try to use Supabase Auth
         const { createClient } = await import('@/utils/supabase/client');
         const supabase = createClient();
-        
+
         // Get the current session
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+          error: sessionError,
+        } = await supabase.auth.getSession();
+
         if (session && !sessionError) {
           // Get user metadata
-          const { data: { user }, error: userError } = await supabase.auth.getUser();
-          
+          const {
+            data: { user },
+            error: userError,
+          } = await supabase.auth.getUser();
+
           if (user && !userError) {
             // Check if this is a city user
             const userMetadata = user.user_metadata;
-            
+
             if (userMetadata && userMetadata.user_type === 'city') {
               // Get city user data from Supabase
               const { data: cityUserData, error: cityUserError } = await supabase
@@ -55,7 +60,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
                 .select('*, cities(*)')
                 .eq('id', user.id)
                 .single();
-              
+
               if (cityUserData && !cityUserError) {
                 // Format the user data
                 const formattedUserData = {
@@ -66,7 +71,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
                   role: cityUserData.role,
                   city: cityUserData.cities,
                 };
-                
+
                 setUserData(formattedUserData);
                 setIsLoading(false);
                 return;
@@ -74,10 +79,10 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
             }
           }
         }
-        
+
         // Fallback to localStorage if Supabase Auth fails
         console.log('Falling back to localStorage for city auth');
-        
+
         // Check if user is authenticated as a city user using localStorage
         if (typeof window !== 'undefined') {
           const cityToken = localStorage.getItem('cityToken');
@@ -92,7 +97,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
           try {
             const parsedUserData = JSON.parse(cityUser);
             setUserData(parsedUserData);
-            
+
             // Check if this is a test token
             if (cityToken && cityToken.startsWith('test-city-token-')) {
               console.log('Using test token for city dashboard');
@@ -100,7 +105,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
               setIsLoading(false);
               return;
             }
-            
+
             // Verify token with backend if we have a token
             const verifyToken = async () => {
               try {
@@ -149,7 +154,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
         router.push(createSafeUrl('/city/login'));
       }
     };
-    
+
     if (isMounted) {
       checkAuth();
     }
@@ -166,10 +171,11 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="flex h-screen bg-gray-900 text-white">
+      <SkipToContent />
       <CityDashboardSidebar role={userData?.role || 'viewer'} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <CityDashboardHeader user={userData} />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-gray-800">
+        <main id="main-content" className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-gray-800">
           <div className="max-w-7xl mx-auto">{children}</div>
         </main>
       </div>

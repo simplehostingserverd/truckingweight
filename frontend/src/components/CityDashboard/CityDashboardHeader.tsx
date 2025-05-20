@@ -13,18 +13,8 @@
 
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import { createSafeUrl } from '@/utils/navigation';
-import {
-  BellIcon,
-  Cog6ToothIcon,
-  UserCircleIcon,
-  ArrowRightOnRectangleIcon,
-  BuildingOfficeIcon,
-} from '@heroicons/react/24/outline';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,8 +23,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { createSafeUrl } from '@/utils/navigation';
+import {
+  ArrowRightOnRectangleIcon,
+  BellIcon,
+  BuildingOfficeIcon,
+  Cog6ToothIcon,
+  UserCircleIcon,
+} from '@heroicons/react/24/outline';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 interface CityDashboardHeaderProps {
   user: {
@@ -51,6 +51,7 @@ interface CityDashboardHeaderProps {
 }
 
 export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) {
+  const [mounted, setMounted] = useState(false);
   const [notifications, setNotifications] = useState([
     {
       id: 1,
@@ -74,6 +75,11 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
       read: true,
     },
   ]);
+
+  // Set mounted state after hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const router = useRouter();
 
@@ -143,6 +149,9 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
         </div>
 
         <div className="flex items-center space-x-4">
+          {/* Accessibility Settings Button */}
+          {mounted && <AccessibilityButton />}
+
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

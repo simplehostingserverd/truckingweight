@@ -13,19 +13,19 @@
 
 'use client';
 
-import { ThemeProvider as NextThemeProvider } from 'next-themes';
-import { useState, useEffect } from 'react';
-import { ToastProvider } from '@/providers/ToastProvider';
-import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import logger from '@/utils/logger';
-import { SupabaseAuthProvider } from '@/providers/SupabaseAuthProvider';
+import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration';
 import { CesiumProvider } from '@/providers/CesiumProvider';
 import MapTilerProvider from '@/providers/MapTilerProvider';
-import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { SupabaseAuthProvider } from '@/providers/SupabaseAuthProvider';
+import { ToastProvider } from '@/providers/ToastProvider';
 import theme from '@/theme/theme';
 import { initializeLicense, isKillSwitchActivated } from '@/utils/license';
+import logger from '@/utils/logger';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as NextThemeProvider } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   // Use undefined as initial state to avoid hydration mismatch
@@ -89,35 +89,39 @@ export function Providers({ children }: { children: React.ReactNode }) {
           <MUIThemeProvider theme={theme}>
             <CssBaseline />
             <NextThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-              <ToastProvider>
-                <ErrorBoundary>
-                  {children}
-                  {/* Only render offline banner after client-side hydration */}
-                  {typeof isOnline === 'boolean' && !isOnline && (
-                    <div
-                      style={{
-                        position: 'fixed',
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        backgroundColor: theme.palette.warning.main,
-                        color: theme.palette.warning.contrastText,
-                        padding: '8px',
-                        textAlign: 'center',
-                        zIndex: 9999,
-                      }}
-                    >
-                      You are currently offline. Some features may be limited.
-                    </div>
-                  )}
-                  <ServiceWorkerRegistration
-                    onUpdate={handleServiceWorkerUpdate}
-                    onError={error =>
-                      logger.error('Service worker error', { error }, 'ServiceWorker')
-                    }
-                  />
-                </ErrorBoundary>
-              </ToastProvider>
+              <AccessibilityProvider>
+                <ToastProvider>
+                  <ErrorBoundary>
+                    {children}
+                    {/* Only render offline banner after client-side hydration */}
+                    {typeof isOnline === 'boolean' && !isOnline && (
+                      <div
+                        style={{
+                          position: 'fixed',
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          backgroundColor: theme.palette.warning.main,
+                          color: theme.palette.warning.contrastText,
+                          padding: '8px',
+                          textAlign: 'center',
+                          zIndex: 9999,
+                        }}
+                        role="alert"
+                        aria-live="assertive"
+                      >
+                        You are currently offline. Some features may be limited.
+                      </div>
+                    )}
+                    <ServiceWorkerRegistration
+                      onUpdate={handleServiceWorkerUpdate}
+                      onError={error =>
+                        logger.error('Service worker error', { error }, 'ServiceWorker')
+                      }
+                    />
+                  </ErrorBoundary>
+                </ToastProvider>
+              </AccessibilityProvider>
             </NextThemeProvider>
           </MUIThemeProvider>
         </MapTilerProvider>

@@ -11,15 +11,14 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
 import { AxleWeight, ComplianceIssue, WeighTicket } from '@/types/scale-master';
 import {
-    CheckCircleIcon,
-    ExclamationCircleIcon,
-    ExclamationTriangleIcon,
-    InformationCircleIcon,
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  ExclamationTriangleIcon,
+  InformationCircleIcon,
 } from '@heroicons/react/24/outline';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useEffect, useState } from 'react';
@@ -115,8 +114,8 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
       const issues: Omit<ComplianceIssue, 'id' | 'created_at'>[] = [];
 
       // Check for overweight axles
-      const overweightAxles = axleWeights.filter(aw =>
-        aw.weight && aw.max_legal_weight && aw.weight > aw.max_legal_weight
+      const overweightAxles = axleWeights.filter(
+        aw => aw.weight && aw.max_legal_weight && aw.weight > aw.max_legal_weight
       );
 
       if (overweightAxles.length > 0) {
@@ -182,7 +181,9 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
       }
     } catch (error) {
       console.error('Error generating compliance issues:', error);
-      setError(`Error generating compliance issues: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setError(
+        `Error generating compliance issues: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   };
 
@@ -216,36 +217,73 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
     }
   };
 
-  // Get the status icon
+  // Get the status icon with proper accessibility attributes
   const getStatusIcon = (status: string | null) => {
     switch (status) {
       case 'Compliant':
-        return <CheckCircleIcon className="h-6 w-6 text-green-500 dark:text-green-400" />;
+        return (
+          <CheckCircleIcon
+            className="h-6 w-6 text-green-500 dark:text-green-400"
+            aria-hidden="true"
+          />
+        );
       case 'Warning':
-        return <ExclamationTriangleIcon className="h-6 w-6 text-amber-500 dark:text-amber-400" />;
+        return (
+          <ExclamationTriangleIcon
+            className="h-6 w-6 text-amber-500 dark:text-amber-400"
+            aria-hidden="true"
+          />
+        );
       case 'Non-Compliant':
-        return <ExclamationCircleIcon className="h-6 w-6 text-red-500 dark:text-red-400" />;
+        return (
+          <ExclamationCircleIcon
+            className="h-6 w-6 text-red-500 dark:text-red-400"
+            aria-hidden="true"
+          />
+        );
       default:
-        return <InformationCircleIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />;
+        return (
+          <InformationCircleIcon
+            className="h-6 w-6 text-gray-500 dark:text-gray-400"
+            aria-hidden="true"
+          />
+        );
     }
   };
 
   // Render the component with a consistent outer container
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Compliance Check</h2>
+    <div
+      className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6"
+      role="region"
+      aria-labelledby="compliance-check-heading"
+    >
+      <h2
+        id="compliance-check-heading"
+        className="text-xl font-semibold text-gray-800 dark:text-white mb-4"
+      >
+        Compliance Check
+      </h2>
 
       {/* Loading state */}
       {isLoading && (
-        <div className="flex justify-center items-center h-40">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+        <div className="flex justify-center items-center h-40" role="status" aria-live="polite">
+          <div
+            className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"
+            aria-hidden="true"
+          ></div>
+          <span className="sr-only">Loading compliance data...</span>
         </div>
       )}
 
       {/* Error state */}
       {!isLoading && error && (
-        <div className="p-4 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 rounded-md">
-          <ExclamationCircleIcon className="h-6 w-6 inline mr-2" />
+        <div
+          className="p-4 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 rounded-md"
+          role="alert"
+          aria-live="assertive"
+        >
+          <ExclamationCircleIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
           {error}
         </div>
       )}
@@ -254,13 +292,23 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
       {!isLoading && !error && ticket && (
         <div className="space-y-6">
           {/* Overall Compliance Status */}
-          <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+          <div
+            className="flex items-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg"
+            role="status"
+            aria-labelledby="overall-status-heading"
+          >
             {getStatusIcon(ticket.compliance_status)}
             <div className="ml-4">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white">Overall Status</h3>
+              <h3
+                id="overall-status-heading"
+                className="text-lg font-medium text-gray-900 dark:text-white"
+              >
+                Overall Status
+              </h3>
               <div className="mt-1">
                 <span
                   className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeColor(ticket.compliance_status)}`}
+                  aria-label={`Compliance status: ${ticket.compliance_status || 'Unknown'}`}
                 >
                   {ticket.compliance_status || 'Unknown'}
                 </span>
@@ -271,23 +319,42 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
           {/* Axle Weights */}
           {axleWeights.length > 0 && (
             <div>
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+              <h3
+                id="axle-weights-heading"
+                className="text-lg font-medium text-gray-900 dark:text-white mb-2"
+              >
                 Axle Weights
               </h3>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <table
+                  className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                  aria-labelledby="axle-weights-heading"
+                >
+                  <caption className="sr-only">Axle weights and compliance status</caption>
                   <thead className="bg-gray-50 dark:bg-gray-900">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      >
                         Axle
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      >
                         Weight
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      >
                         Max Legal
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      >
                         Status
                       </th>
                     </tr>
@@ -307,6 +374,7 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           <span
                             className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeColor(axle.compliance_status)}`}
+                            aria-label={`Axle ${axle.axle_position} status: ${axle.compliance_status}`}
                           >
                             {axle.compliance_status}
                           </span>
@@ -322,15 +390,23 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
           {/* Compliance Issues */}
           {complianceIssues.length > 0 ? (
             <div>
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+              <h3
+                id="compliance-issues-heading"
+                className="text-lg font-medium text-gray-900 dark:text-white mb-2"
+              >
                 Compliance Issues
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-4" role="list" aria-labelledby="compliance-issues-heading">
                 {complianceIssues.map(issue => (
-                  <div key={issue.id} className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                  <div
+                    key={issue.id}
+                    className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg"
+                    role="listitem"
+                  >
                     <div className="flex items-center mb-2">
                       <span
                         className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getSeverityBadgeColor(issue.severity)}`}
+                        aria-label={`Severity: ${issue.severity}`}
                       >
                         {issue.severity}
                       </span>
@@ -340,7 +416,10 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
                     </div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">{issue.description}</p>
                     {issue.recommendation && (
-                      <div className="mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 text-sm rounded">
+                      <div
+                        className="mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 text-sm rounded"
+                        aria-label="Recommendation"
+                      >
                         <strong>Recommendation:</strong> {issue.recommendation}
                       </div>
                     )}
@@ -349,13 +428,21 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
               </div>
             </div>
           ) : ticket.compliance_status === 'Compliant' ? (
-            <div className="p-4 bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 rounded-lg flex items-center">
-              <CheckCircleIcon className="h-6 w-6 mr-2" />
+            <div
+              className="p-4 bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300 rounded-lg flex items-center"
+              role="status"
+              aria-live="polite"
+            >
+              <CheckCircleIcon className="h-6 w-6 mr-2" aria-hidden="true" />
               <span>This weight record is compliant with all regulations.</span>
             </div>
           ) : (
-            <div className="p-4 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-300 rounded-lg">
-              <InformationCircleIcon className="h-6 w-6 inline mr-2" />
+            <div
+              className="p-4 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-300 rounded-lg"
+              role="status"
+              aria-live="polite"
+            >
+              <InformationCircleIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
               No specific compliance issues found.
             </div>
           )}
@@ -364,8 +451,12 @@ export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
 
       {/* No data state - when not loading, no error, but no ticket */}
       {!isLoading && !error && !ticket && (
-        <div className="p-4 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-300 rounded-lg">
-          <InformationCircleIcon className="h-6 w-6 inline mr-2" />
+        <div
+          className="p-4 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-300 rounded-lg"
+          role="status"
+          aria-live="polite"
+        >
+          <InformationCircleIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
           No compliance data available for this ticket.
         </div>
       )}

@@ -1,43 +1,41 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import { Fragment, useState, useEffect } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import MobileNav from '@/components/ui/MobileNav';
 import { Database } from '@/types/supabase';
+import { Menu, Transition } from '@headlessui/react';
 import {
-  UserIcon,
-  BellIcon,
-  Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
+  BellIcon,
+  BuildingOfficeIcon,
+  ChartBarIcon,
+  Cog6ToothIcon,
+  DocumentIcon,
   HomeIcon,
+  PencilIcon,
   ScaleIcon,
   TruckIcon,
   UserGroupIcon,
-  ChartBarIcon,
+  UserIcon,
   UsersIcon,
-  BuildingOfficeIcon,
-  DocumentIcon,
-  PencilIcon,
 } from '@heroicons/react/24/outline';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useTheme } from 'next-themes';
-import MobileNav from '@/components/ui/MobileNav';
-// Import removed to avoid React errors
+import { useRouter } from 'next/navigation';
+import { Fragment, useEffect, useState } from 'react';
 
 type User = Database['public']['Tables']['users']['Row'];
 
@@ -76,17 +74,17 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
     try {
       // Sign out using Supabase Auth
       await supabase.auth.signOut();
-      
+
       // Also clear local storage for backward compatibility
       localStorage.removeItem('cityToken');
       localStorage.removeItem('cityUser');
-      
+
       // Redirect to login page
       router.push('/login');
       router.refresh(); // Important to refresh the router
     } catch (error) {
       console.error('Error signing out:', error);
-      
+
       // Fallback to manual logout if Supabase Auth fails
       localStorage.removeItem('cityToken');
       localStorage.removeItem('cityUser');
@@ -144,6 +142,9 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
           </div>
 
           <div className="flex items-center space-x-3">
+            {/* Accessibility Settings Button */}
+            {mounted && <AccessibilityButton />}
+
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none transition-colors duration-200"
