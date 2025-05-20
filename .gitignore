@@ -85,3 +85,9 @@ scripts/
 backup-files/
 ~/bin/kill-hung-apps.sh
 ~/.config/systemd/user.conf.d/timeout.conf
+
+# License-related files and directories (for local use only)
+license-generator/
+license-tools/
+*license*.js
+verify-license.cjs
