@@ -13,11 +13,11 @@
 
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
 import { useSupabaseAuth } from '@/providers/SupabaseAuthProvider';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -42,7 +42,7 @@ export default function Login() {
       }
 
       // The redirect is handled in the auth provider
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'Invalid email or password');
       console.error('Login error:', err);
     } finally {
