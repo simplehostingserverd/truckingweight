@@ -1,21 +1,21 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
 
-import useSWR, { SWRConfiguration, SWRResponse } from 'swr';
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import { handleApiError, AppError } from '@/utils/errorHandler';
+import { AppError, handleApiError } from '@/utils/errorHandler';
 import logger from '@/utils/logger';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import useSWR, { SWRConfiguration, SWRResponse } from 'swr';
 
 // Create a fetcher function that uses axios with error handling
 const axiosFetcher = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
@@ -49,7 +49,7 @@ export function useSWRFetch<T = any>(
 
   return useSWR<T, AppError>(
     shouldFetch ? [url, config] : null,
-    ([url, config]) => axiosFetcher<T>(url, config),
+    (args) => axiosFetcher<T>(args[0], args[1]),
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,

@@ -1,104 +1,24 @@
 {
-  "name": "cosmo-exploit-weight-management",
-  "version": "2.0.0",
-  "description": "A proprietary weight management system by Cosmo Exploit Group LLC for trucking companies to manage weight checking and load management.",
-  "main": "index.mjs",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "push-schema": "node scripts/push-schema.mjs",
-    "update-schema": "node scripts/update-schema.mjs",
-    "update-deps": "node scripts/update-dependencies.mjs",
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && next dev\"",
-    "install-deps": "node scripts/install-deps.mjs",
-    "prepare": "husky",
-    "lint": "eslint . || echo 'Skipping eslint'",
-    "lint:fix": "npm run lint:frontend:fix && npm run lint:backend:fix",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\" || echo 'Skipping prettier'",
-    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md,css}\" || echo 'Skipping prettier check'",
-    "lint:check": "./lint-check.sh",
-    "lint:check:fix": "./lint-check.sh --fix",
-    "lint:check:report": "./lint-check.sh --report",
-    "lint:check:auto-fix": "./lint-check.sh --auto-fix-all",
-    "lint:frontend": "./lint-check.sh --frontend-only",
-    "lint:backend": "./lint-check.sh --backend-only",
-    "lint:frontend:fix": "cd frontend && npm run lint:fix",
-    "lint:backend:fix": "cd backend && npm run lint:fix",
-    "lint:ci": "./lint-check.sh --auto-fix-all --no-types",
-    "setup-db": "node scripts/setup-database.mjs",
-    "create-admin": "node scripts/create-admin.mjs",
-    "reset-db": "node scripts/reset-database.mjs",
-    "seed-data": "node scripts/seed-realistic-data.mjs",
-    "add-data": "node scripts/add-realistic-data.mjs",
-    "add-logos": "node scripts/add-company-logos.mjs",
-    "setup-all": "npm run setup-db && npm run seed-data && npm run add-data && npm run add-logos",
-    "cleanup": "node scripts/cleanup.mjs",
-    "velociraptor-port-killer": "node scripts/velociraptor.mjs",
-    "kill-nodejs": "node scripts/kill-nodejs.mjs",
-    "prestart-cleanup": "node scripts/prestart-cleanup.mjs",
-    "predev": "node scripts/velociraptor.mjs && node scripts/kill-nodejs.mjs",
-    "postdev": "node scripts/cleanup.mjs",
-    "setup-supabase-buckets": "node scripts/create-supabase-buckets.mjs",
-    "setup-lpr-cameras": "node scripts/migrations/create-lpr-cameras-table.mjs",
-    "add-telematics-columns": "node scripts/migrations/add-telematics-columns.mjs",
-    "add-trucking-data": "node scripts/add-trucking-dashboard-data.mjs",
-    "add-copyright": "node scripts/add-copyright-headers.mjs",
-    "test-license": "node scripts/test-license.mjs"
+  "name": "truckingweight",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">",
+  "main": "fix_policies.js",
+  "directories": {
+    "doc": "docs"
   },
-  "dependencies": {
-    "@hcaptcha/react-hcaptcha": "1.12.0",
-    "@maptiler/sdk": "^3.2.2",
-    "@supabase/supabase-js": "^2.49.4",
-    "axios": "^1.9.0",
-    "concurrently": "^8.2.2",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.4.5",
-    "glob": "11.0.2",
-    "luxon": "^3.6.1",
-    "mapbox-gl": "^3.12.0",
-    "next": "^14.0.4",
-    "node-fetch": "^2.7.0",
-    "pg": "^8.11.3",
-    "tailwindcss-animate": "^1.0.7",
-    "uuid": "^11.1.0"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simplehostingserverd/truckingweight.git"
+    "url": "git+https://github.com/Simple-Hosting-Holdings-Inc/truckingweight.git"
   },
-  "keywords": [
-    "trucking",
-    "weight-management",
-    "logistics"
-  ],
-  "author": "Cosmo Exploit Group LLC",
-  "license": "UNLICENSED",
-  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/simplehostingserverd/truckingweight/issues"
+    "url": "https://github.com/Simple-Hosting-Holdings-Inc/truckingweight/issues"
   },
-  "homepage": "https://github.com/simplehostingserverd/truckingweight#readme",
-  "devDependencies": {
-    "@commitlint/cli": "^18.6.1",
-    "@commitlint/config-conventional": "^18.6.2",
-    "@typescript-eslint/eslint-plugin": "^8.32.1",
-    "@typescript-eslint/parser": "^8.32.1",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.0.4",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-prettier": "^5.4.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "husky": "9.1.7",
-    "lint-staged": "^15.2.2",
-    "nodemon": "^3.1.0",
-    "prettier": "^3.5.3",
-    "typescript": "^5.3.3"
-  },
-  "engines": {
-    "node": ">=20.0.0 <21.0.0",
-    "npm": ">=10.0.0"
-  },
-  "type": "module"
+  "homepage": "https://github.com/Simple-Hosting-Holdings-Inc/truckingweight#readme"
 }

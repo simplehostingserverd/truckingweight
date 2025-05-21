@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -19,8 +19,8 @@
  * geocoding, and other location-based services.
  */
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 // Mapbox API endpoints
 const MAPBOX_BASE_URL = 'https://api.mapbox.com';
@@ -132,7 +132,7 @@ export const getDirections = async (
   const token = await getMapboxToken();
 
   // Format coordinates for the API
-  const coordinates = waypoints.map(wp => wp.coordinates.join(',')).join(';');
+  const coordinates = waypoints.map((wp) => wp.coordinates.join(',')).join(';');
 
   // Build query parameters
   const queryParams = new URLSearchParams({
