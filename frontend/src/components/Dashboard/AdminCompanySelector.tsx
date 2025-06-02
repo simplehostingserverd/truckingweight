@@ -14,9 +14,7 @@
 'use client';
 
 import { useSWROptimized } from '@/hooks/useSWROptimized';
-import { Database } from '@/types/supabase';
 import { BuildingOfficeIcon } from '@heroicons/react/24/outline';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React from 'react';
 
 interface Company {
@@ -30,7 +28,7 @@ interface AdminCompanySelectorProps {
 }
 
 function AdminCompanySelector({ onCompanyChange, selectedCompanyId }: AdminCompanySelectorProps) {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   // Use the optimized SWR hook for data fetching with caching
   const fetchCompanies = async (key: string) => {

@@ -12,7 +12,6 @@
  */
 
 
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
@@ -23,8 +22,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Initialize Supabase client
-    const cookieStore = await cookies();
-    const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+    const supabase = createClient();
 
     // Get user data
     const {
@@ -222,8 +220,7 @@ export async function GET(request: NextRequest) {
     // Try to recover by querying the vehicles table directly
     try {
       // Initialize a new Supabase client
-      const cookieStore = await cookies();
-      const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+      const supabase = createClient();
 
       // Get user data
       const {
