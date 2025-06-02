@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,65 +14,54 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
-  PlusIcon,
-  ArrowPathIcon,
-  LinkIcon,
-  ServerIcon,
-  ChartBarIcon,
-  CurrencyDollarIcon,
-  ArchiveBoxIcon,
-  TruckIcon,
-  UserGroupIcon,
-  MagnifyingGlassIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-  ReceiptRefundIcon,
-  BuildingLibraryIcon,
-  ShoppingCartIcon,
-  ClipboardDocumentIcon,
-  CalendarIcon,
-} from '@heroicons/react/24/outline';
-import {
-  Button,
-  Input,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Badge,
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-  Alert,
-  AlertTitle,
-  AlertDescription,
-  Separator,
-  Skeleton,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+    Alert,
+    AlertDescription,
+    AlertTitle,
+    Badge,
+    Button,
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    Input,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+    Separator,
+    Skeleton,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
 } from '@/components/ui';
-import type { Database } from '@/types/supabase';
+import {
+    ArchiveBoxIcon,
+    ArrowPathIcon,
+    CurrencyDollarIcon,
+    LinkIcon,
+    PlusIcon,
+    ReceiptRefundIcon,
+    ServerIcon,
+    UserGroupIcon
+} from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
 
 type Connection = {
   id: string;
@@ -139,7 +128,7 @@ export default function ERPPage() {
       tokenSecret: '',
     },
   });
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   useEffect(() => {
     fetchConnections();

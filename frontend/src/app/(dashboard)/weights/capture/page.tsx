@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,34 +14,25 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
-import {
-  ScaleIcon,
-  TruckIcon,
-  UserIcon,
-  CameraIcon,
-  DocumentTextIcon,
-  ArrowPathIcon,
-  CheckCircleIcon,
-  ExclamationTriangleIcon,
-  QrCodeIcon,
-  PencilIcon,
-  XCircleIcon,
-} from '@heroicons/react/24/outline';
-import { weightCaptureService } from '@/services/weight-capture';
 import { weighTicketService } from '@/services/weigh-ticket-service';
-import { WeightReading, VehicleExtended, Driver, Scale } from '@/types/scale-master';
-import ScaleSelector from '@/components/WeightCapture/ScaleSelector';
-import WeightReader from '@/components/WeightCapture/WeightReader';
-import AxleWeightCapture from '@/components/WeightCapture/AxleWeightCapture';
-import QRScanner from '@/components/WeightCapture/QRScanner';
+import { weightCaptureService } from '@/services/weight-capture';
+import { Driver, Scale, VehicleExtended, WeightReading } from '@/types/scale-master';
+import {
+    ArrowPathIcon,
+    CameraIcon,
+    CheckCircleIcon,
+    DocumentTextIcon,
+    ExclamationTriangleIcon,
+    QrCodeIcon,
+    ScaleIcon,
+    TruckIcon
+} from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function WeightCapturePage() {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   // State for weight capture
   const [captureMethod, setCaptureMethod] = useState<'scale' | 'iot' | 'camera' | 'manual'>(

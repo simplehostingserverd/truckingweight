@@ -1,24 +1,50 @@
 {
-  "name": "truckingweight",
+  "name": "cosmoexploitgroup-weight-management-system",
   "version": "1.0.0",
-  "description": "<div align=\"center\">",
-  "main": "fix_policies.js",
+  "description": "Cosmo Exploit Group LLC Weight Management System",
+  "main": "index.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-deps": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:frontend": "cd frontend && npm run start",
+    "start:backend": "cd backend && npm run start",
+    "setup-db": "cd backend && npx prisma generate && npx prisma db push",
+    "add-telematics-columns": "cd backend && npx prisma db push --accept-data-loss",
+    "generate-secrets": "node scripts/generate-secrets.mjs",
+    "switch-node": "node scripts/switch-to-node20.mjs",
+    "check-requirements": "node scripts/check-requirements.mjs",
+    "lint": "cd frontend && npm run lint && cd ../backend && npm run lint",
+    "lint:fix": "cd frontend && npm run lint:fix && cd ../backend && npm run lint:fix",
+    "test": "cd frontend && npm test && cd ../backend && npm test",
+    "clean": "rm -rf node_modules frontend/node_modules backend/node_modules frontend/.next backend/dist",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Simple-Hosting-Holdings-Inc/truckingweight.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["trucking", "weight-management", "logistics", "fleet-management", "compliance"],
+  "author": "Michael Anthony Trevino Jr. <info@cosmoexploitgroup.com>",
+  "license": "PROPRIETARY",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Simple-Hosting-Holdings-Inc/truckingweight/issues"
   },
-  "homepage": "https://github.com/Simple-Hosting-Holdings-Inc/truckingweight#readme"
+  "homepage": "https://github.com/Simple-Hosting-Holdings-Inc/truckingweight#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": "20.x",
+    "npm": ">=10.0.0"
+  }
 }

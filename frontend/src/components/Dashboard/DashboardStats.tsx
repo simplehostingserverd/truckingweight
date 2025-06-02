@@ -13,16 +13,14 @@
 
 'use client';
 
-import { Database } from '@/types/supabase';
 import {
-  CalendarDaysIcon,
-  CheckCircleIcon,
-  ClockIcon,
-  ExclamationTriangleIcon,
-  ScaleIcon,
-  TruckIcon,
+    CalendarDaysIcon,
+    CheckCircleIcon,
+    ClockIcon,
+    ExclamationTriangleIcon,
+    ScaleIcon,
+    TruckIcon,
 } from '@heroicons/react/24/outline';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React, { useEffect, useState } from 'react';
 
 interface DashboardStatsProps {
@@ -31,7 +29,7 @@ interface DashboardStatsProps {
 }
 
 function DashboardStats({ initialUserName, companyId }: DashboardStatsProps) {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const [stats, setStats] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');

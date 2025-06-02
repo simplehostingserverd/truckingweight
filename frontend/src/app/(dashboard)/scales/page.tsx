@@ -14,7 +14,6 @@
 
 'use client';
 
-import type { Database } from '@/types/supabase';
 import {
     Refresh as ArrowPathIcon,
     Search as MagnifyingGlassIcon,
@@ -50,7 +49,6 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -74,7 +72,7 @@ export default function ScalesPage() {
     'success' | 'error' | 'info' | 'warning'
   >('info');
   const [activeScales, setActiveScales] = useState<number>(0);
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   useEffect(() => {
     fetchScales();

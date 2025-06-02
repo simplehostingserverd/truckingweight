@@ -1,26 +1,24 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
 
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
 import { toSearchParamString } from '@/utils/searchParams';
+import { createClient } from '@/utils/supabase/server';
+import { notFound } from 'next/navigation';
 import DriverDetailsClient from './client';
 
 export default async function DriverDetail({ params }: { params: { id: string } }) {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createClient();
   // Safely convert the ID parameter to a string
   const id = toSearchParamString(params.id, '');
 

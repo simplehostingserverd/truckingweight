@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,24 +14,22 @@
 
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
-import {
-  PencilIcon,
-  TrashIcon,
-  ArrowPathIcon,
-  CheckIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { uploadSignature } from '@/utils/supabase/storage';
-import ErrorBoundary from '@/components/ErrorBoundary';
+import {
+    ArrowPathIcon,
+    CheckIcon,
+    PencilIcon,
+    TrashIcon,
+    XMarkIcon,
+} from '@heroicons/react/24/outline';
+import { useEffect, useRef, useState } from 'react';
 
 export default function SignaturesPage() {
   const [signatures, setSignatures] = useState<any[]>([]);
@@ -43,7 +41,7 @@ export default function SignaturesPage() {
   const [companyId, setCompanyId] = useState<number | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   useEffect(() => {
     fetchSignatures();

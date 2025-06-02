@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20-alpine AS builder
+FROM node:20.18.0-alpine AS builder
 
 WORKDIR /app
 
@@ -28,7 +28,7 @@ ENV NEXT_PUBLIC_CESIUM_TOKEN=$NEXT_PUBLIC_CESIUM_TOKEN
 RUN npm run build
 
 # Production stage
-FROM node:20-alpine AS runner
+FROM node:20.18.0-alpine AS runner
 
 WORKDIR /app
 

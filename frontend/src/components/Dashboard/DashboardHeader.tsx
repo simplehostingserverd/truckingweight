@@ -17,22 +17,21 @@ import MobileNav from '@/components/ui/MobileNav';
 import { Database } from '@/types/supabase';
 import { Menu, Transition } from '@headlessui/react';
 import {
-  ArrowRightOnRectangleIcon,
-  BellIcon,
-  BuildingOfficeIcon,
-  ChartBarIcon,
-  Cog6ToothIcon,
-  DocumentIcon,
-  HomeIcon,
-  PencilIcon,
-  ScaleIcon,
-  TruckIcon,
-  UserGroupIcon,
-  UserIcon,
-  UsersIcon,
+    ArrowRightOnRectangleIcon,
+    BellIcon,
+    BuildingOfficeIcon,
+    ChartBarIcon,
+    Cog6ToothIcon,
+    DocumentIcon,
+    HomeIcon,
+    PencilIcon,
+    ScaleIcon,
+    TruckIcon,
+    UserGroupIcon,
+    UserIcon,
+    UsersIcon,
 } from '@heroicons/react/24/outline';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
@@ -46,7 +45,7 @@ interface DashboardHeaderProps {
 
 export default function DashboardHeader({ user, isAdmin = false }: DashboardHeaderProps) {
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);

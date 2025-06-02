@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,34 +14,24 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import {
-  Cog6ToothIcon,
-  ServerIcon,
-  ShieldCheckIcon,
-  BellIcon,
-  EnvelopeIcon,
-  CloudArrowUpIcon,
-  ArrowPathIcon,
-  CheckIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle
 } from '@/components/ui/card';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Switch } from '@/components/ui/switch';
+import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import type { Database } from '@/types/supabase';
+import { Switch } from '@/components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+    CloudArrowUpIcon,
+    XMarkIcon
+} from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
 
 type SystemSettings = {
   maintenance_mode: boolean;
@@ -90,7 +80,7 @@ export default function AdminSettingsPage() {
   const [activeTab, setActiveTab] = useState('general');
   const [newEmailNotification, setNewEmailNotification] = useState('');
   const [newFileType, setNewFileType] = useState('');
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   useEffect(() => {
     fetchSettings();

@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,22 +14,19 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
 import { getStatusColor } from '@/lib/utils';
+import { toSearchParamString } from '@/utils/searchParams';
 import {
-  PencilIcon,
-  TrashIcon,
-  ArrowLeftIcon,
-  TruckIcon,
-  MapPinIcon,
-  ClockIcon,
+    ArrowLeftIcon,
+    ClockIcon,
+    MapPinIcon,
+    PencilIcon,
+    TrashIcon
 } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
-import { toSearchParamString } from '@/utils/searchParams';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 // Dynamically import the LoadStatusUpdater component
 const LoadStatusUpdater = dynamic(() => import('@/components/Loads/LoadStatusUpdater'), {
@@ -44,7 +41,7 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [statusUpdated, setStatusUpdated] = useState(false);
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   // Safely convert the ID parameter to a string
   const id = toSearchParamString(params.id, '');
 

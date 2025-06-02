@@ -399,7 +399,7 @@ const transitions = {
 };
 
 // Export all tokens
-export default {
+module.exports = {
   colors,
   typography,
   spacing,

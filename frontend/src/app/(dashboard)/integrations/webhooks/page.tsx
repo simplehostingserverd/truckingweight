@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,24 +14,20 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
-import Link from 'next/link';
 import {
-  BellIcon,
-  PlusIcon,
-  ArrowLeftIcon,
-  ClipboardDocumentIcon,
-  EyeIcon,
-  EyeSlashIcon,
-  TrashIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  ArrowPathIcon,
+    ArrowLeftIcon,
+    ArrowPathIcon,
+    BellIcon,
+    CheckCircleIcon,
+    ClipboardDocumentIcon,
+    PlusIcon,
+    TrashIcon,
+    XCircleIcon
 } from '@heroicons/react/24/outline';
 import { formatDistanceToNow } from 'date-fns';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 interface Webhook {
   id: string;
@@ -46,7 +42,7 @@ interface Webhook {
 
 export default function WebhooksPage() {
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   const [webhooks, setWebhooks] = useState<Webhook[]>([]);
   const [loading, setLoading] = useState(true);

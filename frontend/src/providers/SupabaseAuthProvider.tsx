@@ -13,8 +13,6 @@
 
 'use client';
 
-import { getSupabaseConfig } from '@/utils/supabase/config';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Session, User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
@@ -51,27 +49,8 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  // Get Supabase configuration
-  const { supabaseUrl, supabaseKey } = getSupabaseConfig();
-
   // Initialize the Supabase client
-  const supabase = createClientComponentClient({
-    supabaseUrl,
-    supabaseKey,
-    options: {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-        flowType: 'pkce',
-      },
-      global: {
-        headers: {
-          'X-Client-Info': 'supabase-auth-helpers-nextjs',
-        },
-      },
-    },
-  });
+  const supabase = createClient();
 
   // Sign in function
   const signIn = async (email: string, password: string, captchaToken?: string | null) => {

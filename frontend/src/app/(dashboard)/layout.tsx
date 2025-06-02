@@ -13,8 +13,6 @@
 
 import DashboardHeader from '@/components/Dashboard/DashboardHeader';
 import DashboardSidebar from '@/components/Dashboard/DashboardSidebar';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 // Accessibility component to skip to main content
@@ -30,8 +28,7 @@ function SkipToContent() {
 }
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const cookieStore = await cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createClient();
 
   const {
     data: { user },

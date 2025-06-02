@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,48 +14,44 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import {
-  ArrowLeftIcon,
-  PencilIcon,
-  TrashIcon,
-  TruckIcon,
-  IdentificationIcon,
-  CalendarIcon,
-  ScaleIcon,
-  PhotoIcon,
-  ArrowPathIcon,
-  CameraIcon,
-  VideoCameraIcon,
-} from '@heroicons/react/24/outline';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Skeleton } from '@/components/ui/skeleton';
-import { uploadVehicleImage } from '@/utils/supabase/storage';
-import { captureLPRImage, getLPRCameras, LPRCameraConfig } from '@/utils/lpr';
-import { Database } from '@/types/supabase';
-import ErrorBoundary from '@/components/ErrorBoundary';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from '@/components/ui/dialog';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { captureLPRImage, getLPRCameras, LPRCameraConfig } from '@/utils/lpr';
+import { uploadVehicleImage } from '@/utils/supabase/storage';
+import {
+    ArrowLeftIcon,
+    ArrowPathIcon,
+    CalendarIcon,
+    CameraIcon,
+    IdentificationIcon,
+    PencilIcon,
+    PhotoIcon,
+    ScaleIcon,
+    TruckIcon
+} from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 interface VehicleDetailsProps {
   id: string;
@@ -76,7 +72,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
   const [isCapturing, setIsCapturing] = useState(false);
   const [captureResult, setCaptureResult] = useState<any>(null);
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   useEffect(() => {
     if (!initialData) {

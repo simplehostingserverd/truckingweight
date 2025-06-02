@@ -9,6 +9,11 @@
     "start:express": "node server.cjs",
     "dev": "nodemon server-fastify.mjs",
     "dev:express": "nodemon server.cjs",
+    "build": "npx prisma generate && echo 'Backend build complete'",
+    "db:generate": "npx prisma generate",
+    "db:push": "npx prisma db push",
+    "db:migrate": "npx prisma migrate dev",
+    "db:studio": "npx prisma studio",
     "lint": "eslint .",
     "lint:check": "eslint \"**/*.{js,ts}\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"generated/**\" --ignore-pattern \"prisma/**\"",
     "lint:fix": "eslint \"**/*.{js,ts}\" --fix --ignore-pattern \"node_modules/**\" --ignore-pattern \"generated/**\" --ignore-pattern \"prisma/**\"",
@@ -67,7 +72,7 @@
     "glob": "^9.3.5"
   },
   "engines": {
-    "node": ">=20.0.0 <21.0.0",
+    "node": "20.x",
     "npm": ">=10.0.0"
   }
 }

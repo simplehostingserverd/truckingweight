@@ -11,15 +11,13 @@
  * in any way without explicit written permission.
  */
 
-import Link from 'next/link';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import { formatDate, getStatusColor } from '@/lib/utils';
-import { PlusIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
+import { createClient } from '@/utils/supabase/server';
+import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 export default async function Weights() {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createClient();
 
   // Get user data
   const {

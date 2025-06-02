@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,22 +14,20 @@
 
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
-import {
-  UserIcon,
-  IdentificationIcon,
-  CalendarIcon,
-  PhoneIcon,
-  EnvelopeIcon,
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-} from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import EmailValidationFeedback from '@/components/ui/EmailValidationFeedback';
 import { validateEmail } from '@/utils/validation/emailValidator';
+import {
+    CalendarIcon,
+    CheckCircleIcon,
+    EnvelopeIcon,
+    ExclamationCircleIcon,
+    IdentificationIcon,
+    PhoneIcon,
+    UserIcon,
+} from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function CreateDriver() {
   const [name, setName] = useState('');
@@ -43,7 +41,7 @@ export default function CreateDriver() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

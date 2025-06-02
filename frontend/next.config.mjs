@@ -14,11 +14,11 @@
 /** @type {import('next').NextConfig} */
 
 // Import required modules
+import withPWA from '@ducanh2912/next-pwa';
+import bundleAnalyzer from '@next/bundle-analyzer';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fs from 'fs';
-import bundleAnalyzer from '@next/bundle-analyzer';
-import withPWA from '@ducanh2912/next-pwa';
 
 // Get __dirname equivalent in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -264,7 +264,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5000/api/:path*',
+        destination: 'http://localhost:5001/api/:path*',
       },
     ];
   },

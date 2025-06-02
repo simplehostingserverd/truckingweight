@@ -13,8 +13,7 @@
 
 
 import type { Database } from '@/types/supabase';
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createServerClient } from '@supabase/ssr';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { getSupabaseConfig } from './config';
@@ -88,24 +87,15 @@ export async function middleware(req: NextRequest) {
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
   // Create the client with explicit URL and key
-  const cookieStore = cookies();
-  const supabase = createMiddlewareClient<Database>({
-    req,
-    res,
-    cookies: () => cookieStore,
-    supabaseUrl,
-    supabaseKey,
-    options: {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-        flowType: 'pkce',
+  const supabase = createServerClient<Database>(supabaseUrl, supabaseKey, {
+    cookies: {
+      getAll() {
+        return req.cookies.getAll().map(({ name, value }) => ({ name, value }));
       },
-      global: {
-        headers: {
-          'X-Client-Info': 'supabase-auth-helpers-nextjs/middleware',
-        },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          res.cookies.set(name, value, options);
+        });
       },
     },
   });

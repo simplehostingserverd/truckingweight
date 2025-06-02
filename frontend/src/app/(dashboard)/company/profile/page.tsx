@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,30 +14,28 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import {
-  BuildingOfficeIcon,
-  ArrowPathIcon,
-  MapPinIcon,
-  PhoneIcon,
-  EnvelopeIcon,
-  GlobeAltIcon,
-  PhotoIcon,
-  PencilIcon,
-  UserIcon,
-} from '@heroicons/react/24/outline';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 import { uploadCompanyLogo } from '@/utils/supabase/storage';
-import { Database } from '@/types/supabase';
-import ErrorBoundary from '@/components/ErrorBoundary';
+import {
+    ArrowPathIcon,
+    BuildingOfficeIcon,
+    EnvelopeIcon,
+    GlobeAltIcon,
+    MapPinIcon,
+    PencilIcon,
+    PhoneIcon,
+    PhotoIcon,
+    UserIcon,
+} from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function CompanyProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +75,7 @@ export default function CompanyProfilePage() {
   });
   const [userRole, setUserRole] = useState('user');
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   useEffect(() => {
     fetchCompanyProfile();

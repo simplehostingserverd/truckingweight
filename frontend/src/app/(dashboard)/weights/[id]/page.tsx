@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,13 +14,11 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
 import { formatDate, getStatusColor } from '@/lib/utils';
-import { PencilIcon, TrashIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function WeightDetail({ params }: { params: { id: string } }) {
   const [weight, setWeight] = useState<any>(null);
@@ -29,7 +27,7 @@ export default function WeightDetail({ params }: { params: { id: string } }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const { id } = params;
 
   useEffect(() => {
@@ -50,14 +48,14 @@ export default function WeightDetail({ params }: { params: { id: string } }) {
           .from('weights')
           .select(
             `
-            id, 
-            weight, 
-            date, 
-            time, 
-            status, 
+            id,
+            weight,
+            date,
+            time,
+            status,
             created_at,
             updated_at,
-            vehicles(id, name, license_plate), 
+            vehicles(id, name, license_plate),
             drivers(id, name, license_number)
           `
           )

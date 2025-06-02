@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,32 +14,28 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import {
-  ArrowLeftIcon,
-  PencilIcon,
-  UserIcon,
-  IdentificationIcon,
-  CalendarIcon,
-  PhoneIcon,
-  EnvelopeIcon,
-  TruckIcon,
-  MapPinIcon,
-  PhotoIcon,
-  ArrowPathIcon,
-} from '@heroicons/react/24/outline';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Skeleton } from '@/components/ui/skeleton';
-import { uploadDriverPhoto } from '@/utils/supabase/storage';
-import { Database } from '@/types/supabase';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatDate } from '@/lib/utils';
+import { uploadDriverPhoto } from '@/utils/supabase/storage';
+import {
+    ArrowLeftIcon,
+    ArrowPathIcon,
+    CalendarIcon,
+    EnvelopeIcon,
+    IdentificationIcon,
+    PencilIcon,
+    PhoneIcon,
+    PhotoIcon,
+    UserIcon
+} from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 interface DriverDetailsProps {
   id: string;
@@ -54,7 +50,7 @@ export default function DriverDetailsClient({ id, initialData }: DriverDetailsPr
   const [activeTab, setActiveTab] = useState('details');
   const [photoUploading, setPhotoUploading] = useState(false);
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   useEffect(() => {
     if (!initialData) {

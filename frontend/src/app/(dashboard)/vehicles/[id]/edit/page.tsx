@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,21 +14,18 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
 import {
-  TruckIcon,
-  IdentificationIcon,
-  BuildingOfficeIcon,
-  ScaleIcon,
-  CalendarIcon,
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-  ArrowLeftIcon,
+    ArrowLeftIcon,
+    BuildingOfficeIcon,
+    CheckCircleIcon,
+    ExclamationCircleIcon,
+    IdentificationIcon,
+    ScaleIcon,
+    TruckIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function EditVehicle({ params }: { params: { id: string } }) {
   const [name, setName] = useState('');
@@ -46,7 +43,7 @@ export default function EditVehicle({ params }: { params: { id: string } }) {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const { id } = params;
 
   // Load vehicle data

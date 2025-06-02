@@ -22,6 +22,20 @@ echo -e "${BLUE}=======================================${NC}"
 echo -e "${BLUE}   Simple Scale Solutions Starter   ${NC}"
 echo -e "${BLUE}=======================================${NC}"
 
+# Check Node.js version
+NODE_VERSION=$(node --version)
+NODE_MAJOR=$(echo $NODE_VERSION | cut -d'.' -f1 | sed 's/v//')
+
+if [ "$NODE_MAJOR" != "20" ]; then
+  echo -e "${RED}❌ Wrong Node.js version detected: $NODE_VERSION${NC}"
+  echo -e "${YELLOW}This application requires Node.js 20.x${NC}"
+  echo -e "${YELLOW}Please run: npm run switch-node${NC}"
+  echo -e "${YELLOW}Or manually: nvm use 20${NC}"
+  exit 1
+fi
+
+echo -e "${GREEN}✅ Node.js version check passed: $NODE_VERSION${NC}"
+
 # Check if .env file exists
 if [ ! -f .env ]; then
   echo -e "${YELLOW}No .env file found. Creating one with default values...${NC}"
@@ -35,20 +49,21 @@ SUPABASE_SERVICE_ROLE_KEY=
 SUPABASE_JWT_SECRET=5KYUyCsHvxw3vG7QTtOywMFazTGpWE5VvbPNYgPXK+xiQCybFn9ts4ZLMU2QiGKAVfWuU2SR+N4fJuiJxwQx9Q==
 
 # Backend Configuration
-PORT=3001
+PORT=5001
 NODE_ENV=development
-BACKEND_URL=http://localhost:3001
+BACKEND_URL=http://localhost:5001
 
 # Database Configuration
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
 
-# JWT Configuration
-JWT_SECRET=your-jwt-secret
+# JWT Configuration (for NextAuth compatibility)
+JWT_SECRET=089c8aea07a1c5974098d08cd53b8539c0b7b9b8cc10e0532b78587b23c3fbe2c645231162e9b194677a1c117e651f85e5563129d9f4a45ef64bc3f09916f9109
 JWT_EXPIRES_IN=1d
 
 # API Keys
-MAPBOX_TOKEN=pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY21haTl1dXhpMGJ2bzJ1cTVlY2p4ajhzZCJ9.AUS7RZCMk1vnR4yQR5RAEQ
-CESIUM_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0YzMxZTQ1My1lODMwLTRlZTAtYmQwMC0zNzFhMzVjZjFkYWQiLCJpZCI6MTg3MzI0LCJpYXQiOjE3MDI0OTg5NTl9.U_qVSBPVJvFG5vNu7j7jgOA9jBNjqP_ZwCNIl3Xjmtw
+NEXT_PUBLIC_MAPBOX_TOKEN=pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY21haTl1dXhpMGJ2bzJ1cTVlY2p4ajhzZCJ9.AUS7RZCMk1vnR4yQR5RAEQ
+NEXT_PUBLIC_CESIUM_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0YzMxZTQ1My1lODMwLTRlZTAtYmQwMC0zNzFhMzVjZjFkYWQiLCJpZCI6MTg3MzI0LCJpYXQiOjE3MDI0OTg5NTl9.U_qVSBPVJvFG5vNu7j7jgOA9jBNjqP_ZwCNIl3Xjmtw
+NEXT_PUBLIC_MAPTILER_KEY=WPXCcZzL6zr6JzGBzMUK
 EOL
   echo -e "${GREEN}.env file created successfully${NC}"
 fi

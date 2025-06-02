@@ -13,8 +13,6 @@
 
 'use client';
 
-import { Database } from '@/types/supabase';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
@@ -23,7 +21,7 @@ interface LoadStatusChartProps {
 }
 
 function LoadStatusChart({ companyId }: LoadStatusChartProps) {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const [loadData, setLoadData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');

@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,22 +14,19 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import Link from 'next/link';
 import {
-  ArrowRightIcon,
-  PuzzlePieceIcon,
-  ServerIcon,
-  BellIcon,
-  KeyIcon,
-  ShieldCheckIcon,
-  TruckIcon,
-  BuildingLibraryIcon,
-  ScaleIcon,
-  DocumentTextIcon,
+    ArrowRightIcon,
+    BellIcon,
+    BuildingLibraryIcon,
+    DocumentTextIcon,
+    KeyIcon,
+    PuzzlePieceIcon,
+    ScaleIcon,
+    ShieldCheckIcon,
+    TruckIcon
 } from '@heroicons/react/24/outline';
-import type { Database } from '@/types/supabase';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function IntegrationsPage() {
   const [userData, setUserData] = useState<{ company_id: string; is_admin: boolean } | null>(null);
@@ -38,7 +35,7 @@ export default function IntegrationsPage() {
   const [webhooksCount, setWebhooksCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   useEffect(() => {
     async function fetchData() {

@@ -13,18 +13,16 @@
 
 'use client';
 
-import { Database } from '@/types/supabase';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React, { useEffect, useState } from 'react';
 import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Legend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
+    Bar,
+    BarChart,
+    CartesianGrid,
+    Legend,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
 } from 'recharts';
 
 interface VehicleWeightChartProps {
@@ -32,7 +30,7 @@ interface VehicleWeightChartProps {
 }
 
 function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const [weightData, setWeightData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');

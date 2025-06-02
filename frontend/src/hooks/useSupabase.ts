@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,9 +14,9 @@
 
 'use client';
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { Database } from '@/types/supabase';
 import { getSupabaseConfig } from '@/utils/supabase/config';
+import { createBrowserClient } from '@supabase/ssr';
 
 /**
  * Hook to use Supabase client in client components
@@ -27,23 +27,7 @@ export function useSupabase() {
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
   // Create Supabase client
-  const supabase = createClientComponentClient<Database>({
-    supabaseUrl,
-    supabaseKey,
-    options: {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-        flowType: 'pkce',
-      },
-      global: {
-        headers: {
-          'X-Client-Info': 'supabase-auth-helpers-nextjs',
-        },
-      },
-    },
-  });
+  const supabase = createBrowserClient<Database>(supabaseUrl, supabaseKey);
 
   return { supabase };
 }

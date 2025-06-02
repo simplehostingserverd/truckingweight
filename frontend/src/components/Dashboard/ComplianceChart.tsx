@@ -14,8 +14,6 @@
 'use client';
 
 import useSWRFetch from '@/hooks/useSWRFetch';
-import { Database } from '@/types/supabase';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React, { useMemo, useState } from 'react';
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
@@ -24,7 +22,7 @@ interface ComplianceChartProps {
 }
 
 function ComplianceChart({ companyId }: ComplianceChartProps) {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const [dateRange, setDateRange] = useState('week'); // 'week', 'month', 'year'
   const [selectedCompany, setSelectedCompany] = useState<string>('overall');
 

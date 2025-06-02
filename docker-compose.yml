@@ -44,18 +44,19 @@ services:
         - SUPABASE_KEY=${SUPABASE_KEY}
         - JWT_SECRET=${JWT_SECRET}
     ports:
-      - "5000:5000"
+      - "5001:5001"
     volumes:
       - ./backend:/app
       - backend-node-modules:/app/node_modules
     environment:
       - NODE_ENV=development
+      - PORT=5001
       - SUPABASE_URL
       - SUPABASE_KEY
       - JWT_SECRET
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:5000/health"]
+      test: ["CMD", "wget", "--spider", "http://localhost:5001/health"]
       interval: 10s
       timeout: 5s
       retries: 3

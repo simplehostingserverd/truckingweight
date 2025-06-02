@@ -11,10 +11,8 @@
  * in any way without explicit written permission.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
 import { toSearchParamString } from '@/utils/searchParams';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
 /**
  * API handler for dashboard endpoints
@@ -34,8 +32,7 @@ export async function GET(request: NextRequest, { params }: { params: { route: s
 
   try {
     // Initialize Supabase client
-    const cookieStore = await cookies();
-    const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+    const supabase = createClient();
 
     // Get user data
     const {
@@ -122,8 +119,7 @@ export async function GET(request: NextRequest, { params }: { params: { route: s
     // Try to recover and still use the database
     try {
       // Initialize a new Supabase client
-      const cookieStore = await cookies();
-      const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+      const supabase = createClient();
 
       // Get user data
       const {

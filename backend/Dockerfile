@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20-alpine AS builder
+FROM node:20.18.0-alpine AS builder
 
 WORKDIR /app
 
@@ -27,7 +27,7 @@ ENV JWT_SECRET=$JWT_SECRET
 RUN npm run build || echo "No build script found"
 
 # Production stage
-FROM node:20-alpine AS runner
+FROM node:20.18.0-alpine AS runner
 
 WORKDIR /app
 

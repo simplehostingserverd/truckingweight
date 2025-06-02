@@ -16,7 +16,6 @@
 
 import HardwareSelector from '@/components/scales/HardwareSelector';
 import { toSearchParamString } from '@/lib/utils';
-import type { Database } from '@/types/supabase';
 import {
     ArrowBack as ArrowLeftIcon,
     Edit as PencilIcon,
@@ -43,7 +42,6 @@ import {
     Tabs,
     Typography
 } from '@mui/material';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -57,7 +55,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [activeTab, setActiveTab] = useState('details');
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   // Safely convert the ID parameter to a string
   const id = toSearchParamString(params.id, '');
 
