@@ -14,6 +14,7 @@
 'use client';
 
 import { useSWROptimized } from '@/hooks/useSWROptimized';
+import { createClient } from '@/utils/supabase/client';
 import { BuildingOfficeIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 

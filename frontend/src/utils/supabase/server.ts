@@ -18,10 +18,10 @@ import { cookies } from 'next/headers';
 import { getSupabaseServerConfig } from './config';
 
 // Create a Supabase client for use in server components
-export const createClient = () => {
+export const createClient = async () => {
   // Get Supabase configuration with JWT secret for server-side
   const { supabaseUrl, supabaseKey } = getSupabaseServerConfig();
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   return createServerClient<Database>(supabaseUrl, supabaseKey, {
     cookies: {
