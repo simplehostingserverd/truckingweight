@@ -16,7 +16,7 @@ import { createClient } from '@/utils/supabase/server';
 import ReportsClient from './client';
 
 export default async function Reports() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Get user data
   const {

@@ -16,7 +16,7 @@ import { createClient } from '@/utils/supabase/server';
 import DashboardClient from './client';
 
 export default async function Dashboard() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Get minimal user data for initial rendering
   const {

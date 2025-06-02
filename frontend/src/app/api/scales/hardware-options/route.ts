@@ -18,7 +18,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   try {
     // Create a Supabase client
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Get the user session
     const {

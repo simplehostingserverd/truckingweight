@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Development server configuration - only bind to localhost
+  ...(process.env.NODE_ENV === 'development' && {
+    serverExternalPackages: [],
+  }),
   images: {
     domains: ['images.pexels.com', 'via.placeholder.com', 'placehold.co', 'picsum.photos'],
     unoptimized: process.env.NODE_ENV === 'production', // Required for Cloudflare Pages

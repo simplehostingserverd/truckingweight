@@ -19,7 +19,6 @@
  * geocoding, and other location-based services.
  */
 
-import { createClient } from '@/utils/supabase/client';
 
 
 // Mapbox API endpoints
@@ -88,29 +87,17 @@ export interface RouteOptions {
 }
 
 /**
- * Get Mapbox access token from environment variables or Supabase
+ * Get Mapbox access token from environment variables
  */
 const getMapboxToken = async (): Promise<string> => {
-  // First try to get from environment variable
-  if (process.env.NEXT_PUBLIC_MAPBOX_TOKEN || process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN) {
-    return (
-      process.env.NEXT_PUBLIC_MAPBOX_TOKEN || process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || ''
-    );
+  // Get from environment variable
+  const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+
+  if (!token) {
+    throw new Error('Mapbox access token not found. Please set NEXT_PUBLIC_MAPBOX_TOKEN environment variable.');
   }
 
-  // If not available, try to get from Supabase
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from('app_settings')
-    .select('value')
-    .eq('key', 'mapbox_access_token')
-    .single();
-
-  if (error || !data) {
-    throw new Error('Mapbox access token not found');
-  }
-
-  return data.value;
+  return token;
 };
 
 /**
