@@ -19,6 +19,8 @@
  * geocoding, and other location-based services.
  */
 
+import { createClient } from '@/utils/supabase/client';
+
 
 // Mapbox API endpoints
 const MAPBOX_BASE_URL = 'https://api.mapbox.com';
