@@ -15,12 +15,11 @@
 
 import { AxleWeight, ComplianceIssue, WeighTicket } from '@/types/scale-master';
 import {
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
+    CheckCircleIcon,
+    ExclamationCircleIcon,
+    ExclamationTriangleIcon,
+    InformationCircleIcon,
 } from '@heroicons/react/24/outline';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useEffect, useState } from 'react';
 
 interface ComplianceCheckProps {
@@ -28,7 +27,7 @@ interface ComplianceCheckProps {
 }
 
 export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const [ticket, setTicket] = useState<WeighTicket | null>(null);
   const [axleWeights, setAxleWeights] = useState<AxleWeight[]>([]);
   const [complianceIssues, setComplianceIssues] = useState<ComplianceIssue[]>([]);

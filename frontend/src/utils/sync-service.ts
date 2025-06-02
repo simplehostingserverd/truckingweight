@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,17 +14,16 @@
 
 'use client';
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import {
-  getUnsyncedItems,
-  markAsSynced,
-  addToSyncQueue,
-  processSyncQueue,
-} from './offline-storage';
 import { v4 as uuidv4 } from 'uuid';
+import {
+    addToSyncQueue,
+    getUnsyncedItems,
+    markAsSynced,
+    processSyncQueue,
+} from './offline-storage';
 
 // Create Supabase client
-const supabase = createClientComponentClient();
+const supabase = createClient();
 
 /**
  * Sync all unsynced items to the server

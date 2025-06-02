@@ -14,7 +14,6 @@
 
 'use client';
 
-import { Database } from '@/types/supabase';
 import { useState } from 'react';
 
 interface LoadStatusUpdaterProps {
@@ -34,7 +33,7 @@ export default function LoadStatusUpdater({
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
 
   const statusOptions = [
     { value: 'Pending', label: 'Pending' },

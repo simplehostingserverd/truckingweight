@@ -13,17 +13,15 @@
 
 'use client';
 
-import { Database } from '@/types/supabase';
 import {
-  ArrowDownIcon,
-  ArrowPathIcon,
-  ArrowUpIcon,
-  CheckCircleIcon,
-  ScaleIcon,
-  TruckIcon,
-  XCircleIcon,
+    ArrowDownIcon,
+    ArrowPathIcon,
+    ArrowUpIcon,
+    CheckCircleIcon,
+    ScaleIcon,
+    TruckIcon,
+    XCircleIcon,
 } from '@heroicons/react/24/outline';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useCallback, useEffect, useState } from 'react';
 
 interface WeightReaderProps {
@@ -41,7 +39,7 @@ export default function WeightReader({
   onWeightCaptured,
   autoCapture = false,
 }: WeightReaderProps) {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const [weight, setWeight] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

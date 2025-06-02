@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,24 +14,22 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
-import { QrScanner } from '@yudiel/react-qr-scanner';
 import {
-  ScaleIcon,
-  QrCodeIcon,
-  ArrowPathIcon,
-  CheckCircleIcon,
-  XCircleIcon,
+    ArrowPathIcon,
+    CheckCircleIcon,
+    QrCodeIcon,
+    ScaleIcon,
+    XCircleIcon,
 } from '@heroicons/react/24/outline';
+import { QrScanner } from '@yudiel/react-qr-scanner';
+import { useEffect, useState } from 'react';
 
 interface ScaleSelectorProps {
   onScaleSelect: (scale: any /* @ts-ignore */ ) => void;
 }
 
 export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const [scales, setScales] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

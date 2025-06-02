@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,10 +14,9 @@
 
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { ArrowPathIcon, CheckCircleIcon, PencilIcon } from '@heroicons/react/24/outline';
+import { useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { PencilIcon, ArrowPathIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 
 interface SignatureCaptureProps {
   ticketId: number;
@@ -25,7 +24,7 @@ interface SignatureCaptureProps {
 }
 
 export default function SignatureCapture({ ticketId, onSignatureAdded }: SignatureCaptureProps) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const sigCanvas = useRef<SignatureCanvas>(null);
   const [name, setName] = useState('');
   const [role, setRole] = useState('');

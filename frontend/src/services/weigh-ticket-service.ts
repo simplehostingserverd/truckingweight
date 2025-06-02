@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -17,21 +17,17 @@
  * This service handles the creation and management of weigh tickets
  */
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
-  WeightReading,
-  WeighTicket,
-  AxleWeight,
-  Cargo,
-  TicketImage,
-  TicketSignature,
-  ComplianceIssue,
-  VehicleExtended,
-  Driver,
+    Cargo,
+    ComplianceIssue,
+    TicketImage,
+    TicketSignature,
+    WeighTicket,
+    WeightReading
 } from '@/types/scale-master';
 
 export class WeighTicketService {
-  private supabase = createClientComponentClient();
+  private supabase = createClient();
 
   /**
    * Generate a unique ticket number

@@ -19,8 +19,6 @@
  * geocoding, and other location-based services.
  */
 
-import { Database } from '@/types/supabase';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 // Mapbox API endpoints
 const MAPBOX_BASE_URL = 'https://api.mapbox.com';
@@ -99,7 +97,7 @@ const getMapboxToken = async (): Promise<string> => {
   }
 
   // If not available, try to get from Supabase
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const { data, error } = await supabase
     .from('app_settings')
     .select('value')

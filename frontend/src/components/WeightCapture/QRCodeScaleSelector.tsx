@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,18 +14,17 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Scale } from '@/types/scale-master';
 import { ArrowPathIcon, QrCodeIcon } from '@heroicons/react/24/outline';
+import { QRCodeSVG } from 'qrcode.react';
+import { useEffect, useState } from 'react';
 
 interface QRCodeScaleSelectorProps {
   onScaleSelected: (scaleId: number) => void;
 }
 
 export default function QRCodeScaleSelector({ onScaleSelected }: QRCodeScaleSelectorProps) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const [scales, setScales] = useState<Scale[]>([]);
   const [selectedScale, setSelectedScale] = useState<Scale | null>(null);
   const [qrCodeData, setQrCodeData] = useState<string>('');

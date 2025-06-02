@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -14,17 +14,15 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
 import {
-  TruckIcon,
-  ArrowPathIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  PlusCircleIcon,
-  MinusCircleIcon,
+    ArrowPathIcon,
+    CheckCircleIcon,
+    MinusCircleIcon,
+    PlusCircleIcon,
+    TruckIcon,
+    XCircleIcon,
 } from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
 import WeightReader from './WeightReader';
 
 interface AxleWeightCaptureProps {
@@ -40,7 +38,7 @@ export default function AxleWeightCapture({
   vehicleId,
   onAxleWeightsCaptured,
 }: AxleWeightCaptureProps) {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [axleConfiguration, setAxleConfiguration] = useState<any>(null);
