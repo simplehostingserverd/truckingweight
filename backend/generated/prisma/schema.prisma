@@ -537,11 +537,11 @@ model cities {
   contact_phone String?   @db.VarChar(50)
   logo_url      String?   @db.VarChar(255)
   website       String?   @db.VarChar(255)
-  status        String    @default("Active") @db.VarChar(50) // 'Active', 'Inactive'
+  status        String    @default("Active") @db.VarChar(50)
   created_at    DateTime? @default(now()) @db.Timestamptz(6)
   updated_at    DateTime? @default(now()) @db.Timestamptz(6)
 
-  // Relations
+  /// Relations
   city_users         city_users[]
   city_scales        city_scales[]
   city_permits       city_permits[]
@@ -549,50 +549,50 @@ model cities {
   city_weigh_tickets city_weigh_tickets[]
 }
 
-// City users table for city staff authentication
+/// City users table for city staff authentication
 model city_users {
   id         String    @id @db.Uuid
   name       String    @db.VarChar(255)
   email      String    @unique @db.VarChar(255)
   city_id    Int
-  role       String    @db.VarChar(50) // 'admin', 'operator', 'inspector', 'viewer'
+  role       String    @db.VarChar(50)
   is_active  Boolean   @default(true)
   created_at DateTime? @default(now()) @db.Timestamptz(6)
   updated_at DateTime? @default(now()) @db.Timestamptz(6)
 
-  // Relations
+  /// Relations
   cities             cities               @relation(fields: [city_id], references: [id], onDelete: Cascade)
   city_permits       city_permits[]
   city_violations    city_violations[]
   city_weigh_tickets city_weigh_tickets[]
 }
 
-// City scales table for scales owned by cities
+/// City scales table for scales owned by cities
 model city_scales {
   id                    Int       @id @default(autoincrement())
   name                  String    @db.VarChar(100)
   location              String?   @db.VarChar(255)
   latitude              Decimal?  @db.Decimal(10, 8)
   longitude             Decimal?  @db.Decimal(11, 8)
-  scale_type            String    @db.VarChar(50) // 'fixed', 'portable', 'weigh_station'
+  scale_type            String    @db.VarChar(50)
   manufacturer          String?   @db.VarChar(100)
   model                 String?   @db.VarChar(100)
   serial_number         String?   @db.VarChar(100)
-  max_capacity          Decimal?  @db.Decimal(10, 2) // in pounds or kg
-  precision             Decimal?  @db.Decimal(5, 2) // precision of the scale
+  max_capacity          Decimal?  @db.Decimal(10, 2)
+  precision             Decimal?  @db.Decimal(5, 2)
   calibration_date      DateTime? @db.Date
   next_calibration_date DateTime? @db.Date
-  status                String    @default("Active") @db.VarChar(50) // 'Active', 'Maintenance', 'Offline'
+  status                String    @default("Active") @db.VarChar(50)
   city_id               Int
   created_at            DateTime? @default(now()) @db.Timestamptz(6)
   updated_at            DateTime? @default(now()) @db.Timestamptz(6)
 
-  // Relations
+  /// Relations
   cities             cities               @relation(fields: [city_id], references: [id], onDelete: Cascade)
   city_weigh_tickets city_weigh_tickets[]
 }
 
-// City permits table for overweight/oversize permits
+/// City permits table for overweight/oversize permits
 model city_permits {
   id             Int       @id @default(autoincrement())
   permit_number  String    @unique @db.VarChar(50)
@@ -600,36 +600,36 @@ model city_permits {
   contact_name   String?   @db.VarChar(255)
   contact_email  String?   @db.VarChar(255)
   contact_phone  String?   @db.VarChar(50)
-  vehicle_info   String    @db.VarChar(255) // License plate, VIN, etc.
-  permit_type    String    @db.VarChar(50) // 'overweight', 'oversize', 'both'
-  max_weight     Decimal?  @db.Decimal(10, 2) // Maximum allowed weight
-  dimensions     Json?     @db.Json // For oversize permits
+  vehicle_info   String    @db.VarChar(255)
+  permit_type    String    @db.VarChar(50)
+  max_weight     Decimal?  @db.Decimal(10, 2)
+  dimensions     Json?     @db.Json
   start_date     DateTime  @db.Date
   end_date       DateTime  @db.Date
   fee_amount     Decimal   @db.Decimal(10, 2)
-  payment_status String    @default("Pending") @db.VarChar(50) // 'Pending', 'Paid', 'Refunded'
-  status         String    @default("Active") @db.VarChar(50) // 'Active', 'Expired', 'Revoked'
+  payment_status String    @default("Pending") @db.VarChar(50)
+  status         String    @default("Active") @db.VarChar(50)
   approved_by    String?   @db.Uuid
   city_id        Int
   created_at     DateTime? @default(now()) @db.Timestamptz(6)
   updated_at     DateTime? @default(now()) @db.Timestamptz(6)
 
-  // Relations
+  /// Relations
   cities     cities      @relation(fields: [city_id], references: [id], onDelete: Cascade)
   city_users city_users? @relation(fields: [approved_by], references: [id], onDelete: SetNull)
 }
 
-// City violations table for tracking violations
+/// City violations table for tracking violations
 model city_violations {
   id                Int       @id @default(autoincrement())
   violation_number  String    @unique @db.VarChar(50)
   company_name      String?   @db.VarChar(255)
-  vehicle_info      String    @db.VarChar(255) // License plate, VIN, etc.
+  vehicle_info      String    @db.VarChar(255)
   driver_name       String?   @db.VarChar(255)
-  violation_type    String    @db.VarChar(50) // 'overweight', 'oversize', 'no_permit', 'expired_permit'
+  violation_type    String    @db.VarChar(50)
   violation_details String?   @db.Text
   fine_amount       Decimal   @db.Decimal(10, 2)
-  payment_status    String    @default("Pending") @db.VarChar(50) // 'Pending', 'Paid', 'Disputed'
+  payment_status    String    @default("Pending") @db.VarChar(50)
   violation_date    DateTime  @db.Timestamptz(6)
   location          String?   @db.VarChar(255)
   issued_by         String?   @db.Uuid
@@ -638,17 +638,17 @@ model city_violations {
   created_at        DateTime? @default(now()) @db.Timestamptz(6)
   updated_at        DateTime? @default(now()) @db.Timestamptz(6)
 
-  // Relations
+  /// Relations
   cities             cities              @relation(fields: [city_id], references: [id], onDelete: Cascade)
   city_users         city_users?         @relation(fields: [issued_by], references: [id], onDelete: SetNull)
   city_weigh_tickets city_weigh_tickets? @relation(fields: [weigh_ticket_id], references: [id], onDelete: SetNull)
 }
 
-// City weigh tickets table
+/// City weigh tickets table
 model city_weigh_tickets {
   id            Int       @id @default(autoincrement())
   ticket_number String    @unique @db.VarChar(50)
-  vehicle_info  String    @db.VarChar(255) // License plate, VIN, etc.
+  vehicle_info  String    @db.VarChar(255)
   driver_name   String?   @db.VarChar(255)
   company_name  String?   @db.VarChar(255)
   gross_weight  Decimal   @db.Decimal(10, 2)
@@ -664,7 +664,7 @@ model city_weigh_tickets {
   created_at    DateTime? @default(now()) @db.Timestamptz(6)
   updated_at    DateTime? @default(now()) @db.Timestamptz(6)
 
-  // Relations
+  /// Relations
   cities          cities            @relation(fields: [city_id], references: [id], onDelete: Cascade)
   city_scales     city_scales?      @relation(fields: [scale_id], references: [id], onDelete: SetNull)
   city_users      city_users?       @relation(fields: [recorded_by], references: [id], onDelete: SetNull)
