@@ -11,7 +11,6 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
 import { ToastType } from '@/components/ui/toast';

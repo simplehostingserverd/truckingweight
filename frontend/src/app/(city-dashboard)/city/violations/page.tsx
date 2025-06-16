@@ -1,19 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState, useEffect } from 'react';
@@ -117,7 +117,7 @@ const CityViolationsPageClient = () => {
         weight: 105000,
         permittedWeight: 95000,
         overageAmount: 10000,
-        fineAmount: 500.00,
+        fineAmount: 500.0,
         paymentStatus: 'Paid',
         status: 'Closed',
         notes: 'Driver acknowledged violation and paid fine on site.',
@@ -136,7 +136,7 @@ const CityViolationsPageClient = () => {
           permittedWidth: 12,
           overageAmount: 2,
         },
-        fineAmount: 350.00,
+        fineAmount: 350.0,
         paymentStatus: 'Pending',
         status: 'Open',
         notes: 'Citation issued, awaiting payment.',
@@ -151,7 +151,7 @@ const CityViolationsPageClient = () => {
         violationDate: '2023-11-10',
         location: '789 Center Ave',
         weight: 88000,
-        fineAmount: 750.00,
+        fineAmount: 750.0,
         paymentStatus: 'Pending',
         status: 'Open',
         notes: 'Vehicle had no valid permit for weight. Driver claimed unaware of requirements.',
@@ -173,7 +173,7 @@ const CityViolationsPageClient = () => {
           permittedHeight: 15,
           overageAmount: 1,
         },
-        fineAmount: 850.00,
+        fineAmount: 850.0,
         paymentStatus: 'Paid',
         status: 'Closed',
         notes: 'Multiple violations. Company representative came to pay fine.',
@@ -192,10 +192,10 @@ const CityViolationsPageClient = () => {
           width: 16,
           height: 16,
         },
-        fineAmount: 400.00,
+        fineAmount: 400.0,
         paymentStatus: 'Disputed',
         status: 'Under Review',
-        notes: 'Company claims they filed for renewal but hasn\'t been processed yet.',
+        notes: "Company claims they filed for renewal but hasn't been processed yet.",
         createdAt: '2023-11-16T16:30:00Z',
       },
     ];
@@ -208,7 +208,7 @@ const CityViolationsPageClient = () => {
   }, []);
 
   // Filter violations based on search query and filters
-  const filteredViolations = violations.filter((violation) => {
+  const filteredViolations = violations.filter(violation => {
     const matchesSearch =
       searchQuery === '' ||
       violation.violationNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -225,9 +225,13 @@ const CityViolationsPageClient = () => {
   });
 
   // Get counts for tabs
-  const openViolationsCount = violations.filter((violation) => violation.status === 'Open').length;
-  const closedViolationsCount = violations.filter((violation) => violation.status === 'Closed').length;
-  const reviewViolationsCount = violations.filter((violation) => violation.status === 'Under Review').length;
+  const openViolationsCount = violations.filter(violation => violation.status === 'Open').length;
+  const closedViolationsCount = violations.filter(
+    violation => violation.status === 'Closed'
+  ).length;
+  const reviewViolationsCount = violations.filter(
+    violation => violation.status === 'Under Review'
+  ).length;
 
   return (
     <ErrorBoundary>
@@ -265,7 +269,7 @@ const CityViolationsPageClient = () => {
               id="search"
               placeholder="Search by violation #, company, or vehicle..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               className="bg-gray-800 border-gray-700 text-white"
             />
           </div>
@@ -324,21 +328,21 @@ const CityViolationsPageClient = () => {
 
           <TabsContent value="open" className="space-y-6">
             <ViolationsTable
-              violations={violations.filter((violation) => violation.status === 'Open')}
+              violations={violations.filter(violation => violation.status === 'Open')}
               isLoading={isLoading}
             />
           </TabsContent>
 
           <TabsContent value="closed" className="space-y-6">
             <ViolationsTable
-              violations={violations.filter((violation) => violation.status === 'Closed')}
+              violations={violations.filter(violation => violation.status === 'Closed')}
               isLoading={isLoading}
             />
           </TabsContent>
 
           <TabsContent value="review" className="space-y-6">
             <ViolationsTable
-              violations={violations.filter((violation) => violation.status === 'Under Review')}
+              violations={violations.filter(violation => violation.status === 'Under Review')}
               isLoading={isLoading}
             />
           </TabsContent>
@@ -386,9 +390,11 @@ const ViolationsTable = ({ violations, isLoading }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {violations.map((violation) => (
+            {violations.map(violation => (
               <TableRow key={violation.id} className="border-gray-700 hover:bg-gray-700">
-                <TableCell className="font-medium text-white">{violation.violationNumber}</TableCell>
+                <TableCell className="font-medium text-white">
+                  {violation.violationNumber}
+                </TableCell>
                 <TableCell className="text-gray-300">
                   {new Date(violation.violationDate).toLocaleDateString()}
                 </TableCell>
@@ -403,12 +409,12 @@ const ViolationsTable = ({ violations, isLoading }) => {
                   {violation.violationType === 'overweight'
                     ? 'Overweight'
                     : violation.violationType === 'oversize'
-                    ? 'Oversize'
-                    : violation.violationType === 'both'
-                    ? 'Both'
-                    : violation.violationType === 'no_permit'
-                    ? 'No Permit'
-                    : 'Expired Permit'}
+                      ? 'Oversize'
+                      : violation.violationType === 'both'
+                        ? 'Both'
+                        : violation.violationType === 'no_permit'
+                          ? 'No Permit'
+                          : 'Expired Permit'}
                 </TableCell>
                 <TableCell className="text-gray-300">
                   <div className="flex items-center">
@@ -418,8 +424,8 @@ const ViolationsTable = ({ violations, isLoading }) => {
                 </TableCell>
                 <TableCell className="text-gray-300">
                   <div className="flex items-center">
-                    <CurrencyDollarIcon className="h-4 w-4 mr-1 text-gray-400" />
-                    ${violation.fineAmount.toFixed(2)}
+                    <CurrencyDollarIcon className="h-4 w-4 mr-1 text-gray-400" />$
+                    {violation.fineAmount.toFixed(2)}
                     <PaymentStatusBadge status={violation.paymentStatus} />
                   </div>
                 </TableCell>

@@ -11,45 +11,46 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { createClient } from '@/utils/supabase/client';
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { uploadTruckingDocument } from '@/utils/supabase/storage';
 import {
-    ArrowDownTrayIcon,
-    DocumentCheckIcon,
-    DocumentDuplicateIcon,
-    DocumentIcon,
-    DocumentTextIcon,
-    FolderIcon,
-    MagnifyingGlassIcon,
-    PlusIcon,
-    TrashIcon,
-    XMarkIcon,
+  ArrowDownTrayIcon,
+  DocumentCheckIcon,
+  DocumentDuplicateIcon,
+  DocumentIcon,
+  DocumentTextIcon,
+  FolderIcon,
+  MagnifyingGlassIcon,
+  PlusIcon,
+  TrashIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
@@ -98,7 +99,7 @@ export default function DocumentsPage() {
       }
 
       setCompanyId(userData?.company_id || null);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching user company:', err);
     }
   };
@@ -134,7 +135,7 @@ export default function DocumentsPage() {
       }
 
       setDocuments(data || []);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching documents:', err);
       setError(err.message || 'Failed to load documents');
       // Generate dummy data for testing
@@ -249,7 +250,7 @@ export default function DocumentsPage() {
 
       // Refresh documents list
       fetchDocuments();
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error uploading document:', err);
       setError(err.message || 'Failed to upload document');
     } finally {
@@ -271,7 +272,7 @@ export default function DocumentsPage() {
       // Update state
       setDocuments(documents.filter(doc => doc.id !== documentId));
       setSuccess('Document deleted successfully');
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error deleting document:', err);
       setError(err.message || 'Failed to delete document');
     }

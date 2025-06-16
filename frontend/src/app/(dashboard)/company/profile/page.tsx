@@ -11,9 +11,9 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -23,16 +23,17 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { uploadCompanyLogo } from '@/utils/supabase/storage';
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowPathIcon,
-    BuildingOfficeIcon,
-    EnvelopeIcon,
-    GlobeAltIcon,
-    MapPinIcon,
-    PencilIcon,
-    PhoneIcon,
-    PhotoIcon,
-    UserIcon,
+  ArrowPathIcon,
+  BuildingOfficeIcon,
+  EnvelopeIcon,
+  GlobeAltIcon,
+  MapPinIcon,
+  PencilIcon,
+  PhoneIcon,
+  PhotoIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -140,7 +141,7 @@ export default function CompanyProfilePage() {
         website: companyData.website || '',
         logo_url: companyData.logo_url || '',
       });
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching company profile:', err);
       setError(err.message || 'Failed to load company profile');
       // Generate dummy data for testing
@@ -227,7 +228,7 @@ export default function CompanyProfilePage() {
 
       // Show success message
       setSuccess('Logo uploaded successfully');
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error uploading logo:', err);
       setError(err.message || 'Failed to upload logo');
     } finally {
@@ -274,7 +275,7 @@ export default function CompanyProfilePage() {
 
       setSuccess('Company profile updated successfully');
       setIsEditing(false);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error updating company profile:', err);
       setError(err.message || 'Failed to update company profile');
     }

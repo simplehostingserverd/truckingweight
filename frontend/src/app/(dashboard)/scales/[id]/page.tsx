@@ -11,36 +11,37 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import HardwareSelector from '@/components/scales/HardwareSelector';
 import { toSearchParamString } from '@/lib/utils';
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowBack as ArrowLeftIcon,
-    Edit as PencilIcon,
-    QrCode as QrCodeIcon,
-    Delete as TrashIcon
+  ArrowBack as ArrowLeftIcon,
+  Edit as PencilIcon,
+  QrCode as QrCodeIcon,
+  Delete as TrashIcon,
 } from '@mui/icons-material';
 import {
-    Alert,
-    AlertTitle,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    Chip,
-    CircularProgress,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Grid,
-    Tab,
-    Tabs,
-    Typography
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Chip,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  Tab,
+  Tabs,
+  Typography,
 } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -114,7 +115,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
             setQrCode(qrData.qrCode);
           }
         }
-      } catch (err: any /* @ts-ignore */ ) {
+      } catch (err: any /* @ts-ignore */) {
         console.error('Error fetching scale:', err);
         setError('Failed to load scale data');
       } finally {
@@ -135,7 +136,7 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
       }
 
       router.push('/scales');
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error deleting scale:', err);
       setError('Failed to delete scale');
     } finally {

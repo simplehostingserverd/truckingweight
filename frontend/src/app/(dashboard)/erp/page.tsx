@@ -11,55 +11,56 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
+import { createClient } from '@/utils/supabase/client';
 import {
-    Alert,
-    AlertDescription,
-    AlertTitle,
-    Badge,
-    Button,
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    Input,
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-    Separator,
-    Skeleton,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Separator,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from '@/components/ui';
 import {
-    ArchiveBoxIcon,
-    ArrowPathIcon,
-    CurrencyDollarIcon,
-    LinkIcon,
-    PlusIcon,
-    ReceiptRefundIcon,
-    ServerIcon,
-    UserGroupIcon
+  ArchiveBoxIcon,
+  ArrowPathIcon,
+  CurrencyDollarIcon,
+  LinkIcon,
+  PlusIcon,
+  ReceiptRefundIcon,
+  ServerIcon,
+  UserGroupIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
@@ -78,7 +79,7 @@ type SyncLog = {
   timestamp: string;
   status: string;
   message: string;
-  details: any /* @ts-ignore */ ;
+  details: any /* @ts-ignore */;
 };
 
 // Add more types for the ERP page
@@ -243,7 +244,7 @@ export default function ERPPage() {
           }
         }
       }
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching ERP connections:', err);
       setError(err.message || 'Failed to load ERP connections');
 
@@ -289,7 +290,7 @@ export default function ERPPage() {
         products: 412,
         transactions: 5621,
       });
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching ERP data summary:', err);
     }
   };
@@ -417,7 +418,7 @@ export default function ERPPage() {
           }))
         );
       }
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching sync logs:', err);
 
       // Add dummy data even on error for demonstration
@@ -494,7 +495,7 @@ export default function ERPPage() {
           tokenSecret: '',
         },
       });
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error creating ERP connection:', err);
       setError(err.message || 'Failed to create ERP connection');
     } finally {
@@ -552,7 +553,7 @@ export default function ERPPage() {
       });
 
       setIsLoading(false);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error syncing data:', err);
       setError(err.message || 'Failed to sync data');
       setIsLoading(false);

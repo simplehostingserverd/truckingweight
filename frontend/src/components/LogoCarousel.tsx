@@ -11,9 +11,9 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import { useErrorHandler } from '@/utils/errorHandler';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';

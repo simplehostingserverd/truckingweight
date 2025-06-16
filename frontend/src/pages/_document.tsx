@@ -11,6 +11,7 @@
  * in any way without explicit written permission.
  */
 
+import React from 'react';
 import { Head, Html, Main, NextScript } from 'next/document';
 
 export default function Document(props) {

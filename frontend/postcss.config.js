@@ -11,7 +11,6 @@
  * in any way without explicit written permission.
  */
 
-
 module.exports = {
   plugins: {
     tailwindcss: {},

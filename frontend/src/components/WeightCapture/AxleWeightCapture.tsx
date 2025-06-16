@@ -11,22 +11,23 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowPathIcon,
-    CheckCircleIcon,
-    MinusCircleIcon,
-    PlusCircleIcon,
-    TruckIcon,
-    XCircleIcon,
+  ArrowPathIcon,
+  CheckCircleIcon,
+  MinusCircleIcon,
+  PlusCircleIcon,
+  TruckIcon,
+  XCircleIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import WeightReader from './WeightReader';
 
 interface AxleWeightCaptureProps {
-  scale: any /* @ts-ignore */ ;
+  scale: any /* @ts-ignore */;
   vehicleId: number;
   onAxleWeightsCaptured: (
     axleWeights: Array<{ axleNumber: number; weight: number; axleType?: string }>
@@ -103,7 +104,7 @@ export default function AxleWeightCapture({
             configuration_type: 'custom',
           });
         }
-      } catch (error: any /* @ts-ignore */ ) {
+      } catch (error: any /* @ts-ignore */) {
         console.error('Error fetching axle configuration:', error);
         setError(error.message);
 

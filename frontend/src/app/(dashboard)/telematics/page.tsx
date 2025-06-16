@@ -13,41 +13,43 @@
 
 'use client';
 
+import React from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { createClient } from '@/utils/supabase/client';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card';
 import {
-    Dialog,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-    ArrowPathIcon,
-    MapPinIcon,
-    PlusIcon,
-    SignalIcon,
-    TruckIcon,
+  ArrowPathIcon,
+  MapPinIcon,
+  PlusIcon,
+  SignalIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
@@ -145,7 +147,7 @@ export default function TelematicsPage() {
       }
 
       setConnections(data || []);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching telematics connections:', err);
       setError(err.message || 'Failed to load telematics connections');
     } finally {
@@ -216,7 +218,7 @@ export default function TelematicsPage() {
 
       const data = await response.json();
       setVehicleData(data);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching vehicle data:', err);
       // Try to fetch vehicles directly from the database as fallback
       try {
@@ -298,7 +300,7 @@ export default function TelematicsPage() {
           server: '',
         },
       });
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error creating telematics connection:', err);
       setError(err.message || 'Failed to create telematics connection');
     } finally {
@@ -311,7 +313,7 @@ export default function TelematicsPage() {
       // This would call your backend API to refresh data
       // For now, we'll just refresh the mock data
       fetchVehicleData();
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error refreshing data:', err);
       setError(err.message || 'Failed to refresh data');
     }

@@ -1,19 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState, useEffect } from 'react';
@@ -113,7 +113,7 @@ const CityPermitsPageClient = () => {
         maxWeight: 95000,
         startDate: '2023-11-01',
         endDate: '2023-12-01',
-        feeAmount: 250.00,
+        feeAmount: 250.0,
         paymentStatus: 'Paid',
         status: 'Active',
         createdAt: '2023-10-28T10:30:00Z',
@@ -131,7 +131,7 @@ const CityPermitsPageClient = () => {
         },
         startDate: '2023-11-05',
         endDate: '2023-12-05',
-        feeAmount: 300.00,
+        feeAmount: 300.0,
         paymentStatus: 'Paid',
         status: 'Active',
         createdAt: '2023-11-01T14:15:00Z',
@@ -145,7 +145,7 @@ const CityPermitsPageClient = () => {
         maxWeight: 88000,
         startDate: '2023-11-10',
         endDate: '2023-12-10',
-        feeAmount: 225.00,
+        feeAmount: 225.0,
         paymentStatus: 'Pending',
         status: 'Pending',
         createdAt: '2023-11-08T09:45:00Z',
@@ -164,7 +164,7 @@ const CityPermitsPageClient = () => {
         },
         startDate: '2023-10-15',
         endDate: '2023-11-15',
-        feeAmount: 450.00,
+        feeAmount: 450.0,
         paymentStatus: 'Paid',
         status: 'Expired',
         createdAt: '2023-10-10T11:20:00Z',
@@ -182,7 +182,7 @@ const CityPermitsPageClient = () => {
         },
         startDate: '2023-11-20',
         endDate: '2023-12-20',
-        feeAmount: 500.00,
+        feeAmount: 500.0,
         paymentStatus: 'Pending',
         status: 'Pending',
         createdAt: '2023-11-15T16:30:00Z',
@@ -197,7 +197,7 @@ const CityPermitsPageClient = () => {
   }, []);
 
   // Filter permits based on search query and filters
-  const filteredPermits = permits.filter((permit) => {
+  const filteredPermits = permits.filter(permit => {
     const matchesSearch =
       searchQuery === '' ||
       permit.permitNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -214,9 +214,9 @@ const CityPermitsPageClient = () => {
   });
 
   // Get counts for tabs
-  const activePermitsCount = permits.filter((permit) => permit.status === 'Active').length;
-  const pendingPermitsCount = permits.filter((permit) => permit.status === 'Pending').length;
-  const expiredPermitsCount = permits.filter((permit) => permit.status === 'Expired').length;
+  const activePermitsCount = permits.filter(permit => permit.status === 'Active').length;
+  const pendingPermitsCount = permits.filter(permit => permit.status === 'Pending').length;
+  const expiredPermitsCount = permits.filter(permit => permit.status === 'Expired').length;
 
   return (
     <ErrorBoundary>
@@ -254,7 +254,7 @@ const CityPermitsPageClient = () => {
               id="search"
               placeholder="Search by permit #, company, or vehicle..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               className="bg-gray-800 border-gray-700 text-white"
             />
           </div>
@@ -312,21 +312,21 @@ const CityPermitsPageClient = () => {
 
           <TabsContent value="active" className="space-y-6">
             <PermitsTable
-              permits={permits.filter((permit) => permit.status === 'Active')}
+              permits={permits.filter(permit => permit.status === 'Active')}
               isLoading={isLoading}
             />
           </TabsContent>
 
           <TabsContent value="pending" className="space-y-6">
             <PermitsTable
-              permits={permits.filter((permit) => permit.status === 'Pending')}
+              permits={permits.filter(permit => permit.status === 'Pending')}
               isLoading={isLoading}
             />
           </TabsContent>
 
           <TabsContent value="expired" className="space-y-6">
             <PermitsTable
-              permits={permits.filter((permit) => permit.status === 'Expired')}
+              permits={permits.filter(permit => permit.status === 'Expired')}
               isLoading={isLoading}
             />
           </TabsContent>
@@ -373,7 +373,7 @@ const PermitsTable = ({ permits, isLoading }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {permits.map((permit) => (
+            {permits.map(permit => (
               <TableRow key={permit.id} className="border-gray-700 hover:bg-gray-700">
                 <TableCell className="font-medium text-white">{permit.permitNumber}</TableCell>
                 <TableCell className="text-gray-300">{permit.companyName}</TableCell>
@@ -387,8 +387,8 @@ const PermitsTable = ({ permits, isLoading }) => {
                   {permit.permitType === 'overweight'
                     ? 'Overweight'
                     : permit.permitType === 'oversize'
-                    ? 'Oversize'
-                    : 'Both'}
+                      ? 'Oversize'
+                      : 'Both'}
                 </TableCell>
                 <TableCell className="text-gray-300">
                   <div className="flex items-center">
@@ -399,8 +399,8 @@ const PermitsTable = ({ permits, isLoading }) => {
                 </TableCell>
                 <TableCell className="text-gray-300">
                   <div className="flex items-center">
-                    <CurrencyDollarIcon className="h-4 w-4 mr-1 text-gray-400" />
-                    ${permit.feeAmount.toFixed(2)}
+                    <CurrencyDollarIcon className="h-4 w-4 mr-1 text-gray-400" />$
+                    {permit.feeAmount.toFixed(2)}
                     <PaymentStatusBadge status={permit.paymentStatus} />
                   </div>
                 </TableCell>

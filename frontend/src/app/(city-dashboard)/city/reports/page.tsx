@@ -1,19 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState, useEffect } from 'react';
@@ -241,9 +241,10 @@ const CityReportsPageClient = () => {
     // Simulate report generation
     setTimeout(() => {
       setGeneratingReport(false);
-      
+
       // Add to recent reports
-      const reportName = standardReports.find(r => r.id === selectedReport)?.name || 'Custom Report';
+      const reportName =
+        standardReports.find(r => r.id === selectedReport)?.name || 'Custom Report';
       const newReport = {
         id: Date.now(),
         name: `${reportName} - ${new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`,
@@ -253,7 +254,7 @@ const CityReportsPageClient = () => {
         status: 'completed',
         url: '#',
       };
-      
+
       setRecentReports([newReport, ...recentReports]);
       setSavedReports([newReport, ...savedReports]);
     }, 2000);
@@ -311,7 +312,7 @@ const CityReportsPageClient = () => {
                             <SelectValue placeholder="Select a report type" />
                           </SelectTrigger>
                           <SelectContent className="bg-gray-800 border-gray-700 text-white">
-                            {standardReports.map((report) => (
+                            {standardReports.map(report => (
                               <SelectItem key={report.id} value={report.id}>
                                 <div className="flex items-center">
                                   {report.icon}
@@ -323,7 +324,7 @@ const CityReportsPageClient = () => {
                         </Select>
                         {selectedReport && (
                           <p className="text-sm text-gray-400 mt-1">
-                            {standardReports.find((r) => r.id === selectedReport)?.description}
+                            {standardReports.find(r => r.id === selectedReport)?.description}
                           </p>
                         )}
                       </div>
@@ -401,7 +402,7 @@ const CityReportsPageClient = () => {
                         />
                       </div>
 
-                      {customReportFields.map((field) => (
+                      {customReportFields.map(field => (
                         <div key={field.id}>
                           <Label htmlFor={field.id} className="text-gray-400">
                             {field.name}
@@ -415,7 +416,7 @@ const CityReportsPageClient = () => {
                                 <SelectValue placeholder={`Select ${field.name}`} />
                               </SelectTrigger>
                               <SelectContent className="bg-gray-800 border-gray-700 text-white">
-                                {field.options.map((option) => (
+                                {field.options.map(option => (
                                   <SelectItem key={option.value} value={option.value}>
                                     {option.label}
                                   </SelectItem>
@@ -494,7 +495,7 @@ const CityReportsPageClient = () => {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {recentReports.map((report) => (
+                    {recentReports.map(report => (
                       <div
                         key={report.id}
                         className="flex items-start p-3 rounded-lg border border-gray-700 hover:bg-gray-700/50 transition-colors"
@@ -561,7 +562,7 @@ const CityReportsPageClient = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {savedReports.map((report) => (
+                {savedReports.map(report => (
                   <div
                     key={report.id}
                     className="flex items-start p-3 rounded-lg border border-gray-700 hover:bg-gray-700/50 transition-colors"

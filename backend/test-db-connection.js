@@ -6,7 +6,7 @@ dotenv.config();
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
+  ssl: { rejectUnauthorized: false },
 });
 
 async function testConnection() {
@@ -14,10 +14,10 @@ async function testConnection() {
     console.log('Attempting to connect to database...');
     await client.connect();
     console.log('✅ Successfully connected to database!');
-    
+
     const result = await client.query('SELECT version()');
     console.log('Database version:', result.rows[0].version);
-    
+
     await client.end();
     console.log('✅ Connection test completed successfully!');
   } catch (error) {

@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import mapboxService, { MapboxProfile, Route, Waypoint } from '@/services/mapboxService';
 import { formatDistance, formatDuration } from '@/utils/formatters';
 import {

@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -28,7 +27,7 @@ export async function GET(request: NextRequest) {
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
       console.log('Using test data for city users');
-      
+
       // Mock data
       const dummyUsers = [
         {
@@ -77,7 +76,7 @@ export async function GET(request: NextRequest) {
           createdAt: '2023-05-12T00:00:00Z',
         },
       ];
-      
+
       return NextResponse.json({ users: dummyUsers });
     }
 
@@ -98,7 +97,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     console.error('Error fetching city users:', error);
 
     // Return mock data for development/demo purposes
@@ -168,10 +167,10 @@ export async function POST(request: NextRequest) {
     }
 
     const token = authHeader.split(' ')[1];
-    
+
     // Get request body
     const body = await request.json();
-    
+
     // Validate required fields
     if (!body.name || !body.email || !body.role || !body.password) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -197,7 +196,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     console.error('Error creating city user:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }

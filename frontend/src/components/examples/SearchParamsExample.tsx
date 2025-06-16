@@ -11,9 +11,9 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import { toSearchParamNumber, toSearchParamString } from '@/utils/searchParams';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';

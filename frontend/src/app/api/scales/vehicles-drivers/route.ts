@@ -11,7 +11,7 @@
  * in any way without explicit written permission.
  */
 
-
+import { createClient } from '@/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
 /**

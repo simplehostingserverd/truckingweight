@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -95,9 +94,7 @@ export function AccessibilitySettings() {
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label htmlFor="reduced-motion">Reduced Motion</Label>
-              <p className="text-sm text-muted-foreground">
-                Minimizes animations and transitions
-              </p>
+              <p className="text-sm text-muted-foreground">Minimizes animations and transitions</p>
             </div>
             <Switch
               id="reduced-motion"
@@ -142,7 +139,7 @@ export function AccessibilitySettings() {
                 min={80}
                 max={150}
                 step={10}
-                onValueChange={(value) => {
+                onValueChange={value => {
                   const newValue = value[0] / 100;
                   if (newValue < fontSizeMultiplier) {
                     decreaseFontSize();
@@ -182,7 +179,5 @@ export function AccessibilitySettings() {
  * Accessibility button component for the header
  */
 export function AccessibilityButton() {
-  return (
-    <AccessibilitySettings />
-  );
+  return <AccessibilitySettings />;
 }

@@ -11,15 +11,12 @@
  * in any way without explicit written permission.
  */
 
-
 /**
  * Mapbox Service
  *
  * This service provides integration with the Mapbox API for route planning,
  * geocoding, and other location-based services.
  */
-
-
 
 // Mapbox API endpoints
 const MAPBOX_BASE_URL = 'https://api.mapbox.com';
@@ -94,7 +91,9 @@ const getMapboxToken = async (): Promise<string> => {
   const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
   if (!token) {
-    throw new Error('Mapbox access token not found. Please set NEXT_PUBLIC_MAPBOX_TOKEN environment variable.');
+    throw new Error(
+      'Mapbox access token not found. Please set NEXT_PUBLIC_MAPBOX_TOKEN environment variable.'
+    );
   }
 
   return token;
@@ -119,7 +118,7 @@ export const getDirections = async (
   const token = await getMapboxToken();
 
   // Format coordinates for the API
-  const coordinates = waypoints.map((wp) => wp.coordinates.join(',')).join(';');
+  const coordinates = waypoints.map(wp => wp.coordinates.join(',')).join(';');
 
   // Build query parameters
   const queryParams = new URLSearchParams({

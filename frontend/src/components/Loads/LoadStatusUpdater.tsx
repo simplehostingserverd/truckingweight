@@ -11,9 +11,10 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
+import { createClient } from '@/utils/supabase/client';
 import { useState } from 'react';
 
 interface LoadStatusUpdaterProps {
@@ -96,7 +97,7 @@ export default function LoadStatusUpdater({
 
       setSuccess('Load status updated successfully');
       onStatusUpdate();
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'An error occurred while updating the load status');
       console.error('Update load status error:', err);
     } finally {

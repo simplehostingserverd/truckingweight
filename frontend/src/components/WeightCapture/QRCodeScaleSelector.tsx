@@ -11,12 +11,13 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import { Scale } from '@/types/scale-master';
 import { ArrowPathIcon, QrCodeIcon } from '@heroicons/react/24/outline';
 import { QRCodeSVG } from 'qrcode.react';
+import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 
 interface QRCodeScaleSelectorProps {

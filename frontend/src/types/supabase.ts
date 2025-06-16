@@ -11,7 +11,6 @@
  * in any way without explicit written permission.
  */
 
-
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export interface Database {
@@ -75,7 +74,7 @@ export interface Database {
             columns: ['company_id'];
             referencedRelation: 'companies';
             referencedColumns: ['id'];
-          }
+          },
         ];
       };
       companies: {

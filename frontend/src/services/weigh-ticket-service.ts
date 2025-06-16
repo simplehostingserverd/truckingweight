@@ -11,19 +11,19 @@
  * in any way without explicit written permission.
  */
 
-
 /**
  * Weigh Ticket Service
  * This service handles the creation and management of weigh tickets
  */
 
+import { createClient } from '@/utils/supabase/client';
 import {
-    Cargo,
-    ComplianceIssue,
-    TicketImage,
-    TicketSignature,
-    WeighTicket,
-    WeightReading
+  Cargo,
+  ComplianceIssue,
+  TicketImage,
+  TicketSignature,
+  WeighTicket,
+  WeightReading,
 } from '@/types/scale-master';
 
 export class WeighTicketService {

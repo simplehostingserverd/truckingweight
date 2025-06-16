@@ -13,6 +13,10 @@
 
 'use client';
 
+// Global type declarations
+declare const navigator: Navigator;
+
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration';
 import { AccessibilityProvider } from '@/providers/AccessibilityProvider';

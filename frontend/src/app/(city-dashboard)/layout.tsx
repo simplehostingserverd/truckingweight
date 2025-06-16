@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import CityDashboardHeader from '@/components/CityDashboard/CityDashboardHeader';
 import CityDashboardSidebar from '@/components/CityDashboard/CityDashboardSidebar';
 import { createSafeUrl } from '@/utils/navigation';

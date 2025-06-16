@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -28,33 +27,35 @@ export async function GET(request: NextRequest) {
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
       console.log('Using test data for city settings');
-      
+
       // Mock data
       const dummySettings = {
         // Account settings
         name: token.includes('sanantonio') ? 'San Antonio Admin' : 'Houston Admin',
-        email: token.includes('sanantonio') ? 'sanantonio.admin@example.gov' : 'houston.admin@example.gov',
-        
+        email: token.includes('sanantonio')
+          ? 'sanantonio.admin@example.gov'
+          : 'houston.admin@example.gov',
+
         // Notification settings
         emailNotifications: true,
         permitNotifications: true,
         violationNotifications: true,
         scaleNotifications: true,
         systemNotifications: true,
-        
+
         // Display settings
         theme: 'dark',
         dashboardLayout: 'default',
         compactMode: false,
         highContrastMode: false,
-        
+
         // System settings (admin only)
         sessionTimeout: 60,
         dataRetentionDays: 90,
         autoLogout: true,
         debugMode: false,
       };
-      
+
       return NextResponse.json({ settings: dummySettings });
     }
 
@@ -65,20 +66,20 @@ export async function GET(request: NextRequest) {
       // Account settings
       name: 'City Admin',
       email: 'cityadmin@example.gov',
-      
+
       // Notification settings
       emailNotifications: true,
       permitNotifications: true,
       violationNotifications: true,
       scaleNotifications: true,
       systemNotifications: true,
-      
+
       // Display settings
       theme: 'dark',
       dashboardLayout: 'default',
       compactMode: false,
       highContrastMode: false,
-      
+
       // System settings (admin only)
       sessionTimeout: 60,
       dataRetentionDays: 90,
@@ -87,7 +88,7 @@ export async function GET(request: NextRequest) {
     };
 
     return NextResponse.json({ settings: dummySettings });
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     console.error('Error fetching city settings:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
@@ -103,10 +104,10 @@ export async function PUT(request: NextRequest) {
     }
 
     const token = authHeader.split(' ')[1];
-    
+
     // Get request body
     const body = await request.json();
-    
+
     // Validate required fields
     if (!body) {
       return NextResponse.json({ error: 'Settings data is required' }, { status: 400 });
@@ -115,15 +116,15 @@ export async function PUT(request: NextRequest) {
     // Call the backend API to update user settings
     // In a real implementation, this would call a backend endpoint
     // For now, we'll just simulate a successful update
-    
+
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: 'Settings updated successfully',
-      settings: body 
+      settings: body,
     });
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     console.error('Error updating city settings:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }

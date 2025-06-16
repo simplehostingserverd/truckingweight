@@ -1,19 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState, useEffect } from 'react';
@@ -69,13 +69,13 @@ const CityRevenuePageClient = () => {
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
   const [timeRange, setTimeRange] = useState('6');
-  
+
   const [revenueData, setRevenueData] = useState({
     labels: [],
     permitRevenue: [],
     fineRevenue: [],
   });
-  
+
   const [revenueStats, setRevenueStats] = useState({
     totalRevenue: 0,
     permitRevenue: 0,
@@ -83,7 +83,7 @@ const CityRevenuePageClient = () => {
     pendingRevenue: 0,
     revenueGrowth: 0,
   });
-  
+
   const [recentTransactions, setRecentTransactions] = useState([]);
 
   // Fetch revenue data
@@ -114,17 +114,23 @@ const CityRevenuePageClient = () => {
 
       const data = await response.json();
       setRevenueData(data);
-      
+
       // Calculate revenue stats
       const totalPermitRevenue = data.permitRevenue.reduce((sum, val) => sum + val, 0);
       const totalFineRevenue = data.fineRevenue.reduce((sum, val) => sum + val, 0);
       const totalRevenue = totalPermitRevenue + totalFineRevenue;
-      
+
       // Calculate growth (compare last month to previous month)
-      const lastMonthTotal = data.permitRevenue[data.permitRevenue.length - 1] + data.fineRevenue[data.fineRevenue.length - 1];
-      const previousMonthTotal = data.permitRevenue[data.permitRevenue.length - 2] + data.fineRevenue[data.fineRevenue.length - 2];
-      const growth = previousMonthTotal ? ((lastMonthTotal - previousMonthTotal) / previousMonthTotal) * 100 : 0;
-      
+      const lastMonthTotal =
+        data.permitRevenue[data.permitRevenue.length - 1] +
+        data.fineRevenue[data.fineRevenue.length - 1];
+      const previousMonthTotal =
+        data.permitRevenue[data.permitRevenue.length - 2] +
+        data.fineRevenue[data.fineRevenue.length - 2];
+      const growth = previousMonthTotal
+        ? ((lastMonthTotal - previousMonthTotal) / previousMonthTotal) * 100
+        : 0;
+
       setRevenueStats({
         totalRevenue,
         permitRevenue: totalPermitRevenue,
@@ -132,10 +138,9 @@ const CityRevenuePageClient = () => {
         pendingRevenue: Math.round(totalRevenue * 0.15), // Mock pending revenue (15% of total)
         revenueGrowth: growth,
       });
-      
+
       // Generate mock recent transactions
       generateMockTransactions();
-      
     } catch (err) {
       console.error('Error fetching revenue data:', err);
       setError(err.message || 'Failed to load revenue data');
@@ -157,16 +162,16 @@ const CityRevenuePageClient = () => {
 
     const permitRevenue = [5200, 6100, 5800, 7200, 6500, 8100];
     const fineRevenue = [1800, 1500, 2200, 1900, 2500, 2800];
-    
+
     setRevenueData({
       labels: monthLabels,
       permitRevenue,
       fineRevenue,
     });
-    
+
     const totalPermitRevenue = permitRevenue.reduce((sum, val) => sum + val, 0);
     const totalFineRevenue = fineRevenue.reduce((sum, val) => sum + val, 0);
-    
+
     setRevenueStats({
       totalRevenue: totalPermitRevenue + totalFineRevenue,
       permitRevenue: totalPermitRevenue,
@@ -174,10 +179,10 @@ const CityRevenuePageClient = () => {
       pendingRevenue: 4500,
       revenueGrowth: 12.5,
     });
-    
+
     generateMockTransactions();
   };
-  
+
   // Generate mock transactions
   const generateMockTransactions = () => {
     const transactions = [
@@ -187,7 +192,7 @@ const CityRevenuePageClient = () => {
         type: 'Permit Fee',
         reference: 'OW-2023-001',
         company: 'Heavy Haulers Inc.',
-        amount: 250.00,
+        amount: 250.0,
         status: 'Paid',
       },
       {
@@ -196,7 +201,7 @@ const CityRevenuePageClient = () => {
         type: 'Violation Fine',
         reference: 'V-2023-002',
         company: 'Wide Load Transport',
-        amount: 350.00,
+        amount: 350.0,
         status: 'Pending',
       },
       {
@@ -205,7 +210,7 @@ const CityRevenuePageClient = () => {
         type: 'Permit Fee',
         reference: 'OS-2023-005',
         company: 'Texas Wind Turbines',
-        amount: 500.00,
+        amount: 500.0,
         status: 'Paid',
       },
       {
@@ -214,7 +219,7 @@ const CityRevenuePageClient = () => {
         type: 'Violation Fine',
         reference: 'V-2023-004',
         company: 'Mega Movers LLC',
-        amount: 850.00,
+        amount: 850.0,
         status: 'Paid',
       },
       {
@@ -223,11 +228,11 @@ const CityRevenuePageClient = () => {
         type: 'Permit Fee',
         reference: 'OW-2023-003',
         company: 'Construction Materials Co.',
-        amount: 225.00,
+        amount: 225.0,
         status: 'Pending',
       },
     ];
-    
+
     setRecentTransactions(transactions);
   };
 
@@ -241,7 +246,7 @@ const CityRevenuePageClient = () => {
     month: label,
     'Permit Revenue': revenueData.permitRevenue[index],
     'Fine Revenue': revenueData.fineRevenue[index],
-    'Total': revenueData.permitRevenue[index] + revenueData.fineRevenue[index],
+    Total: revenueData.permitRevenue[index] + revenueData.fineRevenue[index],
   }));
 
   const revenuePieData = [
@@ -257,7 +262,9 @@ const CityRevenuePageClient = () => {
         <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-3xl font-bold text-white">Revenue</h1>
-            <p className="text-gray-400">Track and analyze municipal revenue from permits and fines</p>
+            <p className="text-gray-400">
+              Track and analyze municipal revenue from permits and fines
+            </p>
           </div>
           <div className="flex space-x-2">
             <Select value={timeRange} onValueChange={setTimeRange}>
@@ -300,9 +307,7 @@ const CityRevenuePageClient = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-400">
-                    Total Revenue
-                  </CardTitle>
+                  <CardTitle className="text-sm font-medium text-gray-400">Total Revenue</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {isLoading ? (
@@ -315,7 +320,11 @@ const CityRevenuePageClient = () => {
                           ${revenueStats.totalRevenue.toLocaleString()}
                         </div>
                         <div className="flex items-center text-xs">
-                          <span className={revenueStats.revenueGrowth >= 0 ? "text-green-400" : "text-red-400"}>
+                          <span
+                            className={
+                              revenueStats.revenueGrowth >= 0 ? 'text-green-400' : 'text-red-400'
+                            }
+                          >
                             {revenueStats.revenueGrowth >= 0 ? (
                               <ArrowUpIcon className="h-3 w-3 inline mr-1" />
                             ) : (
@@ -348,7 +357,10 @@ const CityRevenuePageClient = () => {
                           ${revenueStats.permitRevenue.toLocaleString()}
                         </div>
                         <p className="text-xs text-gray-500">
-                          {((revenueStats.permitRevenue / revenueStats.totalRevenue) * 100).toFixed(1)}% of total
+                          {((revenueStats.permitRevenue / revenueStats.totalRevenue) * 100).toFixed(
+                            1
+                          )}
+                          % of total
                         </p>
                       </div>
                     </div>
@@ -358,9 +370,7 @@ const CityRevenuePageClient = () => {
 
               <Card className="bg-gray-800 border-gray-700">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-400">
-                    Fine Revenue
-                  </CardTitle>
+                  <CardTitle className="text-sm font-medium text-gray-400">Fine Revenue</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {isLoading ? (
@@ -373,7 +383,10 @@ const CityRevenuePageClient = () => {
                           ${revenueStats.fineRevenue.toLocaleString()}
                         </div>
                         <p className="text-xs text-gray-500">
-                          {((revenueStats.fineRevenue / revenueStats.totalRevenue) * 100).toFixed(1)}% of total
+                          {((revenueStats.fineRevenue / revenueStats.totalRevenue) * 100).toFixed(
+                            1
+                          )}
+                          % of total
                         </p>
                       </div>
                     </div>
@@ -431,9 +444,13 @@ const CityRevenuePageClient = () => {
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                           ))}
                         </Pie>
-                        <Tooltip 
-                          formatter={(value) => [`$${value.toLocaleString()}`, undefined]}
-                          contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#f9fafb' }}
+                        <Tooltip
+                          formatter={value => [`$${value.toLocaleString()}`, undefined]}
+                          contentStyle={{
+                            backgroundColor: '#1f2937',
+                            borderColor: '#374151',
+                            color: '#f9fafb',
+                          }}
                           itemStyle={{ color: '#f9fafb' }}
                           labelStyle={{ color: '#f9fafb' }}
                         />
@@ -467,8 +484,11 @@ const CityRevenuePageClient = () => {
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {recentTransactions.slice(0, 5).map((transaction) => (
-                            <TableRow key={transaction.id} className="border-gray-700 hover:bg-gray-700">
+                          {recentTransactions.slice(0, 5).map(transaction => (
+                            <TableRow
+                              key={transaction.id}
+                              className="border-gray-700 hover:bg-gray-700"
+                            >
                               <TableCell className="text-gray-300">
                                 {new Date(transaction.date).toLocaleDateString()}
                               </TableCell>
@@ -500,21 +520,21 @@ const CityRevenuePageClient = () => {
                   <ResponsiveContainer width="100%" height={400}>
                     <LineChart data={revenueChartData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                      <XAxis 
-                        dataKey="month" 
+                      <XAxis dataKey="month" stroke="#9ca3af" tick={{ fill: '#9ca3af' }} />
+                      <YAxis
                         stroke="#9ca3af"
                         tick={{ fill: '#9ca3af' }}
+                        tickFormatter={value => `$${value.toLocaleString()}`}
                       />
-                      <YAxis 
-                        stroke="#9ca3af"
-                        tick={{ fill: '#9ca3af' }}
-                        tickFormatter={(value) => `$${value.toLocaleString()}`}
-                      />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#f9fafb' }}
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: '#1f2937',
+                          borderColor: '#374151',
+                          color: '#f9fafb',
+                        }}
                         itemStyle={{ color: '#f9fafb' }}
                         labelStyle={{ color: '#f9fafb' }}
-                        formatter={(value) => [`$${value.toLocaleString()}`, undefined]}
+                        formatter={value => [`$${value.toLocaleString()}`, undefined]}
                       />
                       <Legend wrapperStyle={{ color: '#f9fafb' }} />
                       <Line
@@ -570,8 +590,11 @@ const CityRevenuePageClient = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {recentTransactions.map((transaction) => (
-                        <TableRow key={transaction.id} className="border-gray-700 hover:bg-gray-700">
+                      {recentTransactions.map(transaction => (
+                        <TableRow
+                          key={transaction.id}
+                          className="border-gray-700 hover:bg-gray-700"
+                        >
                           <TableCell className="text-gray-300">
                             {new Date(transaction.date).toLocaleDateString()}
                           </TableCell>
@@ -582,11 +605,13 @@ const CityRevenuePageClient = () => {
                             ${transaction.amount.toFixed(2)}
                           </TableCell>
                           <TableCell className="text-right">
-                            <span className={`px-2 py-1 rounded-full text-xs ${
-                              transaction.status === 'Paid' 
-                                ? 'bg-green-500/20 text-green-400' 
-                                : 'bg-yellow-500/20 text-yellow-400'
-                            }`}>
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs ${
+                                transaction.status === 'Paid'
+                                  ? 'bg-green-500/20 text-green-400'
+                                  : 'bg-yellow-500/20 text-yellow-400'
+                              }`}
+                            >
                               {transaction.status}
                             </span>
                           </TableCell>

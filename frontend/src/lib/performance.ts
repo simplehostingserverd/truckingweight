@@ -1,16 +1,19 @@
+// Global type declarations
+declare const performance: Performance;
+declare const Image: typeof HTMLImageElement;
+
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * Performance optimization utilities for the TruckingWeight application
@@ -26,7 +29,7 @@
 export function debounce<T extends (...args: any[]) => any>(fn: T, ms = 300) {
   let timeoutId: ReturnType<typeof setTimeout>;
 
-  return function (this: any /* @ts-ignore */ , ...args: Parameters<T>) {
+  return function (this: any /* @ts-ignore */, ...args: Parameters<T>) {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => fn.apply(this, args), ms);
   };
@@ -41,7 +44,7 @@ export function debounce<T extends (...args: any[]) => any>(fn: T, ms = 300) {
 export function throttle<T extends (...args: any[]) => any>(fn: T, ms = 300) {
   let lastCall = 0;
 
-  return function (this: any /* @ts-ignore */ , ...args: Parameters<T>) {
+  return function (this: any /* @ts-ignore */, ...args: Parameters<T>) {
     const now = Date.now();
     if (now - lastCall < ms) return;
 
@@ -58,7 +61,7 @@ export function throttle<T extends (...args: any[]) => any>(fn: T, ms = 300) {
 export function memoize<T extends (...args: any[]) => any>(fn: T) {
   const cache = new Map();
 
-  return function (this: any /* @ts-ignore */ , ...args: Parameters<T>) {
+  return function (this: any /* @ts-ignore */, ...args: Parameters<T>) {
     const key = JSON.stringify(args);
     if (cache.has(key)) return cache.get(key);
 
@@ -186,7 +189,7 @@ export const cacheAPI = {
    * @param data The data to cache
    * @param ttl Time to live in seconds
    */
-  async set(key: string, data: any /* @ts-ignore */ , ttl = 3600): Promise<void> {
+  async set(key: string, data: any /* @ts-ignore */, ttl = 3600): Promise<void> {
     if (typeof window === 'undefined') return;
 
     try {

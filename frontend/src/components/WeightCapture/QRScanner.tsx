@@ -11,15 +11,16 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
+import { createClient } from '@/utils/supabase/client';
 import {
-    CameraIcon,
-    CheckCircleIcon,
-    ExclamationCircleIcon,
-    QrCodeIcon,
-    XMarkIcon,
+  CameraIcon,
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  QrCodeIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useState } from 'react';
@@ -95,7 +96,7 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
 
       // Call the onScaleSelect callback
       onScaleSelect(data.scale.id, data.scale.name);
-    } catch (error: any /* @ts-ignore */ ) {
+    } catch (error: any /* @ts-ignore */) {
       console.error('Error validating QR code:', error);
       setError(error.message);
       setValidationResult({

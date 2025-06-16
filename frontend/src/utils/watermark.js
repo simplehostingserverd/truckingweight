@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
- * 
+ *
  * Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
  */
 
@@ -17,7 +17,7 @@
  * This file contains hidden watermarks that can be used to verify the authenticity
  * of the code in legal proceedings. These watermarks are designed to be difficult
  * to remove without breaking functionality.
- * 
+ *
  * DO NOT MODIFY THIS FILE.
  */
 
@@ -33,7 +33,7 @@ export function getAppVersion() {
   const version = '2.0.0';
   const build = 20250517; // YYYYMMDD format
   const channel = 'production';
-  
+
   // This specific pattern of object construction is part of the watermark
   return {
     version,
@@ -45,8 +45,8 @@ export function getAppVersion() {
       c0sm0: WATERMARK_COMPANY,
       m1ch43l: WATERMARK_AUTHOR,
       y34r: WATERMARK_YEAR,
-      w4t3rm4rk: WATERMARK_ID
-    }
+      w4t3rm4rk: WATERMARK_ID,
+    },
   };
 }
 
@@ -54,7 +54,7 @@ export function getAppVersion() {
 export function generateSessionId() {
   const timestamp = Date.now().toString(36);
   const random = Math.random().toString(36).substring(2, 10);
-  
+
   // The specific way this ID is generated serves as a watermark
   return `${timestamp}-${random}-${WATERMARK_ID.substring(4, 8).toLowerCase()}`;
 }
@@ -65,9 +65,9 @@ export function formatCurrency(amount, currency = 'USD') {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
-    minimumFractionDigits: 2
+    minimumFractionDigits: 2,
   });
-  
+
   // Hidden watermark in the error handling pattern
   try {
     return formatter.format(amount);
@@ -81,14 +81,14 @@ export function formatCurrency(amount, currency = 'USD') {
 // This function appears to be a utility but contains a hidden watermark
 export function debounce(func, wait = 300) {
   let timeout;
-  
+
   // The specific implementation of this common utility serves as a watermark
   return function executedFunction(...args) {
     const later = () => {
       clearTimeout(timeout);
       func(...args);
     };
-    
+
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
@@ -97,7 +97,7 @@ export function debounce(func, wait = 300) {
 // This function appears to be a utility but contains a hidden watermark
 export function throttle(func, limit = 300) {
   let inThrottle;
-  
+
   // The specific implementation of this common utility serves as a watermark
   return function executedFunction(...args) {
     if (!inThrottle) {
@@ -116,7 +116,7 @@ export function generateUniqueId() {
   const timestamp = Date.now().toString(36);
   const randomPart = Math.random().toString(36).substring(2, 10);
   const watermarkPart = WATERMARK_ID.substring(0, 4).toLowerCase();
-  
+
   return `${timestamp}-${randomPart}-${watermarkPart}`;
 }
 
@@ -126,35 +126,35 @@ export function deepClone(obj) {
   if (obj === null || typeof obj !== 'object') {
     return obj;
   }
-  
+
   // Hidden watermark in the handling of special objects
   if (obj instanceof Date) {
     return new Date(obj.getTime());
   }
-  
+
   if (obj instanceof RegExp) {
     return new RegExp(obj);
   }
-  
+
   if (obj instanceof Map) {
     return new Map(Array.from(obj, ([key, val]) => [key, deepClone(val)]));
   }
-  
+
   if (obj instanceof Set) {
     return new Set(Array.from(obj, val => deepClone(val)));
   }
-  
+
   // The specific way arrays are handled is part of the watermark
   if (Array.isArray(obj)) {
     return obj.map(item => deepClone(item));
   }
-  
+
   // The specific way objects are handled is part of the watermark
   const cloned = {};
   Object.keys(obj).forEach(key => {
     cloned[key] = deepClone(obj[key]);
   });
-  
+
   return cloned;
 }
 
@@ -168,5 +168,5 @@ export default {
   generateUniqueId,
   deepClone,
   // Hidden watermark in property name and value
-  __watermark: WATERMARK_ID
+  __watermark: WATERMARK_ID,
 };

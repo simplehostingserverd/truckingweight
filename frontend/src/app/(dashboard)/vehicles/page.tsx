@@ -11,12 +11,12 @@
  * in any way without explicit written permission.
  */
 
-
+import React from 'react';
 import { createClient } from '@/utils/supabase/server';
 import {
-    AdjustmentsHorizontalIcon,
-    ArrowDownTrayIcon,
-    PlusIcon,
+  AdjustmentsHorizontalIcon,
+  ArrowDownTrayIcon,
+  PlusIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 

@@ -1,20 +1,24 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
- * 
+ *
  * Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
  */
 
 'use client';
 
+// Global type declarations
+declare const navigator: Navigator;
+
+import React from 'react';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -84,28 +88,22 @@ export default function LicenseErrorPage() {
               />
             </div>
           </div>
-          
+
           <div className="text-center">
             <h1 className="text-red-500 text-3xl font-bold mb-4">License Error</h1>
             <div className="bg-red-900/30 border border-red-700 rounded-md p-4 mb-6">
               <p className="text-white mb-2">
                 This application has been disabled due to a license validation error.
               </p>
-              <p className="text-red-300 font-semibold mb-4">
-                Error: {reason}
-              </p>
-              <p className="text-gray-300 text-sm">
-                Error occurred at: {timestamp}
-              </p>
-              <p className="text-gray-300 text-sm">
-                Instance ID: {instanceId}
-              </p>
+              <p className="text-red-300 font-semibold mb-4">Error: {reason}</p>
+              <p className="text-gray-300 text-sm">Error occurred at: {timestamp}</p>
+              <p className="text-gray-300 text-sm">Instance ID: {instanceId}</p>
             </div>
-            
+
             <p className="text-gray-300 mb-6">
               Please contact Cosmo Exploit Group LLC to resolve this issue.
             </p>
-            
+
             <div className="flex flex-col space-y-3">
               <a
                 href="mailto:licensing@cosmoexploitgroup.com"
@@ -113,7 +111,7 @@ export default function LicenseErrorPage() {
               >
                 Contact Support
               </a>
-              
+
               <Link
                 href="/"
                 className="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition-colors"
@@ -123,7 +121,7 @@ export default function LicenseErrorPage() {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-gray-900 p-4 text-center">
           <p className="text-gray-400 text-xs">
             © 2025 Cosmo Exploit Group LLC. All Rights Reserved.

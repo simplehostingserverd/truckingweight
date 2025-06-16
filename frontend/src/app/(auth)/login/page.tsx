@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { useSupabaseAuth } from '@/providers/SupabaseAuthProvider';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import Image from 'next/image';

@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { createClient } from '@/utils/supabase/client';
 import {
   ArrowDownIcon,

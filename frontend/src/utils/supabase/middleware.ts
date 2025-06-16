@@ -11,7 +11,6 @@
  * in any way without explicit written permission.
  */
 
-
 import type { Database } from '@/types/supabase';
 import { createServerClient } from '@supabase/ssr';
 import type { NextRequest } from 'next/server';

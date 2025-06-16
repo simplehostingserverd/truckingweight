@@ -11,9 +11,9 @@
  * in any way without explicit written permission.
  */
 
-
-import { toSearchParamString } from '@/utils/searchParams';
+import React from 'react';
 import { createClient } from '@/utils/supabase/server';
+import { toSearchParamString } from '@/utils/searchParams';
 import { notFound } from 'next/navigation';
 import VehicleDetailsClient from './client';
 

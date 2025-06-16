@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
- * 
+ *
  * Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
  */
 
@@ -19,12 +19,12 @@ const crypto = require('crypto');
  * Netlify function to verify the application license
  * This provides a server-side verification mechanism as an additional security layer
  */
-exports.handler = async function(event, context) {
+exports.handler = async function (event, context) {
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      body: JSON.stringify({ error: 'Method not allowed' })
+      body: JSON.stringify({ error: 'Method not allowed' }),
     };
   }
 
@@ -37,7 +37,7 @@ exports.handler = async function(event, context) {
     if (!licenseKey || !deploymentUrl) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Missing required fields' })
+        body: JSON.stringify({ error: 'Missing required fields' }),
       };
     }
 
@@ -54,7 +54,7 @@ exports.handler = async function(event, context) {
       console.log('Invalid security token');
       return {
         statusCode: 401,
-        body: JSON.stringify({ error: 'Unauthorized' })
+        body: JSON.stringify({ error: 'Unauthorized' }),
       };
     }
 
@@ -63,10 +63,10 @@ exports.handler = async function(event, context) {
       console.log('Invalid license key');
       return {
         statusCode: 403,
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           valid: false,
-          error: 'Invalid license key'
-        })
+          error: 'Invalid license key',
+        }),
       };
     }
 
@@ -85,10 +85,10 @@ exports.handler = async function(event, context) {
       console.log(`Invalid deployment domain: ${deploymentDomain}`);
       return {
         statusCode: 403,
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           valid: false,
-          error: 'Unauthorized deployment domain'
-        })
+          error: 'Unauthorized deployment domain',
+        }),
       };
     }
 
@@ -103,15 +103,15 @@ exports.handler = async function(event, context) {
         valid: true,
         expiresAt,
         features: ['dashboard', 'reports', 'admin', 'api', 'maps'],
-        message: 'License verified successfully'
-      })
+        message: 'License verified successfully',
+      }),
     };
   } catch (error) {
     console.error('License verification error:', error);
-    
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Internal server error' })
+      body: JSON.stringify({ error: 'Internal server error' }),
     };
   }
 };

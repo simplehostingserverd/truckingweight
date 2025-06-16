@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -57,7 +56,7 @@ interface TruckingDB extends DBSchema {
       id: string;
       table: string;
       action: 'create' | 'update' | 'delete';
-      data: any /* @ts-ignore */ ;
+      data: any /* @ts-ignore */;
       timestamp: number;
     };
   };
@@ -172,7 +171,7 @@ export async function markAsSynced<T extends 'weights' | 'loads'>(
 export async function addToSyncQueue(
   table: string,
   action: 'create' | 'update' | 'delete',
-  data: any /* @ts-ignore */ 
+  data: any /* @ts-ignore */
 ): Promise<void> {
   const db = await getDB();
   const id = `${table}_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;

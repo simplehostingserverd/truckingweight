@@ -15,26 +15,26 @@
 export async function onRequest(context) {
   // Get the request and environment
   const { request, env, next } = context;
-  
+
   // Get the URL from the request
   const url = new URL(request.url);
-  
+
   // Add security headers to all responses
   const response = await next();
   const newResponse = new Response(response.body, response);
-  
+
   // Add security headers
   newResponse.headers.set('X-Content-Type-Options', 'nosniff');
   newResponse.headers.set('X-Frame-Options', 'DENY');
   newResponse.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   newResponse.headers.set('X-XSS-Protection', '1; mode=block');
-  
+
   // Add CORS headers for API routes
   if (url.pathname.startsWith('/api/')) {
     newResponse.headers.set('Access-Control-Allow-Origin', '*');
     newResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     newResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    
+
     // Handle preflight requests
     if (request.method === 'OPTIONS') {
       return new Response(null, {
@@ -43,6 +43,6 @@ export async function onRequest(context) {
       });
     }
   }
-  
+
   return newResponse;
 }

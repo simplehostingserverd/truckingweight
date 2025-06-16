@@ -11,17 +11,21 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+// Global type declarations
+declare function confirm(message?: string): boolean;
+
+import React from 'react';
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowLeftIcon,
-    ArrowPathIcon,
-    CheckCircleIcon,
-    ExclamationTriangleIcon,
-    PlusIcon,
-    TrashIcon,
-    TruckIcon
+  ArrowLeftIcon,
+  ArrowPathIcon,
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
+  PlusIcon,
+  TrashIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
 import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
@@ -31,8 +35,8 @@ import { useEffect, useState } from 'react';
 interface TelematicsConnection {
   id: string;
   provider: string;
-  credentials: any /* @ts-ignore */ ;
-  settings: any /* @ts-ignore */ ;
+  credentials: any /* @ts-ignore */;
+  settings: any /* @ts-ignore */;
   is_active: boolean;
   last_sync_at: string | null;
   created_at: string;
@@ -85,7 +89,7 @@ export default function TelematicsPage() {
         if (error) throw error;
 
         setConnections(data || []);
-      } catch (err: any /* @ts-ignore */ ) {
+      } catch (err: any /* @ts-ignore */) {
         console.error('Error fetching telematics connections:', err);
         setError('Failed to load telematics connections');
       } finally {
@@ -192,7 +196,7 @@ export default function TelematicsPage() {
 
       // Add to state
       setConnections([data, ...connections]);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error creating telematics connection:', err);
       setError('Failed to create telematics connection');
     } finally {
@@ -217,7 +221,7 @@ export default function TelematicsPage() {
 
       // Remove from state
       setConnections(connections.filter(conn => conn.id !== id));
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error deleting connection:', err);
       setError('Failed to delete connection');
     } finally {
@@ -241,7 +245,7 @@ export default function TelematicsPage() {
       setConnections(
         connections.map(conn => (conn.id === id ? { ...conn, is_active: !currentStatus } : conn))
       );
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error updating connection status:', err);
       setError('Failed to update connection status');
     } finally {
@@ -271,7 +275,7 @@ export default function TelematicsPage() {
           conn.id === id ? { ...conn, last_sync_at: new Date().toISOString() } : conn
         )
       );
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error syncing connection:', err);
       setError('Failed to sync connection');
     } finally {

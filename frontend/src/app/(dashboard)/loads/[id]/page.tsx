@@ -11,17 +11,18 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import { getStatusColor } from '@/lib/utils';
 import { toSearchParamString } from '@/utils/searchParams';
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowLeftIcon,
-    ClockIcon,
-    MapPinIcon,
-    PencilIcon,
-    TrashIcon
+  ArrowLeftIcon,
+  ClockIcon,
+  MapPinIcon,
+  PencilIcon,
+  TrashIcon,
 } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -90,7 +91,7 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
         }
 
         setLoad(data);
-      } catch (err: any /* @ts-ignore */ ) {
+      } catch (err: any /* @ts-ignore */) {
         console.error('Error fetching load:', err);
         setError('Failed to load data');
       } finally {
@@ -117,7 +118,7 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
       }
 
       router.push('/loads');
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error deleting load:', err);
       setError(err.message || 'Failed to delete load');
       setIsDeleting(false);

@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * Weigh Ticket Controller
@@ -33,10 +32,10 @@ import { processCameraScannedTicket } from '../services/scaleIntegration';
 // Define the authenticated request type
 interface AuthenticatedRequest extends Request {
   user?: {
-    id: string
-    companyId?: number
-    isAdmin?: boolean
-  }
+    id: string;
+    companyId?: number;
+    isAdmin?: boolean;
+  };
 }
 
 /**
@@ -149,8 +148,8 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
         totalPages: Math.ceil(totalCount / limit),
       },
     });
-  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  catch (error: any /* @ts-expect-error Catching unknown error type */ ) {
+  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error getting weigh tickets: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -179,8 +178,8 @@ export const getWeighTicketById = async (req: AuthenticatedRequest, res: Respons
     }
 
     res.json(result.ticket);
-  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  catch (error: any /* @ts-expect-error Catching unknown error type */ ) {
+  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error getting weigh ticket: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -233,8 +232,8 @@ export const createWeighTicket = async (req: AuthenticatedRequest, res: Response
     }
 
     res.status(201).json(result.ticket);
-  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  catch (error: any /* @ts-expect-error Catching unknown error type */ ) {
+  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error creating weigh ticket: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -276,8 +275,8 @@ export const updateWeighTicketById = async (req: AuthenticatedRequest, res: Resp
     }
 
     res.json(result.ticket);
-  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  catch (error: any /* @ts-expect-error Catching unknown error type */ ) {
+  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error updating weigh ticket: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -310,8 +309,8 @@ export const processCameraScan = async (req: AuthenticatedRequest, res: Response
     }
 
     res.json(result.ticketData);
-  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  catch (error: any /* @ts-expect-error Catching unknown error type */ ) {
+  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error processing camera-scanned ticket: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -344,8 +343,8 @@ export const validateQRCode = async (req: AuthenticatedRequest, res: Response) =
     }
 
     res.json({ valid: true, ticket: result.ticket });
-  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  catch (error: any /* @ts-expect-error Catching unknown error type */ ) {
+  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logger.error(`Error validating weigh ticket QR code: ${error.message}`, { error });
     res.status(500).json({ message: 'Server error', error: error.message });
   }

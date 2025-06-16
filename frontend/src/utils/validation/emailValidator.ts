@@ -1,20 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 /**
  * Email Validation Utility
- * 
+ *
  * Provides comprehensive email validation including:
  * - Basic format validation
  * - Temporary/disposable email domain detection
@@ -151,7 +150,7 @@ export interface EmailValidationResult {
 export const validateEmail = (email: string): EmailValidationResult => {
   // Trim the email to remove any whitespace
   const trimmedEmail = email.trim();
-  
+
   // Check if email is empty
   if (!trimmedEmail) {
     return {
@@ -161,7 +160,7 @@ export const validateEmail = (email: string): EmailValidationResult => {
       status: 'invalid',
     };
   }
-  
+
   // Check basic format using regex
   if (!EMAIL_REGEX.test(trimmedEmail)) {
     return {
@@ -171,10 +170,10 @@ export const validateEmail = (email: string): EmailValidationResult => {
       status: 'invalid',
     };
   }
-  
+
   // Extract domain from email
   const domain = trimmedEmail.split('@')[1].toLowerCase();
-  
+
   // Check if domain is in the list of disposable email domains
   if (DISPOSABLE_EMAIL_DOMAINS.includes(domain)) {
     return {
@@ -184,15 +183,16 @@ export const validateEmail = (email: string): EmailValidationResult => {
       status: 'disposable',
     };
   }
-  
+
   // Check for suspicious patterns in the domain or username
   const username = trimmedEmail.split('@')[0].toLowerCase();
-  
+
   // Check for random-looking usernames (many consecutive consonants or numbers)
-  const hasRandomPattern = /[bcdfghjklmnpqrstvwxz]{5,}/.test(username) || 
-                          /\d{5,}/.test(username) ||
-                          /[^\w.-]/.test(username);
-  
+  const hasRandomPattern =
+    /[bcdfghjklmnpqrstvwxz]{5,}/.test(username) ||
+    /\d{5,}/.test(username) ||
+    /[^\w.-]/.test(username);
+
   if (hasRandomPattern) {
     return {
       isValid: true, // Still technically valid
@@ -201,7 +201,7 @@ export const validateEmail = (email: string): EmailValidationResult => {
       status: 'suspicious',
     };
   }
-  
+
   // All checks passed
   return {
     isValid: true,

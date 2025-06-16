@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * Script to create a simplified Cesium.js stub
@@ -29,10 +28,10 @@ const cesiumStubPath = path.join(publicCesiumPath, 'Cesium.js');
 async function createCesiumStub() {
   try {
     console.log('Creating Cesium stub...');
-    
+
     // Ensure the public/cesium directory exists
     await fs.ensureDir(publicCesiumPath);
-    
+
     // Create a simplified Cesium.js stub
     const cesiumStub = `
 /**
@@ -66,10 +65,10 @@ window.CESIUM_BASE_URL = '/cesium';
   document.head.appendChild(link);
 })();
 `;
-    
+
     // Write the stub to the file
     await fs.writeFile(cesiumStubPath, cesiumStub);
-    
+
     console.log('Cesium stub created successfully!');
   } catch (error) {
     console.error('Error creating Cesium stub:', error);

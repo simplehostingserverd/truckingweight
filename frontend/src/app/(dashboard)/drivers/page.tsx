@@ -11,8 +11,9 @@
  * in any way without explicit written permission.
  */
 
-import { formatDate } from '@/lib/utils';
+import React from 'react';
 import { createClient } from '@/utils/supabase/server';
+import { formatDate } from '@/lib/utils';
 import {
   AdjustmentsHorizontalIcon,
   ArrowDownTrayIcon,

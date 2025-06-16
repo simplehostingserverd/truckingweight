@@ -17,11 +17,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 // Paths that require authentication
-const PROTECTED_PATHS = [
-  '/dashboard',
-  '/city/dashboard',
-  '/trucking/dashboard',
-];
+const PROTECTED_PATHS = ['/dashboard', '/city/dashboard', '/trucking/dashboard'];
 
 // Paths that should redirect to dashboard if already authenticated
 const AUTH_PATHS = [
@@ -55,7 +51,9 @@ export async function middleware(req: NextRequest) {
   );
 
   // Get the current session
-  const { data: { session } } = await supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
   // Get the pathname
   const { pathname } = req.nextUrl;

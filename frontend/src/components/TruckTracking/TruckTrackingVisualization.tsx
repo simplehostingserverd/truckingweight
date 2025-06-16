@@ -1,19 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import * as THREE from 'three';
@@ -21,7 +21,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 interface TruckTrackingVisualizationProps {
-  routeData: any /* @ts-ignore */ ;
+  routeData: any /* @ts-ignore */;
   vehicleId: number;
 }
 
@@ -118,7 +118,7 @@ export default function TruckTrackingVisualization({
   };
 
   // Set up the route visualization
-  const setupRouteVisualization = (routeData: any /* @ts-ignore */ ) => {
+  const setupRouteVisualization = (routeData: any /* @ts-ignore */) => {
     if (!map.current || !routeData || !routeData.coordinates) return;
 
     // Add route line
@@ -194,7 +194,10 @@ export default function TruckTrackingVisualization({
 }
 
 // Helper function to calculate heading based on current position and next point
-function calculateHeading(routeData: any /* @ts-ignore */ , currentPosition: { lng: number; lat: number }) {
+function calculateHeading(
+  routeData: any /* @ts-ignore */,
+  currentPosition: { lng: number; lat: number }
+) {
   // Implementation depends on your route data structure
   // This is a simplified version
   return 0; // Default heading (north)

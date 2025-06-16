@@ -11,6 +11,7 @@
  * in any way without explicit written permission.
  */
 
+import React from 'react';
 import DashboardHeader from '@/components/Dashboard/DashboardHeader';
 import DashboardSidebar from '@/components/Dashboard/DashboardSidebar';
 import { createClient } from '@/utils/supabase/server';

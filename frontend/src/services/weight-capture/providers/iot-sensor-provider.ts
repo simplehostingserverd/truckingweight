@@ -1,21 +1,25 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * IoT Sensor Provider
  * This provider implements the WeightCaptureProvider interface for IoT weight sensors
  */
+
+// Global type declarations
+declare namespace NodeJS {
+  interface Timeout {}
+}
 
 import {
   WeightCaptureProvider,
@@ -27,11 +31,11 @@ import {
 
 // Mock IoT sensor client for development
 class IoTSensorClient {
-  private config: any /* @ts-ignore */ ;
+  private config: any /* @ts-ignore */;
   private connected: boolean = false;
   private mockData: any = {};
 
-  constructor(config: any /* @ts-ignore */ ) {
+  constructor(config: any /* @ts-ignore */) {
     this.config = config;
 
     // Initialize mock data
@@ -115,12 +119,12 @@ class IoTSensorClient {
 
 export class IoTSensorProvider implements WeightCaptureProvider {
   private client: IoTSensorClient | null = null;
-  private config: any /* @ts-ignore */ ;
+  private config: any /* @ts-ignore */;
   private isCapturing: boolean = false;
   private captureInterval: NodeJS.Timeout | null = null;
   private lastReading: WeightReading | null = null;
 
-  constructor(config: any /* @ts-ignore */ ) {
+  constructor(config: any /* @ts-ignore */) {
     this.config = config;
   }
 
@@ -152,11 +156,13 @@ export class IoTSensorProvider implements WeightCaptureProvider {
         const sensorData = await this.client!.readSensor();
 
         // Convert axle data to the expected format
-        const axleWeights: AxleWeightReading[] = sensorData.axleData.map((axle: any /* @ts-ignore */ ) => ({
-          position: axle.id,
-          weight: axle.weight,
-          maxLegal: this.getMaxLegalWeight(axle.id),
-        }));
+        const axleWeights: AxleWeightReading[] = sensorData.axleData.map(
+          (axle: any /* @ts-ignore */) => ({
+            position: axle.id,
+            weight: axle.weight,
+            maxLegal: this.getMaxLegalWeight(axle.id),
+          })
+        );
 
         // Create a new weight reading
         this.lastReading = {

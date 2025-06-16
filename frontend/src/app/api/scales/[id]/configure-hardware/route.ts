@@ -11,7 +11,7 @@
  * in any way without explicit written permission.
  */
 
-
+import { createClient } from '@/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
     const data = await response.json();
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     console.error('Error configuring hardware:', error);
     return NextResponse.json(
       { success: false, error: error.message || 'Internal server error' },

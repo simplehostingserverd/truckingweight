@@ -1,19 +1,22 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 import React, { useState, useEffect } from 'react';
-import { validateEmail, getEmailValidationClass, EmailValidationResult } from '@/utils/validation/emailValidator';
+import {
+  validateEmail,
+  getEmailValidationClass,
+  EmailValidationResult,
+} from '@/utils/validation/emailValidator';
 import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -76,7 +79,7 @@ const EmailValidationFeedback: React.FC<EmailValidationFeedbackProps> = ({
   };
 
   return (
-    <div 
+    <div
       className={cn(
         'flex items-center text-xs mt-1',
         getEmailValidationClass(validation.status),

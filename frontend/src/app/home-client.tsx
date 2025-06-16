@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Layout from '@/components/Layout/Layout';
 import LogoCarousel from '@/components/LogoCarousel';

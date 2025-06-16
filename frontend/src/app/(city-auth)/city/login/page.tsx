@@ -1,19 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState } from 'react';
@@ -66,16 +66,16 @@ export default function CityLogin() {
       // Import Supabase client dynamically to avoid SSR issues
       const { createClient } = await import('@/utils/supabase/client');
       const supabase = createClient();
-      
+
       // First try direct Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
-      
+
       if (!authError && authData.session) {
         console.log('Successfully authenticated with Supabase JWT');
-        
+
         // For backward compatibility, also call the API to get the Paseto token
         try {
           const response = await fetch('/api/city-auth/login', {
@@ -85,7 +85,7 @@ export default function CityLogin() {
             },
             body: JSON.stringify({ email, password }),
           });
-          
+
           if (response.ok) {
             const data = await response.json();
             // Store the token in localStorage for backward compatibility
@@ -96,13 +96,13 @@ export default function CityLogin() {
         } catch (apiError) {
           console.warn('Failed to get legacy tokens, but JWT auth succeeded:', apiError);
         }
-        
+
         // Redirect to city dashboard
         router.push(createSafeUrl('/city/dashboard'));
         router.refresh(); // Important to refresh the router
         return;
       }
-      
+
       // If Supabase Auth fails, fall back to the API
       const response = await fetch('/api/city-auth/login', {
         method: 'POST',
@@ -122,7 +122,7 @@ export default function CityLogin() {
       localStorage.setItem('cityToken', data.token);
       // Store user data in localStorage for backward compatibility
       localStorage.setItem('cityUser', JSON.stringify(data.user));
-      
+
       // If the API returned Supabase tokens, use them to set the session
       if (data.supabaseToken) {
         try {
@@ -139,7 +139,7 @@ export default function CityLogin() {
       // Redirect to city dashboard
       router.push(createSafeUrl('/city/dashboard'));
       router.refresh(); // Important to refresh the router
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'Invalid email or password');
       console.error('City login error:', err);
     } finally {
@@ -151,21 +151,21 @@ export default function CityLogin() {
   const handleDemoLogin = async () => {
     setIsLoading(true);
     setError('');
-    
+
     try {
       // Import Supabase client dynamically to avoid SSR issues
       const { createClient } = await import('@/utils/supabase/client');
       const supabase = createClient();
-      
+
       // Try to sign in with demo credentials
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email: 'cityadmin@example.gov',
         password: 'CityAdmin123!',
       });
-      
+
       if (!authError && authData.session) {
         console.log('Successfully authenticated demo user with Supabase JWT');
-        
+
         // For backward compatibility, also create local storage items
         const demoUser = {
           id: authData.user.id,
@@ -174,20 +174,20 @@ export default function CityLogin() {
           cityId: 1,
           role: 'admin',
         };
-        
+
         // Store the token and user data in localStorage for backward compatibility
         localStorage.setItem('cityToken', authData.session.access_token);
         localStorage.setItem('cityUser', JSON.stringify(demoUser));
-        
+
         // Redirect to city dashboard
         router.push(createSafeUrl('/city/dashboard'));
         router.refresh(); // Important to refresh the router
         return;
       }
-      
+
       // If Supabase Auth fails, fall back to the old method
       console.warn('Supabase Auth failed for demo login, using fallback method');
-      
+
       // Create a demo token and user
       const demoToken = 'test-city-token-' + Date.now();
       const demoUser = {
@@ -197,11 +197,11 @@ export default function CityLogin() {
         cityId: 1,
         role: 'admin',
       };
-      
+
       // Store the token and user data in localStorage
       localStorage.setItem('cityToken', demoToken);
       localStorage.setItem('cityUser', JSON.stringify(demoUser));
-      
+
       // Redirect to city dashboard
       router.push(createSafeUrl('/city/dashboard'));
     } catch (error) {

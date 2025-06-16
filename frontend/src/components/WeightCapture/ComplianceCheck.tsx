@@ -13,8 +13,9 @@
 
 'use client';
 
-import { AxleWeight, ComplianceIssue, WeighTicket } from '@/types/scale-master';
+import React from 'react';
 import { createClient } from '@/utils/supabase/client';
+import { AxleWeight, ComplianceIssue, WeighTicket } from '@/types/scale-master';
 import {
   CheckCircleIcon,
   ExclamationCircleIcon,

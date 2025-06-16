@@ -11,7 +11,6 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
 // Inspired by react-hot-toast library
@@ -201,4 +200,3 @@ function useToast() {
 }
 
 export { toast, useToast };
-

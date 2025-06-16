@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { Session, User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';

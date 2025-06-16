@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { useIsMobile } from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
 import { Dialog, Transition } from '@headlessui/react';

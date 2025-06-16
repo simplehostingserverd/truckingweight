@@ -13,6 +13,9 @@
 
 'use client';
 
+// Global type declarations
+declare const Image: typeof HTMLImageElement;
+
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';

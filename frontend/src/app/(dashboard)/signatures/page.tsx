@@ -11,9 +11,9 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -22,12 +22,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { uploadSignature } from '@/utils/supabase/storage';
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowPathIcon,
-    CheckIcon,
-    PencilIcon,
-    TrashIcon,
-    XMarkIcon,
+  ArrowPathIcon,
+  CheckIcon,
+  PencilIcon,
+  TrashIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useRef, useState } from 'react';
 
@@ -83,7 +84,7 @@ export default function SignaturesPage() {
       }
 
       setCompanyId(userData?.company_id || null);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching user company:', err);
     }
   };
@@ -119,7 +120,7 @@ export default function SignaturesPage() {
       }
 
       setSignatures(data || []);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching signatures:', err);
       setError(err.message || 'Failed to load signatures');
       // Generate dummy data for testing
@@ -306,7 +307,7 @@ export default function SignaturesPage() {
 
       // Refresh signatures list
       fetchSignatures();
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error saving signature:', err);
       setError(err.message || 'Failed to save signature');
     } finally {
@@ -331,7 +332,7 @@ export default function SignaturesPage() {
       // Update state
       setSignatures(signatures.filter(sig => sig.id !== signatureId));
       setSuccess('Signature deleted successfully');
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error deleting signature:', err);
       setError(err.message || 'Failed to delete signature');
     }

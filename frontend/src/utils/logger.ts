@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * Logger utility for consistent logging across the application
@@ -23,7 +22,7 @@ interface LogEntry {
   timestamp: string;
   level: LogLevel;
   message: string;
-  data?: any /* @ts-ignore */ ;
+  data?: any /* @ts-ignore */;
   context?: string;
 }
 
@@ -76,7 +75,7 @@ function shouldLog(level: LogLevel): boolean {
  * @param data - The data to format
  * @returns Formatted data string
  */
-function formatData(data: any /* @ts-ignore */ ): string {
+function formatData(data: any /* @ts-ignore */): string {
   try {
     if (typeof data === 'object') {
       return JSON.stringify(data, null, 2);
@@ -107,7 +106,12 @@ function addToMemoryLogs(entry: LogEntry): void {
  * @param data - Optional data to log
  * @param context - Optional context (e.g., component name)
  */
-function createLogEntry(level: LogLevel, message: string, data?: any /* @ts-ignore */ , context?: string): LogEntry {
+function createLogEntry(
+  level: LogLevel,
+  message: string,
+  data?: any /* @ts-ignore */,
+  context?: string
+): LogEntry {
   return {
     timestamp: new Date().toISOString(),
     level,
@@ -124,7 +128,12 @@ function createLogEntry(level: LogLevel, message: string, data?: any /* @ts-igno
  * @param data - Optional data to log
  * @param context - Optional context (e.g., component name)
  */
-function log(level: LogLevel, message: string, data?: any /* @ts-ignore */ , context?: string): void {
+function log(
+  level: LogLevel,
+  message: string,
+  data?: any /* @ts-ignore */,
+  context?: string
+): void {
   if (!shouldLog(level)) {
     return;
   }

@@ -11,45 +11,46 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
+import { createClient } from '@/utils/supabase/client';
 import {
-    Alert,
-    AlertDescription,
-    AlertTitle,
-    Badge,
-    Button,
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    Input,
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui';
 import {
-    ArrowPathIcon,
-    MagnifyingGlassIcon,
-    PencilIcon,
-    PlusIcon,
-    TrashIcon
+  ArrowPathIcon,
+  MagnifyingGlassIcon,
+  PencilIcon,
+  PlusIcon,
+  TrashIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
@@ -151,7 +152,7 @@ export default function UsersPage() {
 
       setUsers(data || []);
       setFilteredUsers(data || []);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching users:', err);
       setError(err.message || 'Failed to load users');
     } finally {
@@ -171,7 +172,7 @@ export default function UsersPage() {
       }
 
       setCompanies(data || []);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching companies:', err);
     }
   };
@@ -228,7 +229,7 @@ export default function UsersPage() {
 
       // Refresh users list
       fetchUsers();
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error creating user:', err);
       setError(err.message || 'Failed to create user');
     } finally {
@@ -263,7 +264,7 @@ export default function UsersPage() {
 
       // Refresh users list
       fetchUsers();
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error updating user:', err);
       setError(err.message || 'Failed to update user');
     } finally {
@@ -298,7 +299,7 @@ export default function UsersPage() {
 
       // Refresh users list
       fetchUsers();
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error deleting user:', err);
       setError(err.message || 'Failed to delete user');
     } finally {

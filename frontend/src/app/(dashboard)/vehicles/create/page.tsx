@@ -11,16 +11,17 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
+import { createClient } from '@/utils/supabase/client';
 import {
-    BuildingOfficeIcon,
-    CheckCircleIcon,
-    ExclamationCircleIcon,
-    IdentificationIcon,
-    ScaleIcon,
-    TruckIcon
+  BuildingOfficeIcon,
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  IdentificationIcon,
+  ScaleIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -104,7 +105,7 @@ export default function CreateVehicle() {
         router.push('/vehicles');
         router.refresh();
       }, 1500);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'An error occurred while creating the vehicle');
       console.error('Create vehicle error:', err);
     } finally {

@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 import { GlobeAltIcon, MapIcon, TruckIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';

@@ -11,6 +11,7 @@
  * in any way without explicit written permission.
  */
 
+import React from 'react';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 

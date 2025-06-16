@@ -1,19 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState, useEffect } from 'react';
@@ -168,7 +168,7 @@ const CityScalesPageClient = () => {
   }, []);
 
   // Filter scales based on search query and filters
-  const filteredScales = scales.filter((scale) => {
+  const filteredScales = scales.filter(scale => {
     const matchesSearch =
       searchQuery === '' ||
       scale.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -184,9 +184,9 @@ const CityScalesPageClient = () => {
   });
 
   // Get counts for tabs
-  const activeScalesCount = scales.filter((scale) => scale.status === 'Active').length;
-  const maintenanceScalesCount = scales.filter((scale) => scale.status === 'Maintenance').length;
-  const inactiveScalesCount = scales.filter((scale) => scale.status === 'Inactive').length;
+  const activeScalesCount = scales.filter(scale => scale.status === 'Active').length;
+  const maintenanceScalesCount = scales.filter(scale => scale.status === 'Maintenance').length;
+  const inactiveScalesCount = scales.filter(scale => scale.status === 'Inactive').length;
 
   return (
     <ErrorBoundary>
@@ -224,7 +224,7 @@ const CityScalesPageClient = () => {
               id="search"
               placeholder="Search by name or location..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               className="bg-gray-800 border-gray-700 text-white"
             />
           </div>
@@ -280,21 +280,21 @@ const CityScalesPageClient = () => {
 
           <TabsContent value="active" className="space-y-6">
             <ScalesTable
-              scales={scales.filter((scale) => scale.status === 'Active')}
+              scales={scales.filter(scale => scale.status === 'Active')}
               isLoading={isLoading}
             />
           </TabsContent>
 
           <TabsContent value="maintenance" className="space-y-6">
             <ScalesTable
-              scales={scales.filter((scale) => scale.status === 'Maintenance')}
+              scales={scales.filter(scale => scale.status === 'Maintenance')}
               isLoading={isLoading}
             />
           </TabsContent>
 
           <TabsContent value="inactive" className="space-y-6">
             <ScalesTable
-              scales={scales.filter((scale) => scale.status === 'Inactive')}
+              scales={scales.filter(scale => scale.status === 'Inactive')}
               isLoading={isLoading}
             />
           </TabsContent>
@@ -340,7 +340,7 @@ const ScalesTable = ({ scales, isLoading }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {scales.map((scale) => (
+            {scales.map(scale => (
               <TableRow key={scale.id} className="border-gray-700 hover:bg-gray-700">
                 <TableCell className="font-medium text-white">{scale.name}</TableCell>
                 <TableCell className="text-gray-300">

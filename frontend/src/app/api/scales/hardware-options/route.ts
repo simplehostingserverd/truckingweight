@@ -11,7 +11,6 @@
  * in any way without explicit written permission.
  */
 
-
 import { createClient } from '@/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -61,7 +60,7 @@ export async function GET(req: NextRequest) {
 
     const data = await response.json();
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     console.error('Error fetching hardware options:', error);
     return NextResponse.json(
       { success: false, error: error.message || 'Internal server error' },

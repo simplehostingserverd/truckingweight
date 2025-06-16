@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -118,7 +117,10 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    document.documentElement.style.setProperty('--font-size-multiplier', fontSizeMultiplier.toString());
+    document.documentElement.style.setProperty(
+      '--font-size-multiplier',
+      fontSizeMultiplier.toString()
+    );
     localStorage.setItem('accessibility-font-size', fontSizeMultiplier.toString());
   }, [fontSizeMultiplier]);
 
@@ -178,11 +180,7 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
     toggleAlwaysShowFocus,
   };
 
-  return (
-    <AccessibilityContext.Provider value={value}>
-      {children}
-    </AccessibilityContext.Provider>
-  );
+  return <AccessibilityContext.Provider value={value}>{children}</AccessibilityContext.Provider>;
 }
 
 /**

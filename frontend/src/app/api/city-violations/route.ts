@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -35,7 +34,7 @@ export async function GET(request: NextRequest) {
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
       console.log('Using test data for city violations');
-      
+
       // Mock data
       const dummyViolations = [
         {
@@ -49,7 +48,7 @@ export async function GET(request: NextRequest) {
           weight: 105000,
           permittedWeight: 95000,
           overageAmount: 10000,
-          fineAmount: 500.00,
+          fineAmount: 500.0,
           paymentStatus: 'Paid',
           status: 'Closed',
           notes: 'Driver acknowledged violation and paid fine on site.',
@@ -68,7 +67,7 @@ export async function GET(request: NextRequest) {
             permittedWidth: 12,
             overageAmount: 2,
           },
-          fineAmount: 350.00,
+          fineAmount: 350.0,
           paymentStatus: 'Pending',
           status: 'Open',
           notes: 'Citation issued, awaiting payment.',
@@ -83,7 +82,7 @@ export async function GET(request: NextRequest) {
           violationDate: '2023-11-10',
           location: '789 Center Ave',
           weight: 88000,
-          fineAmount: 750.00,
+          fineAmount: 750.0,
           paymentStatus: 'Pending',
           status: 'Open',
           notes: 'Vehicle had no valid permit for weight. Driver claimed unaware of requirements.',
@@ -105,7 +104,7 @@ export async function GET(request: NextRequest) {
             permittedHeight: 15,
             overageAmount: 1,
           },
-          fineAmount: 850.00,
+          fineAmount: 850.0,
           paymentStatus: 'Paid',
           status: 'Closed',
           notes: 'Multiple violations. Company representative came to pay fine.',
@@ -124,51 +123,51 @@ export async function GET(request: NextRequest) {
             width: 16,
             height: 16,
           },
-          fineAmount: 400.00,
+          fineAmount: 400.0,
           paymentStatus: 'Disputed',
           status: 'Under Review',
-          notes: 'Company claims they filed for renewal but hasn\'t been processed yet.',
+          notes: "Company claims they filed for renewal but hasn't been processed yet.",
           createdAt: '2023-11-16T16:30:00Z',
         },
       ];
 
       // Apply filters if provided
       let filteredViolations = [...dummyViolations];
-      
+
       if (status) {
         filteredViolations = filteredViolations.filter(
           violation => violation.status.toLowerCase() === status.toLowerCase()
         );
       }
-      
+
       if (violationType) {
         filteredViolations = filteredViolations.filter(
           violation => violation.violationType.toLowerCase() === violationType.toLowerCase()
         );
       }
-      
+
       // Apply pagination
       const limitNum = parseInt(limit);
       const offsetNum = parseInt(offset);
       const paginatedViolations = filteredViolations.slice(offsetNum, offsetNum + limitNum);
-      
+
       return NextResponse.json({
         violations: paginatedViolations,
-        total: filteredViolations.length
+        total: filteredViolations.length,
       });
     }
 
     // Call the backend API to get city violations
     let url = `${process.env.BACKEND_URL}/api/city-violations?limit=${limit}&offset=${offset}`;
-    
+
     if (status) {
       url += `&status=${status}`;
     }
-    
+
     if (violationType) {
       url += `&violationType=${violationType}`;
     }
-    
+
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -185,7 +184,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     console.error('Error fetching city violations:', error);
 
     // Return mock data for development/demo purposes
@@ -202,7 +201,7 @@ export async function GET(request: NextRequest) {
           weight: 105000,
           permittedWeight: 95000,
           overageAmount: 10000,
-          fineAmount: 500.00,
+          fineAmount: 500.0,
           paymentStatus: 'Paid',
           status: 'Closed',
           notes: 'Driver acknowledged violation and paid fine on site.',
@@ -221,7 +220,7 @@ export async function GET(request: NextRequest) {
             permittedWidth: 12,
             overageAmount: 2,
           },
-          fineAmount: 350.00,
+          fineAmount: 350.0,
           paymentStatus: 'Pending',
           status: 'Open',
           notes: 'Citation issued, awaiting payment.',
@@ -236,7 +235,7 @@ export async function GET(request: NextRequest) {
           violationDate: '2023-11-10',
           location: '789 Center Ave',
           weight: 88000,
-          fineAmount: 750.00,
+          fineAmount: 750.0,
           paymentStatus: 'Pending',
           status: 'Open',
           notes: 'Vehicle had no valid permit for weight. Driver claimed unaware of requirements.',
@@ -258,7 +257,7 @@ export async function GET(request: NextRequest) {
             permittedHeight: 15,
             overageAmount: 1,
           },
-          fineAmount: 850.00,
+          fineAmount: 850.0,
           paymentStatus: 'Paid',
           status: 'Closed',
           notes: 'Multiple violations. Company representative came to pay fine.',
@@ -277,17 +276,17 @@ export async function GET(request: NextRequest) {
             width: 16,
             height: 16,
           },
-          fineAmount: 400.00,
+          fineAmount: 400.0,
           paymentStatus: 'Disputed',
           status: 'Under Review',
-          notes: 'Company claims they filed for renewal but hasn\'t been processed yet.',
+          notes: "Company claims they filed for renewal but hasn't been processed yet.",
           createdAt: '2023-11-16T16:30:00Z',
         },
       ];
 
-      return NextResponse.json({ 
+      return NextResponse.json({
         violations: dummyViolations,
-        total: dummyViolations.length
+        total: dummyViolations.length,
       });
     }
 

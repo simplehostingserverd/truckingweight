@@ -13,8 +13,9 @@
 
 'use client';
 
-import { determineComplianceStatus, getComplianceDetails } from '@/utils/compliance';
+import React from 'react';
 import { createClient } from '@/utils/supabase/client';
+import { determineComplianceStatus, getComplianceDetails } from '@/utils/compliance';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

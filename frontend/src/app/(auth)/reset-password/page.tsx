@@ -11,11 +11,12 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
 import { useState } from 'react';
 
 export default function ResetPassword() {
@@ -42,7 +43,7 @@ export default function ResetPassword() {
       }
 
       setMessage('Check your email for the password reset link');
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'An error occurred while sending the reset link');
       console.error('Reset password error:', err);
     } finally {

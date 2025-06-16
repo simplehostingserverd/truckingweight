@@ -11,12 +11,13 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import { ArrowPathIcon, CheckCircleIcon, PencilIcon } from '@heroicons/react/24/outline';
 import { useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
+import { createClient } from '@/utils/supabase/client';
 
 interface SignatureCaptureProps {
   ticketId: number;

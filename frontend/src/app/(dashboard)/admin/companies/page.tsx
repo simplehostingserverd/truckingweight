@@ -11,40 +11,41 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import {
-    Alert,
-    AlertDescription,
-    AlertTitle,
-    Badge,
-    Button,
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    Input,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Input,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui';
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowPathIcon,
-    MagnifyingGlassIcon,
-    PencilIcon,
-    PlusIcon,
-    TrashIcon
+  ArrowPathIcon,
+  MagnifyingGlassIcon,
+  PencilIcon,
+  PlusIcon,
+  TrashIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
@@ -173,7 +174,7 @@ export default function CompaniesPage() {
 
       setCompanies(companiesWithCounts);
       setFilteredCompanies(companiesWithCounts);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching companies:', err);
       setError(err.message || 'Failed to load companies');
     } finally {
@@ -250,7 +251,7 @@ export default function CompaniesPage() {
 
       // Refresh companies list
       fetchCompanies();
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error creating company:', err);
       setError(err.message || 'Failed to create company');
     } finally {
@@ -291,7 +292,7 @@ export default function CompaniesPage() {
 
       // Refresh companies list
       fetchCompanies();
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error updating company:', err);
       setError(err.message || 'Failed to update company');
     } finally {
@@ -334,7 +335,7 @@ export default function CompaniesPage() {
 
       // Refresh companies list
       fetchCompanies();
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error deleting company:', err);
       setError(err.message || 'Failed to delete company');
     } finally {

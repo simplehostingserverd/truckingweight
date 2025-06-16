@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import Image from 'next/image';

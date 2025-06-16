@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * Weight Capture Service
@@ -75,7 +74,7 @@ export class WeightCaptureService {
    * @param config IoT sensor configuration
    * @returns True if initialization was successful
    */
-  async initializeIoTSensor(id: string, config: any /* @ts-ignore */ ): Promise<boolean> {
+  async initializeIoTSensor(id: string, config: any /* @ts-ignore */): Promise<boolean> {
     const provider = new IoTSensorProvider(config);
     const success = await provider.initialize();
 

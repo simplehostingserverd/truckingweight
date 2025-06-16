@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -25,7 +24,7 @@ export interface MapMarker {
   title?: string;
   type: 'scale' | 'violation' | 'vehicle';
   status?: string;
-  data?: any /* @ts-ignore */ ;
+  data?: any /* @ts-ignore */;
 }
 
 interface MapTilerMapProps {
@@ -101,7 +100,7 @@ const MapTilerMap: React.FC<MapTilerMapProps> = ({
         });
 
         // Add error handler for map
-        mapInstance.on('error', (e: any /* @ts-ignore */ ) => {
+        mapInstance.on('error', (e: any /* @ts-ignore */) => {
           console.error('MapTiler map error:', e);
           setError('Error loading map: ' + (e.error?.message || 'Unknown error'));
         });
@@ -170,9 +169,9 @@ const MapTilerMap: React.FC<MapTilerMapProps> = ({
   }, [latitude, longitude, zoom]);
 
   // Add markers to the map
-  const addMarkers = (mapInstance: any /* @ts-ignore */ ) => {
+  const addMarkers = (mapInstance: any /* @ts-ignore */) => {
     // Clear existing markers
-    Object.values(markersRef.current).forEach((marker: any /* @ts-ignore */ ) => {
+    Object.values(markersRef.current).forEach((marker: any /* @ts-ignore */) => {
       marker.remove();
     });
     markersRef.current = {};
@@ -249,7 +248,7 @@ const MapTilerMap: React.FC<MapTilerMapProps> = ({
   };
 
   // Add heatmap layer
-  const addHeatmap = (mapInstance: any /* @ts-ignore */ ) => {
+  const addHeatmap = (mapInstance: any /* @ts-ignore */) => {
     // Check if heatmap source already exists
     if (mapInstance.getSource('heatmap-data')) {
       mapInstance.removeLayer('heatmap-layer');

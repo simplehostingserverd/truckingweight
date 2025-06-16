@@ -1,19 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState, useEffect } from 'react';
@@ -204,7 +204,7 @@ const CityUsersPageClient = () => {
   }, []);
 
   // Filter users based on search query and filters
-  const filteredUsers = users.filter((user) => {
+  const filteredUsers = users.filter(user => {
     const matchesSearch =
       searchQuery === '' ||
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -217,24 +217,24 @@ const CityUsersPageClient = () => {
   });
 
   // Get counts for tabs
-  const adminCount = users.filter((user) => user.role === 'admin').length;
-  const operatorCount = users.filter((user) => user.role === 'operator').length;
-  const inspectorCount = users.filter((user) => user.role === 'inspector').length;
-  const viewerCount = users.filter((user) => user.role === 'viewer').length;
+  const adminCount = users.filter(user => user.role === 'admin').length;
+  const operatorCount = users.filter(user => user.role === 'operator').length;
+  const inspectorCount = users.filter(user => user.role === 'inspector').length;
+  const viewerCount = users.filter(user => user.role === 'viewer').length;
 
   // Handle form input changes
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     const { name, value } = e.target;
     setNewUser({ ...newUser, [name]: value });
   };
 
   // Handle role selection
-  const handleRoleChange = (value) => {
+  const handleRoleChange = value => {
     setNewUser({ ...newUser, role: value });
   };
 
   // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setFormError('');
 
@@ -309,7 +309,7 @@ const CityUsersPageClient = () => {
               id="search"
               placeholder="Search by name or email..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               className="bg-gray-800 border-gray-700 text-white"
             />
           </div>
@@ -366,29 +366,26 @@ const CityUsersPageClient = () => {
           </TabsContent>
 
           <TabsContent value="admin" className="space-y-6">
-            <UsersTable
-              users={users.filter((user) => user.role === 'admin')}
-              isLoading={isLoading}
-            />
+            <UsersTable users={users.filter(user => user.role === 'admin')} isLoading={isLoading} />
           </TabsContent>
 
           <TabsContent value="operator" className="space-y-6">
             <UsersTable
-              users={users.filter((user) => user.role === 'operator')}
+              users={users.filter(user => user.role === 'operator')}
               isLoading={isLoading}
             />
           </TabsContent>
 
           <TabsContent value="inspector" className="space-y-6">
             <UsersTable
-              users={users.filter((user) => user.role === 'inspector')}
+              users={users.filter(user => user.role === 'inspector')}
               isLoading={isLoading}
             />
           </TabsContent>
 
           <TabsContent value="viewer" className="space-y-6">
             <UsersTable
-              users={users.filter((user) => user.role === 'viewer')}
+              users={users.filter(user => user.role === 'viewer')}
               isLoading={isLoading}
             />
           </TabsContent>
@@ -540,7 +537,7 @@ const UsersTable = ({ users, isLoading }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users.map((user) => (
+            {users.map(user => (
               <TableRow key={user.id} className="border-gray-700 hover:bg-gray-700">
                 <TableCell className="font-medium text-white">{user.name}</TableCell>
                 <TableCell className="text-gray-300">{user.email}</TableCell>

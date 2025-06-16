@@ -11,15 +11,18 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+// Global type declarations
+declare const navigator: Navigator;
+
 import { v4 as uuidv4 } from 'uuid';
+import { createClient } from '@/utils/supabase/client';
 import {
-    addToSyncQueue,
-    getUnsyncedItems,
-    markAsSynced,
-    processSyncQueue,
+  addToSyncQueue,
+  getUnsyncedItems,
+  markAsSynced,
+  processSyncQueue,
 } from './offline-storage';
 
 // Create Supabase client

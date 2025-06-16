@@ -1,19 +1,19 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState, useEffect } from 'react';
@@ -137,7 +137,7 @@ const CityProfilePageClient = () => {
         website: data.city.website || '',
         logo_url: data.city.logo_url || '',
       });
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching city profile:', err);
       setError(err.message || 'Failed to load city profile');
       // Generate dummy data for testing
@@ -225,7 +225,7 @@ const CityProfilePageClient = () => {
 
       // Show success message
       setSuccess('Logo uploaded successfully');
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error uploading logo:', err);
       setError(err.message || 'Failed to upload logo');
     } finally {
@@ -270,7 +270,7 @@ const CityProfilePageClient = () => {
 
       setSuccess('City profile updated successfully');
       setIsEditing(false);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error updating city profile:', err);
       setError(err.message || 'Failed to update city profile');
     }

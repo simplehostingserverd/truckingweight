@@ -11,9 +11,9 @@
  * in any way without explicit written permission.
  */
 
-
-import { getStatusColor, truncateText } from '@/lib/utils';
+import React from 'react';
 import { createClient } from '@/utils/supabase/server';
+import { getStatusColor, truncateText } from '@/lib/utils';
 import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 

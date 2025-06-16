@@ -50,30 +50,27 @@ export async function onRequestPost(context) {
     });
 
     const data = await verificationResponse.json();
-    
+
     // Log verification response for debugging
     console.log('hCaptcha verification response:', data);
-    
+
     if (!data.success) {
       // If we're using the test keys, always return success
       if (context.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY === '10000000-ffff-ffff-ffff-000000000001') {
         console.log('Using test keys, bypassing verification');
-        return new Response(
-          JSON.stringify({ success: true }),
-          {
-            status: 200,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        return new Response(JSON.stringify({ success: true }), {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
       }
-      
+
       return new Response(
-        JSON.stringify({ 
-          success: false, 
+        JSON.stringify({
+          success: false,
           error: 'Invalid captcha',
-          details: data['error-codes'] 
+          details: data['error-codes'],
         }),
         {
           status: 400,
@@ -83,20 +80,17 @@ export async function onRequestPost(context) {
         }
       );
     }
-    
+
     // Verification successful
-    return new Response(
-      JSON.stringify({ success: true }),
-      {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   } catch (error) {
     console.error('Error verifying captcha:', error);
-    
+
     return new Response(
       JSON.stringify({
         success: false,

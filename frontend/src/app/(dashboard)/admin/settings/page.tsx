@@ -11,26 +11,18 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle
-} from '@/components/ui/card';
+import { createClient } from '@/utils/supabase/client';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-    CloudArrowUpIcon,
-    XMarkIcon
-} from '@heroicons/react/24/outline';
+import { CloudArrowUpIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
 type SystemSettings = {
@@ -130,7 +122,7 @@ export default function AdminSettingsPage() {
         ...settings,
         last_backup_time: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
       });
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching settings:', err);
       setError(err.message || 'Failed to load settings');
     } finally {
@@ -160,7 +152,7 @@ export default function AdminSettingsPage() {
       setTimeout(() => {
         setSuccess('');
       }, 3000);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error saving settings:', err);
       setError(err.message || 'Failed to save settings');
     } finally {
@@ -189,7 +181,7 @@ export default function AdminSettingsPage() {
       setTimeout(() => {
         setSuccess('');
       }, 3000);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error triggering backup:', err);
       setError(err.message || 'Failed to trigger backup');
     } finally {

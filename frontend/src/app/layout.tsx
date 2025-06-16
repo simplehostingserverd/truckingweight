@@ -11,6 +11,7 @@
  * in any way without explicit written permission.
  */
 
+import React from 'react';
 import FontLoader from '@/components/FontLoader';
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';

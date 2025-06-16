@@ -24,6 +24,7 @@ This guide provides instructions for deploying the Simple Scale Solutions applic
 ### Step 2: Get Your hCaptcha Keys
 
 After registering your site, you'll receive:
+
 - A **Site Key** (public, used in the frontend)
 - A **Secret Key** (private, used in the backend)
 

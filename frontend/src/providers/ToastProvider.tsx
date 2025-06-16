@@ -11,7 +11,6 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
 import { ToastContainer } from '@/components/ui/toast';
@@ -46,20 +45,23 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setToasts(prevToasts => prevToasts.filter(toast => toast.id !== id));
   }, []);
 
-  const toast = useCallback((options: ToastOptions) => {
-    const id = Math.random().toString(36).substring(2, 9);
-    const newToast: Toast = {
-      id,
-      title: options.title,
-      description: options.description,
-      type: options.type || 'info',
-      duration: options.duration || 5000,
-      onDismiss: dismiss, // Add the onDismiss property
-    };
+  const toast = useCallback(
+    (options: ToastOptions) => {
+      const id = Math.random().toString(36).substring(2, 9);
+      const newToast: Toast = {
+        id,
+        title: options.title,
+        description: options.description,
+        type: options.type || 'info',
+        duration: options.duration || 5000,
+        onDismiss: dismiss, // Add the onDismiss property
+      };
 
-    setToasts(prevToasts => [...prevToasts, newToast]);
-    return id;
-  }, [dismiss]);
+      setToasts(prevToasts => [...prevToasts, newToast]);
+      return id;
+    },
+    [dismiss]
+  );
 
   const dismissAll = useCallback(() => {
     setToasts([]);

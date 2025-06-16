@@ -11,7 +11,6 @@
  * in any way without explicit written permission.
  */
 
-
 import { AppError, handleApiError } from '@/utils/errorHandler';
 import logger from '@/utils/logger';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
@@ -49,7 +48,7 @@ export function useSWRFetch<T = any>(
 
   return useSWR<T, AppError>(
     shouldFetch ? [url, config] : null,
-    (args) => axiosFetcher<T>(args[0], args[1]),
+    args => axiosFetcher<T>(args[0], args[1]),
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,

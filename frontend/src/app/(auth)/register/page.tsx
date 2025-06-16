@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import EmailValidationFeedback from '@/components/ui/EmailValidationFeedback';
 import { createClient } from '@/utils/supabase/client';
 import { validateEmail } from '@/utils/validation/emailValidator';

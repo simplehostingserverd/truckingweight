@@ -11,11 +11,12 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 
 export default function EditLoad({ params }: { params: { id: string } }) {
@@ -103,7 +104,7 @@ export default function EditLoad({ params }: { params: { id: string } }) {
 
         setVehicles(vehiclesData || []);
         setDrivers(driversData || []);
-      } catch (err: any /* @ts-ignore */ ) {
+      } catch (err: any /* @ts-ignore */) {
         console.error('Error fetching data:', err);
         setError('Failed to load data');
       } finally {
@@ -141,7 +142,7 @@ export default function EditLoad({ params }: { params: { id: string } }) {
 
       // Redirect to load detail
       router.push({ pathname: `/loads/${id}` });
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'An error occurred while updating the load');
       console.error('Update load error:', err);
     } finally {

@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 /**
  * License Plate Recognition (LPR) Camera Integration Utility
@@ -51,7 +50,7 @@ export interface LPRCaptureResult {
   timestamp: string;
   cameraId: string;
   error?: string;
-  rawData?: any /* @ts-ignore */ ;
+  rawData?: any /* @ts-ignore */;
 }
 
 /**
@@ -69,7 +68,7 @@ export async function getLPRCameras(): Promise<LPRCameraConfig[]> {
     }
 
     // Map database results to LPRCameraConfig interface
-    return data.map((camera: any /* @ts-ignore */ ) => ({
+    return data.map((camera: any /* @ts-ignore */) => ({
       id: camera.id,
       name: camera.name,
       vendor: camera.vendor as LPRVendor,
@@ -133,7 +132,7 @@ export async function captureLPRImage(cameraId: string): Promise<LPRCaptureResul
 
     // Call the appropriate vendor-specific capture function
     return await captureFromVendor(cameraConfig);
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     return {
       success: false,
       timestamp: new Date().toISOString(),
@@ -173,7 +172,7 @@ async function captureFromVendor(camera: LPRCameraConfig): Promise<LPRCaptureRes
           error: `Unsupported vendor: ${camera.vendor}`,
         };
     }
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     return {
       success: false,
       timestamp: new Date().toISOString(),
@@ -207,7 +206,7 @@ async function captureFromGenetec(camera: LPRCameraConfig): Promise<LPRCaptureRe
     // const data = await response.json();
 
     return mockResult;
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     console.error('Error capturing from Genetec camera:', error);
     return {
       success: false,

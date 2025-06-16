@@ -49,11 +49,13 @@ The application will be available at http://localhost:3000.
 ### 1. AWS Elastic Container Service (ECS)
 
 1. Create an ECR repository:
+
    ```bash
    aws ecr create-repository --repository-name simple-scale-solutions
    ```
 
 2. Build and push the Docker image:
+
    ```bash
    aws ecr get-login-password | docker login --username AWS --password-stdin your-aws-account-id.dkr.ecr.region.amazonaws.com
    docker build -t your-aws-account-id.dkr.ecr.region.amazonaws.com/simple-scale-solutions:latest .
@@ -67,6 +69,7 @@ The application will be available at http://localhost:3000.
 ### 2. Google Cloud Run
 
 1. Build and push the Docker image:
+
    ```bash
    gcloud auth configure-docker
    docker build -t gcr.io/your-project-id/simple-scale-solutions:latest .
@@ -86,11 +89,13 @@ The application will be available at http://localhost:3000.
 ### 3. Azure Container Instances
 
 1. Create an Azure Container Registry:
+
    ```bash
    az acr create --resource-group myResourceGroup --name myRegistry --sku Basic
    ```
 
 2. Build and push the Docker image:
+
    ```bash
    az acr login --name myRegistry
    docker build -t myregistry.azurecr.io/simple-scale-solutions:latest .
@@ -141,30 +146,30 @@ spec:
         app: simple-scale-solutions
     spec:
       containers:
-      - name: simple-scale-solutions
-        image: your-registry/simple-scale-solutions:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NEXT_PUBLIC_SUPABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: app-secrets
-              key: NEXT_PUBLIC_SUPABASE_URL
-        # Add other environment variables
-        resources:
-          limits:
-            cpu: "1"
-            memory: "1Gi"
-          requests:
-            cpu: "0.5"
-            memory: "512Mi"
-        livenessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          initialDelaySeconds: 30
-          periodSeconds: 10
+        - name: simple-scale-solutions
+          image: your-registry/simple-scale-solutions:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NEXT_PUBLIC_SUPABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: NEXT_PUBLIC_SUPABASE_URL
+          # Add other environment variables
+          resources:
+            limits:
+              cpu: '1'
+              memory: '1Gi'
+            requests:
+              cpu: '0.5'
+              memory: '512Mi'
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
 ```
 
 ```yaml
@@ -177,8 +182,8 @@ spec:
   selector:
     app: simple-scale-solutions
   ports:
-  - port: 80
-    targetPort: 3000
+    - port: 80
+      targetPort: 3000
   type: ClusterIP
 ```
 
@@ -193,12 +198,14 @@ spec:
 For production deployments, you'll need SSL certificates. You can use Let's Encrypt to get free SSL certificates:
 
 1. Install certbot:
+
    ```bash
    apt-get update
    apt-get install certbot
    ```
 
 2. Generate certificates:
+
    ```bash
    certbot certonly --standalone -d yourdomain.com -d www.yourdomain.com
    ```
@@ -228,6 +235,7 @@ For temporary subdomain deployments (e.g., for staging environments), you can us
 3. **Serveo**: Simple SSH-based service for exposing local servers.
 
 Example with ngrok:
+
 ```bash
 # Run your Docker containers
 docker-compose up -d

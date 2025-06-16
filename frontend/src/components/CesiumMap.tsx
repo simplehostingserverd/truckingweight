@@ -1,23 +1,22 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 import React, { useEffect, useRef } from 'react';
 
 // Declare Cesium as a global variable
 declare global {
   interface Window {
-    Cesium: any /* @ts-ignore */ ;
+    Cesium: any /* @ts-ignore */;
   }
 }
 
@@ -139,7 +138,7 @@ const CesiumMap: React.FC<CesiumMapProps> = ({
     // Set up click handler
     if (onMarkerClick) {
       const handler = new window.Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-      handler.setInputAction((click: any /* @ts-ignore */ ) => {
+      handler.setInputAction((click: any /* @ts-ignore */) => {
         const pickedObject = viewer.scene.pick(click.position);
         if (window.Cesium.defined(pickedObject) && pickedObject.id) {
           const id = pickedObject.id.id;

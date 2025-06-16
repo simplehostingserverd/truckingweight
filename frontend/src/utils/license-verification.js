@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
- * 
+ *
  * Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
  */
 
@@ -41,16 +41,16 @@ async function calculateCodeHash() {
     const appVersion = process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0';
     const buildId = window.__NEXT_DATA__?.buildId || 'development';
     const baseString = `${appVersion}-${buildId}-${window.location.hostname}`;
-    
+
     // Use SubtleCrypto API to create a hash
     const encoder = new TextEncoder();
     const data = encoder.encode(baseString);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    
+
     // Convert hash to hex string
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    
+
     return hashHex;
   } catch (error) {
     console.error('Error calculating code hash:', error);
@@ -67,75 +67,78 @@ export async function verifyLicense() {
     // Get license key and security token from environment variables
     const licenseKey = process.env.NEXT_PUBLIC_LICENSE_KEY;
     const securityToken = process.env.NEXT_PUBLIC_SECURITY_TOKEN;
-    
+
     if (!licenseKey || !securityToken) {
       console.error('License key or security token not found');
       return false;
     }
-    
+
     // Calculate code hash to detect tampering
     const codeHash = await calculateCodeHash();
-    
+
     // Get deployment URL
     const deploymentUrl = window.location.origin;
-    
+
     // Prepare verification data
     const verificationData = {
       licenseKey,
       deploymentUrl,
       codeHash,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
-    
+
     // Sign the verification data
     const signature = await signVerificationData(verificationData, securityToken);
-    
+
     // Send verification request to license server
     const response = await fetch('https://license.cosmoexploitgroup.com/verify', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${securityToken}`,
-        'X-Signature': signature
+        Authorization: `Bearer ${securityToken}`,
+        'X-Signature': signature,
       },
-      body: JSON.stringify(verificationData)
+      body: JSON.stringify(verificationData),
     });
-    
+
     if (!response.ok) {
       console.error('License verification failed:', await response.text());
-      
+
       // Activate kill switch if license is invalid
       activateKillSwitch();
-      
+
       // Report unauthorized use
       reportUnauthorizedUse({
         reason: 'License verification failed',
         status: response.status,
-        deploymentUrl
+        deploymentUrl,
       });
-      
+
       return false;
     }
-    
+
     // Parse response
     const result = await response.json();
-    
+
     // Store verification result
     localStorage.setItem(LAST_VERIFICATION_KEY, Date.now().toString());
-    localStorage.setItem(LICENSE_STATUS_KEY, JSON.stringify({
-      valid: result.valid,
-      expiresAt: result.expiresAt,
-      features: result.features
-    }));
-    
+    localStorage.setItem(
+      LICENSE_STATUS_KEY,
+      JSON.stringify({
+        valid: result.valid,
+        expiresAt: result.expiresAt,
+        features: result.features,
+      })
+    );
+
     return result.valid;
   } catch (error) {
     console.error('Error verifying license:', error);
-    
+
     // If there's a network error, we'll allow the application to continue
     // but we'll schedule another verification attempt soon
     scheduleVerification(1000 * 60 * 5); // Try again in 5 minutes
-    
+
     // Check if we have a cached verification result
     const cachedStatus = localStorage.getItem(LICENSE_STATUS_KEY);
     if (cachedStatus) {
@@ -146,7 +149,7 @@ export async function verifyLicense() {
         return false;
       }
     }
-    
+
     return false;
   }
 }
@@ -161,7 +164,7 @@ async function signVerificationData(data, secret) {
   try {
     const encoder = new TextEncoder();
     const dataString = JSON.stringify(data);
-    
+
     // Create key from secret
     const keyData = encoder.encode(secret);
     const cryptoKey = await crypto.subtle.importKey(
@@ -171,18 +174,14 @@ async function signVerificationData(data, secret) {
       false,
       ['sign']
     );
-    
+
     // Sign data
-    const signature = await crypto.subtle.sign(
-      'HMAC',
-      cryptoKey,
-      encoder.encode(dataString)
-    );
-    
+    const signature = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(dataString));
+
     // Convert to hex
     const signatureArray = Array.from(new Uint8Array(signature));
     const signatureHex = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    
+
     return signatureHex;
   } catch (error) {
     console.error('Error signing verification data:', error);
@@ -206,16 +205,16 @@ export function scheduleVerification(delay = LICENSE_CHECK_INTERVAL) {
 export function initializeLicenseVerification() {
   // Verify license immediately
   verifyLicense().catch(console.error);
-  
+
   // Schedule periodic verification
   scheduleVerification();
-  
+
   // Add event listener for visibility change to verify when tab becomes visible
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
       const lastVerification = parseInt(localStorage.getItem(LAST_VERIFICATION_KEY) || '0', 10);
       const now = Date.now();
-      
+
       // Verify if last verification was more than 1 hour ago
       if (now - lastVerification > 60 * 60 * 1000) {
         verifyLicense().catch(console.error);
@@ -234,14 +233,14 @@ export function hasValidLicense() {
     if (!cachedStatus) {
       return false;
     }
-    
+
     const status = JSON.parse(cachedStatus);
-    
+
     // Check if license is expired
     if (status.expiresAt && new Date(status.expiresAt) < new Date()) {
       return false;
     }
-    
+
     return status.valid;
   } catch (error) {
     console.error('Error checking license status:', error);
@@ -259,7 +258,7 @@ export function getLicensedFeatures() {
     if (!cachedStatus) {
       return [];
     }
-    
+
     const status = JSON.parse(cachedStatus);
     return status.features || [];
   } catch (error) {
@@ -274,5 +273,5 @@ export default {
   initializeLicenseVerification,
   hasValidLicense,
   getLicensedFeatures,
-  scheduleVerification
+  scheduleVerification,
 };

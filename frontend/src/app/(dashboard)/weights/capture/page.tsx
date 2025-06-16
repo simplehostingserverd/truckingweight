@@ -13,10 +13,11 @@
 
 'use client';
 
+import React from 'react';
 import { weighTicketService } from '@/services/weigh-ticket-service';
 import { weightCaptureService } from '@/services/weight-capture';
-import { Driver, Scale, VehicleExtended, WeightReading } from '@/types/scale-master';
 import { createClient } from '@/utils/supabase/client';
+import { Driver, Scale, VehicleExtended, WeightReading } from '@/types/scale-master';
 import {
   ArrowPathIcon,
   CameraIcon,

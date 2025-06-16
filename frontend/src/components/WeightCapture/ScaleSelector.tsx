@@ -11,21 +11,22 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowPathIcon,
-    CheckCircleIcon,
-    QrCodeIcon,
-    ScaleIcon,
-    XCircleIcon,
+  ArrowPathIcon,
+  CheckCircleIcon,
+  QrCodeIcon,
+  ScaleIcon,
+  XCircleIcon,
 } from '@heroicons/react/24/outline';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useEffect, useState } from 'react';
 
 interface ScaleSelectorProps {
-  onScaleSelect: (scale: any /* @ts-ignore */ ) => void;
+  onScaleSelect: (scale: any /* @ts-ignore */) => void;
 }
 
 export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
@@ -65,10 +66,12 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
         const scalesData = await response.json();
 
         // Filter only active scales
-        const activeScales = scalesData.filter((scale: any /* @ts-ignore */ ) => scale.status === 'Active');
+        const activeScales = scalesData.filter(
+          (scale: any /* @ts-ignore */) => scale.status === 'Active'
+        );
 
         setScales(activeScales);
-      } catch (error: any /* @ts-ignore */ ) {
+      } catch (error: any /* @ts-ignore */) {
         console.error('Error fetching scales:', error);
         setError(error.message);
       } finally {
@@ -135,7 +138,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
       } else {
         setScanResult({ success: false, message: 'Invalid or unauthorized scale QR code.' });
       }
-    } catch (error: any /* @ts-ignore */ ) {
+    } catch (error: any /* @ts-ignore */) {
       console.error('Error processing QR code:', error);
       setScanResult({ success: false, message: error.message || 'Failed to process QR code' });
     }

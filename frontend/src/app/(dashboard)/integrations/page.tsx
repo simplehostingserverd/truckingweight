@@ -11,19 +11,20 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import React from 'react';
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowRightIcon,
-    BellIcon,
-    BuildingLibraryIcon,
-    DocumentTextIcon,
-    KeyIcon,
-    PuzzlePieceIcon,
-    ScaleIcon,
-    ShieldCheckIcon,
-    TruckIcon
+  ArrowRightIcon,
+  BellIcon,
+  BuildingLibraryIcon,
+  DocumentTextIcon,
+  KeyIcon,
+  PuzzlePieceIcon,
+  ScaleIcon,
+  ShieldCheckIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';

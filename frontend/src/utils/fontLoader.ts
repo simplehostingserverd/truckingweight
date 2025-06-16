@@ -1,3 +1,6 @@
+// Global type declarations
+declare const performance: Performance;
+
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
  *

@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -35,7 +34,7 @@ export async function GET(request: NextRequest) {
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
       console.log('Using test data for city permits');
-      
+
       // Mock data
       const dummyPermits = [
         {
@@ -47,7 +46,7 @@ export async function GET(request: NextRequest) {
           maxWeight: 95000,
           startDate: '2023-11-01',
           endDate: '2023-12-01',
-          feeAmount: 250.00,
+          feeAmount: 250.0,
           paymentStatus: 'Paid',
           status: 'Active',
           createdAt: '2023-10-28T10:30:00Z',
@@ -65,7 +64,7 @@ export async function GET(request: NextRequest) {
           },
           startDate: '2023-11-05',
           endDate: '2023-12-05',
-          feeAmount: 300.00,
+          feeAmount: 300.0,
           paymentStatus: 'Paid',
           status: 'Active',
           createdAt: '2023-11-01T14:15:00Z',
@@ -79,7 +78,7 @@ export async function GET(request: NextRequest) {
           maxWeight: 88000,
           startDate: '2023-11-10',
           endDate: '2023-12-10',
-          feeAmount: 225.00,
+          feeAmount: 225.0,
           paymentStatus: 'Pending',
           status: 'Pending',
           createdAt: '2023-11-08T09:45:00Z',
@@ -98,7 +97,7 @@ export async function GET(request: NextRequest) {
           },
           startDate: '2023-10-15',
           endDate: '2023-11-15',
-          feeAmount: 450.00,
+          feeAmount: 450.0,
           paymentStatus: 'Paid',
           status: 'Expired',
           createdAt: '2023-10-10T11:20:00Z',
@@ -116,7 +115,7 @@ export async function GET(request: NextRequest) {
           },
           startDate: '2023-11-20',
           endDate: '2023-12-20',
-          feeAmount: 500.00,
+          feeAmount: 500.0,
           paymentStatus: 'Pending',
           status: 'Pending',
           createdAt: '2023-11-15T16:30:00Z',
@@ -125,41 +124,41 @@ export async function GET(request: NextRequest) {
 
       // Apply filters if provided
       let filteredPermits = [...dummyPermits];
-      
+
       if (status) {
         filteredPermits = filteredPermits.filter(
           permit => permit.status.toLowerCase() === status.toLowerCase()
         );
       }
-      
+
       if (permitType) {
         filteredPermits = filteredPermits.filter(
           permit => permit.permitType.toLowerCase() === permitType.toLowerCase()
         );
       }
-      
+
       // Apply pagination
       const limitNum = parseInt(limit);
       const offsetNum = parseInt(offset);
       const paginatedPermits = filteredPermits.slice(offsetNum, offsetNum + limitNum);
-      
+
       return NextResponse.json({
         permits: paginatedPermits,
-        total: filteredPermits.length
+        total: filteredPermits.length,
       });
     }
 
     // Call the backend API to get city permits
     let url = `${process.env.BACKEND_URL}/api/city-permits?limit=${limit}&offset=${offset}`;
-    
+
     if (status) {
       url += `&status=${status}`;
     }
-    
+
     if (permitType) {
       url += `&permitType=${permitType}`;
     }
-    
+
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -176,7 +175,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */ ) {
+  } catch (error: any /* @ts-ignore */) {
     console.error('Error fetching city permits:', error);
 
     // Return mock data for development/demo purposes
@@ -191,7 +190,7 @@ export async function GET(request: NextRequest) {
           maxWeight: 95000,
           startDate: '2023-11-01',
           endDate: '2023-12-01',
-          feeAmount: 250.00,
+          feeAmount: 250.0,
           paymentStatus: 'Paid',
           status: 'Active',
           createdAt: '2023-10-28T10:30:00Z',
@@ -209,7 +208,7 @@ export async function GET(request: NextRequest) {
           },
           startDate: '2023-11-05',
           endDate: '2023-12-05',
-          feeAmount: 300.00,
+          feeAmount: 300.0,
           paymentStatus: 'Paid',
           status: 'Active',
           createdAt: '2023-11-01T14:15:00Z',
@@ -223,7 +222,7 @@ export async function GET(request: NextRequest) {
           maxWeight: 88000,
           startDate: '2023-11-10',
           endDate: '2023-12-10',
-          feeAmount: 225.00,
+          feeAmount: 225.0,
           paymentStatus: 'Pending',
           status: 'Pending',
           createdAt: '2023-11-08T09:45:00Z',
@@ -242,7 +241,7 @@ export async function GET(request: NextRequest) {
           },
           startDate: '2023-10-15',
           endDate: '2023-11-15',
-          feeAmount: 450.00,
+          feeAmount: 450.0,
           paymentStatus: 'Paid',
           status: 'Expired',
           createdAt: '2023-10-10T11:20:00Z',
@@ -260,16 +259,16 @@ export async function GET(request: NextRequest) {
           },
           startDate: '2023-11-20',
           endDate: '2023-12-20',
-          feeAmount: 500.00,
+          feeAmount: 500.0,
           paymentStatus: 'Pending',
           status: 'Pending',
           createdAt: '2023-11-15T16:30:00Z',
         },
       ];
 
-      return NextResponse.json({ 
+      return NextResponse.json({
         permits: dummyPermits,
-        total: dummyPermits.length
+        total: dummyPermits.length,
       });
     }
 
