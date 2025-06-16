@@ -76,6 +76,7 @@ export { Alert, AlertDescription, AlertTitle } from './alert';
 // Other components
 export { Separator } from './separator';
 export { Skeleton } from './skeleton';
+export { Slider } from './slider';
 export { Switch } from './switch';
 
 // Re-export existing components
