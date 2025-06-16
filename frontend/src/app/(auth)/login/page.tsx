@@ -38,16 +38,16 @@ export default function Login() {
     setError('');
     setCaptchaError('');
 
-    // Validate captcha
-    if (!captchaToken) {
-      setCaptchaError('Please complete the captcha verification');
-      setIsLoading(false);
-      return;
-    }
+    // Validate captcha - TEMPORARILY DISABLED
+    // if (!captchaToken) {
+    //   setCaptchaError('Please complete the captcha verification');
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     try {
-      // Use our custom auth provider to sign in
-      const { error } = await signIn(email, password, captchaToken);
+      // Use our custom auth provider to sign in - CAPTCHA TEMPORARILY DISABLED
+      const { error } = await signIn(email, password, null);
 
       if (error) {
         throw error;
@@ -203,7 +203,8 @@ export default function Login() {
               </label>
             </div>
 
-            {/* hCaptcha component */}
+            {/* hCaptcha component - TEMPORARILY DISABLED */}
+            {/*
             <div className="flex justify-center">
               <HCaptcha
                 sitekey={
@@ -220,10 +221,11 @@ export default function Login() {
             </div>
 
             {captchaError && <div className="text-red-500 text-sm text-center">{captchaError}</div>}
+            */}
 
             <button
               type="submit"
-              disabled={isLoading || !captchaToken}
+              disabled={isLoading}
               className="w-full py-3 px-4 rounded-md bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-white font-medium transition-colors disabled:opacity-70"
             >
               {isLoading ? 'Signing in...' : 'Login'}

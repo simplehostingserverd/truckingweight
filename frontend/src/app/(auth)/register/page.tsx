@@ -177,12 +177,12 @@ export default function Register() {
     setIsLoading(true);
     setError('');
 
-    // Validate captcha
-    if (!captchaToken) {
-      setError('Please complete the captcha verification');
-      setIsLoading(false);
-      return;
-    }
+    // Validate captcha - TEMPORARILY DISABLED
+    // if (!captchaToken) {
+    //   setError('Please complete the captcha verification');
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     // Validate email before submission
     const emailValidation = validateEmail(email);
@@ -192,7 +192,8 @@ export default function Register() {
       return;
     }
 
-    // Verify captcha token
+    // Verify captcha token - TEMPORARILY DISABLED
+    /*
     try {
       const captchaResponse = await fetch('/api/verify-captcha', {
         method: 'POST',
@@ -219,6 +220,7 @@ export default function Register() {
       setIsLoading(false);
       return;
     }
+    */
 
     try {
       // 1. Create user in Supabase Auth
@@ -408,7 +410,8 @@ export default function Register() {
               />
             </div>
 
-            {/* hCaptcha component */}
+            {/* hCaptcha component - TEMPORARILY DISABLED */}
+            {/*
             <div className="flex justify-center">
               <HCaptcha
                 sitekey={
@@ -424,12 +427,12 @@ export default function Register() {
               />
             </div>
 
-            {/* Display captcha error if any */}
             {captchaError && <div className="text-red-500 text-sm text-center">{captchaError}</div>}
+            */}
 
             <button
               type="submit"
-              disabled={isLoading || !captchaToken}
+              disabled={isLoading}
               className="w-full py-3 px-4 rounded-md bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-white font-medium transition-colors disabled:opacity-70"
             >
               {isLoading ? 'Creating account...' : 'Create account'}
