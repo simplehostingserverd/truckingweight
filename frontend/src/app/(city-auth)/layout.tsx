@@ -13,6 +13,7 @@
 
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
+import React from 'react';
 
 export default async function CityAuthLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient();

@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import {
   Alert,
   AlertDescription,
@@ -78,7 +77,7 @@ export default function CompaniesPage() {
   const [showNewCompanyDialog, setShowNewCompanyDialog] = useState(false);
   const [showEditCompanyDialog, setShowEditCompanyDialog] = useState(false);
   const [showDeleteCompanyDialog, setShowDeleteCompanyDialog] = useState(false);
-  const [selectedCompany, setSelectedCompany] = useState<Component | null>(null);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [newCompany, setNewCompany] = useState({
     name: '',
     address: '',

@@ -129,7 +129,7 @@ export default function CityRegister() {
           email,
           password,
           cityId: cityData.city.id,
-          role: _role,
+          role: role,
           status: 'pending', // Set initial status to pending for security review
         }),
       });

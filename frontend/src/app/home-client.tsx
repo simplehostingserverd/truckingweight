@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Layout from '@/components/Layout/Layout';
 import LogoCarousel from '@/components/LogoCarousel';
@@ -66,7 +65,13 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                       href="/login"
                       className="px-8 py-3 bg-transparent border-2 border-white rounded-lg font-semibold hover:bg-white/10 transition-colors"
                     >
-                      Sign In
+                      Trucking Login
+                    </Link>
+                    <Link
+                      href="/city/login"
+                      className="px-8 py-3 bg-blue-600 border-2 border-blue-600 rounded-lg font-semibold hover:bg-blue-700 hover:border-blue-700 transition-colors shadow-lg"
+                    >
+                      City Login
                     </Link>
                   </div>
                 </div>
