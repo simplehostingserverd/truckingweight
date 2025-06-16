@@ -14,7 +14,6 @@
 import type { Database } from '@/types/supabase';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { createClient } from '@/utils/supabase/server';
 import { getSupabaseServerConfig } from './config';
 
 // Create a Supabase client for use in server components

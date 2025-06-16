@@ -13,11 +13,10 @@
 
 'use client';
 
-import React from 'react';
 import { weighTicketService } from '@/services/weigh-ticket-service';
 import { weightCaptureService } from '@/services/weight-capture';
-import { createClient } from '@/utils/supabase/client';
 import { Driver, Scale, VehicleExtended, WeightReading } from '@/types/scale-master';
+import { createClient } from '@/utils/supabase/client';
 import {
   ArrowPathIcon,
   CameraIcon,
@@ -343,6 +342,7 @@ export default function WeightCapturePage() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               <button
+                type="button"
                 className={`flex flex-col items-center justify-center p-4 rounded-lg border ${
                   captureMethod === 'scale'
                     ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
@@ -369,6 +369,7 @@ export default function WeightCapturePage() {
               </button>
 
               <button
+                type="button"
                 className={`flex flex-col items-center justify-center p-4 rounded-lg border ${
                   captureMethod === 'iot'
                     ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
@@ -405,6 +406,7 @@ export default function WeightCapturePage() {
               </button>
 
               <button
+                type="button"
                 className={`flex flex-col items-center justify-center p-4 rounded-lg border ${
                   captureMethod === 'camera'
                     ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
@@ -431,6 +433,7 @@ export default function WeightCapturePage() {
               </button>
 
               <button
+                type="button"
                 className={`flex flex-col items-center justify-center p-4 rounded-lg border ${
                   captureMethod === 'manual'
                     ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
@@ -460,6 +463,7 @@ export default function WeightCapturePage() {
             <div className="flex justify-center">
               {!isCapturing ? (
                 <button
+                  type="button"
                   className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                   onClick={startCapture}
                 >
@@ -468,6 +472,7 @@ export default function WeightCapturePage() {
                 </button>
               ) : (
                 <button
+                  type="button"
                   className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                   onClick={stopCapture}
                 >
@@ -492,6 +497,7 @@ export default function WeightCapturePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <button
+                type="button"
                 className="flex flex-col items-center justify-center p-4 rounded-lg border border-primary-500 bg-primary-50 dark:bg-primary-900/20"
                 onClick={() => {
                   // Open the QR code scanner modal
@@ -509,6 +515,7 @@ export default function WeightCapturePage() {
               </button>
 
               <button
+                type="button"
                 className="flex flex-col items-center justify-center p-4 rounded-lg border border-blue-500 bg-blue-50 dark:bg-blue-900/20"
                 onClick={() => {
                   // Open the axle-by-axle weight capture
@@ -525,6 +532,7 @@ export default function WeightCapturePage() {
               </button>
 
               <button
+                type="button"
                 className="flex flex-col items-center justify-center p-4 rounded-lg border border-green-500 bg-green-50 dark:bg-green-900/20"
                 onClick={() => {
                   // Open the split weighing workflow
@@ -654,6 +662,7 @@ export default function WeightCapturePage() {
 
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <button
+              type="button"
               className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
               disabled={!isFormValid || isCreatingTicket}
               onClick={createTicket}

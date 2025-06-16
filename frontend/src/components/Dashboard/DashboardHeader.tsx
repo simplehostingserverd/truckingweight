@@ -13,10 +13,9 @@
 
 'use client';
 
-import React from 'react';
 import MobileNav from '@/components/ui/MobileNav';
-import { createClient } from '@/utils/supabase/client';
 import { Database } from '@/types/supabase';
+import { createClient } from '@/utils/supabase/client';
 import { Menu, Transition } from '@headlessui/react';
 import {
   ArrowRightOnRectangleIcon,
@@ -147,6 +146,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
             {/* {mounted && <AccessibilityButton />} */}
 
             <button
+              type="button"
               onClick={toggleTheme}
               className="p-2 rounded-full bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none transition-colors duration-200"
               aria-label="Toggle dark mode"
@@ -161,6 +161,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
 
             {/* Hide notifications on mobile */}
             <button
+              type="button"
               className="hidden sm:flex p-2 rounded-full bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none transition-colors duration-200 relative"
               aria-label="Notifications"
             >
@@ -227,6 +228,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
                     <Menu.Item>
                       {({ active }) => (
                         <button
+                          type="button"
                           onClick={handleSignOut}
                           className={`${
                             active ? 'bg-gray-800' : ''

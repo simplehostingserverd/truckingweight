@@ -18,16 +18,15 @@
  */
 
 import { Request, Response } from 'express';
-import prisma from '../config/prisma';
-import { setCompanyContext } from '../config/prisma';
-import { logger } from '../utils/logger';
+import prisma, { setCompanyContext } from '../config/prisma';
+import { validateTicketQRCode } from '../services/qrCodeService';
+import { processCameraScannedTicket } from '../services/scaleIntegration';
 import {
   generateWeighTicket,
   getWeighTicket,
   updateWeighTicket,
 } from '../services/weighTicketService';
-import { validateTicketQRCode } from '../services/qrCodeService';
-import { processCameraScannedTicket } from '../services/scaleIntegration';
+import { logger } from '../utils/logger';
 
 // Define the authenticated request type
 interface AuthenticatedRequest extends Request {
@@ -36,6 +35,27 @@ interface AuthenticatedRequest extends Request {
     companyId?: number;
     isAdmin?: boolean;
   };
+}
+
+// Type for handling errors in catch blocks
+interface ErrorWithMessage {
+  message: string;
+}
+
+// Type guard to check if error has message property
+function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    typeof (error as Record<string, unknown>).message === 'string'
+  );
+}
+
+// Helper function to get error message
+function getErrorMessage(error: unknown): string {
+  if (isErrorWithMessage(error)) return error.message;
+  return String(error);
 }
 
 /**
@@ -148,10 +168,10 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
         totalPages: Math.ceil(totalCount / limit),
       },
     });
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error getting weigh tickets: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error getting weigh tickets: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -178,10 +198,10 @@ export const getWeighTicketById = async (req: AuthenticatedRequest, res: Respons
     }
 
     res.json(result.ticket);
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error getting weigh ticket: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error getting weigh ticket: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -232,10 +252,10 @@ export const createWeighTicket = async (req: AuthenticatedRequest, res: Response
     }
 
     res.status(201).json(result.ticket);
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error creating weigh ticket: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error creating weigh ticket: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -275,10 +295,10 @@ export const updateWeighTicketById = async (req: AuthenticatedRequest, res: Resp
     }
 
     res.json(result.ticket);
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error updating weigh ticket: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error updating weigh ticket: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -309,10 +329,10 @@ export const processCameraScan = async (req: AuthenticatedRequest, res: Response
     }
 
     res.json(result.ticketData);
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error processing camera-scanned ticket: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error processing camera-scanned ticket: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -343,9 +363,9 @@ export const validateQRCode = async (req: AuthenticatedRequest, res: Response) =
     }
 
     res.json({ valid: true, ticket: result.ticket });
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error validating weigh ticket QR code: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error validating weigh ticket QR code: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };

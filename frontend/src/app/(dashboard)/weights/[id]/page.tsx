@@ -13,9 +13,8 @@
 
 'use client';
 
-import React from 'react';
-import { createClient } from '@/utils/supabase/client';
 import { formatDate, getStatusColor } from '@/lib/utils';
+import { createClient } from '@/utils/supabase/client';
 import { ArrowLeftIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -184,6 +183,7 @@ export default function WeightDetail({ params }: { params: { id: string } }) {
             </Link>
 
             <button
+              type="button"
               onClick={() => setShowDeleteConfirm(true)}
               className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
             >
@@ -262,12 +262,14 @@ export default function WeightDetail({ params }: { params: { id: string } }) {
             </p>
             <div className="flex justify-end space-x-3">
               <button
+                type="button"
                 onClick={() => setShowDeleteConfirm(false)}
                 className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleDelete}
                 disabled={isDeleting}
                 className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:bg-red-400"

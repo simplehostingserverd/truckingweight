@@ -207,6 +207,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
         <div className="flex space-x-2">
           {isAdmin && companyData.length > 0 && (
             <select
+              aria-label="Select company"
               className="bg-gray-800 text-white border border-gray-700 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={selectedCompany}
               onChange={handleCompanyChange}
@@ -220,6 +221,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
             </select>
           )}
           <select
+            aria-label="Select date range"
             className="bg-gray-800 text-white border border-gray-700 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={dateRange}
             onChange={handleDateRangeChange}
@@ -249,7 +251,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
                   itemStyle={{ color: '#fff' }}
                   labelStyle={{ color: '#aaa' }}
                 />
-                <Legend formatter={value => <span style={{ color: '#fff' }}>{value}</span>} />
+                <Legend formatter={value => <span className="text-white">{value}</span>} />
                 <Bar dataKey="weight" name="Total Weight (lbs)" fill="#3B82F6" />
               </BarChart>
             </ResponsiveContainer>

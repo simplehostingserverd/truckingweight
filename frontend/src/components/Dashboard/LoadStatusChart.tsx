@@ -140,7 +140,7 @@ function LoadStatusChart({ companyId }: LoadStatusChartProps) {
                   itemStyle={{ color: '#fff' }}
                   labelStyle={{ color: '#aaa' }}
                 />
-                <Legend formatter={value => <span style={{ color: '#fff' }}>{value}</span>} />
+                <Legend formatter={value => <span className="text-white">{value}</span>} />
               </PieChart>
             </ResponsiveContainer>
           </div>

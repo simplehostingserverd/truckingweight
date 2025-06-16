@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import { createClient } from '@/utils/supabase/client';
 import {
   ArrowDownIcon,
@@ -187,6 +186,7 @@ export default function WeightReader({
         </div>
         <div className="flex space-x-2">
           <button
+            type="button"
             onClick={togglePolling}
             className={`inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium ${
               polling
@@ -198,6 +198,7 @@ export default function WeightReader({
             {polling ? 'Stop' : 'Start'} Live Reading
           </button>
           <button
+            type="button"
             onClick={getWeightReading}
             className="inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:text-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
             disabled={loading || captured}

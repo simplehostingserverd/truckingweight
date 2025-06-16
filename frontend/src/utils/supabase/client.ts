@@ -13,7 +13,6 @@
 
 import type { Database } from '@/types/supabase';
 import { createBrowserClient } from '@supabase/ssr';
-import { createClient } from '@/utils/supabase/client';
 import { getSupabaseConfig } from './config';
 
 // Singleton instance to prevent multiple GoTrueClient instances

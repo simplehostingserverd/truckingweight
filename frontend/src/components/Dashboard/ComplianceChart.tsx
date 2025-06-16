@@ -130,6 +130,7 @@ function ComplianceChart({ companyId }: ComplianceChartProps) {
         <div className="flex space-x-2">
           {isAdmin && companyData.length > 0 && (
             <select
+              aria-label="Select company"
               className="bg-gray-800 text-white border border-gray-700 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={selectedCompany}
               onChange={handleCompanyChange}
@@ -143,6 +144,7 @@ function ComplianceChart({ companyId }: ComplianceChartProps) {
             </select>
           )}
           <select
+            aria-label="Select date range"
             className="bg-gray-800 text-white border border-gray-700 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={dateRange}
             onChange={handleDateRangeChange}
@@ -186,7 +188,7 @@ function ComplianceChart({ companyId }: ComplianceChartProps) {
                   itemStyle={{ color: '#fff' }}
                   labelStyle={{ color: '#aaa' }}
                 />
-                <Legend formatter={value => <span style={{ color: '#fff' }}>{value}</span>} />
+                <Legend formatter={value => <span className="text-white">{value}</span>} />
               </PieChart>
             </ResponsiveContainer>
           </div>

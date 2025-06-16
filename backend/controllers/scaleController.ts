@@ -18,17 +18,16 @@
  */
 
 import { Request, Response } from 'express';
-import prisma from '../config/prisma';
-import { setCompanyContext } from '../config/prisma';
-import { logger } from '../utils/logger';
+import prisma, { setCompanyContext } from '../config/prisma';
+import { generateScaleQRCode, validateScaleQRCode } from '../services/qrCodeService';
 import {
+  configureIoTHardware,
+  getAvailableHardwareOptions,
   getScaleReading,
   // processIoTSensorData, // Unused import
   processCameraScannedTicket,
-  getAvailableHardwareOptions,
-  configureIoTHardware,
 } from '../services/scaleIntegration';
-import { generateScaleQRCode, validateScaleQRCode } from '../services/qrCodeService';
+import { logger } from '../utils/logger';
 // Unused imports commented out
 // import {
 //   generateWeighTicket,
@@ -43,6 +42,27 @@ interface AuthenticatedRequest extends Request {
     companyId?: number;
     isAdmin?: boolean;
   };
+}
+
+// Type for handling errors in catch blocks
+interface ErrorWithMessage {
+  message: string;
+}
+
+// Type guard to check if error has message property
+function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    typeof (error as Record<string, unknown>).message === 'string'
+  );
+}
+
+// Helper function to get error message
+function getErrorMessage(error: unknown): string {
+  if (isErrorWithMessage(error)) return error.message;
+  return String(error);
 }
 
 /**
@@ -84,10 +104,10 @@ export const getScales = async (req: AuthenticatedRequest, res: Response) => {
     });
 
     res.json(scales);
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error getting scales: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error getting scales: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -130,10 +150,10 @@ export const getScaleById = async (req: AuthenticatedRequest, res: Response) => 
     }
 
     res.json(scale);
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error getting scale: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error getting scale: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -196,10 +216,10 @@ export const createScale = async (req: AuthenticatedRequest, res: Response) => {
       ...scale,
       qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,
     });
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error creating scale: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error creating scale: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -257,10 +277,10 @@ export const updateScale = async (req: AuthenticatedRequest, res: Response) => {
     });
 
     res.json(scale);
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error updating scale: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error updating scale: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -297,10 +317,10 @@ export const deleteScale = async (req: AuthenticatedRequest, res: Response) => {
     });
 
     res.json({ message: 'Scale deleted successfully' });
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error deleting scale: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error deleting scale: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -328,10 +348,10 @@ export const getReading = async (req: AuthenticatedRequest, res: Response) => {
     }
 
     res.json({ reading: result.reading, rawData: result.rawData });
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error getting scale reading: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error getting scale reading: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -358,10 +378,10 @@ export const getScaleQRCode = async (req: AuthenticatedRequest, res: Response) =
     }
 
     res.json({ qrCode: result.qrCodeDataUrl, uuid: result.qrCodeUuid });
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error generating scale QR code: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error generating scale QR code: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -392,10 +412,10 @@ export const validateQRCode = async (req: AuthenticatedRequest, res: Response) =
     }
 
     res.json({ valid: true, scale: result.scale });
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error validating scale QR code: ${error.message}`, { error });
-    res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error validating scale QR code: ${errorMessage}`, { error });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -424,10 +444,10 @@ export const processCameraTicket = async (req: AuthenticatedRequest, res: Respon
     }
 
     return res.status(200).json(result);
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error processing camera ticket: ${error.message}`, { error });
-    return res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error processing camera ticket: ${errorMessage}`, { error });
+    return res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -450,10 +470,10 @@ export const getHardwareOptions = async (req: AuthenticatedRequest, res: Respons
     }
 
     return res.status(200).json(result);
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error getting hardware options: ${error.message}`, { error });
-    return res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error getting hardware options: ${errorMessage}`, { error });
+    return res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
 
@@ -486,9 +506,9 @@ export const configureHardware = async (req: AuthenticatedRequest, res: Response
     }
 
     return res.status(200).json(result);
-  } catch (error: any /* @ts-expect-error Catching unknown error type */) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error configuring hardware: ${error.message}`, { error });
-    return res.status(500).json({ message: 'Server error', error: error.message });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    logger.error(`Error configuring hardware: ${errorMessage}`, { error });
+    return res.status(500).json({ message: 'Server error', error: errorMessage });
   }
 };
