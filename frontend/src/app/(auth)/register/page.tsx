@@ -16,6 +16,7 @@
 import EmailValidationFeedback from '@/components/ui/EmailValidationFeedback';
 import { createClient } from '@/utils/supabase/client';
 import { validateEmail } from '@/utils/validation/emailValidator';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -30,7 +31,10 @@ export default function Register() {
   const [scaleWeight, setScaleWeight] = useState(0);
   const [truckPosition, setTruckPosition] = useState(0);
   const [formProgress, setFormProgress] = useState(0);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState('');
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const captchaRef = useRef<HCaptcha>(null);
   const router = useRouter();
   const supabase = createClient();
 
@@ -151,15 +155,67 @@ export default function Register() {
     ctx.fillRect(50, 20, (canvas.width - 100) * (formProgress / 100), 10);
   }, [truckPosition, scaleWeight, formProgress]);
 
+  // hCaptcha event handlers
+  const onCaptchaVerify = (token: string) => {
+    setCaptchaToken(token);
+    setCaptchaError('');
+  };
+
+  const onCaptchaError = (err: Error) => {
+    console.error('hCaptcha error:', err);
+    setCaptchaError('Captcha verification failed. Please try again.');
+    setCaptchaToken(null);
+  };
+
+  const onCaptchaExpire = () => {
+    setCaptchaToken(null);
+    setCaptchaError('Captcha expired. Please verify again.');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
+    // Validate captcha
+    if (!captchaToken) {
+      setError('Please complete the captcha verification');
+      setIsLoading(false);
+      return;
+    }
+
     // Validate email before submission
     const emailValidation = validateEmail(email);
     if (!emailValidation.isValid || emailValidation.isDisposable) {
       setError(emailValidation.message);
+      setIsLoading(false);
+      return;
+    }
+
+    // Verify captcha token
+    try {
+      const captchaResponse = await fetch('/api/verify-captcha', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: captchaToken }),
+      });
+
+      const captchaData = await captchaResponse.json();
+
+      if (!captchaData.success) {
+        setError('Captcha verification failed. Please try again.');
+        setCaptchaToken(null);
+        captchaRef.current?.resetCaptcha();
+        setIsLoading(false);
+        return;
+      }
+    } catch (captchaErr) {
+      console.error('Captcha verification error:', captchaErr);
+      setError('Captcha verification failed. Please try again.');
+      setCaptchaToken(null);
+      captchaRef.current?.resetCaptcha();
       setIsLoading(false);
       return;
     }
@@ -352,9 +408,28 @@ export default function Register() {
               />
             </div>
 
+            {/* hCaptcha component */}
+            <div className="flex justify-center">
+              <HCaptcha
+                sitekey={
+                  process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY ||
+                  '10000000-ffff-ffff-ffff-000000000001'
+                }
+                onVerify={onCaptchaVerify}
+                onError={onCaptchaError}
+                onExpire={onCaptchaExpire}
+                ref={captchaRef}
+                theme="dark"
+                size="normal"
+              />
+            </div>
+
+            {/* Display captcha error if any */}
+            {captchaError && <div className="text-red-500 text-sm text-center">{captchaError}</div>}
+
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || !captchaToken}
               className="w-full py-3 px-4 rounded-md bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-white font-medium transition-colors disabled:opacity-70"
             >
               {isLoading ? 'Creating account...' : 'Create account'}
