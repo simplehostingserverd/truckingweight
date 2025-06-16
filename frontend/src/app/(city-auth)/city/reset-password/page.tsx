@@ -103,7 +103,7 @@ export default function ResetPassword() {
       setTimeout(() => {
         router.push(createSafeUrl('/city/login'));
       }, 3000);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'Failed to reset password');
       console.error('Password reset error:', err);
     } finally {

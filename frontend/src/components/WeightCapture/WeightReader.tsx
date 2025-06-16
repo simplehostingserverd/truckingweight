@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { createClient } from '@/utils/supabase/client';
 import {
   ArrowDownIcon,
@@ -26,7 +27,7 @@ import {
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 interface WeightReaderProps {
-  scale: any /* @ts-ignore */;
+  scale: unknown;
   readingType: 'gross' | 'tare' | 'axle';
   axleNumber?: number;
   onWeightCaptured: (weight: number) => void;
@@ -93,7 +94,7 @@ export default function WeightReader({
       } else {
         throw new Error('Invalid reading from scale');
       }
-    } catch (error: any /* @ts-ignore */) {
+    } catch (error: unknown) {
       console.error('Error getting weight reading:', error);
       setError(error.message);
     } finally {

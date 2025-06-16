@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
-      console.log('Using test data for city dashboard recent weighings');
+      console.warn('Using test data for city dashboard recent weighings');
 
       // Generate dummy recent weighings data
       const dummyWeighings = Array.from({ length: 10 }, (_, i) => {
@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching recent weighings:', error);
 
     // Return mock data for development/demo purposes

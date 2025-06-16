@@ -26,7 +26,7 @@ import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useEffect, useState } from 'react';
 
 interface ScaleSelectorProps {
-  onScaleSelect: (scale: any /* @ts-ignore */) => void;
+  onScaleSelect: (scale: unknown) => void;
 }
 
 export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
@@ -67,11 +67,11 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
 
         // Filter only active scales
         const activeScales = scalesData.filter(
-          (scale: any /* @ts-ignore */) => scale.status === 'Active'
+          (scale: unknown) => scale.status === 'Active'
         );
 
         setScales(activeScales);
-      } catch (error: any /* @ts-ignore */) {
+      } catch (error: unknown) {
         console.error('Error fetching scales:', error);
         setError(error.message);
       } finally {
@@ -138,7 +138,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
       } else {
         setScanResult({ success: false, message: 'Invalid or unauthorized scale QR code.' });
       }
-    } catch (error: any /* @ts-ignore */) {
+    } catch (error: unknown) {
       console.error('Error processing QR code:', error);
       setScanResult({ success: false, message: error.message || 'Failed to process QR code' });
     }

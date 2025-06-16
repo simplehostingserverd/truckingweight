@@ -11,6 +11,7 @@
  * in any way without explicit written permission.
  */
 
+import React from 'react';
 import { formatDate } from '@/lib/utils';
 import { createClient } from '@/utils/supabase/server';
 import {

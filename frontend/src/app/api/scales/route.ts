@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
 
     // Always use mock data in development mode or if there's an error
     if (process.env.NODE_ENV !== 'production' || error) {
-      console.log('Using mock data for scales');
+      console.warn('Using mock data for scales');
       return NextResponse.json(getMockScales());
     } else {
       return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

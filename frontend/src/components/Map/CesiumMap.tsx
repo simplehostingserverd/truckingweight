@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { Badge, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import {
   ClockIcon,
@@ -292,7 +293,7 @@ export default function CesiumMap({
         }
 
         setIsLoading(false);
-      } catch (err: any) {
+      } catch (err: Error) {
         console.error('Error initializing map:', err);
         setError('Failed to initialize 3D map');
         setIsLoading(false);

@@ -97,7 +97,7 @@ export default function LoadStatusUpdater({
 
       setSuccess('Load status updated successfully');
       onStatusUpdate();
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'An error occurred while updating the load status');
       console.error('Update load status error:', err);
     } finally {

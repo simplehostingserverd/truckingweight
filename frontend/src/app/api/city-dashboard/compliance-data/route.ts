@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
-      console.log('Using test data for city dashboard compliance data');
+      console.warn('Using test data for city dashboard compliance data');
 
       // Generate dummy compliance data
       const labels = Array.from({ length: 30 }, (_, i) => {
@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching compliance data:', error);
 
     // Return mock data for development/demo purposes

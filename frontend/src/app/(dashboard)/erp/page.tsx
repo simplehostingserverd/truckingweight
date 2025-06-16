@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import {
   Alert,
   AlertDescription,
@@ -78,7 +79,7 @@ type SyncLog = {
   timestamp: string;
   status: string;
   message: string;
-  details: any /* @ts-ignore */;
+  details: unknown;
 };
 
 // Add more types for the ERP page
@@ -190,7 +191,7 @@ export default function ERPPage() {
         syncFrequency: 'daily',
         status: 'active',
       });
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching ERP connections:', err);
       // Don't show error for demo
       setError('');
@@ -214,7 +215,7 @@ export default function ERPPage() {
         products: 412,
         transactions: 5621,
       });
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching ERP data summary:', err);
     }
   };
@@ -345,7 +346,7 @@ export default function ERPPage() {
           }))
         );
       }
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching sync logs:', err);
 
       // Add dummy data even on error for demonstration
@@ -425,7 +426,7 @@ export default function ERPPage() {
           tokenSecret: '',
         },
       });
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error creating ERP connection:', err);
       setError(err.message || 'Failed to create ERP connection');
     } finally {
@@ -483,7 +484,7 @@ export default function ERPPage() {
       });
 
       setIsLoading(false);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error syncing data:', err);
       setError(err.message || 'Failed to sync data');
       setIsLoading(false);

@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import MobileNav from '@/components/ui/MobileNav';
 import { Database } from '@/types/supabase';
 import { createClient } from '@/utils/supabase/client';

@@ -13,9 +13,9 @@
 
 'use client';
 
-import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import * as React from 'react';
 
 interface AccordionProps {
   type?: 'single' | 'multiple';

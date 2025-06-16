@@ -68,7 +68,7 @@ export default function RoutePlanner({
   const [departureTime, setDepartureTime] = useState<string>('08:00');
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<any | null>(null); // Using any instead of mapboxgl.Map to avoid type errors
+  const mapRef = useRef<unknown | null>(null); // Using any instead of mapboxgl.Map to avoid type errors
 
   // Initialize map
   useEffect(() => {
@@ -157,7 +157,7 @@ export default function RoutePlanner({
             estimatedArrival: arrival.toISOString(),
           });
         }
-      } catch (err: any /* @ts-ignore */) {
+      } catch (err: unknown) {
         // Log error for debugging but handle gracefully for users
         const errorMessage = err.message || 'Failed to calculate route';
         setError(errorMessage);

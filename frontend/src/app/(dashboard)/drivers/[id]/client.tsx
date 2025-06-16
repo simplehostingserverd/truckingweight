@@ -39,7 +39,7 @@ import React, { useEffect, useState } from 'react';
 
 interface DriverDetailsProps {
   id: string;
-  initialData?: any /* @ts-ignore */;
+  initialData?: unknown;
 }
 
 export default function DriverDetailsClient({ id, initialData }: DriverDetailsProps) {
@@ -49,7 +49,7 @@ export default function DriverDetailsClient({ id, initialData }: DriverDetailsPr
   const [success, setSuccess] = useState('');
   const [activeTab, setActiveTab] = useState('details');
   const [photoUploading, setPhotoUploading] = useState(false);
-  const router = useRouter();
+  const _router = useRouter();
   const supabase = createClient();
 
   useEffect(() => {
@@ -94,7 +94,7 @@ export default function DriverDetailsClient({ id, initialData }: DriverDetailsPr
       }
 
       setDriver(driverData);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching driver data:', err);
       setError(err.message || 'Failed to load driver data');
     } finally {
@@ -152,7 +152,7 @@ export default function DriverDetailsClient({ id, initialData }: DriverDetailsPr
 
       // Refresh the page data
       fetchDriverData();
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error uploading driver photo:', err);
       setError(err.message || 'Failed to upload driver photo');
     } finally {
@@ -381,7 +381,7 @@ export default function DriverDetailsClient({ id, initialData }: DriverDetailsPr
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                                {driver.weights.map((weight: any /* @ts-ignore */) => (
+                                {driver.weights.map((weight: unknown) => (
                                   <tr key={weight.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                       {new Date(weight.date).toLocaleDateString()}
@@ -444,7 +444,7 @@ export default function DriverDetailsClient({ id, initialData }: DriverDetailsPr
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                                {driver.loads.map((load: any /* @ts-ignore */) => (
+                                {driver.loads.map((load: unknown) => (
                                   <tr key={load.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                       {load.description}

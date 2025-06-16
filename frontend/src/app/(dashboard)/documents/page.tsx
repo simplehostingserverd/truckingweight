@@ -99,7 +99,7 @@ export default function DocumentsPage() {
       }
 
       setCompanyId(userData?.company_id || null);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching user company:', err);
     }
   };
@@ -135,7 +135,7 @@ export default function DocumentsPage() {
       }
 
       setDocuments(data || []);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching documents:', err);
       setError(err.message || 'Failed to load documents');
       // Generate dummy data for testing
@@ -250,7 +250,7 @@ export default function DocumentsPage() {
 
       // Refresh documents list
       fetchDocuments();
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error uploading document:', err);
       setError(err.message || 'Failed to upload document');
     } finally {
@@ -272,7 +272,7 @@ export default function DocumentsPage() {
       // Update state
       setDocuments(documents.filter(doc => doc.id !== documentId));
       setSuccess('Document deleted successfully');
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error deleting document:', err);
       setError(err.message || 'Failed to delete document');
     }

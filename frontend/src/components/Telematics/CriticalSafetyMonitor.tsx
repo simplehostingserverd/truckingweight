@@ -112,7 +112,7 @@ interface CriticalSafetyMonitorProps {
 export default function CriticalSafetyMonitor({ 
   data, 
   onEmergencyAlert,
-  onMaintenanceSchedule 
+  onMaintenanceSchedule, 
 }: CriticalSafetyMonitorProps) {
   const [alertsAcknowledged, setAlertsAcknowledged] = useState<string[]>([]);
 

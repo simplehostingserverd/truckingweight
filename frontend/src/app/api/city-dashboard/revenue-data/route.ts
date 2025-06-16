@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
-      console.log('Using test data for city dashboard revenue data');
+      console.warn('Using test data for city dashboard revenue data');
 
       // Generate dummy revenue data
       const monthLabels = Array.from({ length: 6 }, (_, i) => {
@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching revenue data:', error);
 
     // Return mock data for development/demo purposes

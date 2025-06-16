@@ -24,7 +24,7 @@ export interface MapMarker {
   title?: string;
   type: 'scale' | 'violation' | 'vehicle';
   status?: string;
-  data?: any /* @ts-ignore */;
+  data?: unknown;
 }
 
 interface MapTilerMapProps {
@@ -100,7 +100,7 @@ const MapTilerMap: React.FC<MapTilerMapProps> = ({
         });
 
         // Add error handler for map
-        mapInstance.on('error', (e: any /* @ts-ignore */) => {
+        mapInstance.on('error', (e: unknown) => {
           console.error('MapTiler map error:', e);
           setError('Error loading map: ' + (e.error?.message || 'Unknown error'));
         });
@@ -169,9 +169,9 @@ const MapTilerMap: React.FC<MapTilerMapProps> = ({
   }, [latitude, longitude, zoom]);
 
   // Add markers to the map
-  const addMarkers = (mapInstance: any /* @ts-ignore */) => {
+  const addMarkers = (mapInstance: unknown) => {
     // Clear existing markers
-    Object.values(markersRef.current).forEach((marker: any /* @ts-ignore */) => {
+    Object.values(markersRef.current).forEach((marker: unknown) => {
       marker.remove();
     });
     markersRef.current = {};
@@ -248,7 +248,7 @@ const MapTilerMap: React.FC<MapTilerMapProps> = ({
   };
 
   // Add heatmap layer
-  const addHeatmap = (mapInstance: any /* @ts-ignore */) => {
+  const addHeatmap = (mapInstance: unknown) => {
     // Check if heatmap source already exists
     if (mapInstance.getSource('heatmap-data')) {
       mapInstance.removeLayer('heatmap-layer');

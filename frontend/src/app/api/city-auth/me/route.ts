@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
-      console.log('Using test data for city user');
+      console.warn('Using test data for city user');
 
       // Try to extract city info from token
       let cityId = 1; // Default to Houston
@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching city user data:', error);
 
     // Return mock data for development/demo purposes

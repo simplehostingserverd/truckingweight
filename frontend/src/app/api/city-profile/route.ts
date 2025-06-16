@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
-      console.log('Using test data for city profile');
+      console.warn('Using test data for city profile');
 
       // Mock data
       const dummyProfile = {
@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching city profile:', error);
 
     // Return mock data for development/demo purposes
@@ -114,7 +114,7 @@ export async function PUT(request: NextRequest) {
 
     // For development/demo purposes, handle the request locally if no backend URL
     if (!process.env.BACKEND_URL || process.env.NODE_ENV !== 'production') {
-      console.log('Using mock data for city profile update');
+      console.warn('Using mock data for city profile update');
 
       // Create updated profile with the provided data
       const updatedProfile = {
@@ -156,7 +156,7 @@ export async function PUT(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error updating city profile:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }

@@ -41,12 +41,12 @@ export async function POST(request: NextRequest) {
       const data = await verificationResponse.json();
 
       // Log verification response for debugging
-      console.log('hCaptcha verification response:', data);
+      console.warn('hCaptcha verification response:', data);
 
       if (!data.success) {
         // If we're using the test keys, always return success
         if (process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY === '10000000-ffff-ffff-ffff-000000000001') {
-          console.log('Using test keys, bypassing verification');
+          console.warn('Using test keys, bypassing verification');
           return NextResponse.json({ success: true });
         }
 

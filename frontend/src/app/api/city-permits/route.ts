@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
-      console.log('Using test data for city permits');
+      console.warn('Using test data for city permits');
 
       // Mock data
       const dummyPermits = [
@@ -175,7 +175,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching city permits:', error);
 
     // Return mock data for development/demo purposes

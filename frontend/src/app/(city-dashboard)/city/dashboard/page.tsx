@@ -104,7 +104,7 @@ const CityDashboardPageClient = () => {
 
       // Check if this is a test token or we're in development mode
       if (cityToken.startsWith('test-city-token-') || process.env.NODE_ENV === 'development') {
-        console.log('Using mock data for city dashboard');
+        console.warn('Using mock data for city dashboard');
         generateDummyData();
         return;
       }
@@ -164,7 +164,7 @@ const CityDashboardPageClient = () => {
 
       const revenueData = await revenueResponse.json();
       setRevenueData(revenueData);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching dashboard data:', err);
       setError(err.message || 'Failed to load dashboard data');
 
@@ -563,7 +563,7 @@ const CityDashboardPageClient = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {recentWeighings.map((weighing: any /* @ts-ignore */) => (
+                        {recentWeighings.map((weighing: unknown) => (
                           <tr
                             key={weighing.id}
                             className="border-b border-gray-700 hover:bg-gray-700/50"

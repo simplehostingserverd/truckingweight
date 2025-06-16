@@ -58,7 +58,7 @@ export default function Profile() {
           setEmail(userData.email || '');
           setCompanyName(userData.companies?.name || '');
         }
-      } catch (err: any /* @ts-ignore */) {
+      } catch (err: unknown) {
         console.error('Error fetching user data:', err);
         setError('Failed to load user data');
       } finally {
@@ -125,7 +125,7 @@ export default function Profile() {
       }
 
       setMessage('Profile updated successfully');
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'An error occurred while updating your profile');
       console.error('Profile update error:', err);
     } finally {

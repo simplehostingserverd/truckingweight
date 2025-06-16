@@ -13,23 +13,31 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
-import { Button } from '@/components/ui';
-import { Badge } from '@/components/ui';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui';
+import React from 'react';
 import {
-  ExclamationTriangleIcon,
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui';
+import {
   BellIcon,
+  BoltIcon,
+  ExclamationTriangleIcon,
+  FireIcon,
+  LightBulbIcon,
   PhoneIcon,
   ShieldCheckIcon,
-  FireIcon,
-  BoltIcon,
-  WrenchScrewdriverIcon,
-  LightBulbIcon,
   SpeakerWaveIcon,
+  WrenchScrewdriverIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
 
 interface DriverAlert {
   id: string;
@@ -67,24 +75,56 @@ export default function DriverAlertSystem({
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [lastAlertSound, setLastAlertSound] = useState<string>('');
 
+  // Audio alerts hook
+  const { useAudioAlerts } = require('@/hooks/useAudioAlerts');
+  const { playEmergencyAlert, isPlaying, isSpeaking, cleanup } = useAudioAlerts();
+
   useEffect(() => {
     setActiveAlerts(alerts.filter(alert => !alert.acknowledged));
   }, [alerts]);
 
   useEffect(() => {
     // Play alert sounds for new critical alerts
-    const criticalAlerts = activeAlerts.filter(alert => 
-      (alert.severity === 'critical' || alert.severity === 'emergency') && 
-      alert.soundAlert && 
-      alert.id !== lastAlertSound
+    const criticalAlerts = activeAlerts.filter(
+      alert =>
+        (alert.severity === 'critical' || alert.severity === 'emergency') &&
+        alert.soundAlert &&
+        alert.id !== lastAlertSound
     );
 
     if (criticalAlerts.length > 0 && soundEnabled) {
-      // In a real app, this would play actual alert sounds
-      console.log('🚨 CRITICAL ALERT SOUND:', criticalAlerts[0].title);
-      setLastAlertSound(criticalAlerts[0].id);
+      const alert = criticalAlerts[0];
+      console.warn('🚨 PLAYING CRITICAL ALERT SOUND:', alert.title);
+
+      // Play emergency alert with siren and speech
+      let message = 'Driver, please check your safety issues and pull over if required.';
+
+      // Customize message based on alert type
+      if (alert.category === 'brake') {
+        message =
+          'Driver, brake system alert detected. Please check your brakes and pull over safely if required.';
+      } else if (alert.category === 'electrical') {
+        message =
+          'Driver, electrical system alert detected. Please check your lights and pull over safely if required.';
+      } else if (alert.category === 'tire') {
+        message =
+          'Driver, tire system alert detected. Please check your tires and pull over safely if required.';
+      } else if (alert.category === 'engine') {
+        message =
+          'Driver, engine alert detected. Please check your engine and pull over safely if required.';
+      }
+
+      playEmergencyAlert(message);
+      setLastAlertSound(alert.id);
     }
-  }, [activeAlerts, soundEnabled, lastAlertSound]);
+  }, [activeAlerts, soundEnabled, lastAlertSound, playEmergencyAlert]);
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      cleanup();
+    };
+  }, [cleanup]);
 
   const getAlertIcon = (category: string) => {
     switch (category) {
@@ -127,7 +167,11 @@ export default function DriverAlertSystem({
       case 'critical':
         return <Badge variant="destructive">CRITICAL</Badge>;
       case 'emergency':
-        return <Badge variant="destructive" className="animate-pulse">EMERGENCY</Badge>;
+        return (
+          <Badge variant="destructive" className="animate-pulse">
+            EMERGENCY
+          </Badge>
+        );
       default:
         return <Badge variant="secondary">ALERT</Badge>;
     }
@@ -154,13 +198,21 @@ export default function DriverAlertSystem({
               Driver Alert System
             </div>
             <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setSoundEnabled(!soundEnabled)}
-              >
-                <SpeakerWaveIcon className={`h-4 w-4 mr-1 ${soundEnabled ? 'text-green-600' : 'text-gray-400'}`} />
-                Sound {soundEnabled ? 'On' : 'Off'}
+              <Button variant="outline" size="sm" onClick={() => setSoundEnabled(!soundEnabled)}>
+                <SpeakerWaveIcon
+                  className={`h-4 w-4 mr-1 ${
+                    isPlaying || isSpeaking
+                      ? 'text-red-600 animate-pulse'
+                      : soundEnabled
+                        ? 'text-green-600'
+                        : 'text-gray-400'
+                  }`}
+                />
+                {isPlaying || isSpeaking
+                  ? 'Playing Alert'
+                  : soundEnabled
+                    ? 'Sound On'
+                    : 'Sound Off'}
               </Button>
               <Badge variant="outline">{vehicleId}</Badge>
             </div>
@@ -172,8 +224,12 @@ export default function DriverAlertSystem({
       </Card>
 
       {/* Emergency Alerts - Highest Priority */}
-      {emergencyAlerts.map((alert) => (
-        <Alert key={alert.id} variant="destructive" className={`${getAlertColor(alert.severity)} border-2`}>
+      {emergencyAlerts.map(alert => (
+        <Alert
+          key={alert.id}
+          variant="destructive"
+          className={`${getAlertColor(alert.severity)} border-2`}
+        >
           <div className="flex items-start justify-between">
             <div className="flex items-start space-x-3">
               {getAlertIcon(alert.category)}
@@ -195,26 +251,14 @@ export default function DriverAlertSystem({
                   )}
                 </AlertDescription>
                 <div className="flex space-x-2 mt-4">
-                  <Button 
-                    variant="destructive" 
-                    size="sm"
-                    onClick={onEmergencyContact}
-                  >
+                  <Button variant="destructive" size="sm" onClick={onEmergencyContact}>
                     <PhoneIcon className="h-4 w-4 mr-1" />
                     Emergency Contact
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={onRequestAssistance}
-                  >
+                  <Button variant="outline" size="sm" onClick={onRequestAssistance}>
                     Request Assistance
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => handleAcknowledge(alert.id)}
-                  >
+                  <Button variant="outline" size="sm" onClick={() => handleAcknowledge(alert.id)}>
                     <XMarkIcon className="h-4 w-4 mr-1" />
                     Acknowledge
                   </Button>
@@ -226,7 +270,7 @@ export default function DriverAlertSystem({
       ))}
 
       {/* Critical Alerts */}
-      {criticalAlerts.map((alert) => (
+      {criticalAlerts.map(alert => (
         <Alert key={alert.id} variant="destructive" className={getAlertColor(alert.severity)}>
           <div className="flex items-start justify-between">
             <div className="flex items-start space-x-3">
@@ -243,18 +287,14 @@ export default function DriverAlertSystem({
                   </div>
                 </AlertDescription>
                 <div className="flex space-x-2 mt-3">
-                  <Button 
-                    variant="destructive" 
+                  <Button
+                    variant="destructive"
                     size="sm"
                     onClick={() => handleAcknowledge(alert.id)}
                   >
                     Acknowledge & Take Action
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={onRequestAssistance}
-                  >
+                  <Button variant="outline" size="sm" onClick={onRequestAssistance}>
                     Request Help
                   </Button>
                 </div>
@@ -265,7 +305,7 @@ export default function DriverAlertSystem({
       ))}
 
       {/* Warning Alerts */}
-      {warningAlerts.map((alert) => (
+      {warningAlerts.map(alert => (
         <Alert key={alert.id} className={getAlertColor(alert.severity)}>
           <div className="flex items-start justify-between">
             <div className="flex items-start space-x-3">
@@ -282,18 +322,10 @@ export default function DriverAlertSystem({
                   </div>
                 </AlertDescription>
                 <div className="flex space-x-2 mt-3">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => handleAcknowledge(alert.id)}
-                  >
+                  <Button variant="outline" size="sm" onClick={() => handleAcknowledge(alert.id)}>
                     Acknowledge
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={onRequestAssistance}
-                  >
+                  <Button variant="outline" size="sm" onClick={onRequestAssistance}>
                     Schedule Maintenance
                   </Button>
                 </div>
@@ -304,7 +336,7 @@ export default function DriverAlertSystem({
       ))}
 
       {/* Info Alerts */}
-      {infoAlerts.map((alert) => (
+      {infoAlerts.map(alert => (
         <Alert key={alert.id} className={getAlertColor(alert.severity)}>
           <div className="flex items-start justify-between">
             <div className="flex items-start space-x-3">
@@ -322,8 +354,8 @@ export default function DriverAlertSystem({
                     </div>
                   )}
                 </AlertDescription>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="sm"
                   className="mt-3"
                   onClick={() => handleAcknowledge(alert.id)}

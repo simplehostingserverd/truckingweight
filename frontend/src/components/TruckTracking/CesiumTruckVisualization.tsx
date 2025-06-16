@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 // Declare Cesium as a global variable

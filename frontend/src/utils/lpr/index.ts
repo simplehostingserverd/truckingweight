@@ -50,7 +50,7 @@ export interface LPRCaptureResult {
   timestamp: string;
   cameraId: string;
   error?: string;
-  rawData?: any /* @ts-ignore */;
+  rawData?: unknown;
 }
 
 /**
@@ -68,7 +68,7 @@ export async function getLPRCameras(): Promise<LPRCameraConfig[]> {
     }
 
     // Map database results to LPRCameraConfig interface
-    return data.map((camera: any /* @ts-ignore */) => ({
+    return data.map((camera: unknown) => ({
       id: camera.id,
       name: camera.name,
       vendor: camera.vendor as LPRVendor,
@@ -132,7 +132,7 @@ export async function captureLPRImage(cameraId: string): Promise<LPRCaptureResul
 
     // Call the appropriate vendor-specific capture function
     return await captureFromVendor(cameraConfig);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     return {
       success: false,
       timestamp: new Date().toISOString(),
@@ -172,7 +172,7 @@ async function captureFromVendor(camera: LPRCameraConfig): Promise<LPRCaptureRes
           error: `Unsupported vendor: ${camera.vendor}`,
         };
     }
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     return {
       success: false,
       timestamp: new Date().toISOString(),
@@ -206,7 +206,7 @@ async function captureFromGenetec(camera: LPRCameraConfig): Promise<LPRCaptureRe
     // const data = await response.json();
 
     return mockResult;
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error capturing from Genetec camera:', error);
     return {
       success: false,

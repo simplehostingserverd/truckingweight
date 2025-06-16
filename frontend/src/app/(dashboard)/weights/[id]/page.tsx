@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { formatDate, getStatusColor } from '@/lib/utils';
 import { createClient } from '@/utils/supabase/client';
 import { ArrowLeftIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
@@ -67,7 +68,7 @@ export default function WeightDetail({ params }: { params: { id: string } }) {
         }
 
         setWeight(data);
-      } catch (err: any /* @ts-ignore */) {
+      } catch (err: unknown) {
         console.error('Error fetching weight:', err);
         setError('Failed to load weight data');
       } finally {
@@ -89,7 +90,7 @@ export default function WeightDetail({ params }: { params: { id: string } }) {
       }
 
       router.push('/weights');
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error deleting weight:', err);
       setError(err.message || 'Failed to delete weight');
       setIsDeleting(false);

@@ -19,7 +19,7 @@ interface DataTableProps<T> {
   columns: {
     key: keyof T;
     header: string;
-    render?: (value: any /* @ts-ignore */, item: T) => React.ReactNode;
+    render?: (value: unknown, item: T) => React.ReactNode;
   }[];
   onRowClick?: (item: T) => void;
 }

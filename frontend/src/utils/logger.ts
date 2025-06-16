@@ -22,7 +22,7 @@ interface LogEntry {
   timestamp: string;
   level: LogLevel;
   message: string;
-  data?: any /* @ts-ignore */;
+  data?: unknown;
   context?: string;
 }
 
@@ -75,7 +75,7 @@ function shouldLog(level: LogLevel): boolean {
  * @param data - The data to format
  * @returns Formatted data string
  */
-function formatData(data: any /* @ts-ignore */): string {
+function formatData(data: unknown): string {
   try {
     if (typeof data === 'object') {
       return JSON.stringify(data, null, 2);
@@ -109,7 +109,7 @@ function addToMemoryLogs(entry: LogEntry): void {
 function createLogEntry(
   level: LogLevel,
   message: string,
-  data?: any /* @ts-ignore */,
+  data?: unknown,
   context?: string
 ): LogEntry {
   return {
@@ -131,7 +131,7 @@ function createLogEntry(
 function log(
   level: LogLevel,
   message: string,
-  data?: any /* @ts-ignore */,
+  data?: unknown,
   context?: string
 ): void {
   if (!shouldLog(level)) {
@@ -149,10 +149,10 @@ function log(
   // Log to console with appropriate method
   switch (level) {
     case 'debug':
-      console.debug(prefix, message, data !== undefined ? data : '');
+      console.warn(prefix, message, data !== undefined ? data : '');
       break;
     case 'info':
-      console.info(prefix, message, data !== undefined ? data : '');
+      console.warn(prefix, message, data !== undefined ? data : '');
       break;
     case 'warn':
       console.warn(prefix, message, data !== undefined ? data : '');

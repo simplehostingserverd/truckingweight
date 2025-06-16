@@ -32,8 +32,8 @@ import {
 
 // Mock ScaleSDK for development - would be replaced with actual SDK in production
 class ScaleSDK {
-  static async connect(config: any /* @ts-ignore */): Promise<any> {
-    console.log('Connecting to scale with config:', config);
+  static async connect(config: unknown): Promise<unknown> {
+    console.warn('Connecting to scale with config:', config);
     // Simulate connection delay
     await new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -62,7 +62,7 @@ class ScaleSDK {
         };
       },
       disconnect: async () => {
-        console.log('Disconnecting from scale');
+        console.warn('Disconnecting from scale');
         return true;
       },
     };

@@ -131,7 +131,7 @@ export default function ScalesPage() {
 
       setScales(data || []);
       setFilteredScales(data || []);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching scales:', err);
       setError(err.message || 'Failed to load scales');
     } finally {
@@ -154,7 +154,7 @@ export default function ScalesPage() {
   };
 
   // Connect to a scale for weight capture
-  const connectToScale = async (scale: any /* @ts-ignore */) => {
+  const connectToScale = async (scale: unknown) => {
     if (!scale || scale.status !== 'Active') {
       setSnackbarMessage('Cannot connect to inactive scale');
       setSnackbarSeverity('error');

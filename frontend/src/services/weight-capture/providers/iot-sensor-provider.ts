@@ -31,11 +31,11 @@ import {
 
 // Mock IoT sensor client for development
 class IoTSensorClient {
-  private config: any /* @ts-ignore */;
+  private config: unknown;
   private connected: boolean = false;
   private mockData: any = {};
 
-  constructor(config: any /* @ts-ignore */) {
+  constructor(config: unknown) {
     this.config = config;
 
     // Initialize mock data
@@ -48,7 +48,7 @@ class IoTSensorClient {
   }
 
   async connect(): Promise<boolean> {
-    console.log('Connecting to IoT sensor:', this.config);
+    console.warn('Connecting to IoT sensor:', this.config);
     // Simulate connection delay
     await new Promise(resolve => setTimeout(resolve, 1500));
     this.connected = true;
@@ -59,7 +59,7 @@ class IoTSensorClient {
     return this.connected;
   }
 
-  async readSensor(): Promise<any> {
+  async readSensor(): Promise<unknown> {
     if (!this.connected) {
       throw new Error('Not connected to IoT sensor');
     }
@@ -89,7 +89,7 @@ class IoTSensorClient {
     };
   }
 
-  async calibrate(): Promise<any> {
+  async calibrate(): Promise<unknown> {
     if (!this.connected) {
       throw new Error('Not connected to IoT sensor');
     }
@@ -119,12 +119,12 @@ class IoTSensorClient {
 
 export class IoTSensorProvider implements WeightCaptureProvider {
   private client: IoTSensorClient | null = null;
-  private config: any /* @ts-ignore */;
+  private config: unknown;
   private isCapturing: boolean = false;
   private captureInterval: NodeJS.Timeout | null = null;
   private lastReading: WeightReading | null = null;
 
-  constructor(config: any /* @ts-ignore */) {
+  constructor(config: unknown) {
     this.config = config;
   }
 
@@ -157,7 +157,7 @@ export class IoTSensorProvider implements WeightCaptureProvider {
 
         // Convert axle data to the expected format
         const axleWeights: AxleWeightReading[] = sensorData.axleData.map(
-          (axle: any /* @ts-ignore */) => ({
+          (axle: unknown) => ({
             position: axle.id,
             weight: axle.weight,
             maxLegal: this.getMaxLegalWeight(axle.id),

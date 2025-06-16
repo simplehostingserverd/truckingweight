@@ -96,7 +96,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
           // Regular user view or admin with specific company filter
           setWeightData(data);
         }
-      } catch (error: any /* @ts-ignore */) {
+      } catch (error: unknown) {
         console.error('Error fetching vehicle weight data:', error);
         setError(error.message);
 

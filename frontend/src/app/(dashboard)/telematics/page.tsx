@@ -13,7 +13,10 @@
 
 'use client';
 
+import React from 'react';
 import CesiumMap from '@/components/Map/CesiumMap';
+import CriticalSafetyMonitor from '@/components/Telematics/CriticalSafetyMonitor';
+import DriverAlertSystem from '@/components/Telematics/DriverAlertSystem';
 import MechanicalDiagnostics from '@/components/Telematics/MechanicalDiagnostics';
 import SpeedometerGauge from '@/components/Telematics/SpeedometerGauge';
 import TelematicsIntegration from '@/components/Telematics/TelematicsIntegration';
@@ -627,11 +630,11 @@ export default function TelematicsPage() {
           <CriticalSafetyMonitor
             data={mockCriticalSafetyData}
             onEmergencyAlert={(vehicleId, issue) => {
-              console.log('Emergency alert for:', vehicleId, issue);
+              console.warn('Emergency alert for:', vehicleId, issue);
               // In real app: trigger emergency protocols
             }}
             onMaintenanceSchedule={(vehicleId, system) => {
-              console.log('Schedule maintenance for:', vehicleId, system);
+              console.warn('Schedule maintenance for:', vehicleId, system);
               // In real app: schedule maintenance
             }}
           />
@@ -643,15 +646,15 @@ export default function TelematicsPage() {
             vehicleId={currentVehicle.vehicleId}
             alerts={mockDriverAlerts}
             onAcknowledgeAlert={alertId => {
-              console.log('Acknowledging alert:', alertId);
+              console.warn('Acknowledging alert:', alertId);
               // In real app: update alert status
             }}
             onEmergencyContact={() => {
-              console.log('Emergency contact initiated');
+              console.warn('Emergency contact initiated');
               // In real app: initiate emergency call
             }}
             onRequestAssistance={() => {
-              console.log('Assistance requested');
+              console.warn('Assistance requested');
               // In real app: request roadside assistance
             }}
           />
@@ -679,7 +682,7 @@ export default function TelematicsPage() {
           <MechanicalDiagnostics
             data={currentVehicle.mechanicalData}
             onAcknowledgeAlert={alertId => {
-              console.log('Acknowledging alert:', alertId);
+              console.warn('Acknowledging alert:', alertId);
             }}
           />
         </TabsContent>

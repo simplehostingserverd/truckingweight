@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching city scales:', error);
 
     // Return mock data for development/demo purposes

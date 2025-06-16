@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
-      console.log('Using test data for city dashboard stats');
+      console.warn('Using test data for city dashboard stats');
       return NextResponse.json({
         totalScales: 12,
         activeScales: 10,
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching city dashboard stats:', error);
 
     // Return mock data for development/demo purposes

@@ -85,7 +85,7 @@ export default function EditDriver({ params }: PageProps) {
           setEmail(driver.email || '');
           setStatus(driver.status);
         }
-      } catch (err: any /* @ts-ignore */) {
+      } catch (err: unknown) {
         console.error('Error fetching driver:', err);
         setError('Failed to load driver data');
       } finally {
@@ -127,7 +127,7 @@ export default function EditDriver({ params }: PageProps) {
         router.push({ pathname: `/drivers/${id}` });
         router.refresh();
       }, 1500);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'An error occurred while updating the driver');
       console.error('Update driver error:', err);
     } finally {

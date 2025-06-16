@@ -34,7 +34,7 @@ export const checkFontLoaded = (fontFamily: string): Promise<boolean> => {
         document.fonts.ready.then(() => {
           const isLoaded = document.fonts.check(`1em ${fontFamily}`);
           if (!isLoaded) {
-            console.info(`Font ${fontFamily} not loaded, using fallbacks`);
+            console.warn(`Font ${fontFamily} not loaded, using fallbacks`);
           }
           resolve(isLoaded);
         });

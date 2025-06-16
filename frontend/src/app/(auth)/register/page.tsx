@@ -32,8 +32,8 @@ export default function Register() {
   const [scaleWeight, setScaleWeight] = useState(0);
   const [truckPosition, setTruckPosition] = useState(0);
   const [formProgress, setFormProgress] = useState(0);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [captchaError, setCaptchaError] = useState('');
+  const [_captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [_captchaError, setCaptchaError] = useState('');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // const captchaRef = useRef<HCaptcha>(null); // TEMPORARILY DISABLED
   const router = useRouter();
@@ -157,18 +157,18 @@ export default function Register() {
   }, [truckPosition, scaleWeight, formProgress]);
 
   // hCaptcha event handlers
-  const onCaptchaVerify = (token: string) => {
+  const _onCaptchaVerify = (token: string) => {
     setCaptchaToken(token);
     setCaptchaError('');
   };
 
-  const onCaptchaError = (err: Error) => {
+  const _onCaptchaError = (err: Error) => {
     console.error('hCaptcha error:', err);
     setCaptchaError('Captcha verification failed. Please try again.');
     setCaptchaToken(null);
   };
 
-  const onCaptchaExpire = () => {
+  const _onCaptchaExpire = () => {
     setCaptchaToken(null);
     setCaptchaError('Captcha expired. Please verify again.');
   };
@@ -272,7 +272,7 @@ export default function Register() {
 
       // Redirect to login page
       router.push('/login?registered=true');
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'An error occurred during registration');
       console.error('Registration error:', err);
     } finally {
@@ -419,9 +419,9 @@ export default function Register() {
                   process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY ||
                   '10000000-ffff-ffff-ffff-000000000001'
                 }
-                onVerify={onCaptchaVerify}
-                onError={onCaptchaError}
-                onExpire={onCaptchaExpire}
+                onVerify={_onCaptchaVerify}
+                onError={_onCaptchaError}
+                onExpire={_onCaptchaExpire}
                 ref={captchaRef}
                 theme="dark"
                 size="normal"

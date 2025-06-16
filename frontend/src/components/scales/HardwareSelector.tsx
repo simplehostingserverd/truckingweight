@@ -188,7 +188,7 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
       } else {
         throw new Error(data.error || 'Failed to configure hardware');
       }
-    } catch (error: any /* @ts-ignore */) {
+    } catch (error: unknown) {
       console.error('Error configuring hardware:', error);
       toast({
         title: 'Error',

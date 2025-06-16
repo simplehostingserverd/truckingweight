@@ -109,7 +109,7 @@ export default function CreateDriver() {
         router.push('/drivers');
         router.refresh();
       }, 1500);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'An error occurred while creating the driver');
       console.error('Create driver error:', err);
     } finally {

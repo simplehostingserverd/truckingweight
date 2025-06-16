@@ -132,12 +132,12 @@ export async function GET(request: NextRequest) {
     );
 
     // Log successful offline verification
-    console.log(
+    console.warn(
       `✅ Offline license verification successful for ${license.customer?.name || 'Unknown'}`
     );
-    console.log(`   License: ${license.licenseKey}`);
-    console.log(`   Plan: ${license.plan || 'basic'}`);
-    console.log(`   Days until expiry: ${daysUntilExpiry}`);
+    console.warn(`   License: ${license.licenseKey}`);
+    console.warn(`   Plan: ${license.plan || 'basic'}`);
+    console.warn(`   Days until expiry: ${daysUntilExpiry}`);
 
     // Return sanitized license data
     const response = {
@@ -146,7 +146,7 @@ export async function GET(request: NextRequest) {
       customer: {
         name: license.customer?.name || 'Unknown',
         email: license.customer?.email || 'unknown@example.com',
-        company: license.customer?.company || 'Unknown Company',
+        company: license.customer?.compunknown || 'Unknown Company',
       },
       plan: license.plan || 'basic',
       features: license.features || ['basic'],
@@ -219,7 +219,7 @@ export async function POST(request: NextRequest) {
     const licenseFilePath = path.join(configDir, 'license.json');
     fs.writeFileSync(licenseFilePath, JSON.stringify(license, null, 2));
 
-    console.log('✅ Offline license updated successfully:', license.licenseKey);
+    console.warn('✅ Offline license updated successfully:', license.licenseKey);
 
     return NextResponse.json({
       success: true,

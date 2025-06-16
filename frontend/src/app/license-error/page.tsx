@@ -15,10 +15,10 @@
 
 'use client';
 
+import React from 'react';
 // Global type declarations
 declare const navigator: Navigator;
 
-import React from 'react';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';

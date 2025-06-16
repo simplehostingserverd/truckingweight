@@ -74,7 +74,7 @@ export default function ForgotPassword() {
 
       // Show success message
       setSuccess(true);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'Failed to send password reset email');
       console.error('Password reset error:', err);
     } finally {

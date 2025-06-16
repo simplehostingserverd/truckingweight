@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error creating weigh ticket:', error);
 
     // Return mock data for development/demo purposes
@@ -124,7 +124,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching weigh tickets:', error);
 
     // Return mock data for development/demo purposes

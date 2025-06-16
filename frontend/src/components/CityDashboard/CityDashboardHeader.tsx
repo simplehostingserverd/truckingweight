@@ -14,6 +14,7 @@
 'use client';
 
 import React from 'react';
+import { AccessibilityButton } from '@/components/AccessibilitySettings';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -35,7 +36,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface CityDashboardHeaderProps {
   user: {

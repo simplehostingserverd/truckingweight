@@ -13,13 +13,13 @@
 
 'use client';
 
-import React from 'react';
 import CityDashboardHeader from '@/components/CityDashboard/CityDashboardHeader';
 import CityDashboardSidebar from '@/components/CityDashboard/CityDashboardSidebar';
+import { SkipToContent } from '@/components/ui/SkipToContent';
 import { createSafeUrl } from '@/utils/navigation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Create a client-side only component to avoid hydration issues
 const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) => {
@@ -82,7 +82,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
         }
 
         // Fallback to localStorage if Supabase Auth fails
-        console.log('Falling back to localStorage for city auth');
+        console.warn('Falling back to localStorage for city auth');
 
         // Check if user is authenticated as a city user using localStorage
         if (typeof window !== 'undefined') {
@@ -101,7 +101,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
 
             // Check if this is a test token
             if (cityToken && cityToken.startsWith('test-city-token-')) {
-              console.log('Using test token for city dashboard');
+              console.warn('Using test token for city dashboard');
               // Use the parsed user data directly
               setIsLoading(false);
               return;
@@ -128,7 +128,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
 
                 // For development/testing, allow using the parsed user data even if token verification fails
                 if (process.env.NODE_ENV !== 'production') {
-                  console.log('Using local user data for development');
+                  console.warn('Using local user data for development');
                   setIsLoading(false);
                   return;
                 }

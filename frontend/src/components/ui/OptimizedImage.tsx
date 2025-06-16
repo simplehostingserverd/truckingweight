@@ -13,12 +13,9 @@
 
 'use client';
 
-// Global type declarations
-declare const Image: typeof HTMLImageElement;
-
-import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { cn } from '@/lib/utils';
+import NextImage from 'next/image';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface OptimizedImageProps {
   src: string;
@@ -114,15 +111,20 @@ export function OptimizedImage({
       className={cn(
         'relative overflow-hidden',
         !isLoaded && 'bg-gray-200 animate-pulse',
+        fill ? 'w-full h-full' : 'dynamic-size',
         className
       )}
-      style={{
-        width: fill ? '100%' : width,
-        height: fill ? '100%' : height,
-      }}
+      style={
+        !fill
+          ? ({
+              '--dynamic-width': `${width}px`,
+              '--dynamic-height': `${height}px`,
+            } as React.CSSProperties)
+          : undefined
+      }
     >
       {(isIntersecting || priority) && (
-        <Image
+        <NextImage
           src={hasError ? fallbackImage : src}
           alt={alt}
           width={fill ? undefined : width}
@@ -224,13 +226,18 @@ export function OptimizedBackgroundImage({
   return (
     <div
       ref={containerRef}
-      className={cn('relative', !isLoaded && 'bg-gray-200 animate-pulse', className)}
-      style={{
-        backgroundImage: isLoaded ? `url(${hasError ? fallbackImage : src})` : 'none',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
+      className={cn(
+        'relative bg-cover bg-center bg-no-repeat dynamic-bg-image',
+        !isLoaded && 'bg-gray-200 animate-pulse',
+        className
+      )}
+      style={
+        isLoaded
+          ? ({
+              '--dynamic-bg-image': `url(${hasError ? fallbackImage : src})`,
+            } as React.CSSProperties)
+          : undefined
+      }
       {...props}
     >
       {children}
@@ -289,23 +296,32 @@ export function OptimizedAvatar({
 
   return (
     <div
-      className={cn('relative overflow-hidden rounded-full bg-gray-200', className)}
-      style={{ width: size, height: size }}
+      className={cn('relative overflow-hidden rounded-full bg-gray-200 dynamic-size', className)}
+      style={
+        {
+          '--dynamic-width': `${size}px`,
+          '--dynamic-height': `${size}px`,
+          '--dynamic-font-size': `${size / 2.5}px`,
+        } as React.CSSProperties
+      }
       {...props}
     >
       {hasError ? (
         fallback ? (
-          <Image src={fallbackSrc} alt={alt} width={size} height={size} className="object-cover" />
+          <NextImage
+            src={fallbackSrc}
+            alt={alt}
+            width={size}
+            height={size}
+            className="object-cover"
+          />
         ) : (
-          <div
-            className="flex items-center justify-center w-full h-full bg-primary-500 text-white font-medium"
-            style={{ fontSize: size / 2.5 }}
-          >
+          <div className="flex items-center justify-center w-full h-full bg-primary-500 text-white font-medium dynamic-font-size">
             {initials}
           </div>
         )
       ) : (
-        <Image
+        <NextImage
           src={src}
           alt={alt}
           width={size}

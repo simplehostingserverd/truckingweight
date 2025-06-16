@@ -13,18 +13,17 @@
 
 'use client';
 
-import React from 'react';
+import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/utils/supabase/client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function ResetPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const _router = useRouter();
   const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -43,7 +42,7 @@ export default function ResetPassword() {
       }
 
       setMessage('Check your email for the password reset link');
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'An error occurred while sending the reset link');
       console.error('Reset password error:', err);
     } finally {

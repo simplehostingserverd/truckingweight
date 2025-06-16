@@ -72,7 +72,7 @@ export default function EditVehicle({ params }: { params: { id: string } }) {
           setStatus(vehicle.status);
           setMaxWeight(vehicle.max_weight || '');
         }
-      } catch (err: any /* @ts-ignore */) {
+      } catch (err: unknown) {
         console.error('Error fetching vehicle:', err);
         setError('Failed to load vehicle data');
       } finally {
@@ -117,7 +117,7 @@ export default function EditVehicle({ params }: { params: { id: string } }) {
         router.push({ pathname: `/vehicles/${id}` });
         router.refresh();
       }, 1500);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'An error occurred while updating the vehicle');
       console.error('Update vehicle error:', err);
     } finally {

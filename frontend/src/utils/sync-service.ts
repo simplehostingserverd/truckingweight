@@ -64,11 +64,11 @@ export async function syncAllData(): Promise<{ success: boolean; message: string
 
     // Get unsynced weights
     const unsyncedWeights = await getUnsyncedItems('weights');
-    console.log(`Found ${unsyncedWeights.length} unsynced weights`);
+    console.warn(`Found ${unsyncedWeights.length} unsynced weights`);
 
     // Get unsynced loads
     const unsyncedLoads = await getUnsyncedItems('loads');
-    console.log(`Found ${unsyncedLoads.length} unsynced loads`);
+    console.warn(`Found ${unsyncedLoads.length} unsynced loads`);
 
     // Add weights to sync queue
     for (const weight of unsyncedWeights) {
@@ -156,13 +156,13 @@ export async function hasPendingSync(): Promise<boolean> {
 export function setupAutoSync(): void {
   if (typeof window !== 'undefined') {
     window.addEventListener('online', async () => {
-      console.log('Back online, checking for data to sync...');
+      console.warn('Back online, checking for data to sync...');
       const hasPending = await hasPendingSync();
 
       if (hasPending) {
-        console.log('Found pending data to sync, syncing now...');
+        console.warn('Found pending data to sync, syncing now...');
         const result = await syncAllData();
-        console.log('Auto-sync result:', result);
+        console.warn('Auto-sync result:', result);
       }
     });
   }

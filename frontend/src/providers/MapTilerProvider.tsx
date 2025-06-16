@@ -41,7 +41,7 @@ export function MapTilerProvider({ children }: { children: React.ReactNode }) {
         try {
           if (window.maptilersdk && process.env.NEXT_PUBLIC_MAPTILER_KEY) {
             window.maptilersdk.config.apiKey = process.env.NEXT_PUBLIC_MAPTILER_KEY;
-            console.log('MapTiler SDK loaded and configured');
+            console.warn('MapTiler SDK loaded and configured');
           } else {
             console.warn('MapTiler SDK not available or API key missing');
           }
@@ -62,7 +62,7 @@ export function MapTilerProvider({ children }: { children: React.ReactNode }) {
 // Add global type definition for MapTiler SDK
 declare global {
   interface Window {
-    maptilersdk: any /* @ts-ignore */;
+    maptilersdk: unknown;
   }
 }
 

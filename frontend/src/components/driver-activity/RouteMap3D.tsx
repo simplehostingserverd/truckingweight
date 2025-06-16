@@ -13,10 +13,10 @@
 
 'use client';
 
+import React from 'react';
 // Global type declarations
 declare function requestAnimationFrame(callback: FrameRequestCallback): number;
 
-import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';

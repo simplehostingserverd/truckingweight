@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('City user registration error:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }

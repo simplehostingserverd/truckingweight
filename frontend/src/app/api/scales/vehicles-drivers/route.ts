@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
 
     // Always use mock data in development mode or if there's an error
     if (process.env.NODE_ENV !== 'production' || error) {
-      console.log('Using mock data for vehicles and drivers');
+      console.warn('Using mock data for vehicles and drivers');
       return NextResponse.json({
         vehicles: getMockVehicles(),
         drivers: getMockDrivers(),

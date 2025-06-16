@@ -93,7 +93,7 @@ export default function NewWeight() {
         // Set default date to today
         const today = new Date().toISOString().split('T')[0];
         setDate(today);
-      } catch (err: any /* @ts-ignore */) {
+      } catch (err: unknown) {
         console.error('Error fetching data:', err);
         setError('Failed to load data');
       } finally {
@@ -172,7 +172,7 @@ export default function NewWeight() {
 
       // Redirect to weights list
       router.push('/weights');
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'An error occurred while creating the weight record');
       console.error('Create weight error:', err);
     } finally {

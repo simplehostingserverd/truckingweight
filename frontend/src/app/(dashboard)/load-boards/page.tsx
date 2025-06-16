@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import {
   Alert,
   AlertDescription,
@@ -182,7 +183,7 @@ export default function LoadBoardsPage() {
         },
       ];
       setLoadBoards(dummyBoards);
-    } catch (err: any) {
+    } catch (err: Error) {
       console.error('Error fetching load boards:', err);
       setError(err.message || 'Failed to load load boards');
     } finally {
@@ -302,7 +303,7 @@ export default function LoadBoardsPage() {
         },
       ];
       setLoads(dummyLoads);
-    } catch (err: any) {
+    } catch (err: Error) {
       console.error('Error fetching loads:', err);
       setError(err.message || 'Failed to load available loads');
     }
@@ -334,7 +335,7 @@ export default function LoadBoardsPage() {
 
       // Refresh loads after adding DAT integration
       fetchLoads();
-    } catch (err: any) {
+    } catch (err: Error) {
       console.error('Error setting up DAT integration:', err);
       setError(err.message || 'Failed to setup DAT integration');
     } finally {
@@ -358,7 +359,7 @@ export default function LoadBoardsPage() {
       setLoadBoards([...loadBoards, newProprietaryBoard]);
       setShowNewBoardDialog(false);
       setNewBoard({ name: '', provider: 'proprietary', api_key: '' });
-    } catch (err: any) {
+    } catch (err: Error) {
       console.error('Error creating proprietary load board:', err);
       setError(err.message || 'Failed to create load board');
     } finally {
@@ -375,7 +376,7 @@ export default function LoadBoardsPage() {
 
       // Show success message or redirect to booking confirmation
       alert('Load booked successfully!');
-    } catch (err: any) {
+    } catch (err: Error) {
       console.error('Error booking load:', err);
       setError(err.message || 'Failed to book load');
     }

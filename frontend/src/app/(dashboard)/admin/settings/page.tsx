@@ -122,7 +122,7 @@ export default function AdminSettingsPage() {
         ...settings,
         last_backup_time: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
       });
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching settings:', err);
       setError(err.message || 'Failed to load settings');
     } finally {
@@ -152,7 +152,7 @@ export default function AdminSettingsPage() {
       setTimeout(() => {
         setSuccess('');
       }, 3000);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error saving settings:', err);
       setError(err.message || 'Failed to save settings');
     } finally {
@@ -181,7 +181,7 @@ export default function AdminSettingsPage() {
       setTimeout(() => {
         setSuccess('');
       }, 3000);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error triggering backup:', err);
       setError(err.message || 'Failed to trigger backup');
     } finally {

@@ -156,7 +156,7 @@ function DashboardStats({ initialUserName, companyId }: DashboardStatsProps) {
         ];
 
         setStats(formattedStats);
-      } catch (error: any /* @ts-ignore */) {
+      } catch (error: unknown) {
         console.error('Error fetching dashboard stats:', error);
         setError(error.message);
 

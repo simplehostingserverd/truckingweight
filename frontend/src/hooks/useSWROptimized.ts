@@ -245,7 +245,7 @@ export function useSWRInfinite<Data = any, Error = any>(
  * @param keys Array of keys to prefetch
  * @param fetcher The function to fetch the data
  */
-export function usePrefetch(keys: string[], fetcher: (key: string) => Promise<any>) {
+export function usePrefetch(keys: string[], fetcher: (key: string) => Promise<unknown>) {
   useEffect(() => {
     // Prefetch data for each key
     keys.forEach(key => {

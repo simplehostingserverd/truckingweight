@@ -13,36 +13,35 @@
 
 'use client';
 
-import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import React from 'react';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
 import { createSafeUrl } from '@/utils/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 // MUI Joy UI components
-import { CssVarsProvider } from '@mui/joy/styles';
+import Alert from '@mui/joy/Alert';
 import Box from '@mui/joy/Box';
-import Typography from '@mui/joy/Typography';
+import Button from '@mui/joy/Button';
+import Card from '@mui/joy/Card';
+import Checkbox from '@mui/joy/Checkbox';
+import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
-import Checkbox from '@mui/joy/Checkbox';
-import Alert from '@mui/joy/Alert';
-import Card from '@mui/joy/Card';
-import Divider from '@mui/joy/Divider';
 import Stack from '@mui/joy/Stack';
-import Grid from '@mui/joy/Grid';
+import { CssVarsProvider } from '@mui/joy/styles';
+import Typography from '@mui/joy/Typography';
 
 // MUI Icons
-import EmailIcon from '@mui/icons-material/Email';
-import LockIcon from '@mui/icons-material/Lock';
-import InfoIcon from '@mui/icons-material/Info';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ApartmentIcon from '@mui/icons-material/Apartment';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import EmailIcon from '@mui/icons-material/Email';
+import InfoIcon from '@mui/icons-material/Info';
+import LockIcon from '@mui/icons-material/Lock';
 import WarningIcon from '@mui/icons-material/Warning';
 
 // Custom theme
@@ -54,7 +53,7 @@ export default function CityLogin() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [showDemoLogin, setShowDemoLogin] = useState(process.env.NODE_ENV === 'development');
+  const [_showDemoLogin, setShowDemoLogin] = useState(process.env.NODE_ENV === 'development');
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -74,7 +73,7 @@ export default function CityLogin() {
       });
 
       if (!authError && authData.session) {
-        console.log('Successfully authenticated with Supabase JWT');
+        console.warn('Successfully authenticated with Supabase JWT');
 
         // For backward compatibility, also call the API to get the Paseto token
         try {
@@ -139,7 +138,7 @@ export default function CityLogin() {
       // Redirect to city dashboard
       router.push(createSafeUrl('/city/dashboard'));
       router.refresh(); // Important to refresh the router
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'Invalid email or password');
       console.error('City login error:', err);
     } finally {
@@ -164,7 +163,7 @@ export default function CityLogin() {
       });
 
       if (!authError && authData.session) {
-        console.log('Successfully authenticated demo user with Supabase JWT');
+        console.warn('Successfully authenticated demo user with Supabase JWT');
 
         // For backward compatibility, also create local storage items
         const demoUser = {
@@ -430,7 +429,7 @@ export default function CityLogin() {
                     </Typography>
                   </Divider>
 
-                  {showDemoLogin && (
+                  {_showDemoLogin && (
                     <Button
                       fullWidth
                       variant="outlined"

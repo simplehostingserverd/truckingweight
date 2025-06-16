@@ -57,11 +57,11 @@ export default function CityRegister() {
   const [cityAddress, setCityAddress] = useState('');
   const [cityPhone, setCityPhone] = useState('');
   const [cityEmail, setCityEmail] = useState('');
-  const [role, setRole] = useState('admin');
+  const [_role, setRole] = useState('admin');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const _router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -142,7 +142,7 @@ export default function CityRegister() {
 
       // Show success message without redirect - user needs to wait for approval
       setSuccess(true);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'An error occurred during registration');
       console.error('City registration error:', err);
     } finally {

@@ -28,7 +28,7 @@ type SupabaseAuthContextType = {
     email: string,
     password: string,
     captchaToken?: string | null
-  ) => Promise<{ error: any }>;
+  ) => Promise<{ error: Error }>;
   signOut: () => Promise<void>;
 };
 
@@ -75,7 +75,7 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
             return { error: new Error('Captcha verification failed') };
           }
 
-          console.log('Captcha token verified successfully');
+          console.warn('Captcha token verified successfully');
         } catch (error) {
           console.error('Error verifying captcha:', error);
           return { error: new Error('Captcha verification failed') };
@@ -169,7 +169,7 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
 
       if (!error && data.session) {
         // Get the session to ensure JWT is properly set
-        console.log('Successfully authenticated with Supabase JWT');
+        console.warn('Successfully authenticated with Supabase JWT');
 
         // Set the session and user
         setSession(data.session);

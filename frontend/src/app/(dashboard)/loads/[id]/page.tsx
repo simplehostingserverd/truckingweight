@@ -91,7 +91,7 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
         }
 
         setLoad(data);
-      } catch (err: any /* @ts-ignore */) {
+      } catch (err: unknown) {
         console.error('Error fetching load:', err);
         setError('Failed to load data');
       } finally {
@@ -118,7 +118,7 @@ export default function LoadDetail({ params }: { params: { id: string } }) {
       }
 
       router.push('/loads');
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error deleting load:', err);
       setError(err.message || 'Failed to delete load');
       setIsDeleting(false);

@@ -148,7 +148,7 @@ export default function TelematicsIntegration() {
 
   const handleAddProvider = () => {
     // In a real app, this would make an API call to configure the integration
-    console.log('Adding provider:', selectedProvider, connectionConfig);
+    console.warn('Adding provider:', selectedProvider, connectionConfig);
     setShowAddDialog(false);
     setSelectedProvider('');
     setConnectionConfig({
@@ -163,12 +163,12 @@ export default function TelematicsIntegration() {
 
   const handleTestConnection = (providerId: string) => {
     // In a real app, this would test the connection to the telematics provider
-    console.log('Testing connection for:', providerId);
+    console.warn('Testing connection for:', providerId);
   };
 
   const handleSyncData = (providerId: string) => {
     // In a real app, this would trigger a data sync
-    console.log('Syncing data for:', providerId);
+    console.warn('Syncing data for:', providerId);
     setProviders(providers.map(p => 
       p.id === providerId 
         ? { ...p, lastSync: new Date().toISOString() }
@@ -360,7 +360,7 @@ export default function TelematicsIntegration() {
                     value={connectionConfig.apiKey}
                     onChange={(e) => setConnectionConfig({
                       ...connectionConfig,
-                      apiKey: e.target.value
+                      apiKey: e.target.value,
                     })}
                     placeholder="Enter API key"
                   />
@@ -372,7 +372,7 @@ export default function TelematicsIntegration() {
                     value={connectionConfig.username}
                     onChange={(e) => setConnectionConfig({
                       ...connectionConfig,
-                      username: e.target.value
+                      username: e.target.value,
                     })}
                     placeholder="Enter username"
                   />
@@ -384,7 +384,7 @@ export default function TelematicsIntegration() {
                     value={connectionConfig.serverUrl}
                     onChange={(e) => setConnectionConfig({
                       ...connectionConfig,
-                      serverUrl: e.target.value
+                      serverUrl: e.target.value,
                     })}
                     placeholder="https://api.provider.com"
                   />

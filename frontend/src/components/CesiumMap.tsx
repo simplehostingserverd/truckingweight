@@ -16,7 +16,7 @@ import React, { useEffect, useRef } from 'react';
 // Declare Cesium as a global variable
 declare global {
   interface Window {
-    Cesium: any /* @ts-ignore */;
+    Cesium: unknown;
   }
 }
 
@@ -138,7 +138,7 @@ const CesiumMap: React.FC<CesiumMapProps> = ({
     // Set up click handler
     if (onMarkerClick) {
       const handler = new window.Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-      handler.setInputAction((click: any /* @ts-ignore */) => {
+      handler.setInputAction((click: unknown) => {
         const pickedObject = viewer.scene.pick(click.position);
         if (window.Cesium.defined(pickedObject) && pickedObject.id) {
           const id = pickedObject.id.id;

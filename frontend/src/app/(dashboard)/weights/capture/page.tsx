@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { weighTicketService } from '@/services/weigh-ticket-service';
 import { weightCaptureService } from '@/services/weight-capture';
 import { Driver, Scale, VehicleExtended, WeightReading } from '@/types/scale-master';
@@ -114,7 +115,7 @@ export default function WeightCapturePage() {
 
         // Filter only active scales
         const activeScales = scalesData.filter(
-          (scale: any /* @ts-ignore */) => scale.status === 'Active'
+          (scale: unknown) => scale.status === 'Active'
         );
         setScales(activeScales);
       } catch (error) {

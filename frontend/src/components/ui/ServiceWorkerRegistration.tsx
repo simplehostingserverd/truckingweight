@@ -13,10 +13,10 @@
 
 'use client';
 
+import React from 'react';
 // Global type declarations
 declare function confirm(message?: string): boolean;
 
-import React from 'react';
 import { useEffect, useState } from 'react';
 import { Workbox } from 'workbox-window';
 import logger from '@/utils/logger';

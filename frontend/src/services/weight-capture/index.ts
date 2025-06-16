@@ -74,7 +74,7 @@ export class WeightCaptureService {
    * @param config IoT sensor configuration
    * @returns True if initialization was successful
    */
-  async initializeIoTSensor(id: string, config: any /* @ts-ignore */): Promise<boolean> {
+  async initializeIoTSensor(id: string, config: unknown): Promise<boolean> {
     const provider = new IoTSensorProvider(config);
     const success = await provider.initialize();
 

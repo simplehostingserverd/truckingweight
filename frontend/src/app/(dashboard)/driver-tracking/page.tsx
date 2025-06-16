@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import TruckVisualizationTabs from '@/components/TruckTracking/TruckVisualizationTabs';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { createClient } from '@/utils/supabase/client';

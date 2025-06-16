@@ -13,10 +13,10 @@
 
 'use client';
 
+import React from 'react';
 // Global type declarations
 declare function alert(message?: any): void;
 
-import React from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';

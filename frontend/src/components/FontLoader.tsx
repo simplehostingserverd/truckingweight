@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import { checkFontLoaded } from '@/utils/fontLoader';
 import { useEffect, useState } from 'react';
 

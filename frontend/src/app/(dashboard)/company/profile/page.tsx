@@ -141,7 +141,7 @@ export default function CompanyProfilePage() {
         website: companyData.website || '',
         logo_url: companyData.logo_url || '',
       });
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching company profile:', err);
       setError(err.message || 'Failed to load company profile');
       // Generate dummy data for testing
@@ -228,7 +228,7 @@ export default function CompanyProfilePage() {
 
       // Show success message
       setSuccess('Logo uploaded successfully');
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error uploading logo:', err);
       setError(err.message || 'Failed to upload logo');
     } finally {
@@ -275,7 +275,7 @@ export default function CompanyProfilePage() {
 
       setSuccess('Company profile updated successfully');
       setIsEditing(false);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error updating company profile:', err);
       setError(err.message || 'Failed to update company profile');
     }

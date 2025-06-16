@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import {
   Alert,
   AlertDescription,
@@ -77,7 +78,7 @@ export default function CompaniesPage() {
   const [showNewCompanyDialog, setShowNewCompanyDialog] = useState(false);
   const [showEditCompanyDialog, setShowEditCompanyDialog] = useState(false);
   const [showDeleteCompanyDialog, setShowDeleteCompanyDialog] = useState(false);
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const [selectedCompany, setSelectedCompany] = useState<Component | null>(null);
   const [newCompany, setNewCompany] = useState({
     name: '',
     address: '',
@@ -173,7 +174,7 @@ export default function CompaniesPage() {
 
       setCompanies(companiesWithCounts);
       setFilteredCompanies(companiesWithCounts);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching companies:', err);
       setError(err.message || 'Failed to load companies');
     } finally {
@@ -250,7 +251,7 @@ export default function CompaniesPage() {
 
       // Refresh companies list
       fetchCompanies();
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error creating company:', err);
       setError(err.message || 'Failed to create company');
     } finally {
@@ -291,7 +292,7 @@ export default function CompaniesPage() {
 
       // Refresh companies list
       fetchCompanies();
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error updating company:', err);
       setError(err.message || 'Failed to update company');
     } finally {
@@ -334,7 +335,7 @@ export default function CompaniesPage() {
 
       // Refresh companies list
       fetchCompanies();
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error deleting company:', err);
       setError(err.message || 'Failed to delete company');
     } finally {

@@ -41,7 +41,7 @@ class CameraWeightRecognition {
     try {
       // In a browser environment, this would request camera access
       // For development, we'll just simulate success
-      console.log('Initializing camera weight recognition');
+      console.warn('Initializing camera weight recognition');
 
       // Create video and canvas elements for processing
       if (typeof window !== 'undefined') {
@@ -65,7 +65,7 @@ class CameraWeightRecognition {
       return;
     }
 
-    console.log('Starting camera weight recognition processing');
+    console.warn('Starting camera weight recognition processing');
 
     // Simulate processing frames at regular intervals
     this.processingInterval = setInterval(() => {
@@ -80,10 +80,10 @@ class CameraWeightRecognition {
       this.processingInterval = null;
     }
 
-    console.log('Stopped camera weight recognition processing');
+    console.warn('Stopped camera weight recognition processing');
   }
 
-  async recognizeWeight(): Promise<any> {
+  async recognizeWeight(): Promise<unknown> {
     // Simulate weight recognition from camera
     // In a real implementation, this would analyze the current video frame
 
@@ -108,7 +108,7 @@ class CameraWeightRecognition {
     };
   }
 
-  async calibrate(): Promise<any> {
+  async calibrate(): Promise<unknown> {
     // Simulate calibration
     await new Promise(resolve => setTimeout(resolve, 2000));
 

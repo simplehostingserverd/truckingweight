@@ -13,8 +13,8 @@
 
 'use client';
 
-import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import React from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -61,7 +61,7 @@ export default function CityRegister() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const _router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,7 +129,7 @@ export default function CityRegister() {
           email,
           password,
           cityId: cityData.city.id,
-          role,
+          role: _role,
           status: 'pending', // Set initial status to pending for security review
         }),
       });
@@ -142,7 +142,7 @@ export default function CityRegister() {
 
       // Show success message without redirect - user needs to wait for approval
       setSuccess(true);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       setError(err.message || 'An error occurred during registration');
       console.error('City registration error:', err);
     } finally {

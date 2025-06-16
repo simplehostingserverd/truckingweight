@@ -104,7 +104,7 @@ export function truncateText(text: string, length: number = 50): string {
  * @param params Object containing search parameters
  * @returns URL search parameter string
  */
-export function toSearchParamString(params: Record<string, any>): string {
+export function toSearchParamString(params: Record<string, unknown>): string {
   const searchParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {

@@ -13,11 +13,11 @@
 
 'use client';
 
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { useToastContext } from '@/providers/ToastProvider';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { useToastContext } from '@/providers/ToastProvider';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import React, { Component, ErrorInfo, JSX, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;

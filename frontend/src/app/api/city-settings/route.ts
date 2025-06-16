@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
-      console.log('Using test data for city settings');
+      console.warn('Using test data for city settings');
 
       // Mock data
       const dummySettings = {
@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
     };
 
     return NextResponse.json({ settings: dummySettings });
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching city settings:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
@@ -124,7 +124,7 @@ export async function PUT(request: NextRequest) {
       message: 'Settings updated successfully',
       settings: body,
     });
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error updating city settings:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }

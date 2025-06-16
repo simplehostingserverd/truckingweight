@@ -100,7 +100,7 @@ export default function NewScale() {
 
       // Redirect to the scales list page
       router.push('/scales');
-    } catch (error: any) {
+    } catch (error: Error) {
       console.error('Error creating scale:', error);
       setError(error.message || 'Failed to create scale');
     } finally {

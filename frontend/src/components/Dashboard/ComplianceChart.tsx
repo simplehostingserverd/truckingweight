@@ -78,7 +78,7 @@ function ComplianceChart({ companyId }: ComplianceChartProps) {
   );
 
   // Process the data based on admin status - memoized to prevent recalculation on each render
-  const companyData = useMemo(() => complianceApiData?.byCompany || [], [complianceApiData]);
+  const companyData = useMemo(() => complianceApiData?.byComponent || [], [complianceApiData]);
 
   // Memoize the compliance data to prevent unnecessary recalculations
   const complianceData = useMemo(() => {
@@ -87,7 +87,7 @@ function ComplianceChart({ companyId }: ComplianceChartProps) {
         return complianceApiData.overall;
       } else {
         return (
-          companyData.find((c: any /* @ts-ignore */) => c.companyId.toString() === selectedCompany)
+          companyData.find((c: unknown) => c.companyId.toString() === selectedCompany)
             ?.data || []
         );
       }

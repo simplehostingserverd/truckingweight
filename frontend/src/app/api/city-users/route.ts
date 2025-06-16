@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     // Check if this is a test token
     if (token.startsWith('test-city-token-')) {
-      console.log('Using test data for city users');
+      console.warn('Using test data for city users');
 
       // Mock data
       const dummyUsers = [
@@ -97,7 +97,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error fetching city users:', error);
 
     // Return mock data for development/demo purposes
@@ -196,7 +196,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('Error creating city user:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }

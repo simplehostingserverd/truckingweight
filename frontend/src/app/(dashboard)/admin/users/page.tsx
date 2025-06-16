@@ -152,7 +152,7 @@ export default function UsersPage() {
 
       setUsers(data || []);
       setFilteredUsers(data || []);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching users:', err);
       setError(err.message || 'Failed to load users');
     } finally {
@@ -172,7 +172,7 @@ export default function UsersPage() {
       }
 
       setCompanies(data || []);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching companies:', err);
     }
   };
@@ -229,7 +229,7 @@ export default function UsersPage() {
 
       // Refresh users list
       fetchUsers();
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error creating user:', err);
       setError(err.message || 'Failed to create user');
     } finally {
@@ -264,7 +264,7 @@ export default function UsersPage() {
 
       // Refresh users list
       fetchUsers();
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error updating user:', err);
       setError(err.message || 'Failed to update user');
     } finally {
@@ -299,7 +299,7 @@ export default function UsersPage() {
 
       // Refresh users list
       fetchUsers();
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error deleting user:', err);
       setError(err.message || 'Failed to delete user');
     } finally {

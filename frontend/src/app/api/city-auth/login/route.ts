@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (!response.ok) {
-      console.log('Backend login error response:', data);
+      console.warn('Backend login error response:', data);
       return NextResponse.json(
         { error: data.msg || data.error || 'Authentication failed' },
         { status: response.status }
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch (error: any /* @ts-ignore */) {
+  } catch (error: unknown) {
     console.error('City login error:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }

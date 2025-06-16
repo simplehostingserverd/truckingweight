@@ -13,21 +13,20 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import CesiumMap from '@/components/Map/CesiumMap';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
-import { Button } from '@/components/ui';
-import { Badge } from '@/components/ui';
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import {
-  GlobeAltIcon,
-  TruckIcon,
-  MapPinIcon,
   ClockIcon,
-  ScaleIcon,
-  EyeIcon,
   Cog6ToothIcon,
+  EyeIcon,
+  GlobeAltIcon,
+  MapPinIcon,
+  ScaleIcon,
   SignalIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
+import { useState } from 'react';
 
 // Mock real-time data
 const mockRealTimeData = {
@@ -85,9 +84,7 @@ export default function MapPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
-            3D Route Tracking
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">3D Route Tracking</h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
             Real-time truck tracking and route visualization powered by Cesium
           </p>
@@ -161,9 +158,7 @@ export default function MapPage() {
             <CardContent className="pt-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Avg Speed
-                  </p>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Avg Speed</p>
                   <h3 className="text-2xl font-bold mt-1">{mockRealTimeData.avgSpeed} mph</h3>
                 </div>
                 <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-full">
@@ -177,9 +172,7 @@ export default function MapPage() {
             <CardContent className="pt-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Fuel MPG
-                  </p>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Fuel MPG</p>
                   <h3 className="text-2xl font-bold mt-1">{mockRealTimeData.fuelEfficiency}</h3>
                 </div>
                 <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full">
@@ -193,9 +186,7 @@ export default function MapPage() {
             <CardContent className="pt-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    On-Time %
-                  </p>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">On-Time %</p>
                   <h3 className="text-2xl font-bold mt-1">{mockRealTimeData.onTimeDeliveries}%</h3>
                 </div>
                 <div className="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-full">
@@ -210,7 +201,7 @@ export default function MapPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Main Map */}
         <div className="lg:col-span-3">
-          <CesiumMap 
+          <CesiumMap
             height={mapHeight}
             selectedRoute={selectedRoute}
             onRouteSelect={setSelectedRoute}
@@ -226,11 +217,15 @@ export default function MapPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="text-sm font-medium mb-2 block">Map Height</label>
-                <select 
+                <label htmlFor="map-height-select" className="text-sm font-medium mb-2 block">
+                  Map Height
+                </label>
+                <select
+                  id="map-height-select"
                   value={mapHeight}
-                  onChange={(e) => setMapHeight(e.target.value)}
+                  onChange={e => setMapHeight(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md dark:border-gray-600 dark:bg-gray-800"
+                  aria-label="Select map height"
                 >
                   <option value="500px">Small (500px)</option>
                   <option value="700px">Medium (700px)</option>
@@ -238,7 +233,7 @@ export default function MapPage() {
                   <option value="100vh">Full Screen</option>
                 </select>
               </div>
-              
+
               <div className="space-y-2">
                 <Button variant="outline" className="w-full">
                   <GlobeAltIcon className="h-4 w-4 mr-2" />
@@ -263,11 +258,8 @@ export default function MapPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {mockAlerts.map((alert) => (
-                  <div
-                    key={alert.id}
-                    className={`p-3 rounded-lg ${getAlertColor(alert.type)}`}
-                  >
+                {mockAlerts.map(alert => (
+                  <div key={alert.id} className={`p-3 rounded-lg ${getAlertColor(alert.type)}`}>
                     <div className="flex justify-between items-start mb-1">
                       <Badge variant="outline" className="text-xs">
                         {alert.type.toUpperCase()}

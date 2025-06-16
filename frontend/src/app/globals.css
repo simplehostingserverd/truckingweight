@@ -400,6 +400,20 @@
     @apply shadow-md hover:shadow-lg transition-all duration-200;
   }
 
+  /* Dynamic sizing utilities for components */
+  .dynamic-size {
+    width: var(--dynamic-width, auto);
+    height: var(--dynamic-height, auto);
+  }
+
+  .dynamic-font-size {
+    font-size: var(--dynamic-font-size, 1rem);
+  }
+
+  .dynamic-bg-image {
+    background-image: var(--dynamic-bg-image, none);
+  }
+
   .shadow-button {
     @apply shadow-sm hover:shadow transition-all duration-200;
   }

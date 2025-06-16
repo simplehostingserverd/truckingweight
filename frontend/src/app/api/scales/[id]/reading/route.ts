@@ -75,7 +75,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     // Always use mock data in development mode or if there's an error
     if (process.env.NODE_ENV !== 'production' || error) {
-      console.log('Using mock data for scale reading');
+      console.warn('Using mock data for scale reading');
 
       // Extract query parameters safely
       const url = new URL(request.url);

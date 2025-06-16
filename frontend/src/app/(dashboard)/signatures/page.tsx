@@ -84,7 +84,7 @@ export default function SignaturesPage() {
       }
 
       setCompanyId(userData?.company_id || null);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching user company:', err);
     }
   };
@@ -120,7 +120,7 @@ export default function SignaturesPage() {
       }
 
       setSignatures(data || []);
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error fetching signatures:', err);
       setError(err.message || 'Failed to load signatures');
       // Generate dummy data for testing
@@ -307,7 +307,7 @@ export default function SignaturesPage() {
 
       // Refresh signatures list
       fetchSignatures();
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error saving signature:', err);
       setError(err.message || 'Failed to save signature');
     } finally {
@@ -332,7 +332,7 @@ export default function SignaturesPage() {
       // Update state
       setSignatures(signatures.filter(sig => sig.id !== signatureId));
       setSuccess('Signature deleted successfully');
-    } catch (err: any /* @ts-ignore */) {
+    } catch (err: unknown) {
       console.error('Error deleting signature:', err);
       setError(err.message || 'Failed to delete signature');
     }

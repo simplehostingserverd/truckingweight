@@ -27,7 +27,7 @@ import { useEffect, useState } from 'react';
 import WeightReader from './WeightReader';
 
 interface AxleWeightCaptureProps {
-  scale: any /* @ts-ignore */;
+  scale: unknown;
   vehicleId: number;
   onAxleWeightsCaptured: (
     axleWeights: Array<{ axleNumber: number; weight: number; axleType?: string }>
@@ -104,7 +104,7 @@ export default function AxleWeightCapture({
             configuration_type: 'custom',
           });
         }
-      } catch (error: any /* @ts-ignore */) {
+      } catch (error: unknown) {
         console.error('Error fetching axle configuration:', error);
         setError(error.message);
 

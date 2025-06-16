@@ -174,7 +174,8 @@ async function verifyOnlineLicense(licenseKey, domain) {
     lastVerification = Date.now();
     return result.valid;
   } catch (error) {
-    throw error;
+    console.error('License verification failed:', error);
+    return false;
   }
 }
 
