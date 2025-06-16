@@ -32,7 +32,13 @@
     "type": "git",
     "url": "git+https://github.com/Simple-Hosting-Holdings-Inc/truckingweight.git"
   },
-  "keywords": ["trucking", "weight-management", "logistics", "fleet-management", "compliance"],
+  "keywords": [
+    "trucking",
+    "weight-management",
+    "logistics",
+    "fleet-management",
+    "compliance"
+  ],
   "author": "Michael Anthony Trevino Jr. <info@cosmoexploitgroup.com>",
   "license": "PROPRIETARY",
   "type": "commonjs",
@@ -46,5 +52,9 @@
   "engines": {
     "node": "20.x",
     "npm": ">=10.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.50.0",
+    "dotenv": "16.5.0"
   }
 }

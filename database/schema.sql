@@ -184,3 +184,98 @@ CREATE POLICY "Drivers are updatable by company users" ON drivers
 CREATE POLICY "Drivers are deletable by company users" ON drivers
   FOR DELETE
   USING (company_id = (SELECT company_id FROM users WHERE id::text = auth.uid()::text));
+
+-- License Management Tables
+
+-- Customers Table (for license management)
+CREATE TABLE customers (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  company VARCHAR(255),
+  phone VARCHAR(50),
+  address TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Licenses Table
+CREATE TABLE licenses (
+  id SERIAL PRIMARY KEY,
+  key VARCHAR(255) UNIQUE NOT NULL,
+  customer_id INTEGER REFERENCES customers(id),
+  plan VARCHAR(50) NOT NULL DEFAULT 'basic',
+  status VARCHAR(50) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'expired', 'revoked', 'suspended')),
+  features JSONB DEFAULT '["basic"]',
+  domains JSONB DEFAULT '[]',
+  instances JSONB DEFAULT '[]',
+  max_users INTEGER DEFAULT 10,
+  max_tenants INTEGER DEFAULT 1,
+  max_instances INTEGER DEFAULT 1,
+  expires_at TIMESTAMP WITH TIME ZONE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- License Verifications Table
+CREATE TABLE license_verifications (
+  id SERIAL PRIMARY KEY,
+  key VARCHAR(255) NOT NULL,
+  domain VARCHAR(255) NOT NULL,
+  instance_id VARCHAR(255),
+  app_version VARCHAR(50),
+  status VARCHAR(50) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'verified', 'revoked', 'expired')),
+  plan VARCHAR(50) DEFAULT 'basic',
+  features JSONB DEFAULT '["basic"]',
+  expires_at TIMESTAMP WITH TIME ZONE,
+  last_verified TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(key, domain)
+);
+
+-- License Access Logs Table
+CREATE TABLE license_access_logs (
+  id SERIAL PRIMARY KEY,
+  license_id INTEGER REFERENCES licenses(id),
+  domain VARCHAR(255) NOT NULL,
+  instance_id VARCHAR(255),
+  status VARCHAR(50) NOT NULL,
+  ip_address INET,
+  user_agent TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Enable RLS on license tables
+ALTER TABLE customers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE licenses ENABLE ROW LEVEL SECURITY;
+ALTER TABLE license_verifications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE license_access_logs ENABLE ROW LEVEL SECURITY;
+
+-- License table policies (allow public read for verification)
+CREATE POLICY "License verifications are publicly readable" ON license_verifications
+  FOR SELECT
+  USING (true);
+
+CREATE POLICY "License verifications are insertable by service" ON license_verifications
+  FOR INSERT
+  WITH CHECK (true);
+
+CREATE POLICY "License verifications are updatable by service" ON license_verifications
+  FOR UPDATE
+  USING (true);
+
+-- Licenses are readable by service role only
+CREATE POLICY "Licenses are readable by service role" ON licenses
+  FOR SELECT
+  USING (true);
+
+-- License access logs are insertable by service
+CREATE POLICY "License access logs are insertable by service" ON license_access_logs
+  FOR INSERT
+  WITH CHECK (true);
+
+-- Customers are readable by service role only
+CREATE POLICY "Customers are readable by service role" ON customers
+  FOR SELECT
+  USING (true);

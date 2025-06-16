@@ -1,25 +1,24 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
+import { GlobeAltIcon, MapIcon, TruckIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import MapboxTruckVisualization from './MapboxTruckVisualization';
 import CesiumTruckVisualization from './CesiumTruckVisualization';
 import DeckGLTruckVisualization from './DeckGLTruckVisualization';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
-import { GlobeAltIcon, TruckIcon, MapIcon } from '@heroicons/react/24/outline';
+import MapboxTruckVisualization from './MapboxTruckVisualization';
 
 interface RoutePoint {
   lat: number;
@@ -106,14 +105,19 @@ export default function TruckVisualizationTabs({
                 Current Location
               </p>
               <p className="text-lg font-bold text-gray-900 dark:text-white">
-                {currentPosition?.name || route[Math.floor(route.length * 0.7)].name}
+                {currentPosition?.name ||
+                  (route.length > 0
+                    ? route[Math.floor(route.length * 0.7)]?.name
+                    : 'Unknown Location')}
               </p>
             </div>
             <div>
               <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Current Speed</p>
               <p className="text-lg font-bold text-gray-900 dark:text-white">
-                {currentPosition?.speed.toFixed(1) ||
-                  route[Math.floor(route.length * 0.7)].speed.toFixed(1)}{' '}
+                {currentPosition?.speed?.toFixed(1) ||
+                  (route.length > 0
+                    ? route[Math.floor(route.length * 0.7)]?.speed?.toFixed(1)
+                    : '0')}{' '}
                 mph
               </p>
             </div>
@@ -121,7 +125,10 @@ export default function TruckVisualizationTabs({
               <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Last Update</p>
               <p className="text-lg font-bold text-gray-900 dark:text-white">
                 {new Date(
-                  currentPosition?.timestamp || route[Math.floor(route.length * 0.7)].timestamp
+                  currentPosition?.timestamp ||
+                    (route.length > 0
+                      ? route[Math.floor(route.length * 0.7)]?.timestamp
+                      : Date.now())
                 ).toLocaleTimeString()}
               </p>
             </div>
@@ -133,12 +140,14 @@ export default function TruckVisualizationTabs({
           <div className="space-y-3">
             <div>
               <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Origin</p>
-              <p className="text-lg font-bold text-gray-900 dark:text-white">{route[0].name}</p>
+              <p className="text-lg font-bold text-gray-900 dark:text-white">
+                {route.length > 0 ? route[0]?.name : 'No route data'}
+              </p>
             </div>
             <div>
               <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Destination</p>
               <p className="text-lg font-bold text-gray-900 dark:text-white">
-                {route[route.length - 1].name}
+                {route.length > 0 ? route[route.length - 1]?.name : 'No route data'}
               </p>
             </div>
             <div>

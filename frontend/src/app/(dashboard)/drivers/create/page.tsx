@@ -11,19 +11,19 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
 import EmailValidationFeedback from '@/components/ui/EmailValidationFeedback';
+import { createClient } from '@/utils/supabase/client';
 import { validateEmail } from '@/utils/validation/emailValidator';
 import {
-    CalendarIcon,
-    CheckCircleIcon,
-    EnvelopeIcon,
-    ExclamationCircleIcon,
-    IdentificationIcon,
-    PhoneIcon,
-    UserIcon,
+  CalendarIcon,
+  CheckCircleIcon,
+  EnvelopeIcon,
+  ExclamationCircleIcon,
+  IdentificationIcon,
+  PhoneIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -108,7 +108,7 @@ export default function CreateDriver() {
         router.push('/drivers');
         router.refresh();
       }, 1500);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'An error occurred while creating the driver');
       console.error('Create driver error:', err);
     } finally {

@@ -11,16 +11,17 @@
  * in any way without explicit written permission.
  */
 
-
 import { toSearchParamString } from '@/utils/searchParams';
 import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import DriverDetailsClient from './client';
 
-export default async function DriverDetail({ params }: { params: { id: string } }) {
+export default async function DriverDetail({ params }: { params: Promise<{ id: string }> }) {
   const supabase = createClient();
+  // Await params in Next.js 15
+  const resolvedParams = await params;
   // Safely convert the ID parameter to a string
-  const id = toSearchParamString(params.id, '');
+  const id = toSearchParamString(resolvedParams.id, '');
 
   // Get user data
   const {
@@ -33,7 +34,7 @@ export default async function DriverDetail({ params }: { params: { id: string } 
     .single();
 
   // Get driver data
-  const { data: driver, error } = await supabase
+  let driverQuery = supabase
     .from('drivers')
     .select(
       `
@@ -55,9 +56,14 @@ export default async function DriverDetail({ params }: { params: { id: string } 
       )
     `
     )
-    .eq('id', id)
-    .eq('company_id', userData?.company_id)
-    .single();
+    .eq('id', id);
+
+  // Only filter by company if user has a company_id (when RLS is enabled)
+  if (userData?.company_id) {
+    driverQuery = driverQuery.eq('company_id', userData.company_id);
+  }
+
+  const { data: driver, error } = await driverQuery.single();
 
   if (error || !driver) {
     console.error('Error fetching driver:', error);

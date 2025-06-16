@@ -13,9 +13,10 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import TruckVisualizationTabs from '@/components/TruckTracking/TruckVisualizationTabs';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { createClient } from '@/utils/supabase/client';
+import { useEffect, useState } from 'react';
 
 interface DriverLocation {
   driverId: string;
@@ -53,6 +54,9 @@ export default function DriverTrackingPage() {
   const [activeDriverLocation, setActiveDriverLocation] = useState<DriverLocation | null>(null);
   const [refreshInterval, setRefreshInterval] = useState<number>(30); // seconds
 
+  // Initialize Supabase client
+  const supabase = createClient();
+
   // Fetch driver locations
   useEffect(() => {
     const fetchDriverLocations = async () => {
@@ -89,17 +93,34 @@ export default function DriverTrackingPage() {
           const baseLat = 32.7767;
           const baseLng = -96.797;
 
+          // Generate a sample route with multiple points
+          const routePoints = [];
+          for (let i = 0; i < 5; i++) {
+            routePoints.push({
+              lat: baseLat + index * 0.05 + i * 0.01,
+              lng: baseLng - index * 0.03 - i * 0.01,
+              name: i === 0 ? 'Origin' : i === 4 ? 'Destination' : `Waypoint ${i}`,
+              timestamp: new Date(Date.now() - (4 - i) * 3600000).toISOString(),
+              speed: 55 + Math.random() * 10,
+            });
+          }
+
           return {
             driverId: driver.id.toString(),
             driverName: driver.name,
+            route: routePoints,
             currentPosition: {
               lat: baseLat + index * 0.05,
               lng: baseLng - index * 0.03,
-              address: 'On Route',
+              name: 'On Route - Highway 35',
+              timestamp: new Date().toISOString(),
+              speed: 58 + Math.random() * 7,
             },
             vehicle: {
               id: vehicle.id,
               name: vehicle.name,
+              type: 'Semi-Truck',
+              model: 'Freightliner Cascadia',
             },
             status: index % 3 === 0 ? 'On Duty' : index % 3 === 1 ? 'Driving' : 'Rest',
             hoursOfService: {

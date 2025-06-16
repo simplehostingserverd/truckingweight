@@ -11,27 +11,27 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowLeftIcon,
-    CalendarIcon,
-    CheckCircleIcon,
-    EnvelopeIcon,
-    ExclamationCircleIcon,
-    IdentificationIcon,
-    PhoneIcon,
-    UserIcon,
+  ArrowLeftIcon,
+  CalendarIcon,
+  CheckCircleIcon,
+  EnvelopeIcon,
+  ExclamationCircleIcon,
+  IdentificationIcon,
+  PhoneIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
   searchParams?: Record<string, string | string[] | undefined>;
 }
 
@@ -46,14 +46,25 @@ export default function EditDriver({ params }: PageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [id, setId] = useState<string>('');
 
   const router = useRouter();
   const supabase = createClient();
-  const { id } = params;
+
+  // Resolve params in useEffect
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      setId(resolvedParams.id);
+    };
+    resolveParams();
+  }, [params]);
 
   // Load driver data
   useEffect(() => {
     const fetchDriver = async () => {
+      if (!id) return; // Wait for id to be resolved
+
       try {
         const { data: driver, error } = await supabase
           .from('drivers')
@@ -73,7 +84,7 @@ export default function EditDriver({ params }: PageProps) {
           setEmail(driver.email || '');
           setStatus(driver.status);
         }
-      } catch (err: any /* @ts-ignore */ ) {
+      } catch (err: any /* @ts-ignore */) {
         console.error('Error fetching driver:', err);
         setError('Failed to load driver data');
       } finally {
@@ -115,7 +126,7 @@ export default function EditDriver({ params }: PageProps) {
         router.push({ pathname: `/drivers/${id}` });
         router.refresh();
       }, 1500);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'An error occurred while updating the driver');
       console.error('Update driver error:', err);
     } finally {

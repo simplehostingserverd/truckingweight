@@ -11,13 +11,12 @@
  * in any way without explicit written permission.
  */
 
-
 import { formatDate } from '@/lib/utils';
 import { createClient } from '@/utils/supabase/server';
 import {
-    AdjustmentsHorizontalIcon,
-    ArrowDownTrayIcon,
-    PlusIcon,
+  AdjustmentsHorizontalIcon,
+  ArrowDownTrayIcon,
+  PlusIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -68,7 +67,17 @@ export default async function Drivers() {
       drivers = response.data || [];
       error = response.error;
     } else {
-      console.warn('No company_id found for user and not an admin');
+      // If no user authentication (RLS disabled), show all drivers for testing
+      console.warn(
+        'No company_id found for user and not an admin - showing all drivers for testing'
+      );
+      const response = await supabase
+        .from('drivers')
+        .select('*, companies(name)')
+        .order('name', { ascending: true });
+
+      drivers = response.data || [];
+      error = response.error;
     }
   } catch (err) {
     console.error('Error fetching drivers:', err);
