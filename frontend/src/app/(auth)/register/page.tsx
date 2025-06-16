@@ -16,7 +16,7 @@
 import EmailValidationFeedback from '@/components/ui/EmailValidationFeedback';
 import { createClient } from '@/utils/supabase/client';
 import { validateEmail } from '@/utils/validation/emailValidator';
-import HCaptcha from '@hcaptcha/react-hcaptcha';
+// import HCaptcha from '@hcaptcha/react-hcaptcha'; // TEMPORARILY DISABLED
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -34,7 +34,7 @@ export default function Register() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaError, setCaptchaError] = useState('');
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const captchaRef = useRef<HCaptcha>(null);
+  // const captchaRef = useRef<HCaptcha>(null); // TEMPORARILY DISABLED
   const router = useRouter();
   const supabase = createClient();
 

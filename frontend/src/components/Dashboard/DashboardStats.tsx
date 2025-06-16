@@ -13,13 +13,14 @@
 
 'use client';
 
+import { createClient } from '@/utils/supabase/client';
 import {
-    CalendarDaysIcon,
-    CheckCircleIcon,
-    ClockIcon,
-    ExclamationTriangleIcon,
-    ScaleIcon,
-    TruckIcon,
+  CalendarDaysIcon,
+  CheckCircleIcon,
+  ClockIcon,
+  ExclamationTriangleIcon,
+  ScaleIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
 import React, { useEffect, useState } from 'react';
 

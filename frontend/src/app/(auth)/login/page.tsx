@@ -112,13 +112,17 @@ export default function Login() {
           <div className="text-2xl font-bold">124k</div>
           <div className="flex items-center mt-2">
             <div className="flex space-x-1">
-              {[1, 2, 3, 4, 5, 6, 7].map(i => (
-                <div
-                  key={i}
-                  className="w-2 h-8 bg-indigo-500 rounded-sm"
-                  style={{ height: `${20 + Math.random() * 20}px` }}
-                ></div>
-              ))}
+              {[1, 2, 3, 4, 5, 6, 7].map(i => {
+                // Use consistent heights to avoid hydration mismatch
+                const heights = [32, 28, 24, 36, 30, 26, 34];
+                return (
+                  <div
+                    key={i}
+                    className="w-2 bg-indigo-500 rounded-sm"
+                    style={{ height: `${heights[i - 1]}px` }}
+                  ></div>
+                );
+              })}
             </div>
           </div>
         </div>

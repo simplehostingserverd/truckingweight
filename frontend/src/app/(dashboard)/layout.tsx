@@ -13,6 +13,7 @@
 
 import DashboardHeader from '@/components/Dashboard/DashboardHeader';
 import DashboardSidebar from '@/components/Dashboard/DashboardSidebar';
+import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 
 // Accessibility component to skip to main content

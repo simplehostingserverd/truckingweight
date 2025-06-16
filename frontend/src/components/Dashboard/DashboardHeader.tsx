@@ -15,21 +15,22 @@
 
 import MobileNav from '@/components/ui/MobileNav';
 import { Database } from '@/types/supabase';
+import { createClient } from '@/utils/supabase/client';
 import { Menu, Transition } from '@headlessui/react';
 import {
-    ArrowRightOnRectangleIcon,
-    BellIcon,
-    BuildingOfficeIcon,
-    ChartBarIcon,
-    Cog6ToothIcon,
-    DocumentIcon,
-    HomeIcon,
-    PencilIcon,
-    ScaleIcon,
-    TruckIcon,
-    UserGroupIcon,
-    UserIcon,
-    UsersIcon,
+  ArrowRightOnRectangleIcon,
+  BellIcon,
+  BuildingOfficeIcon,
+  ChartBarIcon,
+  Cog6ToothIcon,
+  DocumentIcon,
+  HomeIcon,
+  PencilIcon,
+  ScaleIcon,
+  TruckIcon,
+  UserGroupIcon,
+  UserIcon,
+  UsersIcon,
 } from '@heroicons/react/24/outline';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { useTheme } from 'next-themes';
@@ -141,8 +142,8 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
           </div>
 
           <div className="flex items-center space-x-3">
-            {/* Accessibility Settings Button */}
-            {mounted && <AccessibilityButton />}
+            {/* Accessibility Settings Button - TODO: Create component */}
+            {/* {mounted && <AccessibilityButton />} */}
 
             <button
               onClick={toggleTheme}

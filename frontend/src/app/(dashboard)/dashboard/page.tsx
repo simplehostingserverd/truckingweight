@@ -11,12 +11,11 @@
  * in any way without explicit written permission.
  */
 
-
 import { createClient } from '@/utils/supabase/server';
 import DashboardClient from './client';
 
 export default async function Dashboard() {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   // Get minimal user data for initial rendering
   const {

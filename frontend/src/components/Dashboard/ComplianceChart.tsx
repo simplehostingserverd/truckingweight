@@ -14,6 +14,7 @@
 'use client';
 
 import useSWRFetch from '@/hooks/useSWRFetch';
+import { createClient } from '@/utils/supabase/client';
 import React, { useMemo, useState } from 'react';
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 

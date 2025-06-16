@@ -13,16 +13,17 @@
 
 'use client';
 
+import { createClient } from '@/utils/supabase/client';
 import React, { useEffect, useState } from 'react';
 import {
-    Bar,
-    BarChart,
-    CartesianGrid,
-    Legend,
-    ResponsiveContainer,
-    Tooltip,
-    XAxis,
-    YAxis,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from 'recharts';
 
 interface VehicleWeightChartProps {

@@ -13,16 +13,17 @@
 
 'use client';
 
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowDownIcon,
-    ArrowPathIcon,
-    ArrowUpIcon,
-    CheckCircleIcon,
-    ScaleIcon,
-    TruckIcon,
-    XCircleIcon,
+  ArrowDownIcon,
+  ArrowPathIcon,
+  ArrowUpIcon,
+  CheckCircleIcon,
+  ScaleIcon,
+  TruckIcon,
+  XCircleIcon,
 } from '@heroicons/react/24/outline';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 interface WeightReaderProps {
   scale: any /* @ts-ignore */;

@@ -15,10 +15,21 @@ import type { Database } from '@/types/supabase';
 import { createBrowserClient } from '@supabase/ssr';
 import { getSupabaseConfig } from './config';
 
+// Singleton instance to prevent multiple GoTrueClient instances
+let supabaseClient: ReturnType<typeof createBrowserClient<Database>> | null = null;
+
 // Create a Supabase client for use in client components
 export const createClient = () => {
+  // Return existing client if already created
+  if (supabaseClient) {
+    return supabaseClient;
+  }
+
   // Get Supabase configuration
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
-  return createBrowserClient<Database>(supabaseUrl, supabaseKey);
+  // Create new client and store it
+  supabaseClient = createBrowserClient<Database>(supabaseUrl, supabaseKey);
+
+  return supabaseClient;
 };

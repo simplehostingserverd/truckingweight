@@ -11,9 +11,9 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -101,7 +101,7 @@ export default function EditWeight({ params }: { params: { id: string } }) {
 
         setVehicles(vehiclesData || []);
         setDrivers(driversData || []);
-      } catch (err: any /* @ts-ignore */ ) {
+      } catch (err: any /* @ts-ignore */) {
         console.error('Error fetching data:', err);
         setError('Failed to load data');
       } finally {
@@ -154,7 +154,7 @@ export default function EditWeight({ params }: { params: { id: string } }) {
 
       // Redirect to weight detail
       router.push(`/weights/${id}`);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'An error occurred while updating the weight record');
       console.error('Update weight error:', err);
     } finally {

@@ -14,11 +14,12 @@
 'use client';
 
 import { AxleWeight, ComplianceIssue, WeighTicket } from '@/types/scale-master';
+import { createClient } from '@/utils/supabase/client';
 import {
-    CheckCircleIcon,
-    ExclamationCircleIcon,
-    ExclamationTriangleIcon,
-    InformationCircleIcon,
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  ExclamationTriangleIcon,
+  InformationCircleIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 

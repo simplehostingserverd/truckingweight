@@ -11,21 +11,21 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
 import { weighTicketService } from '@/services/weigh-ticket-service';
 import { weightCaptureService } from '@/services/weight-capture';
 import { Driver, Scale, VehicleExtended, WeightReading } from '@/types/scale-master';
+import { createClient } from '@/utils/supabase/client';
 import {
-    ArrowPathIcon,
-    CameraIcon,
-    CheckCircleIcon,
-    DocumentTextIcon,
-    ExclamationTriangleIcon,
-    QrCodeIcon,
-    ScaleIcon,
-    TruckIcon
+  ArrowPathIcon,
+  CameraIcon,
+  CheckCircleIcon,
+  DocumentTextIcon,
+  ExclamationTriangleIcon,
+  QrCodeIcon,
+  ScaleIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -113,7 +113,9 @@ export default function WeightCapturePage() {
         const scalesData = await scalesResponse.json();
 
         // Filter only active scales
-        const activeScales = scalesData.filter((scale: any /* @ts-ignore */ ) => scale.status === 'Active');
+        const activeScales = scalesData.filter(
+          (scale: any /* @ts-ignore */) => scale.status === 'Active'
+        );
         setScales(activeScales);
       } catch (error) {
         console.error('Error fetching data:', error);

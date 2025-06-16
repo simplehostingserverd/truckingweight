@@ -11,13 +11,12 @@
  * in any way without explicit written permission.
  */
 
-
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import HomeClient from './home-client';
 
 export default async function Home() {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const {
     data: { user },
