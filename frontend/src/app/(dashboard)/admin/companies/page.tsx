@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import {
   Alert,
   AlertDescription,
@@ -396,6 +395,7 @@ export default function CompaniesPage() {
                 />
               </div>
               <select
+                aria-label="Filter companies by status"
                 className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                 value={statusFilter}
                 onChange={e => setStatusFilter(e.target.value)}
@@ -583,6 +583,7 @@ export default function CompaniesPage() {
             <div className="grid grid-cols-1 gap-2">
               <label className="text-sm font-medium">Status</label>
               <select
+                aria-label="Company status"
                 className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                 value={newCompany.status}
                 onChange={e =>
@@ -692,6 +693,7 @@ export default function CompaniesPage() {
               <div className="grid grid-cols-1 gap-2">
                 <label className="text-sm font-medium">Status</label>
                 <select
+                  aria-label="Company status"
                   className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                   value={selectedCompany.status}
                   onChange={e =>

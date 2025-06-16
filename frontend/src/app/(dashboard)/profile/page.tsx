@@ -13,10 +13,9 @@
 
 'use client';
 
-import React from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function Profile() {
   const [name, setName] = useState('');
@@ -254,6 +253,7 @@ export default function Profile() {
             </p>
 
             <button
+              type="button"
               onClick={() => router.push('/reset-password')}
               className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >

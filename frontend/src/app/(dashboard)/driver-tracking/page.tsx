@@ -13,10 +13,9 @@
 
 'use client';
 
-import React from 'react';
 import TruckVisualizationTabs from '@/components/TruckTracking/TruckVisualizationTabs';
-import { createClient } from '@/utils/supabase/client';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 
 interface DriverLocation {
@@ -184,6 +183,7 @@ export default function DriverTrackingPage() {
         <div className="flex space-x-4">
           <div>
             <select
+              aria-label="Select driver to track"
               className="w-[180px] rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               value={selectedDriver || ''}
               onChange={e => handleDriverChange(e.target.value)}
@@ -201,6 +201,7 @@ export default function DriverTrackingPage() {
 
           <div>
             <select
+              aria-label="Select refresh interval"
               className="w-[180px] rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               value={refreshInterval}
               onChange={e => handleRefreshIntervalChange(Number(e.target.value))}

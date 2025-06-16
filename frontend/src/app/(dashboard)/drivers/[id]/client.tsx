@@ -13,15 +13,14 @@
 
 'use client';
 
-import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { createClient } from '@/utils/supabase/client';
 import { formatDate } from '@/lib/utils';
+import { createClient } from '@/utils/supabase/client';
 import { uploadDriverPhoto } from '@/utils/supabase/storage';
 import {
   ArrowLeftIcon,
@@ -36,7 +35,7 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface DriverDetailsProps {
   id: string;
@@ -533,6 +532,7 @@ export default function DriverDetailsClient({ id, initialData }: DriverDetailsPr
                         accept="image/*"
                         className="hidden"
                         onChange={handlePhotoUpload}
+                        aria-label="Upload driver photo"
                       />
                       <Button
                         variant="outline"

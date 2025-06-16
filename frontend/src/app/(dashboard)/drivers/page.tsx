@@ -11,9 +11,8 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
-import { createClient } from '@/utils/supabase/server';
 import { formatDate } from '@/lib/utils';
+import { createClient } from '@/utils/supabase/server';
 import {
   AdjustmentsHorizontalIcon,
   ArrowDownTrayIcon,
@@ -178,13 +177,19 @@ export default async function Drivers() {
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Filters</span>
           </div>
           <div className="flex flex-wrap gap-2">
-            <select className="rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
+            <select
+              aria-label="Filter by driver status"
+              className="rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm"
+            >
               <option value="">All Statuses</option>
               <option value="Active">Active</option>
               <option value="On Leave">On Leave</option>
               <option value="Inactive">Inactive</option>
             </select>
-            <select className="rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
+            <select
+              aria-label="Filter by license expiry"
+              className="rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm"
+            >
               <option value="">License Expiry</option>
               <option value="expired">Expired</option>
               <option value="30days">Expires in 30 days</option>
