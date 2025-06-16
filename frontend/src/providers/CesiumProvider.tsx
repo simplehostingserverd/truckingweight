@@ -23,13 +23,13 @@ export function CesiumProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Add Cesium script to the document if it doesn't exist
     if (typeof window !== 'undefined' && !document.getElementById('cesium-script')) {
-      // Set Cesium base URL for assets
-      window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium';
+      // Set Cesium base URL for assets (using latest stable version)
+      window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.113/Build/Cesium';
 
       // Add Cesium script
       const script = document.createElement('script');
       script.id = 'cesium-script';
-      script.src = 'https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Cesium.js';
+      script.src = 'https://cesium.com/downloads/cesiumjs/releases/1.113/Build/Cesium/Cesium.js';
       script.async = true;
       document.head.appendChild(script);
 
@@ -37,14 +37,26 @@ export function CesiumProvider({ children }: { children: React.ReactNode }) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href =
-        'https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Widgets/widgets.css';
+        'https://cesium.com/downloads/cesiumjs/releases/1.113/Build/Cesium/Widgets/widgets.css';
       document.head.appendChild(link);
 
       // Set up Cesium Ion token when script is loaded
       script.onload = () => {
-        if (window.Cesium && process.env.NEXT_PUBLIC_CESIUM_TOKEN) {
-          window.Cesium.Ion.defaultAccessToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN;
+        try {
+          if (window.Cesium && process.env.NEXT_PUBLIC_CESIUM_TOKEN) {
+            window.Cesium.Ion.defaultAccessToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN;
+            console.log('Cesium loaded successfully with Ion token');
+          } else if (window.Cesium) {
+            console.warn('Cesium loaded but no Ion token found');
+          }
+        } catch (error) {
+          console.error('Error setting up Cesium Ion token:', error);
         }
+      };
+
+      // Handle script loading errors
+      script.onerror = error => {
+        console.error('Failed to load Cesium script:', error);
       };
     }
   }, []);

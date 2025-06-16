@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import {
   Alert,
   AlertDescription,
@@ -30,7 +29,6 @@ import {
   CogIcon,
   ExclamationTriangleIcon,
   FireIcon,
-  FuelIcon,
   ShieldCheckIcon,
   WrenchScrewdriverIcon,
 } from '@heroicons/react/24/outline';
@@ -140,7 +138,7 @@ export default function MechanicalDiagnostics({
       case 'electrical':
         return <BoltIcon className="h-4 w-4" />;
       case 'fuel':
-        return <FuelIcon className="h-4 w-4" />;
+        return <FireIcon className="h-4 w-4" />;
       default:
         return <ExclamationTriangleIcon className="h-4 w-4" />;
     }

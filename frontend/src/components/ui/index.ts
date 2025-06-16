@@ -21,6 +21,9 @@ export type { ButtonProps } from './button';
 export { Input } from './input';
 export type { InputProps } from './input';
 
+// Label
+export { Label } from './label';
+
 // Select
 export {
   Select,

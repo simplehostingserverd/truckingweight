@@ -13,8 +13,8 @@
 
 'use client';
 
-import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import React from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -129,7 +129,7 @@ export default function CityRegister() {
           email,
           password,
           cityId: cityData.city.id,
-          role,
+          role: _role,
           status: 'pending', // Set initial status to pending for security review
         }),
       });

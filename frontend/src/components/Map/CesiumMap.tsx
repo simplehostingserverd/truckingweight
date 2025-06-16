@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import { Badge, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import {
   ClockIcon,
@@ -148,13 +147,66 @@ const mockTelematicsData = [
   {
     id: 'route-2',
     name: 'Dallas to Atlanta',
-    driver: 'Sarah Johnson',
-    truck: 'Truck #1856',
+    driver: {
+      id: 'driver-002',
+      name: 'Sarah Johnson',
+      license: 'CDL-TX-789012',
+      phone: '(555) 987-6543',
+      status: 'off_duty',
+      hoursOfService: {
+        driving: 0,
+        onDuty: 0,
+        remaining: 11,
+        nextBreakRequired: new Date(Date.now() + 11 * 60 * 60 * 1000).toISOString(),
+      },
+    },
+    vehicle: {
+      id: 'truck-1856',
+      make: 'Peterbilt',
+      model: '579',
+      year: 2021,
+      vin: '1XPWD40X1ED123456',
+      licensePlate: 'TX-TRK1856',
+      mileage: 98432,
+    },
+    telematics: {
+      gps: {
+        latitude: 32.7767,
+        longitude: -96.797,
+        altitude: 430,
+        speed: 0, // mph
+        heading: 0, // degrees
+        accuracy: 2.1, // meters
+        lastUpdate: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+      },
+      engine: {
+        rpm: 0,
+        coolantTemp: 72, // °F
+        oilPressure: 0, // psi
+        fuelLevel: 95, // %
+        engineHours: 8934.2,
+        diagnosticCodes: [],
+      },
+      vehicle: {
+        odometer: 98432.1,
+        fuelConsumption: 7.2, // mpg
+        idleTime: 0, // hours today
+        hardBraking: 0,
+        hardAcceleration: 0,
+        speeding: 0,
+      },
+      environmental: {
+        outsideTemp: 78, // °F
+        humidity: 45, // %
+        airPressure: 30.15, // inHg
+      },
+    },
     status: 'scheduled',
     progress: 0,
     startLocation: {
       name: 'Dallas, TX',
       coordinates: [-96.797, 32.7767],
+      timestamp: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
     },
     endLocation: {
       name: 'Atlanta, GA',
@@ -162,31 +214,97 @@ const mockTelematicsData = [
     },
     currentLocation: {
       coordinates: [-96.797, 32.7767], // At start location
+      address: 'Distribution Center, Dallas, TX',
+      timestamp: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
     },
-    waypoints: [
-      { name: 'Shreveport, LA', coordinates: [-93.7502, 32.5252] },
-      { name: 'Jackson, MS', coordinates: [-90.1848, 32.2988] },
-      { name: 'Birmingham, AL', coordinates: [-86.8025, 33.5186] },
-    ],
+    route: {
+      plannedWaypoints: [
+        { name: 'Shreveport, LA', coordinates: [-93.7502, 32.5252] },
+        { name: 'Jackson, MS', coordinates: [-90.1848, 32.2988] },
+        { name: 'Birmingham, AL', coordinates: [-86.8025, 33.5186] },
+      ],
+      actualPath: [
+        {
+          coordinates: [-96.797, 32.7767],
+          timestamp: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+        },
+      ],
+    },
     load: {
       weight: 38000,
       type: 'Reefer',
       cargo: 'Frozen Foods',
+      temperature: -10, // °F for frozen
     },
+    alerts: [],
     eta: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
     distance: 781,
     distanceRemaining: 781,
+    estimatedFuelCost: 198.5,
   },
   {
     id: 'route-3',
     name: 'Chicago to Denver',
-    driver: 'Mike Rodriguez',
-    truck: 'Truck #2134',
+    driver: {
+      id: 'driver-003',
+      name: 'Mike Rodriguez',
+      license: 'CDL-IL-345678',
+      phone: '(555) 456-7890',
+      status: 'off_duty',
+      hoursOfService: {
+        driving: 10,
+        onDuty: 12,
+        remaining: 0,
+        nextBreakRequired: new Date(Date.now() + 10 * 60 * 60 * 1000).toISOString(),
+      },
+    },
+    vehicle: {
+      id: 'truck-2134',
+      make: 'Kenworth',
+      model: 'T680',
+      year: 2020,
+      vin: '1XKWD40X0KJ654321',
+      licensePlate: 'IL-TRK2134',
+      mileage: 187654,
+    },
+    telematics: {
+      gps: {
+        latitude: 39.7392,
+        longitude: -104.9903,
+        altitude: 5280,
+        speed: 0, // mph
+        heading: 270, // degrees
+        accuracy: 1.8, // meters
+        lastUpdate: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+      },
+      engine: {
+        rpm: 0,
+        coolantTemp: 68, // °F
+        oilPressure: 0, // psi
+        fuelLevel: 45, // %
+        engineHours: 15678.9,
+        diagnosticCodes: [],
+      },
+      vehicle: {
+        odometer: 187654.8,
+        fuelConsumption: 6.5, // mpg
+        idleTime: 0.2, // hours today
+        hardBraking: 0,
+        hardAcceleration: 0,
+        speeding: 0,
+      },
+      environmental: {
+        outsideTemp: 65, // °F
+        humidity: 25, // %
+        airPressure: 24.89, // inHg (high altitude)
+      },
+    },
     status: 'completed',
     progress: 100,
     startLocation: {
       name: 'Chicago, IL',
       coordinates: [-87.6298, 41.8781],
+      timestamp: new Date(Date.now() - 18 * 60 * 60 * 1000).toISOString(),
     },
     endLocation: {
       name: 'Denver, CO',
@@ -194,20 +312,49 @@ const mockTelematicsData = [
     },
     currentLocation: {
       coordinates: [-104.9903, 39.7392], // At end location
+      address: 'Delivery Terminal, Denver, CO',
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
     },
-    waypoints: [
-      { name: 'Des Moines, IA', coordinates: [-93.6091, 41.5868] },
-      { name: 'Omaha, NE', coordinates: [-95.9345, 41.2524] },
-      { name: 'North Platte, NE', coordinates: [-100.7654, 41.1239] },
-    ],
+    route: {
+      plannedWaypoints: [
+        { name: 'Des Moines, IA', coordinates: [-93.6091, 41.5868] },
+        { name: 'Omaha, NE', coordinates: [-95.9345, 41.2524] },
+        { name: 'North Platte, NE', coordinates: [-100.7654, 41.1239] },
+      ],
+      actualPath: [
+        {
+          coordinates: [-87.6298, 41.8781],
+          timestamp: new Date(Date.now() - 18 * 60 * 60 * 1000).toISOString(),
+        },
+        {
+          coordinates: [-93.6091, 41.5868],
+          timestamp: new Date(Date.now() - 15 * 60 * 60 * 1000).toISOString(),
+        },
+        {
+          coordinates: [-95.9345, 41.2524],
+          timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+        },
+        {
+          coordinates: [-100.7654, 41.1239],
+          timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
+        },
+        {
+          coordinates: [-104.9903, 39.7392],
+          timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+        },
+      ],
+    },
     load: {
       weight: 42000,
       type: 'Flatbed',
       cargo: 'Steel Beams',
+      temperature: null, // Not temperature controlled
     },
+    alerts: [],
     eta: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
     distance: 920,
     distanceRemaining: 0,
+    estimatedFuelCost: 285.2,
   },
 ];
 
@@ -229,78 +376,165 @@ export default function CesiumMap({
   const [selectedRouteData, setSelectedRouteData] = useState(mockTelematicsData[0]);
 
   useEffect(() => {
-    // For now, we'll create a placeholder 3D map
-    // In production, this would initialize Cesium
     const initializeMap = async () => {
       try {
         setIsLoading(true);
 
-        // Simulate loading time
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Check if Cesium is available
+        if (typeof window === 'undefined') {
+          setError('Window object not available');
+          setIsLoading(false);
+          return;
+        }
 
-        // Create a mock 3D visualization
-        if (cesiumContainerRef.current) {
-          cesiumContainerRef.current.innerHTML = `
-            <div style="
-              width: 100%;
-              height: 100%;
-              background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              position: relative;
-              overflow: hidden;
-            ">
+        // Wait for Cesium to load if not already available
+        let attempts = 0;
+        const maxAttempts = 50; // 5 seconds max wait
+
+        while (typeof window.Cesium === 'undefined' && attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+          attempts++;
+        }
+
+        if (typeof window.Cesium === 'undefined') {
+          // Fallback to placeholder if Cesium doesn't load
+          if (cesiumContainerRef.current) {
+            cesiumContainerRef.current.innerHTML = `
               <div style="
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-image:
-                  radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 1px, transparent 1px),
-                  radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 1px, transparent 1px),
-                  radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 1px, transparent 1px);
-                background-size: 50px 50px, 80px 80px, 60px 60px;
-                animation: float 20s ease-in-out infinite;
-              "></div>
-              <div style="
-                text-align: center;
-                color: white;
-                z-index: 1;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                overflow: hidden;
               ">
-                <div style="font-size: 48px; margin-bottom: 16px;">🌍</div>
-                <h3 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">3D Route Visualization</h3>
-                <p style="font-size: 16px; opacity: 0.9;">Cesium-powered interactive map</p>
                 <div style="
-                  margin-top: 20px;
-                  padding: 10px 20px;
-                  background: rgba(255,255,255,0.2);
-                  border-radius: 20px;
-                  backdrop-filter: blur(10px);
+                  text-align: center;
+                  color: white;
+                  z-index: 1;
                 ">
-                  Route: ${selectedRouteData.name}
+                  <div style="font-size: 48px; margin-bottom: 16px;">🌍</div>
+                  <h3 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">3D Route Visualization</h3>
+                  <p style="font-size: 16px; opacity: 0.9;">Cesium loading...</p>
+                  <div style="
+                    margin-top: 20px;
+                    padding: 10px 20px;
+                    background: rgba(255,255,255,0.2);
+                    border-radius: 20px;
+                    backdrop-filter: blur(10px);
+                  ">
+                    Route: ${selectedRouteData.name}
+                  </div>
                 </div>
               </div>
-              <style>
-                @keyframes float {
-                  0%, 100% { transform: translateY(0px) rotate(0deg); }
-                  50% { transform: translateY(-20px) rotate(180deg); }
-                }
-              </style>
-            </div>
-          `;
+            `;
+          }
+          setIsLoading(false);
+          return;
+        }
+
+        // Set Cesium Ion access token
+        const cesiumToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN;
+        if (cesiumToken) {
+          window.Cesium.Ion.defaultAccessToken = cesiumToken;
+        }
+
+        // Create Cesium viewer
+        if (cesiumContainerRef.current && !viewerRef.current) {
+          const viewer = new window.Cesium.Viewer(cesiumContainerRef.current, {
+            terrainProvider: window.Cesium.createWorldTerrain(),
+            baseLayerPicker: false,
+            geocoder: false,
+            homeButton: false,
+            sceneModePicker: false,
+            navigationHelpButton: false,
+            animation: false,
+            timeline: false,
+            fullscreenButton: false,
+            vrButton: false,
+            infoBox: false,
+            selectionIndicator: false,
+          });
+
+          viewerRef.current = viewer;
+
+          // Set initial view to show the selected route
+          const startCoords = selectedRouteData.startLocation.coordinates;
+          const endCoords = selectedRouteData.endLocation.coordinates;
+
+          viewer.camera.flyTo({
+            destination: window.Cesium.Cartesian3.fromDegrees(
+              (startCoords[0] + endCoords[0]) / 2,
+              (startCoords[1] + endCoords[1]) / 2,
+              1000000
+            ),
+            orientation: {
+              heading: window.Cesium.Math.toRadians(0),
+              pitch: window.Cesium.Math.toRadians(-45),
+              roll: 0.0,
+            },
+          });
+
+          // Add route visualization
+          if (selectedRouteData.route?.actualPath) {
+            const positions = selectedRouteData.route.actualPath.map(point =>
+              window.Cesium.Cartesian3.fromDegrees(point.coordinates[0], point.coordinates[1])
+            );
+
+            viewer.entities.add({
+              polyline: {
+                positions: positions,
+                width: 5,
+                material: window.Cesium.Color.CYAN,
+                clampToGround: true,
+              },
+            });
+          }
+
+          // Add vehicle marker at current location
+          if (selectedRouteData.currentLocation?.coordinates) {
+            viewer.entities.add({
+              position: window.Cesium.Cartesian3.fromDegrees(
+                selectedRouteData.currentLocation.coordinates[0],
+                selectedRouteData.currentLocation.coordinates[1]
+              ),
+              billboard: {
+                image: '🚛',
+                scale: 2.0,
+                verticalOrigin: window.Cesium.VerticalOrigin.BOTTOM,
+              },
+              label: {
+                text: selectedRouteData.vehicle.id,
+                font: '12pt sans-serif',
+                fillColor: window.Cesium.Color.WHITE,
+                outlineColor: window.Cesium.Color.BLACK,
+                outlineWidth: 2,
+                style: window.Cesium.LabelStyle.FILL_AND_OUTLINE,
+                pixelOffset: new window.Cesium.Cartesian2(0, -50),
+              },
+            });
+          }
         }
 
         setIsLoading(false);
-      } catch (err: Error) {
-        console.error('Error initializing map:', err);
+      } catch (err) {
+        console.error('Error initializing Cesium map:', err);
         setError('Failed to initialize 3D map');
         setIsLoading(false);
       }
     };
 
     initializeMap();
+
+    // Cleanup on unmount
+    return () => {
+      if (viewerRef.current && !viewerRef.current.isDestroyed()) {
+        viewerRef.current.destroy();
+        viewerRef.current = null;
+      }
+    };
   }, [selectedRouteData]);
 
   useEffect(() => {

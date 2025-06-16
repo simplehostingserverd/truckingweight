@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import CesiumMap from '@/components/Map/CesiumMap';
 import CriticalSafetyMonitor from '@/components/Telematics/CriticalSafetyMonitor';
 import DriverAlertSystem from '@/components/Telematics/DriverAlertSystem';
@@ -42,7 +41,6 @@ import {
   DevicePhoneMobileIcon,
   ExclamationTriangleIcon,
   FireIcon,
-  FuelIcon,
   SignalIcon,
   TruckIcon,
 } from '@heroicons/react/24/outline';
@@ -338,6 +336,7 @@ export default function TelematicsPage() {
   const [activeTab, setActiveTab] = useState('overview');
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [lastUpdate, setLastUpdate] = useState(new Date());
+  const [vehicleData, setVehicleData] = useState(mockVehicleData);
 
   // Simulate real-time updates
   useEffect(() => {
@@ -345,18 +344,28 @@ export default function TelematicsPage() {
 
     const interval = setInterval(() => {
       setLastUpdate(new Date());
-      // Simulate speed changes
-      mockVehicleData[0].location.speed = Math.max(
-        0,
-        mockVehicleData[0].location.speed + (Math.random() - 0.5) * 10
+      // Simulate speed changes using state update
+      setVehicleData(prevData =>
+        prevData.map((vehicle, index) => {
+          if (index === 0) {
+            return {
+              ...vehicle,
+              location: {
+                ...vehicle.location,
+                speed: Math.max(0, vehicle.location.speed + (Math.random() - 0.5) * 10),
+              },
+            };
+          }
+          return vehicle;
+        })
       );
     }, 5000); // Update every 5 seconds
 
     return () => clearInterval(interval);
   }, [autoRefresh]);
 
-  const currentVehicle = mockVehicleData[selectedVehicle];
-  const criticalAlerts = mockVehicleData.flatMap(v =>
+  const currentVehicle = vehicleData[selectedVehicle];
+  const criticalAlerts = vehicleData.flatMap(v =>
     v.mechanicalData.alerts.filter(a => a.severity === 'critical' && !a.acknowledged)
   );
 
@@ -416,12 +425,12 @@ export default function TelematicsPage() {
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-6">
         <Card>
           <CardContent className="pt-6">
-            <div className="flex justify-between items-center">
-              <div>
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Assets</p>
                 <h3 className="text-2xl font-bold mt-1">{mockFleetData.totalAssets}</h3>
               </div>
-              <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full">
+              <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full flex-shrink-0">
                 <TruckIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
               </div>
             </div>
@@ -430,14 +439,14 @@ export default function TelematicsPage() {
 
         <Card>
           <CardContent className="pt-6">
-            <div className="flex justify-between items-center">
-              <div>
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                   Live Tracking
                 </p>
                 <h3 className="text-2xl font-bold mt-1">{mockFleetData.activeAssets}</h3>
               </div>
-              <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-full">
+              <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-full flex-shrink-0">
                 <BoltIcon className="h-6 w-6 text-green-600 dark:text-green-400" />
               </div>
             </div>
@@ -446,12 +455,12 @@ export default function TelematicsPage() {
 
         <Card>
           <CardContent className="pt-6">
-            <div className="flex justify-between items-center">
-              <div>
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Connected</p>
                 <h3 className="text-2xl font-bold mt-1">{mockFleetData.connectedDevices}</h3>
               </div>
-              <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full">
+              <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full flex-shrink-0">
                 <DevicePhoneMobileIcon className="h-6 w-6 text-purple-600 dark:text-purple-400" />
               </div>
             </div>
@@ -460,12 +469,12 @@ export default function TelematicsPage() {
 
         <Card>
           <CardContent className="pt-6">
-            <div className="flex justify-between items-center">
-              <div>
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Avg Speed</p>
                 <h3 className="text-2xl font-bold mt-1">{mockFleetData.avgSpeed} mph</h3>
               </div>
-              <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-full">
+              <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-full flex-shrink-0">
                 <SignalIcon className="h-6 w-6 text-amber-600 dark:text-amber-400" />
               </div>
             </div>
@@ -474,13 +483,13 @@ export default function TelematicsPage() {
 
         <Card>
           <CardContent className="pt-6">
-            <div className="flex justify-between items-center">
-              <div>
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Fuel MPG</p>
                 <h3 className="text-2xl font-bold mt-1">{mockFleetData.fuelEfficiency}</h3>
               </div>
-              <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full">
-                <FuelIcon className="h-6 w-6 text-red-600 dark:text-red-400" />
+              <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full flex-shrink-0">
+                <FireIcon className="h-6 w-6 text-red-600 dark:text-red-400" />
               </div>
             </div>
           </CardContent>
@@ -488,12 +497,12 @@ export default function TelematicsPage() {
 
         <Card>
           <CardContent className="pt-6">
-            <div className="flex justify-between items-center">
-              <div>
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">On-Time %</p>
                 <h3 className="text-2xl font-bold mt-1">{mockFleetData.onTimeDeliveries}%</h3>
               </div>
-              <div className="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-full">
+              <div className="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-full flex-shrink-0">
                 <ClockIcon className="h-6 w-6 text-teal-600 dark:text-teal-400" />
               </div>
             </div>
@@ -502,12 +511,12 @@ export default function TelematicsPage() {
 
         <Card>
           <CardContent className="pt-6">
-            <div className="flex justify-between items-center">
-              <div>
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">HOS Alerts</p>
                 <h3 className="text-2xl font-bold mt-1">{mockFleetData.hosViolations}</h3>
               </div>
-              <div className="bg-orange-100 dark:bg-orange-900/30 p-3 rounded-full">
+              <div className="bg-orange-100 dark:bg-orange-900/30 p-3 rounded-full flex-shrink-0">
                 <ExclamationTriangleIcon className="h-6 w-6 text-orange-600 dark:text-orange-400" />
               </div>
             </div>
@@ -516,12 +525,12 @@ export default function TelematicsPage() {
 
         <Card>
           <CardContent className="pt-6">
-            <div className="flex justify-between items-center">
-              <div>
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Critical</p>
                 <h3 className="text-2xl font-bold mt-1">{mockFleetData.criticalAlerts}</h3>
               </div>
-              <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full">
+              <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full flex-shrink-0">
                 <FireIcon className="h-6 w-6 text-red-600 dark:text-red-400" />
               </div>
             </div>
@@ -553,7 +562,7 @@ export default function TelematicsPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {mockVehicleData.map((vehicle, index) => (
+                  {vehicleData.map((vehicle, index) => (
                     <div
                       key={vehicle.vehicleId}
                       className={`p-3 border rounded-lg cursor-pointer transition-colors ${
@@ -662,7 +671,7 @@ export default function TelematicsPage() {
 
         <TabsContent value="speedometer" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockVehicleData.map((vehicle, index) => (
+            {vehicleData.map((vehicle, index) => (
               <Card key={vehicle.vehicleId}>
                 <CardContent className="pt-6">
                   <SpeedometerGauge
