@@ -1,28 +1,27 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
 import {
-  XMarkIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
   InformationCircleIcon,
   XCircleIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { cn } from '@/lib/utils';
+import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
@@ -39,18 +38,18 @@ export interface ToastProps {
 export const Toast = ({ id, title, description, type, onDismiss }: ToastProps) => {
   const [isExiting, setIsExiting] = useState(false);
 
-  const handleDismiss = () => {
+  const handleDismiss = useCallback(() => {
     setIsExiting(true);
     setTimeout(() => {
       onDismiss(id);
     }, 300); // Match the animation duration
-  };
+  }, [id, onDismiss]);
 
   // Auto-dismiss after duration
   useEffect(() => {
     const timer = setTimeout(handleDismiss, 5000);
     return () => clearTimeout(timer);
-  }, [id]);
+  }, [handleDismiss]);
 
   const icons = {
     success: <CheckCircleIcon className="h-5 w-5 text-green-500" />,

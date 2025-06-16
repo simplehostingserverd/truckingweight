@@ -6,7 +6,24 @@ const nextConfig = {
     serverExternalPackages: [],
   }),
   images: {
-    domains: ['images.pexels.com', 'via.placeholder.com', 'placehold.co', 'picsum.photos'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+    ],
     unoptimized: process.env.NODE_ENV === 'production', // Required for Cloudflare Pages
   },
   // Enable hCaptcha on temporary subdomains
@@ -14,7 +31,7 @@ const nextConfig = {
     NEXT_PUBLIC_HCAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY,
     HCAPTCHA_SECRET_KEY: process.env.HCAPTCHA_SECRET_KEY,
   },
-  // Add headers for hCaptcha
+  // Add headers for hCaptcha, MapTiler, Cesium, and Supabase
   async headers() {
     return [
       {
@@ -23,7 +40,7 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://*.hcaptcha.com; frame-src 'self' https://*.hcaptcha.com; connect-src 'self' https://*.hcaptcha.com https://hcaptcha.com; img-src 'self' data: https://*.hcaptcha.com https://images.pexels.com https://via.placeholder.com https://placehold.co https://picsum.photos",
+              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.hcaptcha.com https://cdn.maptiler.com https://cesium.com; style-src 'self' 'unsafe-inline' https://*.hcaptcha.com https://cdn.maptiler.com https://cesium.com; frame-src 'self' https://*.hcaptcha.com; connect-src 'self' https://*.hcaptcha.com https://hcaptcha.com https://*.supabase.co; img-src 'self' data: https://*.hcaptcha.com https://images.pexels.com https://via.placeholder.com https://placehold.co https://picsum.photos https://cdn.maptiler.com https://cesium.com",
           },
         ],
       },

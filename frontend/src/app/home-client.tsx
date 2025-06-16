@@ -166,7 +166,7 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                         </svg>
                       </div>
                       <p className="text-white text-lg font-bold drop-shadow-md">
-                        Click to watch demo video
+                        Click to watch traffic demo
                       </p>
                     </div>
                   </div>

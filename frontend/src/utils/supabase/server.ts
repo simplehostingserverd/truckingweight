@@ -11,25 +11,25 @@
  * in any way without explicit written permission.
  */
 
-
 import type { Database } from '@/types/supabase';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { getSupabaseServerConfig } from './config';
 
 // Create a Supabase client for use in server components
-export const createClient = async () => {
+export const createClient = () => {
   // Get Supabase configuration with JWT secret for server-side
   const { supabaseUrl, supabaseKey } = getSupabaseServerConfig();
-  const cookieStore = await cookies();
 
   return createServerClient<Database>(supabaseUrl, supabaseKey, {
     cookies: {
-      getAll() {
+      async getAll() {
+        const cookieStore = await cookies();
         return cookieStore.getAll();
       },
-      setAll(cookiesToSet) {
+      async setAll(cookiesToSet) {
         try {
+          const cookieStore = await cookies();
           cookiesToSet.forEach(({ name, value, options }) => {
             cookieStore.set(name, value, options);
           });
