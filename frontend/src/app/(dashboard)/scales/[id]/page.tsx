@@ -13,9 +13,7 @@
 
 'use client';
 
-import React from 'react';
 import HardwareSelector from '@/components/scales/HardwareSelector';
-import { toSearchParamString } from '@/lib/utils';
 import { createClient } from '@/utils/supabase/client';
 import {
   ArrowBack as ArrowLeftIcon,
@@ -47,7 +45,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function ScaleDetail({ params }: { params: { id: string } }) {
+export default function ScaleDetail({ params }: { params: Promise<{ id: string }> }) {
   const [scale, setScale] = useState<any>(null);
   const [qrCode, setQrCode] = useState<string>('');
   const [error, setError] = useState('');
@@ -55,12 +53,23 @@ export default function ScaleDetail({ params }: { params: { id: string } }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [activeTab, setActiveTab] = useState('details');
+  const [id, setId] = useState<string>('');
   const router = useRouter();
   const supabase = createClient();
-  // Safely convert the ID parameter to a string
-  const id = toSearchParamString(params.id, '');
+
+  // Handle async params
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      const scaleId = toSearchParamString(resolvedParams.id, '');
+      setId(scaleId);
+    };
+    resolveParams();
+  }, [params]);
 
   useEffect(() => {
+    if (!id) return;
+
     const fetchScale = async () => {
       try {
         // Get session

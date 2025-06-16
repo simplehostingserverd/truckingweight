@@ -2,7 +2,6 @@
   "name": "truckingsemis-frontend",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "next dev --hostname localhost",
     "prebuild": "npm run typecheck && npm run lint",
