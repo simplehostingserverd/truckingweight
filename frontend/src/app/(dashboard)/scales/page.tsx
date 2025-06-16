@@ -11,43 +11,43 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
+import { createClient } from '@/utils/supabase/client';
 import {
-    Refresh as ArrowPathIcon,
-    Search as MagnifyingGlassIcon,
-    Add as PlusIcon,
-    Scale as ScaleIcon,
-    Sync as SyncIcon
+  Refresh as ArrowPathIcon,
+  Search as MagnifyingGlassIcon,
+  Add as PlusIcon,
+  Scale as ScaleIcon,
+  Sync as SyncIcon,
 } from '@mui/icons-material';
 import {
-    Alert,
-    AlertTitle,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    Chip,
-    CircularProgress,
-    FormControl,
-    Grid,
-    InputLabel,
-    MenuItem,
-    Paper,
-    Select,
-    Snackbar,
-    Tab,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Tabs,
-    TextField,
-    Typography
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Chip,
+  CircularProgress,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Snackbar,
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tabs,
+  TextField,
+  Typography,
 } from '@mui/material';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -130,7 +130,7 @@ export default function ScalesPage() {
 
       setScales(data || []);
       setFilteredScales(data || []);
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       console.error('Error fetching scales:', err);
       setError(err.message || 'Failed to load scales');
     } finally {
@@ -153,7 +153,7 @@ export default function ScalesPage() {
   };
 
   // Connect to a scale for weight capture
-  const connectToScale = async (scale: any /* @ts-ignore */ ) => {
+  const connectToScale = async (scale: any /* @ts-ignore */) => {
     if (!scale || scale.status !== 'Active') {
       setSnackbarMessage('Cannot connect to inactive scale');
       setSnackbarSeverity('error');
