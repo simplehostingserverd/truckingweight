@@ -9,5 +9,9 @@
   "features": ["basic", "advanced", "api", "premium"],
   "maxUsers": 50,
   "maxTenants": 5,
-  "expiresAt": "2026-05-17T03:42:28.100-05:00"
+  "expiresAt": "2026-05-17T03:42:28.100-05:00",
+  "status": "active",
+  "domains": ["localhost", "127.0.0.1"],
+  "createdAt": "2025-01-16T12:00:00.000Z",
+  "instanceId": "dev-instance-001"
 }

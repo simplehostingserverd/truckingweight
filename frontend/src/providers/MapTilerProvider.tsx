@@ -1,16 +1,15 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
-
 
 'use client';
 
@@ -39,9 +38,20 @@ export function MapTilerProvider({ children }: { children: React.ReactNode }) {
 
       // Set up MapTiler API key when script is loaded
       script.onload = () => {
-        if (window.maptilersdk && process.env.NEXT_PUBLIC_MAPTILER_KEY) {
-          window.maptilersdk.config.apiKey = process.env.NEXT_PUBLIC_MAPTILER_KEY;
+        try {
+          if (window.maptilersdk && process.env.NEXT_PUBLIC_MAPTILER_KEY) {
+            window.maptilersdk.config.apiKey = process.env.NEXT_PUBLIC_MAPTILER_KEY;
+            console.log('MapTiler SDK loaded and configured');
+          } else {
+            console.warn('MapTiler SDK not available or API key missing');
+          }
+        } catch (error) {
+          console.error('Error configuring MapTiler SDK:', error);
         }
+      };
+
+      script.onerror = () => {
+        console.error('Failed to load MapTiler SDK');
       };
     }
   }, []);
@@ -52,7 +62,7 @@ export function MapTilerProvider({ children }: { children: React.ReactNode }) {
 // Add global type definition for MapTiler SDK
 declare global {
   interface Window {
-    maptilersdk: any /* @ts-ignore */ ;
+    maptilersdk: any /* @ts-ignore */;
   }
 }
 

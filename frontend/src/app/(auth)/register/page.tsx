@@ -11,10 +11,10 @@
  * in any way without explicit written permission.
  */
 
-
 'use client';
 
 import EmailValidationFeedback from '@/components/ui/EmailValidationFeedback';
+import { createClient } from '@/utils/supabase/client';
 import { validateEmail } from '@/utils/validation/emailValidator';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -213,7 +213,7 @@ export default function Register() {
 
       // Redirect to login page
       router.push('/login?registered=true');
-    } catch (err: any /* @ts-ignore */ ) {
+    } catch (err: any /* @ts-ignore */) {
       setError(err.message || 'An error occurred during registration');
       console.error('Registration error:', err);
     } finally {
