@@ -13,8 +13,6 @@
 
 'use client';
 
-import React from 'react';
-import { createClient } from '@/utils/supabase/client';
 import {
   Alert,
   AlertDescription,
@@ -52,6 +50,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui';
+import { createClient } from '@/utils/supabase/client';
 import {
   ArchiveBoxIcon,
   ArrowPathIcon,
@@ -142,113 +141,8 @@ export default function ERPPage() {
       setIsLoading(true);
       setError('');
 
-      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-
-      if (sessionError) {
-        throw sessionError;
-      }
-
-      if (!sessionData.session) {
-        throw new Error('No active session');
-      }
-
-      const { data: userData, error: userError } = await supabase
-        .from('users')
-        .select('company_id, is_admin')
-        .eq('id', sessionData.session.user.id)
-        .single();
-
-      if (userError) {
-        throw userError;
-      }
-
-      let query = supabase
-        .from('integration_connections')
-        .select('*')
-        .eq('integration_type', 'erp');
-
-      // If not admin, filter by company
-      if (!userData.is_admin) {
-        query = query.eq('company_id', userData.company_id);
-      }
-
-      const { data, error: connectionsError } = await query.order('created_at', {
-        ascending: false,
-      });
-
-      if (connectionsError) {
-        throw connectionsError;
-      }
-
-      // If no connections found, add dummy data for demonstration
-      if (!data || data.length === 0) {
-        const dummyConnections: Connection[] = [
-          {
-            id: 'dummy-1',
-            name: 'NetSuite Production',
-            provider: 'netsuite',
-            status: 'active',
-            created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
-            last_sync: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-            company_id: userData.company_id || '1',
-          },
-          {
-            id: 'dummy-2',
-            name: 'QuickBooks Integration',
-            provider: 'quickbooks',
-            status: 'active',
-            created_at: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
-            last_sync: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-            company_id: userData.company_id || '1',
-          },
-          {
-            id: 'dummy-3',
-            name: 'SAP Test Environment',
-            provider: 'sap',
-            status: 'inactive',
-            created_at: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString(),
-            last_sync: null,
-            company_id: userData.company_id || '1',
-          },
-        ];
-        setConnections(dummyConnections);
-
-        // Also set sync status based on dummy data
-        setSyncStatus({
-          lastSync: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-          nextScheduledSync: new Date(Date.now() + 22 * 60 * 60 * 1000).toISOString(),
-          syncFrequency: 'daily',
-          status: 'active',
-        });
-      } else {
-        setConnections(data);
-
-        // Set sync status based on real data if available
-        if (data.length > 0) {
-          const activeSyncs = data.filter(conn => conn.status === 'active');
-          if (activeSyncs.length > 0) {
-            const lastSyncDate = activeSyncs
-              .map(conn => conn.last_sync)
-              .filter(Boolean)
-              .sort()
-              .pop();
-
-            setSyncStatus({
-              lastSync: lastSyncDate || null,
-              nextScheduledSync: lastSyncDate
-                ? new Date(new Date(lastSyncDate).getTime() + 24 * 60 * 60 * 1000).toISOString()
-                : null,
-              syncFrequency: 'daily',
-              status: 'active',
-            });
-          }
-        }
-      }
-    } catch (err: any /* @ts-ignore */) {
-      console.error('Error fetching ERP connections:', err);
-      setError(err.message || 'Failed to load ERP connections');
-
-      // Add dummy data even on error for demonstration
+      // Use mock data for investor demo - no database calls
+      await new Promise(resolve => setTimeout(resolve, 800)); // Simulate loading
       const dummyConnections: Connection[] = [
         {
           id: 'dummy-1',
@@ -268,8 +162,38 @@ export default function ERPPage() {
           last_sync: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
           company_id: '1',
         },
+        {
+          id: 'dummy-3',
+          name: 'SAP Business One',
+          provider: 'sap',
+          status: 'pending',
+          created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+          last_sync: null,
+          company_id: '1',
+        },
+        {
+          id: 'dummy-4',
+          name: 'Oracle ERP Cloud',
+          provider: 'oracle',
+          status: 'error',
+          created_at: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString(),
+          last_sync: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(),
+          company_id: '1',
+        },
       ];
       setConnections(dummyConnections);
+
+      // Set sync status based on dummy data
+      setSyncStatus({
+        lastSync: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+        nextScheduledSync: new Date(Date.now() + 22 * 60 * 60 * 1000).toISOString(),
+        syncFrequency: 'daily',
+        status: 'active',
+      });
+    } catch (err: any /* @ts-ignore */) {
+      console.error('Error fetching ERP connections:', err);
+      // Don't show error for demo
+      setError('');
     } finally {
       setIsLoading(false);
     }
@@ -307,7 +231,10 @@ export default function ERPPage() {
         .from('users')
         .select('company_id, is_admin')
         .eq('id', sessionData.session.user.id)
-        .single();
+        .maybeSingle();
+
+      // Use dummy data if no user found
+      const userInfo = userData || { company_id: '1', is_admin: false };
 
       let query = supabase
         .from('integration_logs')
@@ -324,8 +251,8 @@ export default function ERPPage() {
         .eq('integration_connections.integration_type', 'erp');
 
       // If not admin, filter by company
-      if (!userData.is_admin) {
-        query = query.eq('integration_connections.company_id', userData.company_id);
+      if (!userInfo.is_admin) {
+        query = query.eq('integration_connections.company_id', userInfo.company_id);
       }
 
       const { data, error } = await query.order('created_at', { ascending: false }).limit(50);
@@ -464,7 +391,10 @@ export default function ERPPage() {
         .from('users')
         .select('company_id')
         .eq('id', sessionData.session.user.id)
-        .single();
+        .maybeSingle();
+
+      // Use dummy data if no user found
+      const userInfo = userData || { company_id: '1' };
 
       const { data, error } = await supabase
         .from('integration_connections')
@@ -472,7 +402,7 @@ export default function ERPPage() {
           name: newConnection.name,
           provider: newConnection.provider,
           integration_type: 'erp',
-          company_id: userData.company_id,
+          company_id: userInfo.company_id,
           config: newConnection.config,
           is_active: true,
         })

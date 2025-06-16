@@ -103,6 +103,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
     { name: 'Weights', href: '/weights', icon: ScaleIcon },
     { name: 'Weight Capture', href: '/weights/capture', icon: ScaleIcon },
     { name: 'Loads', href: '/loads', icon: TruckIcon },
+    { name: 'Load Boards', href: '/load-boards', icon: TruckIcon },
     { name: 'Vehicles', href: '/vehicles', icon: TruckIcon },
     { name: 'Drivers', href: '/drivers', icon: UserGroupIcon },
     { name: 'Documents', href: '/documents', icon: DocumentIcon },

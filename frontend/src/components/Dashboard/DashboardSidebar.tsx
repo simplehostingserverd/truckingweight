@@ -13,27 +13,26 @@
 
 'use client';
 
-import React from 'react';
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 import {
-  HomeIcon,
-  ScaleIcon,
-  TruckIcon,
-  UserGroupIcon,
+  BuildingOfficeIcon,
   ChartBarIcon,
   Cog6ToothIcon,
-  UsersIcon,
-  BuildingOfficeIcon,
+  DocumentIcon,
+  HomeIcon,
+  MapPinIcon,
+  PencilIcon,
+  ScaleIcon,
   ServerIcon,
   SignalIcon,
-  MapPinIcon,
-  DocumentIcon,
-  PencilIcon,
+  TruckIcon,
+  UserGroupIcon,
+  UsersIcon,
 } from '@heroicons/react/24/outline';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 // Define breakpoints directly to avoid using the hook
 const BREAKPOINTS = {
@@ -90,6 +89,7 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
     { name: 'Weight Capture', href: '/weights/capture', icon: ScaleIcon },
     { name: 'Scales', href: '/scales', icon: ScaleIcon },
     { name: 'Loads', href: '/loads', icon: TruckIcon },
+    { name: 'Load Boards', href: '/load-boards', icon: TruckIcon },
     { name: 'Vehicles', href: '/vehicles', icon: TruckIcon },
     { name: 'Drivers', href: '/drivers', icon: UserGroupIcon },
     { name: 'Driver Tracking', href: '/driver-tracking', icon: TruckIcon },
