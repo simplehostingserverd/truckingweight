@@ -139,7 +139,7 @@ export default function CityLogin() {
       router.push(createSafeUrl('/city/dashboard'));
       router.refresh(); // Important to refresh the router
     } catch (err: unknown) {
-      setError(err.message || 'Invalid email or password');
+      setError(err instanceof Error ? err.message : 'Invalid email or password');
       console.error('City login error:', err);
     } finally {
       setIsLoading(false);

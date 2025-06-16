@@ -55,7 +55,7 @@ export default function Login() {
 
       // The redirect is handled in the auth provider
     } catch (err: unknown) {
-      setError(err.message || 'Invalid email or password');
+      setError(err instanceof Error ? err.message : 'Invalid email or password');
       console.error('Login error:', err);
 
       // Reset captcha on error

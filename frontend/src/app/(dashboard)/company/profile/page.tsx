@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -22,8 +21,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
-import { uploadCompanyLogo } from '@/utils/supabase/storage';
 import { createClient } from '@/utils/supabase/client';
+import { uploadCompanyLogo } from '@/utils/supabase/storage';
 import {
   ArrowPathIcon,
   BuildingOfficeIcon,
@@ -36,7 +35,7 @@ import {
   UserIcon,
 } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function CompanyProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -143,7 +142,7 @@ export default function CompanyProfilePage() {
       });
     } catch (err: unknown) {
       console.error('Error fetching company profile:', err);
-      setError(err.message || 'Failed to load company profile');
+      setError(err instanceof Error ? err.message : 'Failed to load company profile');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
@@ -230,7 +229,7 @@ export default function CompanyProfilePage() {
       setSuccess('Logo uploaded successfully');
     } catch (err: unknown) {
       console.error('Error uploading logo:', err);
-      setError(err.message || 'Failed to upload logo');
+      setError(err instanceof Error ? err.message : 'Failed to upload logo');
     } finally {
       setLogoUploading(false);
     }
@@ -277,7 +276,7 @@ export default function CompanyProfilePage() {
       setIsEditing(false);
     } catch (err: unknown) {
       console.error('Error updating company profile:', err);
-      setError(err.message || 'Failed to update company profile');
+      setError(err instanceof Error ? err.message : 'Failed to update company profile');
     }
   };
 

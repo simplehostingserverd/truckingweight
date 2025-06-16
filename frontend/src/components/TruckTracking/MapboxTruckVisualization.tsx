@@ -13,22 +13,38 @@
 
 'use client';
 
-import React from 'react';
-import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { useEffect, useRef, useState } from 'react';
 
 // Function to create a custom truck marker element
 function createTruckMarkerElement() {
   const element = document.createElement('div');
   element.className = 'truck-marker';
-  element.style.width = '30px';
-  element.style.height = '30px';
-  element.style.backgroundImage = 'url(/icons/truck-icon.svg)';
-  element.style.backgroundSize = 'contain';
-  element.style.backgroundRepeat = 'no-repeat';
+  element.style.width = '40px';
+  element.style.height = '40px';
+  element.style.borderRadius = '50%';
+  element.style.backgroundColor = '#0d2b4b';
+  element.style.border = '3px solid #FFC107';
+  element.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+  element.style.display = 'flex';
+  element.style.alignItems = 'center';
+  element.style.justifyContent = 'center';
+  element.style.fontSize = '20px';
+  element.style.transition = 'all 0.3s ease';
+  element.innerHTML = '🚛';
+  element.style.cursor = 'pointer';
+
+  // Add hover effect
+  element.addEventListener('mouseenter', () => {
+    element.style.transform = 'scale(1.2)';
+    element.style.boxShadow = '0 6px 12px rgba(0,0,0,0.4)';
+  });
+
+  element.addEventListener('mouseleave', () => {
+    element.style.transform = 'scale(1)';
+    element.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+  });
 
   return element;
 }
@@ -47,6 +63,39 @@ interface MapboxTruckVisualizationProps {
   mapboxToken: string;
 }
 
+// Persistent storage keys
+const TRUCK_POSITION_KEY = 'truck_animation_position';
+const TRUCK_TIMESTAMP_KEY = 'truck_animation_timestamp';
+
+// Get persistent truck position
+const getPersistentTruckPosition = (): number => {
+  if (typeof window === 'undefined') return 0;
+  const stored = localStorage.getItem(TRUCK_POSITION_KEY);
+  const timestamp = localStorage.getItem(TRUCK_TIMESTAMP_KEY);
+
+  if (stored && timestamp) {
+    const storedProgress = parseFloat(stored);
+    const storedTime = parseInt(timestamp);
+    const currentTime = Date.now();
+    const timeDiff = currentTime - storedTime;
+
+    // Calculate how much the truck should have moved based on time elapsed
+    // Assuming truck moves at ~0.1% per second (completes route in ~1000 seconds)
+    const progressPerSecond = 0.001;
+    const additionalProgress = (timeDiff / 1000) * progressPerSecond;
+
+    return Math.min(1, storedProgress + additionalProgress);
+  }
+  return 0;
+};
+
+// Save persistent truck position
+const savePersistentTruckPosition = (progress: number) => {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(TRUCK_POSITION_KEY, progress.toString());
+  localStorage.setItem(TRUCK_TIMESTAMP_KEY, Date.now().toString());
+};
+
 export default function MapboxTruckVisualization({
   route,
   currentPosition,
@@ -54,8 +103,18 @@ export default function MapboxTruckVisualization({
 }: MapboxTruckVisualizationProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const truckMarker = useRef<mapboxgl.Marker | null>(null);
+  const animationRef = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [animationProgress, setAnimationProgress] = useState(() => getPersistentTruckPosition());
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [currentTruckPosition, setCurrentTruckPosition] = useState<{
+    lng: number;
+    lat: number;
+    speed: number;
+  } | null>(null);
 
   // Initialize the map and 3D visualization
   useEffect(() => {
@@ -127,14 +186,23 @@ export default function MapboxTruckVisualization({
           .setPopup(new mapboxgl.Popup().setHTML(`<h3>Destination: ${endPoint.name}</h3>`))
           .addTo(mapInstance);
 
-        // Add custom 3D truck layer
-        addTruckLayer(mapInstance);
+        // Add animated truck marker
+        addAnimatedTruckMarker(mapInstance);
 
         setLoading(false);
       });
 
       // Cleanup
       return () => {
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+        }
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+        if (truckMarker.current) {
+          truckMarker.current.remove();
+        }
         if (map.current) {
           map.current.remove();
           map.current = null;
@@ -147,224 +215,187 @@ export default function MapboxTruckVisualization({
     }
   }, [route, currentPosition, mapboxToken]);
 
-  // Add 3D truck layer using Three.js
-  const addTruckLayer = (mapInstance: mapboxgl.Map) => {
-    // Current truck position
-    const truckPosition = currentPosition || route[Math.floor(route.length * 0.7)]; // Default to 70% along the route
+  // Add animated truck marker
+  const addAnimatedTruckMarker = (mapInstance: mapboxgl.Map) => {
+    // Calculate initial position based on stored progress
+    const initialProgress = animationProgress;
+    let initialPosition;
 
-    // Create a custom layer for the 3D truck
-    const truckLayer = {
-      id: '3d-truck',
-      type: 'custom',
-      renderingMode: '3d',
+    if (currentPosition) {
+      initialPosition = currentPosition;
+    } else if (initialProgress > 0 && route.length > 1) {
+      // Calculate position based on stored progress
+      const routeIndex = Math.floor(initialProgress * (route.length - 1));
+      const nextIndex = Math.min(routeIndex + 1, route.length - 1);
+      const segmentProgress = initialProgress * (route.length - 1) - routeIndex;
 
-      onAdd: function (map: mapboxgl.Map, gl: WebGLRenderingContext) {
-        // Create Three.js scene
-        this.scene = new THREE.Scene();
+      const currentPoint = route[routeIndex];
+      const nextPoint = route[nextIndex];
 
-        // Create camera (will be automatically updated by Mapbox)
-        this.camera = new THREE.Camera();
+      const lng = currentPoint.lng + (nextPoint.lng - currentPoint.lng) * segmentProgress;
+      const lat = currentPoint.lat + (nextPoint.lat - currentPoint.lat) * segmentProgress;
+      const speed = currentPoint.speed + (nextPoint.speed - currentPoint.speed) * segmentProgress;
 
-        // Create renderer
-        this.renderer = new THREE.WebGLRenderer({
-          canvas: map.getCanvas(),
-          context: gl,
-          antialias: true,
-        });
+      initialPosition = {
+        lng,
+        lat,
+        speed,
+        name: currentPoint.name,
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      initialPosition = route[0];
+    }
 
-        this.renderer.autoClear = false;
+    setCurrentTruckPosition({
+      lng: initialPosition.lng,
+      lat: initialPosition.lat,
+      speed: initialPosition.speed,
+    });
 
-        // Add lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        this.scene.add(ambientLight);
+    // Create the truck marker
+    const truckElement = createTruckMarkerElement();
+    truckMarker.current = new mapboxgl.Marker({
+      element: truckElement,
+      anchor: 'center',
+    })
+      .setLngLat([initialPosition.lng, initialPosition.lat])
+      .addTo(mapInstance);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
-        directionalLight.position.set(0, 70, 100);
-        this.scene.add(directionalLight);
+    // Add popup to truck marker
+    const popup = new mapboxgl.Popup({
+      offset: 25,
+      closeButton: false,
+      closeOnClick: false,
+    }).setHTML(`
+      <div class="truck-popup">
+        <h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: bold;">🚛 Live Truck</h3>
+        <p style="margin: 0; font-size: 12px;">Speed: ${Math.round(initialPosition.speed)} mph</p>
+        <p style="margin: 0; font-size: 12px;">Progress: ${Math.round(initialProgress * 100)}%</p>
+      </div>
+    `);
 
-        // Create a custom truck model directly
-        this.createFallbackTruck();
+    truckMarker.current.setPopup(popup);
 
-        // Add a marker directly on the map for better visibility
-        this.truckMarker = new mapboxgl.Marker({
-          element: createTruckMarkerElement(),
-          scale: 0.7,
-        })
-          .setLngLat([truckPosition.lng, truckPosition.lat])
-          .addTo(map);
-
-        // Set up animation
-        this.animationProgress = 0;
-        this.animationSpeed = 0.0005; // Slower speed for more realistic movement
-        this.lastFrameTime = Date.now();
-        this.routeCompleted = false; // Track if route is completed
-      },
-
-      createFallbackTruck: function () {
-        // Create a simple truck shape if the model fails to load
-        const truckGeometry = new THREE.BoxGeometry(1, 0.4, 2);
-        const cabinGeometry = new THREE.BoxGeometry(0.9, 0.6, 0.7);
-
-        const truckMaterial = new THREE.MeshStandardMaterial({
-          color: 0x0d2b4b, // Deep blue from the design system
-          metalness: 0.5,
-          roughness: 0.5,
-        });
-
-        const cabinMaterial = new THREE.MeshStandardMaterial({
-          color: 0x0d2b4b, // Deep blue from the design system
-          metalness: 0.6,
-          roughness: 0.4,
-        });
-
-        const truckBody = new THREE.Mesh(truckGeometry, truckMaterial);
-        const cabin = new THREE.Mesh(cabinGeometry, cabinMaterial);
-
-        cabin.position.z = -0.7;
-        cabin.position.y = 0.1;
-
-        this.truck = new THREE.Group();
-        this.truck.add(truckBody);
-        this.truck.add(cabin);
-
-        // Add wheels - smaller and less prominent
-        const wheelGeometry = new THREE.CylinderGeometry(0.2, 0.2, 0.15, 16);
-        const wheelMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
-
-        // Front wheels
-        const frontLeftWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
-        frontLeftWheel.rotation.x = Math.PI / 2;
-        frontLeftWheel.position.set(-0.6, -0.25, -0.6);
-        this.truck.add(frontLeftWheel);
-
-        const frontRightWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
-        frontRightWheel.rotation.x = Math.PI / 2;
-        frontRightWheel.position.set(0.6, -0.25, -0.6);
-        this.truck.add(frontRightWheel);
-
-        // Rear wheels
-        const rearLeftWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
-        rearLeftWheel.rotation.x = Math.PI / 2;
-        rearLeftWheel.position.set(-0.6, -0.25, 0.6);
-        this.truck.add(rearLeftWheel);
-
-        const rearRightWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
-        rearRightWheel.rotation.x = Math.PI / 2;
-        rearRightWheel.position.set(0.6, -0.25, 0.6);
-        this.truck.add(rearRightWheel);
-
-        // Add a subtle light to make the truck visible without the glow effect
-        const pointLight = new THREE.PointLight(0xffc107, 0.8, 50); // Highway yellow from design system
-        pointLight.position.set(0, 1, 0);
-        this.truck.add(pointLight);
-
-        this.scene.add(this.truck);
-
-        // Calculate initial position
-        this.updateTruckPosition(truckPosition.lng, truckPosition.lat);
-      },
-
-      updateTruckPosition: function (lng: number, lat: number) {
-        if (!this.truck) return;
-
-        // Convert geographic coordinates to Mercator coordinates
-        const position = mapboxgl.MercatorCoordinate.fromLngLat(
-          [lng, lat],
-          0 // Elevation
-        );
-
-        // Scale the model to a consistent size regardless of zoom level
-        const modelScale = position.meterInMercatorCoordinateUnits();
-
-        // Set the position
-        this.truck.position.x = position.x;
-        this.truck.position.y = position.y;
-        this.truck.position.z = position.z;
-
-        // Calculate truck heading based on route
-        const currentIndex = route.findIndex(p => p.lng === lng && p.lat === lat);
-        if (currentIndex > 0 && currentIndex < route.length - 1) {
-          const prevPoint = route[currentIndex - 1];
-          const nextPoint = route[currentIndex + 1];
-
-          // Calculate direction vector
-          const direction = [nextPoint.lng - prevPoint.lng, nextPoint.lat - prevPoint.lat];
-
-          // Calculate angle
-          const angle = Math.atan2(direction[1], direction[0]);
-
-          // Apply rotation to truck
-          this.truck.rotation.z = angle;
-        }
-      },
-
-      render: function (gl: WebGLRenderingContext, matrix: number[]) {
-        if (!this.truck) return;
-
-        // Calculate time delta for smooth animation
-        const now = Date.now();
-        const delta = (now - this.lastFrameTime) / 1000; // Convert to seconds
-        this.lastFrameTime = now;
-
-        // If we have a fixed current position and not animating, just show that
-        if (currentPosition && !this.isAnimating) {
-          this.updateTruckPosition(currentPosition.lng, currentPosition.lat);
-          if (this.truckMarker) {
-            this.truckMarker.setLngLat([currentPosition.lng, currentPosition.lat]);
-          }
-          this.renderer.resetState();
-          this.renderer.render(this.scene, this.camera);
-          return;
-        }
-
-        // Update animation progress
-        if (!this.routeCompleted) {
-          this.animationProgress += this.animationSpeed * delta * 60; // Normalize for 60fps
-        }
-
-        // Check if route is completed
-        if (this.animationProgress >= 1) {
-          this.routeCompleted = true;
-          this.animationProgress = 1; // Stay at the end
-        }
-
-        // Calculate position along the route
-        const routeIndex = Math.floor(this.animationProgress * (route.length - 1));
-        const nextIndex = Math.min(routeIndex + 1, route.length - 1);
-        const segmentProgress = this.animationProgress * (route.length - 1) - routeIndex;
-
-        // Interpolate between points
-        const currentLng =
-          route[routeIndex].lng + (route[nextIndex].lng - route[routeIndex].lng) * segmentProgress;
-        const currentLat =
-          route[routeIndex].lat + (route[nextIndex].lat - route[routeIndex].lat) * segmentProgress;
-
-        // Update truck position
-        this.updateTruckPosition(currentLng, currentLat);
-
-        // Update marker position
-        if (this.truckMarker) {
-          this.truckMarker.setLngLat([currentLng, currentLat]);
-
-          // If we've reached the end, add a popup
-          if (this.routeCompleted && !this.endPopupShown) {
-            this.endPopupShown = true;
-            new mapboxgl.Popup()
-              .setLngLat([currentLng, currentLat])
-              .setHTML(`<h3>Destination Reached</h3><p>${route[route.length - 1].name}</p>`)
-              .addTo(map);
-          }
-        }
-
-        // Render the Three.js scene
-        this.renderer.resetState();
-        this.renderer.render(this.scene, this.camera);
-      },
-    } as any;
-
-    // Add the custom layer to the map
-    mapInstance.addLayer(truckLayer);
+    // Start continuous animation if no current position is provided (demo mode)
+    if (!currentPosition && route.length > 1) {
+      setIsAnimating(true);
+      startContinuousTruckMovement(mapInstance);
+    }
   };
+
+  // Start continuous truck movement (updates every 10 seconds)
+  const startContinuousTruckMovement = (mapInstance: mapboxgl.Map) => {
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    const updateTruckPosition = () => {
+      if (!isAnimating || !route || route.length < 2) return;
+
+      // Get current progress and increment it
+      let currentProgress = animationProgress;
+
+      // Move truck forward by a small amount (adjust this value to control speed)
+      // This represents moving ~1% of the route every 10 seconds
+      const progressIncrement = 0.01;
+      currentProgress += progressIncrement;
+
+      // If we've completed the route, start over
+      if (currentProgress >= 1) {
+        currentProgress = 0;
+      }
+
+      // Calculate new position along the route
+      const routeIndex = Math.floor(currentProgress * (route.length - 1));
+      const nextIndex = Math.min(routeIndex + 1, route.length - 1);
+      const segmentProgress = currentProgress * (route.length - 1) - routeIndex;
+
+      // Interpolate between route points
+      const currentPoint = route[routeIndex];
+      const nextPoint = route[nextIndex];
+
+      const newLng = currentPoint.lng + (nextPoint.lng - currentPoint.lng) * segmentProgress;
+      const newLat = currentPoint.lat + (nextPoint.lat - currentPoint.lat) * segmentProgress;
+      const newSpeed =
+        currentPoint.speed + (nextPoint.speed - currentPoint.speed) * segmentProgress;
+
+      // Update truck marker position
+      if (truckMarker.current) {
+        truckMarker.current.setLngLat([newLng, newLat]);
+
+        // Update popup content
+        const popup = truckMarker.current.getPopup();
+        if (popup) {
+          popup.setHTML(`
+            <div class="truck-popup">
+              <h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: bold;">🚛 Live Truck</h3>
+              <p style="margin: 0; font-size: 12px;">Speed: ${Math.round(newSpeed)} mph</p>
+              <p style="margin: 0; font-size: 12px;">Progress: ${Math.round(currentProgress * 100)}%</p>
+              <p style="margin: 0; font-size: 12px;">Location: ${currentPoint.name}</p>
+            </div>
+          `);
+        }
+
+        // Smoothly follow the truck every few updates
+        if (Math.round(currentProgress * 100) % 10 === 0) {
+          mapInstance.easeTo({
+            center: [newLng, newLat],
+            duration: 2000,
+          });
+        }
+      }
+
+      // Update state and save to localStorage
+      setAnimationProgress(currentProgress);
+      setCurrentTruckPosition({ lng: newLng, lat: newLat, speed: newSpeed });
+      savePersistentTruckPosition(currentProgress);
+    };
+
+    // Initial update
+    updateTruckPosition();
+
+    // Set up interval to update every 10 seconds
+    intervalRef.current = setInterval(updateTruckPosition, 10000);
+  };
+
+  // Effect to handle current position updates
+  useEffect(() => {
+    if (currentPosition && truckMarker.current) {
+      // Stop animation if we have a fixed current position
+      setIsAnimating(false);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+
+      // Update truck marker to current position
+      truckMarker.current.setLngLat([currentPosition.lng, currentPosition.lat]);
+
+      // Update popup
+      const popup = truckMarker.current.getPopup();
+      if (popup) {
+        popup.setHTML(`
+          <div class="truck-popup">
+            <h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: bold;">Live Truck</h3>
+            <p style="margin: 0; font-size: 12px;">Speed: ${currentPosition.speed} mph</p>
+            <p style="margin: 0; font-size: 12px;">Location: ${currentPosition.name}</p>
+          </div>
+        `);
+      }
+
+      // Center map on current position
+      if (map.current) {
+        map.current.easeTo({
+          center: [currentPosition.lng, currentPosition.lat],
+          duration: 1000,
+        });
+      }
+    }
+  }, [currentPosition]);
 
   return (
     <div className="relative w-full h-[600px] rounded-lg overflow-hidden shadow-lg">
@@ -383,23 +414,68 @@ export default function MapboxTruckVisualization({
       <div ref={mapContainer} className="w-full h-full" />
 
       {/* Overlay with truck info */}
-      {!loading && !error && currentPosition && (
+      {!loading && !error && (
         <div className="absolute top-4 right-4 bg-white/80 dark:bg-gray-800/80 p-4 rounded-lg shadow-md backdrop-blur-sm max-w-xs">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            Live Truck Tracking
+            🚛 Live Truck Tracking
           </h3>
           <div className="mt-2 text-sm text-gray-600 dark:text-gray-300 space-y-1">
-            <p>
-              <span className="font-medium">Location:</span> {currentPosition.name}
-            </p>
-            <p>
-              <span className="font-medium">Speed:</span> {currentPosition.speed.toFixed(1)} mph
-            </p>
-            <p>
-              <span className="font-medium">Last Update:</span>{' '}
-              {new Date(currentPosition.timestamp).toLocaleTimeString()}
-            </p>
+            {currentPosition ? (
+              <>
+                <p>
+                  <span className="font-medium">Location:</span> {currentPosition.name}
+                </p>
+                <p>
+                  <span className="font-medium">Speed:</span> {currentPosition.speed.toFixed(1)} mph
+                </p>
+                <p>
+                  <span className="font-medium">Last Update:</span>{' '}
+                  {new Date(currentPosition.timestamp).toLocaleTimeString()}
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  <span className="font-medium">Mode:</span> Demo Animation
+                </p>
+                <p>
+                  <span className="font-medium">Progress:</span>{' '}
+                  {Math.round(animationProgress * 100)}%
+                </p>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-2">
+                  <div
+                    className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${Math.min(100, Math.max(0, animationProgress * 100))}%` }}
+                  ></div>
+                </div>
+              </>
+            )}
           </div>
+        </div>
+      )}
+
+      {/* Animation controls */}
+      {!loading && !error && !currentPosition && (
+        <div className="absolute bottom-4 left-4 bg-white/80 dark:bg-gray-800/80 p-3 rounded-lg shadow-md backdrop-blur-sm">
+          <button
+            type="button"
+            onClick={() => {
+              if (isAnimating) {
+                setIsAnimating(false);
+                if (intervalRef.current) {
+                  clearInterval(intervalRef.current);
+                }
+              } else {
+                setIsAnimating(true);
+                if (map.current) {
+                  startContinuousTruckMovement(map.current);
+                }
+              }
+            }}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            {isAnimating ? '⏸️ Pause' : '▶️ Play'} Animation
+          </button>
         </div>
       )}
     </div>

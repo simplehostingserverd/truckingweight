@@ -40,7 +40,7 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.hcaptcha.com https://cdn.maptiler.com https://cesium.com; style-src 'self' 'unsafe-inline' https://*.hcaptcha.com https://cdn.maptiler.com https://cesium.com; frame-src 'self' https://*.hcaptcha.com; connect-src 'self' https://*.hcaptcha.com https://hcaptcha.com https://*.supabase.co https://api.maptiler.com; worker-src 'self' blob:; img-src 'self' data: https://*.hcaptcha.com https://images.pexels.com https://via.placeholder.com https://placehold.co https://picsum.photos https://cdn.maptiler.com https://cesium.com https://api.maptiler.com",
+              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.hcaptcha.com https://cdn.maptiler.com https://cesium.com; style-src 'self' 'unsafe-inline' https://*.hcaptcha.com https://cdn.maptiler.com https://cesium.com; frame-src 'self' https://*.hcaptcha.com; connect-src 'self' https://*.hcaptcha.com https://hcaptcha.com https://*.supabase.co https://api.maptiler.com https://api.mapbox.com https://events.mapbox.com; worker-src 'self' blob:; img-src 'self' data: https://*.hcaptcha.com https://images.pexels.com https://via.placeholder.com https://placehold.co https://picsum.photos https://cdn.maptiler.com https://cesium.com https://api.maptiler.com https://*.mapbox.com https://*.supabase.co",
           },
         ],
       },

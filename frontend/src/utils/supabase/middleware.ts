@@ -31,19 +31,21 @@ export async function middleware(req: NextRequest) {
     // Default fallback - restrict to same origin
     "default-src 'self'",
     // Scripts - allow inline and eval for development tools and libraries
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co https://cdn.maptiler.com https://cesium.com https://*.hcaptcha.com",
     // Connect - allow Supabase and API connections
-    "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.mapbox.com https://events.mapbox.com",
+    "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.mapbox.com https://events.mapbox.com https://api.maptiler.com https://*.hcaptcha.com https://hcaptcha.com",
     // Images - allow various sources including data URIs
-    "img-src 'self' data: blob: https://images.pexels.com https://*.supabase.co https://upload.wikimedia.org https://*.mapbox.com",
+    "img-src 'self' data: blob: https://images.pexels.com https://*.supabase.co https://upload.wikimedia.org https://*.mapbox.com https://cdn.maptiler.com https://cesium.com https://api.maptiler.com https://via.placeholder.com https://placehold.co https://picsum.photos https://*.hcaptcha.com",
     // Styles - allow inline for component libraries
-    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.maptiler.com https://cesium.com https://*.hcaptcha.com",
     // Fonts - allow data URIs and CDNs
     "font-src 'self' data: https://cdn.jsdelivr.net",
-    // Frames - restrict to same origin
-    "frame-src 'self'",
+    // Frames - restrict to same origin and hCaptcha
+    "frame-src 'self' https://*.hcaptcha.com",
     // Media - restrict to same origin and data URIs
     "media-src 'self' data:",
+    // Workers - allow blob URLs for Cesium
+    "worker-src 'self' blob:",
     // Object - restrict completely
     "object-src 'none'",
   ].join('; ');

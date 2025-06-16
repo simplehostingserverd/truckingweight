@@ -17,21 +17,11 @@ import React from 'react';
 // Global type declarations
 declare function alert(message?: any): void;
 
-import { useState, useEffect } from 'react';
-import {
-  ScaleIcon,
-  TruckIcon,
-  DocumentTextIcon,
-  ArrowPathIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  ExclamationCircleIcon,
-  CameraIcon,
-  QrCodeIcon,
-  PrinterIcon,
-} from '@heroicons/react/24/outline';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -41,18 +31,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  ArrowPathIcon,
+  CameraIcon,
+  PrinterIcon,
+  QrCodeIcon,
+  ScaleIcon,
+} from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
 
 export default function CityWeighingPage() {
   const [scales, setScales] = useState<any[]>([]);
@@ -103,15 +92,13 @@ export default function CityWeighingPage() {
       setScales(data.scales);
 
       // Set first active scale as default
-      const activeScales = data.scales.filter(
-        (scale: unknown) => scale.status === 'Active'
-      );
+      const activeScales = data.scales.filter((scale: unknown) => scale.status === 'Active');
       if (activeScales.length > 0) {
         setSelectedScale(activeScales[0].id.toString());
       }
     } catch (err: unknown) {
       console.error('Error fetching scales:', err);
-      setError(err.message || 'Failed to load scales');
+      setError(err instanceof Error ? err.message : 'Failed to load scales');
 
       // Use dummy data for demo
       const dummyScales = [
@@ -202,7 +189,7 @@ export default function CityWeighingPage() {
       resetForm();
     } catch (err: unknown) {
       console.error('Error creating weigh ticket:', err);
-      setError(err.message || 'Failed to create weigh ticket');
+      setError(err instanceof Error ? err.message : 'Failed to create weigh ticket');
 
       // For demo purposes, create a dummy ticket
       if (process.env.NODE_ENV !== 'production') {

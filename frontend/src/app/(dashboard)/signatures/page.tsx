@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -21,8 +20,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
-import { uploadSignature } from '@/utils/supabase/storage';
 import { createClient } from '@/utils/supabase/client';
+import { uploadSignature } from '@/utils/supabase/storage';
 import {
   ArrowPathIcon,
   CheckIcon,
@@ -30,7 +29,7 @@ import {
   TrashIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function SignaturesPage() {
   const [signatures, setSignatures] = useState<any[]>([]);
@@ -122,7 +121,7 @@ export default function SignaturesPage() {
       setSignatures(data || []);
     } catch (err: unknown) {
       console.error('Error fetching signatures:', err);
-      setError(err.message || 'Failed to load signatures');
+      setError(err instanceof Error ? err.message : 'Failed to load signatures');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
@@ -135,7 +134,7 @@ export default function SignaturesPage() {
       {
         id: 1,
         name: 'John Smith',
-        signature_url: 'https://example.com/signatures/john_smith.png',
+        signature_url: 'https://via.placeholder.com/200x100/4A90E2/FFFFFF?text=John+Smith',
         created_at: '2023-05-15T10:30:00Z',
         updated_at: '2023-05-15T10:30:00Z',
         company_id: 1,
@@ -143,7 +142,7 @@ export default function SignaturesPage() {
       {
         id: 2,
         name: 'Jane Doe',
-        signature_url: 'https://example.com/signatures/jane_doe.png',
+        signature_url: 'https://via.placeholder.com/200x100/50C878/FFFFFF?text=Jane+Doe',
         created_at: '2023-06-20T14:45:00Z',
         updated_at: '2023-06-20T14:45:00Z',
         company_id: 1,

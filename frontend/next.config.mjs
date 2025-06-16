@@ -176,11 +176,11 @@ const nextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(self), interest-cohort=()',
           },
-          {
-            key: 'Content-Security-Policy',
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co https://*.maptiler.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.maptiler.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co https://images.pexels.com https://upload.wikimedia.org https://*.maptiler.com; connect-src 'self' https://*.supabase.co https://api.truckingsemis.com wss://*.supabase.co https://*.maptiler.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; block-all-mixed-content;",
-          },
+          // CSP is handled by middleware to avoid conflicts
+          // {
+          //   key: 'Content-Security-Policy',
+          //   value: "...",
+          // },
           {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload',
@@ -228,7 +228,7 @@ const nextConfig = {
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w',
     NEXT_PUBLIC_MAPBOX_TOKEN:
       process.env.NEXT_PUBLIC_MAPBOX_TOKEN ||
-      'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY2x3MnRqcnRsMDFnMzJrcGR5ZWVxcnRsZSJ9.Ld4-XwYPjH0l1Bj0jh9DuQ',
+      'pk.eyJ1Ijoic2ltcGxlaG9zdGluZ3NlcnZlcmQiLCJhIjoiY21haTl1dXhpMGJ2bzJ1cTVlY2p4ajhzZCJ9.AUS7RZCMk1vnR4yQR5RAEQ',
     NEXT_PUBLIC_CESIUM_TOKEN: process.env.NEXT_PUBLIC_CESIUM_TOKEN || '',
     NEXT_PUBLIC_MAPTILER_KEY: process.env.NEXT_PUBLIC_MAPTILER_KEY || 'WPXCcZzL6zr6JzGBzMUK',
   },
@@ -251,6 +251,18 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'upload.wikimedia.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
       },
     ],
     // Optimize image formats
