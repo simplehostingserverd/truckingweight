@@ -20,7 +20,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
    * Badge variant
    */
-  variant?: 'primary' | 'secondary' | 'outline' | 'success' | 'warning' | 'alert';
+  variant?: 'primary' | 'secondary' | 'outline' | 'success' | 'warning' | 'alert' | 'destructive';
 }
 
 /**
@@ -36,6 +36,7 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       success: 'badge-success',
       warning: 'badge-warning',
       alert: 'badge-alert',
+      destructive: 'badge-alert', // Use alert styling for destructive
     };
 
     return (
