@@ -24,7 +24,7 @@ import React, { useEffect, useState } from 'react';
 // Create a client-side only component to avoid hydration issues
 const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<unknown>(null);
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
 

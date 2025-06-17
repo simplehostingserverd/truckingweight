@@ -42,7 +42,7 @@ export default function AxleWeightCapture({
   const supabase = createClient();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [axleConfiguration, setAxleConfiguration] = useState<any>(null);
+  const [axleConfiguration, setAxleConfiguration] = useState<unknown>(null);
   const [axleWeights, setAxleWeights] = useState<
     Array<{ axleNumber: number; weight: number; axleType?: string }>
   >([]);

@@ -16,6 +16,7 @@
 // Global type declarations
 declare const navigator: Navigator;
 
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { createClient } from '@/utils/supabase/client';
 import {

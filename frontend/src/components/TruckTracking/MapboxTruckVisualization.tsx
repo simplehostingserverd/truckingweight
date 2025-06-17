@@ -195,7 +195,7 @@ export default function MapboxTruckVisualization({
       // Cleanup
       return () => {
         if (animationRef.current) {
-          cancelAnimationFrame(animationRef.current);
+          window.cancelAnimationFrame(animationRef.current);
         }
         if (intervalRef.current) {
           clearInterval(intervalRef.current);
@@ -366,7 +366,7 @@ export default function MapboxTruckVisualization({
       // Stop animation if we have a fixed current position
       setIsAnimating(false);
       if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+        window.cancelAnimationFrame(animationRef.current);
       }
       if (intervalRef.current) {
         clearInterval(intervalRef.current);

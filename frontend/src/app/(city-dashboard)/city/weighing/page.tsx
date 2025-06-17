@@ -15,7 +15,7 @@
 
 import React from 'react';
 // Global type declarations
-declare function alert(message?: any): void;
+declare function alert(message?: unknown): void;
 
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
@@ -44,7 +44,9 @@ import {
 import { useEffect, useState } from 'react';
 
 export default function CityWeighingPage() {
-  const [scales, setScales] = useState<any[]>([]);
+  const [scales, setScales] = useState<
+    Array<{ id: number; name: string; status: string; max_capacity: number }>
+  >([]);
   const [selectedScale, setSelectedScale] = useState<string>('');
   const [vehicleInfo, setVehicleInfo] = useState('');
   const [driverName, setDriverName] = useState('');
@@ -92,7 +94,10 @@ export default function CityWeighingPage() {
       setScales(data.scales);
 
       // Set first active scale as default
-      const activeScales = data.scales.filter((scale: unknown) => scale.status === 'Active');
+      const activeScales = data.scales.filter(
+        (scale: { id: number; name: string; status: string; max_capacity: number }) =>
+          scale.status === 'Active'
+      );
       if (activeScales.length > 0) {
         setSelectedScale(activeScales[0].id.toString());
       }
@@ -280,7 +285,7 @@ export default function CityWeighingPage() {
                             <SelectValue placeholder="Select a scale" />
                           </SelectTrigger>
                           <SelectContent className="bg-gray-700 border-gray-600">
-                            {scales.map((scale: unknown) => (
+                            {scales.map(scale => (
                               <SelectItem
                                 key={scale.id}
                                 value={scale.id.toString()}
@@ -461,7 +466,7 @@ export default function CityWeighingPage() {
                 <div className="text-center py-6 text-gray-400">No scales found</div>
               ) : (
                 <div className="space-y-4">
-                  {scales.map((scale: unknown) => (
+                  {scales.map(scale => (
                     <div
                       key={scale.id}
                       className={`p-4 rounded-lg border ${

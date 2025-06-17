@@ -33,7 +33,7 @@ import {
 class IoTSensorClient {
   private config: unknown;
   private connected: boolean = false;
-  private mockData: any = {};
+  private mockData: unknown = {};
 
   constructor(config: unknown) {
     this.config = config;
@@ -121,7 +121,7 @@ export class IoTSensorProvider implements WeightCaptureProvider {
   private client: IoTSensorClient | null = null;
   private config: unknown;
   private isCapturing: boolean = false;
-  private captureInterval: NodeJS.Timeout | null = null;
+  private captureInterval: typeof typeof NodeJS !== "undefined" ? NodeJS !== "undefined" ? typeof NodeJS !== "undefined" ? NodeJS.Timeout | null = null;
   private lastReading: WeightReading | null = null;
 
   constructor(config: unknown) {

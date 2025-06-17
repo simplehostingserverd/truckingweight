@@ -11,8 +11,8 @@
  * in any way without explicit written permission.
  */
 
-import { createClient } from '@/utils/supabase/server';
 import { toSearchParamString } from '@/utils/searchParams';
+import { createClient } from '@/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
 /**

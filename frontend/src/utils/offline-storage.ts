@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
 
 // Define the database schema

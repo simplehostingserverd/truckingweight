@@ -33,7 +33,7 @@ export default function CreateLoad() {
   const [estimatedArrival, setEstimatedArrival] = useState('');
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
-  const [routeDetails, setRouteDetails] = useState<any>(null);
+  const [routeDetails, setRouteDetails] = useState<unknown>(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);

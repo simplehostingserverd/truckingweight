@@ -188,10 +188,10 @@ export function exportLogs(): string {
 
 // Public logging methods
 export const logger = {
-  debug: (message: string, data?: any, context?: string) => log('debug', message, data, context),
-  info: (message: string, data?: any, context?: string) => log('info', message, data, context),
-  warn: (message: string, data?: any, context?: string) => log('warn', message, data, context),
-  error: (message: string, data?: any, context?: string) => log('error', message, data, context),
+  debug: (message: string, data?: unknown, context?: string) => log('debug', message, data, context),
+  info: (message: string, data?: unknown, context?: string) => log('info', message, data, context),
+  warn: (message: string, data?: unknown, context?: string) => log('warn', message, data, context),
+  error: (message: string, data?: unknown, context?: string) => log('error', message, data, context),
   getLogs,
   clearLogs,
   exportLogs,

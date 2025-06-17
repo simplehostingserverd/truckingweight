@@ -46,7 +46,7 @@ interface Webhook {
 }
 
 export default function WebhooksPage() {
-  const _router = useRouter();
+  const router = useRouter();
   const supabase = createClient();
 
   const [webhooks, setWebhooks] = useState<Webhook[]>([]);

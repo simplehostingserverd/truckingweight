@@ -57,11 +57,11 @@ export default function CityRegister() {
   const [cityAddress, setCityAddress] = useState('');
   const [cityPhone, setCityPhone] = useState('');
   const [cityEmail, setCityEmail] = useState('');
-  const [_role, setRole] = useState('admin');
+  const [role, setRole] = useState('admin');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const _router = useRouter();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,7 +129,7 @@ export default function CityRegister() {
           email,
           password,
           cityId: cityData.city.id,
-          role: _role,
+          role: role,
           status: 'pending', // Set initial status to pending for security review
         }),
       });

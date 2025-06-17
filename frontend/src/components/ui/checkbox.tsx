@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { Check } from 'lucide-react';
 import * as React from 'react';

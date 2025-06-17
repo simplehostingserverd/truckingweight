@@ -31,9 +31,9 @@ type PrometheusHistogram = {
 
 // Use dynamic imports for server-side only code
 let collectDefaultMetrics: ((options: { register: PrometheusRegistry }) => void) | null = null;
-let Registry: any = null;
-let Counter: any = null;
-let Histogram: any = null;
+let Registry: unknown = null;
+let Counter: unknown = null;
+let Histogram: unknown = null;
 
 // Only import and initialize in a server context
 if (typeof window === 'undefined') {

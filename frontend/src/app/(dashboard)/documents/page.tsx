@@ -13,12 +13,10 @@
 
 'use client';
 
-import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { createClient } from '@/utils/supabase/client';
 import {
   Dialog,
   DialogContent,
@@ -39,6 +37,7 @@ import {
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { createClient } from '@/utils/supabase/client';
 import { uploadTruckingDocument } from '@/utils/supabase/storage';
 import {
   ArrowDownTrayIcon,
@@ -52,10 +51,20 @@ import {
   TrashIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function DocumentsPage() {
-  const [documents, setDocuments] = useState<any[]>([]);
+  const [documents, setDocuments] = useState<
+    Array<{
+      id: number;
+      name: string;
+      type: string;
+      file_url: string;
+      created_at: string;
+      updated_at: string;
+      company_id: number;
+    }>
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');

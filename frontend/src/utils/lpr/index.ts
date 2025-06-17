@@ -59,16 +59,22 @@ export interface LPRCaptureResult {
  */
 export async function getLPRCameras(): Promise<LPRCameraConfig[]> {
   try {
-    const supabase = createClient();
-    const { data, error } = await supabase.from('lpr_cameras').select('*').eq('is_active', true);
+    const response = await fetch('/api/lpr-cameras', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-    if (error) {
-      console.error('Error fetching LPR cameras:', error);
+    if (!response.ok) {
+      console.error('Error fetching LPR cameras:', response.statusText);
       return [];
     }
 
+    const data = await response.json();
+
     // Map database results to LPRCameraConfig interface
-    return data.map((camera: unknown) => ({
+    return (data.cameras || []).map((camera: any) => ({
       id: camera.id,
       name: camera.name,
       vendor: camera.vendor as LPRVendor,
@@ -90,7 +96,42 @@ export async function getLPRCameras(): Promise<LPRCameraConfig[]> {
 }
 
 /**
- * Capture an image from an LPR camera
+ * Capture a license plate from an LPR camera
+ * @param cameraId ID of the camera to capture from
+ * @returns Promise with capture result
+ */
+export async function captureLicensePlate(cameraId: string): Promise<LPRCaptureResult> {
+  try {
+    const response = await fetch(`/api/lpr-cameras/${cameraId}/capture`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      return {
+        success: false,
+        timestamp: new Date().toISOString(),
+        cameraId,
+        error: `API request failed: ${response.statusText}`,
+      };
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    return {
+      success: false,
+      timestamp: new Date().toISOString(),
+      cameraId,
+      error: error.message || 'Network error occurred',
+    };
+  }
+}
+
+/**
+ * Capture an image from an LPR camera (legacy function)
  * @param cameraId ID of the camera to capture from
  * @returns Promise with capture result
  */

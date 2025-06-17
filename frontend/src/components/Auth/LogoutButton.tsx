@@ -21,7 +21,7 @@ interface LogoutButtonProps {
   className?: string;
 }
 
-const LogoutButton: React.FC<LogoutButtonProps> = ({ className }) => {
+const LogoutButton: React.FC<LogoutButtonProps> = ({ _className }) => {
   const router = useRouter();
   const supabase = createClient();
 

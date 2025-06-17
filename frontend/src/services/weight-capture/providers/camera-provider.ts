@@ -23,11 +23,10 @@ declare namespace NodeJS {
 }
 
 import {
+  CalibrationResult,
+  GeoLocation,
   WeightCaptureProvider,
   WeightReading,
-  CalibrationResult,
-  AxleWeightReading,
-  GeoLocation,
 } from '@/types/scale-master';
 
 // Mock camera weight recognition service

@@ -15,7 +15,7 @@
 
 import React from 'react';
 // Global type declarations
-declare function alert(message?: any): void;
+declare function alert(message?: unknown): void;
 declare function confirm(message?: string): boolean;
 
 import { createClient } from '@/utils/supabase/client';
@@ -47,7 +47,7 @@ interface ErpConnection {
 }
 
 export default function ErpIntegrationPage() {
-  const _router = useRouter();
+  const router = useRouter();
   const supabase = createClient();
 
   // State
@@ -167,8 +167,8 @@ export default function ErpIntegrationPage() {
       setError(null);
 
       // Prepare credentials based on provider
-      let credentials: any = {};
-      let settings: any = {};
+      let credentials: unknown = {};
+      let settings: unknown = {};
 
       if (newProvider === 'quickbooks') {
         credentials = {

@@ -31,7 +31,7 @@ export default function NewWeight() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
-  const [complianceDetails, setComplianceDetails] = useState<any>(null);
+  const [complianceDetails, setComplianceDetails] = useState<unknown>(null);
   const [stateCode, setStateCode] = useState('');
   const [axleType, setAxleType] = useState<'SINGLE_AXLE' | 'TANDEM_AXLE' | 'GROSS_VEHICLE_WEIGHT'>(
     'GROSS_VEHICLE_WEIGHT'
@@ -300,7 +300,7 @@ export default function NewWeight() {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 value={axleType}
-                onChange={e => setAxleType(e.target.value as any)}
+                onChange={e => setAxleType(e.target.value as unknown)}
               >
                 <option value="GROSS_VEHICLE_WEIGHT">Gross Vehicle Weight</option>
                 <option value="SINGLE_AXLE">Single Axle</option>

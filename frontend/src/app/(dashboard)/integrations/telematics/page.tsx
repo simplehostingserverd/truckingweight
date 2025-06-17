@@ -43,7 +43,7 @@ interface TelematicsConnection {
 }
 
 export default function TelematicsPage() {
-  const _router = useRouter();
+  const router = useRouter();
   const supabase = createClient();
 
   const [connections, setConnections] = useState<TelematicsConnection[]>([]);
@@ -138,8 +138,8 @@ export default function TelematicsPage() {
       setError(null);
 
       // Prepare credentials based on provider
-      let credentials: any = {};
-      let settings: any = {};
+      let credentials: unknown = {};
+      let settings: unknown = {};
 
       if (newProvider === 'geotab') {
         credentials = {

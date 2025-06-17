@@ -358,7 +358,7 @@ export default function TelematicsIntegration() {
                     id="apiKey"
                     type="password"
                     value={connectionConfig.apiKey}
-                    onChange={(e) => setConnectionConfig({
+                    onChange={(_e) => setConnectionConfig({
                       ...connectionConfig,
                       apiKey: e.target.value,
                     })}
@@ -370,7 +370,7 @@ export default function TelematicsIntegration() {
                   <Input
                     id="username"
                     value={connectionConfig.username}
-                    onChange={(e) => setConnectionConfig({
+                    onChange={(_e) => setConnectionConfig({
                       ...connectionConfig,
                       username: e.target.value,
                     })}
@@ -382,7 +382,7 @@ export default function TelematicsIntegration() {
                   <Input
                     id="serverUrl"
                     value={connectionConfig.serverUrl}
-                    onChange={(e) => setConnectionConfig({
+                    onChange={(_e) => setConnectionConfig({
                       ...connectionConfig,
                       serverUrl: e.target.value,
                     })}

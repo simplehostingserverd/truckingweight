@@ -19,9 +19,9 @@ import { useEffect, useRef, useState } from 'react';
 // Declare Cesium as a global variable
 declare global {
   interface Window {
-    Cesium: any;
+    Cesium: unknown;
   }
-  const Cesium: any;
+  const Cesium: unknown;
 }
 
 interface RoutePoint {

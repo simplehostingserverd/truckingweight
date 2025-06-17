@@ -47,7 +47,7 @@ interface ApiKey {
 }
 
 export default function ApiKeysPage() {
-  const _router = useRouter();
+  const router = useRouter();
   const supabase = createClient();
 
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([]);

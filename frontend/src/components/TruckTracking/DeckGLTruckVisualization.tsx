@@ -43,7 +43,7 @@ export default function DeckGLTruckVisualization({
 }: DeckGLTruckVisualizationProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
-  const deckRef = useRef<any>(null);
+  const deckRef = useRef<unknown>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

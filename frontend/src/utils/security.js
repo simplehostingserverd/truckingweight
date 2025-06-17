@@ -200,8 +200,8 @@ function detectDevTools() {
 
   // Method 3: Console timing
   const startTime = performance.now();
-  console.log('Security check');
-  console.clear();
+  console.warn('Security check');
+  console.warn('Console cleared for security check');
   const endTime = performance.now();
 
   if (endTime - startTime > 100) {

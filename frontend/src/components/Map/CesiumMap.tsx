@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { Badge, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import {
   ClockIcon,
@@ -370,7 +371,7 @@ export default function CesiumMap({
   onRouteSelect,
 }: CesiumMapProps) {
   const cesiumContainerRef = useRef<HTMLDivElement>(null);
-  const viewerRef = useRef<any>(null);
+  const viewerRef = useRef<unknown>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [selectedRouteData, setSelectedRouteData] = useState(mockTelematicsData[0]);

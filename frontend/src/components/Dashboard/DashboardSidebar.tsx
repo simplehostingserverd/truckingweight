@@ -13,22 +13,34 @@
 
 'use client';
 
-import React from 'react';
 import { cn } from '@/lib/utils';
 import {
+  ArrowsRightLeftIcon,
+  BanknotesIcon,
+  BeakerIcon,
   BuildingOfficeIcon,
+  CameraIcon,
   ChartBarIcon,
+  ClipboardDocumentListIcon,
   Cog6ToothIcon,
+  CpuChipIcon,
+  CreditCardIcon,
+  CurrencyDollarIcon,
+  DevicePhoneMobileIcon,
   DocumentIcon,
+  DocumentTextIcon,
   HomeIcon,
   MapPinIcon,
   PencilIcon,
+  PresentationChartLineIcon,
   ScaleIcon,
   ServerIcon,
+  ShieldCheckIcon,
   SignalIcon,
   TruckIcon,
   UserGroupIcon,
   UsersIcon,
+  WrenchScrewdriverIcon,
 } from '@heroicons/react/24/outline';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
@@ -84,26 +96,90 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  const navigation = [
+  // Core Operations Navigation
+  const coreNavigation = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
     { name: 'Weights', href: '/weights', icon: ScaleIcon },
     { name: 'Weight Capture', href: '/weights/capture', icon: ScaleIcon },
     { name: 'Scales', href: '/scales', icon: ScaleIcon },
-    { name: 'Loads', href: '/loads', icon: TruckIcon },
-    { name: 'Load Boards', href: '/load-boards', icon: TruckIcon },
+  ];
+
+  // Fleet Management Navigation
+  const fleetNavigation = [
     { name: 'Vehicles', href: '/vehicles', icon: TruckIcon },
+    { name: 'Trailers', href: '/trailers', icon: TruckIcon },
+    { name: 'Equipment', href: '/equipment', icon: WrenchScrewdriverIcon },
     { name: 'Drivers', href: '/drivers', icon: UserGroupIcon },
-    { name: 'Driver Tracking', href: '/driver-tracking', icon: TruckIcon },
+    { name: 'Driver Qualifications', href: '/driver-qualifications', icon: DocumentIcon },
+    { name: 'Fleet Analytics', href: '/fleet-analytics', icon: ChartBarIcon },
+    { name: 'Driver Tracking', href: '/driver-tracking', icon: MapPinIcon },
+  ];
+
+  // Dispatch & Load Management Navigation
+  const dispatchNavigation = [
+    { name: 'Dispatch Center', href: '/dispatch', icon: TruckIcon },
+    { name: 'Loads', href: '/loads', icon: TruckIcon },
+    { name: 'Load Boards', href: '/load-boards', icon: ClipboardDocumentListIcon },
+    { name: 'Route Planning', href: '/routes', icon: MapPinIcon },
+    { name: 'Customers', href: '/customers', icon: BuildingOfficeIcon },
+  ];
+
+  // Maintenance Navigation
+  const maintenanceNavigation = [
+    { name: 'Maintenance', href: '/maintenance', icon: WrenchScrewdriverIcon },
+    { name: 'Work Orders', href: '/work-orders', icon: DocumentTextIcon },
+    { name: 'Parts Inventory', href: '/parts', icon: Cog6ToothIcon },
+    { name: 'Vendors', href: '/vendors', icon: BuildingOfficeIcon },
+  ];
+
+  // Financial Navigation
+  const financialNavigation = [
+    { name: 'Invoices', href: '/invoices', icon: DocumentTextIcon },
+    { name: 'Payments', href: '/payments', icon: CreditCardIcon },
+    { name: 'Fuel Management', href: '/fuel', icon: BanknotesIcon },
+    { name: 'Accounts Receivable', href: '/accounts-receivable', icon: CurrencyDollarIcon },
+    { name: 'Financial Reports', href: '/financial-reports', icon: ChartBarIcon },
+  ];
+
+  // Technology Navigation
+  const technologyNavigation = [
+    { name: 'Telematics', href: '/telematics', icon: SignalIcon },
+    { name: 'IoT Devices', href: '/iot-devices', icon: CpuChipIcon },
+    { name: 'Sensor Monitoring', href: '/sensor-monitoring', icon: DevicePhoneMobileIcon },
+    { name: 'LPR Cameras', href: '/lpr-cameras', icon: CameraIcon },
     { name: 'Documents', href: '/documents', icon: DocumentIcon },
     { name: 'Signatures', href: '/signatures', icon: PencilIcon },
+  ];
+
+  // Compliance & Safety Navigation
+  const complianceNavigation = [
+    { name: 'HOS Logs', href: '/hos-logs', icon: ClipboardDocumentListIcon },
+    { name: 'DVIR Reports', href: '/dvir', icon: ShieldCheckIcon },
+    { name: 'Safety Scores', href: '/safety', icon: ShieldCheckIcon },
+  ];
+
+  // Analytics & Reports Navigation
+  const analyticsNavigation = [
+    { name: 'KPI Dashboard', href: '/kpi', icon: ChartBarIcon },
+    { name: 'Advanced Analytics', href: '/analytics', icon: PresentationChartLineIcon },
+    { name: 'Fleet Analytics', href: '/fleet-analytics', icon: TruckIcon },
+    { name: 'Financial Reports', href: '/financial-reports', icon: CurrencyDollarIcon },
+    { name: 'Reports', href: '/reports', icon: DocumentTextIcon },
+  ];
+
+  // Integration Navigation
+  const integrationNavigation = [
+    { name: 'EDI Integration', href: '/edi', icon: ArrowsRightLeftIcon },
+    { name: 'Trading Partners', href: '/edi/partners', icon: BuildingOfficeIcon },
     { name: 'ERP Integration', href: '/erp', icon: ServerIcon },
-    { name: 'Telematics', href: '/telematics', icon: SignalIcon },
-    { name: 'Reports', href: '/reports', icon: ChartBarIcon },
+    { name: 'AI/ML Models', href: '/ml', icon: BeakerIcon },
   ];
 
   const adminNavigation = [
     { name: 'Users', href: '/admin/users', icon: UsersIcon },
     { name: 'Companies', href: '/admin/companies', icon: BuildingOfficeIcon },
+    { name: 'LPR Cameras', href: '/admin/lpr-cameras', icon: CameraIcon },
+    { name: 'Storage Systems', href: '/admin/storage-systems', icon: ServerIcon },
     { name: 'City Dashboard', href: '/city-weighing', icon: MapPinIcon },
     { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
   ];
@@ -147,8 +223,345 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
           <div className="h-px bg-gray-800"></div>
         </div>
 
-        <nav className="mt-2 flex-1 px-3 space-y-1">
-          {navigation.map(item => {
+        {/* Core Operations */}
+        <nav className="mt-2 px-3 space-y-1">
+          {coreNavigation.map(item => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                  'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150'
+                )}
+              >
+                <item.icon
+                  className={cn(
+                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                    'flex-shrink-0 h-5 w-5',
+                    collapsed ? 'mx-auto' : 'mr-3'
+                  )}
+                  aria-hidden="true"
+                />
+                {!collapsed && <span>{item.name}</span>}
+                {collapsed && <span className="sr-only">{item.name}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Fleet Management Section */}
+        <div className="px-3 mt-6 mb-2">
+          {!collapsed ? (
+            <>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">
+                Fleet
+              </h3>
+              <div className="h-px bg-gray-800"></div>
+            </>
+          ) : (
+            <div className="h-px bg-gray-800"></div>
+          )}
+        </div>
+        <nav className="mt-2 px-3 space-y-1">
+          {fleetNavigation.map(item => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                  'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150'
+                )}
+              >
+                <item.icon
+                  className={cn(
+                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                    'flex-shrink-0 h-5 w-5',
+                    collapsed ? 'mx-auto' : 'mr-3'
+                  )}
+                  aria-hidden="true"
+                />
+                {!collapsed && <span>{item.name}</span>}
+                {collapsed && <span className="sr-only">{item.name}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Dispatch Section */}
+        <div className="px-3 mt-6 mb-2">
+          {!collapsed ? (
+            <>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">
+                Dispatch
+              </h3>
+              <div className="h-px bg-gray-800"></div>
+            </>
+          ) : (
+            <div className="h-px bg-gray-800"></div>
+          )}
+        </div>
+        <nav className="mt-2 px-3 space-y-1">
+          {dispatchNavigation.map(item => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                  'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150'
+                )}
+              >
+                <item.icon
+                  className={cn(
+                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                    'flex-shrink-0 h-5 w-5',
+                    collapsed ? 'mx-auto' : 'mr-3'
+                  )}
+                  aria-hidden="true"
+                />
+                {!collapsed && <span>{item.name}</span>}
+                {collapsed && <span className="sr-only">{item.name}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Maintenance Section */}
+        <div className="px-3 mt-6 mb-2">
+          {!collapsed ? (
+            <>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">
+                Maintenance
+              </h3>
+              <div className="h-px bg-gray-800"></div>
+            </>
+          ) : (
+            <div className="h-px bg-gray-800"></div>
+          )}
+        </div>
+        <nav className="mt-2 px-3 space-y-1">
+          {maintenanceNavigation.map(item => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                  'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150'
+                )}
+              >
+                <item.icon
+                  className={cn(
+                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                    'flex-shrink-0 h-5 w-5',
+                    collapsed ? 'mx-auto' : 'mr-3'
+                  )}
+                  aria-hidden="true"
+                />
+                {!collapsed && <span>{item.name}</span>}
+                {collapsed && <span className="sr-only">{item.name}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Financial Section */}
+        <div className="px-3 mt-6 mb-2">
+          {!collapsed ? (
+            <>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">
+                Financial
+              </h3>
+              <div className="h-px bg-gray-800"></div>
+            </>
+          ) : (
+            <div className="h-px bg-gray-800"></div>
+          )}
+        </div>
+        <nav className="mt-2 px-3 space-y-1">
+          {financialNavigation.map(item => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                  'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150'
+                )}
+              >
+                <item.icon
+                  className={cn(
+                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                    'flex-shrink-0 h-5 w-5',
+                    collapsed ? 'mx-auto' : 'mr-3'
+                  )}
+                  aria-hidden="true"
+                />
+                {!collapsed && <span>{item.name}</span>}
+                {collapsed && <span className="sr-only">{item.name}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Technology Section */}
+        <div className="px-3 mt-6 mb-2">
+          {!collapsed ? (
+            <>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">
+                Technology
+              </h3>
+              <div className="h-px bg-gray-800"></div>
+            </>
+          ) : (
+            <div className="h-px bg-gray-800"></div>
+          )}
+        </div>
+        <nav className="mt-2 px-3 space-y-1">
+          {technologyNavigation.map(item => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                  'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150'
+                )}
+              >
+                <item.icon
+                  className={cn(
+                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                    'flex-shrink-0 h-5 w-5',
+                    collapsed ? 'mx-auto' : 'mr-3'
+                  )}
+                  aria-hidden="true"
+                />
+                {!collapsed && <span>{item.name}</span>}
+                {collapsed && <span className="sr-only">{item.name}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Compliance Section */}
+        <div className="px-3 mt-6 mb-2">
+          {!collapsed ? (
+            <>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">
+                Compliance
+              </h3>
+              <div className="h-px bg-gray-800"></div>
+            </>
+          ) : (
+            <div className="h-px bg-gray-800"></div>
+          )}
+        </div>
+        <nav className="mt-2 px-3 space-y-1">
+          {complianceNavigation.map(item => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                  'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150'
+                )}
+              >
+                <item.icon
+                  className={cn(
+                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                    'flex-shrink-0 h-5 w-5',
+                    collapsed ? 'mx-auto' : 'mr-3'
+                  )}
+                  aria-hidden="true"
+                />
+                {!collapsed && <span>{item.name}</span>}
+                {collapsed && <span className="sr-only">{item.name}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Analytics Section */}
+        <div className="px-3 mt-6 mb-2">
+          {!collapsed ? (
+            <>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">
+                Analytics
+              </h3>
+              <div className="h-px bg-gray-800"></div>
+            </>
+          ) : (
+            <div className="h-px bg-gray-800"></div>
+          )}
+        </div>
+        <nav className="mt-2 px-3 space-y-1">
+          {analyticsNavigation.map(item => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                  'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150'
+                )}
+              >
+                <item.icon
+                  className={cn(
+                    isActive ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                    'flex-shrink-0 h-5 w-5',
+                    collapsed ? 'mx-auto' : 'mr-3'
+                  )}
+                  aria-hidden="true"
+                />
+                {!collapsed && <span>{item.name}</span>}
+                {collapsed && <span className="sr-only">{item.name}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Integration Section */}
+        <div className="px-3 mt-6 mb-2">
+          {!collapsed ? (
+            <>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">
+                Integration
+              </h3>
+              <div className="h-px bg-gray-800"></div>
+            </>
+          ) : (
+            <div className="h-px bg-gray-800"></div>
+          )}
+        </div>
+        <nav className="mt-2 px-3 space-y-1">
+          {integrationNavigation.map(item => {
             const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link

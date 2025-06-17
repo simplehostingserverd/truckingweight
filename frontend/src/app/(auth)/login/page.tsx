@@ -29,7 +29,7 @@ export default function Login() {
   const [_captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [_captchaError, setCaptchaError] = useState('');
   const captchaRef = useRef<HCaptcha>(null);
-  const _router = useRouter();
+  const router = useRouter();
   const { signIn } = useSupabaseAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {

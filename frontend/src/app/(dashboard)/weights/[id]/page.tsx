@@ -22,7 +22,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function WeightDetail({ params }: { params: { id: string } }) {
-  const [weight, setWeight] = useState<any>(null);
+  const [weight, setWeight] = useState<unknown>(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);

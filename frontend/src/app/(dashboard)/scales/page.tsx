@@ -62,7 +62,7 @@ export default function ScalesPage() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [view, setView] = useState('table');
-  const [selectedScale, setSelectedScale] = useState<any>(null);
+  const [selectedScale, setSelectedScale] = useState<unknown>(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected' | 'error'>(
     'disconnected'
@@ -140,7 +140,7 @@ export default function ScalesPage() {
   };
 
   // Check which scales are connected to the weight capture system
-  const checkConnectedScales = async (scalesData: any[]) => {
+  const checkConnectedScales = async (scalesData: unknown[]) => {
     try {
       // In a real implementation, this would check with the backend
       // For now, we'll just simulate it

@@ -2,7 +2,7 @@
 
 /**
  * Quick ESLint Fixes
- * 
+ *
  * This script applies the most common and safe fixes first:
  * 1. Convert console.log to console.warn
  * 2. Replace common 'any' types with better types
@@ -17,14 +17,14 @@ const SRC_DIR = path.join(__dirname, '../src');
 
 function getAllTsFiles(dir) {
   const files = [];
-  
+
   function traverse(currentDir) {
     const items = fs.readdirSync(currentDir);
-    
+
     for (const item of items) {
       const fullPath = path.join(currentDir, item);
       const stat = fs.statSync(fullPath);
-      
+
       if (stat.isDirectory() && !['node_modules', '.next', 'dist'].includes(item)) {
         traverse(fullPath);
       } else if (item.endsWith('.ts') || item.endsWith('.tsx')) {
@@ -32,7 +32,7 @@ function getAllTsFiles(dir) {
       }
     }
   }
-  
+
   traverse(dir);
   return files;
 }
@@ -40,7 +40,7 @@ function getAllTsFiles(dir) {
 function applyQuickFixes(content) {
   let fixed = content;
   let changes = 0;
-  
+
   // 1. Fix console.log statements (most common)
   const consoleMatches = (fixed.match(/console\.log\(/g) || []).length;
   if (consoleMatches > 0) {
@@ -48,7 +48,7 @@ function applyQuickFixes(content) {
     changes += consoleMatches;
     console.log(`    - Fixed ${consoleMatches} console.log statements`);
   }
-  
+
   // 2. Fix common 'any' types
   const anyFixes = [
     { pattern: /: any \/\* @ts-ignore \*\//g, replacement: ': unknown' },
@@ -60,7 +60,7 @@ function applyQuickFixes(content) {
     { pattern: /response: any/g, replacement: 'response: unknown' },
     { pattern: /params: any/g, replacement: 'params: Record<string, unknown>' },
   ];
-  
+
   for (const { pattern, replacement } of anyFixes) {
     const matches = (fixed.match(pattern) || []).length;
     if (matches > 0) {
@@ -69,16 +69,25 @@ function applyQuickFixes(content) {
       console.log(`    - Fixed ${matches} '${pattern.source}' types`);
     }
   }
-  
+
   // 3. Fix known unused variables (safe ones only)
   const unusedFixes = [
     { pattern: /const router = useRouter\(\);/g, replacement: 'const _router = useRouter();' },
-    { pattern: /const \[captchaToken, setCaptchaToken\]/g, replacement: 'const [_captchaToken, setCaptchaToken]' },
-    { pattern: /const \[captchaError, setCaptchaError\]/g, replacement: 'const [_captchaError, setCaptchaError]' },
-    { pattern: /const \[showDemoLogin, setShowDemoLogin\]/g, replacement: 'const [_showDemoLogin, setShowDemoLogin]' },
+    {
+      pattern: /const \[captchaToken, setCaptchaToken\]/g,
+      replacement: 'const [_captchaToken, setCaptchaToken]',
+    },
+    {
+      pattern: /const \[captchaError, setCaptchaError\]/g,
+      replacement: 'const [_captchaError, setCaptchaError]',
+    },
+    {
+      pattern: /const \[showDemoLogin, setShowDemoLogin\]/g,
+      replacement: 'const [_showDemoLogin, setShowDemoLogin]',
+    },
     { pattern: /const \[role, setRole\]/g, replacement: 'const [_role, setRole]' },
   ];
-  
+
   for (const { pattern, replacement } of unusedFixes) {
     const matches = (fixed.match(pattern) || []).length;
     if (matches > 0) {
@@ -87,25 +96,25 @@ function applyQuickFixes(content) {
       console.log(`    - Fixed ${matches} unused variables`);
     }
   }
-  
+
   return { content: fixed, changes };
 }
 
 function main() {
   console.log('🚀 Running quick ESLint fixes...\n');
-  
+
   const files = getAllTsFiles(SRC_DIR);
   console.log(`📁 Found ${files.length} TypeScript files\n`);
-  
+
   let totalChanges = 0;
   let filesChanged = 0;
-  
+
   for (const file of files) {
     const relativePath = path.relative(SRC_DIR, file);
     const originalContent = fs.readFileSync(file, 'utf8');
-    
+
     const result = applyQuickFixes(originalContent);
-    
+
     if (result.changes > 0) {
       fs.writeFileSync(file, result.content, 'utf8');
       console.log(`  ✅ ${relativePath} - ${result.changes} changes`);
@@ -113,13 +122,13 @@ function main() {
       filesChanged++;
     }
   }
-  
+
   console.log('\n' + '='.repeat(50));
   console.log(`📊 Quick fixes completed:`);
   console.log(`   Files processed: ${files.length}`);
   console.log(`   Files changed: ${filesChanged}`);
   console.log(`   Total changes: ${totalChanges}`);
-  
+
   if (totalChanges > 0) {
     console.log('\n🔍 Running lint to check progress...');
     try {

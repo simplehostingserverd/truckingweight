@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { useToastContext } from '@/providers/ToastProvider';
 import logger from '@/utils/logger';
 
@@ -31,7 +32,7 @@ export interface AppError extends Error {
   type?: ErrorType;
   statusCode?: number;
   // @ts-ignore - Suppressing the any type warning as this is a generic error details field
-  details?: any;
+  details?: unknown;
 }
 
 // Function to create a typed error

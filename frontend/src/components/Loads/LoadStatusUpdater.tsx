@@ -73,7 +73,7 @@ export default function LoadStatusUpdater({
     setSuccess('');
 
     try {
-      const updateData: any = { status };
+      const updateData: unknown = { status };
 
       // Add actual departure if provided
       if (actualDeparture) {

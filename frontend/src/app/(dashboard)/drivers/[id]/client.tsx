@@ -43,13 +43,13 @@ interface DriverDetailsProps {
 }
 
 export default function DriverDetailsClient({ id, initialData }: DriverDetailsProps) {
-  const [driver, setDriver] = useState<any>(initialData || null);
+  const [driver, setDriver] = useState<unknown>(initialData || null);
   const [isLoading, setIsLoading] = useState(!initialData);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [activeTab, setActiveTab] = useState('details');
   const [photoUploading, setPhotoUploading] = useState(false);
-  const _router = useRouter();
+  const router = useRouter();
   const supabase = createClient();
 
   useEffect(() => {

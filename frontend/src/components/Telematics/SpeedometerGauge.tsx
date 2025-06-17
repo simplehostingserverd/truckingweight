@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import { Badge } from '@/components/ui';
 import { useEffect, useRef } from 'react';
 
@@ -44,7 +45,7 @@ export default function SpeedometerGauge({
   const angle = -120 + (clampSpeed / maxSpeed) * 240;
 
   // Debug logging
-  console.log('SpeedometerGauge:', { speed, clampSpeed, maxSpeed, angle });
+  console.warn('SpeedometerGauge:', { speed, clampSpeed, maxSpeed, angle });
 
   useEffect(() => {
     if (needleRef.current) {

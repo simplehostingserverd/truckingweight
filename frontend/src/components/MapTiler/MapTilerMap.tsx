@@ -32,7 +32,7 @@ interface MapTilerMapProps {
   longitude: number;
   zoom?: number;
   markers?: MapMarker[];
-  onMarkerClick?: (markerId: string, markerType: string, markerData?: any) => void;
+  onMarkerClick?: (markerId: string, markerType: string, markerData?: unknown) => void;
   showHeatmap?: boolean;
   className?: string;
   height?: string;
@@ -49,8 +49,8 @@ const MapTilerMap: React.FC<MapTilerMapProps> = ({
   height = '600px',
 }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<any>(null);
-  const markersRef = useRef<{ [key: string]: any }>({});
+  const map = useRef<unknown>(null);
+  const markersRef = useRef<{ [key: string]: unknown }>({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

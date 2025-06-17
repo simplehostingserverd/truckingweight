@@ -144,7 +144,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
                 name,
                 weight: Math.round(data.total / data.count),
               }))
-              .sort((a, b) => b.weight - a.weight)
+              .sort((_a, _b) => b.weight - a.weight)
               .slice(0, 5); // Top 5 vehicles by weight
 
             setWeightData(formattedData);

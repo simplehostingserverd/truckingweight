@@ -81,7 +81,7 @@ export class DigitalScaleProvider implements WeightCaptureProvider {
   private scaleConnection: ScaleConnection | null = null;
   private scaleConfig: ScaleConfig;
   private isCapturing: boolean = false;
-  private captureInterval: NodeJS.Timeout | null = null;
+  private captureInterval: typeof typeof NodeJS !== "undefined" ? NodeJS !== "undefined" ? typeof NodeJS !== "undefined" ? NodeJS.Timeout | null = null;
   private lastReading: WeightReading | null = null;
 
   constructor(scaleConfig: ScaleConfig) {

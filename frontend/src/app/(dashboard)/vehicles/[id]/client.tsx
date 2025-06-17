@@ -60,7 +60,7 @@ interface VehicleDetailsProps {
 }
 
 export default function VehicleDetailsClient({ id, initialData }: VehicleDetailsProps) {
-  const [vehicle, setVehicle] = useState<any>(initialData || null);
+  const [vehicle, setVehicle] = useState<unknown>(initialData || null);
   const [isLoading, setIsLoading] = useState(!initialData);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -71,8 +71,8 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
   const [lprCameras, setLPRCameras] = useState<LPRCameraConfig[]>([]);
   const [selectedCamera, setSelectedCamera] = useState<string>('');
   const [isCapturing, setIsCapturing] = useState(false);
-  const [captureResult, setCaptureResult] = useState<any>(null);
-  const _router = useRouter();
+  const [captureResult, setCaptureResult] = useState<unknown>(null);
+  const router = useRouter();
   const supabase = createClient();
 
   useEffect(() => {
@@ -223,7 +223,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
         const imageUrl = await uploadVehicleImage(parseInt(id), file, imageType);
 
         // Update vehicle record with new image URL and license plate if available
-        const updateData: any = {
+        const updateData: unknown = {
           [`image_${imageType}_url`]: imageUrl,
           updated_at: new Date().toISOString(),
         };

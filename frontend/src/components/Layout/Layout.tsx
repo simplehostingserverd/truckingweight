@@ -21,7 +21,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ _children }) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />

@@ -13,6 +13,7 @@
 
 'use client';
 
+import React from 'react';
 import type { Database } from '@/types/supabase';
 import { getSupabaseConfig } from '@/utils/supabase/config';
 import { createBrowserClient } from '@supabase/ssr';

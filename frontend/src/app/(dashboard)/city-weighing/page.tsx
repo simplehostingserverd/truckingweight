@@ -15,7 +15,7 @@
 
 import React from 'react';
 // Global type declarations
-declare function alert(message?: any): void;
+declare function alert(message?: unknown): void;
 
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';

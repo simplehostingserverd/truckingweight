@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import {
   Alert,
   AlertDescription,
@@ -141,8 +140,12 @@ export default function LoadBoardsPage() {
     preferred_only: false,
     exclude_blocked: true,
   });
-  const [searchAlarms, setSearchAlarms] = useState<any[]>([]);
-  const [postAlarms, setPostAlarms] = useState<any[]>([]);
+  const [searchAlarms, setSearchAlarms] = useState<
+    Array<{ id: string; name: string; criteria: unknown }>
+  >([]);
+  const [postAlarms, setPostAlarms] = useState<
+    Array<{ id: string; name: string; criteria: unknown }>
+  >([]);
   const [showAlarmsDialog, setShowAlarmsDialog] = useState(false);
   const [showMCIDialog, setShowMCIDialog] = useState(false);
   const [showCarrierWatchDialog, setShowCarrierWatchDialog] = useState(false);

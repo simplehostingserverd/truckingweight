@@ -30,14 +30,14 @@ export function Providers({ children }) {
     initializeLicenseVerification();
 
     // Add attribution comment to console
-    console.log(
+    console.warn(
       '%c© 2025 Cosmo Exploit Group LLC. All Rights Reserved.\n' +
         'Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer',
       'color: #3b82f6; font-weight: bold; font-size: 12px;'
     );
 
     // Add warning message
-    console.log(
+    console.warn(
       '%cWARNING: This is a proprietary application.\n' +
         'Unauthorized access, copying, or modification is strictly prohibited.',
       'color: #ef4444; font-weight: bold; font-size: 14px;'

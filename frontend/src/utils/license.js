@@ -184,7 +184,7 @@ async function verifyOnlineLicense(licenseKey, domain) {
  */
 async function verifyOfflineLicense() {
   try {
-    console.log('🔒 Using offline license verification');
+    console.warn('🔒 Using offline license verification');
 
     // Try to fetch the offline license file
     const response = await fetch('/api/license/offline');
@@ -240,7 +240,7 @@ async function verifyOfflineLicense() {
     };
 
     lastVerification = Date.now();
-    console.log('✅ Offline license verification successful');
+    console.warn('✅ Offline license verification successful');
     return true;
   } catch (error) {
     console.error('Offline license verification failed:', error);

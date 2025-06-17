@@ -35,7 +35,7 @@ const LoadStatusUpdater = dynamic(() => import('@/components/Loads/LoadStatusUpd
 });
 
 export default function LoadDetail({ params }: { params: { id: string } }) {
-  const [load, setLoad] = useState<any>(null);
+  const [load, setLoad] = useState<unknown>(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);

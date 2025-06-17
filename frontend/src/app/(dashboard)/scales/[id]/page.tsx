@@ -48,7 +48,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function ScaleDetail({ params }: { params: Promise<{ id: string }> }) {
-  const [scale, setScale] = useState<any>(null);
+  const [scale, setScale] = useState<unknown>(null);
   const [qrCode, setQrCode] = useState<string>('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);

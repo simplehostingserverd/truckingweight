@@ -13,25 +13,19 @@
 
 'use client';
 
-import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
-import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import {
-  CurrencyDollarIcon,
-  ArrowPathIcon,
-  DocumentTextIcon,
-  ExclamationTriangleIcon,
-  CalendarIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-} from '@heroicons/react/24/outline';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -40,27 +34,30 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  ArrowDownIcon,
+  ArrowPathIcon,
+  ArrowUpIcon,
+  CalendarIcon,
+  CurrencyDollarIcon,
+  DocumentTextIcon,
+  ExclamationTriangleIcon,
+} from '@heroicons/react/24/outline';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 import {
-  BarChart,
-  Bar,
+  CartesianGrid,
+  Cell,
+  Legend,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  PieChart,
-  Pie,
-  Cell,
 } from 'recharts';
 
 // Create a client-side only component to avoid hydration issues

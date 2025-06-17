@@ -13,36 +13,11 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import {
-  Cog6ToothIcon,
-  ShieldCheckIcon,
-  BellIcon,
-  UserIcon,
-  PaintBrushIcon,
-  KeyIcon,
-  ArrowPathIcon,
-  CheckIcon,
-  XMarkIcon,
-  EyeIcon,
-  EyeSlashIcon,
-} from '@heroicons/react/24/outline';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from '@/components/ui/card';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Switch } from '@/components/ui/switch';
-import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -51,6 +26,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ArrowPathIcon, CheckIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 // Create a client-side only component to avoid hydration issues
 const CitySettingsPageClient = () => {
@@ -276,14 +257,14 @@ const CitySettingsPageClient = () => {
     });
   };
 
-  const handleSwitchChange = (name, checked) => {
+  const handleSwitchChange = (name: string, checked: boolean) => {
     setUserSettings({
       ...userSettings,
       [name]: checked,
     });
   };
 
-  const handleSelectChange = (name, value) => {
+  const handleSelectChange = (name: string, value: string) => {
     setUserSettings({
       ...userSettings,
       [name]: value,

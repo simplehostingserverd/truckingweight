@@ -45,7 +45,7 @@ export function CesiumProvider({ children }: { children: React.ReactNode }) {
         try {
           if (window.Cesium && process.env.NEXT_PUBLIC_CESIUM_TOKEN) {
             window.Cesium.Ion.defaultAccessToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN;
-            console.log('Cesium loaded successfully with Ion token');
+            console.warn('Cesium loaded successfully with Ion token');
           } else if (window.Cesium) {
             console.warn('Cesium loaded but no Ion token found');
           }

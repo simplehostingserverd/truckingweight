@@ -55,7 +55,7 @@ export function useSWRFetch<T = any>(
       dedupingInterval: 5000, // 5 seconds
       errorRetryCount: 3, // Retry 3 times on error
       ...swrOptions,
-      onError: (error, key) => {
+      onError: (_error, _key) => {
         // Call the user's onError if provided
         if (swrOptions?.onError) {
           swrOptions.onError(error, key);

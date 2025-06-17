@@ -20,12 +20,12 @@
  * as a basis for a future TypeScript Fastify implementation.
  */
 
-import express, { Request, Response, NextFunction } from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
-import dotenv from 'dotenv';
-import helmet from 'helmet';
 import compression from 'compression';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express, { NextFunction, Request, Response } from 'express';
+import helmet from 'helmet';
+import morgan from 'morgan';
 
 // Load environment variables
 dotenv.config();
@@ -38,16 +38,29 @@ import prisma from './config/prisma';
 import setCompanyContextMiddleware from './middleware/companyContext';
 
 // Import routes
-import authRoutes from './routes/auth';
-import weightRoutes from './routes/weights';
-import loadRoutes from './routes/loads';
-import companyRoutes from './routes/companies';
-import vehicleRoutes from './routes/vehicles';
-import driverRoutes from './routes/drivers';
 import adminRoutes from './routes/admin';
+import authRoutes from './routes/auth';
+import companyRoutes from './routes/companies';
 import dashboardRoutes from './routes/dashboard';
+import driverRoutes from './routes/drivers';
+import loadRoutes from './routes/loads';
 import scaleRoutes from './routes/scaleRoutes';
+import vehicleRoutes from './routes/vehicles';
 import weighTicketRoutes from './routes/weighTicketRoutes';
+import weightRoutes from './routes/weights';
+
+// Import new TMS routes
+const dispatchRoutes = require('./routes/dispatch');
+const fleetRoutes = require('./routes/fleet');
+const financialRoutes = require('./routes/financial');
+
+// Import additional TMS routes
+import maintenanceRoutes from './routes/maintenance';
+import iotRoutes from './routes/iot';
+import complianceRoutes from './routes/compliance';
+import analyticsRoutes from './routes/analytics';
+import ediRoutes from './routes/edi';
+import mlRoutes from './routes/ml';
 
 // Create Express app
 const app = express();
@@ -75,6 +88,17 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/scales', scaleRoutes);
 app.use('/api/weigh-tickets', weighTicketRoutes);
+app.use('/api/dispatch', dispatchRoutes);
+app.use('/api/fleet', fleetRoutes);
+app.use('/api/financial', financialRoutes);
+
+// Register additional TMS routes
+app.use('/api/maintenance', maintenanceRoutes);
+app.use('/api/iot', iotRoutes);
+app.use('/api/compliance', complianceRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/edi', ediRoutes);
+app.use('/api/ml', mlRoutes);
 
 // Root route
 app.get('/', (req: Request, res: Response) => {
