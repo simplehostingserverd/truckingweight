@@ -66,7 +66,7 @@ export default function ComplianceChecker({
       code,
       name: getStateName(code),
     })),
-  ].sort((_a, _b) => a.name.localeCompare(b.name));
+  ].sort((a, b) => a.name.localeCompare(b.name));
 
   // Get state name from code
   function getStateName(code: string): string {
@@ -107,7 +107,7 @@ export default function ComplianceChecker({
     setAxleWeights(newAxleWeights);
 
     // Update gross weight
-    setGrossWeight(newAxleWeights.reduce((_sum, _weight) => sum + weight, 0));
+    setGrossWeight(newAxleWeights.reduce((sum, weight) => sum + weight, 0));
   };
 
   // Update axle spacing

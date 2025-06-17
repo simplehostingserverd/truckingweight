@@ -132,7 +132,7 @@ export default function LPRCamerasPage() {
     }
   };
 
-  const getVendorIcon = (vendor: string) => {
+  const getVendorIcon = (_vendor: string) => {
     // Return appropriate icon based on vendor
     return <CameraIcon className="h-5 w-5" />;
   };

@@ -187,7 +187,7 @@ export default function AdminLPRCamerasPage() {
   };
 
   const handleDelete = async (cameraId: string) => {
-    if (!confirm('Are you sure you want to delete this camera?')) {
+    if (!window.confirm('Are you sure you want to delete this camera?')) {
       return;
     }
 

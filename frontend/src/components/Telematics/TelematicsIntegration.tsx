@@ -53,7 +53,13 @@ const mockProviders: TelematicsProvider[] = [
     name: 'Geotab',
     logo: '🚛',
     description: 'Industry-leading fleet management and telematics platform',
-    features: ['GPS Tracking', 'Engine Diagnostics', 'Driver Behavior', 'Fuel Management', 'HOS Compliance'],
+    features: [
+      'GPS Tracking',
+      'Engine Diagnostics',
+      'Driver Behavior',
+      'Fuel Management',
+      'HOS Compliance',
+    ],
     connectionType: 'api',
     status: 'active',
     lastSync: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
@@ -65,7 +71,13 @@ const mockProviders: TelematicsProvider[] = [
     name: 'Samsara',
     logo: '📡',
     description: 'Complete fleet operations platform with AI-powered insights',
-    features: ['Real-time GPS', 'AI Dash Cams', 'ELD Compliance', 'Maintenance Alerts', 'Route Optimization'],
+    features: [
+      'Real-time GPS',
+      'AI Dash Cams',
+      'ELD Compliance',
+      'Maintenance Alerts',
+      'Route Optimization',
+    ],
     connectionType: 'cloud',
     status: 'active',
     lastSync: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
@@ -77,7 +89,13 @@ const mockProviders: TelematicsProvider[] = [
     name: 'Fleet Complete',
     logo: '🛰️',
     description: 'Comprehensive fleet management with advanced analytics',
-    features: ['Asset Tracking', 'Driver Safety', 'Compliance Management', 'Fuel Cards', 'Maintenance'],
+    features: [
+      'Asset Tracking',
+      'Driver Safety',
+      'Compliance Management',
+      'Fuel Cards',
+      'Maintenance',
+    ],
     connectionType: 'api',
     status: 'pending',
     vehiclesConnected: 0,
@@ -169,11 +187,9 @@ export default function TelematicsIntegration() {
   const handleSyncData = (providerId: string) => {
     // In a real app, this would trigger a data sync
     console.warn('Syncing data for:', providerId);
-    setProviders(providers.map(p => 
-      p.id === providerId 
-        ? { ...p, lastSync: new Date().toISOString() }
-        : p
-    ));
+    setProviders(
+      providers.map(p => (p.id === providerId ? { ...p, lastSync: new Date().toISOString() } : p))
+    );
   };
 
   return (
@@ -195,7 +211,7 @@ export default function TelematicsIntegration() {
 
       {/* Integration Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {providers.map((provider) => (
+        {providers.map(provider => (
           <Card key={provider.id} className="relative">
             <CardHeader>
               <div className="flex justify-between items-start">
@@ -213,11 +229,15 @@ export default function TelematicsIntegration() {
                 </div>
                 <div className="flex items-center space-x-2">
                   {getStatusIcon(provider.status)}
-                  <Badge 
+                  <Badge
                     variant={
-                      provider.status === 'active' ? 'success' :
-                      provider.status === 'error' ? 'destructive' :
-                      provider.status === 'pending' ? 'warning' : 'secondary'
+                      provider.status === 'active'
+                        ? 'success'
+                        : provider.status === 'error'
+                          ? 'destructive'
+                          : provider.status === 'pending'
+                            ? 'warning'
+                            : 'secondary'
                     }
                   >
                     {provider.status.toUpperCase()}
@@ -252,7 +272,7 @@ export default function TelematicsIntegration() {
               <div className="mb-4">
                 <h4 className="text-sm font-medium mb-2">Features:</h4>
                 <div className="flex flex-wrap gap-1">
-                  {provider.features.slice(0, 3).map((feature) => (
+                  {provider.features.slice(0, 3).map(feature => (
                     <Badge key={feature} variant="outline" className="text-xs">
                       {feature}
                     </Badge>
@@ -270,7 +290,7 @@ export default function TelematicsIntegration() {
                 <div className="mb-4">
                   <h4 className="text-sm font-medium mb-2">Data Points:</h4>
                   <div className="flex flex-wrap gap-1">
-                    {provider.dataPoints.slice(0, 4).map((point) => (
+                    {provider.dataPoints.slice(0, 4).map(point => (
                       <Badge key={point} variant="secondary" className="text-xs">
                         {point}
                       </Badge>
@@ -293,9 +313,9 @@ export default function TelematicsIntegration() {
 
               {/* Actions */}
               <div className="flex space-x-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => handleTestConnection(provider.id)}
                   className="flex-1"
                 >
@@ -303,11 +323,7 @@ export default function TelematicsIntegration() {
                   Test
                 </Button>
                 {provider.status === 'active' && (
-                  <Button 
-                    size="sm" 
-                    onClick={() => handleSyncData(provider.id)}
-                    className="flex-1"
-                  >
+                  <Button size="sm" onClick={() => handleSyncData(provider.id)} className="flex-1">
                     Sync Now
                   </Button>
                 )}
@@ -358,10 +374,12 @@ export default function TelematicsIntegration() {
                     id="apiKey"
                     type="password"
                     value={connectionConfig.apiKey}
-                    onChange={(_e) => setConnectionConfig({
-                      ...connectionConfig,
-                      apiKey: e.target.value,
-                    })}
+                    onChange={e =>
+                      setConnectionConfig({
+                        ...connectionConfig,
+                        apiKey: e.target.value,
+                      })
+                    }
                     placeholder="Enter API key"
                   />
                 </div>
@@ -370,10 +388,12 @@ export default function TelematicsIntegration() {
                   <Input
                     id="username"
                     value={connectionConfig.username}
-                    onChange={(_e) => setConnectionConfig({
-                      ...connectionConfig,
-                      username: e.target.value,
-                    })}
+                    onChange={e =>
+                      setConnectionConfig({
+                        ...connectionConfig,
+                        username: e.target.value,
+                      })
+                    }
                     placeholder="Enter username"
                   />
                 </div>
@@ -382,10 +402,12 @@ export default function TelematicsIntegration() {
                   <Input
                     id="serverUrl"
                     value={connectionConfig.serverUrl}
-                    onChange={(_e) => setConnectionConfig({
-                      ...connectionConfig,
-                      serverUrl: e.target.value,
-                    })}
+                    onChange={e =>
+                      setConnectionConfig({
+                        ...connectionConfig,
+                        serverUrl: e.target.value,
+                      })
+                    }
                     placeholder="https://api.provider.com"
                   />
                 </div>

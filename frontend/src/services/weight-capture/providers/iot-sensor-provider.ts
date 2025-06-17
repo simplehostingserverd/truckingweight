@@ -121,7 +121,7 @@ export class IoTSensorProvider implements WeightCaptureProvider {
   private client: IoTSensorClient | null = null;
   private config: unknown;
   private isCapturing: boolean = false;
-  private captureInterval: typeof typeof NodeJS !== "undefined" ? NodeJS !== "undefined" ? typeof NodeJS !== "undefined" ? NodeJS.Timeout | null = null;
+  private captureInterval: NodeJS.Timeout | null = null;
   private lastReading: WeightReading | null = null;
 
   constructor(config: unknown) {
@@ -156,13 +156,11 @@ export class IoTSensorProvider implements WeightCaptureProvider {
         const sensorData = await this.client!.readSensor();
 
         // Convert axle data to the expected format
-        const axleWeights: AxleWeightReading[] = sensorData.axleData.map(
-          (axle: unknown) => ({
-            position: axle.id,
-            weight: axle.weight,
-            maxLegal: this.getMaxLegalWeight(axle.id),
-          })
-        );
+        const axleWeights: AxleWeightReading[] = sensorData.axleData.map((axle: unknown) => ({
+          position: axle.id,
+          weight: axle.weight,
+          maxLegal: this.getMaxLegalWeight(axle.id),
+        }));
 
         // Create a new weight reading
         this.lastReading = {
