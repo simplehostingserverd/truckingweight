@@ -34,7 +34,7 @@ import {
   PhotoIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
-import { useRouter as _useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 export default function CompanyProfilePage() {
