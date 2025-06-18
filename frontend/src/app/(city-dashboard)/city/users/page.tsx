@@ -20,15 +20,13 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import {
-  UsersIcon,
   ArrowPathIcon,
-  PlusIcon,
+  LockClosedIcon,
   PencilIcon,
-  TrashIcon,
   ShieldCheckIcon,
+  TrashIcon,
   UserIcon,
   UserPlusIcon,
-  LockClosedIcon,
 } from '@heroicons/react/24/outline';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

@@ -118,7 +118,7 @@ export default function CreateHOSLogPage() {
       }
 
       // In production, this would make an API call
-      console.log('Creating HOS log entry:', formData);
+      console.warn('Creating HOS log entry:', formData);
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));

@@ -48,7 +48,7 @@ export class BestPassService extends BaseTollService {
       await this.ensureAuthenticated();
       const response = await this.makeRequest('GET', '/health');
       return response.status === 'healthy' || response.status === 'ok';
-    } catch (error) {
+    } catch (_error) {
       logger.error('BestPass connection test failed:', error);
       return false;
     }
@@ -86,7 +86,7 @@ export class BestPassService extends BaseTollService {
       const response = await this.makeRequest('POST', '/routes/calculate', routeData);
 
       return this.parseRouteResponse(response);
-    } catch (error) {
+    } catch (_error) {
       logger.error('Error calculating tolls with BestPass:', error);
       throw error;
     }
@@ -105,7 +105,7 @@ export class BestPassService extends BaseTollService {
         status: response.accountStatus,
         lastUpdated: new Date(response.lastUpdated),
       };
-    } catch (error) {
+    } catch (_error) {
       logger.error('Error getting BestPass account info:', error);
       throw error;
     }
@@ -146,7 +146,7 @@ export class BestPassService extends BaseTollService {
         exitTime: tx.exitDateTime ? new Date(tx.exitDateTime) : undefined,
         status: tx.transactionStatus || 'completed',
       })) || [];
-    } catch (error) {
+    } catch (_error) {
       logger.error('Error getting BestPass transactions:', error);
       return [];
     }
@@ -163,7 +163,7 @@ export class BestPassService extends BaseTollService {
       await this.ensureAuthenticated();
 
       // Sync account info
-      const accountInfo = await this.getAccountInfo(accountNumber);
+      const _accountInfo = await this.getAccountInfo(accountNumber);
       recordsProcessed++;
       recordsUpdated++;
 
@@ -189,7 +189,7 @@ export class BestPassService extends BaseTollService {
         errors,
         syncDuration: Date.now() - startTime,
       };
-    } catch (error) {
+    } catch (_error) {
       errors.push(error.message);
       return {
         success: false,
@@ -229,7 +229,7 @@ export class BestPassService extends BaseTollService {
     try {
       await this.authenticate();
       return true;
-    } catch (error) {
+    } catch (_error) {
       return false;
     }
   }
@@ -239,7 +239,7 @@ export class BestPassService extends BaseTollService {
       await this.ensureAuthenticated();
       const response = await this.makeRequest('GET', `/accounts/${accountNumber}/violations`);
       return response.violations || [];
-    } catch (error) {
+    } catch (_error) {
       logger.error('Error getting BestPass violations:', error);
       return [];
     }
@@ -250,7 +250,7 @@ export class BestPassService extends BaseTollService {
       await this.ensureAuthenticated();
       const response = await this.makeRequest('GET', `/accounts/${accountNumber}/vehicles`);
       return response.vehicles || [];
-    } catch (error) {
+    } catch (_error) {
       logger.error('Error getting BestPass fleet vehicles:', error);
       return [];
     }
@@ -279,7 +279,7 @@ export class BestPassService extends BaseTollService {
       this.tokenExpiry = new Date(Date.now() + (data.expires_in * 1000));
       
       logger.info('BestPass authentication successful');
-    } catch (error) {
+    } catch (_error) {
       logger.error('BestPass authentication failed:', error);
       throw error;
     }

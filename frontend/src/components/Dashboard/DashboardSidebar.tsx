@@ -62,8 +62,8 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const [_isTablet, setIsTablet] = useState(false);
+  const [_isLargeScreen, setIsLargeScreen] = useState(false);
   const pathname = usePathname();
 
   // Handle all responsive states in a single effect

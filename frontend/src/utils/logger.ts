@@ -34,7 +34,7 @@ const memoryLogs: LogEntry[] = [];
 
 // Environment detection
 const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV === 'development';
+const _isDevelopment = process.env.NODE_ENV === 'development';
 
 // Default minimum log level based on environment
 const DEFAULT_MIN_LEVEL: LogLevel = isProduction ? 'warn' : 'debug';

@@ -15,12 +15,7 @@
 
 import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
-
-import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import {
-  ScaleIcon,
   ArrowPathIcon,
   PlusIcon,
   MapPinIcon,
@@ -28,6 +23,11 @@ import {
   CheckCircleIcon,
   XCircleIcon,
 } from '@heroicons/react/24/outline';
+
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+// import Link from 'next/link'; // Unused
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

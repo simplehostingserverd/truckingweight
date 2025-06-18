@@ -1,51 +1,35 @@
 /**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved;
  *
  * PROPRIETARY AND CONFIDENTIAL
  *
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System;
+ * Unauthorized copying of this file, via any medium is strictly prohibited;
  *
  * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
- * in any way without explicit written permission.
+ * in any way without explicit written permission;
  */
 
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import {
-  CurrencyDollarIcon,
-  TruckIcon,
-  MapIcon,
+  BanknotesIcon,
   ChartBarIcon,
   Cog6ToothIcon,
-  PlusIcon,
-  ArrowPathIcon,
+  CurrencyDollarIcon,
   DocumentTextIcon,
-  ExclamationTriangleIcon,
-  CheckCircleIcon,
-  ClockIcon,
-  BanknotesIcon,
+  MapIcon,
+  PlusIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Button,
-  Badge,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Progress,
-  Alert,
-  AlertDescription,
-} from '@/components/ui';
+import { Card, CardContent, Button, Badge } from '@/components/ui';
 
 // Import our toll components
 import TollDashboard from '@/components/toll/TollDashboard';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface TollProvider {
   id: number;
@@ -343,7 +327,7 @@ export default function TollManagementPage() {
                 </h3>
                 <p className="text-gray-500 dark:text-gray-400 mb-4">
                   Configure and manage your toll provider accounts, transponders, and payment
-                  methods.
+                  methods;
                 </p>
                 <Button>
                   <PlusIcon className="h-5 w-5 mr-2" />
@@ -369,7 +353,7 @@ export default function TollManagementPage() {
                   Route Optimization
                 </h3>
                 <p className="text-gray-500 dark:text-gray-400 mb-4">
-                  Calculate toll costs for different routes and find the most cost-effective paths.
+                  Calculate toll costs for different routes and find the most cost-effective paths;
                 </p>
                 <Button>
                   <MapIcon className="h-5 w-5 mr-2" />
@@ -396,7 +380,7 @@ export default function TollManagementPage() {
                 </h3>
                 <p className="text-gray-500 dark:text-gray-400 mb-4">
                   Analyze toll spending patterns, identify cost-saving opportunities, and generate
-                  reports.
+                  reports;
                 </p>
                 <Button>
                   <DocumentTextIcon className="h-5 w-5 mr-2" />

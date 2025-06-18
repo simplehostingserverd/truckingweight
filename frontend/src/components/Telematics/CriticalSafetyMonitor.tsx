@@ -114,7 +114,7 @@ export default function CriticalSafetyMonitor({
   onEmergencyAlert,
   onMaintenanceSchedule, 
 }: CriticalSafetyMonitorProps) {
-  const [alertsAcknowledged, setAlertsAcknowledged] = useState<string[]>([]);
+  const [_alertsAcknowledged, setAlertsAcknowledged] = useState<string[]>([]);
 
   const getStatusColor = (status: string) => {
     switch (status) {

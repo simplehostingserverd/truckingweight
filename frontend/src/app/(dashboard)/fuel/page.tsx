@@ -16,23 +16,17 @@
 import React, { useState, useEffect } from 'react';
 import {
   BanknotesIcon,
-  PlusIcon,
-  MagnifyingGlassIcon,
-  EyeIcon,
-  CreditCardIcon,
-  TruckIcon,
-  MapPinIcon,
-  CalendarIcon,
   ChartBarIcon,
+  CreditCardIcon,
+  EyeIcon,
+  MagnifyingGlassIcon,
+  MapPinIcon,
+  PlusIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
   Button,
   Badge,
-  Input,
   Select,
   SelectContent,
   SelectItem,
@@ -44,12 +38,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
 } from '@/components/ui';
 import Link from 'next/link';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 
 interface FuelCard {
   id: number;

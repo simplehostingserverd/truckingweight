@@ -15,47 +15,24 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  ClockIcon,
-  ExclamationTriangleIcon,
   CheckCircleIcon,
-  TruckIcon,
-  UserIcon,
-  CalendarIcon,
+  ClockIcon,
   DocumentTextIcon,
-  ShieldCheckIcon,
-  BellIcon,
-  PlayIcon,
-  PauseIcon,
-  StopIcon,
+  ExclamationTriangleIcon,
   EyeIcon,
+  PauseIcon,
   PlusIcon,
   PrinterIcon,
+  ShieldCheckIcon,
+  StopIcon,
+  TruckIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Button,
-  Badge,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Input,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui';
+import { Card, CardContent, Button, Badge, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui';
 import Link from 'next/link';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 
 interface HOSLog {
   id: number;

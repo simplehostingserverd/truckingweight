@@ -279,7 +279,7 @@ export default function StorageSystemsPage() {
       };
 
       // In a real implementation, this would call the API
-      console.log('Storage system payload:', payload);
+      console.warn('Storage system payload:', payload);
 
       await loadStorageSystems();
       setIsDialogOpen(false);
@@ -775,7 +775,7 @@ export default function StorageSystemsPage() {
                         variant="outline"
                         onClick={() => {
                           // Handle edit
-                          console.log('Edit system:', system.id);
+                          console.warn('Edit system:', system.id);
                         }}
                         className="flex-1"
                       >
@@ -787,7 +787,7 @@ export default function StorageSystemsPage() {
                         variant="outline"
                         onClick={() => {
                           // Handle test connection
-                          console.log('Test connection:', system.id);
+                          console.warn('Test connection:', system.id);
                         }}
                         className="flex-1"
                       >

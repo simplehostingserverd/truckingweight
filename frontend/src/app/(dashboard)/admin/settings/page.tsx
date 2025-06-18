@@ -65,7 +65,7 @@ export default function AdminSettingsPage() {
     backup_retention_days: 30,
     last_backup_time: null,
   });
-  const [isLoading, setIsLoading] = useState(true);
+  const [_isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -116,7 +116,7 @@ export default function AdminSettingsPage() {
 
       // For demo purposes, we'll just use the default settings
       // In a real app, you would fetch from the database:
-      // const { data, error } = await supabase.from('system_settings').select('*').single();
+      // const { _data, error } = await supabase.from('system_settings').select('*').single();
 
       setSettings({
         ...settings,

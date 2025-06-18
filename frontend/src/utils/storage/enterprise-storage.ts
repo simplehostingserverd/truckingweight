@@ -79,12 +79,12 @@ export class EnterpriseStorageManager {
   async registerStorageSystem(config: StorageConfig): Promise<boolean> {
     try {
       // Validate configuration
-      if (!this.validateStorageConfig(config)) {
+      if (!this.validateStorageConfig(_config)) {
         throw new Error('Invalid storage configuration');
       }
 
       // Test connection
-      const connectionTest = await this.testConnection(config);
+      const connectionTest = await this.testConnection(_config);
       if (!connectionTest.success) {
         throw new Error(`Connection test failed: ${connectionTest.error}`);
       }
@@ -93,7 +93,7 @@ export class EnterpriseStorageManager {
       this.storageConfigs.set(config.id, config);
       
       // Initialize connection based on protocol
-      await this.initializeConnection(config);
+      await this.initializeConnection(_config);
 
       return true;
     } catch (error) {
@@ -109,17 +109,17 @@ export class EnterpriseStorageManager {
     try {
       switch (config.protocol) {
         case 'nfs':
-          return await this.testNFSConnection(config);
+          return await this.testNFSConnection(_config);
         case 'smb':
-          return await this.testSMBConnection(config);
+          return await this.testSMBConnection(_config);
         case 'iscsi':
-          return await this.testiSCSIConnection(config);
+          return await this.testiSCSIConnection(_config);
         case 'http':
         case 'https':
-          return await this.testHTTPConnection(config);
+          return await this.testHTTPConnection(_config);
         case 'ftp':
         case 'sftp':
-          return await this.testFTPConnection(config);
+          return await this.testFTPConnection(_config);
         default:
           return { success: false, error: 'Unsupported protocol' };
       }
@@ -201,7 +201,7 @@ export class EnterpriseStorageManager {
 
       // Verify checksum if enabled
       if (options.checksum_verification) {
-        const isValid = await this.verifyChecksum(data, filename);
+        const isValid = await this.verifyChecksum(_data, _filename);
         if (!isValid) {
           throw new Error('Checksum verification failed');
         }
@@ -225,7 +225,7 @@ export class EnterpriseStorageManager {
       }
 
       // Get metrics based on protocol
-      return await this.getMetricsByProtocol(config);
+      return await this.getMetricsByProtocol(_config);
     } catch (error) {
       console.error('Failed to get storage metrics:', error);
       return null;
@@ -240,7 +240,7 @@ export class EnterpriseStorageManager {
       const jobId = `backup_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       const backupJob: BackupJob = {
         ...job,
-        id: jobId
+        id: jobId,
       };
 
       // Schedule backup job
@@ -266,7 +266,7 @@ export class EnterpriseStorageManager {
       // 4. Verifying backup integrity
       // 5. Updating job status
 
-      console.log(`Executing backup job: ${jobId}`);
+      console.warn(`Executing backup job: ${jobId}`);
       return true;
     } catch (error) {
       console.error('Failed to execute backup:', error);
@@ -340,7 +340,7 @@ export class EnterpriseStorageManager {
       latency_ms: 2.1,
       cpu_usage_percent: 12,
       memory_usage_gb: 8.2,
-      temperature_celsius: 42
+      temperature_celsius: 42,
     };
   }
 

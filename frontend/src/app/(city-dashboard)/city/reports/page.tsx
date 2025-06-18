@@ -19,14 +19,11 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import {
-  ChartBarIcon,
-  ArrowPathIcon,
-  DocumentTextIcon,
-  DocumentArrowDownIcon,
   CalendarIcon,
+  ChartBarIcon,
   ClockIcon,
-  CheckCircleIcon,
-  XCircleIcon,
+  DocumentArrowDownIcon,
+  DocumentTextIcon,
 } from '@heroicons/react/24/outline';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -43,7 +40,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+// import { Separator } from '@/components/ui/separator'; // Unused
 
 // Create a client-side only component to avoid hydration issues
 const CityReportsPageClient = () => {

@@ -15,111 +15,32 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  CpuChipIcon,
-  ChartBarIcon,
-  ClockIcon,
-  CurrencyDollarIcon,
-  WrenchScrewdriverIcon,
-  EyeIcon,
-  Cog6ToothIcon,
-  PlayIcon,
-  PauseIcon,
   ArrowPathIcon,
-  ExclamationTriangleIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  InformationCircleIcon,
-  BoltIcon,
-  TruckIcon,
-  CalendarIcon,
-  DocumentTextIcon,
   BeakerIcon,
-  AdjustmentsHorizontalIcon,
-  ChartPieIcon,
+  BoltIcon,
+  ChartBarIcon,
+  CheckCircleIcon,
+  ClockIcon,
+  Cog6ToothIcon,
+  CpuChipIcon,
+  CurrencyDollarIcon,
+  DocumentTextIcon,
+  ExclamationTriangleIcon,
+  EyeIcon,
+  InformationCircleIcon,
   LightBulbIcon,
+  PauseIcon,
+  PlayIcon,
+  TruckIcon,
+  WrenchScrewdriverIcon,
+  XCircleIcon
 } from '@heroicons/react/24/outline';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Button,
-  Badge,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Progress,
-} from '@/components/ui';
+import { Card, CardContent, Button, Badge, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui';
 import Link from 'next/link';
-
-interface MLModel {
-  id: string;
-  name: string;
-  type:
-    | 'eta_prediction'
-    | 'dynamic_pricing'
-    | 'maintenance_prediction'
-    | 'route_optimization'
-    | 'demand_forecasting';
-  status: 'active' | 'training' | 'inactive' | 'error' | 'pending';
-  version: string;
-  accuracy: number;
-  lastTrained: string;
-  lastPrediction: string;
-  totalPredictions: number;
-  successRate: number;
-  description: string;
-  features: string[];
-  trainingData: {
-    samples: number;
-    lastUpdate: string;
-    sources: string[];
-  };
-  performance: {
-    latency: number; // ms
-    throughput: number; // predictions/hour
-    errorRate: number;
-    confidence: number;
-  };
-  configuration: {
-    autoRetrain: boolean;
-    retrainThreshold: number;
-    maxPredictions: number;
-    alertThreshold: number;
-  };
-}
-
-interface Prediction {
-  id: string;
-  modelId: string;
-  modelName: string;
-  type: string;
-  input: Record<string, any>;
-  output: Record<string, any>;
-  confidence: number;
-  timestamp: string;
-  executionTime: number;
-  status: 'success' | 'error' | 'pending';
-  actualOutcome?: Record<string, any>;
-  accuracy?: number;
-}
-
-interface MLMetrics {
-  totalModels: number;
-  activeModels: number;
-  totalPredictions: number;
-  averageAccuracy: number;
-  averageLatency: number;
-  errorRate: number;
-  costSavings: number;
-  revenueImpact: number;
-}
+import { MLModel, Prediction, MLMetrics } from '@/types/ml';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 
 export default function MLManagementPage() {
   const [activeTab, setActiveTab] = useState('overview');

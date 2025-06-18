@@ -59,7 +59,7 @@ interface TollAccount {
     name: string;
     provider_type: string;
     supported_regions: string[];
-    features: any;
+    features: unknown;
   };
   vehicle_toll_transponders?: Array<{
     id: number;

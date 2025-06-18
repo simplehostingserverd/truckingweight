@@ -140,29 +140,19 @@ export default function UsersPage() {
         throw new Error('Unauthorized: Admin access required');
       }
 
-      // Get all users with company information using proper join
-      const { data, error: usersError } = await supabase
-        .from('users')
-        .select(
-          `
-          id,
-          name,
-          email,
-          company_id,
-          is_admin,
-          created_at,
-          companies:company_id (
-            id,
-            name
-          )
-        `
-        )
-        .order('created_at', { ascending: false });
+      // Use the API endpoint to get users (which handles proper joins and permissions)
+      const response = await fetch('/api/admin/users', {
+        headers: {
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+      });
 
-      if (usersError) {
-        throw usersError;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch users');
       }
 
+      const data = await response.json();
       setUsers(data || []);
       setFilteredUsers(data || []);
     } catch (err: unknown) {
@@ -202,32 +192,31 @@ export default function UsersPage() {
         return;
       }
 
-      // Create user in Supabase Auth
-      const { data: authData, error: authError } = await supabase.auth.admin.createUser({
-        email: newUser.email,
-        password: newUser.password,
-        email_confirm: true,
-      });
-
-      if (authError) {
-        throw authError;
+      // Get current session for authorization
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !sessionData.session) {
+        throw new Error('Authentication required');
       }
 
-      if (!authData.user) {
-        throw new Error('Failed to create user');
-      }
-
-      // Create user in users table
-      const { error: userError } = await supabase.from('users').insert({
-        id: authData.user.id,
-        name: newUser.name,
-        email: newUser.email,
-        company_id: newUser.company_id || null,
-        is_admin: newUser.is_admin,
+      // Use backend API to create user (which has proper admin permissions)
+      const response = await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+        body: JSON.stringify({
+          name: newUser.name,
+          email: newUser.email,
+          password: newUser.password,
+          company_id: newUser.company_id || null,
+          is_admin: newUser.is_admin,
+        }),
       });
 
-      if (userError) {
-        throw userError;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create user');
       }
 
       // Reset form and close dialog
@@ -244,7 +233,7 @@ export default function UsersPage() {
       fetchUsers();
     } catch (err: unknown) {
       console.error('Error creating user:', err);
-      setError(err.message || 'Failed to create user');
+      setError(err instanceof Error ? err.message : 'Failed to create user');
     } finally {
       setIsLoading(false);
     }
@@ -257,18 +246,29 @@ export default function UsersPage() {
       setIsLoading(true);
       setError('');
 
-      // Update user in users table
-      const { error: userError } = await supabase
-        .from('users')
-        .update({
+      // Get current session for authorization
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !sessionData.session) {
+        throw new Error('Authentication required');
+      }
+
+      // Use backend API to update user
+      const response = await fetch(`/api/admin/users/${selectedUser.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+        body: JSON.stringify({
           name: selectedUser.name,
           company_id: selectedUser.company_id,
           is_admin: selectedUser.is_admin,
-        })
-        .eq('id', selectedUser.id);
+        }),
+      });
 
-      if (userError) {
-        throw userError;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to update user');
       }
 
       // Reset and close dialog
@@ -279,7 +279,7 @@ export default function UsersPage() {
       fetchUsers();
     } catch (err: unknown) {
       console.error('Error updating user:', err);
-      setError(err.message || 'Failed to update user');
+      setError(err instanceof Error ? err.message : 'Failed to update user');
     } finally {
       setIsLoading(false);
     }
@@ -292,18 +292,24 @@ export default function UsersPage() {
       setIsLoading(true);
       setError('');
 
-      // Delete user from Supabase Auth
-      const { error: authError } = await supabase.auth.admin.deleteUser(selectedUser.id);
-
-      if (authError) {
-        throw authError;
+      // Get current session for authorization
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !sessionData.session) {
+        throw new Error('Authentication required');
       }
 
-      // Delete user from users table
-      const { error: userError } = await supabase.from('users').delete().eq('id', selectedUser.id);
+      // Use backend API to delete user
+      const response = await fetch(`/api/admin/users/${selectedUser.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+        },
+      });
 
-      if (userError) {
-        throw userError;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete user');
       }
 
       // Reset and close dialog
@@ -314,7 +320,7 @@ export default function UsersPage() {
       fetchUsers();
     } catch (err: unknown) {
       console.error('Error deleting user:', err);
-      setError(err.message || 'Failed to delete user');
+      setError(err instanceof Error ? err.message : 'Failed to delete user');
     } finally {
       setIsLoading(false);
     }
@@ -492,14 +498,16 @@ export default function UsersPage() {
             <div className="space-y-2">
               <label className="text-sm font-medium">Company</label>
               <Select
-                value={newUser.company_id}
-                onValueChange={value => setNewUser({ ...newUser, company_id: value })}
+                value={newUser.company_id || 'none'}
+                onValueChange={value =>
+                  setNewUser({ ...newUser, company_id: value === 'none' ? '' : value })
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select Company" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">None</SelectItem>
+                  <SelectItem value="none">None</SelectItem>
                   {companies.map(company => (
                     <SelectItem key={company.id} value={company.id}>
                       {company.name}
@@ -555,16 +563,19 @@ export default function UsersPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Company</label>
                 <Select
-                  value={selectedUser.company_id || ''}
+                  value={selectedUser.company_id || 'none'}
                   onValueChange={value =>
-                    setSelectedUser({ ...selectedUser, company_id: value || null })
+                    setSelectedUser({
+                      ...selectedUser,
+                      company_id: value === 'none' ? null : value,
+                    })
                   }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select Company" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value="none">None</SelectItem>
                     {companies.map(company => (
                       <SelectItem key={company.id} value={company.id}>
                         {company.name}

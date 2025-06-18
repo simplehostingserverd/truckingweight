@@ -15,43 +15,25 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  ChartBarIcon,
-  TruckIcon,
-  CurrencyDollarIcon,
-  ClockIcon,
-  BoltIcon,
-  ShieldCheckIcon,
-  ExclamationTriangleIcon,
-  CheckCircleIcon,
-  ArrowUpIcon,
   ArrowDownIcon,
-  CalendarIcon,
-  UserIcon,
-  MapPinIcon,
-  WrenchScrewdriverIcon,
-  DocumentTextIcon,
-  EyeIcon,
+  ArrowUpIcon,
+  BoltIcon,
+  ChartBarIcon,
+  CheckCircleIcon,
+  ClockIcon,
   Cog6ToothIcon,
+  CurrencyDollarIcon,
+  DocumentTextIcon,
+  ExclamationTriangleIcon,
+  EyeIcon,
+  ShieldCheckIcon,
+  TruckIcon,
 } from '@heroicons/react/24/outline';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Button,
-  Badge,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Progress,
-} from '@/components/ui';
+import { Card, CardContent, Button, Badge, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui';
 import Link from 'next/link';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 
 interface KPIMetric {
   id: string;

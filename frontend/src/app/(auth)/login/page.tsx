@@ -14,7 +14,7 @@
 'use client';
 
 import { useSupabaseAuth } from '@/providers/SupabaseAuthProvider';
-import HCaptcha from '@hcaptcha/react-hcaptcha';
+// import _HCaptcha from '@hcaptcha/react-hcaptcha'; // Unused
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -26,9 +26,9 @@ export default function Login() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [_captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [_captchaError, setCaptchaError] = useState('');
-  const captchaRef = useRef<HCaptcha>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState('');
+  const captchaRef = useRef(null);
   const router = useRouter();
   const { signIn } = useSupabaseAuth();
 
@@ -66,18 +66,18 @@ export default function Login() {
     }
   };
 
-  const _onCaptchaVerify = (token: string) => {
+  const onCaptchaVerify = (token: string) => {
     setCaptchaToken(token);
     setCaptchaError('');
   };
 
-  const _onCaptchaError = (err: Error) => {
+  const onCaptchaError = (err: Error) => {
     console.error('hCaptcha error:', err);
     setCaptchaError('Captcha verification failed. Please try again.');
     setCaptchaToken(null);
   };
 
-  const _onCaptchaExpire = () => {
+  const onCaptchaExpire = () => {
     setCaptchaToken(null);
     setCaptchaError('Captcha expired. Please verify again.');
   };

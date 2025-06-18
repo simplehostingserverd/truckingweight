@@ -58,7 +58,7 @@ export function useSWRFetch<T = any>(
       onError: (_error, _key) => {
         // Call the user's onError if provided
         if (swrOptions?.onError) {
-          swrOptions.onError(error, key);
+          swrOptions.onError(_error, _key);
         }
       },
     }

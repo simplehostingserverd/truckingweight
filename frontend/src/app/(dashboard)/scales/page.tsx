@@ -52,24 +52,25 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { Scale } from '@/types/fleet';
 
 export default function ScalesPage() {
-  const [scales, setScales] = useState<any[]>([]);
-  const [filteredScales, setFilteredScales] = useState<any[]>([]);
+  const [scales, setScales] = useState<Scale[]>([]);
+  const [filteredScales, setFilteredScales] = useState<Scale[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [view, setView] = useState('table');
-  const [selectedScale, setSelectedScale] = useState<unknown>(null);
+  const [selectedScale, setSelectedScale] = useState<Scale | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected' | 'error'>(
+  const [_connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected' | 'error'>(
     'disconnected'
   );
   const [showConnectionSnackbar, setShowConnectionSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<
+  const [_snackbarSeverity, setSnackbarSeverity] = useState<
     'success' | 'error' | 'info' | 'warning'
   >('info');
   const [activeScales, setActiveScales] = useState<number>(0);
@@ -99,7 +100,7 @@ export default function ScalesPage() {
       }
 
       // Try to get user data, but don't fail if not found
-      const { data: userData, error: userError } = await supabase
+      const { data: userData, error: _userError } = await supabase
         .from('users')
         .select('company_id, is_admin')
         .eq('id', sessionData.session.user.id);
@@ -116,7 +117,7 @@ export default function ScalesPage() {
         query = query.eq('company_id', user.company_id);
       }
 
-      const { data, error: scalesError } = await query.order('name');
+      const { _data, error: scalesError } = await query.order('name');
 
       if (scalesError) {
         throw scalesError;
@@ -133,19 +134,19 @@ export default function ScalesPage() {
       setFilteredScales(data || []);
     } catch (err: unknown) {
       console.error('Error fetching scales:', err);
-      setError(err.message || 'Failed to load scales');
+      setError(err instanceof Error ? err.message : 'Failed to load scales');
     } finally {
       setIsLoading(false);
     }
   };
 
   // Check which scales are connected to the weight capture system
-  const checkConnectedScales = async (scalesData: unknown[]) => {
+  const checkConnectedScales = async (scalesData: Scale[]) => {
     try {
       // In a real implementation, this would check with the backend
       // For now, we'll just simulate it
       return scalesData.filter(
-        scale => scale.status === 'Active' && scale.api_endpoint && Math.random() > 0.7 // Randomly mark some scales as connected
+        scale => scale.status === 'Active' && Math.random() > 0.7 // Randomly mark some scales as connected
       );
     } catch (error) {
       console.error('Error checking connected scales:', error);
@@ -154,7 +155,7 @@ export default function ScalesPage() {
   };
 
   // Connect to a scale for weight capture
-  const connectToScale = async (scale: unknown) => {
+  const connectToScale = async (scale: Scale) => {
     if (!scale || scale.status !== 'Active') {
       setSnackbarMessage('Cannot connect to inactive scale');
       setSnackbarSeverity('error');

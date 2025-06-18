@@ -25,6 +25,7 @@ import {
   TableRow,
   Paper,
   Chip,
+  TextField,
 } from '@mui/material';
 import {
   Assessment as ReportIcon,
@@ -53,7 +54,7 @@ const TollReports: React.FC = () => {
     fetchSummary('month');
   }, []);
 
-  const handleConfigChange = (field: string, value: any) => {
+  const handleConfigChange = (field: string, value: unknown) => {
     setReportConfig(prev => ({
       ...prev,
       [field]: value,
@@ -360,7 +361,7 @@ const TollReports: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {reportData.data.slice(0, 10).map((item: any, index: number) => (
+                    {reportData.data.slice(0, 10).map((item: unknown, index: number) => (
                       <TableRow key={index}>
                         <TableCell>
                           {item.transaction_date || item.created_at

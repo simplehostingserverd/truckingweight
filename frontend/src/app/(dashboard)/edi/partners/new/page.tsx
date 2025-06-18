@@ -186,7 +186,7 @@ export default function NewTradingPartnerPage() {
     privateKeyPath: '',
   });
 
-  const handleInputChange = (field: keyof TradingPartnerForm, value: any) => {
+  const handleInputChange = (field: keyof TradingPartnerForm, value: unknown) => {
     setFormData(prev => ({
       ...prev,
       [field]: value,
@@ -257,7 +257,7 @@ export default function NewTradingPartnerPage() {
     setIsSubmitting(true);
 
     try {
-      console.log('Submitting trading partner:', formData);
+      console.warn('Submitting trading partner:', formData);
       await new Promise(resolve => setTimeout(resolve, 2000));
       router.push('/edi/partners');
     } catch (error) {

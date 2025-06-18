@@ -67,12 +67,12 @@ export default async function VehicleDetail({ params }: { params: Promise<{ id: 
 
   if (error || !vehicle) {
     console.error('Error fetching vehicle:', error);
-    console.log('Requested vehicle ID:', id);
-    console.log('User company ID:', userData?.company_id);
+    console.warn('Requested vehicle ID:', id);
+    console.warn('User company ID:', userData?.company_id);
 
     // Check if it's a "no rows" error vs other errors
     if (error?.code === 'PGRST116') {
-      console.log('Vehicle not found - redirecting to 404');
+      console.warn('Vehicle not found - redirecting to 404');
     }
 
     notFound();

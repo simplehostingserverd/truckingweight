@@ -16,7 +16,7 @@ import {
   ChartBarIcon,
   MapPinIcon,
   BoltIcon,
-  FireIcon
+  FireIcon,
 } from '@heroicons/react/24/outline';
 import { VehicleList } from './VehicleList';
 import { MaintenanceSchedule } from './MaintenanceSchedule';
@@ -85,7 +85,7 @@ export default function FleetManagementDashboard() {
     totalMaintenanceCost: 0,
     avgSafetyScore: 0,
     criticalAlerts: 0,
-    upcomingMaintenance: 0
+    upcomingMaintenance: 0,
   });
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [loading, setLoading] = useState(true);
@@ -100,7 +100,7 @@ export default function FleetManagementDashboard() {
     try {
       const [vehiclesResponse, metricsResponse] = await Promise.all([
         fetch('/api/fleet/vehicles'),
-        fetch('/api/fleet/metrics')
+        fetch('/api/fleet/metrics'),
       ]);
 
       const vehiclesData = await vehiclesResponse.json();

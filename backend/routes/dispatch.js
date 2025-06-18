@@ -214,7 +214,7 @@ router.post('/auto-assign/:loadId', async (req, res) => {
     const selectedDriver = availableDrivers[0];
 
     // Update load assignment
-    const updatedLoad = await prisma.loads.update({
+    const _updatedLoad = await prisma.loads.update({
       where: { id: loadId },
       data: {
         driver_id: selectedDriver.id,

@@ -24,7 +24,7 @@ import {
   TruckIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter as _useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function CreateVehicle() {
@@ -41,7 +41,7 @@ export default function CreateVehicle() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const router = useRouter();
+  const router = useRouter(); null;
   const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {

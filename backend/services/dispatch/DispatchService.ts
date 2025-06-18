@@ -242,7 +242,7 @@ export class DispatchService {
   /**
    * Calculate driver performance score
    */
-  private async calculateDriverPerformanceScore(driverId: number): Promise<number> {
+  private async calculateDriverPerformanceScore(_driverId: number): Promise<number> {
     const performance = await prisma.driver_performance_metrics.findFirst({
       where: {
         driver_id: driverId,
@@ -279,7 +279,7 @@ export class DispatchService {
   /**
    * Calculate vehicle suitability score
    */
-  private calculateVehicleSuitabilityScore(load: any, vehicle: any): number {
+  private calculateVehicleSuitabilityScore(_load: any, _vehicle: any): number {
     let score = 1.0;
 
     // Weight capacity check
@@ -299,7 +299,7 @@ export class DispatchService {
   /**
    * Calculate HOS compliance score
    */
-  private async calculateHOSComplianceScore(driverId: number): Promise<number> {
+  private async calculateHOSComplianceScore(_driverId: number): Promise<number> {
     const today = new Date();
     const sevenDaysAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
@@ -342,7 +342,7 @@ export class DispatchService {
   /**
    * Calculate equipment matching score
    */
-  private calculateEquipmentScore(load: any, vehicle: any): number {
+  private calculateEquipmentScore(_load: any, _vehicle: any): number {
     // This would check for specific equipment requirements
     // For now, return 1.0 (perfect match)
     return 1.0;
@@ -409,7 +409,7 @@ export class DispatchService {
   /**
    * Get driver's current location
    */
-  private async getDriverCurrentLocation(driverId: number) {
+  private async getDriverCurrentLocation(_driverId: number) {
     // This would integrate with telematics data
     // For now, return null
     return null;

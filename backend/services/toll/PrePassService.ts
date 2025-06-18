@@ -157,7 +157,7 @@ export class PrePassService extends BaseTollService {
 
     try {
       // Sync account info
-      const accountInfo = await this.getAccountInfo(accountNumber);
+      const _accountInfo = await this.getAccountInfo(accountNumber);
       recordsProcessed++;
       recordsUpdated++;
 

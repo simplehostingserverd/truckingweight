@@ -55,7 +55,6 @@ export default function CityLogin() {
   const [rememberMe, setRememberMe] = useState(false);
   const [_showDemoLogin, setShowDemoLogin] = useState(process.env.NODE_ENV === 'development');
   const router = useRouter();
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);

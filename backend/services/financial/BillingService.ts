@@ -265,7 +265,7 @@ export class BillingService {
   /**
    * Calculate tax amount
    */
-  private async calculateTax(subtotal: number, customer: any): Promise<number> {
+  private async calculateTax(_subtotal: number, _customer: any): Promise<number> {
     // Tax calculation would be based on customer location and tax rules
     // For now, return 0 (many freight services are tax-exempt)
     return 0;
@@ -311,7 +311,7 @@ export class BillingService {
    * Check if customer supports EDI
    */
   private async customerSupportsEDI(customerId: number): Promise<boolean> {
-    const tradingPartner = await prisma.edi_trading_partners.findFirst({
+    const _tradingPartner = await prisma.edi_trading_partners.findFirst({
       where: {
         partner_name: {
           // This would match customer name to trading partner
@@ -421,9 +421,9 @@ export class BillingService {
    */
   async generateAgingReport(companyId: number): Promise<any> {
     const today = new Date();
-    const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
-    const sixtyDaysAgo = new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000);
-    const ninetyDaysAgo = new Date(today.getTime() - 90 * 24 * 60 * 60 * 1000);
+    const _thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+    const _sixtyDaysAgo = new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000);
+    const _ninetyDaysAgo = new Date(today.getTime() - 90 * 24 * 60 * 60 * 1000);
 
     const invoices = await prisma.invoices.findMany({
       where: {

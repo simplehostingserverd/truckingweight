@@ -40,7 +40,7 @@ interface TollProvider {
   provider_type: string;
   authentication_type: string;
   supported_regions: string[];
-  features: any;
+  features: unknown;
 }
 
 interface TollAccount {
@@ -48,8 +48,8 @@ interface TollAccount {
   toll_provider_id: number;
   account_number: string;
   account_name: string;
-  credentials: any;
-  account_settings: any;
+  credentials: unknown;
+  account_settings: unknown;
 }
 
 interface TollProviderSetupProps {
@@ -137,14 +137,14 @@ const TollProviderSetup: React.FC<TollProviderSetupProps> = ({
     }
   };
 
-  const handleFormChange = (field: string, value: any) => {
+  const handleFormChange = (field: string, value: unknown) => {
     setFormData({
       ...formData,
       [field]: value,
     });
   };
 
-  const handleCredentialChange = (field: string, value: any) => {
+  const handleCredentialChange = (field: string, value: unknown) => {
     setFormData({
       ...formData,
       credentials: {

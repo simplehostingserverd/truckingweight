@@ -1,114 +1,57 @@
 /**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved;
  *
  * PROPRIETARY AND CONFIDENTIAL
  *
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System;
+ * Unauthorized copying of this file, via any medium is strictly prohibited;
  *
  * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
- * in any way without explicit written permission.
+ * in any way without explicit written permission;
  */
 
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import {
-  ChartBarIcon,
-  PresentationChartLineIcon,
-  DocumentChartBarIcon,
-  CpuChipIcon,
-  EyeIcon,
-  CalendarIcon,
   ArrowDownTrayIcon,
+  BoltIcon,
+  ChartBarIcon,
+  ClockIcon,
   Cog6ToothIcon,
+  CpuChipIcon,
+  CurrencyDollarIcon,
+  DocumentChartBarIcon,
+  EyeIcon,
   FunnelIcon,
   MagnifyingGlassIcon,
-  ClockIcon,
-  TruckIcon,
-  CurrencyDollarIcon,
-  UserIcon,
   MapPinIcon,
-  BoltIcon,
+  PresentationChartLineIcon,
   ShieldCheckIcon,
+  TruckIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
   Button,
   Badge,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Input,
 } from '@/components/ui';
 import Link from 'next/link';
-
-interface AnalyticsWidget {
-  id: string;
-  title: string;
-  type: 'chart' | 'table' | 'metric' | 'map' | 'gauge';
-  category: 'operational' | 'financial' | 'driver' | 'vehicle' | 'route' | 'safety';
-  description: string;
-  dataSource: string;
-  refreshRate: number; // in minutes
-  lastUpdated: string;
-  config: {
-    timeRange: string;
-    filters: Record<string, any>;
-    visualization: Record<string, any>;
-  };
-  data: any;
-  insights: string[];
-}
-
-interface AnalyticsDashboard {
-  id: string;
-  name: string;
-  description: string;
-  widgets: AnalyticsWidget[];
-  layout: {
-    columns: number;
-    rows: number;
-  };
-  permissions: string[];
-  isDefault: boolean;
-  createdBy: string;
-  createdAt: string;
-  lastModified: string;
-}
-
-interface AnalyticsReport {
-  id: string;
-  name: string;
-  type: 'scheduled' | 'on_demand' | 'real_time';
-  category: string;
-  description: string;
-  schedule?: {
-    frequency: 'daily' | 'weekly' | 'monthly';
-    time: string;
-    recipients: string[];
-  };
-  parameters: Record<string, any>;
-  lastRun?: string;
-  nextRun?: string;
-  status: 'active' | 'paused' | 'error';
-}
+import { AnalyticsWidget, AnalyticsDashboard, AnalyticsReport } from '@/types/analytics';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 
 export default function AdvancedAnalyticsPage() {
   const [activeTab, setActiveTab] = useState('dashboards');
   const [dashboards, setDashboards] = useState<AnalyticsDashboard[]>([]);
   const [reports, setReports] = useState<AnalyticsReport[]>([]);
-  const [selectedDashboard, setSelectedDashboard] = useState<string>('');
+  const [_selectedDashboard, setSelectedDashboard] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [loading, setLoading] = useState(true);
@@ -593,7 +536,7 @@ export default function AdvancedAnalyticsPage() {
                     No Dashboards Found
                   </h3>
                   <p className="text-gray-500 dark:text-gray-400 mb-4">
-                    No dashboards match your current filters.
+                    No dashboards match your current filters;
                   </p>
                   <Button>
                     <CpuChipIcon className="h-4 w-4 mr-2" />
@@ -705,7 +648,7 @@ export default function AdvancedAnalyticsPage() {
                     No Reports Found
                   </h3>
                   <p className="text-gray-500 dark:text-gray-400 mb-4">
-                    No reports match your current filters.
+                    No reports match your current filters;
                   </p>
                   <Button>Create Report</Button>
                 </div>
@@ -739,7 +682,7 @@ export default function AdvancedAnalyticsPage() {
                           <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
                             AI analysis suggests redistributing 3 vehicles from Route A to Route C
                             could increase overall efficiency by 12% and reduce fuel costs by
-                            $2,400/month.
+                            $2,400/month;
                           </p>
                           <div className="mt-3">
                             <Badge className="bg-blue-100 text-blue-800 text-xs">High Impact</Badge>
@@ -760,8 +703,8 @@ export default function AdvancedAnalyticsPage() {
                             Driver Performance Pattern
                           </h4>
                           <p className="text-sm text-green-700 dark:text-green-300 mt-1">
-                            Drivers with 3+ years experience show 23% better fuel efficiency.
-                            Consider pairing new drivers with experienced mentors.
+                            Drivers with 3+ years experience show 23% better fuel efficiency;
+                            Consider pairing new drivers with experienced mentors;
                           </p>
                           <div className="mt-3">
                             <Badge className="bg-green-100 text-green-800 text-xs">
@@ -785,7 +728,7 @@ export default function AdvancedAnalyticsPage() {
                           </h4>
                           <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
                             Vehicle #247 shows early indicators of transmission issues. Schedule
-                            preventive maintenance within 2 weeks to avoid breakdown.
+                            preventive maintenance within 2 weeks to avoid breakdown;
                           </p>
                           <div className="mt-3">
                             <Badge className="bg-yellow-100 text-yellow-800 text-xs">
@@ -809,7 +752,7 @@ export default function AdvancedAnalyticsPage() {
                           </h4>
                           <p className="text-sm text-purple-700 dark:text-purple-300 mt-1">
                             Peak demand hours (2-4 PM) show 18% higher rates. Adjust scheduling to
-                            capture more high-value loads during this window.
+                            capture more high-value loads during this window;
                           </p>
                           <div className="mt-3">
                             <Badge className="bg-purple-100 text-purple-800 text-xs">
@@ -836,11 +779,11 @@ export default function AdvancedAnalyticsPage() {
                         </div>
                         <p className="text-sm text-gray-600 mb-3">
                           Based on historical patterns and market trends, fuel costs are expected to
-                          increase by 8-12% over the next month.
+                          increase by 8-12% over the next month;
                         </p>
                         <div className="text-sm">
                           <span className="font-medium">Recommendation:</span> Consider fuel hedging
-                          strategies or route optimization to mitigate impact.
+                          strategies or route optimization to mitigate impact;
                         </div>
                       </div>
 
@@ -851,11 +794,11 @@ export default function AdvancedAnalyticsPage() {
                         </div>
                         <p className="text-sm text-gray-600 mb-3">
                           Seasonal analysis indicates 25% increase in shipping demand starting
-                          March. Current capacity may be insufficient.
+                          March. Current capacity may be insufficient;
                         </p>
                         <div className="text-sm">
                           <span className="font-medium">Recommendation:</span> Consider expanding
-                          fleet or partnering with additional carriers.
+                          fleet or partnering with additional carriers;
                         </div>
                       </div>
                     </div>

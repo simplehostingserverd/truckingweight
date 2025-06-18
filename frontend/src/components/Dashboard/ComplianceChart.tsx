@@ -23,7 +23,7 @@ interface ComplianceChartProps {
 }
 
 function ComplianceChart({ companyId }: ComplianceChartProps) {
-  const supabase = createClient();
+  const _supabase = createClient();
   const [dateRange, setDateRange] = useState('week'); // 'week', 'month', 'year'
   const [selectedCompany, setSelectedCompany] = useState<string>('overall');
 

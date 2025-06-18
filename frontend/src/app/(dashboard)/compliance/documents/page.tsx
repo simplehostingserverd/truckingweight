@@ -14,36 +14,21 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { Card, CardContent, Button, Badge, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Button,
-  Badge,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui';
-import {
+  ArrowDownTrayIcon,
+  CalendarIcon,
+  ClockIcon,
   DocumentTextIcon,
   EyeIcon,
-  ArrowDownTrayIcon,
-  PrinterIcon,
   FolderIcon,
-  CalendarIcon,
-  UserIcon,
+  PrinterIcon,
   ShieldCheckIcon,
-  ClockIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 import PDFViewer from '@/components/PDFViewer/PDFViewer';
-import Link from 'next/link';
+import { CardHeader, CardTitle } from '@/components/ui/card';
+// // import Link from 'next/link'; // Unused // Unused
 
 interface ComplianceDocument {
   id: number;
@@ -66,7 +51,7 @@ export default function ComplianceDocumentsPage() {
   const [documents, setDocuments] = useState<ComplianceDocument[]>([]);
   const [selectedDocument, setSelectedDocument] = useState<ComplianceDocument | null>(null);
   const [showPDFViewer, setShowPDFViewer] = useState(false);
-  const [activeTab, setActiveTab] = useState('documents');
+  const [_activeTab, setActiveTab] = useState('documents');
   const [typeFilter, setTypeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [loading, setLoading] = useState(true);

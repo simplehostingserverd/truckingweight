@@ -163,7 +163,7 @@ export default function ComplianceChecker({
   }, [axleWeights, axleSpacing, grossWeight, stateCode]);
 
   // Get color class based on compliance status
-  const getStatusColorClass = (isCompliant: boolean) => {
+  const _getStatusColorClass = (isCompliant: boolean) => {
     return isCompliant ? 'text-green-500' : 'text-red-500';
   };
 

@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved;
  *
  * PROPRIETARY AND CONFIDENTIAL
  *
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System;
+ * Unauthorized copying of this file, via any medium is strictly prohibited;
  *
  * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
- * in any way without explicit written permission.
+ * in any way without explicit written permission;
  */
 
 'use client';
@@ -44,7 +44,7 @@ import {
 import { useEffect, useState } from 'react';
 
 export default function CityWeighingPage() {
-  const [scales, setScales] = useState<
+  const [_scales, setscales] = useState<
     Array<{ id: number; name: string; status: string; max_capacity: number }>
   >([]);
   const [selectedScale, setSelectedScale] = useState<string>('');
@@ -68,8 +68,7 @@ export default function CityWeighingPage() {
     fetchScales();
   }, []);
 
-  const fetchScales = async () => {
-    setIsLoading(true);
+  const _fetchScales =  null; null;
     setError('');
 
     try {
@@ -420,7 +419,7 @@ export default function CityWeighingPage() {
                     </Button>
                     <p className="text-sm text-gray-400">
                       Use the camera to scan vehicle license plates or QR codes for automated data
-                      entry.
+                      entry;
                     </p>
                   </div>
                 </TabsContent>
@@ -441,7 +440,7 @@ export default function CityWeighingPage() {
                     </Button>
                     <p className="text-sm text-gray-400">
                       Connect directly to compatible scales to automatically retrieve weight
-                      measurements.
+                      measurements;
                     </p>
                   </div>
                 </TabsContent>

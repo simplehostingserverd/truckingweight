@@ -350,7 +350,7 @@ export class MLService {
   /**
    * Run ETA prediction
    */
-  private async runETAPrediction(features: any): Promise<{ hours: number }> {
+  private async runETAPrediction(_features: any): Promise<{ hours: number }> {
     if (!this.etaModel) {
       throw new Error('ETA model not initialized');
     }
@@ -494,7 +494,7 @@ export class MLService {
     };
   }
 
-  private async runPricingPrediction(features: any): Promise<number> {
+  private async runPricingPrediction(_features: any): Promise<number> {
     // Simplified pricing adjustment (would use actual model)
     let multiplier = 1.0;
     
@@ -529,12 +529,12 @@ export class MLService {
     return 1.0; // Mock value
   }
 
-  private async getMarketFactor(origin: any, destination: any): Promise<number> {
+  private async getMarketFactor(_origin: any, _destination: any): Promise<number> {
     // Would analyze market conditions for this lane
     return 1.0; // Mock value
   }
 
-  private calculatePricingConfidence(features: any): number {
+  private calculatePricingConfidence(_features: any): number {
     return 0.85; // Mock confidence
   }
 
@@ -543,7 +543,7 @@ export class MLService {
     return 3.45;
   }
 
-  private async getDemandIndex(origin: any, destination: any): Promise<number> {
+  private async getDemandIndex(_origin: any, _destination: any): Promise<number> {
     // Would calculate demand index for this lane
     return 0.7;
   }
@@ -553,7 +553,7 @@ export class MLService {
     return {};
   }
 
-  private async runMaintenancePrediction(features: any): Promise<any> {
+  private async runMaintenancePrediction(_features: any): Promise<any> {
     // Would run actual maintenance prediction model
     return {
       failureProbability: Math.random() * 0.3, // Mock

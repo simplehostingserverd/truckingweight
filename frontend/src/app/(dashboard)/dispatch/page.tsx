@@ -1,60 +1,31 @@
 /**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved;
  *
  * PROPRIETARY AND CONFIDENTIAL
  *
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System;
+ * Unauthorized copying of this file, via any medium is strictly prohibited;
  *
  * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
- * in any way without explicit written permission.
+ * in any way without explicit written permission;
  */
 
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import {
-  TruckIcon,
-  MapPinIcon,
-  ClockIcon,
+  BoltIcon,
+  ChartBarIcon,
   CurrencyDollarIcon,
   ExclamationTriangleIcon,
-  CheckCircleIcon,
-  PlayIcon,
-  PauseIcon,
+  TruckIcon,
   UserGroupIcon,
-  ChartBarIcon,
-  BuildingOfficeIcon,
-  RouteIcon,
-  BoltIcon,
-  CalendarIcon,
 } from '@heroicons/react/24/outline';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Button,
-  Badge,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Input,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui';
+import { Card, CardContent, Button, Badge, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui';
 import Link from 'next/link';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface Load {
   id: number;

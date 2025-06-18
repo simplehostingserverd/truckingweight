@@ -13,9 +13,9 @@ import {
   ExclamationTriangleIcon,
   CheckCircleIcon,
   PlayIcon,
-  PauseIcon
+  PauseIcon,
 } from '@heroicons/react/24/outline';
-import { LoadBoard } from './LoadBoard';
+import { LoadBoard as _LoadBoard } from './LoadBoard';
 import { DriverAssignment } from './DriverAssignment';
 import { RouteOptimization } from './RouteOptimization';
 import { DispatchMap } from './DispatchMap';
@@ -60,7 +60,7 @@ export default function DispatchDashboard() {
     availableDrivers: 0,
     utilizationRate: 0,
     avgRevenuePerMile: 0,
-    onTimeDeliveryRate: 0
+    onTimeDeliveryRate: 0,
   });
   const [selectedLoad, setSelectedLoad] = useState<Load | null>(null);
   const [autoDispatchEnabled, setAutoDispatchEnabled] = useState(false);
@@ -77,7 +77,7 @@ export default function DispatchDashboard() {
       // Fetch loads and metrics from API
       const [loadsResponse, metricsResponse] = await Promise.all([
         fetch('/api/dispatch/loads'),
-        fetch('/api/dispatch/metrics')
+        fetch('/api/dispatch/metrics'),
       ]);
 
       const loadsData = await loadsResponse.json();
@@ -95,7 +95,7 @@ export default function DispatchDashboard() {
   const handleAutoAssign = async (loadId: number) => {
     try {
       const response = await fetch(`/api/dispatch/auto-assign/${loadId}`, {
-        method: 'POST'
+        method: 'POST',
       });
 
       if (response.ok) {

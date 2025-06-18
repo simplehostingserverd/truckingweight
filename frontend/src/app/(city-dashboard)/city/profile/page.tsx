@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved;
  *
  * PROPRIETARY AND CONFIDENTIAL
  *
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System;
+ * Unauthorized copying of this file, via any medium is strictly prohibited;
  *
  * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
- * in any way without explicit written permission.
+ * in any way without explicit written permission;
  */
 
 'use client';
@@ -39,9 +39,8 @@ import { Separator } from '@/components/ui/separator';
 import { uploadCityLogo } from '@/utils/supabase/storage';
 
 // Create a client-side only component to avoid hydration issues
-const CityProfilePageClient = () => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
+const _CityProfilePageClient =  null; null;
+  const [_isLoading, setisLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -186,7 +185,7 @@ const CityProfilePageClient = () => {
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { _name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
@@ -592,7 +591,7 @@ const CityProfilePageClient = () => {
                         </div>
                       )}
                       <p className="text-xs text-gray-400 mt-2">
-                        Recommended size: 200x200px. Max file size: 2MB.
+                        Recommended size: 200x200px. Max file size: 2MB;
                       </p>
                     </div>
                   </div>

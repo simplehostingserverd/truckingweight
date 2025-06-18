@@ -547,7 +547,7 @@ export default function CesiumMap({
     }
   }, [selectedRoute]);
 
-  const getStatusColor = (status: string) => {
+  const _getStatusColor = (status: string) => {
     switch (status) {
       case 'in_transit':
         return 'bg-blue-500';

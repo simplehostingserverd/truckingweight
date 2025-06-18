@@ -32,9 +32,9 @@ export default function Register() {
   const [scaleWeight, setScaleWeight] = useState(0);
   const [truckPosition, setTruckPosition] = useState(0);
   const [formProgress, setFormProgress] = useState(0);
-  const [_captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [_captchaError, setCaptchaError] = useState('');
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState('');
+  const canvasRef = useRef(null);
   // const captchaRef = useRef<HCaptcha>(null); // TEMPORARILY DISABLED
   const router = useRouter();
   const supabase = createClient();
@@ -157,18 +157,18 @@ export default function Register() {
   }, [truckPosition, scaleWeight, formProgress]);
 
   // hCaptcha event handlers
-  const _onCaptchaVerify = (token: string) => {
+  const onCaptchaVerify = (token: string) => {
     setCaptchaToken(token);
     setCaptchaError('');
   };
 
-  const _onCaptchaError = (err: Error) => {
+  const onCaptchaError = (err: Error) => {
     console.error('hCaptcha error:', err);
     setCaptchaError('Captcha verification failed. Please try again.');
     setCaptchaToken(null);
   };
 
-  const _onCaptchaExpire = () => {
+  const onCaptchaExpire = () => {
     setCaptchaToken(null);
     setCaptchaError('Captcha expired. Please verify again.');
   };

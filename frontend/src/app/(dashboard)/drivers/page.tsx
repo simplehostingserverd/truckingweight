@@ -23,7 +23,7 @@ import Link from 'next/link';
 
 export default async function Drivers() {
   const supabase = createClient();
-
+ null;
   // Get user data
   const {
     data: { user },
@@ -96,14 +96,14 @@ export default async function Drivers() {
   const onLeaveDrivers = drivers?.filter(driver => driver.status === 'On Leave').length || 0;
 
   // Get count of inactive drivers
-  const inactiveDrivers = drivers?.filter(driver => driver.status === 'Inactive').length || 0;
+  const _inactiveDrivers = drivers?.filter(driver => driver.status === 'Inactive').length || 0;
 
   // Get count of drivers with expiring licenses (within next 30 days)
   const today = new Date();
   const thirtyDaysFromNow = new Date();
   thirtyDaysFromNow.setDate(today.getDate() + 30);
 
-  const expiringLicenses =
+  const expiringLicenses = null;
     drivers?.filter(driver => {
       if (!driver.license_expiry) return false;
       const expiryDate = new Date(driver.license_expiry);
@@ -239,7 +239,7 @@ export default async function Drivers() {
                     ? new Date(driver.license_expiry)
                     : null;
                   const isExpired = licenseExpiry && licenseExpiry < today;
-                  const isExpiringSoon =
+                  const isExpiringSoon = null;
                     licenseExpiry && !isExpired && licenseExpiry <= thirtyDaysFromNow;
 
                   return (

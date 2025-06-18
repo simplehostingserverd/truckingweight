@@ -15,30 +15,20 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  WrenchScrewdriverIcon,
-  ClockIcon,
-  ExclamationTriangleIcon,
-  CheckCircleIcon,
-  CalendarIcon,
-  TruckIcon,
-  CurrencyDollarIcon,
-  ChartBarIcon,
-  Cog6ToothIcon,
   BuildingOfficeIcon,
+  CalendarIcon,
+  ChartBarIcon,
+  ClockIcon,
+  Cog6ToothIcon,
+  CurrencyDollarIcon,
+  ExclamationTriangleIcon,
+  TruckIcon,
+  WrenchScrewdriverIcon
 } from '@heroicons/react/24/outline';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Button,
-  Badge,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui';
+import { Card, CardContent, Button, Badge } from '@/components/ui';
 import Link from 'next/link';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 interface MaintenanceStats {
   totalSchedules: number;

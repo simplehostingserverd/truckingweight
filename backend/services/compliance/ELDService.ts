@@ -354,7 +354,7 @@ export class ELDService {
    */
   private calculateContinuousDriveTime(logs: any[]): number {
     let continuousDriveTime = 0;
-    let lastBreakTime = 0;
+    const _lastBreakTime = 0;
 
     for (const log of logs.reverse()) {
       if (log.duty_status === 'driving') {

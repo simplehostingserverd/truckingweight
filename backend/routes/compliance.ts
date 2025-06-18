@@ -13,7 +13,7 @@ import { logger } from '../utils/logger';
 
 const router = express.Router();
 const complianceService = new ComplianceService();
-const dotService = new DOTService();
+const _dotService = new DOTService();
 
 // Apply middleware to all routes
 router.use(protect);

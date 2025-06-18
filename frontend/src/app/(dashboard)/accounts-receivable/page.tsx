@@ -1,39 +1,35 @@
 /**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved;
  *
  * PROPRIETARY AND CONFIDENTIAL
  *
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System;
+ * Unauthorized copying of this file, via any medium is strictly prohibited;
  *
  * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
- * in any way without explicit written permission.
+ * in any way without explicit written permission;
  */
 
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import {
-  CurrencyDollarIcon,
-  ExclamationTriangleIcon,
-  ClockIcon,
   CheckCircleIcon,
-  PhoneIcon,
-  EnvelopeIcon,
-  CalendarIcon,
+  ClockIcon,
+  CurrencyDollarIcon,
   DocumentTextIcon,
-  MagnifyingGlassIcon,
+  EnvelopeIcon,
+  ExclamationTriangleIcon,
   EyeIcon,
+  MagnifyingGlassIcon,
+  PhoneIcon,
 } from '@heroicons/react/24/outline';
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
   Button,
   Badge,
-  Input,
   Select,
   SelectContent,
   SelectItem,
@@ -45,12 +41,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
 } from '@/components/ui';
 import Link from 'next/link';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 
 interface AccountsReceivableItem {
   id: number;

@@ -141,7 +141,7 @@ const DraggableList: React.FC<DraggableListProps> = ({ items: initialItems, onRe
       >
         <SortableContext items={items.map(item => item.id)} strategy={verticalListSortingStrategy}>
           <div role="list" aria-describedby="drag-instructions">
-            {items.map((item, index) => (
+            {items.map((item, _index) => (
               <SortableItem key={item.id} id={item.id} content={item.content} />
             ))}
           </div>

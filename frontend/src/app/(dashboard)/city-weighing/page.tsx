@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved;
  *
  * PROPRIETARY AND CONFIDENTIAL
  *
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System;
+ * Unauthorized copying of this file, via any medium is strictly prohibited;
  *
  * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
- * in any way without explicit written permission.
+ * in any way without explicit written permission;
  */
 
 'use client';
@@ -56,7 +56,7 @@ import {
 import { useEffect, useState } from 'react';
 
 export default function CityWeighingPage() {
-  const [cityData, setCityData] = useState({
+  const [_cityData, setcityData] = useState({
     name: 'Austin',
     state: 'TX',
     totalScales: 12,
@@ -147,9 +147,7 @@ export default function CityWeighingPage() {
     }, 1000);
   }, []);
 
-  const handleIssuePermit = () => {
-    // This would normally call your backend API
-    alert('Permit issued successfully!');
+  const _handleIssuePermit =  null; null;
     setShowPermitDialog(false);
   };
 

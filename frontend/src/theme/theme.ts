@@ -220,7 +220,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
 });
 
 // Create the light theme
-const lightTheme = responsiveFontSizes(createTheme(getDesignTokens('light')));
+const _lightTheme = responsiveFontSizes(createTheme(getDesignTokens('light')));
 
 // Create the dark theme
 const darkTheme = responsiveFontSizes(createTheme(getDesignTokens('dark')));

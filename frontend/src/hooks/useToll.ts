@@ -14,7 +14,7 @@ interface TollProvider {
   authentication_type: string;
   is_active: boolean;
   supported_regions: string[];
-  features: any;
+  features: unknown;
 }
 
 interface TollAccount {
@@ -150,7 +150,7 @@ export const useToll = () => {
     }
   }, [apiCall]);
 
-  const testConnection = useCallback(async (providerId: number, credentials: any) => {
+  const testConnection = useCallback(async (providerId: number, credentials: unknown) => {
     try {
       return await apiCall(`/providers/${providerId}/test`, {
         method: 'POST',

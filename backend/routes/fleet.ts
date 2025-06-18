@@ -350,7 +350,7 @@ router.get('/maintenance/schedule', async (req, res) => {
     const { upcoming, overdue } = req.query;
     const companyId = req.user.companyId;
 
-    let whereClause: any = {
+    const whereClause: any = {
       company_id: companyId,
       active: true
     };

@@ -19,15 +19,14 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import {
-  DocumentTextIcon,
   ArrowPathIcon,
-  PlusIcon,
+  CalendarIcon,
   CheckCircleIcon,
-  XCircleIcon,
   ClockIcon,
   CurrencyDollarIcon,
+  PlusIcon,
   TruckIcon,
-  CalendarIcon,
+  XCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

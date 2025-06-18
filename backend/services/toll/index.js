@@ -81,19 +81,19 @@ export class BaseTollService {
     throw new Error('testConnection must be implemented by subclass');
   }
 
-  async calculateTolls(request) {
+  async calculateTolls(_request) {
     throw new Error('calculateTolls must be implemented by subclass');
   }
 
-  async getAccountInfo(accountNumber) {
+  async getAccountInfo(_accountNumber) {
     throw new Error('getAccountInfo must be implemented by subclass');
   }
 
-  async getTransactions(accountNumber, startDate, endDate, limit) {
+  async getTransactions(_accountNumber, _startDate, _endDate, _limit) {
     throw new Error('getTransactions must be implemented by subclass');
   }
 
-  async syncAccountData(accountNumber) {
+  async syncAccountData(_accountNumber) {
     throw new Error('syncAccountData must be implemented by subclass');
   }
 
@@ -281,7 +281,7 @@ class PCMilerService extends BaseTollService {
     };
   }
 
-  async calculateTolls(request) {
+  async calculateTolls(_request) {
     // Mock implementation
     return {
       totalCost: 15.50,
@@ -291,7 +291,7 @@ class PCMilerService extends BaseTollService {
     };
   }
 
-  async getAccountInfo(accountNumber) {
+  async getAccountInfo(_accountNumber) {
     return {
       accountNumber,
       accountName: 'PC Miler Account',
@@ -302,11 +302,11 @@ class PCMilerService extends BaseTollService {
     };
   }
 
-  async getTransactions(accountNumber, startDate, endDate, limit) {
+  async getTransactions(_accountNumber, _startDate, _endDate, _limit) {
     return [];
   }
 
-  async syncAccountData(accountNumber) {
+  async syncAccountData(_accountNumber) {
     return {
       success: true,
       recordsProcessed: 0,
@@ -354,7 +354,7 @@ class IPassService extends BaseTollService {
     };
   }
 
-  async calculateTolls(request) {
+  async calculateTolls(_request) {
     return {
       totalCost: 8.25,
       currency: 'USD',
@@ -363,7 +363,7 @@ class IPassService extends BaseTollService {
     };
   }
 
-  async getAccountInfo(accountNumber) {
+  async getAccountInfo(_accountNumber) {
     return {
       accountNumber,
       accountName: 'I-Pass Account',
@@ -374,11 +374,11 @@ class IPassService extends BaseTollService {
     };
   }
 
-  async getTransactions(accountNumber, startDate, endDate, limit) {
+  async getTransactions(_accountNumber, _startDate, _endDate, _limit) {
     return [];
   }
 
-  async syncAccountData(accountNumber) {
+  async syncAccountData(_accountNumber) {
     return {
       success: true,
       recordsProcessed: 0,
@@ -426,7 +426,7 @@ class BestPassService extends BaseTollService {
     };
   }
 
-  async calculateTolls(request) {
+  async calculateTolls(_request) {
     return {
       totalCost: 22.75,
       currency: 'USD',
@@ -435,7 +435,7 @@ class BestPassService extends BaseTollService {
     };
   }
 
-  async getAccountInfo(accountNumber) {
+  async getAccountInfo(_accountNumber) {
     return {
       accountNumber,
       accountName: 'BestPass Account',
@@ -446,11 +446,11 @@ class BestPassService extends BaseTollService {
     };
   }
 
-  async getTransactions(accountNumber, startDate, endDate, limit) {
+  async getTransactions(_accountNumber, _startDate, _endDate, _limit) {
     return [];
   }
 
-  async syncAccountData(accountNumber) {
+  async syncAccountData(_accountNumber) {
     return {
       success: true,
       recordsProcessed: 0,
@@ -498,7 +498,7 @@ class PrePassService extends BaseTollService {
     };
   }
 
-  async calculateTolls(request) {
+  async calculateTolls(_request) {
     return {
       totalCost: 18.00,
       currency: 'USD',
@@ -507,7 +507,7 @@ class PrePassService extends BaseTollService {
     };
   }
 
-  async getAccountInfo(accountNumber) {
+  async getAccountInfo(_accountNumber) {
     return {
       accountNumber,
       accountName: 'PrePass Account',
@@ -518,11 +518,11 @@ class PrePassService extends BaseTollService {
     };
   }
 
-  async getTransactions(accountNumber, startDate, endDate, limit) {
+  async getTransactions(_accountNumber, _startDate, _endDate, _limit) {
     return [];
   }
 
-  async syncAccountData(accountNumber) {
+  async syncAccountData(_accountNumber) {
     return {
       success: true,
       recordsProcessed: 0,

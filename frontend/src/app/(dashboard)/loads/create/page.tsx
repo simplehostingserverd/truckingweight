@@ -19,25 +19,26 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
+import { Vehicle, Driver, RouteDetails } from '@/types/fleet';
 
 export default function CreateLoad() {
-  const [description, setDescription] = useState('');
+  const [_description, setdescription] = useState('');
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [weight, setWeight] = useState('');
   const [vehicleId, setVehicleId] = useState('');
   const [driverId, setDriverId] = useState('');
-  const [vehicles, setVehicles] = useState<any[]>([]);
-  const [drivers, setDrivers] = useState<any[]>([]);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [drivers, setDrivers] = useState<Driver[]>([]);
   const [estimatedDeparture, setEstimatedDeparture] = useState('');
   const [estimatedArrival, setEstimatedArrival] = useState('');
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
-  const [routeDetails, setRouteDetails] = useState<unknown>(null);
+  const [routeDetails, setRouteDetails] = useState<RouteDetails | null>(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
-  const [isCalculatingRoute, setIsCalculatingRoute] = useState(false);
+  const [_isCalculatingRoute, setIsCalculatingRoute] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
@@ -94,7 +95,7 @@ export default function CreateLoad() {
         setDrivers(driversData || []);
       } catch (err: unknown) {
         // Handle data fetching errors gracefully
-        const errorMessage = err.message || 'Failed to load data';
+        const errorMessage = err instanceof Error ? err.message : 'Failed to load data';
         setError(errorMessage);
       } finally {
         setIsLoadingData(false);
@@ -105,7 +106,7 @@ export default function CreateLoad() {
   }, [router, supabase]);
 
   // Calculate route details
-  const calculateRoute = async () => {
+  const _calculateRoute = async () => {
     if (!origin || !destination) {
       setError('Origin and destination are required to calculate route');
       return;
@@ -163,7 +164,7 @@ export default function CreateLoad() {
       });
     } catch (err: unknown) {
       // Handle route calculation errors with a user-friendly message
-      const errorMessage = err.message || 'Unknown error';
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       setError(`Failed to calculate route: ${errorMessage}`);
     } finally {
       setIsCalculatingRoute(false);
@@ -199,7 +200,7 @@ export default function CreateLoad() {
       }
 
       // Create load record with route details
-      const { data: newLoad, error: loadError } = await supabase
+      const { data: _newLoad, error: loadError } = await supabase
         .from('loads')
         .insert([
           {
@@ -229,7 +230,7 @@ export default function CreateLoad() {
       router.push('/loads');
     } catch (err: unknown) {
       // Handle load creation errors with a user-friendly message
-      const errorMessage = err.message || 'Unknown error';
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       setError(`An error occurred while creating the load: ${errorMessage}`);
     } finally {
       setIsLoading(false);

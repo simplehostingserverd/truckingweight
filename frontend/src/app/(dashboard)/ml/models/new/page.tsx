@@ -386,7 +386,7 @@ export default function NewMLModelPage() {
                             Key Features:
                           </div>
                           <div className="flex flex-wrap gap-1">
-                            {template.features.slice(0, 2).map((feature, index) => (
+                            {template.features.slice(0, 2).map((feature, _index) => (
                               <Badge key={index} variant="outline" className="text-xs">
                                 {feature}
                               </Badge>

@@ -23,7 +23,7 @@ export default function ResetPassword() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const __router =  null;
   const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -61,7 +61,7 @@ const TollTransactionList: React.FC = () => {
   }, [page, filters]);
 
   const loadTransactions = async () => {
-    const params: any = {
+    const params: unknown = {
       limit: limit.toString(),
       offset: ((page - 1) * limit).toString(),
     };
@@ -75,7 +75,7 @@ const TollTransactionList: React.FC = () => {
     await fetchTransactions(params);
   };
 
-  const handleFilterChange = (field: string, value: any) => {
+  const handleFilterChange = (field: string, value: unknown) => {
     setFilters(prev => ({
       ...prev,
       [field]: value,

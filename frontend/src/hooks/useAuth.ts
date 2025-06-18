@@ -15,7 +15,7 @@ export interface AuthUser {
 
 export interface AuthHook {
   user: AuthUser | null;
-  session: any;
+  session: unknown;
   isLoading: boolean;
   token?: string;
   signIn: (email: string, password: string, captchaToken?: string | null) => Promise<{ error: Error }>;

@@ -15,45 +15,37 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  ArrowsRightLeftIcon,
-  BuildingOfficeIcon,
-  DocumentTextIcon,
-  ExclamationTriangleIcon,
-  CheckCircleIcon,
-  ClockIcon,
-  EyeIcon,
-  Cog6ToothIcon,
-  PlusIcon,
   ArrowDownTrayIcon,
   ArrowUpTrayIcon,
-  SignalIcon,
-  XCircleIcon,
-  InformationCircleIcon,
+  ArrowsRightLeftIcon,
+  BuildingOfficeIcon,
   ChartBarIcon,
-  CalendarIcon,
-  UserIcon,
+  CheckCircleIcon,
+  ClockIcon,
+  Cog6ToothIcon,
+  DocumentTextIcon,
+  ExclamationTriangleIcon,
+  EyeIcon,
+  InformationCircleIcon,
   MapPinIcon,
+  PlusIcon,
+  SignalIcon,
+  UserIcon,
+  XCircleIcon,
 } from '@heroicons/react/24/outline';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
   Button,
   Badge,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Input,
-  Progress,
 } from '@/components/ui';
 import Link from 'next/link';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 
 interface TradingPartner {
   id: string;

@@ -105,14 +105,14 @@ const TollRouteCalculator: React.FC = () => {
     }
   }, [accounts]);
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: unknown) => {
     setFormData(prev => ({
       ...prev,
       [field]: value,
     }));
   };
 
-  const handleLocationChange = (type: 'origin' | 'destination', field: string, value: any) => {
+  const handleLocationChange = (type: 'origin' | 'destination', field: string, value: unknown) => {
     setFormData(prev => ({
       ...prev,
       [type]: {
@@ -122,7 +122,7 @@ const TollRouteCalculator: React.FC = () => {
     }));
   };
 
-  const handleRouteOptionChange = (option: string, value: boolean) => {
+  const _handleRouteOptionChange = (option: string, value: boolean) => {
     setFormData(prev => ({
       ...prev,
       routeOptions: {

@@ -74,7 +74,7 @@ export async function getLPRCameras(): Promise<LPRCameraConfig[]> {
     const data = await response.json();
 
     // Map database results to LPRCameraConfig interface
-    return (data.cameras || []).map((camera: any) => ({
+    return (data.cameras || []).map((camera: unknown) => ({
       id: camera.id,
       name: camera.name,
       vendor: camera.vendor as LPRVendor,
@@ -120,7 +120,7 @@ export async function captureLicensePlate(cameraId: string): Promise<LPRCaptureR
 
     const result = await response.json();
     return result;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       success: false,
       timestamp: new Date().toISOString(),

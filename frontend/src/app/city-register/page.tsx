@@ -57,7 +57,7 @@ export default function CityRegister() {
   const [cityAddress, setCityAddress] = useState('');
   const [cityPhone, setCityPhone] = useState('');
   const [cityEmail, setCityEmail] = useState('');
-  const [role, setRole] = useState('admin');
+  const [_role, setRole] = useState('admin');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

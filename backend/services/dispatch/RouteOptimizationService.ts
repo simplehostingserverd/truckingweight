@@ -289,10 +289,10 @@ export class RouteOptimizationService {
    */
   private async applyAdvancedOptimizations(route: OptimizedRoute, vehicle: any, load: any): Promise<OptimizedRoute> {
     // Add fuel stop recommendations
-    const fuelStops = await this.recommendFuelStops(route, vehicle);
+    const _fuelStops = await this.recommendFuelStops(route, vehicle);
     
     // Add rest area recommendations for HOS compliance
-    const restStops = await this.recommendRestStops(route);
+    const _restStops = await this.recommendRestStops(route);
 
     // Adjust for real-time traffic (if available)
     const trafficAdjustedDuration = await this.adjustForTraffic(route);
@@ -320,7 +320,7 @@ export class RouteOptimizationService {
   /**
    * Estimate toll costs along the route
    */
-  private async estimateTollCosts(geometry: any, vehicle: any): Promise<number> {
+  private async estimateTollCosts(_geometry: any, _vehicle: any): Promise<number> {
     // This would integrate with toll calculation APIs
     // For now, return a basic estimate
     return 50; // Base estimate
@@ -329,7 +329,7 @@ export class RouteOptimizationService {
   /**
    * Identify restrictions along the route
    */
-  private async identifyRestrictions(geometry: any, vehicle: any, load: any): Promise<RouteRestriction[]> {
+  private async identifyRestrictions(_geometry: any, _vehicle: any, _load: any): Promise<RouteRestriction[]> {
     const restrictions: RouteRestriction[] = [];
 
     // This would check against a database of known restrictions
@@ -359,7 +359,7 @@ export class RouteOptimizationService {
   /**
    * Extract toll costs from HERE API response
    */
-  private extractHereTollCosts(route: any): number {
+  private extractHereTollCosts(_route: any): number {
     if (route.tolls && route.tolls.length > 0) {
       return route.tolls.reduce((total: number, toll: any) => total + (toll.cost || 0), 0);
     }
@@ -369,7 +369,7 @@ export class RouteOptimizationService {
   /**
    * Convert HERE polyline to GeoJSON
    */
-  private convertHerePolyline(polyline: string): any {
+  private convertHerePolyline(_polyline: string): any {
     // This would decode HERE's flexible polyline format
     // For now, return a basic structure
     return {

@@ -15,9 +15,9 @@
 
 'use client';
 
-import React from 'react';
+// import React from 'react'; // Unused
 import { useEffect } from 'react';
-import { ThemeProvider } from '@/components/theme-provider';
+import { ThemeProvider as _ThemeProvider } from '@/components/theme-provider';
 import { initializeLicenseVerification } from '@/utils/license-verification';
 import { initializeSecurity } from '@/utils/security';
 
