@@ -23,13 +23,13 @@ import {
   ClockIcon,
   WifiIcon,
   CpuChipIcon,
-  BatteryIcon,
-  ThermometerIcon,
+  Battery100Icon,
+  FireIcon,
   PlusIcon,
   Cog6ToothIcon,
   MapPinIcon,
   TruckIcon,
-  ScaleIcon,
+  CalculatorIcon,
 } from '@heroicons/react/24/outline';
 import {
   Card,
@@ -470,11 +470,11 @@ export default function IoTDevicesPage() {
   const getDeviceTypeIcon = (type: string) => {
     switch (type) {
       case 'scale':
-        return <ScaleIcon className="h-5 w-5" />;
+        return <CalculatorIcon className="h-5 w-5" />;
       case 'gps_tracker':
         return <MapPinIcon className="h-5 w-5" />;
       case 'temperature_sensor':
-        return <ThermometerIcon className="h-5 w-5" />;
+        return <FireIcon className="h-5 w-5" />;
       case 'fuel_sensor':
         return <BoltIcon className="h-5 w-5" />;
       case 'telematics_unit':
@@ -574,7 +574,7 @@ export default function IoTDevicesPage() {
                 <p className="text-xs text-gray-500">across all devices</p>
               </div>
               <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full flex-shrink-0">
-                <BatteryIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                <Battery100Icon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
               </div>
             </div>
           </CardContent>
@@ -893,7 +893,7 @@ export default function IoTDevicesPage() {
                           <div className="space-y-1">
                             {device.batteryLevel && (
                               <div className="flex items-center gap-1">
-                                <BatteryIcon
+                                <Battery100Icon
                                   className={`h-4 w-4 ${getBatteryColor(device.batteryLevel)}`}
                                 />
                                 <span className={`text-sm ${getBatteryColor(device.batteryLevel)}`}>

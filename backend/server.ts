@@ -53,6 +53,7 @@ import weightRoutes from './routes/weights';
 const dispatchRoutes = require('./routes/dispatch');
 const fleetRoutes = require('./routes/fleet');
 const financialRoutes = require('./routes/financial');
+const tollRoutes = require('./routes/toll');
 
 // Import additional TMS routes
 import maintenanceRoutes from './routes/maintenance';
@@ -91,6 +92,7 @@ app.use('/api/weigh-tickets', weighTicketRoutes);
 app.use('/api/dispatch', dispatchRoutes);
 app.use('/api/fleet', fleetRoutes);
 app.use('/api/financial', financialRoutes);
+app.use('/api/toll', tollRoutes);
 
 // Register additional TMS routes
 app.use('/api/maintenance', maintenanceRoutes);

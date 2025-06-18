@@ -33,6 +33,9 @@ dotenv.config({ path: path.resolve(__dirname, '.env') });
 // Import environment validator
 import { validateAllConfig } from './utils/envValidator.js';
 
+// Import toll configuration
+import { initializeTollConfig } from './config/toll.js';
+
 // Import database connection
 import * as db from './config/database.js';
 
@@ -196,6 +199,9 @@ async function registerRoutes() {
   // Import LPR cameras routes
   const lprCamerasRoutes = await import('./routes/fastify/lprCameras.js');
 
+  // Import toll management routes
+  const tollRoutes = await import('./routes/fastify/toll.js');
+
   // Import Grafana integration routes
   const grafanaRoutes = await import('./routes/fastify/grafana.js');
 
@@ -225,6 +231,9 @@ async function registerRoutes() {
   // Register LPR cameras routes
   fastify.register(lprCamerasRoutes.default, { prefix: '/api/lpr-cameras' });
 
+  // Register toll management routes
+  fastify.register(tollRoutes.default, { prefix: '/api/toll' });
+
   // Register Grafana integration routes
   fastify.register(grafanaRoutes.default, { prefix: '/api/grafana' });
 
@@ -250,6 +259,15 @@ async function start() {
     if (!validateAllConfig()) {
       fastify.log.error('Environment validation failed. Please check your .env file.');
       process.exit(1);
+    }
+
+    // Initialize toll configuration
+    try {
+      initializeTollConfig();
+      fastify.log.info('Toll management configuration initialized successfully');
+    } catch (error) {
+      fastify.log.warn('Toll configuration initialization failed:', error.message);
+      fastify.log.warn('Toll management features will be disabled');
     }
 
     await registerPlugins();

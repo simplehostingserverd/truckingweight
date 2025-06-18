@@ -137,6 +137,7 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
     { name: 'Invoices', href: '/invoices', icon: DocumentTextIcon },
     { name: 'Payments', href: '/payments', icon: CreditCardIcon },
     { name: 'Fuel Management', href: '/fuel', icon: BanknotesIcon },
+    { name: 'Toll Management', href: '/toll-management', icon: CurrencyDollarIcon },
     { name: 'Accounts Receivable', href: '/accounts-receivable', icon: CurrencyDollarIcon },
     { name: 'Financial Reports', href: '/financial-reports', icon: ChartBarIcon },
   ];

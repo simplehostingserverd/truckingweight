@@ -79,6 +79,8 @@ export { Skeleton } from './skeleton';
 export { Slider } from './slider';
 export { Switch } from './switch';
 export { Progress } from './progress';
+export { Textarea } from './textarea';
+export { Checkbox } from './checkbox';
 
 // Re-export existing components
 export { default as MobileNav } from './MobileNav';

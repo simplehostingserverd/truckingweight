@@ -140,10 +140,23 @@ export default function UsersPage() {
         throw new Error('Unauthorized: Admin access required');
       }
 
-      // Get all users with company information
+      // Get all users with company information using proper join
       const { data, error: usersError } = await supabase
         .from('users')
-        .select('*, companies(*)')
+        .select(
+          `
+          id,
+          name,
+          email,
+          company_id,
+          is_admin,
+          created_at,
+          companies:company_id (
+            id,
+            name
+          )
+        `
+        )
         .order('created_at', { ascending: false });
 
       if (usersError) {
@@ -154,7 +167,7 @@ export default function UsersPage() {
       setFilteredUsers(data || []);
     } catch (err: unknown) {
       console.error('Error fetching users:', err);
-      setError(err.message || 'Failed to load users');
+      setError(err instanceof Error ? err.message : 'Failed to load users');
     } finally {
       setIsLoading(false);
     }
