@@ -24,7 +24,7 @@ import {
   PlusIcon,
   TruckIcon,
 } from '@heroicons/react/24/outline';
-import { Card, CardContent, Button, Badge } from '@/components/ui';
+import { Button, Badge } from '@/components/ui';
 
 // Import our toll components
 import TollDashboard from '@/components/toll/TollDashboard';

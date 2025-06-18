@@ -117,7 +117,7 @@ export default function ScalesPage() {
         query = query.eq('company_id', user.company_id);
       }
 
-      const { _data, error: scalesError } = await query.order('name');
+      const { data, error: scalesError } = await query.order('name');
 
       if (scalesError) {
         throw scalesError;
