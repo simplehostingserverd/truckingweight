@@ -24,16 +24,16 @@ import {
 } from '@heroicons/react/24/outline';
 import { useEffect, useRef, useState } from 'react';
 
-// Mock telematics data for live tracking demonstration
+// Professional mock telematics data for investor demonstration
 const mockTelematicsData = [
   {
-    id: 'asset-1247',
-    name: 'Los Angeles to Phoenix',
+    id: 'asset-FL2847',
+    name: 'Chicago to Denver Express',
     driver: {
-      id: 'driver-001',
-      name: 'John Smith',
-      license: 'CDL-CA-123456',
-      phone: '(555) 123-4567',
+      id: 'CDL-IL-847291',
+      name: 'Michael Rodriguez',
+      license: 'CDL-IL-847291',
+      phone: '(312) 555-8472',
       status: 'driving',
       hoursOfService: {
         driving: 8.5,
@@ -43,13 +43,13 @@ const mockTelematicsData = [
       },
     },
     vehicle: {
-      id: 'truck-1247',
+      id: 'FL-2847',
       make: 'Freightliner',
-      model: 'Cascadia',
+      model: 'Cascadia Evolution',
       year: 2022,
-      vin: '1FUJGHDV8NLXXXXXX',
-      licensePlate: 'CA-TRK1247',
-      mileage: 145678,
+      vin: '1FUJGHDV8NLAA2847',
+      licensePlate: 'IL PFS-2847',
+      mileage: 287456,
     },
     telematics: {
       gps: {

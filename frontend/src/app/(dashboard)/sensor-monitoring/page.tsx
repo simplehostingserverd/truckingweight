@@ -16,7 +16,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   ChartBarIcon,
-  ThermometerIcon,
   BoltIcon,
   ScaleIcon,
   MapPinIcon,
@@ -30,6 +29,7 @@ import {
   PlayIcon,
   PauseIcon,
 } from '@heroicons/react/24/outline';
+import ThermometerIcon from '@/components/icons/ThermometerIcon';
 import {
   Card,
   CardContent,
@@ -137,12 +137,12 @@ export default function SensorMonitoringPage() {
     try {
       setLoading(true);
 
-      // Mock data - will be replaced with API calls
+      // Professional mock data for investor demonstration
       const mockSensorData: SensorData[] = [
         {
           id: 1,
-          deviceId: 'TEMP-001',
-          deviceName: 'Reefer Unit #1',
+          deviceId: 'THERMO-FL2847',
+          deviceName: 'Carrier Transicold X4 7300',
           sensorType: 'temperature',
           currentValue: -8,
           unit: '°F',
@@ -152,10 +152,10 @@ export default function SensorMonitoringPage() {
             max: 5,
             target: -10,
           },
-          location: 'Trailer #003',
+          location: 'Reefer Trailer FL-2847',
           assignedTo: {
             type: 'trailer',
-            name: 'Reefer Trailer #003',
+            name: 'Freightliner Cascadia FL-2847',
           },
           lastUpdated: '2025-01-20T10:30:00Z',
           trend: 'stable',
@@ -168,33 +168,33 @@ export default function SensorMonitoringPage() {
         },
         {
           id: 2,
-          deviceId: 'SCALE-001',
-          deviceName: 'Main Truck Scale',
+          deviceId: 'SCALE-RL8500',
+          deviceName: 'Rice Lake Weighing Systems RL8500',
           sensorType: 'weight',
-          currentValue: 45000,
+          currentValue: 78450,
           unit: 'lbs',
           status: 'normal',
           threshold: {
             max: 80000,
           },
-          location: 'Chicago Scale Facility',
+          location: 'Phoenix Distribution Center',
           assignedTo: {
             type: 'scale',
-            name: 'Scale #001',
+            name: 'Primary Truck Scale - Bay 3',
           },
           lastUpdated: '2025-01-20T10:29:45Z',
           trend: 'stable',
           historicalData: [
             { timestamp: '2025-01-20T10:00:00Z', value: 0 },
-            { timestamp: '2025-01-20T10:15:00Z', value: 45000 },
-            { timestamp: '2025-01-20T10:29:45Z', value: 45000 },
+            { timestamp: '2025-01-20T10:15:00Z', value: 78450 },
+            { timestamp: '2025-01-20T10:29:45Z', value: 78450 },
           ],
           alerts: [],
         },
         {
           id: 3,
-          deviceId: 'FUEL-002',
-          deviceName: 'Fuel Tank Sensor #2',
+          deviceId: 'FUEL-VDO3847',
+          deviceName: 'VDO Fuel Management System',
           sensorType: 'fuel_level',
           currentValue: 25,
           unit: '%',
@@ -203,10 +203,10 @@ export default function SensorMonitoringPage() {
             min: 20,
             max: 100,
           },
-          location: 'Truck #002',
+          location: 'Peterbilt 579 - Unit PB-3847',
           assignedTo: {
             type: 'vehicle',
-            name: 'Truck #002',
+            name: 'Peterbilt 579 - Unit PB-3847',
           },
           lastUpdated: '2025-01-20T10:28:30Z',
           trend: 'down',
@@ -220,7 +220,8 @@ export default function SensorMonitoringPage() {
               id: 1,
               type: 'threshold_exceeded',
               severity: 'medium',
-              message: 'Fuel level approaching minimum threshold',
+              message:
+                'Fuel level approaching minimum threshold - recommend refueling at next stop',
               timestamp: '2025-01-20T10:25:00Z',
               acknowledged: false,
             },
@@ -311,7 +312,7 @@ export default function SensorMonitoringPage() {
   const getSensorIcon = (type: string) => {
     switch (type) {
       case 'temperature':
-        return <ThermometerIcon className="h-5 w-5" />;
+        return <ThermometerIcon className="h-5 w-5" />; // Custom thermometer icon
       case 'weight':
         return <ScaleIcon className="h-5 w-5" />;
       case 'fuel_level':

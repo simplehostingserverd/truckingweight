@@ -280,50 +280,64 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// Mock data generator
+// Professional mock data generator for investor demonstration
 function getMockVehicleData() {
   return [
     {
       id: '1',
-      name: 'Truck 101',
+      name: 'Freightliner FL-2847',
       status: 'active',
       location: {
         latitude: 32.7767,
         longitude: -96.797,
-        address: 'Dallas, TX',
+        address: 'I-35 N, Dallas, TX',
       },
       lastUpdate: new Date().toISOString(),
-      speed: 65,
-      fuelLevel: 75,
+      speed: 68,
+      fuelLevel: 78,
       engineStatus: 'running',
     },
     {
       id: '2',
-      name: 'Truck 102',
-      status: 'inactive',
+      name: 'Peterbilt PB-3947',
+      status: 'active',
       location: {
         latitude: 29.7604,
         longitude: -95.3698,
-        address: 'Houston, TX',
+        address: 'I-10 W, Houston, TX',
       },
-      lastUpdate: new Date(Date.now() - 3600000).toISOString(),
-      speed: 0,
-      fuelLevel: 45,
-      engineStatus: 'off',
+      lastUpdate: new Date(Date.now() - 1800000).toISOString(), // 30 minutes ago
+      speed: 72,
+      fuelLevel: 65,
+      engineStatus: 'running',
     },
     {
       id: '3',
-      name: 'Truck 103',
+      name: 'Kenworth KW-5829',
       status: 'active',
       location: {
         latitude: 30.2672,
         longitude: -97.7431,
-        address: 'Austin, TX',
+        address: 'I-35 S, Austin, TX',
       },
       lastUpdate: new Date().toISOString(),
-      speed: 55,
-      fuelLevel: 60,
+      speed: 65,
+      fuelLevel: 82,
       engineStatus: 'running',
+    },
+    {
+      id: '4',
+      name: 'Volvo VN-8472',
+      status: 'maintenance',
+      location: {
+        latitude: 32.7555,
+        longitude: -97.3308,
+        address: 'Continental Logistics - Dallas Service Center',
+      },
+      lastUpdate: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
+      speed: 0,
+      fuelLevel: 45,
+      engineStatus: 'off',
     },
   ];
 }

@@ -20,7 +20,7 @@ let supabaseClient: ReturnType<typeof createBrowserClient<Database>> | null = nu
 
 // Create a Supabase client for use in client components
 export const createClient = () => {
-  // Return existing client if already created
+  // Return existing client if already created and still valid
   if (supabaseClient) {
     return supabaseClient;
   }
@@ -28,8 +28,19 @@ export const createClient = () => {
   // Get Supabase configuration
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
-  // Create new client and store it
-  supabaseClient = createBrowserClient<Database>(supabaseUrl, supabaseKey);
+  // Create new client and store it with singleton options
+  supabaseClient = createBrowserClient<Database>(supabaseUrl, supabaseKey, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: false,
+    },
+    global: {
+      headers: {
+        'X-Client-Info': 'supabase-js/trucking-frontend',
+      },
+    },
+  });
 
   return supabaseClient;
 };

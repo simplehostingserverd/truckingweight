@@ -58,7 +58,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     }
 
     // Make a request to the backend API
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
     const response = await fetch(`${backendUrl}/api/scales/${scaleId}/configure-hardware`, {
       method: 'POST',
       headers: {

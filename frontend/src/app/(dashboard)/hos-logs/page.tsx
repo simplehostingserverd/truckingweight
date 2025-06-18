@@ -144,48 +144,48 @@ export default function HOSLogsPage() {
     try {
       setLoading(true);
 
-      // Mock data - will be replaced with API calls
+      // Professional mock data for investor demonstration
       const mockHOSLogs: HOSLog[] = [
         {
           id: 1,
           driverId: 1,
-          driverName: 'John Smith',
+          driverName: 'Michael Rodriguez',
           vehicleId: 1,
-          vehicleNumber: 'TRK-001',
+          vehicleNumber: 'FL-2847',
           logDate: '2025-01-20',
           dutyStatus: 'driving',
           startTime: '2025-01-20T06:00:00Z',
           endTime: '2025-01-20T14:00:00Z',
           duration: 480, // 8 hours
-          location: 'Chicago, IL to Detroit, MI',
-          odometer: 125000,
-          engineHours: 8500,
-          notes: 'Regular delivery route',
+          location: 'Chicago, IL to Denver, CO',
+          odometer: 287456,
+          engineHours: 12847,
+          notes: 'Interstate freight delivery - Premier Freight Solutions',
           violations: [],
           certificationStatus: 'certified',
           certifiedAt: '2025-01-20T14:30:00Z',
-          eldDevice: 'Geotab GO9',
+          eldDevice: 'Geotab GO9 Fleet Management',
           isManualEntry: false,
         },
         {
           id: 2,
           driverId: 2,
-          driverName: 'Sarah Johnson',
+          driverName: 'Jennifer Chen',
           vehicleId: 2,
-          vehicleNumber: 'TRK-002',
+          vehicleNumber: 'PB-3947',
           logDate: '2025-01-20',
           dutyStatus: 'on_duty_not_driving',
           startTime: '2025-01-20T05:30:00Z',
           endTime: '2025-01-20T06:30:00Z',
           duration: 60, // 1 hour
-          location: 'Terminal - Pre-trip inspection',
-          odometer: 98500,
-          engineHours: 7200,
-          notes: 'Pre-trip inspection and vehicle check',
+          location: 'Continental Logistics - Dallas Terminal',
+          odometer: 394756,
+          engineHours: 18294,
+          notes: 'Pre-trip inspection and DVIR completion',
           violations: [],
           certificationStatus: 'certified',
           certifiedAt: '2025-01-20T06:45:00Z',
-          eldDevice: 'Omnitracs IVG',
+          eldDevice: 'Omnitracs IVG Fleet Management',
           isManualEntry: false,
         },
         {

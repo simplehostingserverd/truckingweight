@@ -78,6 +78,7 @@ export { Separator } from './separator';
 export { Skeleton } from './skeleton';
 export { Slider } from './slider';
 export { Switch } from './switch';
+export { Progress } from './progress';
 
 // Re-export existing components
 export { default as MobileNav } from './MobileNav';

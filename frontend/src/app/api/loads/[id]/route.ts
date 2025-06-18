@@ -19,9 +19,11 @@ import { toSearchParamString } from '@/utils/searchParams';
  * This provides temporary mock data while the backend is being developed
  */
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  // Await params before using its properties (Next.js 15 requirement)
+  const resolvedParams = await params;
   // Safely convert the ID parameter to a string
-  const id = toSearchParamString(params.id, '1');
+  const id = toSearchParamString(resolvedParams.id, '1');
 
   try {
     // Return mock load data

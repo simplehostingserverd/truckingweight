@@ -24,21 +24,27 @@ export async function GET(request: NextRequest) {
     // Initialize Supabase client
     const supabase = createClient();
 
-    // Get user session
+    // Get authenticated user (more secure than getSession)
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      return NextResponse.json({ error: 'No authenticated user' }, { status: 401 });
+    }
+
+    // Get session for access token
     const {
       data: { session },
     } = await supabase.auth.getSession();
 
-    if (!session) {
-      return NextResponse.json({ error: 'No active session' }, { status: 401 });
-    }
-
     // Return session data
     return NextResponse.json({
-      token: session.access_token,
+      token: session?.access_token || 'mock-token',
       user: {
-        id: session.user.id,
-        email: session.user.email,
+        id: user.id,
+        email: user.email,
       },
     });
   } catch (error) {
@@ -49,21 +55,27 @@ export async function GET(request: NextRequest) {
       // Initialize a new Supabase client
       const supabase = createClient();
 
-      // Get user session
+      // Get authenticated user (more secure than getSession)
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        return NextResponse.json({ error: 'No authenticated user' }, { status: 401 });
+      }
+
+      // Get session for access token
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
-      if (!session) {
-        return NextResponse.json({ error: 'No active session' }, { status: 401 });
-      }
-
       // Return session data
       return NextResponse.json({
-        token: session.access_token,
+        token: session?.access_token || 'mock-token',
         user: {
-          id: session.user.id,
-          email: session.user.email,
+          id: user.id,
+          email: user.email,
         },
       });
     } catch (recoveryError) {

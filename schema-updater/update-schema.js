@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- * 
+ *
  * PROPRIETARY AND CONFIDENTIAL
- * 
+ *
  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
- * 
- * This file contains proprietary and confidential information of 
+ *
+ * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
  */
@@ -234,43 +234,46 @@ CREATE POLICY "Loads are deletable by company users" ON loads
 
 // Sample data for vehicles and drivers
 const sampleDataSQL = `
--- Insert sample companies
+-- Insert professional sample companies for investor demonstration
 INSERT INTO companies (name, address, contact_email, contact_phone)
 VALUES
-  ('ABC Trucking', '123 Main St, Anytown, USA', 'contact@abctrucking.com', '555-123-4567'),
-  ('XYZ Logistics', '456 Oak Ave, Somewhere, USA', 'info@xyzlogistics.com', '555-987-6543');
+  ('Premier Freight Solutions', '2847 Industrial Blvd, Chicago, IL 60601', 'operations@premierfreight.com', '(312) 555-8472'),
+  ('Continental Logistics Group', '5829 Commerce Drive, Dallas, TX 75201', 'dispatch@continentallogistics.com', '(214) 555-9384'),
+  ('Pacific Coast Transport', '1847 Harbor Way, Long Beach, CA 90802', 'fleet@pacificcoasttransport.com', '(562) 555-7291'),
+  ('Mountain States Hauling', '3947 Denver West Pkwy, Denver, CO 80401', 'admin@mountainstateshauling.com', '(303) 555-6847'),
+  ('Atlantic Express Carriers', '7284 Peachtree Rd, Atlanta, GA 30309', 'info@atlanticexpress.com', '(404) 555-5729');
 
--- Insert sample vehicles for ABC Trucking
+-- Insert professional sample vehicles for Premier Freight Solutions
 INSERT INTO vehicles (name, type, license_plate, vin, make, model, year, status, max_weight, company_id)
 VALUES
-  ('Truck 101', 'Semi', 'ABC-1234', 'VIN12345678901234A', 'Freightliner', 'Cascadia', 2020, 'Active', '80,000 lbs', 1),
-  ('Truck 203', 'Semi', 'ABC-2345', 'VIN23456789012345B', 'Peterbilt', '579', 2019, 'Active', '80,000 lbs', 1),
-  ('Truck 155', 'Box Truck', 'ABC-3456', 'VIN34567890123456C', 'International', 'MV', 2021, 'Maintenance', '33,000 lbs', 1),
-  ('Truck 087', 'Semi', 'ABC-4567', 'VIN45678901234567D', 'Kenworth', 'T680', 2018, 'Active', '80,000 lbs', 1);
+  ('Freightliner FL-2847', 'Class 8 Semi', 'IL PFS-2847', '1FUJGHDV8NLAA2847', 'Freightliner', 'Cascadia Evolution', 2022, 'Active', '80,000 lbs', 1),
+  ('Peterbilt PB-3947', 'Class 8 Semi', 'IL PFS-3947', '1XPBDP9X5ND394756', 'Peterbilt', '579 EPIQ', 2023, 'Active', '80,000 lbs', 1),
+  ('Kenworth KW-5829', 'Class 8 Semi', 'IL PFS-5829', '1XKDDB9X8NJ582947', 'Kenworth', 'T680 Next Gen', 2023, 'Active', '80,000 lbs', 1),
+  ('International IN-7284', 'Medium Duty', 'IL PFS-7284', '3HAMMAAR8NL728456', 'International', 'MV Series', 2022, 'Maintenance', '33,000 lbs', 1);
 
--- Insert sample vehicles for XYZ Logistics
+-- Insert professional sample vehicles for Continental Logistics Group
 INSERT INTO vehicles (name, type, license_plate, vin, make, model, year, status, max_weight, company_id)
 VALUES
-  ('Truck A1', 'Semi', 'XYZ-1234', 'VIN56789012345678E', 'Volvo', 'VNL', 2021, 'Active', '80,000 lbs', 2),
-  ('Truck B2', 'Semi', 'XYZ-2345', 'VIN67890123456789F', 'Mack', 'Anthem', 2020, 'Active', '80,000 lbs', 2),
-  ('Truck C3', 'Box Truck', 'XYZ-3456', 'VIN78901234567890G', 'Hino', '338', 2019, 'Active', '33,000 lbs', 2),
-  ('Truck D4', 'Semi', 'XYZ-4567', 'VIN89012345678901H', 'Western Star', '5700', 2022, 'Maintenance', '80,000 lbs', 2);
+  ('Volvo VN-8472', 'Class 8 Semi', 'TX CLG-8472', '4V4NC9EH5NN847291', 'Volvo', 'VNL 860', 2023, 'Active', '80,000 lbs', 2),
+  ('Mack MA-9384', 'Class 8 Semi', 'TX CLG-9384', '1M1AK07Y5KM938456', 'Mack', 'Anthem 64T', 2022, 'Active', '80,000 lbs', 2),
+  ('Western Star WS-7291', 'Class 8 Semi', 'TX CLG-7291', '5KKHALDV8NP729184', 'Western Star', '5700XE', 2023, 'Active', '80,000 lbs', 2),
+  ('Isuzu IS-6847', 'Medium Duty', 'TX CLG-6847', 'JALC4B16X97684729', 'Isuzu', 'NPR-HD', 2021, 'Maintenance', '25,950 lbs', 2);
 
--- Insert sample drivers for ABC Trucking
+-- Insert professional sample drivers for Premier Freight Solutions
 INSERT INTO drivers (name, license_number, license_expiry, phone, email, status, company_id)
 VALUES
-  ('John Smith', 'DL12345678', '2025-06-30', '555-111-2222', 'john.smith@example.com', 'Active', 1),
-  ('Sarah Johnson', 'DL23456789', '2024-08-15', '555-222-3333', 'sarah.johnson@example.com', 'Active', 1),
-  ('Mike Wilson', 'DL34567890', '2023-12-01', '555-333-4444', 'mike.wilson@example.com', 'Active', 1),
-  ('Lisa Brown', 'DL45678901', '2024-03-22', '555-444-5555', 'lisa.brown@example.com', 'On Leave', 1);
+  ('Michael Rodriguez', 'CDL-IL-847291', '2026-08-15', '(312) 555-8472', 'mrodriguez@premierfreight.com', 'Active', 1),
+  ('Jennifer Chen', 'CDL-IL-394756', '2025-11-22', '(312) 555-3947', 'jchen@premierfreight.com', 'Active', 1),
+  ('Robert Thompson', 'CDL-IL-582947', '2026-03-18', '(312) 555-5829', 'rthompson@premierfreight.com', 'Active', 1),
+  ('Amanda Williams', 'CDL-IL-728456', '2025-09-30', '(312) 555-7284', 'awilliams@premierfreight.com', 'On Leave', 1);
 
--- Insert sample drivers for XYZ Logistics
+-- Insert professional sample drivers for Continental Logistics Group
 INSERT INTO drivers (name, license_number, license_expiry, phone, email, status, company_id)
 VALUES
-  ('David Miller', 'DL56789012', '2025-02-18', '555-555-6666', 'david.miller@example.com', 'Active', 2),
-  ('Emily Davis', 'DL67890123', '2024-05-09', '555-666-7777', 'emily.davis@example.com', 'Active', 2),
-  ('Michael Johnson', 'DL78901234', '2023-11-14', '555-777-8888', 'michael.johnson@example.com', 'Active', 2),
-  ('Jessica Wilson', 'DL89012345', '2024-07-30', '555-888-9999', 'jessica.wilson@example.com', 'Inactive', 2);
+  ('Carlos Martinez', 'CDL-TX-938456', '2026-01-12', '(214) 555-9384', 'cmartinez@continentallogistics.com', 'Active', 2),
+  ('Sarah Mitchell', 'CDL-TX-729184', '2025-07-25', '(214) 555-7291', 'smitchell@continentallogistics.com', 'Active', 2),
+  ('David Park', 'CDL-TX-684729', '2026-04-08', '(214) 555-6847', 'dpark@continentallogistics.com', 'Active', 2),
+  ('Lisa Anderson', 'CDL-TX-572948', '2025-12-14', '(214) 555-5729', 'landerson@continentallogistics.com', 'Active', 2);
 `;
 
 async function updateSchema() {

@@ -166,28 +166,28 @@ export default function IoTDevicesPage() {
     try {
       setLoading(true);
 
-      // Mock data - will be replaced with API calls
+      // Professional mock data for investor demonstration
       const mockDevices: IoTDevice[] = [
         {
           id: 1,
-          deviceId: 'IOT-SCALE-001',
-          name: 'Main Truck Scale Sensor',
+          deviceId: 'RL-8500-PFS2847',
+          name: 'Rice Lake Weighing Systems RL-8500',
           type: 'scale',
-          manufacturer: 'Rice Lake',
-          model: 'RL-IoT-Scale-Pro',
-          firmwareVersion: '2.1.4',
+          manufacturer: 'Rice Lake Weighing Systems',
+          model: 'RL-8500 IoT Scale Platform',
+          firmwareVersion: '3.2.1',
           status: 'online',
-          signalStrength: 85,
+          signalStrength: 92,
           lastSeen: '2025-01-20T10:30:00Z',
           location: {
             latitude: 41.8781,
             longitude: -87.6298,
-            address: 'Chicago Scale Facility, IL',
+            address: 'Premier Freight Solutions - Chicago Distribution Center',
           },
           assignedTo: {
             type: 'scale',
             id: 1,
-            name: 'Scale #001',
+            name: 'Primary Truck Scale - Bay 3',
           },
           sensorData: [
             {
@@ -227,25 +227,25 @@ export default function IoTDevicesPage() {
         },
         {
           id: 2,
-          deviceId: 'IOT-GPS-002',
-          name: 'Vehicle GPS Tracker #002',
+          deviceId: 'GEOTAB-GO9-FL2847',
+          name: 'Geotab GO9 Telematics Device',
           type: 'gps_tracker',
-          manufacturer: 'Geotab',
-          model: 'GO9-Pro',
-          firmwareVersion: '8.2.1',
+          manufacturer: 'Geotab Inc.',
+          model: 'GO9 Fleet Management Device',
+          firmwareVersion: '9.1.3',
           status: 'online',
-          batteryLevel: 92,
-          signalStrength: 78,
+          batteryLevel: 94,
+          signalStrength: 89,
           lastSeen: '2025-01-20T10:29:45Z',
           location: {
             latitude: 42.3601,
             longitude: -71.0589,
-            address: 'I-90 East, Boston, MA',
+            address: 'I-80 W, Nebraska City, NE',
           },
           assignedTo: {
             type: 'vehicle',
             id: 2,
-            name: 'Truck #002',
+            name: 'Freightliner FL-2847',
           },
           sensorData: [
             {

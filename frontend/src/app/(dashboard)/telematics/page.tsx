@@ -62,11 +62,11 @@ const mockFleetData = {
 
 const mockVehicleData = [
   {
-    vehicleId: 'Truck #1247',
+    vehicleId: 'Freightliner FL-2847',
     driver: {
-      name: 'John Smith',
-      id: 'driver-001',
-      phone: '(555) 123-4567',
+      name: 'Michael Rodriguez',
+      id: 'CDL-TX-847291',
+      phone: '(214) 555-8472',
       status: 'driving',
       hoursRemaining: 2.8,
     },
@@ -196,12 +196,12 @@ const mockVehicleData = [
   },
 ];
 
-// Mock critical safety data for the top 5 mechanical issues
+// Professional mock critical safety data for the top 5 mechanical issues
 const mockCriticalSafetyData = {
-  vehicleId: 'Truck #1247',
-  driverName: 'John Smith',
-  driverPhone: '(555) 123-4567',
-  location: 'I-10 E, Desert Center, CA',
+  vehicleId: 'Freightliner FL-2847',
+  driverName: 'Michael Rodriguez',
+  driverPhone: '(312) 555-8472',
+  location: 'I-80 W, Nebraska City, NE',
   timestamp: new Date().toISOString(),
 
   brakeSystem: {

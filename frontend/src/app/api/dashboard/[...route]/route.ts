@@ -508,82 +508,107 @@ async function getRecentWeights(supabase, isAdmin, companyId) {
   return weights;
 }
 
-// Mock data generators (fallback)
+// Professional mock data generators for investor demonstration
 function getMockStats() {
   return {
-    vehicleCount: 12,
-    driverCount: 8,
-    activeLoads: 5,
-    weightsToday: 3,
-    complianceRate: 92,
-    nonCompliantWeights: 2,
+    vehicleCount: 47,
+    driverCount: 52,
+    activeLoads: 23,
+    weightsToday: 156,
+    complianceRate: 97.8,
+    nonCompliantWeights: 4,
   };
 }
 
 function getMockLoadStatus() {
   return [
-    { name: 'Pending', value: 3 },
-    { name: 'In Transit', value: 2 },
-    { name: 'Delivered', value: 8 },
-    { name: 'Cancelled', value: 1 },
+    { name: 'Pending', value: 12 },
+    { name: 'In Transit', value: 23 },
+    { name: 'Delivered', value: 184 },
+    { name: 'Cancelled', value: 3 },
   ];
 }
 
 function getMockComplianceData(dateRange: string) {
-  // Adjust data slightly based on date range
-  const multiplier = dateRange === 'week' ? 1 : dateRange === 'month' ? 4 : 12;
+  // Adjust data based on date range for realistic scaling
+  const multiplier = dateRange === 'week' ? 1 : dateRange === 'month' ? 4.2 : 12.8;
 
   return [
-    { name: 'Compliant', value: 42 * multiplier },
-    { name: 'Warning', value: 5 * multiplier },
-    { name: 'Non-Compliant', value: 3 * multiplier },
+    { name: 'Compliant', value: Math.round(147 * multiplier) },
+    { name: 'Warning', value: Math.round(8 * multiplier) },
+    { name: 'Non-Compliant', value: Math.round(4 * multiplier) },
   ];
 }
 
 function getMockVehicleWeights(dateRange: string) {
-  // Adjust data slightly based on date range
-  const multiplier = dateRange === 'week' ? 1 : dateRange === 'month' ? 1.5 : 2;
+  // Professional vehicle weight data with realistic scaling
+  const baseWeights = [78450, 76820, 79150, 77340, 78890];
+  const multiplier = dateRange === 'week' ? 1 : dateRange === 'month' ? 1.2 : 1.8;
 
   return [
-    { name: 'Truck 101', weight: Math.round(32500 * multiplier) },
-    { name: 'Truck 102', weight: Math.round(29800 * multiplier) },
-    { name: 'Truck 103', weight: Math.round(34200 * multiplier) },
-    { name: 'Truck 104', weight: Math.round(31100 * multiplier) },
-    { name: 'Truck 105', weight: Math.round(33400 * multiplier) },
+    { name: 'Freightliner FL-2847', weight: Math.round(baseWeights[0] * multiplier) },
+    { name: 'Peterbilt PB-3947', weight: Math.round(baseWeights[1] * multiplier) },
+    { name: 'Kenworth KW-5829', weight: Math.round(baseWeights[2] * multiplier) },
+    { name: 'Volvo VN-8472', weight: Math.round(baseWeights[3] * multiplier) },
+    { name: 'Mack MA-9384', weight: Math.round(baseWeights[4] * multiplier) },
   ];
 }
 
 function getMockRecentWeights() {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
   return [
     {
       id: 1,
-      weight: '32,500 lbs',
-      date: '2023-11-15',
+      weight: '78,450 lbs',
+      date: today.toISOString().split('T')[0],
       time: '14:30',
       status: 'Compliant',
-      created_at: '2023-11-15T14:30:00Z',
-      vehicles: { id: 1, name: 'Truck 101' },
-      drivers: { id: 1, name: 'John Driver' },
+      created_at: today.toISOString(),
+      vehicles: { id: 1, name: 'Freightliner FL-2847' },
+      drivers: { id: 1, name: 'Michael Rodriguez' },
     },
     {
       id: 2,
-      weight: '34,200 lbs',
-      date: '2023-11-15',
+      weight: '79,150 lbs',
+      date: today.toISOString().split('T')[0],
       time: '11:15',
       status: 'Warning',
-      created_at: '2023-11-15T11:15:00Z',
-      vehicles: { id: 2, name: 'Truck 102' },
-      drivers: { id: 2, name: 'Sarah Smith' },
+      created_at: today.toISOString(),
+      vehicles: { id: 2, name: 'Peterbilt PB-3947' },
+      drivers: { id: 2, name: 'Jennifer Chen' },
     },
     {
       id: 3,
-      weight: '29,800 lbs',
-      date: '2023-11-14',
+      weight: '76,820 lbs',
+      date: yesterday.toISOString().split('T')[0],
       time: '16:45',
       status: 'Compliant',
-      created_at: '2023-11-14T16:45:00Z',
-      vehicles: { id: 3, name: 'Truck 103' },
-      drivers: { id: 1, name: 'John Driver' },
+      created_at: yesterday.toISOString(),
+      vehicles: { id: 3, name: 'Kenworth KW-5829' },
+      drivers: { id: 3, name: 'Robert Thompson' },
+    },
+    {
+      id: 4,
+      weight: '77,340 lbs',
+      date: yesterday.toISOString().split('T')[0],
+      time: '13:22',
+      status: 'Compliant',
+      created_at: yesterday.toISOString(),
+      vehicles: { id: 4, name: 'Volvo VN-8472' },
+      drivers: { id: 4, name: 'Carlos Martinez' },
+    },
+    {
+      id: 5,
+      weight: '78,890 lbs',
+      date: yesterday.toISOString().split('T')[0],
+      time: '09:18',
+      status: 'Compliant',
+      created_at: yesterday.toISOString(),
+      vehicles: { id: 5, name: 'Mack MA-9384' },
+      drivers: { id: 5, name: 'Sarah Mitchell' },
     },
   ];
 }

@@ -54,7 +54,9 @@
     "npm": ">=10.0.0"
   },
   "dependencies": {
+    "@radix-ui/react-progress": "1.1.7",
     "@supabase/supabase-js": "2.50.0",
-    "dotenv": "16.5.0"
+    "dotenv": "16.5.0",
+    "pdfkit": "0.17.1"
   }
 }

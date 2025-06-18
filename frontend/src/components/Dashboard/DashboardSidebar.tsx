@@ -156,6 +156,7 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
     { name: 'HOS Logs', href: '/hos-logs', icon: ClipboardDocumentListIcon },
     { name: 'DVIR Reports', href: '/dvir', icon: ShieldCheckIcon },
     { name: 'Safety Scores', href: '/safety', icon: ShieldCheckIcon },
+    { name: 'Compliance Documents', href: '/compliance/documents', icon: DocumentTextIcon },
   ];
 
   // Analytics & Reports Navigation

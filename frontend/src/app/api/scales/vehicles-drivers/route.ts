@@ -90,16 +90,16 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// Mock data generators
+// Professional mock data generators for investor demonstration
 function getMockVehicles() {
   return [
     {
       id: 1,
-      name: 'Truck 101',
-      license_plate: 'ABC-1234',
-      vin: '1HGCM82633A123456',
+      name: 'Freightliner FL-2847',
+      license_plate: 'IL PFS-2847',
+      vin: '1FUJGHDV8NLAA2847',
       make: 'Freightliner',
-      model: 'Cascadia',
+      model: 'Cascadia Evolution',
       year: 2022,
       status: 'Active',
       company_id: 1,
@@ -108,12 +108,12 @@ function getMockVehicles() {
     },
     {
       id: 2,
-      name: 'Truck 102',
-      license_plate: 'XYZ-5678',
-      vin: '2FMZA52233B654321',
+      name: 'Peterbilt PB-3947',
+      license_plate: 'IL PFS-3947',
+      vin: '1XPBDP9X5ND394756',
       make: 'Peterbilt',
-      model: '579',
-      year: 2021,
+      model: '579 EPIQ',
+      year: 2023,
       status: 'Active',
       company_id: 1,
       created_at: '2023-02-20T00:00:00Z',
@@ -165,12 +165,12 @@ function getMockDrivers() {
   return [
     {
       id: 1,
-      name: 'John Driver',
-      license_number: 'DL12345678',
-      license_state: 'CA',
-      license_expiry: '2025-06-30',
-      phone: '555-123-4567',
-      email: 'john.driver@example.com',
+      name: 'Michael Rodriguez',
+      license_number: 'CDL-IL-847291',
+      license_state: 'IL',
+      license_expiry: '2026-08-15',
+      phone: '(312) 555-8472',
+      email: 'mrodriguez@premierfreight.com',
       status: 'Active',
       company_id: 1,
       created_at: '2023-01-10T00:00:00Z',
@@ -178,12 +178,12 @@ function getMockDrivers() {
     },
     {
       id: 2,
-      name: 'Sarah Smith',
-      license_number: 'DL87654321',
-      license_state: 'TX',
-      license_expiry: '2024-08-15',
-      phone: '555-987-6543',
-      email: 'sarah.smith@example.com',
+      name: 'Jennifer Chen',
+      license_number: 'CDL-IL-394756',
+      license_state: 'IL',
+      license_expiry: '2025-11-22',
+      phone: '(312) 555-3947',
+      email: 'jchen@premierfreight.com',
       status: 'Active',
       company_id: 1,
       created_at: '2023-02-15T00:00:00Z',

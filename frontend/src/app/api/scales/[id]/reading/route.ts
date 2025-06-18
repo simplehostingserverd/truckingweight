@@ -20,7 +20,9 @@ import { NextRequest, NextResponse } from 'next/server';
  * This provides real data from the database with fallback to mock data
  */
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  // Await params before using its properties (Next.js 15 requirement)
+  const resolvedParams = await params;
   try {
     // Create a Supabase client
     const supabase = createClient();
@@ -42,7 +44,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       : null;
 
     // Get the scale ID from the URL
-    const scaleId = params.id;
+    const scaleId = resolvedParams.id;
 
     // Get the scale data
     const { data: scale, error: scaleError } = await supabase

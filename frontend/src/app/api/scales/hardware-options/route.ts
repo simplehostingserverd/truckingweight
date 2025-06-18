@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Make a request to the backend API
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
     const response = await fetch(`${backendUrl}/api/scales/hardware-options`, {
       method: 'GET',
       headers: {

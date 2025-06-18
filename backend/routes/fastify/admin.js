@@ -14,6 +14,7 @@
 import adminController from '../../controllers/fastify/admin.js';
 import { authMiddleware } from '../../middleware/fastify/auth.js';
 import { adminMiddleware } from '../../middleware/fastify/admin.js';
+import supabase from '../../config/supabase.js';
 
 // User schema
 const userSchema = {
@@ -293,6 +294,51 @@ async function routes(fastify, _options) {
       preHandler: [authMiddleware, adminMiddleware],
     },
     adminController.exportData
+  );
+
+  // Get all companies (admin only)
+  fastify.get(
+    '/companies',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      schema: {
+        response: {
+          200: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'integer' },
+                name: { type: 'string' },
+                email: { type: 'string' },
+                phone: { type: 'string' },
+                address: { type: 'string' },
+                created_at: { type: 'string' },
+                updated_at: { type: 'string' },
+              },
+            },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      try {
+        const { data: companies, error } = await supabase
+          .from('companies')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          request.log.error('Error fetching companies:', error);
+          return reply.code(500).send({ error: 'Failed to fetch companies' });
+        }
+
+        return reply.send(companies || []);
+      } catch (err) {
+        request.log.error('Error in admin companies:', err);
+        return reply.code(500).send({ error: 'Server error' });
+      }
+    }
   );
 }
 

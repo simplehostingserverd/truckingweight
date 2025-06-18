@@ -453,19 +453,19 @@ function getMockDriverActivity(driverId: string): DriverActivityResponse {
   if (driverId === '1') {
     return {
       driverId: driverIdNum,
-      driverName: 'John Driver',
+      driverName: 'Michael Rodriguez',
       date: new Date().toISOString().split('T')[0],
       route: routeData.route,
       currentPosition: routeData.currentPosition,
       stats: generateDriverStats(),
       vehicle: {
         id: driverIdNum,
-        name: 'Truck 101',
-        type: 'Semi-Truck',
-        model: 'Peterbilt 579',
+        name: 'Freightliner FL-2847',
+        type: 'Class 8 Semi',
+        model: 'Freightliner Cascadia Evolution',
         year: 2022,
-        licensePlate: 'TX-10001',
-        vin: '1XPBD49X1MD100001',
+        licensePlate: 'IL PFS-2847',
+        vin: '1FUJGHDV8NLAA2847',
         status: 'Active',
         lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
           .toISOString()
@@ -489,25 +489,43 @@ function getMockDriverActivity(driverId: string): DriverActivityResponse {
     };
   }
 
-  // Return mock data structure for other drivers
+  // Return professional mock data structure for other drivers
+  const driverNames = ['Jennifer Chen', 'Robert Thompson', 'Amanda Williams', 'Carlos Martinez'];
+  const vehicleNames = [
+    'Peterbilt PB-3947',
+    'Kenworth KW-5829',
+    'International IN-7284',
+    'Volvo VN-8472',
+  ];
+  const vehicleModels = [
+    'Peterbilt 579 EPIQ',
+    'Kenworth T680 Next Gen',
+    'International MV Series',
+    'Volvo VNL 860',
+  ];
+  const licensePlates = ['IL PFS-3947', 'IL PFS-5829', 'IL PFS-7284', 'TX CLG-8472'];
+  const vins = ['1XPBDP9X5ND394756', '1XKDDB9X8NJ582947', '3HAMMAAR8NL728456', '4V4NC9EH5NN847291'];
+
+  const index = (driverIdNum - 2) % driverNames.length;
+
   return {
     driverId: driverIdNum,
-    driverName: driverId === '2' ? 'Sarah Smith' : `Driver ${driverIdNum}`,
+    driverName: driverNames[index] || `Professional Driver ${driverIdNum}`,
     date: new Date().toISOString().split('T')[0],
     route: routeData.route,
     currentPosition: routeData.currentPosition,
     stats: generateDriverStats(),
     vehicle: {
       id: driverIdNum,
-      name: `Truck ${100 + driverIdNum}`,
-      type: 'Semi-Truck',
-      model: driverId === '2' ? 'Kenworth T680' : 'Freightliner Cascadia',
-      year: driverId === '2' ? 2021 : 2020,
-      licensePlate: `TX-${10000 + driverIdNum}`,
-      vin: `1XPBD49X1MD${100000 + driverIdNum}`,
+      name: vehicleNames[index] || `Professional Vehicle ${driverIdNum}`,
+      type: 'Class 8 Semi',
+      model: vehicleModels[index] || 'Professional Truck Model',
+      year: 2022 + (index % 2),
+      licensePlate: licensePlates[index] || `IL PFS-${1000 + driverIdNum}`,
+      vin: vins[index] || `1PROF${driverIdNum.toString().padStart(12, '0')}`,
       status: 'Active',
       lastMaintenance: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      color: driverId === '2' ? '#CC3366' : '#33CC66',
+      color: ['#CC3366', '#33CC66', '#3366CC', '#CC6633'][index % 4],
     },
   };
 }

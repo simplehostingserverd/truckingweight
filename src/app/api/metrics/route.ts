@@ -7,7 +7,7 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   try {
     // Fetch metrics from backend
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:3001';
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:5001';
     const response = await fetch(`${backendUrl}/metrics`, {
       headers: {
         'Content-Type': 'text/plain',

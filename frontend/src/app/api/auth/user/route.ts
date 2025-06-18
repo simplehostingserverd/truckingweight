@@ -21,17 +21,24 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
-    // Get the authorization header
+    // Get the authorization header (try both formats)
     const authHeader = request.headers.get('authorization');
+    const xAuthToken = request.headers.get('x-auth-token');
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    let token = null;
+
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
+    } else if (xAuthToken) {
+      token = xAuthToken;
+    }
+
+    if (!token) {
       return NextResponse.json(
         { error: 'Missing or invalid authorization header' },
         { status: 401 }
       );
     }
-
-    const token = authHeader.split(' ')[1];
 
     // Create Supabase client
     const supabase = createClient();

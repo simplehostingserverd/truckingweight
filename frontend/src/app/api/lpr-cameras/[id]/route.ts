@@ -14,13 +14,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const supabase = createClient();
-    const cameraId = params.id;
+    // Await params before using its properties (Next.js 15 requirement)
+    const resolvedParams = await params;
+    const cameraId = resolvedParams.id;
 
     // Get the current user
     const {
@@ -50,10 +49,7 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = createClient();
     const cameraId = params.id;
@@ -142,10 +138,7 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = createClient();
     const cameraId = params.id;
@@ -188,10 +181,7 @@ export async function DELETE(
     }
 
     // Delete camera record
-    const { error } = await supabase
-      .from('lpr_cameras')
-      .delete()
-      .eq('id', cameraId);
+    const { error } = await supabase.from('lpr_cameras').delete().eq('id', cameraId);
 
     if (error) {
       console.error('Error deleting LPR camera:', error);

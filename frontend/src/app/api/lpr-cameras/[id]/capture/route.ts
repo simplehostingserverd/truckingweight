@@ -14,13 +14,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  // Await params before using its properties (Next.js 15 requirement)
+  const resolvedParams = await params;
+  const cameraId = resolvedParams.id;
+
   try {
     const supabase = createClient();
-    const cameraId = params.id;
 
     // Get the current user
     const {
@@ -72,10 +72,13 @@ export async function POST(
       // Generate a realistic license plate
       const states = ['CA', 'TX', 'FL', 'NY', 'IL', 'PA', 'OH', 'GA', 'NC', 'MI'];
       const state = states[Math.floor(Math.random() * states.length)];
-      const numbers = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-      const letters = String.fromCharCode(65 + Math.floor(Math.random() * 26)) +
-                     String.fromCharCode(65 + Math.floor(Math.random() * 26)) +
-                     String.fromCharCode(65 + Math.floor(Math.random() * 26));
+      const numbers = Math.floor(Math.random() * 1000)
+        .toString()
+        .padStart(3, '0');
+      const letters =
+        String.fromCharCode(65 + Math.floor(Math.random() * 26)) +
+        String.fromCharCode(65 + Math.floor(Math.random() * 26)) +
+        String.fromCharCode(65 + Math.floor(Math.random() * 26));
       const licensePlate = `${state} ${numbers} ${letters}`;
 
       // Generate confidence score
@@ -99,7 +102,7 @@ export async function POST(
 
       // In a real implementation, you would also save this capture to the database
       // For now, we'll just return the result
-      
+
       return NextResponse.json(captureResult);
     } else {
       // Capture failed
@@ -124,7 +127,7 @@ export async function POST(
       {
         success: false,
         timestamp: new Date().toISOString(),
-        cameraId: params.id,
+        cameraId: cameraId,
         error: 'Internal server error during capture',
       },
       { status: 500 }

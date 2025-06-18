@@ -17,10 +17,12 @@ import { toSearchParamString } from '@/utils/searchParams';
 import { notFound } from 'next/navigation';
 import VehicleDetailsClient from './client';
 
-export default async function VehicleDetail({ params }: { params: { id: string } }) {
+export default async function VehicleDetail({ params }: { params: Promise<{ id: string }> }) {
   const supabase = createClient();
+  // Await params before using its properties (Next.js 15 requirement)
+  const resolvedParams = await params;
   // Safely convert the ID parameter to a string
-  const id = toSearchParamString(params.id, '');
+  const id = toSearchParamString(resolvedParams.id, '');
 
   // Get user data
   const {
@@ -32,8 +34,8 @@ export default async function VehicleDetail({ params }: { params: { id: string }
     .eq('id', user?.id)
     .single();
 
-  // Get vehicle data
-  const { data: vehicle, error } = await supabase
+  // Get vehicle data with better error handling
+  let vehicleQuery = supabase
     .from('vehicles')
     .select(
       `
@@ -54,12 +56,25 @@ export default async function VehicleDetail({ params }: { params: { id: string }
       )
     `
     )
-    .eq('id', id)
-    .eq('company_id', userData?.company_id)
-    .single();
+    .eq('id', id);
+
+  // Only filter by company if user has a company_id (when RLS is enabled)
+  if (userData?.company_id) {
+    vehicleQuery = vehicleQuery.eq('company_id', userData.company_id);
+  }
+
+  const { data: vehicle, error } = await vehicleQuery.single();
 
   if (error || !vehicle) {
     console.error('Error fetching vehicle:', error);
+    console.log('Requested vehicle ID:', id);
+    console.log('User company ID:', userData?.company_id);
+
+    // Check if it's a "no rows" error vs other errors
+    if (error?.code === 'PGRST116') {
+      console.log('Vehicle not found - redirecting to 404');
+    }
+
     notFound();
   }
 

@@ -217,32 +217,54 @@ export default function DVIRPage() {
     try {
       setLoading(true);
 
-      // Mock data - will be replaced with API calls
+      // Professional mock data for investor demonstration
       const mockDVIRReports: DVIRReport[] = [
         {
           id: 1,
           driverId: 1,
-          driverName: 'John Smith',
+          driverName: 'Michael Rodriguez',
           vehicleId: 1,
-          vehicleNumber: 'TRK-001',
+          vehicleNumber: 'FL-2847',
           trailerId: 1,
-          trailerNumber: 'TRL-001',
+          trailerNumber: 'TRL-FL2847',
           inspectionDate: '2025-01-20T06:00:00Z',
           inspectionType: 'pre_trip',
-          odometer: 125000,
-          engineHours: 8500,
-          location: 'Chicago Terminal',
+          odometer: 287456,
+          engineHours: 12847,
+          location: 'Premier Freight Solutions - Chicago Distribution Center',
           overallStatus: 'satisfactory',
           defects: [],
           inspectionItems: [
             {
               id: 1,
               category: 'Engine Compartment',
-              item: 'Engine Oil Level',
+              item: 'Engine Oil Level - Cummins X15',
               status: 'satisfactory',
             },
-            { id: 2, category: 'Brakes', item: 'Service Brakes', status: 'satisfactory' },
-            { id: 3, category: 'Tires & Wheels', item: 'Tire Condition', status: 'satisfactory' },
+            {
+              id: 2,
+              category: 'Air Brake System',
+              item: 'Service Brakes - Bendix',
+              status: 'satisfactory',
+            },
+            {
+              id: 3,
+              category: 'Tires & Wheels',
+              item: 'Michelin XDA Energy Tires',
+              status: 'satisfactory',
+            },
+            {
+              id: 4,
+              category: 'Lighting',
+              item: 'LED Headlights & Markers',
+              status: 'satisfactory',
+            },
+            {
+              id: 5,
+              category: 'Coupling System',
+              item: 'Fifth Wheel - Holland FW35',
+              status: 'satisfactory',
+            },
           ],
           driverSignature: 'John Smith',
           certificationStatus: 'certified',
