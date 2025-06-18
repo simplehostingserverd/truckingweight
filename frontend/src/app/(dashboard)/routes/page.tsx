@@ -16,16 +16,12 @@
 import React, { useState, useEffect } from 'react';
 import {
   MapPinIcon,
-  RouteIcon,
-  ClockIcon,
   CurrencyDollarIcon,
   BoltIcon,
-  ExclamationTriangleIcon,
-  CheckCircleIcon,
   TruckIcon,
-  CalendarIcon,
   ChartBarIcon,
   PlusIcon,
+  ArrowUpIcon,
 } from '@heroicons/react/24/outline';
 import {
   Card,
@@ -43,7 +39,6 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Input,
   Table,
   TableBody,
   TableCell,
@@ -412,7 +407,7 @@ export default function RoutesPage() {
                 <h3 className="text-2xl font-bold mt-1 text-green-600">{metrics.activeRoutes}</h3>
               </div>
               <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-full flex-shrink-0">
-                <RouteIcon className="h-6 w-6 text-green-600 dark:text-green-400" />
+                <ArrowUpIcon className="h-6 w-6 text-green-600 dark:text-green-400" />
               </div>
             </div>
           </CardContent>
