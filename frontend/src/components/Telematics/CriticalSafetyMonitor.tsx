@@ -14,10 +14,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
-import { Badge } from '@/components/ui';
-import { Button } from '@/components/ui';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   ExclamationTriangleIcon,
   ShieldCheckIcon,
@@ -35,7 +35,7 @@ interface CriticalSafetyData {
   driverPhone: string;
   location: string;
   timestamp: string;
-  
+
   // Top 5 Critical Safety Systems
   brakeSystem: {
     status: 'safe' | 'warning' | 'critical' | 'failure';
@@ -48,7 +48,7 @@ interface CriticalSafetyData {
     lastInspection: string;
     issues: string[];
   };
-  
+
   tireSystem: {
     status: 'safe' | 'warning' | 'critical' | 'failure';
     pressures: number[]; // psi for all tires
@@ -59,7 +59,7 @@ interface CriticalSafetyData {
     lastRotation: string;
     issues: string[];
   };
-  
+
   engineCooling: {
     status: 'safe' | 'warning' | 'critical' | 'failure';
     coolantTemp: number; // °F
@@ -70,7 +70,7 @@ interface CriticalSafetyData {
     overheatingRisk: boolean;
     issues: string[];
   };
-  
+
   electricalSystem: {
     status: 'safe' | 'warning' | 'critical' | 'failure';
     batteryVoltage: number; // V
@@ -86,7 +86,7 @@ interface CriticalSafetyData {
     wiringCondition: 'good' | 'fair' | 'poor';
     issues: string[];
   };
-  
+
   transmission: {
     status: 'safe' | 'warning' | 'critical' | 'failure';
     fluidLevel: number; // %
@@ -97,7 +97,7 @@ interface CriticalSafetyData {
     clutchWear: number; // %
     issues: string[];
   };
-  
+
   overallSafetyScore: number; // 0-100
   accidentRiskLevel: 'low' | 'medium' | 'high' | 'critical';
   recommendedActions: string[];
@@ -109,10 +109,10 @@ interface CriticalSafetyMonitorProps {
   onMaintenanceSchedule?: (vehicleId: string, system: string) => void;
 }
 
-export default function CriticalSafetyMonitor({ 
-  data, 
+export default function CriticalSafetyMonitor({
+  data,
   onEmergencyAlert,
-  onMaintenanceSchedule, 
+  onMaintenanceSchedule,
 }: CriticalSafetyMonitorProps) {
   const [_alertsAcknowledged, setAlertsAcknowledged] = useState<string[]>([]);
 
@@ -161,11 +161,21 @@ export default function CriticalSafetyMonitor({
   };
 
   const criticalIssues = [
-    ...(data.brakeSystem.status === 'critical' || data.brakeSystem.status === 'failure' ? ['Brake System'] : []),
-    ...(data.electricalSystem.status === 'critical' || data.electricalSystem.status === 'failure' ? ['Electrical/Lighting'] : []),
-    ...(data.tireSystem.status === 'critical' || data.tireSystem.status === 'failure' ? ['Tire System'] : []),
-    ...(data.engineCooling.status === 'critical' || data.engineCooling.status === 'failure' ? ['Engine Cooling'] : []),
-    ...(data.transmission.status === 'critical' || data.transmission.status === 'failure' ? ['Transmission'] : []),
+    ...(data.brakeSystem.status === 'critical' || data.brakeSystem.status === 'failure'
+      ? ['Brake System']
+      : []),
+    ...(data.electricalSystem.status === 'critical' || data.electricalSystem.status === 'failure'
+      ? ['Electrical/Lighting']
+      : []),
+    ...(data.tireSystem.status === 'critical' || data.tireSystem.status === 'failure'
+      ? ['Tire System']
+      : []),
+    ...(data.engineCooling.status === 'critical' || data.engineCooling.status === 'failure'
+      ? ['Engine Cooling']
+      : []),
+    ...(data.transmission.status === 'critical' || data.transmission.status === 'failure'
+      ? ['Transmission']
+      : []),
   ];
 
   const handleEmergencyAlert = (system: string) => {
@@ -190,20 +200,24 @@ export default function CriticalSafetyMonitor({
           </AlertTitle>
           <AlertDescription>
             <div className="mt-2 space-y-2">
-              <div className="font-medium">Vehicle: {data.vehicleId} | Driver: {data.driverName}</div>
+              <div className="font-medium">
+                Vehicle: {data.vehicleId} | Driver: {data.driverName}
+              </div>
               <div className="text-sm">Location: {data.location}</div>
-              <div className="font-medium text-red-700">Critical Systems: {criticalIssues.join(', ')}</div>
+              <div className="font-medium text-red-700">
+                Critical Systems: {criticalIssues.join(', ')}
+              </div>
               <div className="flex space-x-2 mt-3">
-                <Button 
-                  variant="destructive" 
+                <Button
+                  variant="destructive"
                   size="sm"
                   onClick={() => handleEmergencyAlert(criticalIssues.join(', '))}
                 >
                   <PhoneIcon className="h-4 w-4 mr-1" />
                   Alert Driver Now
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="sm"
                   onClick={() => handleScheduleMaintenance('emergency')}
                 >
@@ -229,8 +243,15 @@ export default function CriticalSafetyMonitor({
                 Risk: {data.accidentRiskLevel.toUpperCase()}
               </Badge>
               <div className="text-3xl font-bold">
-                <span className={data.overallSafetyScore >= 80 ? 'text-green-600' : 
-                               data.overallSafetyScore >= 60 ? 'text-yellow-600' : 'text-red-600'}>
+                <span
+                  className={
+                    data.overallSafetyScore >= 80
+                      ? 'text-green-600'
+                      : data.overallSafetyScore >= 60
+                        ? 'text-yellow-600'
+                        : 'text-red-600'
+                  }
+                >
                   {data.overallSafetyScore}
                 </span>
                 <span className="text-lg text-gray-500">/100</span>
@@ -240,10 +261,13 @@ export default function CriticalSafetyMonitor({
         </CardHeader>
         <CardContent>
           <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
-            <div 
+            <div
               className={`h-4 rounded-full transition-all duration-500 ${
-                data.overallSafetyScore >= 80 ? 'bg-green-500' : 
-                data.overallSafetyScore >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                data.overallSafetyScore >= 80
+                  ? 'bg-green-500'
+                  : data.overallSafetyScore >= 60
+                    ? 'bg-yellow-500'
+                    : 'bg-red-500'
               }`}
               style={{ width: `${data.overallSafetyScore}%` }}
             ></div>
@@ -257,7 +281,9 @@ export default function CriticalSafetyMonitor({
       {/* Top 5 Critical Safety Systems */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* 1. Brake System - #1 Accident Cause */}
-        <Card className={`border-2 ${data.brakeSystem.status === 'critical' || data.brakeSystem.status === 'failure' ? 'border-red-500' : ''}`}>
+        <Card
+          className={`border-2 ${data.brakeSystem.status === 'critical' || data.brakeSystem.status === 'failure' ? 'border-red-500' : ''}`}
+        >
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center">
@@ -277,51 +303,81 @@ export default function CriticalSafetyMonitor({
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex justify-between">
                   <span className="text-sm">Air Pressure</span>
-                  <Badge variant={data.brakeSystem.airPressure >= 100 ? 'success' : 
-                                data.brakeSystem.airPressure >= 90 ? 'warning' : 'destructive'}>
+                  <Badge
+                    variant={
+                      data.brakeSystem.airPressure >= 100
+                        ? 'success'
+                        : data.brakeSystem.airPressure >= 90
+                          ? 'warning'
+                          : 'destructive'
+                    }
+                  >
                     {data.brakeSystem.airPressure} psi
                   </Badge>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm">Brake Temp</span>
-                  <Badge variant={data.brakeSystem.temperature <= 300 ? 'success' : 
-                                data.brakeSystem.temperature <= 400 ? 'warning' : 'destructive'}>
+                  <Badge
+                    variant={
+                      data.brakeSystem.temperature <= 300
+                        ? 'success'
+                        : data.brakeSystem.temperature <= 400
+                          ? 'warning'
+                          : 'destructive'
+                    }
+                  >
                     {data.brakeSystem.temperature}°F
                   </Badge>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm">Front Pads</span>
-                  <Badge variant={data.brakeSystem.padWearFront >= 30 ? 'success' : 
-                                data.brakeSystem.padWearFront >= 15 ? 'warning' : 'destructive'}>
+                  <Badge
+                    variant={
+                      data.brakeSystem.padWearFront >= 30
+                        ? 'success'
+                        : data.brakeSystem.padWearFront >= 15
+                          ? 'warning'
+                          : 'destructive'
+                    }
+                  >
                     {data.brakeSystem.padWearFront}%
                   </Badge>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm">Rear Pads</span>
-                  <Badge variant={data.brakeSystem.padWearRear >= 30 ? 'success' : 
-                                data.brakeSystem.padWearRear >= 15 ? 'warning' : 'destructive'}>
+                  <Badge
+                    variant={
+                      data.brakeSystem.padWearRear >= 30
+                        ? 'success'
+                        : data.brakeSystem.padWearRear >= 15
+                          ? 'warning'
+                          : 'destructive'
+                    }
+                  >
                     {data.brakeSystem.padWearRear}%
                   </Badge>
                 </div>
               </div>
-              
+
               {data.brakeSystem.airLeaks && (
                 <Alert variant="destructive">
                   <AlertDescription>⚠️ Air leaks detected in brake lines</AlertDescription>
                 </Alert>
               )}
-              
+
               {data.brakeSystem.warningLights && (
                 <Alert variant="destructive">
                   <AlertDescription>🚨 Brake warning lights active</AlertDescription>
                 </Alert>
               )}
-              
+
               {data.brakeSystem.issues.length > 0 && (
                 <div className="mt-2 p-2 bg-red-50 dark:bg-red-900/20 rounded">
                   <div className="text-xs font-medium text-red-600 dark:text-red-400">Issues:</div>
                   {data.brakeSystem.issues.map((issue, index) => (
-                    <div key={index} className="text-xs text-red-600 dark:text-red-400">• {issue}</div>
+                    <div key={index} className="text-xs text-red-600 dark:text-red-400">
+                      • {issue}
+                    </div>
                   ))}
                 </div>
               )}
@@ -330,7 +386,9 @@ export default function CriticalSafetyMonitor({
         </Card>
 
         {/* 2. Electrical/Lighting System - #2 Accident Cause */}
-        <Card className={`border-2 ${data.electricalSystem.status === 'critical' || data.electricalSystem.status === 'failure' ? 'border-red-500' : ''}`}>
+        <Card
+          className={`border-2 ${data.electricalSystem.status === 'critical' || data.electricalSystem.status === 'failure' ? 'border-red-500' : ''}`}
+        >
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center">
@@ -350,56 +408,90 @@ export default function CriticalSafetyMonitor({
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex justify-between">
                   <span className="text-sm">Battery</span>
-                  <Badge variant={data.electricalSystem.batteryVoltage >= 12.4 ? 'success' : 
-                                data.electricalSystem.batteryVoltage >= 11.8 ? 'warning' : 'destructive'}>
+                  <Badge
+                    variant={
+                      data.electricalSystem.batteryVoltage >= 12.4
+                        ? 'success'
+                        : data.electricalSystem.batteryVoltage >= 11.8
+                          ? 'warning'
+                          : 'destructive'
+                    }
+                  >
                     {data.electricalSystem.batteryVoltage}V
                   </Badge>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm">Alternator</span>
-                  <Badge variant={data.electricalSystem.alternatorOutput >= 13.5 ? 'success' : 
-                                data.electricalSystem.alternatorOutput >= 12.5 ? 'warning' : 'destructive'}>
+                  <Badge
+                    variant={
+                      data.electricalSystem.alternatorOutput >= 13.5
+                        ? 'success'
+                        : data.electricalSystem.alternatorOutput >= 12.5
+                          ? 'warning'
+                          : 'destructive'
+                    }
+                  >
                     {data.electricalSystem.alternatorOutput}V
                   </Badge>
                 </div>
               </div>
-              
+
               {/* Critical Lighting Status */}
               <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded">
                 <h4 className="font-medium text-sm mb-2">Critical Lighting Systems:</h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="flex justify-between">
                     <span>Headlights</span>
-                    <Badge variant={data.electricalSystem.lightingSystem.headlights ? 'success' : 'destructive'}>
+                    <Badge
+                      variant={
+                        data.electricalSystem.lightingSystem.headlights ? 'success' : 'destructive'
+                      }
+                    >
                       {data.electricalSystem.lightingSystem.headlights ? 'OK' : 'FAULT'}
                     </Badge>
                   </div>
                   <div className="flex justify-between">
                     <span>Brake Lights</span>
-                    <Badge variant={data.electricalSystem.lightingSystem.brakeLight ? 'success' : 'destructive'}>
+                    <Badge
+                      variant={
+                        data.electricalSystem.lightingSystem.brakeLight ? 'success' : 'destructive'
+                      }
+                    >
                       {data.electricalSystem.lightingSystem.brakeLight ? 'OK' : 'FAULT'}
                     </Badge>
                   </div>
                   <div className="flex justify-between">
                     <span>Turn Signals</span>
-                    <Badge variant={data.electricalSystem.lightingSystem.turnSignals ? 'success' : 'destructive'}>
+                    <Badge
+                      variant={
+                        data.electricalSystem.lightingSystem.turnSignals ? 'success' : 'destructive'
+                      }
+                    >
                       {data.electricalSystem.lightingSystem.turnSignals ? 'OK' : 'FAULT'}
                     </Badge>
                   </div>
                   <div className="flex justify-between">
                     <span>Marker Lights</span>
-                    <Badge variant={data.electricalSystem.lightingSystem.markerLights ? 'success' : 'destructive'}>
+                    <Badge
+                      variant={
+                        data.electricalSystem.lightingSystem.markerLights
+                          ? 'success'
+                          : 'destructive'
+                      }
+                    >
                       {data.electricalSystem.lightingSystem.markerLights ? 'OK' : 'FAULT'}
                     </Badge>
                   </div>
                 </div>
               </div>
-              
+
               {data.electricalSystem.issues.length > 0 && (
                 <div className="mt-2 p-2 bg-red-50 dark:bg-red-900/20 rounded">
                   <div className="text-xs font-medium text-red-600 dark:text-red-400">Issues:</div>
                   {data.electricalSystem.issues.map((issue, index) => (
-                    <div key={index} className="text-xs text-red-600 dark:text-red-400">• {issue}</div>
+                    <div key={index} className="text-xs text-red-600 dark:text-red-400">
+                      • {issue}
+                    </div>
                   ))}
                 </div>
               )}
@@ -408,7 +500,9 @@ export default function CriticalSafetyMonitor({
         </Card>
 
         {/* 3. Tire System */}
-        <Card className={`border-2 ${data.tireSystem.status === 'critical' || data.tireSystem.status === 'failure' ? 'border-red-500' : ''}`}>
+        <Card
+          className={`border-2 ${data.tireSystem.status === 'critical' || data.tireSystem.status === 'failure' ? 'border-red-500' : ''}`}
+        >
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center">
@@ -429,19 +523,23 @@ export default function CriticalSafetyMonitor({
                 {data.tireSystem.pressures.map((pressure, index) => (
                   <div key={index} className="flex justify-between text-xs">
                     <span>Tire {index + 1}</span>
-                    <Badge variant={pressure >= 100 ? 'success' : pressure >= 90 ? 'warning' : 'destructive'}>
+                    <Badge
+                      variant={
+                        pressure >= 100 ? 'success' : pressure >= 90 ? 'warning' : 'destructive'
+                      }
+                    >
                       {pressure} psi
                     </Badge>
                   </div>
                 ))}
               </div>
-              
+
               {data.tireSystem.blowoutRisk && (
                 <Alert variant="destructive">
                   <AlertDescription>⚠️ High blowout risk detected</AlertDescription>
                 </Alert>
               )}
-              
+
               {data.tireSystem.unevenWear && (
                 <Alert variant="warning">
                   <AlertDescription>⚠️ Uneven tire wear detected</AlertDescription>
@@ -452,7 +550,9 @@ export default function CriticalSafetyMonitor({
         </Card>
 
         {/* 4. Engine Cooling */}
-        <Card className={`border-2 ${data.engineCooling.status === 'critical' || data.engineCooling.status === 'failure' ? 'border-red-500' : ''}`}>
+        <Card
+          className={`border-2 ${data.engineCooling.status === 'critical' || data.engineCooling.status === 'failure' ? 'border-red-500' : ''}`}
+        >
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center">
@@ -472,20 +572,34 @@ export default function CriticalSafetyMonitor({
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex justify-between">
                   <span className="text-sm">Coolant Temp</span>
-                  <Badge variant={data.engineCooling.coolantTemp <= 210 ? 'success' : 
-                                data.engineCooling.coolantTemp <= 230 ? 'warning' : 'destructive'}>
+                  <Badge
+                    variant={
+                      data.engineCooling.coolantTemp <= 210
+                        ? 'success'
+                        : data.engineCooling.coolantTemp <= 230
+                          ? 'warning'
+                          : 'destructive'
+                    }
+                  >
                     {data.engineCooling.coolantTemp}°F
                   </Badge>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm">Coolant Level</span>
-                  <Badge variant={data.engineCooling.coolantLevel >= 80 ? 'success' : 
-                                data.engineCooling.coolantLevel >= 60 ? 'warning' : 'destructive'}>
+                  <Badge
+                    variant={
+                      data.engineCooling.coolantLevel >= 80
+                        ? 'success'
+                        : data.engineCooling.coolantLevel >= 60
+                          ? 'warning'
+                          : 'destructive'
+                    }
+                  >
                     {data.engineCooling.coolantLevel}%
                   </Badge>
                 </div>
               </div>
-              
+
               {data.engineCooling.overheatingRisk && (
                 <Alert variant="destructive">
                   <AlertDescription>🔥 Engine overheating risk detected</AlertDescription>
@@ -496,7 +610,9 @@ export default function CriticalSafetyMonitor({
         </Card>
 
         {/* 5. Transmission */}
-        <Card className={`border-2 ${data.transmission.status === 'critical' || data.transmission.status === 'failure' ? 'border-red-500' : ''}`}>
+        <Card
+          className={`border-2 ${data.transmission.status === 'critical' || data.transmission.status === 'failure' ? 'border-red-500' : ''}`}
+        >
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center">
@@ -516,26 +632,40 @@ export default function CriticalSafetyMonitor({
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex justify-between">
                   <span className="text-sm">Fluid Level</span>
-                  <Badge variant={data.transmission.fluidLevel >= 80 ? 'success' : 
-                                data.transmission.fluidLevel >= 60 ? 'warning' : 'destructive'}>
+                  <Badge
+                    variant={
+                      data.transmission.fluidLevel >= 80
+                        ? 'success'
+                        : data.transmission.fluidLevel >= 60
+                          ? 'warning'
+                          : 'destructive'
+                    }
+                  >
                     {data.transmission.fluidLevel}%
                   </Badge>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm">Fluid Temp</span>
-                  <Badge variant={data.transmission.fluidTemp <= 200 ? 'success' : 
-                                data.transmission.fluidTemp <= 220 ? 'warning' : 'destructive'}>
+                  <Badge
+                    variant={
+                      data.transmission.fluidTemp <= 200
+                        ? 'success'
+                        : data.transmission.fluidTemp <= 220
+                          ? 'warning'
+                          : 'destructive'
+                    }
+                  >
                     {data.transmission.fluidTemp}°F
                   </Badge>
                 </div>
               </div>
-              
+
               {data.transmission.gearSlipping && (
                 <Alert variant="destructive">
                   <AlertDescription>⚠️ Gear slipping detected</AlertDescription>
                 </Alert>
               )}
-              
+
               {data.transmission.shiftingIssues && (
                 <Alert variant="warning">
                   <AlertDescription>⚠️ Shifting difficulties detected</AlertDescription>
@@ -558,10 +688,13 @@ export default function CriticalSafetyMonitor({
           <CardContent>
             <div className="space-y-2">
               {data.recommendedActions.map((action, index) => (
-                <div key={index} className="flex items-center justify-between p-2 bg-blue-50 dark:bg-blue-900/20 rounded">
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-2 bg-blue-50 dark:bg-blue-900/20 rounded"
+                >
                   <span className="text-sm">{action}</span>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     onClick={() => handleScheduleMaintenance(`action-${index}`)}
                   >

@@ -15,6 +15,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {
+  AdjustmentsHorizontalIcon,
   ArrowPathIcon,
   BeakerIcon,
   BoltIcon,
@@ -33,9 +34,17 @@ import {
   PlayIcon,
   TruckIcon,
   WrenchScrewdriverIcon,
-  XCircleIcon
+  XCircleIcon,
 } from '@heroicons/react/24/outline';
-import { Card, CardContent, Button, Badge, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui';
+import {
+  Button,
+  Badge,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui';
 import Link from 'next/link';
 import { MLModel, Prediction, MLMetrics } from '@/types/ml';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';

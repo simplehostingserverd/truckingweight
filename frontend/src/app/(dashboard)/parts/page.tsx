@@ -14,8 +14,37 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Cog6ToothIcon, MagnifyingGlassIcon, ShoppingCartIcon, CurrencyDollarIcon, EyeIcon, PencilIcon } from '@heroicons/react/24/outline';
-import { Card, CardContent, Button, Badge, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui';
+import {
+  CheckCircleIcon,
+  Cog6ToothIcon,
+  CurrencyDollarIcon,
+  ExclamationTriangleIcon,
+  EyeIcon,
+  MagnifyingGlassIcon,
+  PencilIcon,
+  PlusIcon,
+  ShoppingCartIcon,
+} from '@heroicons/react/24/outline';
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui';
 import Link from 'next/link';
 
 interface Part {

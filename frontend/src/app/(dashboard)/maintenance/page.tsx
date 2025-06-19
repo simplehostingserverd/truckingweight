@@ -23,9 +23,9 @@ import {
   CurrencyDollarIcon,
   ExclamationTriangleIcon,
   TruckIcon,
-  WrenchScrewdriverIcon
+  WrenchScrewdriverIcon,
 } from '@heroicons/react/24/outline';
-import { Card, CardContent, Button, Badge } from '@/components/ui';
+import { Button, Badge } from '@/components/ui';
 import Link from 'next/link';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';

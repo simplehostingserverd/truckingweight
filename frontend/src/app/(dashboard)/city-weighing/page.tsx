@@ -56,7 +56,7 @@ import {
 import { useEffect, useState } from 'react';
 
 export default function CityWeighingPage() {
-  const [_cityData, setcityData] = useState({
+  const [cityData, setCityData] = useState({
     name: 'Austin',
     state: 'TX',
     totalScales: 12,
@@ -147,7 +147,8 @@ export default function CityWeighingPage() {
     }, 1000);
   }, []);
 
-  const _handleIssuePermit =  null; null;
+  const handleIssuePermit = () => {
+    // Handle permit issuance logic here
     setShowPermitDialog(false);
   };
 

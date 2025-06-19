@@ -39,8 +39,9 @@ import { Separator } from '@/components/ui/separator';
 import { uploadCityLogo } from '@/utils/supabase/storage';
 
 // Create a client-side only component to avoid hydration issues
-const _CityProfilePageClient =  null; null;
-  const [_isLoading, setisLoading] = useState(true);
+const CityProfilePageClient = () => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -185,7 +186,7 @@ const _CityProfilePageClient =  null; null;
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { _name, value } = e.target;
+    const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 

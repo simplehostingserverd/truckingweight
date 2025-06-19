@@ -14,7 +14,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Button, Badge, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui';
+import {
+  Button,
+  Badge,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui';
 import {
   ArrowDownTrayIcon,
   CalendarIcon,
@@ -27,7 +35,7 @@ import {
   UserIcon,
 } from '@heroicons/react/24/outline';
 import PDFViewer from '@/components/PDFViewer/PDFViewer';
-import { CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 // // import Link from 'next/link'; // Unused // Unused
 
 interface ComplianceDocument {
@@ -93,7 +101,8 @@ export default function ComplianceDocumentsPage() {
           fileSize: '1.8 MB',
           pages: 2,
           pdfUrl: '/api/documents/dvir-fl2847-20250120.pdf',
-          description: 'Driver Vehicle Inspection Report - Pre-trip inspection with satisfactory results',
+          description:
+            'Driver Vehicle Inspection Report - Pre-trip inspection with satisfactory results',
           tags: ['DVIR', 'Pre-Trip', 'Satisfactory', 'Safety'],
         },
         {
@@ -218,9 +227,7 @@ export default function ComplianceDocumentsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
-            Compliance Documents
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Compliance Documents</h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
             Digital document management for HOS logs, DVIR reports, and safety certificates
           </p>
@@ -299,7 +306,7 @@ export default function ComplianceDocumentsPage() {
                 <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
                   {document.description}
                 </p>
-                
+
                 <div className="space-y-2 text-sm">
                   {document.driverName && (
                     <div className="flex items-center gap-2">

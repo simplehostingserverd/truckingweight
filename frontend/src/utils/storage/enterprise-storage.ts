@@ -79,21 +79,21 @@ export class EnterpriseStorageManager {
   async registerStorageSystem(config: StorageConfig): Promise<boolean> {
     try {
       // Validate configuration
-      if (!this.validateStorageConfig(_config)) {
+      if (!this.validateStorageConfig(config)) {
         throw new Error('Invalid storage configuration');
       }
 
       // Test connection
-      const connectionTest = await this.testConnection(_config);
+      const connectionTest = await this.testConnection(config);
       if (!connectionTest.success) {
         throw new Error(`Connection test failed: ${connectionTest.error}`);
       }
 
       // Store configuration
       this.storageConfigs.set(config.id, config);
-      
+
       // Initialize connection based on protocol
-      await this.initializeConnection(_config);
+      await this.initializeConnection(config);
 
       return true;
     } catch (error) {
@@ -109,17 +109,17 @@ export class EnterpriseStorageManager {
     try {
       switch (config.protocol) {
         case 'nfs':
-          return await this.testNFSConnection(_config);
+          return await this.testNFSConnection(config);
         case 'smb':
-          return await this.testSMBConnection(_config);
+          return await this.testSMBConnection(config);
         case 'iscsi':
-          return await this.testiSCSIConnection(_config);
+          return await this.testiSCSIConnection(config);
         case 'http':
         case 'https':
-          return await this.testHTTPConnection(_config);
+          return await this.testHTTPConnection(config);
         case 'ftp':
         case 'sftp':
-          return await this.testFTPConnection(_config);
+          return await this.testFTPConnection(config);
         default:
           return { success: false, error: 'Unsupported protocol' };
       }
@@ -201,7 +201,7 @@ export class EnterpriseStorageManager {
 
       // Verify checksum if enabled
       if (options.checksum_verification) {
-        const isValid = await this.verifyChecksum(_data, _filename);
+        const isValid = await this.verifyChecksum(data, filename);
         if (!isValid) {
           throw new Error('Checksum verification failed');
         }
@@ -225,7 +225,7 @@ export class EnterpriseStorageManager {
       }
 
       // Get metrics based on protocol
-      return await this.getMetricsByProtocol(_config);
+      return await this.getMetricsByProtocol(config);
     } catch (error) {
       console.error('Failed to get storage metrics:', error);
       return null;
@@ -285,27 +285,37 @@ export class EnterpriseStorageManager {
     // This would create actual connections to storage systems
   }
 
-  private async testNFSConnection(config: StorageConfig): Promise<{ success: boolean; error?: string }> {
+  private async testNFSConnection(
+    config: StorageConfig
+  ): Promise<{ success: boolean; error?: string }> {
     // Test NFS connection
     return { success: true };
   }
 
-  private async testSMBConnection(config: StorageConfig): Promise<{ success: boolean; error?: string }> {
+  private async testSMBConnection(
+    config: StorageConfig
+  ): Promise<{ success: boolean; error?: string }> {
     // Test SMB/CIFS connection
     return { success: true };
   }
 
-  private async testiSCSIConnection(config: StorageConfig): Promise<{ success: boolean; error?: string }> {
+  private async testiSCSIConnection(
+    config: StorageConfig
+  ): Promise<{ success: boolean; error?: string }> {
     // Test iSCSI connection
     return { success: true };
   }
 
-  private async testHTTPConnection(config: StorageConfig): Promise<{ success: boolean; error?: string }> {
+  private async testHTTPConnection(
+    config: StorageConfig
+  ): Promise<{ success: boolean; error?: string }> {
     // Test HTTP/HTTPS connection
     return { success: true };
   }
 
-  private async testFTPConnection(config: StorageConfig): Promise<{ success: boolean; error?: string }> {
+  private async testFTPConnection(
+    config: StorageConfig
+  ): Promise<{ success: boolean; error?: string }> {
     // Test FTP/SFTP connection
     return { success: true };
   }

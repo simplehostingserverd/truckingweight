@@ -30,7 +30,6 @@ import {
 } from '@heroicons/react/24/outline';
 import {
   Button,
-  Badge,
   Select,
   SelectContent,
   SelectItem,
@@ -44,6 +43,7 @@ import {
   TableRow,
 } from '@/components/ui';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';

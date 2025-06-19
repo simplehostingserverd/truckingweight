@@ -17,7 +17,7 @@ import React from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { determineComplianceStatus, getComplianceDetails } from '@/utils/compliance';
 import Link from 'next/link';
-import { useRouter as _useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function NewWeight() {
@@ -36,7 +36,8 @@ export default function NewWeight() {
   const [axleType, setAxleType] = useState<'SINGLE_AXLE' | 'TANDEM_AXLE' | 'GROSS_VEHICLE_WEIGHT'>(
     'GROSS_VEHICLE_WEIGHT'
   );
-  const router = useRouter(); null;
+  const router = useRouter();
+  null;
   const supabase = createClient();
 
   useEffect(() => {

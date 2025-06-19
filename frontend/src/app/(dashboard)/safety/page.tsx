@@ -14,8 +14,36 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { EyeIcon, TrophyIcon, FireIcon, SparklesIcon } from '@heroicons/react/24/outline';
-import { Card, CardContent, Button, Badge, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui';
+import {
+  CheckCircleIcon,
+  ClockIcon,
+  DocumentTextIcon,
+  ExclamationTriangleIcon,
+  EyeIcon,
+  FireIcon,
+  ShieldCheckIcon,
+  SparklesIcon,
+  TrophyIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline';
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Progress,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui';
 
 interface SafetyScore {
   id: number;

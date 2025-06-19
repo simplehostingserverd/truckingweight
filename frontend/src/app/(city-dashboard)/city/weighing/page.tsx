@@ -44,7 +44,7 @@ import {
 import { useEffect, useState } from 'react';
 
 export default function CityWeighingPage() {
-  const [_scales, setscales] = useState<
+  const [scales, setScales] = useState<
     Array<{ id: number; name: string; status: string; max_capacity: number }>
   >([]);
   const [selectedScale, setSelectedScale] = useState<string>('');
@@ -68,7 +68,8 @@ export default function CityWeighingPage() {
     fetchScales();
   }, []);
 
-  const _fetchScales =  null; null;
+  const fetchScales = async () => {
+    setIsLoading(true);
     setError('');
 
     try {

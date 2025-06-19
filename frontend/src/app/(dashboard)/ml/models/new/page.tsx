@@ -105,13 +105,25 @@ export default function NewMLModelPage() {
       id: 'eta_prediction',
       name: 'ETA Prediction Model',
       type: 'eta_prediction',
-      description: 'AI-powered estimated time of arrival predictions using traffic, weather, and driver performance data',
+      description:
+        'AI-powered estimated time of arrival predictions using traffic, weather, and driver performance data',
       icon: <ClockIcon className="h-8 w-8" />,
       difficulty: 'intermediate',
       estimatedTime: '15-20 minutes',
-      features: ['Real-time traffic analysis', 'Weather integration', 'Driver performance factors', 'Route optimization'],
-      dataRequirements: ['GPS tracking data', 'Traffic API access', 'Weather API access', 'Driver performance logs'],
-      businessValue: 'Improve customer satisfaction and operational efficiency with accurate delivery predictions',
+      features: [
+        'Real-time traffic analysis',
+        'Weather integration',
+        'Driver performance factors',
+        'Route optimization',
+      ],
+      dataRequirements: [
+        'GPS tracking data',
+        'Traffic API access',
+        'Weather API access',
+        'Driver performance logs',
+      ],
+      businessValue:
+        'Improve customer satisfaction and operational efficiency with accurate delivery predictions',
       accuracy: '92-96%',
       useCase: 'Predict accurate delivery times for customer notifications and route planning',
     },
@@ -119,13 +131,25 @@ export default function NewMLModelPage() {
       id: 'dynamic_pricing',
       name: 'Dynamic Pricing Model',
       type: 'dynamic_pricing',
-      description: 'Market-driven pricing optimization based on demand, capacity, and competitive analysis',
+      description:
+        'Market-driven pricing optimization based on demand, capacity, and competitive analysis',
       icon: <CurrencyDollarIcon className="h-8 w-8" />,
       difficulty: 'advanced',
       estimatedTime: '25-30 minutes',
-      features: ['Market demand analysis', 'Competitive pricing', 'Seasonal adjustments', 'Capacity optimization'],
-      dataRequirements: ['Load board data', 'Market rates', 'Fuel price APIs', 'Historical pricing data'],
-      businessValue: 'Maximize revenue through intelligent pricing strategies and market positioning',
+      features: [
+        'Market demand analysis',
+        'Competitive pricing',
+        'Seasonal adjustments',
+        'Capacity optimization',
+      ],
+      dataRequirements: [
+        'Load board data',
+        'Market rates',
+        'Fuel price APIs',
+        'Historical pricing data',
+      ],
+      businessValue:
+        'Maximize revenue through intelligent pricing strategies and market positioning',
       accuracy: '85-92%',
       useCase: 'Optimize pricing for loads based on market conditions and demand patterns',
     },
@@ -137,8 +161,18 @@ export default function NewMLModelPage() {
       icon: <WrenchScrewdriverIcon className="h-8 w-8" />,
       difficulty: 'intermediate',
       estimatedTime: '20-25 minutes',
-      features: ['Component failure prediction', 'Maintenance scheduling', 'Cost optimization', 'Safety alerts'],
-      dataRequirements: ['Telematics data', 'Maintenance records', 'Fault codes', 'Component specifications'],
+      features: [
+        'Component failure prediction',
+        'Maintenance scheduling',
+        'Cost optimization',
+        'Safety alerts',
+      ],
+      dataRequirements: [
+        'Telematics data',
+        'Maintenance records',
+        'Fault codes',
+        'Component specifications',
+      ],
       businessValue: 'Reduce maintenance costs and prevent breakdowns through predictive analytics',
       accuracy: '88-94%',
       useCase: 'Predict vehicle maintenance needs before failures occur to minimize downtime',
@@ -147,15 +181,22 @@ export default function NewMLModelPage() {
       id: 'route_optimization',
       name: 'Route Optimization Model',
       type: 'route_optimization',
-      description: 'AI-powered route optimization for fuel efficiency and delivery time optimization',
+      description:
+        'AI-powered route optimization for fuel efficiency and delivery time optimization',
       icon: <TruckIcon className="h-8 w-8" />,
       difficulty: 'advanced',
       estimatedTime: '30-35 minutes',
-      features: ['Multi-stop optimization', 'Traffic-aware routing', 'Fuel efficiency', 'Driver preferences'],
+      features: [
+        'Multi-stop optimization',
+        'Traffic-aware routing',
+        'Fuel efficiency',
+        'Driver preferences',
+      ],
       dataRequirements: ['GPS routes', 'Traffic data', 'Fuel consumption data', 'Delivery records'],
       businessValue: 'Reduce fuel costs and improve delivery efficiency through optimized routing',
       accuracy: '80-88%',
-      useCase: 'Find the most efficient routes considering traffic, fuel costs, and delivery windows',
+      useCase:
+        'Find the most efficient routes considering traffic, fuel costs, and delivery windows',
     },
     {
       id: 'demand_forecasting',
@@ -165,7 +206,12 @@ export default function NewMLModelPage() {
       icon: <ChartBarIcon className="h-8 w-8" />,
       difficulty: 'advanced',
       estimatedTime: '35-40 minutes',
-      features: ['Seasonal patterns', 'Economic indicators', 'Market trends', 'Competitor analysis'],
+      features: [
+        'Seasonal patterns',
+        'Economic indicators',
+        'Market trends',
+        'Competitor analysis',
+      ],
       dataRequirements: ['Load board data', 'Market reports', 'Economic data', 'Industry trends'],
       businessValue: 'Make informed capacity and investment decisions based on demand predictions',
       accuracy: '75-85%',
@@ -175,13 +221,25 @@ export default function NewMLModelPage() {
       id: 'toll_optimization',
       name: 'Toll Cost Optimization Model',
       type: 'toll_optimization',
-      description: 'AI-powered toll cost optimization using route analysis and toll provider integration',
+      description:
+        'AI-powered toll cost optimization using route analysis and toll provider integration',
       icon: <CurrencyDollarIcon className="h-8 w-8" />,
       difficulty: 'intermediate',
       estimatedTime: '20-25 minutes',
-      features: ['Multi-provider toll comparison', 'Route cost analysis', 'Time vs cost optimization', 'Transponder management'],
-      dataRequirements: ['Toll provider APIs', 'Route data', 'Vehicle classifications', 'Historical toll costs'],
-      businessValue: 'Minimize toll expenses through intelligent route planning and provider optimization',
+      features: [
+        'Multi-provider toll comparison',
+        'Route cost analysis',
+        'Time vs cost optimization',
+        'Transponder management',
+      ],
+      dataRequirements: [
+        'Toll provider APIs',
+        'Route data',
+        'Vehicle classifications',
+        'Historical toll costs',
+      ],
+      businessValue:
+        'Minimize toll expenses through intelligent route planning and provider optimization',
       accuracy: '90-95%',
       useCase: 'Optimize routes to minimize toll costs while maintaining delivery schedules',
     },
@@ -269,23 +327,25 @@ export default function NewMLModelPage() {
     // Simulate deployment process
     for (let i = 0; i < steps.length; i++) {
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      setDeploymentSteps(prev => prev.map((step, index) => {
-        if (index === i) {
-          return { ...step, status: 'completed', progress: 100 };
-        } else if (index === i + 1) {
-          return { ...step, status: 'in-progress', progress: 0 };
-        }
-        return step;
-      }));
+
+      setDeploymentSteps(prev =>
+        prev.map((step, index) => {
+          if (index === i) {
+            return { ...step, status: 'completed', progress: 100 };
+          } else if (index === i + 1) {
+            return { ...step, status: 'in-progress', progress: 0 };
+          }
+          return step;
+        })
+      );
 
       // Simulate progress for current step
       if (i < steps.length - 1) {
         for (let progress = 0; progress <= 100; progress += 20) {
           await new Promise(resolve => setTimeout(resolve, 200));
-          setDeploymentSteps(prev => prev.map((step, index) => 
-            index === i + 1 ? { ...step, progress } : step
-          ));
+          setDeploymentSteps(prev =>
+            prev.map((step, index) => (index === i + 1 ? { ...step, progress } : step))
+          );
         }
       }
     }
@@ -299,7 +359,9 @@ export default function NewMLModelPage() {
       case 'completed':
         return <CheckCircleIcon className="h-5 w-5 text-green-600" />;
       case 'in-progress':
-        return <div className="h-5 w-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />;
+        return (
+          <div className="h-5 w-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+        );
       case 'error':
         return <ExclamationTriangleIcon className="h-5 w-5 text-red-600" />;
       default:
@@ -327,8 +389,12 @@ export default function NewMLModelPage() {
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="template">Choose Template</TabsTrigger>
-          <TabsTrigger value="configuration" disabled={!selectedTemplate}>Configuration</TabsTrigger>
-          <TabsTrigger value="deployment" disabled={!selectedTemplate || !modelConfig.name}>Deployment</TabsTrigger>
+          <TabsTrigger value="configuration" disabled={!selectedTemplate}>
+            Configuration
+          </TabsTrigger>
+          <TabsTrigger value="deployment" disabled={!selectedTemplate || !modelConfig.name}>
+            Deployment
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="template" className="space-y-6">
@@ -341,11 +407,13 @@ export default function NewMLModelPage() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {modelTemplates.map((template) => (
-                  <Card 
-                    key={template.id} 
+                {modelTemplates.map(template => (
+                  <Card
+                    key={template.id}
                     className={`cursor-pointer transition-all hover:shadow-lg ${
-                      selectedTemplate === template.id ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20' : ''
+                      selectedTemplate === template.id
+                        ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                        : ''
                     }`}
                     onClick={() => handleTemplateSelect(template.id)}
                   >
@@ -369,7 +437,7 @@ export default function NewMLModelPage() {
                         <p className="text-sm text-gray-600 dark:text-gray-300">
                           {template.description}
                         </p>
-                        
+
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
                             <span className="text-gray-500">Estimated Time:</span>
@@ -386,7 +454,7 @@ export default function NewMLModelPage() {
                             Key Features:
                           </div>
                           <div className="flex flex-wrap gap-1">
-                            {template.features.slice(0, 2).map((feature, _index) => (
+                            {template.features.slice(0, 2).map((feature, index) => (
                               <Badge key={index} variant="outline" className="text-xs">
                                 {feature}
                               </Badge>
@@ -400,9 +468,7 @@ export default function NewMLModelPage() {
                         </div>
 
                         <div className="pt-2 border-t">
-                          <p className="text-xs text-gray-500">
-                            {template.useCase}
-                          </p>
+                          <p className="text-xs text-gray-500">{template.useCase}</p>
                         </div>
                       </div>
                     </CardContent>
@@ -421,7 +487,7 @@ export default function NewMLModelPage() {
                 {(() => {
                   const template = modelTemplates.find(t => t.id === selectedTemplate);
                   if (!template) return null;
-                  
+
                   return (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
@@ -468,35 +534,42 @@ export default function NewMLModelPage() {
                     <Input
                       id="modelName"
                       value={modelConfig.name}
-                      onChange={(e) => setModelConfig(prev => ({ ...prev, name: e.target.value }))}
+                      onChange={e => setModelConfig(prev => ({ ...prev, name: e.target.value }))}
                       placeholder="Enter model name"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="modelDescription">Description</Label>
                     <Textarea
                       id="modelDescription"
                       value={modelConfig.description}
-                      onChange={(e) => setModelConfig(prev => ({ ...prev, description: e.target.value }))}
+                      onChange={e =>
+                        setModelConfig(prev => ({ ...prev, description: e.target.value }))
+                      }
                       placeholder="Describe your model's purpose and functionality"
                       rows={3}
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="modelVersion">Version</Label>
                     <Input
                       id="modelVersion"
                       value={modelConfig.version}
-                      onChange={(e) => setModelConfig(prev => ({ ...prev, version: e.target.value }))}
+                      onChange={e => setModelConfig(prev => ({ ...prev, version: e.target.value }))}
                       placeholder="1.0.0"
                     />
                   </div>
 
                   <div>
                     <Label htmlFor="environment">Deployment Environment</Label>
-                    <Select value={modelConfig.environment} onValueChange={(value) => setModelConfig(prev => ({ ...prev, environment: value }))}>
+                    <Select
+                      value={modelConfig.environment}
+                      onValueChange={value =>
+                        setModelConfig(prev => ({ ...prev, environment: value }))
+                      }
+                    >
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
@@ -514,17 +587,24 @@ export default function NewMLModelPage() {
                     <Switch
                       id="autoRetrain"
                       checked={modelConfig.autoRetrain}
-                      onCheckedChange={(checked) => setModelConfig(prev => ({ ...prev, autoRetrain: checked }))}
+                      onCheckedChange={checked =>
+                        setModelConfig(prev => ({ ...prev, autoRetrain: checked }))
+                      }
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="retrainThreshold">Retrain Threshold (%)</Label>
                     <Input
                       id="retrainThreshold"
                       type="number"
                       value={modelConfig.retrainThreshold}
-                      onChange={(e) => setModelConfig(prev => ({ ...prev, retrainThreshold: parseInt(e.target.value) }))}
+                      onChange={e =>
+                        setModelConfig(prev => ({
+                          ...prev,
+                          retrainThreshold: parseInt(e.target.value),
+                        }))
+                      }
                       min="0"
                       max="100"
                     />
@@ -532,25 +612,35 @@ export default function NewMLModelPage() {
                       Automatically retrain when accuracy drops below this threshold
                     </p>
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="maxPredictions">Max Predictions per Hour</Label>
                     <Input
                       id="maxPredictions"
                       type="number"
                       value={modelConfig.maxPredictions}
-                      onChange={(e) => setModelConfig(prev => ({ ...prev, maxPredictions: parseInt(e.target.value) }))}
+                      onChange={e =>
+                        setModelConfig(prev => ({
+                          ...prev,
+                          maxPredictions: parseInt(e.target.value),
+                        }))
+                      }
                       min="100"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="alertThreshold">Alert Threshold (%)</Label>
                     <Input
                       id="alertThreshold"
                       type="number"
                       value={modelConfig.alertThreshold}
-                      onChange={(e) => setModelConfig(prev => ({ ...prev, alertThreshold: parseInt(e.target.value) }))}
+                      onChange={e =>
+                        setModelConfig(prev => ({
+                          ...prev,
+                          alertThreshold: parseInt(e.target.value),
+                        }))
+                      }
                       min="0"
                       max="100"
                     />
@@ -562,8 +652,8 @@ export default function NewMLModelPage() {
               </div>
 
               <div className="mt-6 pt-6 border-t">
-                <Button 
-                  onClick={handleDeploy} 
+                <Button
+                  onClick={handleDeploy}
                   className="w-full"
                   disabled={!modelConfig.name || isDeploying}
                 >
@@ -580,7 +670,9 @@ export default function NewMLModelPage() {
             <CardHeader>
               <CardTitle>Model Deployment</CardTitle>
               <p className="text-sm text-gray-500">
-                {deploymentComplete ? 'Deployment completed successfully!' : 'Deploying your AI model...'}
+                {deploymentComplete
+                  ? 'Deployment completed successfully!'
+                  : 'Deploying your AI model...'}
               </p>
             </CardHeader>
             <CardContent>
@@ -613,9 +705,7 @@ export default function NewMLModelPage() {
                 <div className="space-y-6">
                   {deploymentSteps.map((step, index) => (
                     <div key={step.id} className="flex items-center gap-4">
-                      <div className="flex-shrink-0">
-                        {getStepIcon(step.status)}
-                      </div>
+                      <div className="flex-shrink-0">{getStepIcon(step.status)}</div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <h4 className="font-medium">{step.title}</h4>

@@ -26,10 +26,7 @@ import {
   PhoneIcon,
 } from '@heroicons/react/24/outline';
 import {
-  Card,
-  CardContent,
   Button,
-  Badge,
   Select,
   SelectContent,
   SelectItem,
@@ -43,6 +40,7 @@ import {
   TableRow,
 } from '@/components/ui';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';

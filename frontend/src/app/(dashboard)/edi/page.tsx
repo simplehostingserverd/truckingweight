@@ -35,7 +35,6 @@ import {
 } from '@heroicons/react/24/outline';
 import {
   Button,
-  Badge,
   Select,
   SelectContent,
   SelectItem,
@@ -43,6 +42,7 @@ import {
   SelectValue,
 } from '@/components/ui';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';

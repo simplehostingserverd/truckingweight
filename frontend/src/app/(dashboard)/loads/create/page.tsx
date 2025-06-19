@@ -22,7 +22,7 @@ import { useEffect, useState } from 'react';
 import { Vehicle, Driver, RouteDetails } from '@/types/fleet';
 
 export default function CreateLoad() {
-  const [_description, setdescription] = useState('');
+  const [description, setDescription] = useState('');
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [weight, setWeight] = useState('');

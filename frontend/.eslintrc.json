@@ -13,7 +13,7 @@
 //
 
 {
-  "extends": ["next/core-web-vitals", "eslint:recommended"],
+  "extends": ["next/core-web-vitals", "eslint:recommended", "@typescript-eslint/recommended"],
   "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -28,6 +28,7 @@
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-duplicate-imports": "error",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "no-console": ["warn", { "allow": ["warn", "error"] }],
@@ -46,7 +47,9 @@
         "exports": "always-multiline",
         "functions": "never"
       }
-    ]
+    ],
+    "no-redeclare": "error",
+    "no-undef": "error"
   },
   "env": {
     "browser": true,
