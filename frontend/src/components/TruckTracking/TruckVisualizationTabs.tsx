@@ -44,6 +44,17 @@ export default function TruckVisualizationTabs({
 }: TruckVisualizationTabsProps) {
   const [activeTab, setActiveTab] = useState('mapbox');
 
+  // Debug information
+  React.useEffect(() => {
+    console.log('TruckVisualizationTabs Debug Info:', {
+      routeLength: route?.length,
+      hasCurrentPosition: !!currentPosition,
+      hasMapboxToken: !!mapboxToken,
+      hasCesiumToken: !!cesiumToken,
+      cesiumLoaded: typeof window !== 'undefined' ? typeof window.Cesium !== 'undefined' : false,
+    });
+  }, [route, currentPosition, mapboxToken, cesiumToken]);
+
   return (
     <div className="space-y-4">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -68,31 +79,70 @@ export default function TruckVisualizationTabs({
 
         <TabsContent value="mapbox" className="mt-0">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <MapboxTruckVisualization
-              route={route}
-              currentPosition={currentPosition}
-              mapboxToken={mapboxToken}
-            />
+            {route && route.length >= 2 ? (
+              <MapboxTruckVisualization
+                route={route}
+                currentPosition={currentPosition}
+                mapboxToken={mapboxToken}
+              />
+            ) : (
+              <div className="flex items-center justify-center h-[600px] bg-gray-100 dark:bg-gray-800">
+                <div className="text-center">
+                  <p className="text-lg font-semibold text-gray-600 dark:text-gray-400">
+                    No route data available
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
+                    Please select a driver with active route data
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </TabsContent>
 
         <TabsContent value="cesium" className="mt-0">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <CesiumTruckVisualization
-              route={route}
-              currentPosition={currentPosition}
-              cesiumToken={cesiumToken}
-            />
+            {route && route.length >= 2 ? (
+              <CesiumTruckVisualization
+                route={route}
+                currentPosition={currentPosition}
+                cesiumToken={cesiumToken}
+              />
+            ) : (
+              <div className="flex items-center justify-center h-[600px] bg-gray-100 dark:bg-gray-800">
+                <div className="text-center">
+                  <p className="text-lg font-semibold text-gray-600 dark:text-gray-400">
+                    No route data available
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
+                    Please select a driver with active route data
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </TabsContent>
 
         <TabsContent value="deckgl" className="mt-0">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-            <DeckGLTruckVisualization
-              route={route}
-              currentPosition={currentPosition}
-              mapboxToken={mapboxToken}
-            />
+            {route && route.length >= 2 ? (
+              <DeckGLTruckVisualization
+                route={route}
+                currentPosition={currentPosition}
+                mapboxToken={mapboxToken}
+              />
+            ) : (
+              <div className="flex items-center justify-center h-[600px] bg-gray-100 dark:bg-gray-800">
+                <div className="text-center">
+                  <p className="text-lg font-semibold text-gray-600 dark:text-gray-400">
+                    No route data available
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
+                    Please select a driver with active route data
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </TabsContent>
       </Tabs>

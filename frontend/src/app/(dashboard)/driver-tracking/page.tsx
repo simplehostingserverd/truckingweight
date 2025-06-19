@@ -216,6 +216,24 @@ export default function DriverTrackingPage() {
         </div>
       </div>
 
+      {/* Debug Information */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-md mb-4">
+          <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">Debug Info</h3>
+          <div className="text-xs text-blue-700 dark:text-blue-300 space-y-1">
+            <p>Mapbox Token: {process.env.NEXT_PUBLIC_MAPBOX_TOKEN ? 'Available' : 'Missing'}</p>
+            <p>Cesium Token: {process.env.NEXT_PUBLIC_CESIUM_TOKEN ? 'Available' : 'Missing'}</p>
+            <p>Selected Driver: {selectedDriver || 'None'}</p>
+            <p>Active Driver Location: {activeDriverLocation ? 'Available' : 'None'}</p>
+            <p>Route Points: {activeDriverLocation?.route?.length || 0}</p>
+            <p>
+              Cesium Loaded:{' '}
+              {typeof window !== 'undefined' && typeof window.Cesium !== 'undefined' ? 'Yes' : 'No'}
+            </p>
+          </div>
+        </div>
+      )}
+
       {loading && !activeDriverLocation ? (
         <div className="flex justify-center items-center h-64">
           <p className="text-lg">Loading driver location data...</p>

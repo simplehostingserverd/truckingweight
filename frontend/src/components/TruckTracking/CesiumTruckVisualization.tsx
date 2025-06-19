@@ -53,16 +53,30 @@ export default function CesiumTruckVisualization({
   useEffect(() => {
     if (!cesiumContainer.current || !route || route.length < 2) return;
 
+    let timeoutId: NodeJS.Timeout;
+    let retryCount = 0;
+    const maxRetries = 50; // 5 seconds total wait time
+
     // Wait for Cesium to be loaded
     const initCesiumViewer = () => {
       if (typeof window.Cesium === 'undefined') {
-        setTimeout(initCesiumViewer, 100);
+        retryCount++;
+        if (retryCount >= maxRetries) {
+          setError(
+            'Failed to load Cesium library. Please check your internet connection and refresh the page.'
+          );
+          setLoading(false);
+          return;
+        }
+        timeoutId = setTimeout(initCesiumViewer, 100);
         return;
       }
 
       try {
         // Set Cesium ion access token
-        window.Cesium.Ion.defaultAccessToken = cesiumToken;
+        if (cesiumToken) {
+          window.Cesium.Ion.defaultAccessToken = cesiumToken;
+        }
 
         // Create Cesium viewer with basic options first
         const cesiumViewer = new window.Cesium.Viewer(cesiumContainer.current, {
@@ -85,7 +99,8 @@ export default function CesiumTruckVisualization({
             const worldTerrain = await window.Cesium.createWorldTerrainAsync();
             cesiumViewer.terrainProvider = worldTerrain;
           } catch (error) {
-            console.error('Failed to load world terrain:', error);
+            console.warn('Failed to load world terrain, using default:', error);
+            // Continue with default terrain provider
           }
         })();
 
@@ -118,6 +133,9 @@ export default function CesiumTruckVisualization({
 
     // Cleanup
     return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
       if (viewer.current) {
         viewer.current.destroy();
         viewer.current = null;
@@ -224,13 +242,21 @@ export default function CesiumTruckVisualization({
         window.Cesium.Cartesian3.fromDegrees(truckPos.lng, truckPos.lat, 100),
         new window.Cesium.HeadingPitchRoll(heading, 0, 0)
       ),
-      // Use a billboard with truck image
+      // Use a billboard with truck image (with fallback)
       billboard: {
         image: '/images/truck_PNG16270.png',
         width: 64,
         height: 64,
         scale: 0.5,
         verticalOrigin: window.Cesium.VerticalOrigin.BOTTOM,
+      },
+      // Fallback point if image fails to load
+      point: {
+        pixelSize: 20,
+        color: window.Cesium.Color.BLUE,
+        outlineColor: window.Cesium.Color.WHITE,
+        outlineWidth: 2,
+        show: false, // Only show if billboard fails
       },
       label: {
         text: 'Truck',
