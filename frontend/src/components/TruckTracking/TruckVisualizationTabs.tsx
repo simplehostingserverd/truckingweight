@@ -34,6 +34,7 @@ interface TruckVisualizationTabsProps {
   currentPosition?: RoutePoint;
   mapboxToken: string;
   cesiumToken: string;
+  geofenceZones?: unknown[]; // Will be properly typed when we implement geofence visualization
 }
 
 export default function TruckVisualizationTabs({
@@ -41,6 +42,7 @@ export default function TruckVisualizationTabs({
   currentPosition,
   mapboxToken,
   cesiumToken,
+  geofenceZones = [],
 }: TruckVisualizationTabsProps) {
   const [activeTab, setActiveTab] = useState('mapbox');
 
