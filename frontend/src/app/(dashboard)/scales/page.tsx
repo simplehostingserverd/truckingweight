@@ -54,25 +54,21 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Scale } from '@/types/fleet';
 
-import { PlusIcon, ArrowPathIcon, ScaleIcon } from '@heroicons/react/24/outline';
 export default function ScalesPage() {
   const handleDelete = async (id: number) => {
-    if (!confirm(`Are you sure you want to delete this scale?`)) {
+    if (!window.confirm(`Are you sure you want to delete this scale?`)) {
       return;
     }
 
     try {
-      const { error } = await supabase
-        .from('scales')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('scales').delete().eq('id', id);
 
       if (error) {
         throw error;
       }
 
       // Refresh the data
-      mutate();
+      fetchScales();
 
       // Show success message
       console.log('scale deleted successfully');
@@ -161,7 +157,13 @@ export default function ScalesPage() {
       setFilteredScales(data || []);
     } catch (err: unknown) {
       console.error('Error fetching scales:', err);
-      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to load scales');
+      setError(
+        err instanceof Error
+          ? err instanceof Error
+            ? err.message
+            : String(err)
+          : 'Failed to load scales'
+      );
     } finally {
       setIsLoading(false);
     }

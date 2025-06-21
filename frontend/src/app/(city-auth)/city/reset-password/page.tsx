@@ -44,7 +44,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // Custom theme
 import cityTheme from '@/theme/cityTheme';
 
-import { CheckCircleIcon } from '@heroicons/react/24/outline';
 export default function ResetPassword() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -105,7 +104,13 @@ export default function ResetPassword() {
         router.push(createSafeUrl('/city/login'));
       }, 3000);
     } catch (err: unknown) {
-      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to reset password');
+      setError(
+        err instanceof Error
+          ? err instanceof Error
+            ? err.message
+            : String(err)
+          : 'Failed to reset password'
+      );
       console.error('Password reset error:', err);
     } finally {
       setIsLoading(false);

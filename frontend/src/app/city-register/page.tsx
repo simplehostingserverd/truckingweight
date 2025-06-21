@@ -46,7 +46,6 @@ import WarningIcon from '@mui/icons-material/Warning';
 // Custom theme
 import cityTheme from '@/theme/cityTheme';
 
-import { CheckCircleIcon } from '@heroicons/react/24/outline';
 export default function CityRegister() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -144,7 +143,10 @@ export default function CityRegister() {
       // Show success message without redirect - user needs to wait for approval
       setSuccess(true);
     } catch (err: unknown) {
-      setError((err instanceof Error ? err.message : String(err)) || 'An error occurred during registration');
+      setError(
+        (err instanceof Error ? err.message : String(err)) ||
+          'An error occurred during registration'
+      );
       console.error('City registration error:', err);
     } finally {
       setIsLoading(false);
