@@ -25,11 +25,12 @@ const GEOCODING_API = `${MAPBOX_BASE_URL}/geocoding/v5/mapbox.places`;
 
 // Mapbox routing profiles
 export enum MapboxProfile {
-  DRIVING = 'driving',
-  DRIVING_TRAFFIC = 'driving-traffic',
-  WALKING = 'walking',
-  CYCLING = 'cycling',
-  TRUCKING = 'driving-traffic', // Use driving-traffic for trucking as it's the most appropriate
+  DRIVING = "DRIVING",
+  DRIVING_TRAFFIC = "DRIVING_TRAFFIC",
+  WALKING = "WALKING",
+  CYCLING = "CYCLING",
+  TRUCKING = "TRUCKING",
+  // Use driving-traffic for trucking as it's the most appropriate = "// Use driving-traffic for trucking as it's the most appropriate"
 }
 
 // Waypoint interface

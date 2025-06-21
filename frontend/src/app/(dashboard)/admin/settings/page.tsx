@@ -124,7 +124,7 @@ export default function AdminSettingsPage() {
       });
     } catch (err: unknown) {
       console.error('Error fetching settings:', err);
-      setError(err.message || 'Failed to load settings');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to load settings');
     } finally {
       setIsLoading(false);
     }
@@ -154,7 +154,7 @@ export default function AdminSettingsPage() {
       }, 3000);
     } catch (err: unknown) {
       console.error('Error saving settings:', err);
-      setError(err.message || 'Failed to save settings');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to save settings');
     } finally {
       setIsSaving(false);
     }
@@ -183,7 +183,7 @@ export default function AdminSettingsPage() {
       }, 3000);
     } catch (err: unknown) {
       console.error('Error triggering backup:', err);
-      setError(err.message || 'Failed to trigger backup');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to trigger backup');
     } finally {
       setIsSaving(false);
     }

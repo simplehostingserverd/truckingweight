@@ -54,7 +54,7 @@ export default function CreateDriver() {
     if (email) {
       const emailValidation = validateEmail(email);
       if (!emailValidation.isValid || emailValidation.isDisposable) {
-        setError(emailValidation.message);
+        setError((emailValidation instanceof Error ? emailValidation.message : String(emailValidation)));
         setIsLoading(false);
         return;
       }
@@ -110,7 +110,7 @@ export default function CreateDriver() {
         router.refresh();
       }, 1500);
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred while creating the driver');
+      setError((err instanceof Error ? err.message : String(err)) || 'An error occurred while creating the driver');
       console.error('Create driver error:', err);
     } finally {
       setIsLoading(false);

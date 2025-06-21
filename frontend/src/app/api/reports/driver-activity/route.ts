@@ -148,7 +148,7 @@ export async function GET(request: NextRequest) {
 
       // Get the first vehicle if any exist
       if (vehiclesData && vehiclesData.length > 0) {
-        vehicleData = vehiclesData[0] as any;
+        vehicleData = vehiclesData[0] as unknown;
       }
     } catch (error) {
       console.warn('Error fetching vehicle data:', error);

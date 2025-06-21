@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
     if (!response.ok) {
       const errorData = await response.json();
       return NextResponse.json(
-        { success: false, error: errorData.message || 'Failed to fetch hardware options' },
+        { success: false, error: (errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch hardware options' },
         { status: response.status }
       );
     }
@@ -63,7 +63,7 @@ export async function GET(req: NextRequest) {
   } catch (error: unknown) {
     console.error('Error fetching hardware options:', error);
     return NextResponse.json(
-      { success: false, error: error.message || 'Internal server error' },
+      { success: false, error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' },
       { status: 500 }
     );
   }

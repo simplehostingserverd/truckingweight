@@ -103,7 +103,7 @@ export default function WeightDetail({ params }: { params: Promise<{ id: string 
       router.push('/weights');
     } catch (err: unknown) {
       console.error('Error deleting weight:', err);
-      setError(err.message || 'Failed to delete weight');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to delete weight');
       setIsDeleting(false);
       setShowDeleteConfirm(false);
     }

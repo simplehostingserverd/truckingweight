@@ -129,7 +129,7 @@ export default function EditVehicle({ params }: { params: Promise<{ id: string }
         router.refresh();
       }, 1500);
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred while updating the vehicle');
+      setError((err instanceof Error ? err.message : String(err)) || 'An error occurred while updating the vehicle');
       console.error('Update vehicle error:', err);
     } finally {
       setIsSaving(false);

@@ -176,7 +176,7 @@ export default function CompaniesPage() {
       setFilteredCompanies(companiesWithCounts);
     } catch (err: unknown) {
       console.error('Error fetching companies:', err);
-      setError(err.message || 'Failed to load companies');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to load companies');
     } finally {
       setIsLoading(false);
     }
@@ -253,7 +253,7 @@ export default function CompaniesPage() {
       fetchCompanies();
     } catch (err: unknown) {
       console.error('Error creating company:', err);
-      setError(err.message || 'Failed to create company');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to create company');
     } finally {
       setIsLoading(false);
     }
@@ -294,7 +294,7 @@ export default function CompaniesPage() {
       fetchCompanies();
     } catch (err: unknown) {
       console.error('Error updating company:', err);
-      setError(err.message || 'Failed to update company');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to update company');
     } finally {
       setIsLoading(false);
     }
@@ -337,7 +337,7 @@ export default function CompaniesPage() {
       fetchCompanies();
     } catch (err: unknown) {
       console.error('Error deleting company:', err);
-      setError(err.message || 'Failed to delete company');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to delete company');
     } finally {
       setIsLoading(false);
     }

@@ -95,7 +95,7 @@ export default function CreateLoad() {
         setDrivers(driversData || []);
       } catch (err: unknown) {
         // Handle data fetching errors gracefully
-        const errorMessage = err instanceof Error ? err.message : 'Failed to load data';
+        const errorMessage = err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to load data';
         setError(errorMessage);
       } finally {
         setIsLoadingData(false);
@@ -164,7 +164,7 @@ export default function CreateLoad() {
       });
     } catch (err: unknown) {
       // Handle route calculation errors with a user-friendly message
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      const errorMessage = err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Unknown error';
       setError(`Failed to calculate route: ${errorMessage}`);
     } finally {
       setIsCalculatingRoute(false);
@@ -230,7 +230,7 @@ export default function CreateLoad() {
       router.push('/loads');
     } catch (err: unknown) {
       // Handle load creation errors with a user-friendly message
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      const errorMessage = err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Unknown error';
       setError(`An error occurred while creating the load: ${errorMessage}`);
     } finally {
       setIsLoading(false);

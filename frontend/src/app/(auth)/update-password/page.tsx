@@ -75,7 +75,7 @@ export default function UpdatePassword() {
       }, 2000);
     } catch (err: unknown) {
       setError(
-        err instanceof Error ? err.message : 'An error occurred while updating your password'
+        err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'An error occurred while updating your password'
       );
       console.error('Update password error:', err);
     } finally {

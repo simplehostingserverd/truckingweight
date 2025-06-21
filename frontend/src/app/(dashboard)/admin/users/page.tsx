@@ -157,7 +157,7 @@ export default function UsersPage() {
       setFilteredUsers(data || []);
     } catch (err: unknown) {
       console.error('Error fetching users:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load users');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to load users');
     } finally {
       setIsLoading(false);
     }
@@ -216,7 +216,7 @@ export default function UsersPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to create user');
+        throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to create user');
       }
 
       // Reset form and close dialog
@@ -233,7 +233,7 @@ export default function UsersPage() {
       fetchUsers();
     } catch (err: unknown) {
       console.error('Error creating user:', err);
-      setError(err instanceof Error ? err.message : 'Failed to create user');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to create user');
     } finally {
       setIsLoading(false);
     }
@@ -268,7 +268,7 @@ export default function UsersPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update user');
+        throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to update user');
       }
 
       // Reset and close dialog
@@ -279,7 +279,7 @@ export default function UsersPage() {
       fetchUsers();
     } catch (err: unknown) {
       console.error('Error updating user:', err);
-      setError(err instanceof Error ? err.message : 'Failed to update user');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to update user');
     } finally {
       setIsLoading(false);
     }
@@ -309,7 +309,7 @@ export default function UsersPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to delete user');
+        throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to delete user');
       }
 
       // Reset and close dialog
@@ -320,7 +320,7 @@ export default function UsersPage() {
       fetchUsers();
     } catch (err: unknown) {
       console.error('Error deleting user:', err);
-      setError(err instanceof Error ? err.message : 'Failed to delete user');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to delete user');
     } finally {
       setIsLoading(false);
     }

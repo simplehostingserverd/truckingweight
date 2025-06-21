@@ -103,7 +103,7 @@ export default function CityWeighingPage() {
       }
     } catch (err: unknown) {
       console.error('Error fetching scales:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load scales');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to load scales');
 
       // Use dummy data for demo
       const dummyScales = [
@@ -194,7 +194,7 @@ export default function CityWeighingPage() {
       resetForm();
     } catch (err: unknown) {
       console.error('Error creating weigh ticket:', err);
-      setError(err instanceof Error ? err.message : 'Failed to create weigh ticket');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to create weigh ticket');
 
       // For demo purposes, create a dummy ticket
       if (process.env.NODE_ENV !== 'production') {

@@ -143,7 +143,7 @@ export default function CityRegister() {
       // Show success message without redirect - user needs to wait for approval
       setSuccess(true);
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred during registration');
+      setError((err instanceof Error ? err.message : String(err)) || 'An error occurred during registration');
       console.error('City registration error:', err);
     } finally {
       setIsLoading(false);

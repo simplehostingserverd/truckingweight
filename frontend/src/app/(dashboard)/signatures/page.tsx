@@ -32,7 +32,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 
 export default function SignaturesPage() {
-  const [signatures, setSignatures] = useState<any[]>([]);
+  const [signatures, setSignatures] = useState<unknown[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -121,7 +121,7 @@ export default function SignaturesPage() {
       setSignatures(data || []);
     } catch (err: unknown) {
       console.error('Error fetching signatures:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load signatures');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to load signatures');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
@@ -308,7 +308,7 @@ export default function SignaturesPage() {
       fetchSignatures();
     } catch (err: unknown) {
       console.error('Error saving signature:', err);
-      setError(err.message || 'Failed to save signature');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to save signature');
     } finally {
       setIsLoading(false);
     }
@@ -333,7 +333,7 @@ export default function SignaturesPage() {
       setSuccess('Signature deleted successfully');
     } catch (err: unknown) {
       console.error('Error deleting signature:', err);
-      setError(err.message || 'Failed to delete signature');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to delete signature');
     }
   };
 

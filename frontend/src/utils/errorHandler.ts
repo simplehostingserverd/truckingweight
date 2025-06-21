@@ -19,12 +19,12 @@ import logger from '@/utils/logger';
 
 // Error types
 export enum ErrorType {
-  NETWORK = 'network',
-  AUTH = 'auth',
-  VALIDATION = 'validation',
-  SERVER = 'server',
-  DATABASE = 'database',
-  UNKNOWN = 'unknown',
+  NETWORK = "NETWORK",
+  AUTH = "AUTH",
+  VALIDATION = "VALIDATION",
+  SERVER = "SERVER",
+  DATABASE = "DATABASE",
+  UNKNOWN = "UNKNOWN"
 }
 
 // Error interface

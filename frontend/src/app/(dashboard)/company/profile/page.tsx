@@ -142,7 +142,7 @@ export default function CompanyProfilePage() {
       });
     } catch (err: unknown) {
       console.error('Error fetching company profile:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load company profile');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to load company profile');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
@@ -229,7 +229,7 @@ export default function CompanyProfilePage() {
       setSuccess('Logo uploaded successfully');
     } catch (err: unknown) {
       console.error('Error uploading logo:', err);
-      setError(err instanceof Error ? err.message : 'Failed to upload logo');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to upload logo');
     } finally {
       setLogoUploading(false);
     }
@@ -276,7 +276,7 @@ export default function CompanyProfilePage() {
       setIsEditing(false);
     } catch (err: unknown) {
       console.error('Error updating company profile:', err);
-      setError(err instanceof Error ? err.message : 'Failed to update company profile');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to update company profile');
     }
   };
 

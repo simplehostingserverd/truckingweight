@@ -109,7 +109,7 @@ export default function ServiceWorkerRegistration({
             if (registration) {
               logger.info(
                 'Service Worker registered',
-                { scope: (registration as any).scope },
+                { scope: (registration as unknown).scope },
                 'ServiceWorker'
               );
             }

@@ -75,7 +75,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     if (!response.ok) {
       const errorData = await response.json();
       return NextResponse.json(
-        { success: false, error: errorData.message || 'Failed to configure hardware' },
+        { success: false, error: (errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to configure hardware' },
         { status: response.status }
       );
     }
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   } catch (error: unknown) {
     console.error('Error configuring hardware:', error);
     return NextResponse.json(
-      { success: false, error: error.message || 'Internal server error' },
+      { success: false, error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' },
       { status: 500 }
     );
   }

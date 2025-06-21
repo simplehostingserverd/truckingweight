@@ -75,7 +75,7 @@ export default function ForgotPassword() {
       // Show success message
       setSuccess(true);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Failed to send password reset email');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to send password reset email');
       console.error('Password reset error:', err);
     } finally {
       setIsLoading(false);

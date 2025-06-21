@@ -104,7 +104,7 @@ export default function ResetPassword() {
         router.push(createSafeUrl('/city/login'));
       }, 3000);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Failed to reset password');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to reset password');
       console.error('Password reset error:', err);
     } finally {
       setIsLoading(false);

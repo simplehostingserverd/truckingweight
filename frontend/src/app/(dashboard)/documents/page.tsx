@@ -146,7 +146,7 @@ export default function DocumentsPage() {
       setDocuments(data || []);
     } catch (err: unknown) {
       console.error('Error fetching documents:', err);
-      setError(err.message || 'Failed to load documents');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to load documents');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
@@ -261,7 +261,7 @@ export default function DocumentsPage() {
       fetchDocuments();
     } catch (err: unknown) {
       console.error('Error uploading document:', err);
-      setError(err.message || 'Failed to upload document');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to upload document');
     } finally {
       setIsUploading(false);
     }
@@ -283,7 +283,7 @@ export default function DocumentsPage() {
       setSuccess('Document deleted successfully');
     } catch (err: unknown) {
       console.error('Error deleting document:', err);
-      setError(err.message || 'Failed to delete document');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to delete document');
     }
   };
 

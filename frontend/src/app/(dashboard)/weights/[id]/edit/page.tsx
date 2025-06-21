@@ -26,8 +26,8 @@ export default function EditWeight({ params }: { params: Promise<{ id: string }>
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [status, setStatus] = useState('');
-  const [vehicles, setVehicles] = useState<any[]>([]);
-  const [drivers, setDrivers] = useState<any[]>([]);
+  const [vehicles, setVehicles] = useState<unknown[]>([]);
+  const [drivers, setDrivers] = useState<unknown[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
@@ -167,7 +167,7 @@ export default function EditWeight({ params }: { params: Promise<{ id: string }>
       // Redirect to weight detail
       router.push(`/weights/${id}`);
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred while updating the weight record');
+      setError((err instanceof Error ? err.message : String(err)) || 'An error occurred while updating the weight record');
       console.error('Update weight error:', err);
     } finally {
       setIsLoading(false);

@@ -107,7 +107,7 @@ export default function CreateVehicle() {
         router.refresh();
       }, 1500);
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred while creating the vehicle');
+      setError((err instanceof Error ? err.message : String(err)) || 'An error occurred while creating the vehicle');
       console.error('Create vehicle error:', err);
     } finally {
       setIsLoading(false);

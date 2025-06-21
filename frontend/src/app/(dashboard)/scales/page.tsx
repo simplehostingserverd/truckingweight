@@ -134,7 +134,7 @@ export default function ScalesPage() {
       setFilteredScales(data || []);
     } catch (err: unknown) {
       console.error('Error fetching scales:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load scales');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to load scales');
     } finally {
       setIsLoading(false);
     }

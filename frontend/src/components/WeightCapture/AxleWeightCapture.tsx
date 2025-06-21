@@ -73,7 +73,7 @@ export default function AxleWeightCapture({
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to fetch vehicle details');
+          throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch vehicle details');
         }
 
         const vehicleData = await response.json();
@@ -91,7 +91,7 @@ export default function AxleWeightCapture({
 
           if (!axleConfigResponse.ok) {
             const errorData = await axleConfigResponse.json();
-            throw new Error(errorData.message || 'Failed to fetch axle configuration');
+            throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch axle configuration');
           }
 
           const axleConfigData = await axleConfigResponse.json();
@@ -106,7 +106,7 @@ export default function AxleWeightCapture({
         }
       } catch (error: unknown) {
         console.error('Error fetching axle configuration:', error);
-        setError(error.message);
+        setError((error instanceof Error ? error.message : String(error)));
 
         // Default to 5 axles if there's an error
         setAxleConfiguration({

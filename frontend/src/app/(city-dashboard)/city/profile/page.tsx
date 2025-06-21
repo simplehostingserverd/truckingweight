@@ -139,7 +139,7 @@ const CityProfilePageClient = () => {
       });
     } catch (err: unknown) {
       console.error('Error fetching city profile:', err);
-      setError(err.message || 'Failed to load city profile');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to load city profile');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
@@ -227,7 +227,7 @@ const CityProfilePageClient = () => {
       setSuccess('Logo uploaded successfully');
     } catch (err: unknown) {
       console.error('Error uploading logo:', err);
-      setError(err.message || 'Failed to upload logo');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to upload logo');
     } finally {
       setLogoUploading(false);
     }
@@ -272,7 +272,7 @@ const CityProfilePageClient = () => {
       setIsEditing(false);
     } catch (err: unknown) {
       console.error('Error updating city profile:', err);
-      setError(err.message || 'Failed to update city profile');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to update city profile');
     }
   };
 

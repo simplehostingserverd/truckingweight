@@ -23,7 +23,7 @@ interface LoadStatusChartProps {
 
 function LoadStatusChart({ companyId }: LoadStatusChartProps) {
   const supabase = createClient();
-  const [loadData, setLoadData] = useState<any[]>([]);
+  const [loadData, setLoadData] = useState<unknown[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -65,7 +65,7 @@ function LoadStatusChart({ companyId }: LoadStatusChartProps) {
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to fetch load status data');
+          throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch load status data');
         }
 
         const loadData = await response.json();
@@ -74,7 +74,7 @@ function LoadStatusChart({ companyId }: LoadStatusChartProps) {
         setLoadData(loadData);
       } catch (error: unknown) {
         console.error('Error fetching load status data:', error);
-        setError(error.message);
+        setError((error instanceof Error ? error.message : String(error)));
       } finally {
         setIsLoading(false);
       }

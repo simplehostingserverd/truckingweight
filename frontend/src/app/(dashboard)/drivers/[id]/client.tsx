@@ -96,7 +96,7 @@ export default function DriverDetailsClient({ id, initialData }: DriverDetailsPr
       setDriver(driverData);
     } catch (err: unknown) {
       console.error('Error fetching driver data:', err);
-      setError(err.message || 'Failed to load driver data');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to load driver data');
     } finally {
       setIsLoading(false);
     }
@@ -154,7 +154,7 @@ export default function DriverDetailsClient({ id, initialData }: DriverDetailsPr
       fetchDriverData();
     } catch (err: unknown) {
       console.error('Error uploading driver photo:', err);
-      setError(err.message || 'Failed to upload driver photo');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to upload driver photo');
     } finally {
       setPhotoUploading(false);
     }

@@ -128,7 +128,7 @@ export default function EditDriver({ params }: PageProps) {
         router.refresh();
       }, 1500);
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred while updating the driver');
+      setError((err instanceof Error ? err.message : String(err)) || 'An error occurred while updating the driver');
       console.error('Update driver error:', err);
     } finally {
       setIsSaving(false);

@@ -151,8 +151,8 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
         };
 
         // Set the mock session and user
-        setSession(mockSession as any);
-        setUser(mockSession.user as any);
+        setSession(mockSession as unknown);
+        setUser(mockSession.user as unknown);
 
         // Redirect to dashboard
         router.push('/dashboard');

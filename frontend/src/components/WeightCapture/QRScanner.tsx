@@ -52,7 +52,7 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
 
   const handleError = (error: Error) => {
     console.error('QR Scanner error:', error);
-    setError(`Scanner error: ${error.message}`);
+    setError(`Scanner error: ${(error instanceof Error ? error.message : String(error))}`);
     setIsScanning(false);
   };
 
@@ -82,7 +82,7 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to validate QR code');
+        throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to validate QR code');
       }
 
       const data = await response.json();
@@ -98,10 +98,10 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
       onScaleSelect(data.scale.id, data.scale.name);
     } catch (error: unknown) {
       console.error('Error validating QR code:', error);
-      setError(error.message);
+      setError((error instanceof Error ? error.message : String(error)));
       setValidationResult({
         success: false,
-        message: `Error: ${error.message}`,
+        message: `Error: ${(error instanceof Error ? error.message : String(error))}`,
       });
     } finally {
       setIsValidating(false);
@@ -194,7 +194,7 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
                 <ExclamationCircleIcon className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
               )}
               <div>
-                <p className="font-medium">{validationResult.message}</p>
+                <p className="font-medium">{(validationResult instanceof Error ? validationResult.message : String(validationResult))}</p>
                 {validationResult.success && (
                   <p className="mt-1 text-sm">Scale ID: {validationResult.scaleId}</p>
                 )}

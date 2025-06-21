@@ -381,7 +381,7 @@ describe('Maintenance Management Tests', () => {
 // Integration test for work order creation flow
 describe('Work Order Creation Integration', () => {
   it('should create a new work order successfully', async () => {
-    (global.fetch as jest.Mock).mockImplementation((url: string, options: any) => {
+    (global.fetch as jest.Mock).mockImplementation((url: string, options: unknown) => {
       if (options?.method === 'POST' && url.includes('/api/maintenance/work-orders')) {
         return Promise.resolve({
           ok: true,

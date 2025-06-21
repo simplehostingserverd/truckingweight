@@ -180,7 +180,7 @@ const TollDashboard: React.FC = () => {
                     </Typography>
                     <Chip
                       label={status === 'not_configured' ? 'Not Setup' : status}
-                      color={getProviderStatusColor(status) as any}
+                      color={getProviderStatusColor(status) as unknown}
                       size="small"
                     />
                   </Box>

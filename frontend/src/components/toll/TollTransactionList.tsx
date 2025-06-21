@@ -311,7 +311,7 @@ const TollTransactionList: React.FC = () => {
                     <TableCell>
                       <Chip
                         label={transaction.transaction_status}
-                        color={getStatusColor(transaction.transaction_status) as any}
+                        color={getStatusColor(transaction.transaction_status) as unknown}
                         size="small"
                       />
                     </TableCell>

@@ -130,7 +130,7 @@ export default function LoadDetail({ params }: { params: Promise<{ id: string }>
       router.push('/loads');
     } catch (err: unknown) {
       console.error('Error deleting load:', err);
-      setError(err.message || 'Failed to delete load');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to delete load');
       setIsDeleting(false);
       setShowDeleteConfirm(false);
     }

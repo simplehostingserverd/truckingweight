@@ -77,7 +77,7 @@ export default function WeightReader({
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to get weight reading');
+        throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to get weight reading');
       }
 
       const data = await response.json();
@@ -96,7 +96,7 @@ export default function WeightReader({
       }
     } catch (error: unknown) {
       console.error('Error getting weight reading:', error);
-      setError(error.message);
+      setError((error instanceof Error ? error.message : String(error)));
     } finally {
       setLoading(false);
     }

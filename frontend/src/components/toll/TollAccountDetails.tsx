@@ -217,7 +217,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({ open, onClose, 
                       secondary={
                         <Chip
                           label={account.account_status}
-                          color={getStatusColor(account.account_status) as any}
+                          color={getStatusColor(account.account_status) as unknown}
                           size="small"
                         />
                       }
@@ -304,7 +304,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({ open, onClose, 
                     <Box textAlign="center">
                       <Chip
                         label={account.sync_status}
-                        color={getStatusColor(account.sync_status) as any}
+                        color={getStatusColor(account.sync_status) as unknown}
                         sx={{ mb: 1 }}
                       />
                       <Typography variant="body2" color="text.secondary">
@@ -376,7 +376,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({ open, onClose, 
                             <TableCell>
                               <Chip
                                 label={transponder.status}
-                                color={getStatusColor(transponder.status) as any}
+                                color={getStatusColor(transponder.status) as unknown}
                                 size="small"
                               />
                             </TableCell>
@@ -428,7 +428,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({ open, onClose, 
                                 {getStatusIcon(sync.sync_status)}
                                 <Chip
                                   label={sync.sync_status}
-                                  color={getStatusColor(sync.sync_status) as any}
+                                  color={getStatusColor(sync.sync_status) as unknown}
                                   size="small"
                                 />
                               </Box>

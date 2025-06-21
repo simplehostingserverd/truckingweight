@@ -65,7 +65,7 @@ function DashboardStats({ initialUserName, companyId }: DashboardStatsProps) {
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to fetch dashboard stats');
+          throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch dashboard stats');
         }
 
         const statsData = await response.json();
@@ -158,7 +158,7 @@ function DashboardStats({ initialUserName, companyId }: DashboardStatsProps) {
         setStats(formattedStats);
       } catch (error: unknown) {
         console.error('Error fetching dashboard stats:', error);
-        setError(error.message);
+        setError((error instanceof Error ? error.message : String(error)));
 
         // Try to recover by querying the database directly
         try {

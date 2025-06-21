@@ -125,7 +125,7 @@ export async function captureLicensePlate(cameraId: string): Promise<LPRCaptureR
       success: false,
       timestamp: new Date().toISOString(),
       cameraId,
-      error: error.message || 'Network error occurred',
+      error: (error instanceof Error ? error.message : String(error)) || 'Network error occurred',
     };
   }
 }
@@ -178,7 +178,7 @@ export async function captureLPRImage(cameraId: string): Promise<LPRCaptureResul
       success: false,
       timestamp: new Date().toISOString(),
       cameraId,
-      error: error.message || 'Unknown error occurred',
+      error: (error instanceof Error ? error.message : String(error)) || 'Unknown error occurred',
     };
   }
 }
@@ -218,7 +218,7 @@ async function captureFromVendor(camera: LPRCameraConfig): Promise<LPRCaptureRes
       success: false,
       timestamp: new Date().toISOString(),
       cameraId: camera.id,
-      error: error.message || 'Error capturing from camera',
+      error: (error instanceof Error ? error.message : String(error)) || 'Error capturing from camera',
     };
   }
 }
@@ -253,7 +253,7 @@ async function captureFromGenetec(camera: LPRCameraConfig): Promise<LPRCaptureRe
       success: false,
       timestamp: new Date().toISOString(),
       cameraId: camera.id,
-      error: error.message || 'Failed to capture from Genetec camera',
+      error: (error instanceof Error ? error.message : String(error)) || 'Failed to capture from Genetec camera',
     };
   }
 }

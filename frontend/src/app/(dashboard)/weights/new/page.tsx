@@ -26,8 +26,8 @@ export default function NewWeight() {
   const [weight, setWeight] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  const [vehicles, setVehicles] = useState<any[]>([]);
-  const [drivers, setDrivers] = useState<any[]>([]);
+  const [vehicles, setVehicles] = useState<unknown[]>([]);
+  const [drivers, setDrivers] = useState<unknown[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
@@ -174,7 +174,7 @@ export default function NewWeight() {
       // Redirect to weights list
       router.push('/weights');
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred while creating the weight record');
+      setError((err instanceof Error ? err.message : String(err)) || 'An error occurred while creating the weight record');
       console.error('Create weight error:', err);
     } finally {
       setIsLoading(false);
@@ -351,7 +351,7 @@ export default function NewWeight() {
                         : 'text-red-800 dark:text-red-200'
                   }`}
                 >
-                  {complianceDetails.status}: {complianceDetails.message}
+                  {complianceDetails.status}: {(complianceDetails instanceof Error ? complianceDetails.message : String(complianceDetails))}
                 </h3>
                 <div className="mt-2 text-sm">
                   <p className="text-gray-700 dark:text-gray-300">

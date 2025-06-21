@@ -126,7 +126,7 @@ export default function Profile() {
 
       setMessage('Profile updated successfully');
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred while updating your profile');
+      setError((err instanceof Error ? err.message : String(err)) || 'An error occurred while updating your profile');
       console.error('Profile update error:', err);
     } finally {
       setIsLoading(false);

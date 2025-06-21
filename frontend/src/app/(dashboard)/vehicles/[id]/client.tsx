@@ -134,7 +134,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
       setVehicle(vehicleData);
     } catch (err: unknown) {
       console.error('Error fetching vehicle data:', err);
-      setError(err.message || 'Failed to load vehicle data');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to load vehicle data');
     } finally {
       setIsLoading(false);
     }
@@ -192,7 +192,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
       fetchVehicleData();
     } catch (err: unknown) {
       console.error('Error uploading vehicle image:', err);
-      setError(err.message || 'Failed to upload vehicle image');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to upload vehicle image');
     } finally {
       setImageUploading(false);
     }
@@ -268,7 +268,7 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
       }
     } catch (err: unknown) {
       console.error('Error capturing from LPR camera:', err);
-      setError(err.message || 'Failed to capture from LPR camera');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to capture from LPR camera');
     } finally {
       setIsCapturing(false);
     }

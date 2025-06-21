@@ -165,7 +165,7 @@ const CityDashboardPageClient = () => {
       setRevenueData(revenueData);
     } catch (err: unknown) {
       console.error('Error fetching dashboard data:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load dashboard data');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to load dashboard data');
 
       // Automatically load mock data when there's an error
       generateDummyData();

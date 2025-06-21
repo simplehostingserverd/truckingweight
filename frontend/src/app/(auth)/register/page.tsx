@@ -194,7 +194,7 @@ export default function Register() {
     // Validate email before submission
     const emailValidation = validateEmail(email);
     if (!emailValidation.isValid || emailValidation.isDisposable) {
-      setError(emailValidation.message);
+      setError((emailValidation instanceof Error ? emailValidation.message : String(emailValidation)));
       setIsLoading(false);
       return;
     }
@@ -279,7 +279,7 @@ export default function Register() {
       // Redirect to login page
       router.push('/login?registered=true');
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'An error occurred during registration');
+      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'An error occurred during registration');
       console.error('Registration error:', err);
     } finally {
       setIsLoading(false);

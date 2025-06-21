@@ -60,7 +60,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to fetch scales');
+          throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch scales');
         }
 
         const scalesData = await response.json();
@@ -71,7 +71,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
         setScales(activeScales);
       } catch (error: unknown) {
         console.error('Error fetching scales:', error);
-        setError(error.message);
+        setError((error instanceof Error ? error.message : String(error)));
       } finally {
         setLoading(false);
       }
@@ -115,7 +115,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to validate QR code');
+        throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to validate QR code');
       }
 
       const validationResult = await response.json();
@@ -138,7 +138,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
       }
     } catch (error: unknown) {
       console.error('Error processing QR code:', error);
-      setScanResult({ success: false, message: error.message || 'Failed to process QR code' });
+      setScanResult({ success: false, message: (error instanceof Error ? error.message : String(error)) || 'Failed to process QR code' });
     }
   };
 
@@ -217,7 +217,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
                 <p
                   className={`text-sm ${scanResult.success ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'}`}
                 >
-                  {scanResult.message}
+                  {(scanResult instanceof Error ? scanResult.message : String(scanResult))}
                 </p>
               </div>
             </div>

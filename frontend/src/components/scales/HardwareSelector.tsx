@@ -182,7 +182,7 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
       if (data.success) {
         toast({
           title: 'Success',
-          description: data.message || 'Hardware configured successfully',
+          description: (data instanceof Error ? data.message : String(data)) || 'Hardware configured successfully',
         });
         if (onConfigured) onConfigured(true);
       } else {
@@ -192,7 +192,7 @@ const HardwareSelector: React.FC<HardwareSelectorProps> = ({ scaleId, onConfigur
       console.error('Error configuring hardware:', error);
       toast({
         title: 'Error',
-        description: error.message || 'Failed to configure hardware. Please try again.',
+        description: (error instanceof Error ? error.message : String(error)) || 'Failed to configure hardware. Please try again.',
         variant: 'destructive',
       });
       if (onConfigured) onConfigured(false);

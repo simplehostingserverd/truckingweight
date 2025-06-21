@@ -38,7 +38,7 @@ const axiosFetcher = async <T>(url: string, config?: AxiosRequestConfig): Promis
 };
 
 // Custom hook that wraps SWR with axios
-export function useSWRFetch<T = any>(
+export function useSWRFetch<T = unknown>(
   url: string | null,
   config?: AxiosRequestConfig,
   swrOptions?: SWRConfiguration

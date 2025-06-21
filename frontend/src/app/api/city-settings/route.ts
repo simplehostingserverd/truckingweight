@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ settings: dummySettings });
   } catch (error: unknown) {
     console.error('Error fetching city settings:', error);
-    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -126,6 +126,6 @@ export async function PUT(request: NextRequest) {
     });
   } catch (error: unknown) {
     console.error('Error updating city settings:', error);
-    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { status: 500 });
   }
 }

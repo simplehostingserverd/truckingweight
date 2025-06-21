@@ -57,11 +57,11 @@ export interface ComplianceResult {
 
 // Violation types
 export enum ViolationType {
-  SINGLE_AXLE = 'Single Axle',
-  TANDEM_AXLE = 'Tandem Axle',
-  TRIDEM_AXLE = 'Tridem Axle',
-  GROSS_WEIGHT = 'Gross Weight',
-  BRIDGE_FORMULA = 'Bridge Formula',
+  SINGLE_AXLE = "SINGLE_AXLE",
+  TANDEM_AXLE = "TANDEM_AXLE",
+  TRIDEM_AXLE = "TRIDEM_AXLE",
+  GROSS_WEIGHT = "GROSS_WEIGHT",
+  BRIDGE_FORMULA = "BRIDGE_FORMULA"
 }
 
 // Violation

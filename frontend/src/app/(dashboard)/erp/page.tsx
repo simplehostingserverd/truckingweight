@@ -341,7 +341,7 @@ export default function ERPPage() {
             id: log.id,
             timestamp: log.created_at,
             status: log.status,
-            message: log.message,
+            message: (log instanceof Error ? log.message : String(log)),
             details: log.details,
           }))
         );
@@ -428,7 +428,7 @@ export default function ERPPage() {
       });
     } catch (err: unknown) {
       console.error('Error creating ERP connection:', err);
-      setError(err.message || 'Failed to create ERP connection');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to create ERP connection');
     } finally {
       setIsLoading(false);
     }
@@ -486,7 +486,7 @@ export default function ERPPage() {
       setIsLoading(false);
     } catch (err: unknown) {
       console.error('Error syncing data:', err);
-      setError(err.message || 'Failed to sync data');
+      setError((err instanceof Error ? err.message : String(err)) || 'Failed to sync data');
       setIsLoading(false);
     }
   };
@@ -745,7 +745,7 @@ export default function ERPPage() {
                     {syncLogs.map(log => (
                       <TableRow key={log.id}>
                         <TableCell>{new Date(log.timestamp).toLocaleString()}</TableCell>
-                        <TableCell>{log.message}</TableCell>
+                        <TableCell>{(log instanceof Error ? log.message : String(log))}</TableCell>
                         <TableCell>
                           <Badge
                             variant={
@@ -929,7 +929,7 @@ export default function ERPPage() {
 
               <div>
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Message</p>
-                <p className="mt-1">{selectedLog.message}</p>
+                <p className="mt-1">{(selectedLog instanceof Error ? selectedLog.message : String(selectedLog))}</p>
               </div>
 
               <Separator />

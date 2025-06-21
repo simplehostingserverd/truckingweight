@@ -82,7 +82,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to fetch vehicle weight data');
+          throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch vehicle weight data');
         }
 
         const data = await response.json();
@@ -98,7 +98,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
         }
       } catch (error: unknown) {
         console.error('Error fetching vehicle weight data:', error);
-        setError(error.message);
+        setError((error instanceof Error ? error.message : String(error)));
 
         // Try to recover by querying the database directly
         try {

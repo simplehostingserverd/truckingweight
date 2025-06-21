@@ -21,7 +21,7 @@ export const useAudioAlerts = () => {
 
   // Generate synthetic siren sound using Web Audio API
   const generateSirenSound = useCallback(() => {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const audioContext = new (window.AudioContext || (window as unknown).webkitAudioContext)();
     const duration = 3; // 3 seconds
     const sampleRate = audioContext.sampleRate;
     const frameCount = sampleRate * duration;
@@ -82,7 +82,7 @@ export const useAudioAlerts = () => {
   const playSyntheticSiren = useCallback(
     (options: AudioAlertOptions = {}) => {
       try {
-        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const audioContext = new (window.AudioContext || (window as unknown).webkitAudioContext)();
         const sirenBuffer = generateSirenSound();
         const source = audioContext.createBufferSource();
         const gainNode = audioContext.createGain();
@@ -100,7 +100,7 @@ export const useAudioAlerts = () => {
         source.start();
 
         // Store reference for stopping
-        (audioRef as any).current = {
+        (audioRef as unknown).current = {
           stop: () => {
             source.stop();
             setIsPlaying(false);
@@ -121,9 +121,9 @@ export const useAudioAlerts = () => {
         // Regular HTML Audio element
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
-      } else if (typeof (audioRef.current as any).stop === 'function') {
+      } else if (typeof (audioRef.current as unknown).stop === 'function') {
         // Synthetic audio source
-        (audioRef.current as any).stop();
+        (audioRef.current as unknown).stop();
       }
       setIsPlaying(false);
     }

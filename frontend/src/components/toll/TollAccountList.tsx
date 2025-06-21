@@ -243,7 +243,7 @@ const TollAccountList: React.FC = () => {
                   <TableCell>
                     <Chip
                       label={account.account_status}
-                      color={getStatusColor(account.account_status) as any}
+                      color={getStatusColor(account.account_status) as unknown}
                       size="small"
                     />
                   </TableCell>
@@ -273,7 +273,7 @@ const TollAccountList: React.FC = () => {
                     <Box display="flex" alignItems="center" gap={1}>
                       <Chip
                         label={account.sync_status}
-                        color={getSyncStatusColor(account.sync_status) as any}
+                        color={getSyncStatusColor(account.sync_status) as unknown}
                         size="small"
                       />
                       {account.sync_error_message && (

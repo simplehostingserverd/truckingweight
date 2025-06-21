@@ -154,7 +154,7 @@ export default function EditLoad({ params }: { params: Promise<{ id: string }> }
       // Redirect to load detail
       router.push({ pathname: `/loads/${id}` });
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred while updating the load');
+      setError((err instanceof Error ? err.message : String(err)) || 'An error occurred while updating the load');
       console.error('Update load error:', err);
     } finally {
       setIsLoading(false);

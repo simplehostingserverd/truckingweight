@@ -46,7 +46,7 @@ const TollReports: React.FC = () => {
     startDate: null as Date | null,
     endDate: null as Date | null,
   });
-  const [reportData, setReportData] = useState<any>(null);
+  const [reportData, setReportData] = useState<unknown>(null);
   const [generating, setGenerating] = useState(false);
 
   useEffect(() => {

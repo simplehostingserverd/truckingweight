@@ -159,7 +159,7 @@ export default function RoutePlanner({
         }
       } catch (err: unknown) {
         // Log error for debugging but handle gracefully for users
-        const errorMessage = err.message || 'Failed to calculate route';
+        const errorMessage = (err instanceof Error ? err.message : String(err)) || 'Failed to calculate route';
         setError(errorMessage);
       } finally {
         setIsCalculating(false);

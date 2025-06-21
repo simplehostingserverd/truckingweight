@@ -42,7 +42,7 @@ export default function ResetPassword() {
       setMessage('Check your email for the password reset link');
     } catch (err: unknown) {
       setError(
-        err instanceof Error ? err.message : 'An error occurred while sending the reset link'
+        err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'An error occurred while sending the reset link'
       );
       console.error('Reset password error:', err);
     } finally {
