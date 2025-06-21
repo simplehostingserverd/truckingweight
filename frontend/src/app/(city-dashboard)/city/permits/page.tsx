@@ -292,12 +292,7 @@ const CityPermitsPageClient = () => {
           </div>
         </div>
 
-        <Tabs
-          defaultValue="all"
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="space-y-6"
-        >
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid grid-cols-4 w-full max-w-md mx-auto">
             <TabsTrigger value="all">All ({permits.length})</TabsTrigger>
             <TabsTrigger value="active">Active ({activePermitsCount})</TabsTrigger>

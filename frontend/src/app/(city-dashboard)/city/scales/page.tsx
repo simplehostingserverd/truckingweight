@@ -90,9 +90,9 @@ const CityScalesPageClient = () => {
 
       const data = await response.json();
       setScales(data.scales || []);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error fetching scales:', err);
-      setError(err.message || 'Failed to load scales');
+      setError(err instanceof Error ? err.message : 'Failed to load scales');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
@@ -261,12 +261,7 @@ const CityScalesPageClient = () => {
           </div>
         </div>
 
-        <Tabs
-          defaultValue="all"
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="space-y-6"
-        >
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid grid-cols-4 w-full max-w-md mx-auto">
             <TabsTrigger value="all">All ({scales.length})</TabsTrigger>
             <TabsTrigger value="active">Active ({activeScalesCount})</TabsTrigger>

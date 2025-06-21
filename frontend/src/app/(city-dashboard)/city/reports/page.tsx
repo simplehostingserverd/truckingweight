@@ -284,12 +284,7 @@ const CityReportsPageClient = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Tabs
-                  defaultValue="standard"
-                  value={activeTab}
-                  onValueChange={setActiveTab}
-                  className="space-y-6"
-                >
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
                   <TabsList className="grid grid-cols-2 w-full max-w-md">
                     <TabsTrigger value="standard">Standard Reports</TabsTrigger>
                     <TabsTrigger value="custom">Custom Report</TabsTrigger>

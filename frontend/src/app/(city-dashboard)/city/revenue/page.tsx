@@ -138,9 +138,9 @@ const CityRevenuePageClient = () => {
 
       // Generate mock recent transactions
       generateMockTransactions();
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error fetching revenue data:', err);
-      setError(err.message || 'Failed to load revenue data');
+      setError(err instanceof Error ? err.message : 'Failed to load revenue data');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
@@ -287,12 +287,7 @@ const CityRevenuePageClient = () => {
           </Alert>
         )}
 
-        <Tabs
-          defaultValue="overview"
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="space-y-6"
-        >
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid grid-cols-3 w-full max-w-md mx-auto">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="trends">Trends</TabsTrigger>
