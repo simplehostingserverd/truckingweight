@@ -137,9 +137,9 @@ const CitySettingsPageClient = () => {
         name: userData.user.name,
         email: userData.user.email,
       });
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error fetching user data:', err);
-      setError(err.message || 'An error occurred while fetching user data');
+      setError(err instanceof Error ? err.message : 'An error occurred while fetching user data');
 
       // Generate dummy data for testing
       generateDummyData();
@@ -241,9 +241,9 @@ const CitySettingsPageClient = () => {
       });
 
       setSuccess('Settings saved successfully');
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error saving settings:', err);
-      setError(err.message || 'An error occurred while saving settings');
+      setError(err instanceof Error ? err.message : 'An error occurred while saving settings');
     } finally {
       setIsSaving(false);
     }
