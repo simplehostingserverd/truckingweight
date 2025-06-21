@@ -424,7 +424,7 @@ export default function CityLogin() {
                   </Button>
 
                   <Divider sx={{ my: 1 }}>
-                    <Typography level="body3" sx={{ color: 'text.tertiary' }}>
+                    <Typography level="body-sm" sx={{ color: 'text.tertiary' }}>
                       OR
                     </Typography>
                   </Divider>
