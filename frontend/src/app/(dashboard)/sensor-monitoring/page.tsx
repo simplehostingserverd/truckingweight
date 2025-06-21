@@ -28,7 +28,7 @@ import {
   PlayIcon,
   ScaleIcon,
   SignalIcon,
-  ThermometerIcon,
+  FireIcon,
 } from '@heroicons/react/24/outline';
 import {
   Card,
@@ -312,7 +312,7 @@ export default function SensorMonitoringPage() {
   const getSensorIcon = (type: string) => {
     switch (type) {
       case 'temperature':
-        return <ThermometerIcon className="h-5 w-5" />; // Custom thermometer icon
+        return <FireIcon className="h-5 w-5" />; // Temperature sensor icon
       case 'weight':
         return <ScaleIcon className="h-5 w-5" />;
       case 'fuel_level':
