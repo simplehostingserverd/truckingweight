@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20.18.0-alpine AS builder
+FROM node:20.19.0-alpine AS builder
 
 WORKDIR /app
 
@@ -27,7 +27,7 @@ ENV JWT_SECRET=$JWT_SECRET
 RUN npm run build
 
 # Production stage
-FROM node:20.18.0-alpine AS runner
+FROM node:20.19.0-alpine AS runner
 
 WORKDIR /app
 
@@ -38,12 +38,11 @@ ENV NODE_ENV=production
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
-# Copy built application from builder stage
+# Copy built application from builder stage (no .env file needed in production)
 COPY --from=builder /app/server-fastify.mjs ./
 COPY --from=builder /app/server.cjs ./
-COPY --from=builder /app/.env ./.env
 COPY --from=builder /app/config ./config
 COPY --from=builder /app/routes ./routes
 COPY --from=builder /app/controllers ./controllers

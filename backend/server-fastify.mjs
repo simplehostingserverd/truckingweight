@@ -27,8 +27,13 @@ import swaggerUi from '@fastify/swagger-ui';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load environment variables from .env file in the backend directory
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+// Load environment variables from .env file in the backend directory (optional for production)
+try {
+  dotenv.config({ path: path.resolve(__dirname, '.env') });
+} catch (error) {
+  // In production, environment variables are provided by the deployment platform
+  console.log('No .env file found, using environment variables from deployment platform');
+}
 
 // Import environment validator
 import { validateAllConfig } from './utils/envValidator.js';
