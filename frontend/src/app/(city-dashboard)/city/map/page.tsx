@@ -81,9 +81,9 @@ const CityMapPageClient = () => {
       // In a real implementation, we would fetch data from the API
       // For now, we'll use mock data
       generateMockData();
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error fetching map data:', err);
-      setError(err.message || 'Failed to load map data');
+      setError(err instanceof Error ? err.message : 'Failed to load map data');
       // Generate dummy data for testing
       generateMockData();
     } finally {
@@ -382,7 +382,7 @@ const CityMapPageClient = () => {
                           latitude: scale.coordinates.lat,
                           longitude: scale.coordinates.lng,
                           title: scale.name,
-                          type: 'scale',
+                          type: 'scale' as const,
                           status: scale.status,
                           data: scale,
                         })),
@@ -392,7 +392,7 @@ const CityMapPageClient = () => {
                               latitude: violation.coordinates.lat,
                               longitude: violation.coordinates.lng,
                               title: violation.violationNumber,
-                              type: 'violation',
+                              type: 'violation' as const,
                               status: violation.status,
                               data: violation,
                             }))
@@ -403,7 +403,7 @@ const CityMapPageClient = () => {
                               latitude: vehicle.coordinates.lat,
                               longitude: vehicle.coordinates.lng,
                               title: vehicle.vehicleId,
-                              type: 'vehicle',
+                              type: 'vehicle' as const,
                               status: vehicle.status,
                               data: vehicle,
                             }))
@@ -434,12 +434,7 @@ const CityMapPageClient = () => {
               </CardContent>
             </Card>
 
-            <Tabs
-              defaultValue="scales"
-              value={activeTab}
-              onValueChange={setActiveTab}
-              className="mt-6"
-            >
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-6">
               <TabsList className="grid grid-cols-3 w-full max-w-md mx-auto">
                 <TabsTrigger value="scales">Scales</TabsTrigger>
                 <TabsTrigger value="violations">Violations</TabsTrigger>

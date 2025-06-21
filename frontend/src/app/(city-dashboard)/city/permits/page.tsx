@@ -90,9 +90,9 @@ const CityPermitsPageClient = () => {
 
       const data = await response.json();
       setPermits(data.permits || []);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error fetching permits:', err);
-      setError(err.message || 'Failed to load permits');
+      setError(err instanceof Error ? err.message : 'Failed to load permits');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
