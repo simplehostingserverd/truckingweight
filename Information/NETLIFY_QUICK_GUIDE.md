@@ -1,8 +1,8 @@
-# Cosmo Exploit Group LLC - Netlify Quick Deployment Guide
+# Cargo Scale Pro - Netlify Quick Deployment Guide
 
 **CONFIDENTIAL DOCUMENT - FOR INTERNAL USE ONLY**
 
-© 2025 Cosmo Exploit Group LLC. All Rights Reserved.  
+© 2025 Cargo Scale Pro. All Rights Reserved.
 Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
 
 ## Quick Deployment Steps
@@ -20,22 +20,26 @@ Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
 ### 2. Deploy to Netlify Using Drag and Drop
 
 1. **Build the Application**
+
    ```bash
    cd frontend
    npm run build
    ```
 
 2. **Prepare for Deployment**
+
    - Navigate to the `frontend/.next` directory
    - Create a ZIP file of the entire `.next` directory
 
 3. **Deploy to Netlify**
+
    - Log in to [Netlify](https://app.netlify.com/)
    - Go to the "Sites" section
    - Drag and drop the ZIP file onto the Netlify dashboard
    - Wait for the upload and processing to complete
 
 4. **Configure Environment Variables**
+
    - Go to "Site settings" > "Environment variables"
    - Click "Import from .env"
    - Upload your `.env.production` file
@@ -49,9 +53,11 @@ Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
 ### 3. Deploy to Netlify Using GitHub Integration
 
 1. **Push Code to GitHub**
+
    - Ensure your code is pushed to the GitHub repository
 
 2. **Connect to Netlify**
+
    - Log in to [Netlify](https://app.netlify.com/)
    - Click "New site from Git"
    - Select GitHub as the Git provider
@@ -59,6 +65,7 @@ Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
    - Select the repository
 
 3. **Configure Build Settings**
+
    - Base directory: `frontend`
    - Build command: `npm run build`
    - Publish directory: `.next`
@@ -90,28 +97,30 @@ All API requests include a signature generated using a secret key to prevent una
 
 ## Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| NEXT_PUBLIC_SUPABASE_URL | Supabase project URL | Yes |
-| NEXT_PUBLIC_SUPABASE_ANON_KEY | Supabase anonymous key | Yes |
-| NEXT_PUBLIC_API_URL | API endpoint URL | Yes |
-| NEXT_PUBLIC_APP_URL | Application URL | Yes |
-| NEXT_PUBLIC_LICENSE_KEY | License validation key | Yes |
-| NEXT_PUBLIC_SECURITY_TOKEN | Security token for API calls | Yes |
-| LICENSE_KEY | Server-side license key | Yes |
-| SECURITY_TOKEN | Server-side security token | Yes |
-| AUTHORIZED_DOMAINS | Comma-separated list of authorized domains | Yes |
+| Variable                      | Description                                | Required |
+| ----------------------------- | ------------------------------------------ | -------- |
+| NEXT_PUBLIC_SUPABASE_URL      | Supabase project URL                       | Yes      |
+| NEXT_PUBLIC_SUPABASE_ANON_KEY | Supabase anonymous key                     | Yes      |
+| NEXT_PUBLIC_API_URL           | API endpoint URL                           | Yes      |
+| NEXT_PUBLIC_APP_URL           | Application URL                            | Yes      |
+| NEXT_PUBLIC_LICENSE_KEY       | License validation key                     | Yes      |
+| NEXT_PUBLIC_SECURITY_TOKEN    | Security token for API calls               | Yes      |
+| LICENSE_KEY                   | Server-side license key                    | Yes      |
+| SECURITY_TOKEN                | Server-side security token                 | Yes      |
+| AUTHORIZED_DOMAINS            | Comma-separated list of authorized domains | Yes      |
 
 ## Troubleshooting
 
 ### Common Issues
 
 1. **Build Failures**
+
    - Check the build logs for specific errors
    - Verify that all dependencies are correctly installed
    - Ensure environment variables are properly set
 
 2. **Environment Variable Issues**
+
    - Verify that all required environment variables are set
    - Check for typos in variable names
    - Ensure values are correctly formatted
@@ -125,12 +134,12 @@ All API requests include a signature generated using a secret key to prevent una
 
 For deployment issues, contact:
 
-- Michael Anthony Trevino Jr. - Lead Developer (michael.trevino@cosmoexploitgroup.com)
-- IT Support Team (support@cosmoexploitgroup.com)
+- Michael Anthony Trevino Jr. - Lead Developer (michael.trevino@cargoscalepro.com)
+- IT Support Team (support@cargoscalepro.com)
 
 ---
 
 **CONFIDENTIAL DOCUMENT - FOR INTERNAL USE ONLY**
 
-© 2025 Cosmo Exploit Group LLC. All Rights Reserved.  
+© 2025 Cargo Scale Pro. All Rights Reserved.
 Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer

@@ -26,7 +26,7 @@
 
 ## 📋 Overview
 
-What started as Cosmo Exploit Group LLC's flagship weight management project in 2022 has evolved into a comprehensive **Transportation Management System (TMS)** that revolutionizes how trucking companies operate. Built by industry experts with 35+ years of combined experience, our platform serves everything from single owner-operators to enterprise fleets managing 500+ vehicles.
+What started as Cargo Scale Pro's flagship weight management project in 2022 has evolved into a comprehensive **Transportation Management System (TMS)** that revolutionizes how trucking companies operate. Built by industry experts with 35+ years of combined experience, our platform serves everything from single owner-operators to enterprise fleets managing 500+ vehicles.
 
 **Real Results from Real Customers:**
 
@@ -472,17 +472,17 @@ truckingweight/
 
 **Sales & Partnerships:**
 
-- 📧 Email: [sales@truckingsemis.com](mailto:sales@truckingsemis.com)
-- 📞 Phone: (555) 123-TRUCK
-- 🌐 Website: [https://cosmoexploitgroup.com](https://cosmoexploitgroup.com)
-- 📅 Schedule Demo: [calendly.com/cosmoexploit/demo](https://calendly.com/cosmoexploit/demo)
+- 📧 Email: [sales@cargoscalepro.com](mailto:sales@cargoscalepro.com)
+- 📞 Phone: (555) 123-CARGO
+- 🌐 Website: [https://cargoscalepro.com](https://cargoscalepro.com)
+- 📅 Schedule Demo: [calendly.com/cargoscalepro/demo](https://calendly.com/cargoscalepro/demo)
 
 **Technical Support:**
 
-- 📧 Support: [support@truckingsemis.com](mailto:support@truckingsemis.com)
+- 📧 Support: [support@cargoscalepro.com](mailto:support@cargoscalepro.com)
 - 📞 24/7 Hotline: (555) 123-HELP
 - 💬 Live Chat: Available on our website
-- 📚 Documentation: [docs.truckingsemis.com](https://docs.truckingsemis.com)
+- 📚 Documentation: [docs.cargoscalepro.com](https://docs.cargoscalepro.com)
 
 ### 👨‍💻 **Development Team**
 
@@ -490,8 +490,8 @@ truckingweight/
 
 - 🎯 35+ years software development experience
 - 🚛 Trucking industry specialist
-- 💼 Lead Full-Stack Developer at Cosmo Exploit Group LLC
-- 📧 Contact: [michael@cosmoexploitgroup.com](mailto:michael@cosmoexploitgroup.com)
+- 💼 Lead Full-Stack Developer at Cargo Scale Pro
+- 📧 Contact: [michael@cargoscalepro.com](mailto:michael@cargoscalepro.com)
 
 **GitHub Repository:**
 
@@ -501,11 +501,11 @@ truckingweight/
 
 ## 📄 License & Legal
 
-© 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+© 2025 Cargo Scale Pro. All Rights Reserved.
 
 **PROPRIETARY AND CONFIDENTIAL SOFTWARE**
 
-This Transportation Management System is proprietary software owned exclusively by Cosmo Exploit Group LLC. The source code, documentation, and all associated files contain confidential and proprietary information protected by intellectual property laws.
+This Transportation Management System is proprietary software owned exclusively by Cargo Scale Pro. The source code, documentation, and all associated files contain confidential and proprietary information protected by intellectual property laws.
 
 **Restrictions:**
 
@@ -515,7 +515,7 @@ This Transportation Management System is proprietary software owned exclusively 
 - ✅ Licensed use only through official agreements
 
 **For Licensing Inquiries:**
-Contact [legal@cosmoexploitgroup.com](mailto:legal@cosmoexploitgroup.com)
+Contact [legal@cargoscalepro.com](mailto:legal@cargoscalepro.com)
 
 ---
 
@@ -525,6 +525,6 @@ Contact [legal@cosmoexploitgroup.com](mailto:legal@cosmoexploitgroup.com)
 
 _Designed and developed by industry experts who understand your challenges_
 
-**Cosmo Exploit Group LLC** | **Est. 2022** | **Trusted by 50+ Fleets**
+**Cargo Scale Pro** | **Est. 2022** | **Trusted by 50+ Fleets**
 
 </div>

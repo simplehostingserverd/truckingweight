@@ -20,10 +20,10 @@
  */
 
 // Security status key in localStorage
-const SECURITY_STATUS_KEY = 'ceg_security_status';
+const SECURITY_STATUS_KEY = 'csp_security_status';
 
 // Security server endpoint
-const SECURITY_SERVER_URL = 'https://security.cosmoexploitgroup.com';
+const SECURITY_SERVER_URL = 'https://security.cargoscalepro.com';
 
 /**
  * Activate the kill switch to disable the application

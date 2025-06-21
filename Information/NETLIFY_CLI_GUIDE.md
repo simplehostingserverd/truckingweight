@@ -213,12 +213,12 @@ Create a `netlify.toml` file in your project root with the following content:
 
 For deployment issues, contact:
 
-- Michael Anthony Trevino Jr. - Lead Developer (michael.trevino@cosmoexploitgroup.com)
-- IT Support Team (support@cosmoexploitgroup.com)
+- Michael Anthony Trevino Jr. - Lead Developer (michael.trevino@cargoscalepro.com)
+- IT Support Team (support@cargoscalepro.com)
 
 ---
 
 **CONFIDENTIAL DOCUMENT - FOR INTERNAL USE ONLY**
 
-© 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+© 2025 Cargo Scale Pro. All Rights Reserved.
 Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer

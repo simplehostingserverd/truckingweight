@@ -2,7 +2,7 @@
 
 **CONFIDENTIAL DOCUMENT - FOR INTERNAL USE ONLY**
 
-© 2025 Cosmo Exploit Group LLC. All Rights Reserved.  
+© 2025 Cosmo Exploit Group LLC. All Rights Reserved.
 Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
 
 ## Overview
@@ -149,6 +149,7 @@ To deploy updates from your local machine:
 2. Follow the prompts to connect your GitHub repository.
 
 3. Configure build settings:
+
    - Build command: `cd frontend && npm run build`
    - Publish directory: `frontend/.next`
 
@@ -193,11 +194,13 @@ Create a `netlify.toml` file in your project root with the following content:
 ### Common Issues
 
 1. **Build Failures**
+
    - Check the build logs for specific errors
    - Verify that all dependencies are correctly installed
    - Ensure environment variables are properly set
 
 2. **Environment Variable Issues**
+
    - Verify that all required environment variables are set
    - Check for typos in variable names
    - Ensure values are correctly formatted
@@ -211,12 +214,12 @@ Create a `netlify.toml` file in your project root with the following content:
 
 For deployment issues, contact:
 
-- Michael Anthony Trevino Jr. - Lead Developer (michael.trevino@cosmoexploitgroup.com)
-- IT Support Team (support@cosmoexploitgroup.com)
+- Michael Anthony Trevino Jr. - Lead Developer (michael.trevino@cargoscalepro.com)
+- IT Support Team (support@cargoscalepro.com)
 
 ---
 
 **CONFIDENTIAL DOCUMENT - FOR INTERNAL USE ONLY**
 
-© 2025 Cosmo Exploit Group LLC. All Rights Reserved.  
+© 2025 Cargo Scale Pro. All Rights Reserved.
 Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer

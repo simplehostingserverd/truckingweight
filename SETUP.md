@@ -72,6 +72,7 @@ npm run dev
 ```
 
 This will start:
+
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:5001
 - **API Documentation**: http://localhost:5001/documentation
@@ -87,19 +88,25 @@ Use these accounts to test the application:
 ## Troubleshooting
 
 ### Port Conflicts
+
 If you get port conflicts, run the port killer:
+
 ```bash
 node scripts/velociraptor.mjs
 ```
 
 ### Database Connection Issues
+
 Test your Supabase connection:
+
 ```bash
 node scripts/test-supabase-connection.mjs
 ```
 
 ### Clean Install
+
 If you encounter dependency issues:
+
 ```bash
 npm run clean
 npm run install-deps
@@ -107,15 +114,15 @@ npm run install-deps
 
 ## Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development servers |
-| `npm run build` | Build for production |
-| `npm run start` | Start production servers |
-| `npm run setup-db` | Initialize database |
-| `npm run lint` | Check code quality |
-| `npm run test` | Run tests |
-| `npm run docker:up` | Start with Docker |
+| Script              | Description               |
+| ------------------- | ------------------------- |
+| `npm run dev`       | Start development servers |
+| `npm run build`     | Build for production      |
+| `npm run start`     | Start production servers  |
+| `npm run setup-db`  | Initialize database       |
+| `npm run lint`      | Check code quality        |
+| `npm run test`      | Run tests                 |
+| `npm run docker:up` | Start with Docker         |
 
 ## Next Steps
 
@@ -128,4 +135,4 @@ npm run install-deps
 
 - Check the [main README](README.md) for detailed information
 - Review the [Information](Information/) directory for guides
-- Contact: info@cosmoexploitgroup.com
+- Contact: info@cargoscalepro.com

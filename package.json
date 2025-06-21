@@ -1,7 +1,7 @@
 {
-  "name": "cosmoexploitgroup-weight-management-system",
+  "name": "cargoscalepro-weight-management-system",
   "version": "1.0.0",
-  "description": "Cosmo Exploit Group LLC Weight Management System",
+  "description": "Cargo Scale Pro Weight Management System",
   "main": "index.js",
   "directories": {
     "doc": "docs"
