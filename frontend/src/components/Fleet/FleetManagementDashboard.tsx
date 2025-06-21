@@ -73,14 +73,6 @@ interface FleetMetrics {
   upcomingMaintenance: number;
 }
 
-
-const FireIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3.001 2.48Z" />
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.467 5.99 5.99 0 0 0-1.925 3.546 5.974 5.974 0 0 1-2.133-1A3.75 3.75 0 0 0 12 18Z" />
-  </svg>
-);
-
 export default function FleetManagementDashboard() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [metrics, setMetrics] = useState<FleetMetrics>({
@@ -125,20 +117,29 @@ export default function FleetManagementDashboard() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'bg-green-100 text-green-800';
-      case 'maintenance': return 'bg-yellow-100 text-yellow-800';
-      case 'out_of_service': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'active':
+        return 'bg-green-100 text-green-800';
+      case 'maintenance':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'out_of_service':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
   const getAlertColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'bg-red-100 text-red-800';
-      case 'high': return 'bg-orange-100 text-orange-800';
-      case 'medium': return 'bg-yellow-100 text-yellow-800';
-      case 'low': return 'bg-blue-100 text-blue-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'critical':
+        return 'bg-red-100 text-red-800';
+      case 'high':
+        return 'bg-orange-100 text-orange-800';
+      case 'medium':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'low':
+        return 'bg-blue-100 text-blue-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -169,9 +170,7 @@ export default function FleetManagementDashboard() {
           <Button onClick={fetchFleetData} variant="outline">
             Refresh
           </Button>
-          <Button className="bg-blue-600 hover:bg-blue-700">
-            Add Vehicle
-          </Button>
+          <Button className="bg-blue-600 hover:bg-blue-700">Add Vehicle</Button>
         </div>
       </div>
 
@@ -184,9 +183,7 @@ export default function FleetManagementDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-white">{metrics.totalVehicles}</div>
-            <div className="text-xs text-gray-400">
-              {metrics.activeVehicles} active
-            </div>
+            <div className="text-xs text-gray-400">{metrics.activeVehicles} active</div>
           </CardContent>
         </Card>
 
@@ -196,7 +193,9 @@ export default function FleetManagementDashboard() {
             <ChartBarIcon className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-white">{metrics.avgUtilization.toFixed(1)}%</div>
+            <div className="text-2xl font-bold text-white">
+              {metrics.avgUtilization.toFixed(1)}%
+            </div>
             <Progress value={metrics.avgUtilization} className="mt-2" />
           </CardContent>
         </Card>
@@ -207,10 +206,10 @@ export default function FleetManagementDashboard() {
             <FireIcon className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-white">{metrics.avgFuelEfficiency.toFixed(1)} MPG</div>
-            <div className="text-xs text-gray-400">
-              Fleet average
+            <div className="text-2xl font-bold text-white">
+              {metrics.avgFuelEfficiency.toFixed(1)} MPG
             </div>
+            <div className="text-xs text-gray-400">Fleet average</div>
           </CardContent>
         </Card>
 
@@ -223,9 +222,7 @@ export default function FleetManagementDashboard() {
             <div className={`text-2xl font-bold ${getScoreColor(metrics.avgSafetyScore)}`}>
               {metrics.avgSafetyScore.toFixed(0)}
             </div>
-            <div className="text-xs text-gray-400">
-              Out of 100
-            </div>
+            <div className="text-xs text-gray-400">Out of 100</div>
           </CardContent>
         </Card>
 
@@ -236,9 +233,7 @@ export default function FleetManagementDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-red-400">{metrics.criticalAlerts}</div>
-            <div className="text-xs text-gray-400">
-              Require attention
-            </div>
+            <div className="text-xs text-gray-400">Require attention</div>
           </CardContent>
         </Card>
       </div>
@@ -246,11 +241,21 @@ export default function FleetManagementDashboard() {
       {/* Main Content */}
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList className="grid w-full grid-cols-5 bg-gray-800">
-          <TabsTrigger value="overview" className="text-white">Overview</TabsTrigger>
-          <TabsTrigger value="vehicles" className="text-white">Vehicles</TabsTrigger>
-          <TabsTrigger value="maintenance" className="text-white">Maintenance</TabsTrigger>
-          <TabsTrigger value="tracking" className="text-white">Live Tracking</TabsTrigger>
-          <TabsTrigger value="analytics" className="text-white">Analytics</TabsTrigger>
+          <TabsTrigger value="overview" className="text-white">
+            Overview
+          </TabsTrigger>
+          <TabsTrigger value="vehicles" className="text-white">
+            Vehicles
+          </TabsTrigger>
+          <TabsTrigger value="maintenance" className="text-white">
+            Maintenance
+          </TabsTrigger>
+          <TabsTrigger value="tracking" className="text-white">
+            Live Tracking
+          </TabsTrigger>
+          <TabsTrigger value="analytics" className="text-white">
+            Analytics
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-4">
@@ -263,7 +268,7 @@ export default function FleetManagementDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {vehicles.slice(0, 8).map((vehicle) => (
+                    {vehicles.slice(0, 8).map(vehicle => (
                       <div
                         key={vehicle.id}
                         className="flex items-center justify-between p-3 rounded-lg bg-gray-700 hover:bg-gray-600 cursor-pointer"
@@ -278,11 +283,13 @@ export default function FleetManagementDashboard() {
                             </p>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-center space-x-4">
                           <div className="text-right">
                             <div className="flex items-center space-x-2">
-                              <span className={`text-sm font-medium ${getScoreColor(vehicle.safetyScore)}`}>
+                              <span
+                                className={`text-sm font-medium ${getScoreColor(vehicle.safetyScore)}`}
+                              >
                                 {vehicle.safetyScore}
                               </span>
                               <span className="text-xs text-gray-400">Safety</span>
@@ -291,7 +298,7 @@ export default function FleetManagementDashboard() {
                               {vehicle.odometer.toLocaleString()} mi
                             </div>
                           </div>
-                          
+
                           <div className="flex flex-col space-y-1">
                             <Badge className={getStatusColor(vehicle.status)}>
                               {vehicle.status}
@@ -322,10 +329,15 @@ export default function FleetManagementDashboard() {
                 <CardContent>
                   <div className="space-y-3">
                     {vehicles
-                      .flatMap(v => v.alerts.filter(a => a.severity === 'critical' || a.severity === 'high'))
+                      .flatMap(v =>
+                        v.alerts.filter(a => a.severity === 'critical' || a.severity === 'high')
+                      )
                       .slice(0, 5)
-                      .map((alert) => (
-                        <div key={alert.id} className="p-3 rounded-lg bg-red-900/20 border border-red-800">
+                      .map(alert => (
+                        <div
+                          key={alert.id}
+                          className="p-3 rounded-lg bg-red-900/20 border border-red-800"
+                        >
                           <div className="flex items-start justify-between">
                             <div>
                               <Badge className={getAlertColor(alert.severity)}>
@@ -357,10 +369,17 @@ export default function FleetManagementDashboard() {
                 <CardContent>
                   <div className="space-y-3">
                     {vehicles
-                      .filter(v => new Date(v.nextMaintenanceDue) <= new Date(Date.now() + 7 * 24 * 60 * 60 * 1000))
+                      .filter(
+                        v =>
+                          new Date(v.nextMaintenanceDue) <=
+                          new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+                      )
                       .slice(0, 4)
-                      .map((vehicle) => (
-                        <div key={vehicle.id} className="flex items-center justify-between p-2 rounded bg-gray-700">
+                      .map(vehicle => (
+                        <div
+                          key={vehicle.id}
+                          className="flex items-center justify-between p-2 rounded bg-gray-700"
+                        >
                           <div>
                             <p className="text-sm font-medium text-white">{vehicle.name}</p>
                             <p className="text-xs text-gray-400">
@@ -410,18 +429,20 @@ export default function FleetManagementDashboard() {
               ×
             </Button>
           </div>
-          
+
           <div className="space-y-4">
             <div>
               <Badge className={getStatusColor(selectedVehicle.status)}>
                 {selectedVehicle.status}
               </Badge>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <label className="text-gray-400">Make/Model</label>
-                <p className="text-white">{selectedVehicle.make} {selectedVehicle.model}</p>
+                <p className="text-white">
+                  {selectedVehicle.make} {selectedVehicle.model}
+                </p>
               </div>
               <div>
                 <label className="text-gray-400">Year</label>
@@ -451,7 +472,9 @@ export default function FleetManagementDashboard() {
               </div>
               <div>
                 <label className="text-gray-400">Safety Score</label>
-                <p className={`text-lg font-semibold ${getScoreColor(selectedVehicle.safetyScore)}`}>
+                <p
+                  className={`text-lg font-semibold ${getScoreColor(selectedVehicle.safetyScore)}`}
+                >
                   {selectedVehicle.safetyScore}/100
                 </p>
               </div>
@@ -461,11 +484,9 @@ export default function FleetManagementDashboard() {
               <div>
                 <label className="text-gray-400">Active Alerts</label>
                 <div className="space-y-2 mt-2">
-                  {selectedVehicle.alerts.map((alert) => (
+                  {selectedVehicle.alerts.map(alert => (
                     <div key={alert.id} className="p-2 rounded bg-gray-700">
-                      <Badge className={getAlertColor(alert.severity)}>
-                        {alert.severity}
-                      </Badge>
+                      <Badge className={getAlertColor(alert.severity)}>{alert.severity}</Badge>
                       <p className="text-sm text-white mt-1">{alert.message}</p>
                     </div>
                   ))}
