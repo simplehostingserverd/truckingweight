@@ -23,8 +23,8 @@ ENV SUPABASE_URL=$SUPABASE_URL
 ENV SUPABASE_KEY=$SUPABASE_KEY
 ENV JWT_SECRET=$JWT_SECRET
 
-# Build the application (if there's a build step)
-RUN npm run build || echo "No build script found"
+# Build the application
+RUN npm run build
 
 # Production stage
 FROM node:20.18.0-alpine AS runner
@@ -41,10 +41,18 @@ COPY package*.json ./
 RUN npm ci --only=production
 
 # Copy built application from builder stage
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/server-fastify.js ./
-COPY --from=builder /app/server.js ./
+COPY --from=builder /app/server-fastify.mjs ./
+COPY --from=builder /app/server.cjs ./
+COPY --from=builder /app/.env ./.env
 COPY --from=builder /app/config ./config
+COPY --from=builder /app/routes ./routes
+COPY --from=builder /app/controllers ./controllers
+COPY --from=builder /app/middleware ./middleware
+COPY --from=builder /app/services ./services
+COPY --from=builder /app/utils ./utils
+COPY --from=builder /app/plugins ./plugins
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/generated ./generated
 
 # Set non-root user for security
 RUN addgroup --system --gid 1001 nodejs && \
@@ -57,4 +65,4 @@ USER nodeapp
 EXPOSE 5000
 
 # Start the application
-CMD ["node", "server-fastify.js"]
+CMD ["node", "server-fastify.mjs"]
