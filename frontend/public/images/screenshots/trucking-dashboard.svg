@@ -2,51 +2,51 @@
 <svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
   <rect width="1200" height="800" fill="#0f172a" />
-  
+
   <!-- Sidebar -->
   <rect x="0" y="0" width="240" height="800" fill="#1e293b" />
-  
+
   <!-- Sidebar content -->
   <g transform="translate(20, 30)">
     <!-- Logo -->
     <rect x="0" y="0" width="40" height="40" rx="5" fill="#4f46e5" />
-    <text x="50" y="25" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">TruckingSemis</text>
-    
+    <text x="50" y="25" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">CargoScalePro</text>
+
     <!-- Navigation items -->
     <g transform="translate(0, 80)">
       <!-- Dashboard -->
       <rect x="0" y="0" width="200" height="40" rx="5" fill="#4f46e5" />
       <text x="40" y="25" font-family="Arial, sans-serif" font-size="14" fill="white">Dashboard</text>
-      
+
       <!-- Fleet -->
       <rect x="0" y="50" width="200" height="40" rx="5" fill="transparent" />
       <text x="40" y="75" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Fleet Management</text>
-      
+
       <!-- Drivers -->
       <rect x="0" y="100" width="200" height="40" rx="5" fill="transparent" />
       <text x="40" y="125" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Drivers</text>
-      
+
       <!-- Weights -->
       <rect x="0" y="150" width="200" height="40" rx="5" fill="transparent" />
       <text x="40" y="175" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Weight Records</text>
-      
+
       <!-- Routes -->
       <rect x="0" y="200" width="200" height="40" rx="5" fill="transparent" />
       <text x="40" y="225" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Routes</text>
-      
+
       <!-- Compliance -->
       <rect x="0" y="250" width="200" height="40" rx="5" fill="transparent" />
       <text x="40" y="275" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Compliance</text>
-      
+
       <!-- Reports -->
       <rect x="0" y="300" width="200" height="40" rx="5" fill="transparent" />
       <text x="40" y="325" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Reports</text>
-      
+
       <!-- Settings -->
       <rect x="0" y="350" width="200" height="40" rx="5" fill="transparent" />
       <text x="40" y="375" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Settings</text>
     </g>
-    
+
     <!-- User profile -->
     <g transform="translate(0, 700)">
       <circle cx="20" cy="20" r="20" fill="#475569" />
@@ -54,17 +54,17 @@
       <text x="50" y="40" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8">Fleet Manager</text>
     </g>
   </g>
-  
+
   <!-- Main content -->
   <g transform="translate(260, 20)">
     <!-- Header -->
     <text x="0" y="30" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">Fleet Dashboard</text>
     <text x="0" y="60" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Overview of your fleet operations and compliance status</text>
-    
+
     <!-- Date range selector -->
     <rect x="700" y="20" width="220" height="40" rx="5" stroke="#475569" stroke-width="2" fill="transparent" />
     <text x="810" y="45" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Last 30 Days ▼</text>
-    
+
     <!-- Stats cards -->
     <g transform="translate(0, 80)">
       <!-- Active Vehicles -->
@@ -72,80 +72,80 @@
       <text x="20" y="30" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Active Vehicles</text>
       <text x="20" y="70" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">42</text>
       <text x="20" y="90" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Out of 48 total</text>
-      
+
       <!-- Compliance Rate -->
       <rect x="240" y="0" width="220" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
       <text x="260" y="30" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Compliance Rate</text>
       <text x="260" y="70" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">96.3%</text>
       <text x="260" y="90" font-family="Arial, sans-serif" font-size="12" fill="#64748b">↑ 2.1% from last month</text>
-      
+
       <!-- Total Weighings -->
       <rect x="480" y="0" width="220" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
       <text x="500" y="30" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Total Weighings</text>
       <text x="500" y="70" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">1,248</text>
       <text x="500" y="90" font-family="Arial, sans-serif" font-size="12" fill="#64748b">This month</text>
-      
+
       <!-- Violations -->
       <rect x="720" y="0" width="220" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
       <text x="740" y="30" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Violations</text>
       <text x="740" y="70" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">7</text>
       <text x="740" y="90" font-family="Arial, sans-serif" font-size="12" fill="#64748b">↓ 3 from last month</text>
     </g>
-    
+
     <!-- Map view -->
     <g transform="translate(0, 220)">
       <rect x="0" y="0" width="940" height="300" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
       <text x="20" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Fleet Location Map</text>
-      
+
       <!-- Map placeholder -->
       <rect x="20" y="50" width="900" height="230" rx="5" fill="#0f172a" />
-      
+
       <!-- Map content -->
       <g transform="translate(20, 50)">
         <!-- US map outline (simplified) -->
         <path d="M100,100 L300,80 L500,90 L700,70 L800,120 L750,200 L650,220 L400,210 L200,180 L100,100 Z" fill="none" stroke="#334155" stroke-width="2" />
-        
+
         <!-- State borders (simplified) -->
         <path d="M300,80 L320,180 M500,90 L480,210 M650,120 L600,210" fill="none" stroke="#334155" stroke-width="1" />
-        
+
         <!-- Cities/locations -->
         <circle cx="200" cy="120" r="5" fill="#4f46e5" />
         <circle cx="350" cy="150" r="5" fill="#4f46e5" />
         <circle cx="480" cy="130" r="5" fill="#4f46e5" />
         <circle cx="600" cy="160" r="5" fill="#4f46e5" />
         <circle cx="700" cy="140" r="5" fill="#4f46e5" />
-        
+
         <!-- Truck markers -->
         <circle cx="220" cy="130" r="8" fill="#4f46e5" stroke="white" stroke-width="2" />
         <circle cx="370" cy="140" r="8" fill="#4f46e5" stroke="white" stroke-width="2" />
         <circle cx="500" cy="120" r="8" fill="#4f46e5" stroke="white" stroke-width="2" />
         <circle cx="620" cy="150" r="8" fill="#4f46e5" stroke="white" stroke-width="2" />
         <circle cx="680" cy="130" r="8" fill="#ef4444" stroke="white" stroke-width="2" />
-        
+
         <!-- Routes -->
         <path d="M220,130 L370,140 L500,120 L620,150" fill="none" stroke="#4f46e5" stroke-width="2" stroke-dasharray="5,5" />
       </g>
-      
+
       <!-- Map legend -->
       <g transform="translate(780, 60)">
         <rect x="0" y="0" width="120" height="100" rx="5" fill="#1e293b" opacity="0.8" />
-        
+
         <circle cx="15" cy="20" r="6" fill="#4f46e5" stroke="white" stroke-width="2" />
         <text x="30" y="25" font-family="Arial, sans-serif" font-size="12" fill="white">Active Truck</text>
-        
+
         <circle cx="15" cy="50" r="6" fill="#ef4444" stroke="white" stroke-width="2" />
         <text x="30" y="55" font-family="Arial, sans-serif" font-size="12" fill="white">Violation</text>
-        
+
         <circle cx="15" cy="80" r="4" fill="#4f46e5" />
         <text x="30" y="85" font-family="Arial, sans-serif" font-size="12" fill="white">Weigh Station</text>
       </g>
     </g>
-    
+
     <!-- Recent activity -->
     <g transform="translate(0, 540)">
       <rect x="0" y="0" width="940" height="220" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
       <text x="20" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Recent Activity</text>
-      
+
       <!-- Table headers -->
       <rect x="20" y="50" width="900" height="30" fill="#334155" />
       <text x="40" y="70" font-family="Arial, sans-serif" font-size="14" fill="white">Date</text>
@@ -155,7 +155,7 @@
       <text x="600" y="70" font-family="Arial, sans-serif" font-size="14" fill="white">Weight</text>
       <text x="740" y="70" font-family="Arial, sans-serif" font-size="14" fill="white">Status</text>
       <text x="860" y="70" font-family="Arial, sans-serif" font-size="14" fill="white">Action</text>
-      
+
       <!-- Table rows -->
       <g transform="translate(20, 90)">
         <!-- Row 1 -->
@@ -168,7 +168,7 @@
         <text x="760" y="10" font-family="Arial, sans-serif" font-size="14" fill="#10b981" text-anchor="middle">Compliant</text>
         <rect x="840" y="-5" width="60" height="20" rx="5" fill="#4f46e5" />
         <text x="870" y="10" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">View</text>
-        
+
         <!-- Row 2 -->
         <text x="20" y="40" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">2025-05-17 09:48</text>
         <text x="160" y="40" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Truck #1036</text>
@@ -179,7 +179,7 @@
         <text x="760" y="40" font-family="Arial, sans-serif" font-size="14" fill="#ef4444" text-anchor="middle">Violation</text>
         <rect x="840" y="25" width="60" height="20" rx="5" fill="#4f46e5" />
         <text x="870" y="40" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">View</text>
-        
+
         <!-- Row 3 -->
         <text x="20" y="70" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">2025-05-17 09:32</text>
         <text x="160" y="70" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Truck #1039</text>
@@ -190,7 +190,7 @@
         <text x="760" y="70" font-family="Arial, sans-serif" font-size="14" fill="#10b981" text-anchor="middle">Compliant</text>
         <rect x="840" y="55" width="60" height="20" rx="5" fill="#4f46e5" />
         <text x="870" y="70" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">View</text>
-        
+
         <!-- Row 4 -->
         <text x="20" y="100" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">2025-05-17 09:15</text>
         <text x="160" y="100" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Truck #1045</text>
