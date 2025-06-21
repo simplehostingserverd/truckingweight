@@ -41,16 +41,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-    deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: start-first
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
+    # Deploy configuration removed for Coolify compatibility
+    # Coolify handles scaling and resource management
 
   backend:
     build:
@@ -75,16 +67,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 20s
-    deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: start-first
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
+    # Deploy configuration removed for Coolify compatibility
+    # Coolify handles scaling and resource management
 
   nginx:
     image: nginx:alpine
@@ -104,10 +88,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-    deploy:
-      resources:
-        limits:
-          cpus: '0.2'
-          memory: 128M
+    # Deploy configuration removed for Coolify compatibility
+    # Coolify handles scaling and resource management
 
-volumes:
+# Volumes section (empty but required for valid compose file)
+volumes: {}
