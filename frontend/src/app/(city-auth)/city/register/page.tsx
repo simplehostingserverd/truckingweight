@@ -45,6 +45,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 // Custom theme
 import cityTheme from '@/theme/cityTheme';
 
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
 export default function CityRegister() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

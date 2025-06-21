@@ -29,7 +29,7 @@ import { cacheAPI } from '@/lib/performance';
  * @param options Configuration options
  * @returns SWR response with data, error, and loading state
  */
-export function useSWROptimized<Data = any, Error = any>(
+export function useSWROptimized<Data = unknown, Error = unknown>(
   key: string | null,
   fetcher: (key: string) => Promise<Data>,
   options: SWRConfiguration & {
@@ -104,7 +104,7 @@ export function useSWROptimized<Data = any, Error = any>(
  * @param options Configuration options
  * @returns SWR response with data, error, loading state, and pagination helpers
  */
-export function useSWRPagination<Data = any, Error = any>(
+export function useSWRPagination<Data = unknown, Error = unknown>(
   baseKey: string | null,
   fetcher: (
     key: string,
@@ -162,7 +162,7 @@ export function useSWRPagination<Data = any, Error = any>(
  * @param options Configuration options
  * @returns SWR response with data, error, loading state, and infinite scroll helpers
  */
-export function useSWRInfinite<Data = any, Error = any>(
+export function useSWRInfinite<Data = unknown, Error = unknown>(
   baseKey: string | null,
   fetcher: (
     key: string,

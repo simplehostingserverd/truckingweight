@@ -14,21 +14,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import {
-  ChartBarIcon,
-  BoltIcon,
-  ScaleIcon,
-  MapPinIcon,
-  ExclamationTriangleIcon,
-  CheckCircleIcon,
-  ClockIcon,
-  SignalIcon,
-  CpuChipIcon,
-  EyeIcon,
-  Cog6ToothIcon,
-  PlayIcon,
-  PauseIcon,
-} from '@heroicons/react/24/outline';
+import { BoltIcon, ChartBarIcon, CheckCircleIcon, ClockIcon, Cog6ToothIcon, CpuChipIcon, ExclamationTriangleIcon, EyeIcon, MapPinIcon, PauseIcon, PlayIcon, ScaleIcon, SignalIcon, ThermometerIcon } from '@heroicons/react/24/outline';
 import ThermometerIcon from '@/components/icons/ThermometerIcon';
 import {
   Card,
@@ -104,6 +90,13 @@ interface MonitoringMetrics {
   dataPointsToday: number;
   systemUptime: number;
 }
+
+
+const ThermometerIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v9.75m0 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm0 0V3m0 9.75h3m-3 0h-3" />
+  </svg>
+);
 
 export default function SensorMonitoringPage() {
   const [activeTab, setActiveTab] = useState('dashboard');

@@ -26,7 +26,7 @@ declare const Image: typeof HTMLImageElement;
  * @param ms The debounce delay in milliseconds
  * @returns A debounced function
  */
-export function debounce<T extends (...args: unknown[]) => any>(fn: T, ms = 300) {
+export function debounce<T extends (...args: unknown[]) => unknown>(fn: T, ms = 300) {
   let timeoutId: ReturnType<typeof setTimeout>;
 
   return function (this: unknown, ...args: Parameters<T>) {
@@ -41,7 +41,7 @@ export function debounce<T extends (...args: unknown[]) => any>(fn: T, ms = 300)
  * @param ms The throttle delay in milliseconds
  * @returns A throttled function
  */
-export function throttle<T extends (...args: unknown[]) => any>(fn: T, ms = 300) {
+export function throttle<T extends (...args: unknown[]) => unknown>(fn: T, ms = 300) {
   let lastCall = 0;
 
   return function (this: unknown, ...args: Parameters<T>) {
@@ -58,7 +58,7 @@ export function throttle<T extends (...args: unknown[]) => any>(fn: T, ms = 300)
  * @param fn The function to memoize
  * @returns A memoized function
  */
-export function memoize<T extends (...args: unknown[]) => any>(fn: T) {
+export function memoize<T extends (...args: unknown[]) => unknown>(fn: T) {
   const cache = new Map();
 
   return function (this: unknown, ...args: Parameters<T>) {

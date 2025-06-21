@@ -165,7 +165,13 @@ const CityDashboardPageClient = () => {
       setRevenueData(revenueData);
     } catch (err: unknown) {
       console.error('Error fetching dashboard data:', err);
-      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to load dashboard data');
+      setError(
+        err instanceof Error
+          ? err instanceof Error
+            ? err.message
+            : String(err)
+          : 'Failed to load dashboard data'
+      );
 
       // Automatically load mock data when there's an error
       generateDummyData();
@@ -401,8 +407,8 @@ const CityDashboardPageClient = () => {
                 size="default"
                 className="mt-3 md:mt-0 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                 onClick={generateDummyData}
-                startDecorator={<ArrowPathIcon className="h-5 w-5" />}
               >
+                <ArrowPathIcon className="h-5 w-5 mr-2" />
                 Refresh Demo Data
               </Button>
             </div>

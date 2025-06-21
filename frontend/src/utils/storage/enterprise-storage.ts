@@ -65,13 +65,21 @@ export interface DataTransferOptions {
   retry_attempts?: number;
 }
 
+export interface StorageConnection {
+  id: string;
+  protocol: string;
+  status: 'connected' | 'disconnected' | 'error';
+  lastActivity: Date;
+  connectionHandle?: unknown;
+}
+
 /**
  * Enterprise Storage Manager
  * Handles integration with NAS, NVMe, and cloud storage systems
  */
 export class EnterpriseStorageManager {
   private storageConfigs: Map<string, StorageConfig> = new Map();
-  private activeConnections: Map<string, any> = new Map();
+  private activeConnections: Map<string, StorageConnection> = new Map();
 
   /**
    * Register a storage system

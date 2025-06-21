@@ -44,6 +44,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // Custom theme
 import cityTheme from '@/theme/cityTheme';
 
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');

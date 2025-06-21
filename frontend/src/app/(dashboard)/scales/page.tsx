@@ -54,6 +54,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Scale } from '@/types/fleet';
 
+import { PlusIcon, ArrowPathIcon, ScaleIcon } from '@heroicons/react/24/outline';
 export default function ScalesPage() {
   const [scales, setScales] = useState<Scale[]>([]);
   const [filteredScales, setFilteredScales] = useState<Scale[]>([]);
