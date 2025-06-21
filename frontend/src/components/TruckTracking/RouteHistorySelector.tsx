@@ -91,7 +91,7 @@ export default function RouteHistorySelector({
             Quick Ranges
           </h4>
           <div className="grid grid-cols-2 gap-2">
-            {quickRanges.map((range) => (
+            {quickRanges.map(range => (
               <Button
                 key={range.label}
                 variant="outline"
@@ -115,28 +115,40 @@ export default function RouteHistorySelector({
           <div className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
+                <label
+                  htmlFor="route-history-start-date"
+                  className="block text-xs text-gray-500 dark:text-gray-400 mb-1"
+                >
                   Start Date
                 </label>
                 <input
+                  id="route-history-start-date"
                   type="date"
                   value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
+                  onChange={e => setStartDate(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   max={new Date().toISOString().split('T')[0]}
+                  aria-label="Select start date for route history"
+                  title="Select the start date for viewing route history"
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
+                <label
+                  htmlFor="route-history-end-date"
+                  className="block text-xs text-gray-500 dark:text-gray-400 mb-1"
+                >
                   End Date
                 </label>
                 <input
+                  id="route-history-end-date"
                   type="date"
                   value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
+                  onChange={e => setEndDate(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   min={startDate}
                   max={new Date().toISOString().split('T')[0]}
+                  aria-label="Select end date for route history"
+                  title="Select the end date for viewing route history"
                 />
               </div>
             </div>

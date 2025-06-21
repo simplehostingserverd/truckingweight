@@ -18,7 +18,6 @@ import React from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 // MUI Joy UI components
@@ -57,12 +56,11 @@ export default function CityRegister() {
   const [cityAddress, setCityAddress] = useState('');
   const [cityPhone, setCityPhone] = useState('');
   const [cityEmail, setCityEmail] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [role, setRole] = useState('admin');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const __router = 
- null;
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -184,7 +182,7 @@ export default function CityRegister() {
               alt="City Weighing System"
               fill
               sizes="(max-width: 1200px) 100vw, 50vw"
-              style={{ objectFit: 'cover' }}
+              className="object-cover"
               priority
             />
             <Box

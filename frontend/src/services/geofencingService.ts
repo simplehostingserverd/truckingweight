@@ -67,6 +67,8 @@ export interface GeofenceAlert {
   recipients: string[];
 }
 
+import { logger } from '@/utils/logger';
+
 class GeofencingService {
   private zones: Map<string, GeofenceZone> = new Map();
   private violations: GeofenceViolation[] = [];
@@ -413,7 +415,11 @@ class GeofencingService {
   private updateVehicleZoneStatus(vehicleId: string, zoneId: string, isInside: boolean): void {
     // In a real implementation, this would update a database or cache
     // For now, we'll just log it
-    console.log(`Vehicle ${vehicleId} is ${isInside ? 'inside' : 'outside'} zone ${zoneId}`);
+    logger.info(
+      `Vehicle ${vehicleId} is ${isInside ? 'inside' : 'outside'} zone ${zoneId}`,
+      { vehicleId, zoneId, isInside },
+      'GeofencingService'
+    );
   }
 
   // Alert management

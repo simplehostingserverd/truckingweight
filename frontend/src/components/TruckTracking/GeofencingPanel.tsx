@@ -17,21 +17,22 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
+import {
   ShieldExclamationIcon,
   MapPinIcon,
   BellIcon,
   CheckCircleIcon,
   XCircleIcon,
   ClockIcon,
-  ExclamationTriangleIcon
+  ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline';
-import { 
-  geofencingService, 
-  GeofenceZone, 
-  GeofenceViolation, 
-  GeofenceAlert 
+import {
+  geofencingService,
+  GeofenceZone,
+  GeofenceViolation,
+  GeofenceAlert,
 } from '@/services/geofencingService';
+import styles from './GeofencingPanel.module.css';
 
 interface GeofencingPanelProps {
   vehicleId?: string;
@@ -53,7 +54,7 @@ export default function GeofencingPanel({ vehicleId, onViolationAlert }: Geofenc
     // Subscribe to real-time alerts
     const handleAlert = (alert: GeofenceAlert) => {
       setAlerts(prev => [alert, ...prev]);
-      
+
       // Find the related violation
       const violation = geofencingService.getViolations().find(v => v.id === alert.violationId);
       if (violation && onViolationAlert) {
@@ -85,7 +86,11 @@ export default function GeofencingPanel({ vehicleId, onViolationAlert }: Geofenc
   };
 
   const handleAcknowledgeViolation = (violationId: string) => {
-    const success = geofencingService.acknowledgeViolation(violationId, 'current-user', 'Acknowledged via dashboard');
+    const success = geofencingService.acknowledgeViolation(
+      violationId,
+      'current-user',
+      'Acknowledged via dashboard'
+    );
     if (success) {
       loadViolations();
     }
@@ -108,22 +113,54 @@ export default function GeofencingPanel({ vehicleId, onViolationAlert }: Geofenc
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'bg-red-500';
-      case 'high': return 'bg-orange-500';
-      case 'medium': return 'bg-yellow-500';
-      case 'low': return 'bg-blue-500';
-      default: return 'bg-gray-500';
+      case 'critical':
+        return 'bg-red-500';
+      case 'high':
+        return 'bg-orange-500';
+      case 'medium':
+        return 'bg-yellow-500';
+      case 'low':
+        return 'bg-blue-500';
+      default:
+        return 'bg-gray-500';
     }
   };
 
   const getSeverityIcon = (severity: string) => {
     switch (severity) {
-      case 'critical': return <ExclamationTriangleIcon className="h-4 w-4" />;
-      case 'high': return <ShieldExclamationIcon className="h-4 w-4" />;
-      case 'medium': return <BellIcon className="h-4 w-4" />;
-      case 'low': return <MapPinIcon className="h-4 w-4" />;
-      default: return <MapPinIcon className="h-4 w-4" />;
+      case 'critical':
+        return <ExclamationTriangleIcon className="h-4 w-4" />;
+      case 'high':
+        return <ShieldExclamationIcon className="h-4 w-4" />;
+      case 'medium':
+        return <BellIcon className="h-4 w-4" />;
+      case 'low':
+        return <MapPinIcon className="h-4 w-4" />;
+      default:
+        return <MapPinIcon className="h-4 w-4" />;
     }
+  };
+
+  const getZoneColorClass = (color: string) => {
+    const colorMap: Record<string, string> = {
+      '#ef4444': styles.zoneColorRed,
+      '#f97316': styles.zoneColorOrange,
+      '#eab308': styles.zoneColorYellow,
+      '#22c55e': styles.zoneColorGreen,
+      '#3b82f6': styles.zoneColorBlue,
+      '#a855f7': styles.zoneColorPurple,
+      '#ec4899': styles.zoneColorPink,
+      '#6b7280': styles.zoneColorGray,
+      red: styles.zoneColorRed,
+      orange: styles.zoneColorOrange,
+      yellow: styles.zoneColorYellow,
+      green: styles.zoneColorGreen,
+      blue: styles.zoneColorBlue,
+      purple: styles.zoneColorPurple,
+      pink: styles.zoneColorPink,
+      gray: styles.zoneColorGray,
+    };
+    return colorMap[color] || styles.zoneColorDefault;
   };
 
   const formatTimestamp = (timestamp: string) => {
@@ -131,7 +168,9 @@ export default function GeofencingPanel({ vehicleId, onViolationAlert }: Geofenc
   };
 
   const unreadAlertsCount = alerts.filter(alert => !alert.isRead).length;
-  const unacknowledgedViolationsCount = violations.filter(violation => !violation.acknowledged).length;
+  const unacknowledgedViolationsCount = violations.filter(
+    violation => !violation.acknowledged
+  ).length;
 
   return (
     <Card>
@@ -165,6 +204,7 @@ export default function GeofencingPanel({ vehicleId, onViolationAlert }: Geofenc
           ].map(tab => (
             <button
               key={tab.key}
+              type="button"
               onClick={() => setActiveTab(tab.key as typeof activeTab)}
               className={`flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                 activeTab === tab.key
@@ -198,8 +238,7 @@ export default function GeofencingPanel({ vehicleId, onViolationAlert }: Geofenc
                 >
                   <div className="flex items-center space-x-3">
                     <div
-                      className="w-4 h-4 rounded-full"
-                      style={{ backgroundColor: zone.metadata.color }}
+                      className={`${styles.zoneColorIndicator} ${getZoneColorClass(zone.metadata.color)}`}
                     />
                     <div>
                       <div className="font-medium text-sm">{zone.name}</div>
@@ -247,19 +286,22 @@ export default function GeofencingPanel({ vehicleId, onViolationAlert }: Geofenc
                 <div
                   key={violation.id}
                   className={`p-3 rounded-lg border-l-4 ${
-                    violation.acknowledged 
-                      ? 'bg-gray-50 dark:bg-gray-800 border-gray-300' 
+                    violation.acknowledged
+                      ? 'bg-gray-50 dark:bg-gray-800 border-gray-300'
                       : 'bg-red-50 dark:bg-red-900/20 border-red-500'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-3">
-                      <div className={`p-1 rounded-full ${getSeverityColor(violation.severity)} text-white`}>
+                      <div
+                        className={`p-1 rounded-full ${getSeverityColor(violation.severity)} text-white`}
+                      >
                         {getSeverityIcon(violation.severity)}
                       </div>
                       <div>
                         <div className="font-medium text-sm">
-                          {violation.violationType === 'entry' ? 'Entered' : 'Exited'} {violation.zoneName}
+                          {violation.violationType === 'entry' ? 'Entered' : 'Exited'}{' '}
+                          {violation.zoneName}
                         </div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
                           Vehicle {violation.vehicleId} • {formatTimestamp(violation.timestamp)}
@@ -301,14 +343,16 @@ export default function GeofencingPanel({ vehicleId, onViolationAlert }: Geofenc
                 <div
                   key={alert.id}
                   className={`p-3 rounded-lg ${
-                    alert.isRead 
-                      ? 'bg-gray-50 dark:bg-gray-800' 
+                    alert.isRead
+                      ? 'bg-gray-50 dark:bg-gray-800'
                       : 'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-3">
-                      <BellIcon className={`h-4 w-4 mt-0.5 ${alert.isRead ? 'text-gray-400' : 'text-blue-500'}`} />
+                      <BellIcon
+                        className={`h-4 w-4 mt-0.5 ${alert.isRead ? 'text-gray-400' : 'text-blue-500'}`}
+                      />
                       <div>
                         <div className="font-medium text-sm">{alert.message}</div>
                         <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center space-x-1">

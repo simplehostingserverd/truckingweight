@@ -14,12 +14,12 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { 
-  notificationService, 
-  Notification, 
+import {
+  notificationService,
+  Notification,
   NotificationEventType,
   NotificationChannel,
-  NotificationRule
+  NotificationRule,
 } from '@/services/notificationService';
 
 export interface UseNotificationsOptions {
@@ -58,7 +58,7 @@ export function useNotifications(options: UseNotificationsOptions = {}) {
 
     try {
       let notifications = notificationService.getNotifications({ limit: maxNotifications });
-      
+
       // Filter by vehicle/driver if specified
       if (vehicleId) {
         notifications = notifications.filter(n => n.data.vehicleId === vehicleId);
@@ -68,7 +68,9 @@ export function useNotifications(options: UseNotificationsOptions = {}) {
       }
 
       const unreadCount = notifications.filter(n => !n.isRead).length;
-      const highPriorityCount = notifications.filter(n => n.priority === 'high' || n.priority === 'urgent').length;
+      const highPriorityCount = notifications.filter(
+        n => n.priority === 'high' || n.priority === 'urgent'
+      ).length;
       const channels = notificationService.getChannels();
       const rules = notificationService.getRules();
 
@@ -91,24 +93,32 @@ export function useNotifications(options: UseNotificationsOptions = {}) {
   }, [vehicleId, driverId, maxNotifications]);
 
   // Handle new notifications
-  const handleNewNotification = useCallback((notification: Notification) => {
-    // Filter by vehicle/driver if specified
-    if (vehicleId && notification.data.vehicleId !== vehicleId) return;
-    if (driverId && notification.data.driverId !== driverId) return;
+  const handleNewNotification = useCallback(
+    (notification: Notification) => {
+      // Filter by vehicle/driver if specified
+      if (vehicleId && notification.data.vehicleId !== vehicleId) return;
+      if (driverId && notification.data.driverId !== driverId) return;
 
-    setData(prev => {
-      const newNotifications = [notification, ...prev.notifications.slice(0, maxNotifications - 1)];
-      const unreadCount = newNotifications.filter(n => !n.isRead).length;
-      const highPriorityCount = newNotifications.filter(n => n.priority === 'high' || n.priority === 'urgent').length;
+      setData(prev => {
+        const newNotifications = [
+          notification,
+          ...prev.notifications.slice(0, maxNotifications - 1),
+        ];
+        const unreadCount = newNotifications.filter(n => !n.isRead).length;
+        const highPriorityCount = newNotifications.filter(
+          n => n.priority === 'high' || n.priority === 'urgent'
+        ).length;
 
-      return {
-        ...prev,
-        notifications: newNotifications,
-        unreadCount,
-        highPriorityCount,
-      };
-    });
-  }, [vehicleId, driverId, maxNotifications]);
+        return {
+          ...prev,
+          notifications: newNotifications,
+          unreadCount,
+          highPriorityCount,
+        };
+      });
+    },
+    [vehicleId, driverId, maxNotifications]
+  );
 
   // Subscribe to notifications
   useEffect(() => {
@@ -127,7 +137,7 @@ export function useNotifications(options: UseNotificationsOptions = {}) {
     if (success) {
       setData(prev => ({
         ...prev,
-        notifications: prev.notifications.map(n => 
+        notifications: prev.notifications.map(n =>
           n.id === notificationId ? { ...n, isRead: true } : n
         ),
         unreadCount: Math.max(0, prev.unreadCount - 1),
@@ -141,13 +151,15 @@ export function useNotifications(options: UseNotificationsOptions = {}) {
     if (success) {
       setData(prev => ({
         ...prev,
-        notifications: prev.notifications.map(n => 
-          n.id === notificationId ? { 
-            ...n, 
-            isAcknowledged: true, 
-            acknowledgedBy,
-            acknowledgedAt: new Date().toISOString()
-          } : n
+        notifications: prev.notifications.map(n =>
+          n.id === notificationId
+            ? {
+                ...n,
+                isAcknowledged: true,
+                acknowledgedBy,
+                acknowledgedAt: new Date().toISOString(),
+              }
+            : n
         ),
       }));
     }
@@ -165,81 +177,110 @@ export function useNotifications(options: UseNotificationsOptions = {}) {
   }, []);
 
   // Create notifications
-  const createNotification = useCallback(async (
-    eventType: NotificationEventType,
-    data: Notification['data'],
-    customMessage?: { title: string; message: string }
-  ) => {
-    try {
-      const notification = await notificationService.createNotification(eventType, data, customMessage);
-      return notification;
-    } catch (error) {
-      setData(prev => ({
-        ...prev,
-        error: error instanceof Error ? error.message : 'Failed to create notification',
-      }));
-      return null;
-    }
-  }, []);
+  const createNotification = useCallback(
+    async (
+      eventType: NotificationEventType,
+      data: Notification['data'],
+      customMessage?: { title: string; message: string }
+    ) => {
+      try {
+        const notification = await notificationService.createNotification(
+          eventType,
+          data,
+          customMessage
+        );
+        return notification;
+      } catch (error) {
+        setData(prev => ({
+          ...prev,
+          error: error instanceof Error ? error.message : 'Failed to create notification',
+        }));
+        return null;
+      }
+    },
+    []
+  );
 
   // Quick notification methods
-  const notifyGeofenceViolation = useCallback(async (
-    vehicleId: string,
-    driverId: string,
-    zoneName: string,
-    violationType: 'entry' | 'exit',
-    location: { lat: number; lng: number; address?: string }
-  ) => {
-    try {
-      await notificationService.notifyGeofenceViolation(vehicleId, driverId, zoneName, violationType, location);
-    } catch (error) {
-      console.error('Failed to send geofence violation notification:', error);
-    }
-  }, []);
+  const notifyGeofenceViolation = useCallback(
+    async (
+      vehicleId: string,
+      driverId: string,
+      zoneName: string,
+      violationType: 'entry' | 'exit',
+      location: { lat: number; lng: number; address?: string }
+    ) => {
+      try {
+        await notificationService.notifyGeofenceViolation(
+          vehicleId,
+          driverId,
+          zoneName,
+          violationType,
+          location
+        );
+      } catch (error) {
+        console.error('Failed to send geofence violation notification:', error);
+      }
+    },
+    []
+  );
 
-  const notifySpeedViolation = useCallback(async (
-    vehicleId: string,
-    driverId: string,
-    currentSpeed: number,
-    speedLimit: number,
-    location: { lat: number; lng: number; address?: string }
-  ) => {
-    try {
-      await notificationService.notifySpeedViolation(vehicleId, driverId, currentSpeed, speedLimit, location);
-    } catch (error) {
-      console.error('Failed to send speed violation notification:', error);
-    }
-  }, []);
+  const notifySpeedViolation = useCallback(
+    async (
+      vehicleId: string,
+      driverId: string,
+      currentSpeed: number,
+      speedLimit: number,
+      location: { lat: number; lng: number; address?: string }
+    ) => {
+      try {
+        await notificationService.notifySpeedViolation(
+          vehicleId,
+          driverId,
+          currentSpeed,
+          speedLimit,
+          location
+        );
+      } catch (error) {
+        console.error('Failed to send speed violation notification:', error);
+      }
+    },
+    []
+  );
 
-  const notifyETADelay = useCallback(async (
-    vehicleId: string,
-    driverId: string,
-    delayMinutes: number,
-    newETA: string
-  ) => {
-    try {
-      await notificationService.notifyETADelay(vehicleId, driverId, delayMinutes, newETA);
-    } catch (error) {
-      console.error('Failed to send ETA delay notification:', error);
-    }
-  }, []);
+  const notifyETADelay = useCallback(
+    async (vehicleId: string, driverId: string, delayMinutes: number, newETA: string) => {
+      try {
+        await notificationService.notifyETADelay(vehicleId, driverId, delayMinutes, newETA);
+      } catch (error) {
+        console.error('Failed to send ETA delay notification:', error);
+      }
+    },
+    []
+  );
 
   // Channel and rule management
-  const updateChannel = useCallback((channelId: string, updates: Partial<NotificationChannel>) => {
-    const success = notificationService.updateChannel(channelId, updates);
-    if (success) {
-      loadData(); // Reload to get updated channels
-    }
-    return success;
-  }, [loadData]);
+  const updateChannel = useCallback(
+    (channelId: string, updates: Partial<NotificationChannel>) => {
+      const success = notificationService.updateChannel(channelId, updates);
+      if (success) {
+        loadData(); // Reload to get updated channels
+      }
+      return success;
+    },
+    [loadData]
+  );
 
-  const updateRule = useCallback((ruleId: string, updates: Partial<NotificationRule>) => {
-    const success = notificationService.updateRule(ruleId, updates);
-    if (success) {
-      loadData(); // Reload to get updated rules
-    }
-    return success;
-  }, [loadData]);
+  const updateRule = useCallback(
+    (ruleId: string, updates: Partial<NotificationRule>) => {
+      const success = notificationService.updateRule(ruleId, updates);
+      if (success) {
+        loadData(); // Reload to get updated rules
+      }
+      return success;
+    },
+    [loadData]
+  );
 
   // Load data on mount
   useEffect(() => {
@@ -274,11 +315,14 @@ export function useEventNotifications(eventType: NotificationEventType) {
     setIsLoading(false);
   }, [eventType]);
 
-  const handleNewNotification = useCallback((notification: Notification) => {
-    if (notification.eventType === eventType) {
-      setNotifications(prev => [notification, ...prev]);
-    }
-  }, [eventType]);
+  const handleNewNotification = useCallback(
+    (notification: Notification) => {
+      if (notification.eventType === eventType) {
+        setNotifications(prev => [notification, ...prev]);
+      }
+    },
+    [eventType]
+  );
 
   useEffect(() => {
     loadNotifications();
@@ -311,21 +355,27 @@ export function useNotificationSettings() {
     setIsLoading(false);
   }, []);
 
-  const updateChannel = useCallback((channelId: string, updates: Partial<NotificationChannel>) => {
-    const success = notificationService.updateChannel(channelId, updates);
-    if (success) {
-      loadSettings();
-    }
-    return success;
-  }, [loadSettings]);
+  const updateChannel = useCallback(
+    (channelId: string, updates: Partial<NotificationChannel>) => {
+      const success = notificationService.updateChannel(channelId, updates);
+      if (success) {
+        loadSettings();
+      }
+      return success;
+    },
+    [loadSettings]
+  );
 
-  const updateRule = useCallback((ruleId: string, updates: Partial<NotificationRule>) => {
-    const success = notificationService.updateRule(ruleId, updates);
-    if (success) {
-      loadSettings();
-    }
-    return success;
-  }, [loadSettings]);
+  const updateRule = useCallback(
+    (ruleId: string, updates: Partial<NotificationRule>) => {
+      const success = notificationService.updateRule(ruleId, updates);
+      if (success) {
+        loadSettings();
+      }
+      return success;
+    },
+    [loadSettings]
+  );
 
   useEffect(() => {
     loadSettings();

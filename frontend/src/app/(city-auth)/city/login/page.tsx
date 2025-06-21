@@ -53,6 +53,7 @@ export default function CityLogin() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_showDemoLogin, setShowDemoLogin] = useState(process.env.NODE_ENV === 'development');
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent) => {
@@ -244,7 +245,7 @@ export default function CityLogin() {
               alt="City Weighing System"
               fill
               sizes="(max-width: 1200px) 100vw, 50vw"
-              style={{ objectFit: 'cover' }}
+              className="object-cover"
               priority
             />
             <Box

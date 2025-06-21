@@ -13,7 +13,13 @@
 
 'use client';
 
-import { DocumentTextIcon, PlusIcon, ScaleIcon } from '@heroicons/react/24/outline';
+import {
+  DocumentTextIcon,
+  PlusIcon,
+  ScaleIcon,
+  TruckIcon,
+  UserGroupIcon,
+} from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import React from 'react';
 
@@ -40,7 +46,7 @@ function QuickActions() {
           href="/loads/new"
           className="flex items-center justify-center bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors"
         >
-          <PlusIcon className="h-5 w-5 mr-2" />
+          <TruckIcon className="h-5 w-5 mr-2" />
           Create Load
         </Link>
         <Link
@@ -64,8 +70,15 @@ function QuickActions() {
           Compliance Check
         </Link>
         <Link
+          href="/drivers"
+          className="flex items-center justify-center bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors"
+        >
+          <UserGroupIcon className="h-5 w-5 mr-2" />
+          Manage Drivers
+        </Link>
+        <Link
           href="/reports"
-          className="flex items-center justify-center bg-gray-700 text-white py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors col-span-1 md:col-span-2"
+          className="flex items-center justify-center bg-gray-700 text-white py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors"
         >
           <DocumentTextIcon className="h-5 w-5 mr-2" />
           Generate Report

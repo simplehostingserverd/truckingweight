@@ -378,8 +378,13 @@ export default function DriverTrackingPage() {
 
         <div className="flex space-x-4">
           <div>
+            <label htmlFor="driver-select" className="sr-only">
+              Select driver to track
+            </label>
             <select
+              id="driver-select"
               aria-label="Select driver to track"
+              title="Choose a driver to view their live tracking information"
               className="w-[180px] rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               value={selectedDriver || ''}
               onChange={e => handleDriverChange(e.target.value)}
@@ -396,8 +401,13 @@ export default function DriverTrackingPage() {
           </div>
 
           <div>
+            <label htmlFor="refresh-interval-select" className="sr-only">
+              Select refresh interval
+            </label>
             <select
+              id="refresh-interval-select"
               aria-label="Select refresh interval"
+              title="Choose how often to refresh the tracking data"
               className="w-[180px] rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               value={refreshInterval}
               onChange={e => handleRefreshIntervalChange(Number(e.target.value))}
@@ -620,91 +630,91 @@ export default function DriverTrackingPage() {
               </TabsContent>
             </Tabs>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Driver Information</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                          Driver Name
-                        </p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">
-                          {activeDriverLocation.driverName}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                          Current Location
-                        </p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">
-                          {activeDriverLocation.currentPosition.name}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                          Status
-                        </p>
-                        <p
-                          className={`text-lg font-bold ${
-                            activeDriverLocation.status === 'Driving'
-                              ? 'text-blue-600 dark:text-blue-400'
-                              : activeDriverLocation.status === 'On Duty'
-                                ? 'text-green-600 dark:text-green-400'
-                                : 'text-yellow-600 dark:text-yellow-400'
-                          }`}
-                        >
-                          {activeDriverLocation.status}
-                        </p>
-                      </div>
+            {/* Driver and Vehicle Information */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Driver Information</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Driver Name
+                      </p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-white">
+                        {activeDriverLocation.driverName}
+                      </p>
                     </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Vehicle Information</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                          Vehicle
-                        </p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">
-                          {activeDriverLocation.vehicle.name}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                          Model
-                        </p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">
-                          {activeDriverLocation.vehicle.model}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                          Current Speed
-                        </p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">
-                          {activeDriverLocation.currentPosition.speed} mph
-                        </p>
-                      </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Current Location
+                      </p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-white">
+                        {activeDriverLocation.currentPosition.name}
+                      </p>
                     </div>
-                  </CardContent>
-                </Card>
+                    <div>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Status
+                      </p>
+                      <p
+                        className={`text-lg font-bold ${
+                          activeDriverLocation.status === 'Driving'
+                            ? 'text-blue-600 dark:text-blue-400'
+                            : activeDriverLocation.status === 'On Duty'
+                              ? 'text-green-600 dark:text-green-400'
+                              : 'text-yellow-600 dark:text-yellow-400'
+                        }`}
+                      >
+                        {activeDriverLocation.status}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-                {/* ETA Display */}
-                <ETADisplay
-                  etaData={etaData.currentETA}
-                  isLoading={etaData.isLoading}
-                  onRefresh={etaData.refresh}
-                />
-              </div>
-            </>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Vehicle Information</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Vehicle
+                      </p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-white">
+                        {activeDriverLocation.vehicle.name}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Model
+                      </p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-white">
+                        {activeDriverLocation.vehicle.model}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Current Speed
+                      </p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-white">
+                        {activeDriverLocation.currentPosition.speed} mph
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* ETA Display */}
+              <ETADisplay
+                etaData={etaData.currentETA}
+                isLoading={etaData.isLoading}
+                onRefresh={etaData.refresh}
+              />
+            </div>
           ) : (
             <div className="flex justify-center items-center h-64 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <p className="text-lg text-gray-500 dark:text-gray-400">

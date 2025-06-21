@@ -15,7 +15,6 @@
 
 import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 export default function ResetPassword() {
@@ -23,7 +22,6 @@ export default function ResetPassword() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const __router =  null;
   const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {

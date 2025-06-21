@@ -33,9 +33,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Cosmo Exploit Group LLC - Weight Management System',
+  title: 'CargoScalePro - Professional Truck Weight Management System',
   description:
-    'A proprietary weight management system by Cosmo Exploit Group LLC for trucking companies to manage weight checking and load management',
+    'CargoScalePro: Advanced weight management and compliance system for trucking companies. Manage scales, loads, drivers, and ensure DOT compliance with real-time monitoring.',
   manifest: '/manifest.json',
   icons: {
     apple: [
@@ -46,18 +46,28 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Cosmo Weight Management',
+    title: 'CargoScalePro',
   },
-  authors: [{ name: 'Michael Anthony Trevino Jr.', url: 'https://cosmoexploitgroup.com' }],
+  authors: [{ name: 'Michael Anthony Trevino Jr.', url: 'https://cargoscalepro.com' }],
   creator: 'Michael Anthony Trevino Jr.',
   publisher: 'Cosmo Exploit Group LLC',
-  keywords: ['trucking', 'weight management', 'logistics', 'compliance', 'fleet management'],
-  robots: 'noindex, nofollow',
+  keywords: [
+    'trucking',
+    'weight management',
+    'logistics',
+    'compliance',
+    'fleet management',
+    'DOT',
+    'cargo scale',
+    'truck weighing',
+  ],
+  robots: 'index, follow',
   openGraph: {
     type: 'website',
-    title: 'Cosmo Exploit Group LLC - Weight Management System',
-    description: 'A proprietary weight management system for trucking companies',
-    siteName: 'Cosmo Exploit Group LLC',
+    title: 'CargoScalePro - Professional Truck Weight Management',
+    description: 'Advanced weight management and compliance system for trucking companies',
+    siteName: 'CargoScalePro',
+    url: 'https://cargoscalepro.com',
   },
 };
 
@@ -78,15 +88,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="application-name" content="Cosmo Weight Management" />
+        <meta name="application-name" content="CargoScalePro" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Cosmo Weight Management" />
+        <meta name="apple-mobile-web-app-title" content="CargoScalePro" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content="#0D2B4B" />
         <meta name="copyright" content="© 2025 Cosmo Exploit Group LLC. All Rights Reserved." />
         <meta name="author" content="Michael Anthony Trevino Jr." />
+
+        {/* Preconnect to Cesium CDN for performance */}
+        <link rel="preconnect" href="https://cesium.com" />
       </head>
       <body className={`${inter.variable} font-sans`}>
         <FontLoader />

@@ -19,6 +19,7 @@ import { Deck, MapView } from 'deck.gl';
 import { PathLayer, PolygonLayer } from 'deck.gl';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { logger } from '@/utils/logger';
 
 interface RoutePoint {
   lat: number;
@@ -55,7 +56,11 @@ export default function DeckGLTruckVisualization({
       return;
     }
 
-    console.log('DeckGL: Initializing with route points:', route.length);
+    logger.info(
+      'DeckGL: Initializing with route points',
+      { routeLength: route.length },
+      'DeckGLTruckVisualization'
+    );
 
     try {
       // Current truck position
@@ -68,7 +73,7 @@ export default function DeckGLTruckVisualization({
         return;
       }
 
-      console.log('DeckGL: Using truck position:', truckPosition);
+      logger.info('DeckGL: Using truck position', truckPosition, 'DeckGLTruckVisualization');
 
       // Set Mapbox token
       mapboxgl.accessToken = mapboxToken;
@@ -94,7 +99,11 @@ export default function DeckGLTruckVisualization({
 
       // Wait for map to load before adding deck.gl layers
       map.on('load', () => {
-        console.log('DeckGL: Mapbox loaded, initializing Deck.gl');
+        logger.info(
+          'DeckGL: Mapbox loaded, initializing Deck.gl',
+          undefined,
+          'DeckGLTruckVisualization'
+        );
 
         try {
           // Ensure canvas is available
@@ -191,7 +200,7 @@ export default function DeckGLTruckVisualization({
               ),
             ],
             onLoad: () => {
-              console.log('DeckGL: Successfully loaded');
+              logger.info('DeckGL: Successfully loaded', undefined, 'DeckGLTruckVisualization');
               setLoading(false);
             },
             onError: (err: Error) => {
@@ -202,7 +211,11 @@ export default function DeckGLTruckVisualization({
           });
 
           deckRef.current = deck;
-          console.log('DeckGL: Deck instance created successfully');
+          logger.info(
+            'DeckGL: Deck instance created successfully',
+            undefined,
+            'DeckGLTruckVisualization'
+          );
         } catch (deckError) {
           console.error('Error creating Deck.gl instance:', deckError);
           setError(

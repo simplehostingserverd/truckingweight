@@ -14,11 +14,11 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { 
-  telematicsService, 
-  VehiclePosition, 
-  TelematicsEvent, 
-  HistoricalRoute 
+import {
+  telematicsService,
+  VehiclePosition,
+  TelematicsEvent,
+  HistoricalRoute,
 } from '@/services/telematicsService';
 
 export interface UseTelematicsOptions {
@@ -106,41 +106,47 @@ export function useTelematics(options: UseTelematicsOptions = {}) {
   }, [vehicleId]);
 
   // Get historical route
-  const getHistoricalRoute = useCallback(async (startTime: string, endTime: string) => {
-    if (!vehicleId) return;
+  const getHistoricalRoute = useCallback(
+    async (startTime: string, endTime: string) => {
+      if (!vehicleId) return;
 
-    setData(prev => ({ ...prev, isLoading: true, error: null }));
+      setData(prev => ({ ...prev, isLoading: true, error: null }));
 
-    try {
-      const route = await telematicsService.getHistoricalRoute(vehicleId, startTime, endTime);
-      setData(prev => ({
-        ...prev,
-        historicalRoute: route,
-        isLoading: false,
-      }));
-    } catch (error) {
-      setData(prev => ({
-        ...prev,
-        isLoading: false,
-        error: error instanceof Error ? error.message : 'Failed to get historical route',
-      }));
-    }
-  }, [vehicleId]);
+      try {
+        const route = await telematicsService.getHistoricalRoute(vehicleId, startTime, endTime);
+        setData(prev => ({
+          ...prev,
+          historicalRoute: route,
+          isLoading: false,
+        }));
+      } catch (error) {
+        setData(prev => ({
+          ...prev,
+          isLoading: false,
+          error: error instanceof Error ? error.message : 'Failed to get historical route',
+        }));
+      }
+    },
+    [vehicleId]
+  );
 
   // Get telematics events
-  const getTelematicsEvents = useCallback(async (startTime: string, endTime: string) => {
-    if (!vehicleId) return;
+  const getTelematicsEvents = useCallback(
+    async (startTime: string, endTime: string) => {
+      if (!vehicleId) return;
 
-    try {
-      const events = await telematicsService.getTelematicsEvents(vehicleId, startTime, endTime);
-      setData(prev => ({
-        ...prev,
-        events,
-      }));
-    } catch (error) {
-      console.error('Failed to get telematics events:', error);
-    }
-  }, [vehicleId]);
+      try {
+        const events = await telematicsService.getTelematicsEvents(vehicleId, startTime, endTime);
+        setData(prev => ({
+          ...prev,
+          events,
+        }));
+      } catch (error) {
+        console.error('Failed to get telematics events:', error);
+      }
+    },
+    [vehicleId]
+  );
 
   // Check connection status
   useEffect(() => {
@@ -150,10 +156,10 @@ export function useTelematics(options: UseTelematicsOptions = {}) {
       const now = new Date().getTime();
       const lastUpdateTime = data.lastUpdate ? new Date(data.lastUpdate).getTime() : 0;
       const timeDiff = now - lastUpdateTime;
-      
+
       // Consider offline if no update in the last 5 minutes
       const isOnline = timeDiff < 300000;
-      
+
       setData(prev => ({
         ...prev,
         isOnline,

@@ -21,6 +21,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import styles from './register.module.css';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -32,7 +33,9 @@ export default function Register() {
   const [scaleWeight, setScaleWeight] = useState(0);
   const [truckPosition, setTruckPosition] = useState(0);
   const [formProgress, setFormProgress] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [captchaError, setCaptchaError] = useState('');
   const canvasRef = useRef(null);
   // const captchaRef = useRef<HCaptcha>(null); // TEMPORARILY DISABLED
@@ -157,17 +160,20 @@ export default function Register() {
   }, [truckPosition, scaleWeight, formProgress]);
 
   // hCaptcha event handlers
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onCaptchaVerify = (token: string) => {
     setCaptchaToken(token);
     setCaptchaError('');
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onCaptchaError = (err: Error) => {
     console.error('hCaptcha error:', err);
     setCaptchaError('Captcha verification failed. Please try again.');
     setCaptchaToken(null);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onCaptchaExpire = () => {
     setCaptchaToken(null);
     setCaptchaError('Captcha expired. Please verify again.');
@@ -294,8 +300,8 @@ export default function Register() {
           <div className="flex items-center mt-2">
             <div className="h-1 w-24 bg-gray-700 rounded-full overflow-hidden">
               <div
-                className="h-full bg-indigo-500 rounded-full transition-all duration-300"
-                style={{ width: `${formProgress}%` }}
+                className={`h-full bg-indigo-500 rounded-full ${styles.progressBar}`}
+                style={{ '--progress-width': `${formProgress}%` } as React.CSSProperties}
               ></div>
             </div>
           </div>
@@ -307,14 +313,18 @@ export default function Register() {
           <div className="flex items-center mt-2">
             <div className="h-2 w-full bg-gray-700 rounded-full overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-300 ${
+                className={`h-full rounded-full ${styles.weightScaleBar} ${
                   scaleWeight > 80000
                     ? 'bg-red-500'
                     : scaleWeight > 70000
                       ? 'bg-amber-500'
                       : 'bg-emerald-500'
                 }`}
-                style={{ width: `${Math.min(100, (scaleWeight / 80000) * 100)}%` }}
+                style={
+                  {
+                    '--scale-width': `${Math.min(100, (scaleWeight / 80000) * 100)}%`,
+                  } as React.CSSProperties
+                }
               ></div>
             </div>
           </div>

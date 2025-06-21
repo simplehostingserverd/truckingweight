@@ -98,6 +98,8 @@ export interface NotificationTemplate {
   channels: string[];
 }
 
+import { logger } from '@/utils/logger';
+
 class NotificationService {
   private channels: Map<string, NotificationChannel> = new Map();
   private rules: Map<string, NotificationRule> = new Map();
@@ -288,7 +290,11 @@ class NotificationService {
     const now = Date.now();
 
     if (now - lastNotification < rule.cooldownMinutes * 60000) {
-      console.log(`Notification suppressed due to cooldown: ${rule.name}`);
+      logger.warn(
+        `Notification suppressed due to cooldown: ${rule.name}`,
+        { ruleId: rule.id, cooldownKey },
+        'NotificationService'
+      );
       throw new Error('Notification suppressed due to cooldown period');
     }
 
@@ -478,12 +484,20 @@ class NotificationService {
     _channel: NotificationChannel
   ): Promise<void> {
     // Mock email sending - in production, this would integrate with email service
-    console.log('Email notification sent (mock)');
+    logger.info(
+      'Email notification sent (mock)',
+      { notificationId: _notification.id },
+      'NotificationService'
+    );
   }
 
   private async sendSMS(_notification: Notification, _channel: NotificationChannel): Promise<void> {
     // Mock SMS sending - in production, this would integrate with SMS service
-    console.log('SMS notification sent (mock)');
+    logger.info(
+      'SMS notification sent (mock)',
+      { notificationId: _notification.id },
+      'NotificationService'
+    );
   }
 
   private async sendWebhook(
@@ -491,7 +505,11 @@ class NotificationService {
     _channel: NotificationChannel
   ): Promise<void> {
     // Mock webhook sending - in production, this would make HTTP request
-    console.log('Webhook notification sent (mock)');
+    logger.info(
+      'Webhook notification sent (mock)',
+      { notificationId: _notification.id },
+      'NotificationService'
+    );
   }
 
   // Subscription management

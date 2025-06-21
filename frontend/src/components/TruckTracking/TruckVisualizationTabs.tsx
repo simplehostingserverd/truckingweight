@@ -20,6 +20,7 @@ import { useState } from 'react';
 import CesiumTruckVisualization from './CesiumTruckVisualization';
 import DeckGLTruckVisualization from './DeckGLTruckVisualization';
 import MapboxTruckVisualization from './MapboxTruckVisualization';
+import { logger } from '@/utils/logger';
 
 interface RoutePoint {
   lat: number;
@@ -48,13 +49,17 @@ export default function TruckVisualizationTabs({
 
   // Debug information
   React.useEffect(() => {
-    console.log('TruckVisualizationTabs Debug Info:', {
-      routeLength: route?.length,
-      hasCurrentPosition: !!currentPosition,
-      hasMapboxToken: !!mapboxToken,
-      hasCesiumToken: !!cesiumToken,
-      cesiumLoaded: typeof window !== 'undefined' ? typeof window.Cesium !== 'undefined' : false,
-    });
+    logger.info(
+      'TruckVisualizationTabs Debug Info',
+      {
+        routeLength: route?.length,
+        hasCurrentPosition: !!currentPosition,
+        hasMapboxToken: !!mapboxToken,
+        hasCesiumToken: !!cesiumToken,
+        cesiumLoaded: typeof window !== 'undefined' ? typeof window.Cesium !== 'undefined' : false,
+      },
+      'TruckVisualizationTabs'
+    );
   }, [route, currentPosition, mapboxToken, cesiumToken]);
 
   return (

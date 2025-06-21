@@ -14,11 +14,11 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { 
-  geofencingService, 
-  GeofenceZone, 
-  GeofenceViolation, 
-  GeofenceAlert 
+import {
+  geofencingService,
+  GeofenceZone,
+  GeofenceViolation,
+  GeofenceAlert,
 } from '@/services/geofencingService';
 
 export interface UseGeofencingOptions {
@@ -61,7 +61,9 @@ export function useGeofencing(options: UseGeofencingOptions = {}) {
       const alerts = geofencingService.getAlerts();
 
       const unreadAlertsCount = alerts.filter(alert => !alert.isRead).length;
-      const unacknowledgedViolationsCount = violations.filter(violation => !violation.acknowledged).length;
+      const unacknowledgedViolationsCount = violations.filter(
+        violation => !violation.acknowledged
+      ).length;
 
       setData(prev => ({
         ...prev,
@@ -106,8 +108,13 @@ export function useGeofencing(options: UseGeofencingOptions = {}) {
     (latitude: number, longitude: number) => {
       if (!vehicleId || !driverId) return [];
 
-      const violations = geofencingService.checkVehiclePosition(vehicleId, driverId, latitude, longitude);
-      
+      const violations = geofencingService.checkVehiclePosition(
+        vehicleId,
+        driverId,
+        latitude,
+        longitude
+      );
+
       if (violations.length > 0) {
         setData(prev => ({
           ...prev,
@@ -145,7 +152,7 @@ export function useGeofencing(options: UseGeofencingOptions = {}) {
       if (updatedZone) {
         setData(prev => ({
           ...prev,
-          zones: prev.zones.map(zone => zone.id === zoneId ? updatedZone : zone),
+          zones: prev.zones.map(zone => (zone.id === zoneId ? updatedZone : zone)),
         }));
       }
       return updatedZone;
@@ -178,29 +185,38 @@ export function useGeofencing(options: UseGeofencingOptions = {}) {
   }, []);
 
   // Violation management functions
-  const acknowledgeViolation = useCallback((violationId: string, acknowledgedBy: string, notes?: string) => {
-    try {
-      const success = geofencingService.acknowledgeViolation(violationId, acknowledgedBy, notes);
-      if (success) {
+  const acknowledgeViolation = useCallback(
+    (violationId: string, acknowledgedBy: string, notes?: string) => {
+      try {
+        const success = geofencingService.acknowledgeViolation(violationId, acknowledgedBy, notes);
+        if (success) {
+          setData(prev => ({
+            ...prev,
+            violations: prev.violations.map(violation =>
+              violation.id === violationId
+                ? {
+                    ...violation,
+                    acknowledged: true,
+                    acknowledgedBy,
+                    acknowledgedAt: new Date().toISOString(),
+                    notes,
+                  }
+                : violation
+            ),
+            unacknowledgedViolationsCount: Math.max(0, prev.unacknowledgedViolationsCount - 1),
+          }));
+        }
+        return success;
+      } catch (error) {
         setData(prev => ({
           ...prev,
-          violations: prev.violations.map(violation =>
-            violation.id === violationId
-              ? { ...violation, acknowledged: true, acknowledgedBy, acknowledgedAt: new Date().toISOString(), notes }
-              : violation
-          ),
-          unacknowledgedViolationsCount: Math.max(0, prev.unacknowledgedViolationsCount - 1),
+          error: error instanceof Error ? error.message : 'Failed to acknowledge violation',
         }));
+        return false;
       }
-      return success;
-    } catch (error) {
-      setData(prev => ({
-        ...prev,
-        error: error instanceof Error ? error.message : 'Failed to acknowledge violation',
-      }));
-      return false;
-    }
-  }, []);
+    },
+    []
+  );
 
   // Alert management functions
   const markAlertAsRead = useCallback((alertId: string) => {

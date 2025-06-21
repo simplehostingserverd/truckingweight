@@ -17,8 +17,8 @@ import { useSupabaseAuth } from '@/providers/SupabaseAuthProvider';
 // import _HCaptcha from '@hcaptcha/react-hcaptcha'; // Unused
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
+import styles from './login.module.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -26,9 +26,12 @@ export default function Login() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [captchaError, setCaptchaError] = useState('');
-  const captchaRef = useRef(null);
+  const captchaRef = useRef<HTMLElement | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const { signIn } = useSupabaseAuth();
 
@@ -66,17 +69,20 @@ export default function Login() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onCaptchaVerify = (token: string) => {
     setCaptchaToken(token);
     setCaptchaError('');
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onCaptchaError = (err: Error) => {
     console.error('hCaptcha error:', err);
     setCaptchaError('Captcha verification failed. Please try again.');
     setCaptchaToken(null);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onCaptchaExpire = () => {
     setCaptchaToken(null);
     setCaptchaError('Captcha expired. Please verify again.');
@@ -91,7 +97,7 @@ export default function Login() {
           alt="Semi truck on highway"
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
-          style={{ objectFit: 'cover' }}
+          className={styles.backgroundImage}
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-transparent z-10"></div>
@@ -114,12 +120,19 @@ export default function Login() {
             <div className="flex space-x-1">
               {[1, 2, 3, 4, 5, 6, 7].map(i => {
                 // Use consistent heights to avoid hydration mismatch
-                const heights = [32, 28, 24, 36, 30, 26, 34];
+                const chartBarClasses = [
+                  styles.chartBar1,
+                  styles.chartBar2,
+                  styles.chartBar3,
+                  styles.chartBar4,
+                  styles.chartBar5,
+                  styles.chartBar6,
+                  styles.chartBar7,
+                ];
                 return (
                   <div
                     key={i}
-                    className="w-2 bg-indigo-500 rounded-sm"
-                    style={{ height: `${heights[i - 1]}px` }}
+                    className={`w-2 bg-indigo-500 rounded-sm ${chartBarClasses[i - 1]}`}
                   ></div>
                 );
               })}

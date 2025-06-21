@@ -1,0 +1,46 @@
+/**
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ *
+ * PROPRIETARY AND CONFIDENTIAL
+ *
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ *
+ * This file contains proprietary and confidential information of
+ * Cosmo Exploit Group LLC and may not be copied, distributed, or used
+ * in any way without explicit written permission.
+ */
+
+/* Background image styles */
+.backgroundImage {
+  object-fit: cover;
+}
+
+/* Chart bar heights */
+.chartBar1 {
+  height: 32px;
+}
+
+.chartBar2 {
+  height: 28px;
+}
+
+.chartBar3 {
+  height: 24px;
+}
+
+.chartBar4 {
+  height: 36px;
+}
+
+.chartBar5 {
+  height: 30px;
+}
+
+.chartBar6 {
+  height: 26px;
+}
+
+.chartBar7 {
+  height: 34px;
+}

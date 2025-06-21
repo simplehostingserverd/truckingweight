@@ -17,14 +17,14 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { 
-  PlayIcon, 
-  PauseIcon, 
-  StopIcon, 
-  ForwardIcon, 
+import {
+  PlayIcon,
+  PauseIcon,
+  StopIcon,
+  ForwardIcon,
   BackwardIcon,
   ClockIcon,
-  MapPinIcon
+  MapPinIcon,
 } from '@heroicons/react/24/outline';
 import { HistoricalRoute, RoutePoint } from '@/services/telematicsService';
 
@@ -43,7 +43,7 @@ export default function RouteHistoryPlayback({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [playbackSpeed, setPlaybackSpeed] = useState(1); // 1x, 2x, 4x, 8x
   const [selectedTimeRange, setSelectedTimeRange] = useState<[number, number]>([0, 100]);
-  
+
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const totalPoints = historicalRoute?.points.length || 0;
 
@@ -119,10 +119,13 @@ export default function RouteHistoryPlayback({
   }, []);
 
   // Handle slider change
-  const handleSliderChange = useCallback((value: number[]) => {
-    const newIndex = Math.floor((value[0] / 100) * (totalPoints - 1));
-    setCurrentIndex(newIndex);
-  }, [totalPoints]);
+  const handleSliderChange = useCallback(
+    (value: number[]) => {
+      const newIndex = Math.floor((value[0] / 100) * (totalPoints - 1));
+      setCurrentIndex(newIndex);
+    },
+    [totalPoints]
+  );
 
   // Format time display
   const formatTime = (timestamp: string) => {
@@ -166,7 +169,8 @@ export default function RouteHistoryPlayback({
             <span>Route History Playback</span>
           </div>
           <div className="text-sm text-gray-500 dark:text-gray-400">
-            {formatDuration(historicalRoute.totalDuration)} • {historicalRoute.totalDistance.toFixed(1)} miles
+            {formatDuration(historicalRoute.totalDuration)} •{' '}
+            {historicalRoute.totalDistance.toFixed(1)} miles
           </div>
         </CardTitle>
       </CardHeader>
@@ -186,28 +190,21 @@ export default function RouteHistoryPlayback({
             disabled={totalPoints === 0}
           />
           <div className="flex justify-between text-xs text-gray-400">
-            <span>Point {currentIndex + 1} of {totalPoints}</span>
+            <span>
+              Point {currentIndex + 1} of {totalPoints}
+            </span>
             <span>{currentPosition ? formatTime(currentPosition.timestamp) : ''}</span>
           </div>
         </div>
 
         {/* Playback Controls */}
         <div className="flex items-center justify-center space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={skipBackward}
-            disabled={currentIndex === 0}
-          >
+          <Button variant="outline" size="sm" onClick={skipBackward} disabled={currentIndex === 0}>
             <BackwardIcon className="h-4 w-4" />
           </Button>
-          
+
           {isPlaying ? (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={pausePlayback}
-            >
+            <Button variant="outline" size="sm" onClick={pausePlayback}>
               <PauseIcon className="h-4 w-4" />
             </Button>
           ) : (
@@ -220,15 +217,11 @@ export default function RouteHistoryPlayback({
               <PlayIcon className="h-4 w-4" />
             </Button>
           )}
-          
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={stopPlayback}
-          >
+
+          <Button variant="outline" size="sm" onClick={stopPlayback}>
             <StopIcon className="h-4 w-4" />
           </Button>
-          
+
           <Button
             variant="outline"
             size="sm"
@@ -245,7 +238,7 @@ export default function RouteHistoryPlayback({
           {[0.5, 1, 2, 4, 8].map(speed => (
             <Button
               key={speed}
-              variant={playbackSpeed === speed ? "default" : "outline"}
+              variant={playbackSpeed === speed ? 'default' : 'outline'}
               size="sm"
               onClick={() => setPlaybackSpeed(speed)}
               className="px-2 py-1 text-xs"

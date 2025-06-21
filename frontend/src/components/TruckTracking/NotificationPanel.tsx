@@ -17,7 +17,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
+import {
   BellIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
@@ -26,12 +26,12 @@ import {
   ClockIcon,
   TruckIcon,
   MapPinIcon,
-  UserIcon
+  UserIcon,
 } from '@heroicons/react/24/outline';
-import { 
-  notificationService, 
-  Notification, 
-  NotificationEventType 
+import {
+  notificationService,
+  Notification,
+  NotificationEventType,
 } from '@/services/notificationService';
 
 interface NotificationPanelProps {
@@ -40,10 +40,10 @@ interface NotificationPanelProps {
   maxNotifications?: number;
 }
 
-export default function NotificationPanel({ 
-  vehicleId, 
-  driverId, 
-  maxNotifications = 10 
+export default function NotificationPanel({
+  vehicleId,
+  driverId,
+  maxNotifications = 10,
 }: NotificationPanelProps) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [filter, setFilter] = useState<'all' | 'unread' | 'high_priority'>('all');
@@ -71,7 +71,7 @@ export default function NotificationPanel({
 
   const loadNotifications = () => {
     const allNotifications = notificationService.getNotifications({ limit: maxNotifications });
-    
+
     // Filter by vehicle/driver if specified
     let filtered = allNotifications;
     if (vehicleId) {
@@ -98,8 +98,8 @@ export default function NotificationPanel({
   const handleMarkAsRead = (notificationId: string) => {
     const success = notificationService.markAsRead(notificationId);
     if (success) {
-      setNotifications(prev => 
-        prev.map(n => n.id === notificationId ? { ...n, isRead: true } : n)
+      setNotifications(prev =>
+        prev.map(n => (n.id === notificationId ? { ...n, isRead: true } : n))
       );
     }
   };
@@ -107,13 +107,17 @@ export default function NotificationPanel({
   const handleAcknowledge = (notificationId: string) => {
     const success = notificationService.acknowledge(notificationId, 'current-user');
     if (success) {
-      setNotifications(prev => 
-        prev.map(n => n.id === notificationId ? { 
-          ...n, 
-          isAcknowledged: true, 
-          acknowledgedBy: 'current-user',
-          acknowledgedAt: new Date().toISOString()
-        } : n)
+      setNotifications(prev =>
+        prev.map(n =>
+          n.id === notificationId
+            ? {
+                ...n,
+                isAcknowledged: true,
+                acknowledgedBy: 'current-user',
+                acknowledgedAt: new Date().toISOString(),
+              }
+            : n
+        )
       );
     }
   };
@@ -140,11 +144,16 @@ export default function NotificationPanel({
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'urgent': return 'border-red-500 bg-red-50 dark:bg-red-900/20';
-      case 'high': return 'border-orange-500 bg-orange-50 dark:bg-orange-900/20';
-      case 'normal': return 'border-blue-500 bg-blue-50 dark:bg-blue-900/20';
-      case 'low': return 'border-gray-300 bg-gray-50 dark:bg-gray-800';
-      default: return 'border-gray-300 bg-gray-50 dark:bg-gray-800';
+      case 'urgent':
+        return 'border-red-500 bg-red-50 dark:bg-red-900/20';
+      case 'high':
+        return 'border-orange-500 bg-orange-50 dark:bg-orange-900/20';
+      case 'normal':
+        return 'border-blue-500 bg-blue-50 dark:bg-blue-900/20';
+      case 'low':
+        return 'border-gray-300 bg-gray-50 dark:bg-gray-800';
+      default:
+        return 'border-gray-300 bg-gray-50 dark:bg-gray-800';
     }
   };
 
@@ -176,7 +185,9 @@ export default function NotificationPanel({
 
   const filteredNotifications = getFilteredNotifications();
   const unreadCount = notifications.filter(n => !n.isRead).length;
-  const highPriorityCount = notifications.filter(n => n.priority === 'high' || n.priority === 'urgent').length;
+  const highPriorityCount = notifications.filter(
+    n => n.priority === 'high' || n.priority === 'urgent'
+  ).length;
 
   return (
     <Card>
@@ -192,19 +203,11 @@ export default function NotificationPanel({
             )}
           </div>
           <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
+            <Button variant="outline" size="sm" onClick={() => setIsExpanded(!isExpanded)}>
               {isExpanded ? 'Collapse' : 'Expand'}
             </Button>
             {notifications.length > 0 && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleClearAll}
-              >
+              <Button variant="outline" size="sm" onClick={handleClearAll}>
                 Clear All
               </Button>
             )}
@@ -221,6 +224,7 @@ export default function NotificationPanel({
           ].map(tab => (
             <button
               key={tab.key}
+              type="button"
               onClick={() => setFilter(tab.key as typeof filter)}
               className={`flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                 filter === tab.key
@@ -269,7 +273,10 @@ export default function NotificationPanel({
                         )}
                       </div>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        {isExpanded ? notification.message : notification.message.substring(0, 100) + (notification.message.length > 100 ? '...' : '')}
+                        {isExpanded
+                          ? notification.message
+                          : notification.message.substring(0, 100) +
+                            (notification.message.length > 100 ? '...' : '')}
                       </p>
                       <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500 dark:text-gray-400">
                         <span>{formatTimestamp(notification.timestamp)}</span>
@@ -298,16 +305,17 @@ export default function NotificationPanel({
                         <CheckCircleIcon className="h-3 w-3" />
                       </Button>
                     )}
-                    {!notification.isAcknowledged && (notification.priority === 'high' || notification.priority === 'urgent') && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleAcknowledge(notification.id)}
-                        className="text-xs"
-                      >
-                        Ack
-                      </Button>
-                    )}
+                    {!notification.isAcknowledged &&
+                      (notification.priority === 'high' || notification.priority === 'urgent') && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleAcknowledge(notification.id)}
+                          className="text-xs"
+                        >
+                          Ack
+                        </Button>
+                      )}
                   </div>
                 </div>
               </div>

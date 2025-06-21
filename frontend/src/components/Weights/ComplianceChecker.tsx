@@ -180,9 +180,11 @@ export default function ComplianceChecker({
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-medium text-white">Vehicle Configuration</h3>
             <button
+              type="button"
               onClick={() => checkCompliance()}
               className="p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-              aria-label="Recalculate"
+              aria-label="Recalculate compliance"
+              title="Recalculate compliance based on current settings"
             >
               <ArrowPathIcon className="h-5 w-5" />
             </button>
@@ -190,11 +192,19 @@ export default function ComplianceChecker({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">Vehicle Type</label>
+              <label
+                htmlFor="vehicle-type-select"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
+                Vehicle Type
+              </label>
               <select
+                id="vehicle-type-select"
                 value={vehicleType}
                 onChange={e => setVehicleType(e.target.value)}
                 className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                aria-label="Select vehicle type for compliance checking"
+                title="Choose the vehicle type to check weight compliance"
               >
                 <option value="5-Axle Semi">5-Axle Semi</option>
                 <option value="3-Axle Straight Truck">3-Axle Straight Truck</option>
@@ -206,11 +216,19 @@ export default function ComplianceChecker({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">Jurisdiction</label>
+              <label
+                htmlFor="jurisdiction-select"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
+                Jurisdiction
+              </label>
               <select
+                id="jurisdiction-select"
                 value={stateCode}
                 onChange={e => setStateCode(e.target.value)}
                 className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                aria-label="Select jurisdiction for compliance checking"
+                title="Choose the state or jurisdiction for weight limit regulations"
               >
                 {states.map(state => (
                   <option key={state.code} value={state.code}>
@@ -228,24 +246,36 @@ export default function ComplianceChecker({
               </label>
               <div className="flex items-center">
                 <button
+                  type="button"
                   onClick={() => updateAxleCount(axleCount - 1)}
                   disabled={axleCount <= 2}
                   className="p-1.5 rounded-l-md bg-gray-700 text-gray-300 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Decrease axle count"
+                  title="Decrease number of axles"
                 >
                   <MinusIcon className="h-4 w-4" />
                 </button>
+                <label htmlFor="axle-count-input" className="sr-only">
+                  Number of axles
+                </label>
                 <input
+                  id="axle-count-input"
                   type="number"
                   value={axleCount}
                   onChange={e => updateAxleCount(parseInt(e.target.value) || 2)}
                   min="2"
                   max="9"
                   className="w-full bg-gray-700 border-y border-gray-600 px-3 py-2 text-white text-center focus:outline-none"
+                  aria-label="Number of axles"
+                  title="Enter the number of axles (2-9)"
                 />
                 <button
+                  type="button"
                   onClick={() => updateAxleCount(axleCount + 1)}
                   disabled={axleCount >= 9}
                   className="p-1.5 rounded-r-md bg-gray-700 text-gray-300 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Increase axle count"
+                  title="Increase number of axles"
                 >
                   <PlusIcon className="h-4 w-4" />
                 </button>
@@ -253,14 +283,21 @@ export default function ComplianceChecker({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
+              <label
+                htmlFor="gross-weight-input"
+                className="block text-sm font-medium text-gray-300 mb-1"
+              >
                 Gross Weight (lbs)
               </label>
               <input
+                id="gross-weight-input"
                 type="number"
                 value={grossWeight}
                 onChange={e => updateGrossWeight(parseInt(e.target.value) || 0)}
                 className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                aria-label="Enter gross weight in pounds"
+                title="Enter the total gross weight of the vehicle in pounds"
+                placeholder="Enter weight in lbs"
               />
             </div>
           </div>
@@ -273,14 +310,21 @@ export default function ComplianceChecker({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {axleWeights.map((weight, index) => (
               <div key={`axle-${index}`}>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label
+                  htmlFor={`axle-weight-${index}`}
+                  className="block text-sm font-medium text-gray-300 mb-1"
+                >
                   Axle {index + 1} Weight (lbs)
                 </label>
                 <input
+                  id={`axle-weight-${index}`}
                   type="number"
                   value={weight}
                   onChange={e => updateAxleWeight(index, parseInt(e.target.value) || 0)}
                   className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  aria-label={`Enter weight for axle ${index + 1} in pounds`}
+                  title={`Enter the weight for axle ${index + 1} in pounds`}
+                  placeholder="Enter weight"
                 />
               </div>
             ))}
@@ -294,15 +338,22 @@ export default function ComplianceChecker({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {axleSpacing.map((spacing, index) => (
               <div key={`spacing-${index}`}>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label
+                  htmlFor={`axle-spacing-${index}`}
+                  className="block text-sm font-medium text-gray-300 mb-1"
+                >
                   Between Axle {index + 1} and {index + 2}
                 </label>
                 <input
+                  id={`axle-spacing-${index}`}
                   type="number"
                   value={spacing}
                   onChange={e => updateAxleSpacing(index, parseFloat(e.target.value) || 0)}
                   step="0.1"
                   className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  aria-label={`Enter spacing between axle ${index + 1} and ${index + 2} in feet`}
+                  title={`Enter the distance between axle ${index + 1} and ${index + 2} in feet`}
+                  placeholder="Enter spacing in feet"
                 />
               </div>
             ))}
@@ -315,8 +366,15 @@ export default function ComplianceChecker({
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-medium text-white">Compliance Results</h3>
               <button
+                type="button"
                 onClick={() => setShowDetails(!showDetails)}
                 className="text-sm text-blue-400 hover:text-blue-300"
+                aria-label={showDetails ? 'Hide compliance details' : 'Show compliance details'}
+                title={
+                  showDetails
+                    ? 'Hide detailed compliance information'
+                    : 'Show detailed compliance information'
+                }
               >
                 {showDetails ? 'Hide Details' : 'Show Details'}
               </button>

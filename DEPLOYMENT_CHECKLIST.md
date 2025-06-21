@@ -1,20 +1,20 @@
-# 🚀 FreightWeightPros Deployment Checklist
+# 🚀 CargoScalePro Deployment Checklist
 
 ## Pre-Deployment Preparation
 
 ### 1. Domain & DNS Setup
 
-- [ ] Purchase domain (e.g., `freightweightpros.com`)
+- [ ] Purchase domain (e.g., `cargoscalepro.com`)
 - [ ] Configure DNS records:
-  - [ ] A Record: `freightweightpros.com` → Frontend hosting IP
-  - [ ] CNAME: `www.freightweightpros.com` → `freightweightpros.com`
-  - [ ] A Record: `api.freightweightpros.com` → Backend server IP
+  - [ ] A Record: `cargoscalepro.com` → Frontend hosting IP
+  - [ ] CNAME: `www.cargoscalepro.com` → `cargoscalepro.com`
+  - [ ] A Record: `api.cargoscalepro.com` → Backend server IP
 - [ ] Verify DNS propagation (use tools like `dig` or online DNS checkers)
 
 ### 2. SSL Certificates
 
-- [ ] Obtain SSL certificate for `freightweightpros.com`
-- [ ] Obtain SSL certificate for `api.freightweightpros.com`
+- [ ] Obtain SSL certificate for `cargoscalepro.com`
+- [ ] Obtain SSL certificate for `api.cargoscalepro.com`
 - [ ] Configure auto-renewal for certificates
 
 ### 3. Hosting Setup
@@ -36,16 +36,16 @@ Update `frontend/.env.production`:
 
 ```bash
 # Production URLs
-NEXT_PUBLIC_API_URL=https://api.freightweightpros.com
-NEXT_PUBLIC_APP_URL=https://freightweightpros.com
-BACKEND_URL=https://api.freightweightpros.com
+NEXT_PUBLIC_API_URL=https://api.cargoscalepro.com
+NEXT_PUBLIC_APP_URL=https://cargoscalepro.com
+BACKEND_URL=https://api.cargoscalepro.com
 
 # Supabase (keep existing values)
 NEXT_PUBLIC_SUPABASE_URL=https://pczfmxigimuluacspxse.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 # Security
-AUTHORIZED_DOMAINS=freightweightpros.com,api.freightweightpros.com,www.freightweightpros.com
+AUTHORIZED_DOMAINS=cargoscalepro.com,api.cargoscalepro.com,www.cargoscalepro.com
 NODE_ENV=production
 
 # Feature Flags
@@ -80,8 +80,8 @@ JWT_SECRET=your-new-production-jwt-secret-256-chars
 PASETO_SECRET_KEY=your-new-production-paseto-key
 
 # Frontend URLs
-FRONTEND_URL=https://freightweightpros.com
-ALLOWED_ORIGINS=https://freightweightpros.com,https://www.freightweightpros.com
+FRONTEND_URL=https://cargoscalepro.com
+ALLOWED_ORIGINS=https://cargoscalepro.com,https://www.cargoscalepro.com
 
 # Supabase (keep existing)
 SUPABASE_URL=https://pczfmxigimuluacspxse.supabase.co
@@ -218,20 +218,20 @@ openssl rand -base64 32
 
 ```bash
 # Check A record
-dig freightweightpros.com A
+dig cargoscalepro.com A
 
 # Check CNAME
-dig www.freightweightpros.com CNAME
+dig www.cargoscalepro.com CNAME
 
 # Check API subdomain
-dig api.freightweightpros.com A
+dig api.cargoscalepro.com A
 ```
 
 ### SSL Certificate Check
 
 ```bash
 # Check SSL certificate
-openssl s_client -connect freightweightpros.com:443 -servername freightweightpros.com
+openssl s_client -connect cargoscalepro.com:443 -servername cargoscalepro.com
 ```
 
 ---

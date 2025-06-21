@@ -87,18 +87,30 @@ export default function SearchParamsExample() {
 
       <form onSubmit={handleSearch} className="mb-6">
         <div className="flex gap-2 mb-4">
+          <label htmlFor="search-input" className="sr-only">
+            Search query
+          </label>
           <input
+            id="search-input"
             type="text"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search..."
             className="flex-1 p-2 border rounded"
+            aria-label="Enter search query"
+            title="Enter your search terms"
           />
 
+          <label htmlFor="category-select" className="sr-only">
+            Select category
+          </label>
           <select
+            id="category-select"
             value={selectedCategory}
             onChange={handleCategoryChange}
             className="p-2 border rounded"
+            aria-label="Select search category"
+            title="Choose a category to filter search results"
           >
             <option value="all">All Categories</option>
             <option value="vehicles">Vehicles</option>
@@ -123,6 +135,7 @@ export default function SearchParamsExample() {
 
       <div className="flex justify-center gap-2">
         <button
+          type="button"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage <= 1}
           className="px-3 py-1 border rounded disabled:opacity-50"
@@ -131,6 +144,7 @@ export default function SearchParamsExample() {
         </button>
         <span className="px-3 py-1">Page {currentPage}</span>
         <button
+          type="button"
           onClick={() => handlePageChange(currentPage + 1)}
           className="px-3 py-1 border rounded"
         >

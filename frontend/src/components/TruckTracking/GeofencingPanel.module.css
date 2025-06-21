@@ -1,0 +1,57 @@
+/**
+ * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ *
+ * PROPRIETARY AND CONFIDENTIAL
+ *
+ * This file is part of the Cosmo Exploit Group LLC Weight Management System.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ *
+ * This file contains proprietary and confidential information of
+ * Cosmo Exploit Group LLC and may not be copied, distributed, or used
+ * in any way without explicit written permission.
+ */
+
+/* Zone color indicator styles */
+.zoneColorIndicator {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+}
+
+/* Zone color variants */
+.zoneColorRed {
+  background-color: #ef4444;
+}
+
+.zoneColorOrange {
+  background-color: #f97316;
+}
+
+.zoneColorYellow {
+  background-color: #eab308;
+}
+
+.zoneColorGreen {
+  background-color: #22c55e;
+}
+
+.zoneColorBlue {
+  background-color: #3b82f6;
+}
+
+.zoneColorPurple {
+  background-color: #a855f7;
+}
+
+.zoneColorPink {
+  background-color: #ec4899;
+}
+
+.zoneColorGray {
+  background-color: #6b7280;
+}
+
+/* Default fallback color */
+.zoneColorDefault {
+  background-color: #6b7280;
+}

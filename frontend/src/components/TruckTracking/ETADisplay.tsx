@@ -18,7 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { 
+import {
   ClockIcon,
   MapPinIcon,
   TruckIcon,
@@ -26,7 +26,7 @@ import {
   CloudIcon,
   UserIcon,
   ArrowPathIcon,
-  CheckCircleIcon
+  CheckCircleIcon,
 } from '@heroicons/react/24/outline';
 import { ETACalculation } from '@/services/etaService';
 
@@ -54,10 +54,10 @@ export default function ETADisplay({
       const now = new Date().getTime();
       const eta = new Date(etaData.adjustedETA).getTime();
       const baseEta = new Date(etaData.baseETA).getTime();
-      
+
       const timeDiff = eta - now;
       setIsDelayed(eta > baseEta);
-      
+
       if (timeDiff <= 0) {
         setTimeToDestination('Arrived');
         return;
@@ -65,7 +65,7 @@ export default function ETADisplay({
 
       const hours = Math.floor(timeDiff / (1000 * 60 * 60));
       const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-      
+
       if (hours > 0) {
         setTimeToDestination(`${hours}h ${minutes}m`);
       } else {
@@ -122,18 +122,10 @@ export default function ETADisplay({
             <span>Estimated Arrival</span>
           </div>
           <div className="flex items-center space-x-2">
-            <Badge 
-              variant={isDelayed ? "destructive" : "default"}
-              className="text-xs"
-            >
+            <Badge variant={isDelayed ? 'destructive' : 'default'} className="text-xs">
               {isDelayed ? 'Delayed' : 'On Time'}
             </Badge>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onRefresh}
-              disabled={isLoading}
-            >
+            <Button variant="outline" size="sm" onClick={onRefresh} disabled={isLoading}>
               <ArrowPathIcon className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
             </Button>
           </div>
@@ -159,9 +151,7 @@ export default function ETADisplay({
         {/* Confidence Indicator */}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Confidence
-            </span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Confidence</span>
             <span className={`text-sm font-medium ${getConfidenceColor(etaData.confidence)}`}>
               {getConfidenceLabel(etaData.confidence)} ({etaData.confidence}%)
             </span>
@@ -174,7 +164,7 @@ export default function ETADisplay({
           <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
             Factors Affecting ETA
           </h4>
-          
+
           {/* Traffic */}
           <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded-lg">
             <div className="flex items-center space-x-2">
@@ -183,7 +173,8 @@ export default function ETADisplay({
             </div>
             <div className="text-right">
               <div className="text-sm font-medium">
-                {etaData.factors.traffic.delayMinutes > 0 ? '+' : ''}{Math.round(etaData.factors.traffic.delayMinutes)}m
+                {etaData.factors.traffic.delayMinutes > 0 ? '+' : ''}
+                {Math.round(etaData.factors.traffic.delayMinutes)}m
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400 capitalize">
                 {etaData.factors.traffic.severity}
@@ -199,7 +190,8 @@ export default function ETADisplay({
             </div>
             <div className="text-right">
               <div className="text-sm font-medium">
-                {etaData.factors.weather.delayMinutes > 0 ? '+' : ''}{Math.round(etaData.factors.weather.delayMinutes)}m
+                {etaData.factors.weather.delayMinutes > 0 ? '+' : ''}
+                {Math.round(etaData.factors.weather.delayMinutes)}m
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400">
                 {etaData.factors.weather.conditions}
@@ -215,11 +207,10 @@ export default function ETADisplay({
             </div>
             <div className="text-right">
               <div className="text-sm font-medium">
-                {etaData.factors.driverBehavior.adjustmentMinutes > 0 ? '+' : ''}{Math.round(etaData.factors.driverBehavior.adjustmentMinutes)}m
+                {etaData.factors.driverBehavior.adjustmentMinutes > 0 ? '+' : ''}
+                {Math.round(etaData.factors.driverBehavior.adjustmentMinutes)}m
               </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">
-                Historical data
-              </div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">Historical data</div>
             </div>
           </div>
 

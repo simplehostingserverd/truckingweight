@@ -18,20 +18,25 @@ services:
       dockerfile: Dockerfile
       target: runner # Use the production-ready runner stage
       args:
+        - NODE_ENV=production
+        - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-https://cargoscalepro.com}
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://api.cargoscalepro.com}
         - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
         - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
         - NEXT_PUBLIC_MAPBOX_TOKEN=${NEXT_PUBLIC_MAPBOX_TOKEN}
         - NEXT_PUBLIC_CESIUM_TOKEN=${NEXT_PUBLIC_CESIUM_TOKEN}
-    image: ${DOCKER_REGISTRY:-simplehostingserverd}/truckingweight-frontend:${TAG:-latest}
+    image: ${DOCKER_REGISTRY:-cargoscalepro}/frontend:${TAG:-latest}
     environment:
       - NODE_ENV=production
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-https://cargoscalepro.com}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://api.cargoscalepro.com}
       - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
       - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
       - NEXT_PUBLIC_MAPBOX_TOKEN=${NEXT_PUBLIC_MAPBOX_TOKEN}
       - NEXT_PUBLIC_CESIUM_TOKEN=${NEXT_PUBLIC_CESIUM_TOKEN}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:3000"]
+      test: ['CMD', 'wget', '--spider', 'http://localhost:3000']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -57,7 +62,7 @@ services:
         - SUPABASE_URL=${SUPABASE_URL}
         - SUPABASE_KEY=${SUPABASE_KEY}
         - JWT_SECRET=${JWT_SECRET}
-    image: ${DOCKER_REGISTRY:-simplehostingserverd}/truckingweight-backend:${TAG:-latest}
+    image: ${DOCKER_REGISTRY:-cargoscalepro}/backend:${TAG:-latest}
     environment:
       - NODE_ENV=production
       - SUPABASE_URL=${SUPABASE_URL}
@@ -65,7 +70,7 @@ services:
       - JWT_SECRET=${JWT_SECRET}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:5000/health"]
+      test: ['CMD', 'wget', '--spider', 'http://localhost:5000/health']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -84,8 +89,8 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     volumes:
       - ./nginx/production.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/ssl:/etc/nginx/ssl
@@ -95,7 +100,7 @@ services:
       - backend
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost"]
+      test: ['CMD', 'wget', '--spider', 'http://localhost']
       interval: 30s
       timeout: 10s
       retries: 3

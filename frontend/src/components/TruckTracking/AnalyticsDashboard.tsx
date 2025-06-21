@@ -19,7 +19,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
+import {
   ChartBarIcon,
   TruckIcon,
   ClockIcon,
@@ -29,7 +29,7 @@ import {
   ArrowTrendingUpIcon,
   ArrowTrendingDownIcon,
   UserIcon,
-  DocumentChartBarIcon
+  DocumentChartBarIcon,
 } from '@heroicons/react/24/outline';
 import { DriverMetrics, FleetMetrics, AnalyticsReport } from '@/services/analyticsService';
 
@@ -50,7 +50,9 @@ export default function AnalyticsDashboard({
   onGenerateReport,
   isLoading = false,
 }: AnalyticsDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'overview' | 'driver' | 'fleet' | 'reports'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'driver' | 'fleet' | 'reports'>(
+    'overview'
+  );
 
   // Auto-switch to driver tab if driver metrics are available
   useEffect(() => {
@@ -123,11 +125,15 @@ export default function AnalyticsDashboard({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as typeof activeTab)}>
+        <Tabs value={activeTab} onValueChange={value => setActiveTab(value as typeof activeTab)}>
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="driver" disabled={!driverMetrics}>Driver</TabsTrigger>
-            <TabsTrigger value="fleet" disabled={!fleetMetrics}>Fleet</TabsTrigger>
+            <TabsTrigger value="driver" disabled={!driverMetrics}>
+              Driver
+            </TabsTrigger>
+            <TabsTrigger value="fleet" disabled={!fleetMetrics}>
+              Fleet
+            </TabsTrigger>
             <TabsTrigger value="reports">Reports</TabsTrigger>
           </TabsList>
 
@@ -140,7 +146,9 @@ export default function AnalyticsDashboard({
                     <TruckIcon className="h-8 w-8 text-blue-500" />
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">Active Vehicles</p>
-                      <p className="text-2xl font-bold">{fleetMetrics?.overview.activeVehicles || 0}</p>
+                      <p className="text-2xl font-bold">
+                        {fleetMetrics?.overview.activeVehicles || 0}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -152,7 +160,9 @@ export default function AnalyticsDashboard({
                     <UserIcon className="h-8 w-8 text-green-500" />
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">Active Drivers</p>
-                      <p className="text-2xl font-bold">{fleetMetrics?.overview.activeDrivers || 0}</p>
+                      <p className="text-2xl font-bold">
+                        {fleetMetrics?.overview.activeDrivers || 0}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -164,7 +174,9 @@ export default function AnalyticsDashboard({
                     <ClockIcon className="h-8 w-8 text-yellow-500" />
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">On-Time Rate</p>
-                      <p className="text-2xl font-bold">{fleetMetrics?.performance.onTimePerformance.toFixed(1) || 0}%</p>
+                      <p className="text-2xl font-bold">
+                        {fleetMetrics?.performance.onTimePerformance.toFixed(1) || 0}%
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -176,7 +188,9 @@ export default function AnalyticsDashboard({
                     <CurrencyDollarIcon className="h-8 w-8 text-purple-500" />
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">Cost per Mile</p>
-                      <p className="text-2xl font-bold">{formatCurrency(fleetMetrics?.costs.costPerMile || 0)}</p>
+                      <p className="text-2xl font-bold">
+                        {formatCurrency(fleetMetrics?.costs.costPerMile || 0)}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -224,8 +238,12 @@ export default function AnalyticsDashboard({
                   <Card>
                     <CardContent className="p-4">
                       <div className="text-center">
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Overall Score</p>
-                        <p className={`text-3xl font-bold ${getScoreColor(driverMetrics.performance.overallScore)}`}>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                          Overall Score
+                        </p>
+                        <p
+                          className={`text-3xl font-bold ${getScoreColor(driverMetrics.performance.overallScore)}`}
+                        >
                           {driverMetrics.performance.overallScore.toFixed(0)}
                         </p>
                         <Progress value={driverMetrics.performance.overallScore} className="mt-2" />
@@ -236,8 +254,12 @@ export default function AnalyticsDashboard({
                   <Card>
                     <CardContent className="p-4">
                       <div className="text-center">
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Safety Score</p>
-                        <p className={`text-2xl font-bold ${getScoreColor(driverMetrics.performance.safetyScore)}`}>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                          Safety Score
+                        </p>
+                        <p
+                          className={`text-2xl font-bold ${getScoreColor(driverMetrics.performance.safetyScore)}`}
+                        >
                           {driverMetrics.performance.safetyScore.toFixed(0)}
                         </p>
                         <Progress value={driverMetrics.performance.safetyScore} className="mt-2" />
@@ -249,10 +271,15 @@ export default function AnalyticsDashboard({
                     <CardContent className="p-4">
                       <div className="text-center">
                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Efficiency</p>
-                        <p className={`text-2xl font-bold ${getScoreColor(driverMetrics.performance.efficiencyScore)}`}>
+                        <p
+                          className={`text-2xl font-bold ${getScoreColor(driverMetrics.performance.efficiencyScore)}`}
+                        >
                           {driverMetrics.performance.efficiencyScore.toFixed(0)}
                         </p>
-                        <Progress value={driverMetrics.performance.efficiencyScore} className="mt-2" />
+                        <Progress
+                          value={driverMetrics.performance.efficiencyScore}
+                          className="mt-2"
+                        />
                       </div>
                     </CardContent>
                   </Card>
@@ -261,10 +288,15 @@ export default function AnalyticsDashboard({
                     <CardContent className="p-4">
                       <div className="text-center">
                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Punctuality</p>
-                        <p className={`text-2xl font-bold ${getScoreColor(driverMetrics.performance.punctualityScore)}`}>
+                        <p
+                          className={`text-2xl font-bold ${getScoreColor(driverMetrics.performance.punctualityScore)}`}
+                        >
                           {driverMetrics.performance.punctualityScore.toFixed(0)}
                         </p>
-                        <Progress value={driverMetrics.performance.punctualityScore} className="mt-2" />
+                        <Progress
+                          value={driverMetrics.performance.punctualityScore}
+                          className="mt-2"
+                        />
                       </div>
                     </CardContent>
                   </Card>
@@ -280,23 +312,33 @@ export default function AnalyticsDashboard({
                       <div className="space-y-4">
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-500">Total Miles</span>
-                          <span className="font-medium">{formatNumber(driverMetrics.driving.totalMiles)}</span>
+                          <span className="font-medium">
+                            {formatNumber(driverMetrics.driving.totalMiles)}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-500">Total Hours</span>
-                          <span className="font-medium">{formatNumber(driverMetrics.driving.totalHours)}</span>
+                          <span className="font-medium">
+                            {formatNumber(driverMetrics.driving.totalHours)}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-500">Average Speed</span>
-                          <span className="font-medium">{formatNumber(driverMetrics.driving.averageSpeed, 1)} mph</span>
+                          <span className="font-medium">
+                            {formatNumber(driverMetrics.driving.averageSpeed, 1)} mph
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-500">Fuel Efficiency</span>
-                          <span className="font-medium">{formatNumber(driverMetrics.driving.fuelEfficiency, 1)} MPG</span>
+                          <span className="font-medium">
+                            {formatNumber(driverMetrics.driving.fuelEfficiency, 1)} MPG
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-500">Idle Time</span>
-                          <span className="font-medium">{formatNumber(driverMetrics.driving.idleTime)} min</span>
+                          <span className="font-medium">
+                            {formatNumber(driverMetrics.driving.idleTime)} min
+                          </span>
                         </div>
                       </div>
                     </CardContent>
@@ -310,23 +352,33 @@ export default function AnalyticsDashboard({
                       <div className="space-y-4">
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-500">Total Deliveries</span>
-                          <span className="font-medium">{driverMetrics.delivery.totalDeliveries}</span>
+                          <span className="font-medium">
+                            {driverMetrics.delivery.totalDeliveries}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-500">On-Time Deliveries</span>
-                          <span className="font-medium text-green-600">{driverMetrics.delivery.onTimeDeliveries}</span>
+                          <span className="font-medium text-green-600">
+                            {driverMetrics.delivery.onTimeDeliveries}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-500">Late Deliveries</span>
-                          <span className="font-medium text-red-600">{driverMetrics.delivery.lateDeliveries}</span>
+                          <span className="font-medium text-red-600">
+                            {driverMetrics.delivery.lateDeliveries}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-500">Average Delay</span>
-                          <span className="font-medium">{formatNumber(driverMetrics.delivery.averageDelayMinutes, 1)} min</span>
+                          <span className="font-medium">
+                            {formatNumber(driverMetrics.delivery.averageDelayMinutes, 1)} min
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-500">Customer Rating</span>
-                          <span className="font-medium">{formatNumber(driverMetrics.delivery.customerRating, 1)}/5</span>
+                          <span className="font-medium">
+                            {formatNumber(driverMetrics.delivery.customerRating, 1)}/5
+                          </span>
                         </div>
                       </div>
                     </CardContent>
@@ -341,19 +393,27 @@ export default function AnalyticsDashboard({
                   <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-red-600">{driverMetrics.compliance.speedViolations}</p>
+                        <p className="text-2xl font-bold text-red-600">
+                          {driverMetrics.compliance.speedViolations}
+                        </p>
                         <p className="text-sm text-gray-500">Speed Violations</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-orange-600">{driverMetrics.compliance.hosViolations}</p>
+                        <p className="text-2xl font-bold text-orange-600">
+                          {driverMetrics.compliance.hosViolations}
+                        </p>
                         <p className="text-sm text-gray-500">HOS Violations</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-yellow-600">{driverMetrics.compliance.geofenceViolations}</p>
+                        <p className="text-2xl font-bold text-yellow-600">
+                          {driverMetrics.compliance.geofenceViolations}
+                        </p>
                         <p className="text-sm text-gray-500">Geofence Violations</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-green-600">{driverMetrics.compliance.inspectionsPassed}</p>
+                        <p className="text-2xl font-bold text-green-600">
+                          {driverMetrics.compliance.inspectionsPassed}
+                        </p>
                         <p className="text-sm text-gray-500">Inspections Passed</p>
                       </div>
                     </div>
@@ -371,8 +431,12 @@ export default function AnalyticsDashboard({
                   <Card>
                     <CardContent className="p-4">
                       <div className="text-center">
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Fleet Safety Score</p>
-                        <p className={`text-2xl font-bold ${getScoreColor(fleetMetrics.performance.fleetSafetyScore)}`}>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                          Fleet Safety Score
+                        </p>
+                        <p
+                          className={`text-2xl font-bold ${getScoreColor(fleetMetrics.performance.fleetSafetyScore)}`}
+                        >
                           {fleetMetrics.performance.fleetSafetyScore.toFixed(0)}
                         </p>
                       </div>
@@ -382,8 +446,12 @@ export default function AnalyticsDashboard({
                   <Card>
                     <CardContent className="p-4">
                       <div className="text-center">
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Efficiency Score</p>
-                        <p className={`text-2xl font-bold ${getScoreColor(fleetMetrics.performance.fleetEfficiencyScore)}`}>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                          Efficiency Score
+                        </p>
+                        <p
+                          className={`text-2xl font-bold ${getScoreColor(fleetMetrics.performance.fleetEfficiencyScore)}`}
+                        >
                           {fleetMetrics.performance.fleetEfficiencyScore.toFixed(0)}
                         </p>
                       </div>
@@ -393,7 +461,9 @@ export default function AnalyticsDashboard({
                   <Card>
                     <CardContent className="p-4">
                       <div className="text-center">
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Fuel Efficiency</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                          Fuel Efficiency
+                        </p>
                         <p className="text-2xl font-bold text-blue-600">
                           {fleetMetrics.performance.fuelEfficiency.toFixed(1)} MPG
                         </p>
@@ -422,19 +492,27 @@ export default function AnalyticsDashboard({
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       <div>
                         <p className="text-sm text-gray-500 mb-2">Total Operating Cost</p>
-                        <p className="text-2xl font-bold">{formatCurrency(fleetMetrics.costs.totalOperatingCost)}</p>
+                        <p className="text-2xl font-bold">
+                          {formatCurrency(fleetMetrics.costs.totalOperatingCost)}
+                        </p>
                         <div className="flex items-center mt-1">
                           {getTrendIcon(fleetMetrics.trends.costsGrowth > 0 ? 'up' : 'down')}
-                          <span className="text-sm ml-1">{fleetMetrics.trends.costsGrowth.toFixed(1)}%</span>
+                          <span className="text-sm ml-1">
+                            {fleetMetrics.trends.costsGrowth.toFixed(1)}%
+                          </span>
                         </div>
                       </div>
                       <div>
                         <p className="text-sm text-gray-500 mb-2">Fuel Cost</p>
-                        <p className="text-2xl font-bold">{formatCurrency(fleetMetrics.costs.totalFuelCost)}</p>
+                        <p className="text-2xl font-bold">
+                          {formatCurrency(fleetMetrics.costs.totalFuelCost)}
+                        </p>
                       </div>
                       <div>
                         <p className="text-sm text-gray-500 mb-2">Maintenance Cost</p>
-                        <p className="text-2xl font-bold">{formatCurrency(fleetMetrics.costs.totalMaintenanceCost)}</p>
+                        <p className="text-2xl font-bold">
+                          {formatCurrency(fleetMetrics.costs.totalMaintenanceCost)}
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -450,28 +528,36 @@ export default function AnalyticsDashboard({
                       <div className="text-center">
                         <div className="flex items-center justify-center mb-2">
                           {getTrendIcon(fleetMetrics.trends.milesGrowth > 0 ? 'up' : 'down')}
-                          <span className="ml-2 text-lg font-bold">{fleetMetrics.trends.milesGrowth.toFixed(1)}%</span>
+                          <span className="ml-2 text-lg font-bold">
+                            {fleetMetrics.trends.milesGrowth.toFixed(1)}%
+                          </span>
                         </div>
                         <p className="text-sm text-gray-500">Miles Growth</p>
                       </div>
                       <div className="text-center">
                         <div className="flex items-center justify-center mb-2">
                           {getTrendIcon(fleetMetrics.trends.deliveriesGrowth > 0 ? 'up' : 'down')}
-                          <span className="ml-2 text-lg font-bold">{fleetMetrics.trends.deliveriesGrowth.toFixed(1)}%</span>
+                          <span className="ml-2 text-lg font-bold">
+                            {fleetMetrics.trends.deliveriesGrowth.toFixed(1)}%
+                          </span>
                         </div>
                         <p className="text-sm text-gray-500">Deliveries Growth</p>
                       </div>
                       <div className="text-center">
                         <div className="flex items-center justify-center mb-2">
                           {getTrendIcon(fleetMetrics.trends.efficiencyGrowth > 0 ? 'up' : 'down')}
-                          <span className="ml-2 text-lg font-bold">{fleetMetrics.trends.efficiencyGrowth.toFixed(1)}%</span>
+                          <span className="ml-2 text-lg font-bold">
+                            {fleetMetrics.trends.efficiencyGrowth.toFixed(1)}%
+                          </span>
                         </div>
                         <p className="text-sm text-gray-500">Efficiency Growth</p>
                       </div>
                       <div className="text-center">
                         <div className="flex items-center justify-center mb-2">
                           <ExclamationTriangleIcon className="h-5 w-5 text-red-500" />
-                          <span className="ml-2 text-lg font-bold">{fleetMetrics.incidents.violations}</span>
+                          <span className="ml-2 text-lg font-bold">
+                            {fleetMetrics.incidents.violations}
+                          </span>
                         </div>
                         <p className="text-sm text-gray-500">Total Violations</p>
                       </div>
@@ -504,7 +590,7 @@ export default function AnalyticsDashboard({
                         <div className="text-sm text-gray-500">
                           Generated: {new Date(report.generatedAt).toLocaleString()}
                         </div>
-                        
+
                         {/* Insights */}
                         {report.insights.length > 0 && (
                           <div>
@@ -512,11 +598,19 @@ export default function AnalyticsDashboard({
                             <div className="space-y-2">
                               {report.insights.slice(0, 3).map((insight, index) => (
                                 <div key={index} className="flex items-center space-x-2 text-sm">
-                                  {insight.type === 'positive' && <CheckCircleIcon className="h-4 w-4 text-green-500" />}
-                                  {insight.type === 'warning' && <ExclamationTriangleIcon className="h-4 w-4 text-yellow-500" />}
-                                  {insight.type === 'negative' && <ExclamationTriangleIcon className="h-4 w-4 text-red-500" />}
+                                  {insight.type === 'positive' && (
+                                    <CheckCircleIcon className="h-4 w-4 text-green-500" />
+                                  )}
+                                  {insight.type === 'warning' && (
+                                    <ExclamationTriangleIcon className="h-4 w-4 text-yellow-500" />
+                                  )}
+                                  {insight.type === 'negative' && (
+                                    <ExclamationTriangleIcon className="h-4 w-4 text-red-500" />
+                                  )}
                                   <span>{insight.title}</span>
-                                  {insight.value && <Badge variant="outline">{insight.value}</Badge>}
+                                  {insight.value && (
+                                    <Badge variant="outline">{insight.value}</Badge>
+                                  )}
                                 </div>
                               ))}
                             </div>
@@ -531,12 +625,18 @@ export default function AnalyticsDashboard({
                               {report.recommendations.slice(0, 2).map((rec, index) => (
                                 <div key={index} className="text-sm">
                                   <div className="flex items-center space-x-2">
-                                    <Badge variant={rec.priority === 'high' ? 'destructive' : 'secondary'}>
+                                    <Badge
+                                      variant={
+                                        rec.priority === 'high' ? 'destructive' : 'secondary'
+                                      }
+                                    >
                                       {rec.priority}
                                     </Badge>
                                     <span className="font-medium">{rec.title}</span>
                                   </div>
-                                  <p className="text-gray-600 dark:text-gray-400 mt-1">{rec.description}</p>
+                                  <p className="text-gray-600 dark:text-gray-400 mt-1">
+                                    {rec.description}
+                                  </p>
                                 </div>
                               ))}
                             </div>

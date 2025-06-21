@@ -1,91 +1,156 @@
 version: '3.8'
 
 services:
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: cargoscalepro-nginx
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+    networks:
+      - cargoscalepro-network
+
+  # Frontend Service
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
       target: builder # Use the builder stage for development
       args:
+        - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-https://cargoscalepro.com}
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://api.cargoscalepro.com}
         - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
         - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
         - NEXT_PUBLIC_MAPBOX_TOKEN=${NEXT_PUBLIC_MAPBOX_TOKEN}
         - NEXT_PUBLIC_CESIUM_TOKEN=${NEXT_PUBLIC_CESIUM_TOKEN}
-    ports:
-      - "3000:3000"
+    container_name: cargoscalepro-frontend
+    expose:
+      - '3000'
     volumes:
       - ./frontend:/app
       - frontend-node-modules:/app/node_modules
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${NODE_ENV:-development}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-https://cargoscalepro.com}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://api.cargoscalepro.com}
       - NEXT_PUBLIC_SUPABASE_URL
       - NEXT_PUBLIC_SUPABASE_ANON_KEY
       - NEXT_PUBLIC_MAPBOX_TOKEN
       - NEXT_PUBLIC_CESIUM_TOKEN
     depends_on:
       - backend
+      - redis
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:3000"]
-      interval: 10s
-      timeout: 5s
+      test: ['CMD', 'wget', '--spider', 'http://localhost:3000/api/health']
+      interval: 30s
+      timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 60s
     command: npm run dev
+    networks:
+      - cargoscalepro-network
 
+  # Backend API Service
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
       target: builder # Use the builder stage for development
       args:
-        - NODE_ENV=development
+        - NODE_ENV=${NODE_ENV:-development}
         - SUPABASE_URL=${SUPABASE_URL}
         - SUPABASE_KEY=${SUPABASE_KEY}
         - JWT_SECRET=${JWT_SECRET}
-    ports:
-      - "5001:5001"
+    container_name: cargoscalepro-backend
+    expose:
+      - '5001'
     volumes:
       - ./backend:/app
       - backend-node-modules:/app/node_modules
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${NODE_ENV:-development}
       - PORT=5001
+      - FRONTEND_URL=${NEXT_PUBLIC_APP_URL:-https://cargoscalepro.com}
+      - ALLOWED_ORIGINS=${NEXT_PUBLIC_APP_URL:-https://cargoscalepro.com}
       - SUPABASE_URL
       - SUPABASE_KEY
+      - SUPABASE_SERVICE_ROLE_KEY
       - JWT_SECRET
+      - PASETO_SECRET_KEY
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:5001/health"]
-      interval: 10s
-      timeout: 5s
+      test: ['CMD', 'wget', '--spider', 'http://localhost:5001/health']
+      interval: 30s
+      timeout: 10s
       retries: 3
-      start_period: 15s
+      start_period: 30s
     command: npm run dev
+    networks:
+      - cargoscalepro-network
 
+  # Redis Cache Service
+  redis:
+    image: redis:7-alpine
+    container_name: cargoscalepro-redis
+    expose:
+      - '6379'
+    volumes:
+      - redis-data:/data
+      - ./redis/redis.conf:/etc/redis/redis.conf:ro
+    command: redis-server /etc/redis/redis.conf
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - cargoscalepro-network
+
+  # Monitoring Services
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
+    container_name: cargoscalepro-grafana
     restart: unless-stopped
-    ports:
-      - "3001:3000"
+    expose:
+      - '3000'
     volumes:
       - grafana-storage:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
       - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_SERVER_ROOT_URL=http://localhost:3001
-      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+      - GF_SERVER_ROOT_URL=https://cargoscalepro.com/grafana
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,redis-datasource
     depends_on:
       - prometheus
+      - redis
+    networks:
+      - cargoscalepro-network
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus
+    container_name: cargoscalepro-prometheus
     restart: unless-stopped
-    ports:
-      - "9090:9090"
+    expose:
+      - '9090'
     volumes:
       - ./monitoring/prometheus:/etc/prometheus
       - prometheus-data:/prometheus
@@ -95,10 +160,45 @@ services:
       - '--web.console.libraries=/etc/prometheus/console_libraries'
       - '--web.console.templates=/etc/prometheus/consoles'
       - '--web.enable-lifecycle'
+      - '--web.external-url=https://cargoscalepro.com/prometheus'
+      - '--web.route-prefix=/prometheus'
+    networks:
+      - cargoscalepro-network
+
+  # Node Exporter for system metrics
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: cargoscalepro-node-exporter
+    restart: unless-stopped
+    expose:
+      - '9100'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - cargoscalepro-network
 
 volumes:
   frontend-node-modules:
+    driver: local
   backend-node-modules:
+    driver: local
   grafana-storage:
+    driver: local
   prometheus-data:
+    driver: local
+  redis-data:
+    driver: local
 
+networks:
+  cargoscalepro-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

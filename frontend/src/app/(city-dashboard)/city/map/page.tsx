@@ -410,7 +410,11 @@ const CityMapPageClient = () => {
                           : []),
                       ]}
                       showHeatmap={showHeatmap}
-                      onMarkerClick={(id, type, data) => {
+                      onMarkerClick={(
+                        id,
+                        type,
+                        /* eslint-disable-next-line @typescript-eslint/no-unused-vars */ data
+                      ) => {
                         // Set the active tab based on the marker type
                         if (type === 'scale') setActiveTab('scales');
                         else if (type === 'violation') setActiveTab('violations');

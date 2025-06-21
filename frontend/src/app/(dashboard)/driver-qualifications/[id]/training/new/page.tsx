@@ -15,6 +15,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { logger } from '@/utils/logger';
 import {
   ArrowLeftIcon,
   AcademicCapIcon,
@@ -218,7 +219,7 @@ export default function NewTrainingPage() {
       };
 
       // TODO: Replace with actual API call
-      console.log('Creating training record:', trainingData);
+      logger.info('Creating training record', trainingData, 'TrainingForm');
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));

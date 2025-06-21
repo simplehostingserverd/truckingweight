@@ -15,6 +15,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { logger } from '@/utils/logger';
 import {
   ArrowLeftIcon,
   WrenchScrewdriverIcon,
@@ -166,7 +167,7 @@ export default function NewEquipmentPage() {
       };
 
       // TODO: Replace with actual API call
-      console.log('Creating equipment:', equipmentData);
+      logger.info('Creating equipment', equipmentData, 'EquipmentForm');
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
