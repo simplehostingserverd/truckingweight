@@ -56,6 +56,32 @@ import { Scale } from '@/types/fleet';
 
 import { PlusIcon, ArrowPathIcon, ScaleIcon } from '@heroicons/react/24/outline';
 export default function ScalesPage() {
+  const handleDelete = async (id: number) => {
+    if (!confirm(`Are you sure you want to delete this scale?`)) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('scales')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        throw error;
+      }
+
+      // Refresh the data
+      mutate();
+
+      // Show success message
+      console.log('scale deleted successfully');
+    } catch (error: unknown) {
+      console.error('Error deleting scale:', error);
+      alert('Failed to delete scale');
+    }
+  };
+
   const [scales, setScales] = useState<Scale[]>([]);
   const [filteredScales, setFilteredScales] = useState<Scale[]>([]);
   const [isLoading, setIsLoading] = useState(true);

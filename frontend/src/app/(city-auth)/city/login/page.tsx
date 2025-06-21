@@ -47,7 +47,6 @@ import WarningIcon from '@mui/icons-material/Warning';
 // Custom theme
 import cityTheme from '@/theme/cityTheme';
 
-import { CheckCircleIcon } from '@heroicons/react/24/outline';
 export default function CityLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -140,7 +139,13 @@ export default function CityLogin() {
       router.push(createSafeUrl('/city/dashboard'));
       router.refresh(); // Important to refresh the router
     } catch (err: unknown) {
-      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Invalid email or password');
+      setError(
+        err instanceof Error
+          ? err instanceof Error
+            ? err.message
+            : String(err)
+          : 'Invalid email or password'
+      );
       console.error('City login error:', err);
     } finally {
       setIsLoading(false);

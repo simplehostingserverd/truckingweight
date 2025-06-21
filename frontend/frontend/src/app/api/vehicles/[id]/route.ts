@@ -9,7 +9,7 @@ export async function GET(
   try {
     const supabase = createClient();
     const { data, error } = await supabase
-      .from('loads')
+      .from('vehicles')
       .select('*')
       .eq('id', params.id)
       .single();
@@ -34,9 +34,9 @@ export async function PUT(
   try {
     const supabase = createClient();
     const body = await request.json();
-
+    
     const { data, error } = await supabase
-      .from('loads')
+      .from('vehicles')
       .update(body)
       .eq('id', params.id)
       .select()
@@ -61,9 +61,9 @@ export async function DELETE(
 ) {
   try {
     const supabase = createClient();
-
+    
     const { error } = await supabase
-      .from('loads')
+      .from('vehicles')
       .delete()
       .eq('id', params.id);
 
