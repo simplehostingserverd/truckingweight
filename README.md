@@ -450,13 +450,13 @@ truckingweight/
 
 **Trucking Company Portal:**
 
-- Demo URL: [https://demo.truckingsemis.com](https://demo.truckingsemis.com)
+- Demo URL: [https://demo.cargoscalepro.com](https://demo.cargoscalepro.com)
 - Login: `demo@trucking.com` / `demo123`
 - Features: Full TMS functionality with sample data
 
 **City/Municipal Portal:**
 
-- Demo URL: [https://city.truckingsemis.com](https://city.truckingsemis.com)
+- Demo URL: [https://city.cargoscalepro.com](https://city.cargoscalepro.com)
 - Login: `inspector@city.gov` / `city123`
 - Features: Compliance monitoring and permit management
 
