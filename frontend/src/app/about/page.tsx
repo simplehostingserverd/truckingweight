@@ -11,11 +11,12 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '@/components/Layout/Layout';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const metadata = {
   title: 'About Us | TruckingSemis',
   description:

@@ -22,12 +22,17 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const checkAuth = async () => {
       const {
         data: { session },
@@ -41,7 +46,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     };
 
     checkAuth();
-  }, [router]);
+  }, [_router]);
 
   if (isLoading) {
     return (

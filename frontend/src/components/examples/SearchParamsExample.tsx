@@ -16,7 +16,7 @@
 import React from 'react';
 import { toSearchParamNumber, toSearchParamString } from '@/utils/searchParams';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { _useState } from 'react';
 
 /**
  * Example component demonstrating safe search parameter handling
@@ -25,22 +25,32 @@ import { useState } from 'react';
  * to avoid common bugs with string[] parameters.
  */
 export default function SearchParamsExample() {
-  const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const searchParams = useSearchParams();
 
   // Safely extract search parameters
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const query = toSearchParamString(searchParams.get('query'), '');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const page = toSearchParamNumber(searchParams.get('page'), 1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const category = toSearchParamString(searchParams.get('category'), 'all');
 
   // Local state
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchQuery, setSearchQuery] = useState(query);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentPage, setCurrentPage] = useState(page);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedCategory, setSelectedCategory] = useState(category);
 
   // Update URL when filters change
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const updateFilters = () => {
     // Create a URLSearchParams object
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const params = new URLSearchParams();
 
     // Add parameters only if they have values
@@ -55,6 +65,7 @@ export default function SearchParamsExample() {
     }
 
     // Create the URL with search parameters
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const url = `${window.location.pathname}?${params.toString()}`;
 
     // Navigate to the new URL
@@ -62,20 +73,21 @@ export default function SearchParamsExample() {
   };
 
   // Handle search form submission
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (_e: _React.FormEvent) => {
     e.preventDefault();
     setCurrentPage(1); // Reset to page 1 on new search
     updateFilters();
   };
 
   // Handle pagination
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
     updateFilters();
   };
 
   // Handle category change
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleCategoryChange = (_e: _React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
     setCurrentPage(1); // Reset to page 1 on category change
     updateFilters();

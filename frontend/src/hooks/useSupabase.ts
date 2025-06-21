@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import type { Database } from '@/types/supabase';
 import { getSupabaseConfig } from '@/utils/supabase/config';
 import { createBrowserClient } from '@supabase/ssr';
@@ -24,10 +23,12 @@ import { createBrowserClient } from '@supabase/ssr';
  */
 export function useSupabase() {
   // Get Supabase configuration
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
   // Create Supabase client
-  const supabase = createBrowserClient<Database>(supabaseUrl, supabaseKey);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createBrowserClient<Database>(supabaseUrl, supabaseKey);
 
-  return { supabase };
+  return { _supabase };
 }

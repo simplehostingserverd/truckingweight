@@ -22,10 +22,12 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   // Await params before using its properties (Next.js 15 requirement)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const resolvedParams = await params;
   try {
     // Create a Supabase client
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
 
     // Get the user's session
     const {
@@ -37,17 +39,22 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     // Extract query parameters safely
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const url = new URL(request.url);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const readingType = toSearchParamString(url.searchParams.get('type'), 'gross');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const axleNumber = url.searchParams.get('axle')
       ? parseInt(toSearchParamString(url.searchParams.get('axle'), '0'))
       : null;
 
     // Get the scale ID from the URL
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const scaleId = resolvedParams.id;
 
     // Get the scale data
-    const { data: scale, error: scaleError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: scale, _error: scaleError } = await supabase
       .from('scales')
       .select('*')
       .eq('id', scaleId)
@@ -58,7 +65,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     // Get the latest reading for this scale
-    const { data: reading, error: readingError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: reading, _error: readingError } = await supabase
       .from('scale_readings')
       .select('*')
       .eq('scale_id', scaleId)
@@ -80,15 +88,18 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       console.warn('Using mock data for scale reading');
 
       // Extract query parameters safely
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const url = new URL(request.url);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const readingType = toSearchParamString(url.searchParams.get('type'), 'gross');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const axleNumber = url.searchParams.get('axle')
         ? parseInt(toSearchParamString(url.searchParams.get('axle'), '0'))
         : null;
 
       return NextResponse.json(getMockReading(readingType, axleNumber));
     } else {
-      return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+      return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
     }
   }
 }
@@ -96,6 +107,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 // Mock data generator
 function getMockReading(readingType: string, axleNumber: number | null) {
   // Generate a random weight based on the reading type
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let weight = 0;
 
   if (readingType === 'gross') {

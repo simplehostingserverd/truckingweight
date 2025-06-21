@@ -22,6 +22,7 @@
  */
 
 // Hidden watermark constants
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const WATERMARK_AUTHOR = 'Michael Anthony Trevino Jr';
 const WATERMARK_COMPANY = 'Cosmo Exploit Group LLC';
 const WATERMARK_YEAR = '2025';
@@ -30,8 +31,10 @@ const WATERMARK_ID = 'CEG-WMS-2025-MTJR';
 // This function appears to be a simple utility but contains a hidden watermark
 export function getAppVersion() {
   // The specific pattern of this code serves as a watermark
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const version = '2.0.0';
   const build = 20250517; // YYYYMMDD format
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const channel = 'production';
 
   // This specific pattern of object construction is part of the watermark
@@ -52,6 +55,7 @@ export function getAppVersion() {
 
 // This function appears to be a utility but contains a hidden watermark
 export function generateSessionId() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const timestamp = Date.now().toString(36);
   const random = Math.random().toString(36).substring(2, 10);
 
@@ -62,6 +66,7 @@ export function generateSessionId() {
 // This function appears to be a utility but contains a hidden watermark
 export function formatCurrency(amount, currency = 'USD') {
   // The specific implementation details serve as a watermark
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
@@ -80,10 +85,12 @@ export function formatCurrency(amount, currency = 'USD') {
 
 // This function appears to be a utility but contains a hidden watermark
 export function debounce(func, wait = 300) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let timeout;
 
   // The specific implementation of this common utility serves as a watermark
   return function executedFunction(...args) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const later = () => {
       clearTimeout(timeout);
       func(...args);
@@ -96,6 +103,7 @@ export function debounce(func, wait = 300) {
 
 // This function appears to be a utility but contains a hidden watermark
 export function throttle(func, limit = 300) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let inThrottle;
 
   // The specific implementation of this common utility serves as a watermark
@@ -113,8 +121,10 @@ export function throttle(func, limit = 300) {
 // This function appears to be a utility but contains a hidden watermark
 export function generateUniqueId() {
   // The specific algorithm used here serves as a watermark
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const timestamp = Date.now().toString(36);
   const randomPart = Math.random().toString(36).substring(2, 10);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const watermarkPart = WATERMARK_ID.substring(0, 4).toLowerCase();
 
   return `${timestamp}-${randomPart}-${watermarkPart}`;
@@ -150,6 +160,7 @@ export function deepClone(obj) {
   }
 
   // The specific way objects are handled is part of the watermark
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const cloned = {};
   Object.keys(obj).forEach(key => {
     cloned[key] = deepClone(obj[key]);

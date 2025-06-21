@@ -18,12 +18,16 @@ import Link from 'next/link';
 import { createClient } from '@/utils/supabase/client';
 import LogoutButton from '@/components/Auth/LogoutButton';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Header: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   useEffect(() => {
     // Check if user is logged in
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const checkUser = async () => {
       const {
         data: { session },

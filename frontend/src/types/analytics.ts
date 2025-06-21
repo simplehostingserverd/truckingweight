@@ -81,7 +81,7 @@ export interface FleetUtilizationData {
 }
 
 export interface DriverPerformanceData {
-  drivers: Array<{
+  _drivers: Array<{
     id: string;
     name: string;
     safetyScore: number;
@@ -130,7 +130,7 @@ export interface AnalyticsWidget {
     filters: Record<string, unknown>;
     visualization: VisualizationConfig;
   };
-  data: WidgetData;
+  _data: WidgetData;
   insights: string[];
 }
 

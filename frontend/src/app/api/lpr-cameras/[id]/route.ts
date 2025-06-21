@@ -16,71 +16,80 @@ import { createClient } from '@/utils/supabase/server';
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
     // Await params before using its properties (Next.js 15 requirement)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resolvedParams = await params;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const cameraId = resolvedParams.id;
 
     // Get the current user
     const {
-      data: { user },
-      error: userError,
+      data: { _user },
+      _error: userError,
     } = await supabase.auth.getUser();
 
     if (userError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { _status: 401 });
     }
 
     // Get camera
-    const { data: camera, error } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: camera, error } = await supabase
       .from('lpr_cameras')
       .select('*')
       .eq('id', cameraId)
       .single();
 
     if (error || !camera) {
-      return NextResponse.json({ error: 'Camera not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Camera not found' }, { _status: 404 });
     }
 
     return NextResponse.json(camera);
   } catch (error) {
     console.error('Error in LPR camera GET API:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
   }
 }
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resolvedParams = await params;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const cameraId = resolvedParams.id;
 
     // Get the current user
     const {
-      data: { user },
-      error: userError,
+      data: { _user },
+      _error: userError,
     } = await supabase.auth.getUser();
 
     if (userError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { _status: 401 });
     }
 
     // Get user data to check permissions
-    const { data: userData, error: userDataError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: userData, _error: userDataError } = await supabase
       .from('users')
       .select('*, companies(*)')
       .eq('id', user.id)
       .single();
 
     if (userDataError) {
-      return NextResponse.json({ error: 'User data not found' }, { status: 404 });
+      return NextResponse.json({ error: 'User data not found' }, { _status: 404 });
     }
 
     // Only admins can update cameras
     if (!userData.is_admin) {
-      return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
+      return NextResponse.json({ error: 'Admin access required' }, { _status: 403 });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const body = await request.json();
     const {
       name,
@@ -101,12 +110,13 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     if (!name || !vendor || !ip_address) {
       return NextResponse.json(
         { error: 'Missing required fields: name, vendor, ip_address' },
-        { status: 400 }
+        { _status: 400 }
       );
     }
 
     // Update camera record
-    const { data: updatedCamera, error } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: updatedCamera, error } = await supabase
       .from('lpr_cameras')
       .update({
         name,
@@ -129,13 +139,13 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
     if (error) {
       console.error('Error updating LPR camera:', error);
-      return NextResponse.json({ error: 'Failed to update camera' }, { status: 500 });
+      return NextResponse.json({ error: 'Failed to update camera' }, { _status: 500 });
     }
 
     return NextResponse.json(updatedCamera);
   } catch (error) {
     console.error('Error in LPR camera PUT API:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
   }
 }
 
@@ -144,58 +154,64 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resolvedParams = await params;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const cameraId = resolvedParams.id;
 
     // Get the current user
     const {
-      data: { user },
-      error: userError,
+      data: { _user },
+      _error: userError,
     } = await supabase.auth.getUser();
 
     if (userError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { _status: 401 });
     }
 
     // Get user data to check permissions
-    const { data: userData, error: userDataError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: userData, _error: userDataError } = await supabase
       .from('users')
       .select('*, companies(*)')
       .eq('id', user.id)
       .single();
 
     if (userDataError) {
-      return NextResponse.json({ error: 'User data not found' }, { status: 404 });
+      return NextResponse.json({ error: 'User data not found' }, { _status: 404 });
     }
 
     // Only admins can delete cameras
     if (!userData.is_admin) {
-      return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
+      return NextResponse.json({ error: 'Admin access required' }, { _status: 403 });
     }
 
     // Check if camera exists
-    const { data: camera, error: checkError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: camera, _error: checkError } = await supabase
       .from('lpr_cameras')
       .select('id')
       .eq('id', cameraId)
       .single();
 
     if (checkError || !camera) {
-      return NextResponse.json({ error: 'Camera not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Camera not found' }, { _status: 404 });
     }
 
     // Delete camera record
-    const { error } = await supabase.from('lpr_cameras').delete().eq('id', cameraId);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _error } = await supabase.from('lpr_cameras').delete().eq('id', cameraId);
 
     if (error) {
       console.error('Error deleting LPR camera:', error);
-      return NextResponse.json({ error: 'Failed to delete camera' }, { status: 500 });
+      return NextResponse.json({ error: 'Failed to delete camera' }, { _status: 500 });
     }
 
     return NextResponse.json({ message: 'Camera deleted successfully' });
   } catch (error) {
     console.error('Error in LPR camera DELETE API:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
   }
 }

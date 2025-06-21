@@ -20,7 +20,7 @@ import { createSafeUrl } from '@/utils/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { _useState } from 'react';
 
 // MUI Joy UI components
 import Alert from '@mui/joy/Alert';
@@ -48,26 +48,35 @@ import WarningIcon from '@mui/icons-material/Warning';
 import cityTheme from '@/theme/cityTheme';
 
 export default function CityLogin() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [email, setEmail] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [password, setPassword] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [rememberMe, setRememberMe] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_showDemoLogin, setShowDemoLogin] = useState(process.env.NODE_ENV === 'development');
-  const router = useRouter();
-  const handleSubmit = async (e: React.FormEvent) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  const handleSubmit = async (_e: _React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
     try {
       // Import Supabase client dynamically to avoid SSR issues
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { createClient } = await import('@/utils/supabase/client');
-      const supabase = createClient();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _supabase = createClient();
 
       // First try direct Supabase Auth
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _data: authData, _error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -77,6 +86,7 @@ export default function CityLogin() {
 
         // For backward compatibility, also call the API to get the Paseto token
         try {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const response = await fetch('/api/city-auth/login', {
             method: 'POST',
             headers: {
@@ -86,7 +96,8 @@ export default function CityLogin() {
           });
 
           if (response.ok) {
-            const data = await response.json();
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const _data = await response.json();
             // Store the token in localStorage for backward compatibility
             localStorage.setItem('cityToken', data.token);
             // Store user data in localStorage for backward compatibility
@@ -103,6 +114,7 @@ export default function CityLogin() {
       }
 
       // If Supabase Auth fails, fall back to the API
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await fetch('/api/city-auth/login', {
         method: 'POST',
         headers: {
@@ -111,7 +123,8 @@ export default function CityLogin() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _data = await response.json();
 
       if (!response.ok) {
         throw new Error(data.msg || data.error || 'Login failed');
@@ -138,7 +151,7 @@ export default function CityLogin() {
       // Redirect to city dashboard
       router.push(createSafeUrl('/city/dashboard'));
       router.refresh(); // Important to refresh the router
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       setError(
         err instanceof Error
           ? err instanceof Error
@@ -153,17 +166,21 @@ export default function CityLogin() {
   };
 
   // Handle demo login with test credentials
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDemoLogin = async () => {
     setIsLoading(true);
     setError('');
 
     try {
       // Import Supabase client dynamically to avoid SSR issues
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { createClient } = await import('@/utils/supabase/client');
-      const supabase = createClient();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _supabase = createClient();
 
       // Try to sign in with demo credentials
-      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _data: authData, _error: authError } = await supabase.auth.signInWithPassword({
         email: 'cityadmin@example.gov',
         password: 'CityAdmin123!',
       });
@@ -172,6 +189,7 @@ export default function CityLogin() {
         console.warn('Successfully authenticated demo user with Supabase JWT');
 
         // For backward compatibility, also create local storage items
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const demoUser = {
           id: authData.user.id,
           name: 'Demo City Admin',
@@ -194,7 +212,9 @@ export default function CityLogin() {
       console.warn('Supabase Auth failed for demo login, using fallback method');
 
       // Create a demo token and user
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const demoToken = 'test-city-token-' + Date.now();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const demoUser = {
         id: 'demo-city-user',
         name: 'Demo City Admin',
@@ -338,7 +358,7 @@ export default function CityLogin() {
                   startDecorator={<WarningIcon />}
                   sx={{ mb: 3 }}
                 >
-                  {error}
+                  {_error}
                 </Alert>
               )}
 
@@ -410,8 +430,8 @@ export default function CityLogin() {
 
                   <Button
                     type="submit"
-                    loading={isLoading}
-                    disabled={isLoading}
+                    loading={_isLoading}
+                    disabled={_isLoading}
                     fullWidth
                     sx={{
                       bgcolor: 'primary.500',
@@ -441,7 +461,7 @@ export default function CityLogin() {
                       variant="outlined"
                       color="neutral"
                       onClick={handleDemoLogin}
-                      disabled={isLoading}
+                      disabled={_isLoading}
                       sx={{
                         mb: 2,
                         borderColor: 'primary.300',

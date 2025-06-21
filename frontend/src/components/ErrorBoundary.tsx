@@ -26,12 +26,13 @@ interface Props {
 
 interface State {
   hasError: boolean;
-  error: Error | null;
+  _error: Error | null;
   errorInfo: ErrorInfo | null;
 }
 
 // Context consumer component to access toast context
-const ErrorToastConsumer = ({ error }: { error: Error }) => {
+const ErrorToastConsumer = ({ _error }: { _error: Error }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toast = useToastContext();
 
   React.useEffect(() => {
@@ -49,16 +50,16 @@ const ErrorToastConsumer = ({ error }: { error: Error }) => {
 class ErrorBoundaryClass extends Component<Props, State> {
   public state: State = {
     hasError: false,
-    error: null,
+    _error: null,
     errorInfo: null,
   };
 
-  public static getDerivedStateFromError(error: Error): State {
+  public static getDerivedStateFromError(_error: Error): State {
     // Update state so the next render will show the fallback UI
     return { hasError: true, error, errorInfo: null };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+  public componentDidCatch(_error: Error, errorInfo: ErrorInfo): void {
     // Log the error to an error reporting service
     console.error('Uncaught error:', error, errorInfo);
     this.setState({ errorInfo });
@@ -94,7 +95,7 @@ class ErrorBoundaryClass extends Component<Props, State> {
                     Reload Page
                   </Button>
                   <Button
-                    onClick={() => this.setState({ hasError: false, error: null, errorInfo: null })}
+                    onClick={() => this.setState({ hasError: false, _error: null, errorInfo: null })}
                   >
                     Try Again
                   </Button>
@@ -111,6 +112,7 @@ class ErrorBoundaryClass extends Component<Props, State> {
 }
 
 // Wrapper component to use the error boundary
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ErrorBoundary = (props: Props): JSX.Element => {
   return <ErrorBoundaryClass {...props} />;
 };

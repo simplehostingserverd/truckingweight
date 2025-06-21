@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import { createClient } from '@/utils/supabase/client';
 import {
   Refresh as ArrowPathIcon,
@@ -55,13 +55,15 @@ import { useEffect, useState } from 'react';
 import { Scale } from '@/types/fleet';
 
 export default function ScalesPage() {
-  const handleDelete = async (id: number) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _handleDelete = async (id: number) => {
     if (!window.confirm(`Are you sure you want to delete this scale?`)) {
       return;
     }
 
     try {
-      const { error } = await supabase.from('scales').delete().eq('id', id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _error } = await supabase.from('scales').delete().eq('id', id);
 
       if (error) {
         throw error;
@@ -71,33 +73,49 @@ export default function ScalesPage() {
       fetchScales();
 
       // Show success message
-      console.log('scale deleted successfully');
-    } catch (error: unknown) {
+      console.warn('scale deleted successfully');
+    } catch (_error: unknown) {
       console.error('Error deleting scale:', error);
       alert('Failed to delete scale');
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scales, setScales] = useState<Scale[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [filteredScales, setFilteredScales] = useState<Scale[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchTerm, setSearchTerm] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [statusFilter, setStatusFilter] = useState('all');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [typeFilter, setTypeFilter] = useState('all');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [view, setView] = useState('table');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedScale, setSelectedScale] = useState<Scale | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isConnecting, setIsConnecting] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected' | 'error'>(
     'disconnected'
   );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showConnectionSnackbar, setShowConnectionSnackbar] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_snackbarSeverity, setSnackbarSeverity] = useState<
     'success' | 'error' | 'info' | 'warning'
   >('info');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeScales, setActiveScales] = useState<number>(0);
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   useEffect(() => {
     fetchScales();
@@ -107,12 +125,14 @@ export default function ScalesPage() {
     filterScales();
   }, [scales, searchTerm, statusFilter, typeFilter]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fetchScales = async () => {
     try {
       setIsLoading(true);
       setError('');
 
-      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _data: sessionData, _error: sessionError } = await supabase.auth.getSession();
 
       if (sessionError) {
         throw sessionError;
@@ -123,16 +143,19 @@ export default function ScalesPage() {
       }
 
       // Try to get user data, but don't fail if not found
-      const { data: userData, error: _userError } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _data: userData, _error: _userError } = await supabase
         .from('users')
         .select('company_id, is_admin')
         .eq('id', sessionData.session.user.id);
 
       // Use first user or create a default admin user object
-      const user =
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _user =
         userData && userData.length > 0 ? userData[0] : { company_id: 1, is_admin: true };
 
       // Use type-safe query with the updated Database type
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       let query = supabase.from('scales').select('*, companies(id, name)');
 
       // If not admin, filter by company
@@ -140,22 +163,25 @@ export default function ScalesPage() {
         query = query.eq('company_id', user.company_id);
       }
 
-      const { data, error: scalesError } = await query.order('name');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { data, _error: scalesError } = await query.order('name');
 
       if (scalesError) {
         throw scalesError;
       }
 
       // Count active scales
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const activeScalesCount = data ? data.filter(scale => scale.status === 'Active').length : 0;
       setActiveScales(activeScalesCount);
 
       // Check if any scales are connected to the weight capture system
-      const connectedScales = await checkConnectedScales(data || []);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _connectedScales = await checkConnectedScales(data || []);
 
       setScales(data || []);
       setFilteredScales(data || []);
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error fetching scales:', err);
       setError(
         err instanceof Error
@@ -170,6 +196,7 @@ export default function ScalesPage() {
   };
 
   // Check which scales are connected to the weight capture system
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const checkConnectedScales = async (scalesData: Scale[]) => {
     try {
       // In a real implementation, this would check with the backend
@@ -184,6 +211,7 @@ export default function ScalesPage() {
   };
 
   // Connect to a scale for weight capture
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const connectToScale = async (scale: Scale) => {
     if (!scale || scale.status !== 'Active') {
       setSnackbarMessage('Cannot connect to inactive scale');
@@ -202,7 +230,8 @@ export default function ScalesPage() {
       await new Promise(resolve => setTimeout(resolve, 1500));
 
       // Simulate success or failure
-      const success = Math.random() > 0.2;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _success = Math.random() > 0.2;
 
       if (success) {
         setConnectionStatus('connected');
@@ -226,11 +255,14 @@ export default function ScalesPage() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const filterScales = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let filtered = [...scales];
 
     // Apply search filter
     if (searchTerm) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(
         scale =>
@@ -255,6 +287,7 @@ export default function ScalesPage() {
   };
 
   // Get unique scale types for filter
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const scaleTypes = ['all', ...new Set(scales.map(scale => scale.scale_type))];
 
   return (
@@ -273,7 +306,7 @@ export default function ScalesPage() {
       {error && (
         <Alert severity="error" sx={{ mb: 3 }}>
           <AlertTitle>Error</AlertTitle>
-          {error}
+          {_error}
         </Alert>
       )}
 

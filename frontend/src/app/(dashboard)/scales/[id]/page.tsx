@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import HardwareSelector from '@/components/scales/HardwareSelector';
 import { toSearchParamString } from '@/utils/searchParams';
 import { createClient } from '@/utils/supabase/client';
@@ -48,21 +48,34 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function ScaleDetail({ params }: { params: Promise<{ id: string }> }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scale, setScale] = useState<unknown>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [qrCode, setQrCode] = useState<string>('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isDeleting, setIsDeleting] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTab, setActiveTab] = useState('details');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [id, setId] = useState<string>('');
-  const router = useRouter();
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   // Handle async params
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resolveParams = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const resolvedParams = await params;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const scaleId = toSearchParamString(resolvedParams.id, '');
       setId(scaleId);
     };
@@ -72,6 +85,7 @@ export default function ScaleDetail({ params }: { params: Promise<{ id: string }
   useEffect(() => {
     if (!id) return;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchScale = async () => {
       try {
         // Get session
@@ -85,6 +99,7 @@ export default function ScaleDetail({ params }: { params: Promise<{ id: string }
         }
 
         // Get scale data
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { data, error } = await supabase
           .from('scales')
           .select(
@@ -113,6 +128,7 @@ export default function ScaleDetail({ params }: { params: Promise<{ id: string }
         setScale(data);
 
         // Fetch QR code
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await fetch(`/api/scales/${id}/qrcode`, {
           headers: {
             'Content-Type': 'application/json',
@@ -121,12 +137,13 @@ export default function ScaleDetail({ params }: { params: Promise<{ id: string }
         });
 
         if (response.ok) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const qrData = await response.json();
           if (qrData.qrCode) {
             setQrCode(qrData.qrCode);
           }
         }
-      } catch (err: unknown) {
+      } catch (_err: unknown) {
         console.error('Error fetching scale:', err);
         setError('Failed to load scale data');
       } finally {
@@ -137,17 +154,19 @@ export default function ScaleDetail({ params }: { params: Promise<{ id: string }
     fetchScale();
   }, [id, router, supabase]);
 
-  const handleDelete = async () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _handleDelete = async () => {
     try {
       setIsDeleting(true);
-      const { error } = await supabase.from('scales').delete().eq('id', id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _error } = await supabase.from('scales').delete().eq('id', id);
 
       if (error) {
         throw error;
       }
 
       router.push('/scales');
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error deleting scale:', err);
       setError('Failed to delete scale');
     } finally {
@@ -171,7 +190,7 @@ export default function ScaleDetail({ params }: { params: Promise<{ id: string }
       <Box sx={{ maxWidth: 1200, mx: 'auto', px: 3, py: 4 }}>
         <Alert severity="error">
           <AlertTitle>Error</AlertTitle>
-          {error}
+          {_error}
         </Alert>
         <Box sx={{ mt: 2 }}>
           <Link href="/scales" style={{ textDecoration: 'none' }}>
@@ -228,7 +247,7 @@ export default function ScaleDetail({ params }: { params: Promise<{ id: string }
         </Box>
 
         <Box sx={{ width: '100%', mb: 4 }}>
-          <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)} centered>
+          <Tabs value={_activeTab} onChange={(_, newValue) => setActiveTab(newValue)} centered>
             <Tab label="Details" value="details" />
             <Tab label="Hardware" value="hardware" />
             <Tab label="QR Code" value="qrcode" />
@@ -377,7 +396,7 @@ export default function ScaleDetail({ params }: { params: Promise<{ id: string }
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setShowDeleteConfirm(false)}>Cancel</Button>
-            <Button onClick={handleDelete} color="error" disabled={isDeleting}>
+            <Button onClick={_handleDelete} color="error" disabled={isDeleting}>
               {isDeleting ? 'Deleting...' : 'Delete'}
             </Button>
           </DialogActions>

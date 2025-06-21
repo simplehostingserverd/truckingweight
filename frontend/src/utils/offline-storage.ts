@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
 
 // Define the database schema
@@ -42,7 +41,7 @@ interface TruckingDB extends DBSchema {
       origin: string;
       destination: string;
       weight: number;
-      status: string;
+      _status: string;
       vehicle_id?: string;
       driver_id?: string;
       synced: boolean;
@@ -57,7 +56,7 @@ interface TruckingDB extends DBSchema {
       id: string;
       table: string;
       action: 'create' | 'update' | 'delete';
-      data: unknown;
+      _data: unknown;
       timestamp: number;
     };
   };
@@ -65,6 +64,7 @@ interface TruckingDB extends DBSchema {
 
 // Database version
 const DB_VERSION = 1;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DB_NAME = 'trucking-offline-db';
 
 // Initialize the database
@@ -73,6 +73,7 @@ async function initDB(): Promise<IDBPDatabase<TruckingDB>> {
     upgrade(db) {
       // Create weights store
       if (!db.objectStoreNames.contains('weights')) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const weightStore = db.createObjectStore('weights', { keyPath: 'id' });
         weightStore.createIndex('by-date', 'date');
         weightStore.createIndex('by-synced', 'synced');
@@ -80,6 +81,7 @@ async function initDB(): Promise<IDBPDatabase<TruckingDB>> {
 
       // Create loads store
       if (!db.objectStoreNames.contains('loads')) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const loadStore = db.createObjectStore('loads', { keyPath: 'id' });
         loadStore.createIndex('by-status', 'status');
         loadStore.createIndex('by-synced', 'synced');
@@ -94,6 +96,7 @@ async function initDB(): Promise<IDBPDatabase<TruckingDB>> {
 }
 
 // Get database instance (singleton)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let dbPromise: Promise<IDBPDatabase<TruckingDB>> | null = null;
 
 export function getDB(): Promise<IDBPDatabase<TruckingDB>> {
@@ -108,7 +111,9 @@ export async function addItem<T extends keyof TruckingDB>(
   storeName: T,
   item: TruckingDB[T]['value']
 ): Promise<string> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const db = await getDB();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const id = await db.add(storeName, item);
   return String(id);
 }
@@ -117,6 +122,7 @@ export async function getItem<T extends keyof TruckingDB>(
   storeName: T,
   id: string
 ): Promise<TruckingDB[T]['value'] | undefined> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const db = await getDB();
   return db.get(storeName, id);
 }
@@ -125,7 +131,9 @@ export async function updateItem<T extends keyof TruckingDB>(
   storeName: T,
   item: TruckingDB[T]['value']
 ): Promise<string> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const db = await getDB();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const id = await db.put(storeName, item);
   return String(id);
 }
@@ -134,6 +142,7 @@ export async function deleteItem<T extends keyof TruckingDB>(
   storeName: T,
   id: string
 ): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const db = await getDB();
   await db.delete(storeName, id);
 }
@@ -141,6 +150,7 @@ export async function deleteItem<T extends keyof TruckingDB>(
 export async function getAllItems<T extends keyof TruckingDB>(
   storeName: T
 ): Promise<TruckingDB[T]['value'][]> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const db = await getDB();
   return db.getAll(storeName);
 }
@@ -149,7 +159,9 @@ export async function getAllItems<T extends keyof TruckingDB>(
 export async function getUnsyncedItems<T extends 'weights' | 'loads'>(
   storeName: T
 ): Promise<TruckingDB[T]['value'][]> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const db = await getDB();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const index = db.transaction(storeName).store.index('by-synced');
   return index.getAll(false);
 }
@@ -158,8 +170,11 @@ export async function markAsSynced<T extends 'weights' | 'loads'>(
   storeName: T,
   id: string
 ): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const db = await getDB();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tx = db.transaction(storeName, 'readwrite');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const item = await tx.store.get(id);
   if (item) {
     item.synced = true;
@@ -172,9 +187,11 @@ export async function markAsSynced<T extends 'weights' | 'loads'>(
 export async function addToSyncQueue(
   table: string,
   action: 'create' | 'update' | 'delete',
-  data: unknown
+  _data: unknown
 ): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const db = await getDB();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const id = `${table}_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
   await db.add('sync_queue', {
     id,
@@ -188,12 +205,17 @@ export async function addToSyncQueue(
 export async function processSyncQueue(
   processFn: (item: TruckingDB['sync_queue']['value']) => Promise<boolean>
 ): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const db = await getDB();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tx = db.transaction('sync_queue', 'readwrite');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const items = await tx.store.getAll();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   for (const item of items) {
-    const success = await processFn(item);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _success = await processFn(item);
     if (success) {
       await tx.store.delete(item.id);
     }

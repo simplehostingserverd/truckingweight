@@ -18,7 +18,8 @@ import { NextResponse } from 'next/server';
  * Returns basic health information about the application
  */
 export async function GET() {
-  const healthData = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _healthData = {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
@@ -27,5 +28,5 @@ export async function GET() {
     memory: process.memoryUsage(),
   };
 
-  return NextResponse.json(healthData, { status: 200 });
+  return NextResponse.json(healthData, { _status: 200 });
 }

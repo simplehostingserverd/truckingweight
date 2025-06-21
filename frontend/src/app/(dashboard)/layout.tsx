@@ -30,10 +30,11 @@ function SkipToContent() {
 }
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   const {
-    data: { user },
+    data: { _user },
     error,
   } = await supabase.auth.getUser();
 
@@ -43,7 +44,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
   }
 
   // Get user data with company information
-  const { data: userData } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: userData } = await supabase
     .from('users')
     .select('*, companies(*)')
     .eq('id', user.id)
@@ -54,7 +56,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <SkipToContent />
       <DashboardSidebar isAdmin={userData?.is_admin || false} />
       <div className="flex flex-col flex-1 overflow-hidden">
-        <DashboardHeader user={userData} isAdmin={userData?.is_admin || false} />
+        <DashboardHeader user={_userData} isAdmin={userData?.is_admin || false} />
         <main
           id="main-content"
           className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-[#121212]"

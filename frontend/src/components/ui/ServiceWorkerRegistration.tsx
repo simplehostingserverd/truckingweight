@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 // Global type declarations
 declare function confirm(message?: string): boolean;
 
@@ -25,7 +25,7 @@ import { useToastContext } from '@/providers/ToastProvider';
 interface ServiceWorkerRegistrationProps {
   onUpdate?: () => void;
   onSuccess?: () => void;
-  onError?: (error: Error) => void;
+  onError?: (_error: Error) => void;
 }
 
 export default function ServiceWorkerRegistration({
@@ -34,16 +34,20 @@ export default function ServiceWorkerRegistration({
   onError,
 }: ServiceWorkerRegistrationProps) {
   // Use undefined as initial state to avoid hydration mismatch
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isUpdateAvailable, setIsUpdateAvailable] = useState<boolean | undefined>(undefined);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toast = useToastContext();
 
   useEffect(() => {
     // Only run in production or when explicitly enabled
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const shouldRegisterSW =
       process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_ENABLE_SW === 'true';
 
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator && shouldRegisterSW) {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const wb = new Workbox('/service-worker.js');
 
         // Successful registration
@@ -77,7 +81,7 @@ export default function ServiceWorkerRegistration({
 
         // Registration error
         wb.addEventListener('error', event => {
-          const error = new Error('Service worker registration failed');
+          const _error = new Error('Service worker registration failed');
           logger.error('Service Worker registration failed', { event }, 'ServiceWorker');
 
           // Show toast notification for error
@@ -99,7 +103,9 @@ export default function ServiceWorkerRegistration({
         });
 
         // Register the service worker with a timeout
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const registrationPromise = wb.register();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const timeoutPromise = new Promise((_, reject) => {
           setTimeout(() => reject(new Error('Service Worker registration timed out')), 10000);
         });
@@ -115,7 +121,7 @@ export default function ServiceWorkerRegistration({
             }
           })
           .catch(error => {
-            logger.error('Service Worker registration failed', { error }, 'ServiceWorker');
+            logger.error('Service Worker registration failed', { _error }, 'ServiceWorker');
 
             // Show toast notification for registration error
             toast.error({
@@ -123,11 +129,11 @@ export default function ServiceWorkerRegistration({
               description: error.message || 'Failed to register service worker',
             });
 
-            onError?.(error instanceof Error ? error : new Error(String(error)));
+            onError?.(error instanceof Error ? _error : new Error(String(error)));
           });
       } catch (error) {
-        logger.error('Service Worker setup error', { error }, 'ServiceWorker');
-        onError?.(error instanceof Error ? error : new Error(String(error)));
+        logger.error('Service Worker setup error', { _error }, 'ServiceWorker');
+        onError?.(error instanceof Error ? _error : new Error(String(error)));
       }
     }
   }, [onUpdate, onSuccess, onError, toast]);

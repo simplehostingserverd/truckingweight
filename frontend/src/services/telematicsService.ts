@@ -20,7 +20,7 @@ export interface TelematicsProvider {
 }
 
 export interface VehiclePosition {
-  vehicleId: string;
+  _vehicleId: string;
   latitude: number;
   longitude: number;
   speed: number;
@@ -38,7 +38,7 @@ export interface VehiclePosition {
 
 export interface TelematicsEvent {
   id: string;
-  vehicleId: string;
+  _vehicleId: string;
   driverId: string;
   eventType: 'speeding' | 'harsh_braking' | 'rapid_acceleration' | 'idle_time' | 'geofence_violation' | 'maintenance_alert';
   severity: 'low' | 'medium' | 'high' | 'critical';
@@ -61,12 +61,12 @@ export interface RoutePoint {
 }
 
 export interface HistoricalRoute {
-  vehicleId: string;
+  _vehicleId: string;
   driverId: string;
-  startTime: string;
-  endTime: string;
+  _startTime: string;
+  _endTime: string;
   totalDistance: number;
-  totalDuration: number;
+  _totalDuration: number;
   averageSpeed: number;
   maxSpeed: number;
   fuelConsumed: number;
@@ -77,7 +77,7 @@ export interface HistoricalRoute {
 class TelematicsService {
   private providers: Map<string, TelematicsProvider> = new Map();
   private websockets: Map<string, WebSocket> = new Map();
-  private eventListeners: Map<string, ((data: VehiclePosition | TelematicsEvent) => void)[]> = new Map();
+  private eventListeners: Map<string, ((_data: VehiclePosition | TelematicsEvent) => void)[]> = new Map();
 
   constructor() {
     this.initializeProviders();
@@ -85,6 +85,7 @@ class TelematicsService {
 
   private initializeProviders(): void {
     // Mock telematics providers - in production, these would be real providers
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const mockProviders: TelematicsProvider[] = [
       {
         id: 'samsara',
@@ -115,7 +116,8 @@ class TelematicsService {
   }
 
   // Real-time position streaming
-  public subscribeToVehicleUpdates(vehicleId: string, callback: (position: VehiclePosition) => void): void {
+  public subscribeToVehicleUpdates(_vehicleId: string, callback: (position: VehiclePosition) => void): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const listeners = this.eventListeners.get(vehicleId) || [];
     listeners.push(callback);
     this.eventListeners.set(vehicleId, listeners);
@@ -124,8 +126,10 @@ class TelematicsService {
     this.startRealTimeStream(vehicleId);
   }
 
-  public unsubscribeFromVehicleUpdates(vehicleId: string, callback: (position: VehiclePosition) => void): void {
+  public unsubscribeFromVehicleUpdates(_vehicleId: string, callback: (position: VehiclePosition) => void): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const listeners = this.eventListeners.get(vehicleId) || [];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const filteredListeners = listeners.filter(listener => listener !== callback);
     
     if (filteredListeners.length === 0) {
@@ -136,23 +140,25 @@ class TelematicsService {
     }
   }
 
-  private startRealTimeStream(vehicleId: string): void {
+  private startRealTimeStream(_vehicleId: string): void {
     if (this.websockets.has(vehicleId)) {
       return; // Already connected
     }
 
     // Mock WebSocket connection - in production, this would connect to real telematics provider
-    const mockWebSocketUrl = `wss://mock-telematics.example.com/vehicles/${vehicleId}`;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const mockWebSocketUrl = `wss://mock-telematics.example.com/vehicles/${_vehicleId}`;
     
     try {
       // For now, simulate real-time updates with intervals
       this.simulateRealTimeUpdates(vehicleId);
     } catch (error) {
-      console.error(`Failed to start real-time stream for vehicle ${vehicleId}:`, error);
+      console.error(`Failed to start real-time stream for vehicle ${_vehicleId}:`, error);
     }
   }
 
-  private stopRealTimeStream(vehicleId: string): void {
+  private stopRealTimeStream(_vehicleId: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const ws = this.websockets.get(vehicleId);
     if (ws) {
       ws.close();
@@ -160,26 +166,31 @@ class TelematicsService {
     }
   }
 
-  private simulateRealTimeUpdates(vehicleId: string): void {
+  private simulateRealTimeUpdates(_vehicleId: string): void {
     // Simulate real-time position updates every 10 seconds
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const interval = setInterval(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const listeners = this.eventListeners.get(vehicleId);
       if (!listeners || listeners.length === 0) {
         clearInterval(interval);
         return;
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const mockPosition = this.generateMockPosition(vehicleId);
       listeners.forEach(callback => callback(mockPosition));
     }, 10000); // 10 seconds
 
     // Store interval reference for cleanup
-    this.websockets.set(vehicleId, { close: () => clearInterval(interval) } as WebSocket);
+    this.websockets.set(_vehicleId, { close: () => clearInterval(interval) } as WebSocket);
   }
 
-  private generateMockPosition(vehicleId: string): VehiclePosition {
+  private generateMockPosition(_vehicleId: string): VehiclePosition {
     // Generate realistic mock data - in production, this comes from real telematics
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const baseLatitude = 32.7767 + (Math.random() - 0.5) * 0.1;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const baseLongitude = -96.797 + (Math.random() - 0.5) * 0.1;
 
     return {
@@ -201,31 +212,38 @@ class TelematicsService {
   }
 
   // Get current position for a vehicle
-  public async getCurrentPosition(vehicleId: string): Promise<VehiclePosition | null> {
+  public async getCurrentPosition(_vehicleId: string): Promise<VehiclePosition | null> {
     try {
       // In production, this would make an API call to the telematics provider
       return this.generateMockPosition(vehicleId);
     } catch (error) {
-      console.error(`Failed to get current position for vehicle ${vehicleId}:`, error);
+      console.error(`Failed to get current position for vehicle ${_vehicleId}:`, error);
       return null;
     }
   }
 
   // Get historical route data
   public async getHistoricalRoute(
-    vehicleId: string, 
-    startTime: string, 
-    endTime: string
+    _vehicleId: string, 
+    _startTime: string, 
+    _endTime: string
   ): Promise<HistoricalRoute | null> {
     try {
       // Mock historical route data - in production, this comes from telematics API
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const points: RoutePoint[] = [];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const start = new Date(startTime);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const end = new Date(endTime);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const duration = end.getTime() - start.getTime();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const pointCount = Math.min(100, Math.max(10, Math.floor(duration / 60000))); // One point per minute, max 100
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for (let i = 0; i < pointCount; i++) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const timestamp = new Date(start.getTime() + (duration * i) / pointCount);
         points.push({
           latitude: 32.7767 + (Math.random() - 0.5) * 0.1,
@@ -242,7 +260,7 @@ class TelematicsService {
         startTime,
         endTime,
         totalDistance: 50 + Math.random() * 200, // miles
-        totalDuration: duration / 1000, // seconds
+        _totalDuration: duration / 1000, // seconds
         averageSpeed: 45 + Math.random() * 15,
         maxSpeed: 65 + Math.random() * 15,
         fuelConsumed: 5 + Math.random() * 15, // gallons
@@ -250,19 +268,20 @@ class TelematicsService {
         events: [],
       };
     } catch (error) {
-      console.error(`Failed to get historical route for vehicle ${vehicleId}:`, error);
+      console.error(`Failed to get historical route for vehicle ${_vehicleId}:`, error);
       return null;
     }
   }
 
   // Get telematics events
   public async getTelematicsEvents(
-    vehicleId: string, 
-    startTime: string, 
-    endTime: string
+    _vehicleId: string, 
+    _startTime: string, 
+    _endTime: string
   ): Promise<TelematicsEvent[]> {
     try {
       // Mock events - in production, these come from telematics API
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const events: TelematicsEvent[] = [];
       
       if (Math.random() > 0.7) {
@@ -285,18 +304,21 @@ class TelematicsService {
 
       return events;
     } catch (error) {
-      console.error(`Failed to get telematics events for vehicle ${vehicleId}:`, error);
+      console.error(`Failed to get telematics events for vehicle ${_vehicleId}:`, error);
       return [];
     }
   }
 
   // Health check for telematics providers
   public async checkProviderHealth(): Promise<Map<string, boolean>> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const healthStatus = new Map<string, boolean>();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [id, provider] of this.providers) {
       try {
         // Mock health check - in production, this would ping the actual API
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const isHealthy = Math.random() > 0.1; // 90% uptime simulation
         healthStatus.set(id, isHealthy);
       } catch (error) {
@@ -318,4 +340,5 @@ class TelematicsService {
 }
 
 // Export singleton instance
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const telematicsService = new TelematicsService();

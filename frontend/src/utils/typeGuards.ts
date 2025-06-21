@@ -77,7 +77,7 @@ export function isErrorLike(value: unknown): value is { message: string; name?: 
 /**
  * Safely extract error message from unknown error
  */
-export function getErrorMessage(error: unknown): string {
+export function getErrorMessage(_error: unknown): string {
   if (isError(error)) {
     return error.message;
   }
@@ -93,7 +93,7 @@ export function getErrorMessage(error: unknown): string {
 /**
  * Safely extract error name from unknown error
  */
-export function getErrorName(error: unknown): string {
+export function getErrorName(_error: unknown): string {
   if (isError(error)) {
     return error.name;
   }
@@ -112,8 +112,8 @@ export function getErrorName(error: unknown): string {
  */
 export function isApiResponse<T>(
   value: unknown,
-  dataValidator: (data: unknown) => data is T
-): value is { data: T; success: boolean } {
+  dataValidator: (_data: unknown) => data is T
+): value is { _data: T; _success: boolean } {
   return (
     isObject(value) &&
     isBoolean(value.success) &&
@@ -129,7 +129,7 @@ export function isPaginatedResponse<T>(
   value: unknown,
   itemValidator: (item: unknown) => item is T
 ): value is {
-  data: T[];
+  _data: T[];
   pagination: {
     page: number;
     limit: number;
@@ -243,6 +243,7 @@ export function toString(value: unknown): string {
 export function toNumber(value: unknown): number | null {
   if (isNumber(value)) return value;
   if (isString(value)) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const parsed = parseFloat(value);
     return isNaN(parsed) ? null : parsed;
   }

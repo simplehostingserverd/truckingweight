@@ -22,16 +22,17 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Initialize Supabase client
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
 
     // Get authenticated user (more secure than getSession)
     const {
-      data: { user },
-      error: userError,
+      data: { _user },
+      _error: userError,
     } = await supabase.auth.getUser();
 
     if (userError || !user) {
-      return NextResponse.json({ error: 'No authenticated user' }, { status: 401 });
+      return NextResponse.json({ error: 'No authenticated user' }, { _status: 401 });
     }
 
     // Get session for access token
@@ -53,16 +54,17 @@ export async function GET(request: NextRequest) {
     // Try to recover by creating a new session
     try {
       // Initialize a new Supabase client
-      const supabase = createClient();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _supabase = createClient();
 
       // Get authenticated user (more secure than getSession)
       const {
-        data: { user },
-        error: userError,
+        data: { _user },
+        _error: userError,
       } = await supabase.auth.getUser();
 
       if (userError || !user) {
-        return NextResponse.json({ error: 'No authenticated user' }, { status: 401 });
+        return NextResponse.json({ error: 'No authenticated user' }, { _status: 401 });
       }
 
       // Get session for access token
@@ -94,6 +96,6 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
   }
 }

@@ -19,6 +19,7 @@ import { Check } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>

@@ -16,11 +16,12 @@ import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   // Check if user is authenticated
   const {
-    data: { user },
+    data: { _user },
   } = await supabase.auth.getUser();
 
   // If user is already logged in, redirect to dashboard

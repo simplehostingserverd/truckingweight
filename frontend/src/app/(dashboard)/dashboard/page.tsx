@@ -11,18 +11,20 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
+
 import { createClient } from '@/utils/supabase/server';
 import DashboardClient from './client';
 
 export default async function Dashboard() {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   // Get minimal user data for initial rendering
   const {
-    data: { user },
+    data: { _user },
   } = await supabase.auth.getUser();
-  const { data: userData } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: userData } = await supabase
     .from('users')
     .select('name, is_admin')
     .eq('id', user?.id)

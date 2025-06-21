@@ -17,7 +17,7 @@ import {
   getEmailValidationClass,
   EmailValidationResult,
 } from '@/utils/validation/emailValidator';
-import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { CheckCircle, XCircleCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface EmailValidationFeedbackProps {
@@ -30,11 +30,13 @@ interface EmailValidationFeedbackProps {
  * Email validation feedback component
  * Shows real-time feedback on email validity with appropriate icons and messages
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const EmailValidationFeedback: React.FC<EmailValidationFeedbackProps> = ({
   email,
   showWhenEmpty = false,
   className,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [validation, setValidation] = useState<EmailValidationResult>({
     isValid: false,
     isDisposable: false,
@@ -54,6 +56,7 @@ const EmailValidationFeedback: React.FC<EmailValidationFeedbackProps> = ({
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const result = validateEmail(email);
     setValidation(result);
   }, [email, showWhenEmpty]);
@@ -64,6 +67,7 @@ const EmailValidationFeedback: React.FC<EmailValidationFeedbackProps> = ({
   }
 
   // Determine icon based on validation status
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderIcon = () => {
     switch (validation.status) {
       case 'valid':

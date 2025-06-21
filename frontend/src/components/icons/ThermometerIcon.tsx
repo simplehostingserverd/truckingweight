@@ -11,7 +11,6 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
 
 interface ThermometerIconProps {
   className?: string;

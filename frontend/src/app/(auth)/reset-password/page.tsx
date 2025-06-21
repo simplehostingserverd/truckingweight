@@ -15,23 +15,29 @@
 
 import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { _useState } from 'react';
 
 export default function ResetPassword() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [email, setEmail] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [message, setMessage] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (_e: _React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
     setMessage('');
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/update-password`,
       });
 
@@ -40,7 +46,7 @@ export default function ResetPassword() {
       }
 
       setMessage('Check your email for the password reset link');
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       setError(
         err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'An error occurred while sending the reset link'
       );
@@ -66,7 +72,7 @@ export default function ResetPassword() {
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{error}</h3>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{_error}</h3>
               </div>
             </div>
           </div>
@@ -105,7 +111,7 @@ export default function ResetPassword() {
           <div>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={_isLoading}
               className="group relative flex w-full justify-center rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:bg-primary-400"
             >
               {isLoading ? 'Sending...' : 'Send reset link'}

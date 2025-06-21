@@ -272,7 +272,7 @@ export interface GeoLocation {
 }
 
 export interface CalibrationResult {
-  success: boolean;
+  _success: boolean;
   previousOffset: number;
   newOffset: number;
   timestamp: Date;

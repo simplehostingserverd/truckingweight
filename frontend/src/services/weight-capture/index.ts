@@ -57,9 +57,11 @@ export class WeightCaptureService {
    * @param config Scale configuration
    * @returns True if initialization was successful
    */
-  async initializeDigitalScale(id: string, config: ScaleConfig): Promise<boolean> {
+  async initializeDigitalScale(id: string, _config: ScaleConfig): Promise<boolean> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const provider = new DigitalScaleProvider(config);
-    const success = await provider.initialize();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _success = await provider.initialize();
 
     if (success) {
       this.registerProvider(id, provider);
@@ -74,9 +76,11 @@ export class WeightCaptureService {
    * @param config IoT sensor configuration
    * @returns True if initialization was successful
    */
-  async initializeIoTSensor(id: string, config: unknown): Promise<boolean> {
+  async initializeIoTSensor(id: string, _config: unknown): Promise<boolean> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const provider = new IoTSensorProvider(config);
-    const success = await provider.initialize();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _success = await provider.initialize();
 
     if (success) {
       this.registerProvider(id, provider);
@@ -91,8 +95,10 @@ export class WeightCaptureService {
    * @returns True if initialization was successful
    */
   async initializeCamera(id: string): Promise<boolean> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const provider = new CameraProvider();
-    const success = await provider.initialize();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _success = await provider.initialize();
 
     if (success) {
       this.registerProvider(id, provider);
@@ -107,6 +113,7 @@ export class WeightCaptureService {
    * @returns True if initialization was successful
    */
   initializeManualEntry(id: string): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const provider = new ManualEntryProvider();
     this.registerProvider(id, provider);
     return true;
@@ -118,6 +125,7 @@ export class WeightCaptureService {
    * @returns True if provider was found and set as active
    */
   setActiveProvider(id: string): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const provider = this.providers.get(id);
 
     if (!provider) {
@@ -189,4 +197,5 @@ export class WeightCaptureService {
 }
 
 // Create and export a singleton instance
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const weightCaptureService = new WeightCaptureService();

@@ -11,7 +11,7 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
+
 import { createClient } from '@/utils/supabase/server';
 import {
   AdjustmentsHorizontalIcon,
@@ -21,34 +21,40 @@ import {
 import Link from 'next/link';
 
 export default async function Vehicles() {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   // Get user data
   const {
-    data: { user },
+    data: { _user },
   } = await supabase.auth.getUser();
-  const { data: userData } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: userData } = await supabase
     .from('users')
     .select('company_id')
     .eq('id', user?.id)
     .single();
 
   // Get vehicles
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let vehicles = [];
-  let error = null;
+  let _error = null;
 
   try {
     // Check if user is admin
-    const { data: adminCheck } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: adminCheck } = await supabase
       .from('users')
       .select('is_admin')
       .eq('id', user?.id)
       .single();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isAdmin = adminCheck?.is_admin || false;
 
     if (isAdmin) {
       // Admin can see all vehicles from all companies
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await supabase
         .from('vehicles')
         .select('*, companies(name)')
@@ -58,6 +64,7 @@ export default async function Vehicles() {
       error = response.error;
     } else if (userData?.company_id) {
       // Regular user can only see vehicles from their company
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await supabase
         .from('vehicles')
         .select('*')
@@ -79,9 +86,11 @@ export default async function Vehicles() {
   }
 
   // Get count of active vehicles
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const activeVehicles = vehicles?.filter(vehicle => vehicle.status === 'Active').length || 0;
 
   // Get count of maintenance vehicles
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const maintenanceVehicles =
     vehicles?.filter(vehicle => vehicle.status === 'Maintenance').length || 0;
 

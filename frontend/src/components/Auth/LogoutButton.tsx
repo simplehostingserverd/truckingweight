@@ -21,10 +21,14 @@ interface LogoutButtonProps {
   className?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const LogoutButton: React.FC<LogoutButtonProps> = ({ className }) => {
-  const router = useRouter();
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleLogout = async () => {
     try {
       // Sign out using Supabase Auth

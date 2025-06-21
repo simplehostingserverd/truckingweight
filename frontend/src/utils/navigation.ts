@@ -32,18 +32,22 @@ export function createSafeUrl(
   query?: Record<string, string | number | boolean | undefined>
 ): string {
   // Start with the pathname
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let url = pathname;
 
   // Add query parameters if provided
   if (query && Object.keys(query).length > 0) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const searchParams = new URLSearchParams();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [key, value] of Object.entries(query)) {
       if (value !== undefined && value !== null) {
         searchParams.append(key, String(value));
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const queryString = searchParams.toString();
     if (queryString) {
       url = `${url}?${queryString}`;
@@ -62,6 +66,7 @@ export function createSafeUrl(
 export function searchParamsToObject(
   searchParams: ReadonlyURLSearchParams
 ): Record<string, string> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const params: Record<string, string> = {};
 
   searchParams.forEach((value, key) => {
@@ -82,8 +87,10 @@ export function updateSearchParams(
   currentParams: Record<string, string>,
   updates: Record<string, string | number | boolean | undefined>
 ): Record<string, string> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const newParams = { ...currentParams };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   for (const [key, value] of Object.entries(updates)) {
     if (value === undefined || value === null) {
       delete newParams[key];

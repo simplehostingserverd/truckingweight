@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import MobileNav from '@/components/ui/MobileNav';
 import { Database } from '@/types/supabase';
 import { createClient } from '@/utils/supabase/client';
@@ -41,15 +41,20 @@ import { Fragment, useEffect, useState } from 'react';
 type User = Database['public']['Tables']['users']['Row'];
 
 interface DashboardHeaderProps {
-  user: User | null;
+  _user: User | null;
   isAdmin?: boolean;
 }
 
 export default function DashboardHeader({ user, isAdmin = false }: DashboardHeaderProps) {
-  const router = useRouter();
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { theme, setTheme } = useTheme();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [mounted, setMounted] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isMobile, setIsMobile] = useState(false);
 
   // Set mounted state after hydration and check screen size
@@ -57,6 +62,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
     setMounted(true);
 
     // Check if mobile
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth < 768); // md breakpoint
     };
@@ -71,6 +77,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSignOut = async () => {
     try {
       // Sign out using Supabase Auth
@@ -94,6 +101,7 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };

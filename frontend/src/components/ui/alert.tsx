@@ -16,6 +16,7 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const alertVariants = cva(
   'relative w-full rounded-lg border px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7',
   {
@@ -32,6 +33,7 @@ const alertVariants = cva(
   }
 );
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Alert = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
@@ -40,6 +42,7 @@ const Alert = React.forwardRef<
 ));
 Alert.displayName = 'Alert';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
   ({ className, ...props }, ref) => (
     <h5
@@ -51,6 +54,7 @@ const AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<H
 );
 AlertTitle.displayName = 'AlertTitle';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const AlertDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>

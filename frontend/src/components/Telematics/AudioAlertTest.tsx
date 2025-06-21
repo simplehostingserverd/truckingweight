@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,25 +8,32 @@ import { SpeakerWaveIcon, ExclamationTriangleIcon } from '@heroicons/react/24/ou
 
 export default function AudioAlertTest() {
   // Audio alerts hook - import the hook dynamically for now
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { useAudioAlerts } = require('@/hooks/useAudioAlerts');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { playEmergencyAlert, playSiren, speak, isPlaying, isSpeaking, cleanup } = useAudioAlerts();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const testEmergencyAlert = () => {
     playEmergencyAlert("Driver, please check your safety issues and pull over if required.");
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const testBrakeAlert = () => {
     playEmergencyAlert("Driver, brake system alert detected. Please check your brakes and pull over safely if required.");
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const testElectricalAlert = () => {
     playEmergencyAlert("Driver, electrical system alert detected. Please check your lights and pull over safely if required.");
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const testSirenOnly = () => {
     playSiren({ volume: 0.7 });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const testSpeechOnly = () => {
     speak("Driver, please check your safety issues and pull over if required.", {
       rate: 0.8,

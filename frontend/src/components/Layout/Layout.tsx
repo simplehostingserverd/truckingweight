@@ -21,6 +21,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen">

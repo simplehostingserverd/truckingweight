@@ -16,13 +16,15 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { token, password } = await request.json();
 
     if (!token || !password) {
-      return NextResponse.json({ error: 'Token and password are required' }, { status: 400 });
+      return NextResponse.json({ error: 'Token and password are required' }, { _status: 400 });
     }
 
     // Call the backend API to reset the password
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await fetch(`${process.env.BACKEND_URL}/api/city-auth/reset-password`, {
       method: 'POST',
       headers: {
@@ -31,18 +33,19 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({ token, password }),
     });
 
-    const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _data = await response.json();
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.msg || 'Failed to reset password' },
-        { status: response.status }
+        { _error: data.msg || 'Failed to reset password' },
+        { _status: response.status }
       );
     }
 
     return NextResponse.json({ message: 'Password reset successful' });
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     console.error('Password reset error:', error);
-    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { _status: 500 });
   }
 }

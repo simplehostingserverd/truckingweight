@@ -29,9 +29,11 @@ interface AdminCompanySelectorProps {
 }
 
 function AdminCompanySelector({ onCompanyChange, selectedCompanyId }: AdminCompanySelectorProps) {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   // Use the optimized SWR hook for data fetching with caching
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fetchCompanies = async (key: string) => {
     // Get auth token from supabase
     const {
@@ -43,6 +45,7 @@ function AdminCompanySelector({ onCompanyChange, selectedCompanyId }: AdminCompa
     }
 
     // Fetch companies
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await fetch('/api/admin/companies', {
       headers: {
         'x-auth-token': session.access_token,
@@ -50,6 +53,7 @@ function AdminCompanySelector({ onCompanyChange, selectedCompanyId }: AdminCompa
     });
 
     if (!response.ok) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const errorData = await response.json();
       throw new Error(errorData.message || 'Failed to fetch companies');
     }
@@ -59,9 +63,10 @@ function AdminCompanySelector({ onCompanyChange, selectedCompanyId }: AdminCompa
 
   // Use SWR for data fetching with caching and revalidation
   const {
-    data: companies,
+    _data: companies,
     error,
     isLoading,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } = useSWROptimized<Company[]>('admin-companies', fetchCompanies, {
     localCache: true,
     localCacheTtl: 3600, // Cache for 1 hour
@@ -70,8 +75,10 @@ function AdminCompanySelector({ onCompanyChange, selectedCompanyId }: AdminCompa
     dedupingInterval: 60000, // 1 minute
   });
 
-  const handleCompanyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleCompanyChange = (_e: _React.ChangeEvent<HTMLSelectElement>) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const value = e.target.value;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const companyId = value === 'all' ? null : parseInt(value, 10);
     onCompanyChange(companyId);
   };

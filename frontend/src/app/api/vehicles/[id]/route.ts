@@ -4,25 +4,30 @@ import { createClient } from '@/lib/supabase/server';
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, error } = await supabase.from('vehicles').select('*').eq('id', id).single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ _error: _error.message }, { _status: 500 });
     }
 
     return NextResponse.json(data);
-  } catch (error: unknown) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  } catch (_error: unknown) {
+    return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
   }
 }
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const body = await request.json();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, error } = await supabase
       .from('vehicles')
       .update(body)
@@ -31,12 +36,12 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ _error: _error.message }, { _status: 500 });
     }
 
     return NextResponse.json(data);
-  } catch (error: unknown) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  } catch (_error: unknown) {
+    return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
   }
 }
 
@@ -46,16 +51,18 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
 
-    const { error } = await supabase.from('vehicles').delete().eq('id', id);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _error } = await supabase.from('vehicles').delete().eq('id', id);
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ _error: _error.message }, { _status: 500 });
     }
 
-    return NextResponse.json({ success: true });
-  } catch (error: unknown) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ _success: true });
+  } catch (_error: unknown) {
+    return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
   }
 }

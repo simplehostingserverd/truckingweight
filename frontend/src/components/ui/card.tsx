@@ -23,6 +23,7 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   hoverable?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, hoverable = false, ...props }, ref) => {
     return (
@@ -38,6 +39,7 @@ Card.displayName = 'Card';
 
 interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, ...props }, ref) => {
     return <div ref={ref} className={cn('card-header', className)} {...props} />;
@@ -47,6 +49,7 @@ CardHeader.displayName = 'CardHeader';
 
 interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
   ({ className, ...props }, ref) => {
     return <h3 ref={ref} className={cn('card-title', className)} {...props} />;
@@ -56,6 +59,7 @@ CardTitle.displayName = 'CardTitle';
 
 interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionProps>(
   ({ className, ...props }, ref) => {
     return <p ref={ref} className={cn('card-description', className)} {...props} />;
@@ -65,6 +69,7 @@ CardDescription.displayName = 'CardDescription';
 
 interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
   ({ className, ...props }, ref) => {
     return <div ref={ref} className={cn('card-content', className)} {...props} />;
@@ -74,6 +79,7 @@ CardContent.displayName = 'CardContent';
 
 interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className, ...props }, ref) => {
     return <div ref={ref} className={cn('card-footer', className)} {...props} />;

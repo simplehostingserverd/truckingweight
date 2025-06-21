@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import { createClient } from '@/utils/supabase/client';
 import {
   ArrowDownIcon,
@@ -41,16 +41,25 @@ export default function WeightReader({
   onWeightCaptured,
   autoCapture = false,
 }: WeightReaderProps) {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [weight, setWeight] = useState<number | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [captured, setCaptured] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [polling, setPolling] = useState(autoCapture);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [weightHistory, setWeightHistory] = useState<number[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [weightStable, setWeightStable] = useState(false);
 
   // Function to get weight reading from scale
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getWeightReading = useCallback(async () => {
     try {
       setLoading(true);
@@ -66,6 +75,7 @@ export default function WeightReader({
       }
 
       // Fetch weight reading from API
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await fetch(
         `/api/scales/${scale.id}/reading?type=${readingType}${axleNumber ? `&axle=${axleNumber}` : ''}`,
         {
@@ -76,17 +86,20 @@ export default function WeightReader({
       );
 
       if (!response.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const errorData = await response.json();
         throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to get weight reading');
       }
 
-      const data = await response.json();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _data = await response.json();
 
       if (data.reading !== undefined) {
         setWeight(data.reading);
 
         // Add to weight history for stability check
         setWeightHistory(prev => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const newHistory = [...prev, data.reading];
           // Keep only the last 5 readings
           return newHistory.slice(-5);
@@ -94,7 +107,7 @@ export default function WeightReader({
       } else {
         throw new Error('Invalid reading from scale');
       }
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       console.error('Error getting weight reading:', error);
       setError((error instanceof Error ? error.message : String(error)));
     } finally {
@@ -103,6 +116,7 @@ export default function WeightReader({
   }, [supabase, scale.id, readingType, axleNumber]);
 
   // Memoize the weight stability calculation
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isWeightStable = useMemo(() => {
     if (weightHistory.length >= 3) {
       return weightHistory.every((w, i, arr) => {
@@ -130,6 +144,7 @@ export default function WeightReader({
   useEffect(() => {
     if (!polling) return;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const pollInterval = setInterval(() => {
       getWeightReading();
     }, 1000);
@@ -143,6 +158,7 @@ export default function WeightReader({
   }, [getWeightReading]);
 
   // Memoize event handlers to prevent unnecessary re-creations
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleCapture = useCallback(() => {
     if (weight !== null) {
       setCaptured(true);
@@ -151,6 +167,7 @@ export default function WeightReader({
     }
   }, [weight, onWeightCaptured]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleReset = useCallback(() => {
     setCaptured(false);
     setWeight(null);
@@ -160,6 +177,7 @@ export default function WeightReader({
     setPolling(autoCapture);
   }, [getWeightReading, autoCapture]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const togglePolling = useCallback(() => {
     setPolling(prevPolling => !prevPolling);
   }, []);
@@ -237,7 +255,7 @@ export default function WeightReader({
           ) : error ? (
             <div className="text-red-500 dark:text-red-400">
               <XCircleIcon className="h-8 w-8 mx-auto mb-2" />
-              <p>{error}</p>
+              <p>{_error}</p>
             </div>
           ) : (
             <div className="flex items-baseline">

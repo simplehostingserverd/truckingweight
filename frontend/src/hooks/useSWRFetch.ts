@@ -17,12 +17,15 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import useSWR, { SWRConfiguration, SWRResponse } from 'swr';
 
 // Create a fetcher function that uses axios with error handling
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const axiosFetcher = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response: AxiosResponse<T> = await axios(url, config);
     return response.data;
   } catch (error) {
     // Convert to AppError for better error handling
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const appError = handleApiError(error);
 
     // Log the error
@@ -44,6 +47,7 @@ export function useSWRFetch<T = unknown>(
   swrOptions?: SWRConfiguration
 ): SWRResponse<T, AppError> {
   // Only fetch if URL is provided
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const shouldFetch = !!url;
 
   return useSWR<T, AppError>(
@@ -67,12 +71,15 @@ export function useSWRFetch<T = unknown>(
 
 // Hook for POST requests
 export function useSWRMutation<T = unknown, D = unknown>(url: string, options?: SWRConfiguration) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fetcher = async function (url: string, { arg }: { arg: D }) {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await axios.post<T>(url, arg);
       return response.data;
     } catch (error) {
       // Convert to AppError for better error handling
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const appError = handleApiError(error);
 
       // Log the error
@@ -92,12 +99,15 @@ export function useSWRMutation<T = unknown, D = unknown>(url: string, options?: 
 
 // Hook for PUT requests
 export function useSWRPut<T = unknown, D = unknown>(url: string, options?: SWRConfiguration) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fetcher = async function (url: string, { arg }: { arg: D }) {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await axios.put<T>(url, arg);
       return response.data;
     } catch (error) {
       // Convert to AppError for better error handling
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const appError = handleApiError(error);
 
       // Log the error
@@ -117,12 +127,15 @@ export function useSWRPut<T = unknown, D = unknown>(url: string, options?: SWRCo
 
 // Hook for DELETE requests
 export function useSWRDelete<T = unknown>(url: string, options?: SWRConfiguration) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fetcher = async function (url: string) {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await axios.delete<T>(url);
       return response.data;
     } catch (error) {
       // Convert to AppError for better error handling
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const appError = handleApiError(error);
 
       // Log the error

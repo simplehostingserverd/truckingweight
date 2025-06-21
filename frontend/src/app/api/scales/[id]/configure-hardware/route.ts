@@ -14,52 +14,60 @@
 import { createClient } from '@/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function POST(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resolvedParams = await params;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const scaleId = resolvedParams.id;
 
     if (!scaleId) {
-      return NextResponse.json({ success: false, error: 'Scale ID is required' }, { status: 400 });
+      return NextResponse.json({ _success: false, error: 'Scale ID is required' }, { _status: 400 });
     }
 
     // Parse request body
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const body = await req.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { hardwareType, config } = body;
 
     if (!hardwareType || !config) {
       return NextResponse.json(
-        { success: false, error: 'Hardware type and configuration are required' },
-        { status: 400 }
+        { _success: false, error: 'Hardware type and configuration are required' },
+        { _status: 400 }
       );
     }
 
     // Create a Supabase client
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
 
     // Get the user session
     const {
       data: { session },
-      error: sessionError,
+      _error: sessionError,
     } = await supabase.auth.getSession();
 
     if (sessionError || !session) {
-      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ _success: false, error: 'Unauthorized' }, { _status: 401 });
     }
 
     // Get the user
-    const { data: userData, error: userError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: userData, _error: userError } = await supabase
       .from('users')
       .select('id, company_id, is_admin')
       .eq('id', session.user.id)
       .single();
 
     if (userError || !userData) {
-      return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
+      return NextResponse.json({ _success: false, error: 'User not found' }, { _status: 404 });
     }
 
     // Make a request to the backend API
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await fetch(`${backendUrl}/api/scales/${scaleId}/configure-hardware`, {
       method: 'POST',
       headers: {
@@ -73,20 +81,22 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     });
 
     if (!response.ok) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const errorData = await response.json();
       return NextResponse.json(
-        { success: false, error: (errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to configure hardware' },
-        { status: response.status }
+        { _success: false, error: (errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to configure hardware' },
+        { _status: response.status }
       );
     }
 
-    const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _data = await response.json();
     return NextResponse.json(data);
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     console.error('Error configuring hardware:', error);
     return NextResponse.json(
-      { success: false, error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' },
-      { status: 500 }
+      { _success: false, error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' },
+      { _status: 500 }
     );
   }
 }

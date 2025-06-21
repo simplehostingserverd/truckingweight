@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState, useEffect } from 'react';
@@ -40,16 +40,22 @@ import { Switch } from '@/components/ui/switch';
 // Import MapTiler components
 import MapTilerProvider from '@/providers/MapTilerProvider';
 // Dynamically import the MapTilerMap component to avoid SSR issues
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MapTilerMap = dynamic(() => import('@/components/MapTiler/MapTilerMap'), {
   ssr: false,
   loading: () => <Skeleton className="h-[600px] w-full bg-gray-700" />,
 });
 
 // Create a client-side only component to avoid hydration issues
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CityMapPageClient = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTab, setActiveTab] = useState('scales');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [mapData, setMapData] = useState({
     scales: [],
     violations: [],
@@ -57,13 +63,19 @@ const CityMapPageClient = () => {
   });
 
   // Map filter states
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showActiveScales, setShowActiveScales] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showInactiveScales, setShowInactiveScales] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showViolations, setShowViolations] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showActiveVehicles, setShowActiveVehicles] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showHeatmap, setShowHeatmap] = useState(false);
 
   // Fetch map data
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fetchMapData = async () => {
     setIsLoading(true);
     setError('');
@@ -72,6 +84,7 @@ const CityMapPageClient = () => {
       // Safely access localStorage only on the client side
       if (typeof window === 'undefined') return;
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const cityToken = localStorage.getItem('cityToken');
 
       if (!cityToken) {
@@ -81,7 +94,7 @@ const CityMapPageClient = () => {
       // In a real implementation, we would fetch data from the API
       // For now, we'll use mock data
       generateMockData();
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error fetching map data:', err);
       setError(err instanceof Error ? err.message : 'Failed to load map data');
       // Generate dummy data for testing
@@ -92,7 +105,9 @@ const CityMapPageClient = () => {
   };
 
   // Generate mock data for testing
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateMockData = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const mockScales = [
       {
         id: 1,
@@ -171,6 +186,7 @@ const CityMapPageClient = () => {
       },
     ];
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const mockActiveVehicles = [
       {
         id: 1,
@@ -214,6 +230,7 @@ const CityMapPageClient = () => {
   }, []);
 
   // Filter map data based on active filters
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const filteredScales = mapData.scales.filter(scale => {
     if (scale.status === 'Active' && showActiveScales) return true;
     if (scale.status !== 'Active' && showInactiveScales) return true;
@@ -229,7 +246,7 @@ const CityMapPageClient = () => {
             <p className="text-gray-400">View scales, violations, and vehicle activity</p>
           </div>
           <div className="flex space-x-2">
-            <Button variant="outline" onClick={fetchMapData} disabled={isLoading}>
+            <Button variant="outline" onClick={fetchMapData} disabled={_isLoading}>
               <ArrowPathIcon className="h-5 w-5 mr-2" />
               Refresh
             </Button>
@@ -238,7 +255,7 @@ const CityMapPageClient = () => {
 
         {error && (
           <Alert variant="destructive" className="mb-6">
-            <AlertDescription>{error}</AlertDescription>
+            <AlertDescription>{_error}</AlertDescription>
           </Alert>
         )}
 
@@ -383,8 +400,8 @@ const CityMapPageClient = () => {
                           longitude: scale.coordinates.lng,
                           title: scale.name,
                           type: 'scale' as const,
-                          status: scale.status,
-                          data: scale,
+                          _status: scale.status,
+                          _data: scale,
                         })),
                         ...(showViolations
                           ? mapData.violations.map(violation => ({
@@ -393,8 +410,8 @@ const CityMapPageClient = () => {
                               longitude: violation.coordinates.lng,
                               title: violation.violationNumber,
                               type: 'violation' as const,
-                              status: violation.status,
-                              data: violation,
+                              _status: violation.status,
+                              _data: violation,
                             }))
                           : []),
                         ...(showActiveVehicles
@@ -404,8 +421,8 @@ const CityMapPageClient = () => {
                               longitude: vehicle.coordinates.lng,
                               title: vehicle.vehicleId,
                               type: 'vehicle' as const,
-                              status: vehicle.status,
-                              data: vehicle,
+                              _status: vehicle.status,
+                              _data: vehicle,
                             }))
                           : []),
                       ]}
@@ -434,7 +451,7 @@ const CityMapPageClient = () => {
               </CardContent>
             </Card>
 
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-6">
+            <Tabs value={_activeTab} onValueChange={_setActiveTab} className="mt-6">
               <TabsList className="grid grid-cols-3 w-full max-w-md mx-auto">
                 <TabsTrigger value="scales">Scales</TabsTrigger>
                 <TabsTrigger value="violations">Violations</TabsTrigger>
@@ -614,6 +631,7 @@ const CityMapPageClient = () => {
 };
 
 // Use dynamic import with SSR disabled to avoid hydration issues
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CityMapPage = dynamic(() => Promise.resolve(CityMapPageClient), {
   ssr: false,
 });

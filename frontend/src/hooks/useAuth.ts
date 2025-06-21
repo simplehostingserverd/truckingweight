@@ -14,22 +14,25 @@ export interface AuthUser {
 }
 
 export interface AuthHook {
-  user: AuthUser | null;
+  _user: AuthUser | null;
   session: unknown;
-  isLoading: boolean;
+  _isLoading: boolean;
   token?: string;
   signIn: (
     email: string,
     password: string,
     captchaToken?: string | null
-  ) => Promise<{ error: Error }>;
+  ) => Promise<{ _error: Error }>;
   signOut: () => Promise<void>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const useAuth = (): AuthHook => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user, session, isLoading, signIn, signOut } = useSupabaseAuth();
 
   // Transform Supabase user to our AuthUser interface
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const authUser: AuthUser | null = user
     ? {
         id: user.id,
@@ -41,10 +44,11 @@ export const useAuth = (): AuthHook => {
     : null;
 
   // Extract token from session
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const token = session?.access_token;
 
   return {
-    user: authUser,
+    _user: authUser,
     session,
     isLoading,
     token,

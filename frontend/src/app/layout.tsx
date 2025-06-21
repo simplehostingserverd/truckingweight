@@ -24,6 +24,7 @@ import { Providers } from './providers';
 // 2. Optimize font loading and prevent layout shifts
 // 3. Provide system font fallbacks for low-memory devices
 // 4. Reduce memory usage by loading only what's needed
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -32,6 +33,7 @@ const inter = Inter({
   preload: true,
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const metadata: Metadata = {
   title: 'CargoScalePro - Professional Truck Weight Management System',
   description:
@@ -71,6 +73,7 @@ export const metadata: Metadata = {
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,

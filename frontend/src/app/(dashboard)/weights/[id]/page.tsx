@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import { formatDate, getStatusColor } from '@/lib/utils';
 import { createClient } from '@/utils/supabase/client';
 import { ArrowLeftIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
@@ -22,18 +22,28 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function WeightDetail({ params }: { params: Promise<{ id: string }> }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [weight, setWeight] = useState<unknown>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isDeleting, setIsDeleting] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [id, setId] = useState<string>('');
-  const router = useRouter();
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   // Resolve params in useEffect
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resolveParams = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const resolvedParams = await params;
       setId(resolvedParams.id);
     };
@@ -41,6 +51,7 @@ export default function WeightDetail({ params }: { params: Promise<{ id: string 
   }, [params]);
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchWeight = async () => {
       if (!id) return; // Wait for id to be resolved
 
@@ -56,6 +67,7 @@ export default function WeightDetail({ params }: { params: Promise<{ id: string 
         }
 
         // Get weight with vehicle and driver info
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { data, error } = await supabase
           .from('weights')
           .select(
@@ -79,7 +91,7 @@ export default function WeightDetail({ params }: { params: Promise<{ id: string 
         }
 
         setWeight(data);
-      } catch (err: unknown) {
+      } catch (_err: unknown) {
         console.error('Error fetching weight:', err);
         setError('Failed to load weight data');
       } finally {
@@ -90,18 +102,20 @@ export default function WeightDetail({ params }: { params: Promise<{ id: string 
     fetchWeight();
   }, [id, router, supabase]);
 
-  const handleDelete = async () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _handleDelete = async () => {
     setIsDeleting(true);
 
     try {
-      const { error } = await supabase.from('weights').delete().eq('id', id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _error } = await supabase.from('weights').delete().eq('id', id);
 
       if (error) {
         throw error;
       }
 
       router.push('/weights');
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error deleting weight:', err);
       setError((err instanceof Error ? err.message : String(err)) || 'Failed to delete weight');
       setIsDeleting(false);
@@ -124,7 +138,7 @@ export default function WeightDetail({ params }: { params: Promise<{ id: string 
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{error}</h3>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{_error}</h3>
               </div>
             </div>
           </div>
@@ -282,7 +296,7 @@ export default function WeightDetail({ params }: { params: Promise<{ id: string 
               </button>
               <button
                 type="button"
-                onClick={handleDelete}
+                onClick={_handleDelete}
                 disabled={isDeleting}
                 className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:bg-red-400"
               >

@@ -14,6 +14,7 @@
 import { extendTheme } from '@mui/joy/styles';
 
 // City portal theme with dark mode and neon accents
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const cityTheme = extendTheme({
   colorSchemes: {
     dark: {

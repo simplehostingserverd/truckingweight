@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import { useToast } from '@/hooks/use-toast';
 import {
   Toast,
@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/toast';
 
 export function Toaster() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { toasts } = useToast();
 
   return (

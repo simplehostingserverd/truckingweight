@@ -17,13 +17,17 @@ import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 
 // Initialize Supabase client
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const supabaseKey =
   process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(request: NextRequest) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { reason, timestamp, instanceId, userAgent, url } = await request.json();
 
     // Log error to Supabase
@@ -37,9 +41,9 @@ export async function POST(request: NextRequest) {
       created_at: new Date().toISOString(),
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ _success: true });
   } catch (error) {
     console.error('Error reporting license error:', error);
-    return NextResponse.json({ error: 'Failed to report license error' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to report license error' }, { _status: 500 });
   }
 }

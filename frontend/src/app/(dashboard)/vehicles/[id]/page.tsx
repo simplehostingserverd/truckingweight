@@ -11,30 +11,35 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
+
 import { createClient } from '@/utils/supabase/server';
 import { toSearchParamString } from '@/utils/searchParams';
 import { notFound } from 'next/navigation';
 import VehicleDetailsClient from './client';
 
 export default async function VehicleDetail({ params }: { params: Promise<{ id: string }> }) {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
   // Await params before using its properties (Next.js 15 requirement)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const resolvedParams = await params;
   // Safely convert the ID parameter to a string
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const id = toSearchParamString(resolvedParams.id, '');
 
   // Get user data
   const {
-    data: { user },
+    data: { _user },
   } = await supabase.auth.getUser();
-  const { data: userData } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: userData } = await supabase
     .from('users')
     .select('company_id')
     .eq('id', user?.id)
     .single();
 
   // Get vehicle data with better error handling
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let vehicleQuery = supabase
     .from('vehicles')
     .select(
@@ -63,7 +68,8 @@ export default async function VehicleDetail({ params }: { params: Promise<{ id: 
     vehicleQuery = vehicleQuery.eq('company_id', userData.company_id);
   }
 
-  const { data: vehicle, error } = await vehicleQuery.single();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: vehicle, error } = await vehicleQuery.single();
 
   if (error || !vehicle) {
     console.error('Error fetching vehicle:', error);

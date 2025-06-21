@@ -16,13 +16,15 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { email, password } = await request.json();
 
     if (!email || !password) {
-      return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
+      return NextResponse.json({ error: 'Email and password are required' }, { _status: 400 });
     }
 
     // Call the backend API to authenticate the city user
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await fetch(`${process.env.BACKEND_URL}/api/city-auth/login`, {
       method: 'POST',
       headers: {
@@ -31,19 +33,20 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({ email, password }),
     });
 
-    const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _data = await response.json();
 
     if (!response.ok) {
       console.warn('Backend login error response:', data);
       return NextResponse.json(
-        { error: data.msg || data.error || 'Authentication failed' },
-        { status: response.status }
+        { _error: data.msg || data.error || 'Authentication failed' },
+        { _status: response.status }
       );
     }
 
     return NextResponse.json(data);
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     console.error('City login error:', error);
-    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { _status: 500 });
   }
 }

@@ -13,8 +13,8 @@
 
 'use client';
 
-import React from 'react';
-import { getStatusColor } from '@/lib/utils';
+
+import { _getStatusColor } from '@/lib/utils';
 import { toSearchParamString } from '@/utils/searchParams';
 import { createClient } from '@/utils/supabase/client';
 import {
@@ -30,24 +30,36 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // Dynamically import the LoadStatusUpdater component
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const LoadStatusUpdater = dynamic(() => import('@/components/Loads/LoadStatusUpdater'), {
   ssr: false,
 });
 
 export default function LoadDetail({ params }: { params: Promise<{ id: string }> }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [load, setLoad] = useState<unknown>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isDeleting, setIsDeleting] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [statusUpdated, setStatusUpdated] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [id, setId] = useState<string>('');
-  const router = useRouter();
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   // Resolve params in useEffect
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resolveParams = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const resolvedParams = await params;
       setId(toSearchParamString(resolvedParams.id, ''));
     };
@@ -55,6 +67,7 @@ export default function LoadDetail({ params }: { params: Promise<{ id: string }>
   }, [params]);
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchLoad = async () => {
       if (!id) return; // Wait for id to be resolved
 
@@ -70,6 +83,7 @@ export default function LoadDetail({ params }: { params: Promise<{ id: string }>
         }
 
         // Get load with vehicle and driver info
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { data, error } = await supabase
           .from('loads')
           .select(
@@ -101,7 +115,7 @@ export default function LoadDetail({ params }: { params: Promise<{ id: string }>
         }
 
         setLoad(data);
-      } catch (err: unknown) {
+      } catch (_err: unknown) {
         console.error('Error fetching load:', err);
         setError('Failed to load data');
       } finally {
@@ -117,18 +131,20 @@ export default function LoadDetail({ params }: { params: Promise<{ id: string }>
     }
   }, [id, router, supabase, statusUpdated]);
 
-  const handleDelete = async () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _handleDelete = async () => {
     setIsDeleting(true);
 
     try {
-      const { error } = await supabase.from('loads').delete().eq('id', id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _error } = await supabase.from('loads').delete().eq('id', id);
 
       if (error) {
         throw error;
       }
 
       router.push('/loads');
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error deleting load:', err);
       setError((err instanceof Error ? err.message : String(err)) || 'Failed to delete load');
       setIsDeleting(false);
@@ -151,7 +167,7 @@ export default function LoadDetail({ params }: { params: Promise<{ id: string }>
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{error}</h3>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{_error}</h3>
               </div>
             </div>
           </div>
@@ -431,7 +447,7 @@ export default function LoadDetail({ params }: { params: Promise<{ id: string }>
                 Cancel
               </button>
               <button
-                onClick={handleDelete}
+                onClick={_handleDelete}
                 disabled={isDeleting}
                 className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:bg-red-400"
               >

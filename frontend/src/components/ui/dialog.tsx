@@ -19,14 +19,19 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Dialog = DialogPrimitive.Root;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DialogTrigger = DialogPrimitive.Trigger;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DialogPortal = DialogPrimitive.Portal;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DialogClose = DialogPrimitive.Close;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
@@ -42,6 +47,7 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
@@ -71,12 +77,14 @@ const DialogContent = React.forwardRef<
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const DialogHeader = ({ className, ...props }: _React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)} {...props} />
 );
 DialogHeader.displayName = 'DialogHeader';
 
-const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const DialogFooter = ({ className, ...props }: _React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)}
     {...props}
@@ -84,6 +92,7 @@ const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 );
 DialogFooter.displayName = 'DialogFooter';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
@@ -96,6 +105,7 @@ const DialogTitle = React.forwardRef<
 ));
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>

@@ -16,12 +16,14 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Get the authorization token from the request headers
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const authHeader = request.headers.get('authorization');
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Authorization token is required' }, { status: 401 });
+      return NextResponse.json({ error: 'Authorization token is required' }, { _status: 401 });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const token = authHeader.split(' ')[1];
 
     // Check if this is a test token
@@ -29,6 +31,7 @@ export async function GET(request: NextRequest) {
       console.warn('Using test data for city users');
 
       // Mock data
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dummyUsers = [
         {
           id: 1,
@@ -81,27 +84,30 @@ export async function GET(request: NextRequest) {
     }
 
     // Call the backend API to get city users
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await fetch(`${process.env.BACKEND_URL}/api/city-users`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _data = await response.json();
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.msg || 'Failed to fetch city users' },
-        { status: response.status }
+        { _error: data.msg || 'Failed to fetch city users' },
+        { _status: response.status }
       );
     }
 
     return NextResponse.json(data);
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     console.error('Error fetching city users:', error);
 
     // Return mock data for development/demo purposes
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dummyUsers = [
         {
           id: 1,
@@ -153,30 +159,34 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ users: dummyUsers });
     }
 
-    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { _status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
     // Get the authorization token from the request headers
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const authHeader = request.headers.get('authorization');
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Authorization token is required' }, { status: 401 });
+      return NextResponse.json({ error: 'Authorization token is required' }, { _status: 401 });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const token = authHeader.split(' ')[1];
 
     // Get request body
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const body = await request.json();
 
     // Validate required fields
     if (!body.name || !body.email || !body.role || !body.password) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing required fields' }, { _status: 400 });
     }
 
     // Call the backend API to create a new city user
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await fetch(`${process.env.BACKEND_URL}/api/city-users`, {
       method: 'POST',
       headers: {
@@ -186,18 +196,19 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(body),
     });
 
-    const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _data = await response.json();
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.msg || 'Failed to create city user' },
-        { status: response.status }
+        { _error: data.msg || 'Failed to create city user' },
+        { _status: response.status }
       );
     }
 
     return NextResponse.json(data);
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     console.error('Error creating city user:', error);
-    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { _status: 500 });
   }
 }

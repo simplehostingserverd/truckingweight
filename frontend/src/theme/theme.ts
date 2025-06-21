@@ -15,6 +15,7 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
 
 // Define theme settings based on mode
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
     mode,
@@ -220,12 +221,15 @@ const getDesignTokens = (mode: PaletteMode) => ({
 });
 
 // Create the light theme
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _lightTheme = responsiveFontSizes(createTheme(getDesignTokens('light')));
 
 // Create the dark theme
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const darkTheme = responsiveFontSizes(createTheme(getDesignTokens('dark')));
 
 // Export the dark theme by default
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const theme = darkTheme;
 
 export default theme;

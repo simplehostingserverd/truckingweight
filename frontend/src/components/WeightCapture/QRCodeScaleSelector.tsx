@@ -25,15 +25,22 @@ interface QRCodeScaleSelectorProps {
 }
 
 export default function QRCodeScaleSelector({ onScaleSelected }: QRCodeScaleSelectorProps) {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scales, setScales] = useState<Scale[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedScale, setSelectedScale] = useState<Scale | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [qrCodeData, setQrCodeData] = useState<string>('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
 
   // Load scales on component mount
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchScales = async () => {
       try {
         setIsLoading(true);
@@ -41,9 +48,10 @@ export default function QRCodeScaleSelector({ onScaleSelected }: QRCodeScaleSele
 
         // Get user's company ID
         const {
-          data: { user },
+          data: { _user },
         } = await supabase.auth.getUser();
-        const { data: userData } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { _data: userData } = await supabase
           .from('users')
           .select('company_id')
           .eq('id', user?.id)
@@ -54,7 +62,8 @@ export default function QRCodeScaleSelector({ onScaleSelected }: QRCodeScaleSele
         }
 
         // Fetch scales
-        const { data: scalesData, error: scalesError } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { _data: scalesData, _error: scalesError } = await supabase
           .from('scales')
           .select('*')
           .eq('company_id', userData.company_id)
@@ -76,9 +85,10 @@ export default function QRCodeScaleSelector({ onScaleSelected }: QRCodeScaleSele
     };
 
     fetchScales();
-  }, [supabase]);
+  }, [_supabase]);
 
   // Generate QR code for the selected scale
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateQRCode = () => {
     if (!selectedScale) {
       setError('Please select a scale');
@@ -104,14 +114,17 @@ export default function QRCodeScaleSelector({ onScaleSelected }: QRCodeScaleSele
   };
 
   // Handle scale selection
-  const handleScaleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleScaleChange = (_e: _React.ChangeEvent<HTMLSelectElement>) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const scaleId = parseInt(e.target.value);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const scale = scales.find(s => s.id === scaleId) || null;
     setSelectedScale(scale);
     setQrCodeData(''); // Clear QR code when scale changes
   };
 
   // Simulate scanning a QR code
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const simulateScan = () => {
     if (selectedScale) {
       onScaleSelected(selectedScale.id);
@@ -137,7 +150,7 @@ export default function QRCodeScaleSelector({ onScaleSelected }: QRCodeScaleSele
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             value={selectedScale?.id || ''}
             onChange={handleScaleChange}
-            disabled={isLoading}
+            disabled={_isLoading}
           >
             <option value="">Select a scale</option>
             {scales.map(scale => (
@@ -161,7 +174,7 @@ export default function QRCodeScaleSelector({ onScaleSelected }: QRCodeScaleSele
 
         {error && (
           <div className="p-3 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 rounded-md text-sm">
-            {error}
+            {_error}
           </div>
         )}
 

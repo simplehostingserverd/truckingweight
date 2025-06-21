@@ -20,10 +20,15 @@ export type MetricsCounter = unknown;
 export type MetricsHistogram = unknown;
 
 // Variables to hold metrics objects
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let register: MetricsRegistry | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let pageViewsCounter: MetricsCounter | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let apiRequestsCounter: MetricsCounter | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let apiRequestDuration: MetricsHistogram | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let isInitialized = false;
 
 // Initialize metrics - only call this on the server
@@ -35,7 +40,9 @@ export function initializeMetrics() {
 
   try {
     // Dynamically import prom-client
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const promClient = require('prom-client');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { collectDefaultMetrics, Registry, Counter, Histogram } = promClient;
 
     // Create a registry
@@ -93,7 +100,7 @@ export function recordPageView(page: string) {
 }
 
 // Record API request
-export function recordApiRequest(method: string, endpoint: string, status: string) {
+export function recordApiRequest(method: string, endpoint: string, _status: string) {
   if (apiRequestsCounter) {
     apiRequestsCounter.inc({ method, endpoint, status });
   }

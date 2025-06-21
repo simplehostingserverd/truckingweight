@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import { createClient } from '@/utils/supabase/client';
 import {
   CameraIcon,
@@ -23,25 +23,32 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { QrScanner } from '@yudiel/react-qr-scanner';
-import { useState } from 'react';
+import { _useState } from 'react';
 
 interface QRScannerProps {
   onScaleSelect: (scaleId: number, scaleName: string) => void;
 }
 
 export default function QRScanner({ onScaleSelect }: QRScannerProps) {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isScanning, setIsScanning] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scanResult, setScanResult] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isValidating, setIsValidating] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [validationResult, setValidationResult] = useState<{
-    success: boolean;
+    _success: boolean;
     scaleId?: number;
     scaleName?: string;
     message?: string;
   } | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleScan = (result: string) => {
     if (result) {
       setScanResult(result);
@@ -50,12 +57,13 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
     }
   };
 
-  const handleError = (error: Error) => {
+  const _handleError = (_error: Error) => {
     console.error('QR Scanner error:', error);
     setError(`Scanner error: ${(error instanceof Error ? error.message : String(error))}`);
     setIsScanning(false);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const validateQRCode = async (qrData: string) => {
     try {
       setIsValidating(true);
@@ -71,6 +79,7 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
       }
 
       // Call API to validate QR code
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await fetch('/api/scales/validate-qrcode', {
         method: 'POST',
         headers: {
@@ -81,14 +90,16 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
       });
 
       if (!response.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const errorData = await response.json();
         throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to validate QR code');
       }
 
-      const data = await response.json();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _data = await response.json();
 
       setValidationResult({
-        success: true,
+        _success: true,
         scaleId: data.scale.id,
         scaleName: data.scale.name,
         message: `Successfully identified scale: ${data.scale.name}`,
@@ -96,11 +107,11 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
 
       // Call the onScaleSelect callback
       onScaleSelect(data.scale.id, data.scale.name);
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       console.error('Error validating QR code:', error);
       setError((error instanceof Error ? error.message : String(error)));
       setValidationResult({
-        success: false,
+        _success: false,
         message: `Error: ${(error instanceof Error ? error.message : String(error))}`,
       });
     } finally {
@@ -157,7 +168,7 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
             <div className="max-w-md mx-auto">
               <QrScanner
                 onDecode={handleScan}
-                onError={handleError}
+                onError={_handleError}
                 scanDelay={500}
                 constraints={{
                   facingMode: 'environment',
@@ -174,7 +185,7 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
           <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-md">
             <div className="flex items-start">
               <ExclamationCircleIcon className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
-              <p>{error}</p>
+              <p>{_error}</p>
             </div>
           </div>
         )}

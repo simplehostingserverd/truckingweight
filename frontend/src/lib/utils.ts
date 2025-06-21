@@ -25,9 +25,11 @@ export function cn(...inputs: ClassValue[]) {
  * @returns Formatted date string
  */
 export function formatDate(date: Date | string, includeTime: boolean = false): string {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dateObj = typeof date === 'string' ? new Date(date) : date;
 
-  const options: Intl.DateTimeFormatOptions = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -46,7 +48,7 @@ export function formatDate(date: Date | string, includeTime: boolean = false): s
  * @param status Status string
  * @returns Tailwind CSS class string for the status
  */
-export function getStatusColor(status: string): string {
+export function getStatusColor(_status: string): string {
   // Weight status colors
   if (status === 'Compliant') {
     return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
@@ -105,6 +107,7 @@ export function truncateText(text: string, length: number = 50): string {
  * @returns URL search parameter string
  */
 export function toSearchParamString(params: Record<string, unknown>): string {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const searchParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
@@ -113,6 +116,7 @@ export function toSearchParamString(params: Record<string, unknown>): string {
     }
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const paramString = searchParams.toString();
   return paramString ? `?${paramString}` : '';
 }

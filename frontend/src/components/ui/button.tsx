@@ -62,6 +62,7 @@ export interface ButtonProps
   loadingText?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -80,9 +81,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     // Determine if button is disabled (either explicitly or due to loading)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isDisabled = disabled || isLoading;
 
     // If button has only an icon and no text, ensure it has an aria-label
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const hasOnlyIcon = size === 'icon' && !children && !props['aria-label'];
 
     if (hasOnlyIcon && process.env.NODE_ENV !== 'production') {

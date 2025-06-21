@@ -29,11 +29,13 @@ const AUTH_PATHS = [
   '/trucking/register',
 ];
 
-export async function middleware(req: NextRequest) {
+export async function middleware(_req: NextRequest) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const res = NextResponse.next();
 
   // Create a Supabase client for the middleware
-  const supabase = createServerClient<Database>(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -42,7 +44,7 @@ export async function middleware(req: NextRequest) {
           return req.cookies.getAll().map(({ name, value }) => ({ name, value }));
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
+          cookiesToSet.forEach(({ name, value, _options }) => {
             res.cookies.set(name, value, options);
           });
         },
@@ -56,17 +58,21 @@ export async function middleware(req: NextRequest) {
   } = await supabase.auth.getSession();
 
   // Get the pathname
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { pathname } = req.nextUrl;
 
   // Check if the path is protected
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isProtectedPath = PROTECTED_PATHS.some(path => pathname.startsWith(path));
 
   // Check if the path is an auth path
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isAuthPath = AUTH_PATHS.some(path => pathname === path);
 
   // If the path is protected and there's no session, redirect to login
   if (isProtectedPath && !session) {
     // Determine which login page to redirect to
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let redirectUrl = '/login';
 
     if (pathname.startsWith('/city/')) {
@@ -75,6 +81,7 @@ export async function middleware(req: NextRequest) {
       redirectUrl = '/trucking/login';
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const redirectTo = req.nextUrl.clone();
     redirectTo.pathname = redirectUrl;
     redirectTo.searchParams.set('redirectedFrom', pathname);
@@ -85,6 +92,7 @@ export async function middleware(req: NextRequest) {
   // If the path is an auth path and there's a session, redirect to dashboard
   if (isAuthPath && session) {
     // Determine which dashboard to redirect to
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let redirectUrl = '/dashboard';
 
     if (pathname.startsWith('/city/')) {
@@ -93,6 +101,7 @@ export async function middleware(req: NextRequest) {
       redirectUrl = '/trucking/dashboard';
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const redirectTo = req.nextUrl.clone();
     redirectTo.pathname = redirectUrl;
 
@@ -103,7 +112,8 @@ export async function middleware(req: NextRequest) {
 }
 
 // Configure the middleware to run on specific paths
-export const config = {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const _config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:

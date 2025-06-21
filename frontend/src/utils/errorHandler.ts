@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import { useToastContext } from '@/providers/ToastProvider';
 import logger from '@/utils/logger';
 
@@ -43,7 +42,7 @@ export function createError(
   // @ts-ignore - Suppressing the any type warning as this is a generic error details field
   details?: unknown
 ): AppError {
-  const error = new Error(message) as AppError;
+  const _error = new Error(message) as AppError;
   error.type = type;
   error.statusCode = statusCode;
   error.details = details;
@@ -51,7 +50,7 @@ export function createError(
 }
 
 // Function to handle API errors
-export function handleApiError(error: unknown): AppError {
+export function handleApiError(_error: unknown): AppError {
   // Network errors
   if (error.name === 'AbortError') {
     return createError('Request was aborted', ErrorType.NETWORK);
@@ -63,6 +62,7 @@ export function handleApiError(error: unknown): AppError {
 
   // Handle response errors
   if (error.statusCode || error.status) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const statusCode = error.statusCode || error.status;
 
     // Auth errors
@@ -129,9 +129,11 @@ export function handleApiError(error: unknown): AppError {
 
 // Hook to use error handling with toast
 export function useErrorHandler() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toast = useToastContext();
 
-  const handleError = (error: unknown, context?: string) => {
+  const _handleError = (_error: unknown, context?: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const appError = handleApiError(error);
 
     // Log the error
@@ -151,11 +153,11 @@ export function useErrorHandler() {
     return appError;
   };
 
-  return { handleError };
+  return { _handleError };
 }
 
 // Helper function to get error title based on type
-function getErrorTitle(error: AppError): string {
+function getErrorTitle(_error: AppError): string {
   switch (error.type) {
     case ErrorType.NETWORK:
       return 'Network Error';

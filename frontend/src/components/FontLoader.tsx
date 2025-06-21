@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import { checkFontLoaded } from '@/utils/fontLoader';
 import { useEffect, useState } from 'react';
 
@@ -28,6 +27,7 @@ import { useEffect, useState } from 'react';
  * Note: The actual font loading is handled by next/font/google in layout.tsx
  */
 export default function FontLoader() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {

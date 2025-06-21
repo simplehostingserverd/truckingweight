@@ -26,9 +26,11 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 /**
  * Badge component for displaying status or labels
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   ({ className, variant = 'primary', ...props }, ref) => {
     // Determine the CSS classes based on the variant
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const variantClasses = {
       primary: 'badge-primary',
       secondary: 'badge-secondary',

@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Layout from '@/components/Layout/Layout';
 import LogoCarousel from '@/components/LogoCarousel';
@@ -133,9 +132,11 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                     onError={e => {
                       console.error('Video loading error:', e);
                       // Add fallback image if video fails to load
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
                       const videoElement = e.target as HTMLVideoElement;
                       if (videoElement) {
                         videoElement.style.display = 'none';
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         const fallbackImg = document.createElement('img');
                         fallbackImg.src = '/images/video-thumbnail.svg';
                         fallbackImg.alt = 'Video thumbnail';
@@ -391,6 +392,7 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                   // Render testimonials from the database
                   testimonials.map(testimonial => {
                     // Get initials for the avatar
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const initials = testimonial.name
                       .split(' ')
                       .map(n => n[0])

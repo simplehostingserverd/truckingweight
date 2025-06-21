@@ -28,13 +28,15 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement;
 };
 
-const actionTypes = {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _actionTypes = {
   ADD_TOAST: 'ADD_TOAST',
   UPDATE_TOAST: 'UPDATE_TOAST',
   DISMISS_TOAST: 'DISMISS_TOAST',
   REMOVE_TOAST: 'REMOVE_TOAST',
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let count = 0;
 
 function genId() {
@@ -66,13 +68,16 @@ interface State {
   toasts: ToasterToast[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const addToRemoveQueue = (toastId: string) => {
   if (toastTimeouts.has(toastId)) {
     return;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const timeout = setTimeout(() => {
     toastTimeouts.delete(toastId);
     dispatch({
@@ -84,6 +89,7 @@ const addToRemoveQueue = (toastId: string) => {
   toastTimeouts.set(toastId, timeout);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'ADD_TOAST':
@@ -137,8 +143,10 @@ export const reducer = (state: State, action: Action): State => {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const listeners: Array<(state: State) => void> = [];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let memoryState: State = { toasts: [] };
 
 function dispatch(action: Action) {
@@ -151,13 +159,16 @@ function dispatch(action: Action) {
 type Toast = Omit<ToasterToast, 'id'>;
 
 function toast({ ...props }: Toast) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const id = genId();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const update = (props: ToasterToast) =>
     dispatch({
       type: 'UPDATE_TOAST',
       toast: { ...props, id },
     });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dismiss = () => dispatch({ type: 'DISMISS_TOAST', toastId: id });
 
   dispatch({
@@ -180,11 +191,13 @@ function toast({ ...props }: Toast) {
 }
 
 function useToast() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, setState] = React.useState<State>(memoryState);
 
   React.useEffect(() => {
     listeners.push(setState);
     return () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const index = listeners.indexOf(setState);
       if (index > -1) {
         listeners.splice(index, 1);

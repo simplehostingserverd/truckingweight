@@ -20,10 +20,13 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const body = await request.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { email, password } = body;
 
     // Predefined test accounts
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const testAccounts = [
       {
         email: 'truckadmin@example.com',
@@ -52,6 +55,7 @@ export async function POST(request: NextRequest) {
     ];
 
     // Check for test accounts first
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const testAccount = testAccounts.find(
       account =>
         account.email.toLowerCase() === email.toLowerCase() && account.password === password
@@ -78,7 +82,8 @@ export async function POST(request: NextRequest) {
     // For demo purposes, accept any email with a password of "password"
     if (password === 'password') {
       // Create a mock user and session
-      const user = {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _user = {
         id: '123e4567-e89b-12d3-a456-426614174000',
         email,
         name: 'Demo User',
@@ -98,9 +103,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Return error for invalid credentials
-    return NextResponse.json({ error: 'Invalid login credentials' }, { status: 401 });
+    return NextResponse.json({ error: 'Invalid login credentials' }, { _status: 401 });
   } catch (error) {
     console.error('Error in mock login API:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
   }
 }

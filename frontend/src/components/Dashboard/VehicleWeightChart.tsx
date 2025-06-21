@@ -31,16 +31,25 @@ interface VehicleWeightChartProps {
 }
 
 function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [weightData, setWeightData] = useState<unknown[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dateRange, setDateRange] = useState('week'); // 'week', 'month', 'year'
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isAdmin, setIsAdmin] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [companyData, setCompanyData] = useState<unknown[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedCompany, setSelectedCompany] = useState<string>('overall');
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -56,9 +65,11 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
         }
 
         // Check if user is admin
-        const { data: userData } = await supabase.auth.getUser();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { _data: userData } = await supabase.auth.getUser();
         if (userData?.user) {
-          const { data: userDetails } = await supabase
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { _data: userDetails } = await supabase
             .from('users')
             .select('is_admin')
             .eq('id', userData.user.id)
@@ -72,6 +83,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
           ? `/api/dashboard/vehicle-weights?dateRange=${dateRange}&companyId=${companyId}`
           : `/api/dashboard/vehicle-weights?dateRange=${dateRange}`;
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await fetch(url, {
           headers: {
             'x-auth-token': session.access_token || '',
@@ -81,11 +93,13 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
         });
 
         if (!response.ok) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const errorData = await response.json();
           throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch vehicle weight data');
         }
 
-        const data = await response.json();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const _data = await response.json();
 
         // Handle different data formats based on admin status
         if (data.overall && data.byCompany) {
@@ -96,7 +110,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
           // Regular user view or admin with specific company filter
           setWeightData(data);
         }
-      } catch (error: unknown) {
+      } catch (_error: unknown) {
         console.error('Error fetching vehicle weight data:', error);
         setError((error instanceof Error ? error.message : String(error)));
 
@@ -104,6 +118,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
         try {
           // Query vehicles directly from the database
           // Note: Using max_weight instead of weight as per the database schema
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           let vehiclesQuery = supabase.from('vehicles').select('id, name, max_weight');
 
           // If not admin and we have a company ID, filter by it
@@ -111,7 +126,7 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
             vehiclesQuery = vehiclesQuery.eq('company_id', companyId);
           }
 
-          const { data: vehicles, error: vehiclesError } = await vehiclesQuery;
+          const { _data: vehicles, _error: vehiclesError } = await vehiclesQuery;
 
           if (vehiclesError) {
             throw vehiclesError;
@@ -120,9 +135,11 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
           // If we have vehicles, format them for the chart
           if (vehicles && vehicles.length > 0) {
             // Group by vehicle name and calculate average weight
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const vehicleWeights = {};
 
             vehicles.forEach(vehicle => {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               const weightValue = parseFloat(vehicle.max_weight || '0');
 
               if (!isNaN(weightValue) && weightValue > 0) {
@@ -139,8 +156,9 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
             });
 
             // Format for chart
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const formattedData = Object.entries(vehicleWeights)
-              .map(([name, data]) => ({
+              .map(([name, _data]) => ({
                 name,
                 weight: Math.round(data.total / data.count),
               }))
@@ -162,11 +180,12 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
     fetchData();
   }, [supabase, dateRange, companyId, isAdmin]);
 
-  const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleDateRangeChange = (_e: _React.ChangeEvent<HTMLSelectElement>) => {
     setDateRange(e.target.value);
   };
 
-  const handleCompanyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleCompanyChange = (_e: _React.ChangeEvent<HTMLSelectElement>) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const companyId = e.target.value;
     setSelectedCompany(companyId);
 

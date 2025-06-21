@@ -56,7 +56,7 @@ export class ManualEntryProvider implements WeightCaptureProvider {
   async calibrate(): Promise<CalibrationResult> {
     // Calibration doesn't apply to manual entry
     return {
-      success: true,
+      _success: true,
       previousOffset: 0,
       newOffset: 0,
       timestamp: new Date(),
@@ -96,6 +96,7 @@ export class ManualEntryProvider implements WeightCaptureProvider {
    */
   private updateReading(): void {
     // Calculate net weight if both gross and tare are available
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let netWeight = null;
     if (this.manualWeight !== null && this.manualTareWeight !== null) {
       netWeight = this.manualWeight - this.manualTareWeight;

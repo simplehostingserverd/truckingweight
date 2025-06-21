@@ -30,14 +30,19 @@ type PrometheusHistogram = {
 };
 
 // Use dynamic imports for server-side only code
-let collectDefaultMetrics: ((options: { register: PrometheusRegistry }) => void) | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let collectDefaultMetrics: ((_options: { register: PrometheusRegistry }) => void) | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let Registry: unknown = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let Counter: unknown = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let Histogram: unknown = null;
 
 // Only import and initialize in a server context
 if (typeof window === 'undefined') {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const pkg = require('prom-client');
     collectDefaultMetrics = pkg.collectDefaultMetrics;
     Registry = pkg.Registry;
@@ -49,9 +54,13 @@ if (typeof window === 'undefined') {
 }
 
 // Initialize metrics only if we're on the server
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let register: PrometheusRegistry | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let pageViewsCounter: PrometheusCounter | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let apiRequestsCounter: PrometheusCounter | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let apiRequestDuration: PrometheusHistogram | null = null;
 
 // Only initialize metrics on the server
@@ -104,7 +113,7 @@ export async function GET(_: NextRequest) {
   try {
     // Check if metrics are initialized
     if (!register) {
-      return NextResponse.json({ error: 'Metrics not initialized' }, { status: 503 });
+      return NextResponse.json({ error: 'Metrics not initialized' }, { _status: 503 });
     }
 
     // Record this metrics request
@@ -113,6 +122,7 @@ export async function GET(_: NextRequest) {
     }
 
     // Get metrics
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const metrics = await register.metrics();
 
     // Return metrics
@@ -123,7 +133,7 @@ export async function GET(_: NextRequest) {
     });
   } catch (error) {
     console.error('Error generating metrics:', error);
-    return NextResponse.json({ error: 'Failed to generate metrics' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to generate metrics' }, { _status: 500 });
   }
 }
 

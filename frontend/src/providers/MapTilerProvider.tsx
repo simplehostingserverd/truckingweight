@@ -24,6 +24,7 @@ export function MapTilerProvider({ children }: { children: React.ReactNode }) {
     // Add MapTiler SDK script to the document if it doesn't exist
     if (typeof window !== 'undefined' && !document.getElementById('maptiler-sdk-script')) {
       // Add MapTiler SDK script
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const script = document.createElement('script');
       script.id = 'maptiler-sdk-script';
       script.src = 'https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.min.js';
@@ -31,6 +32,7 @@ export function MapTilerProvider({ children }: { children: React.ReactNode }) {
       document.head.appendChild(script);
 
       // Add MapTiler SDK CSS
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = 'https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.css';

@@ -327,6 +327,7 @@ const spacing = {
 };
 
 // Border Radius - Modern 2024 Design System
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const borderRadius = {
   none: '0',
   xs: '0.125rem', // 2px
@@ -368,6 +369,7 @@ const shadows = {
 };
 
 // Z-index
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const zIndex = {
   0: '0',
   10: '10',

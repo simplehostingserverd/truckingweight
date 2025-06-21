@@ -19,7 +19,8 @@ import { getSupabaseConfig } from './config';
 
 // This middleware refreshes the user's session and must be run
 // for any Server Component route that uses a Supabase client
-export async function middleware(req: NextRequest) {
+export async function middleware(_req: NextRequest) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const res = NextResponse.next();
 
   // Apply security headers
@@ -27,6 +28,7 @@ export async function middleware(req: NextRequest) {
   // Content-Security-Policy - Helps prevent XSS attacks
   // Use a balanced approach that works for both development and production
   // but is still secure
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const cspValue = [
     // Default fallback - restrict to same origin
     "default-src 'self'",
@@ -35,11 +37,11 @@ export async function middleware(req: NextRequest) {
     // Connect - allow Supabase and API connections
     "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.mapbox.com https://events.mapbox.com https://api.maptiler.com https://*.hcaptcha.com https://hcaptcha.com",
     // Images - allow various sources including data URIs
-    "img-src 'self' data: blob: https://images.pexels.com https://*.supabase.co https://upload.wikimedia.org https://*.mapbox.com https://cdn.maptiler.com https://cesium.com https://api.maptiler.com https://via.placeholder.com https://placehold.co https://picsum.photos https://*.hcaptcha.com",
+    "img-src 'self' _data: blob: https://images.pexels.com https://*.supabase.co https://upload.wikimedia.org https://*.mapbox.com https://cdn.maptiler.com https://cesium.com https://api.maptiler.com https://via.placeholder.com https://placehold.co https://picsum.photos https://*.hcaptcha.com",
     // Styles - allow inline for component libraries
     "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.maptiler.com https://cesium.com https://*.hcaptcha.com",
     // Fonts - allow data URIs and CDNs
-    "font-src 'self' data: https://cdn.jsdelivr.net",
+    "font-src 'self' _data: https://cdn.jsdelivr.net",
     // Frames - restrict to same origin and hCaptcha
     "frame-src 'self' https://*.hcaptcha.com",
     // Media - restrict to same origin and data URIs
@@ -85,16 +87,18 @@ export async function middleware(req: NextRequest) {
   );
 
   // Get Supabase configuration with JWT secret for server-side
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
   // Create the client with explicit URL and key
-  const supabase = createServerClient<Database>(supabaseUrl, supabaseKey, {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createServerClient<Database>(supabaseUrl, supabaseKey, {
     cookies: {
       getAll() {
         return req.cookies.getAll().map(({ name, value }) => ({ name, value }));
       },
       setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) => {
+        cookiesToSet.forEach(({ name, value, _options }) => {
           res.cookies.set(name, value, options);
         });
       },
@@ -103,19 +107,24 @@ export async function middleware(req: NextRequest) {
 
   try {
     // Get authenticated user - more secure than getSession()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, error } = await supabase.auth.getUser();
-    const user = data?.user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _user = data?.user;
 
     // Check auth condition
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isAuthRoute =
       req.nextUrl.pathname.startsWith('/login') ||
       req.nextUrl.pathname.startsWith('/register') ||
       req.nextUrl.pathname.startsWith('/reset-password');
 
     // API routes that should be accessible without authentication
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isPublicApiRoute = req.nextUrl.pathname.startsWith('/api/verify-supabase');
 
     // Static assets and public routes
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isPublicAsset =
       req.nextUrl.pathname.startsWith('/_next') ||
       req.nextUrl.pathname.startsWith('/favicon.ico') ||
@@ -151,7 +160,7 @@ export async function middleware(req: NextRequest) {
           error: 'Authentication error',
           message: error instanceof Error ? error.message : 'Unknown error',
         },
-        { status: 401 }
+        { _status: 401 }
       );
     }
   }

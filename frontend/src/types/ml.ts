@@ -58,7 +58,7 @@ export interface DynamicPricingOutput {
 }
 
 export interface MaintenancePredictionInput {
-  vehicleId: string;
+  _vehicleId: string;
   mileage: number;
   engineHours: number;
   lastMaintenance: string;

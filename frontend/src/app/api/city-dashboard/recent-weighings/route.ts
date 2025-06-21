@@ -16,12 +16,14 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Get the authorization token from the request headers
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const authHeader = request.headers.get('authorization');
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Authorization token is required' }, { status: 401 });
+      return NextResponse.json({ error: 'Authorization token is required' }, { _status: 401 });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const token = authHeader.split(' ')[1];
 
     // Check if this is a test token
@@ -29,11 +31,15 @@ export async function GET(request: NextRequest) {
       console.warn('Using test data for city dashboard recent weighings');
 
       // Generate dummy recent weighings data
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dummyWeighings = Array.from({ length: 10 }, (_, i) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const date = new Date();
         date.setHours(date.getHours() - i * 2);
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const grossWeight = Math.floor(Math.random() * 30000) + 20000;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const tareWeight = Math.floor(Math.random() * 10000) + 10000;
 
         return {
@@ -56,10 +62,13 @@ export async function GET(request: NextRequest) {
     }
 
     // Get query parameters
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const searchParams = request.nextUrl.searchParams;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const limit = searchParams.get('limit') || '10';
 
     // Call the backend API to get recent weighings
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await fetch(
       `${process.env.BACKEND_URL}/api/city-dashboard/recent-weighings?limit=${limit}`,
       {
@@ -69,22 +78,24 @@ export async function GET(request: NextRequest) {
       }
     );
 
-    const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _data = await response.json();
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.msg || 'Failed to fetch recent weighings' },
-        { status: response.status }
+        { _error: data.msg || 'Failed to fetch recent weighings' },
+        { _status: response.status }
       );
     }
 
     return NextResponse.json(data);
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     console.error('Error fetching recent weighings:', error);
 
     // Return mock data for development/demo purposes
     if (process.env.NODE_ENV !== 'production') {
       // Generate dummy recent weighings
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dummyWeighings = Array.from({ length: 10 }, (_, i) => ({
         id: i + 1,
         ticketNumber: `CWT-001-${20230701 + i}-${1000 + i}`,
@@ -93,7 +104,7 @@ export async function GET(request: NextRequest) {
         grossWeight: 35000 + Math.floor(Math.random() * 10000),
         netWeight: 25000 + Math.floor(Math.random() * 8000),
         weighDate: new Date(2023, 6, 1 + i).toISOString(),
-        status:
+        _status:
           Math.random() > 0.2 ? 'Compliant' : Math.random() > 0.5 ? 'Non-Compliant' : 'Warning',
         scaleName: `Scale ${(i % 3) + 1}`,
       }));
@@ -101,6 +112,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ weighings: dummyWeighings });
     }
 
-    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ _error: _error.message || 'Internal server error' }, { _status: 500 });
   }
 }

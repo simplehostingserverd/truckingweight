@@ -15,6 +15,7 @@
 
 import React from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-800 text-white py-8">

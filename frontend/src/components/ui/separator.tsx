@@ -21,6 +21,7 @@ interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
   decorative?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
   ({ className, orientation = 'horizontal', decorative = true, ...props }, ref) => (
     <div

@@ -11,7 +11,7 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
+
 import { cn } from '@/lib/utils';
 
 interface StatsCardProps {

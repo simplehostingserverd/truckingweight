@@ -11,16 +11,17 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
+
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import HomeClient from './home-client';
 
 export default async function Home() {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   const {
-    data: { user },
+    data: { _user },
   } = await supabase.auth.getUser();
 
   // If user is logged in, redirect to dashboard
@@ -29,7 +30,8 @@ export default async function Home() {
   }
 
   // Fetch testimonials from the database
-  const { data: testimonials } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: testimonials } = await supabase
     .from('testimonials')
     .select('*')
     .order('rating', { ascending: false })

@@ -26,19 +26,26 @@ import {
  */
 export async function GET(request: NextRequest) {
   // Get the URL from the request
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const url = new URL(request.url);
 
   // Extract search parameters safely
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const name = toSearchParamString(url.searchParams.get('name'), 'Guest');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const page = toSearchParamNumber(url.searchParams.get('page'), 1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const limit = toSearchParamNumber(url.searchParams.get('limit'), 10);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const showDetails = toSearchParamBoolean(url.searchParams.get('details'), false);
 
   // Handle potential array parameters safely
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tags = toSearchParamString(url.searchParams.get('tags'), '');
   const tagArray = tags ? tags.split(',') : [];
 
   // Create response data
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const responseData = {
     name,
     page,

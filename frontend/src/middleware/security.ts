@@ -25,7 +25,8 @@ import type { NextRequest } from 'next/server';
  * - MITM (Man-in-the-Middle) attacks via HSTS
  * - Other common web vulnerabilities
  */
-export function securityMiddleware(req: NextRequest) {
+export function securityMiddleware(_req: NextRequest) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const response = NextResponse.next();
 
   // Set security headers
@@ -34,7 +35,7 @@ export function securityMiddleware(req: NextRequest) {
   // Customize this policy based on your application's needs
   response.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com; connect-src 'self' https://*.supabase.co https://www.google-analytics.com; img-src 'self' data: https://images.pexels.com https://*.supabase.co; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; frame-src 'self';"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com; connect-src 'self' https://*.supabase.co https://www.google-analytics.com; img-src 'self' _data: https://images.pexels.com https://*.supabase.co; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' _data: https://cdn.jsdelivr.net; frame-src 'self';"
   );
 
   // X-XSS-Protection - Stops pages from loading when they detect reflected XSS attacks

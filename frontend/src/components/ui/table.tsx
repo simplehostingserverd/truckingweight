@@ -24,8 +24,9 @@ interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   selectable?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ className, description, sortable, selectable, ...props }, ref) => (
+  ({ className, description, _sortable, selectable, ...props }, ref) => (
     <div className="relative w-full overflow-auto">
       {description && <div className="sr-only">{description}</div>}
       <table
@@ -41,6 +42,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
 );
 Table.displayName = 'Table';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
@@ -49,6 +51,7 @@ const TableHeader = React.forwardRef<
 ));
 TableHeader.displayName = 'TableHeader';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TableBody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
@@ -62,6 +65,7 @@ const TableBody = React.forwardRef<
 ));
 TableBody.displayName = 'TableBody';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TableFooter = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
@@ -79,6 +83,7 @@ interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   selected?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(
   ({ className, selected, ...props }, ref) => (
     <tr
@@ -103,8 +108,9 @@ interface TableHeadProps extends React.ThHTMLAttributes<HTMLTableCellElement> {
   sortDirection?: 'asc' | 'desc' | null;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, sortable, sortDirection, ...props }, ref) => (
+  ({ className, _sortable, sortDirection, ...props }, ref) => (
     <th
       ref={ref}
       className={cn(
@@ -133,6 +139,7 @@ interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
   isRowHeader?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
   ({ className, isRowHeader, ...props }, ref) => (
     <td
@@ -148,6 +155,7 @@ const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
 );
 TableCell.displayName = 'TableCell';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
   React.HTMLAttributes<HTMLTableCaptionElement>

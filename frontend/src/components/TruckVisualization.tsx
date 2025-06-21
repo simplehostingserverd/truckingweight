@@ -15,6 +15,7 @@ import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 // Dynamically import Three.js component with no SSR
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TruckModel = dynamic(() => import('./TruckModel'), {
   ssr: false,
   loading: () => <ModelLoadingPlaceholder />,
@@ -41,6 +42,7 @@ interface TruckVisualizationProps {
   height?: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TruckVisualization: React.FC<TruckVisualizationProps> = ({
   vehicleType,
   axleCount,
@@ -49,6 +51,7 @@ const TruckVisualization: React.FC<TruckVisualizationProps> = ({
   width = 800,
   height = 400,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isClient, setIsClient] = useState(false);
 
   // Only render on client side

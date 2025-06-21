@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import { formatDate, getStatusColor } from '@/lib/utils';
 import Link from 'next/link';
 
@@ -22,7 +22,7 @@ interface Weight {
   weight: string;
   date: string;
   time: string | null;
-  status: string;
+  _status: string;
   vehicle_id: number | null;
   driver_id: number | null;
   vehicles: {

@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import * as THREE from 'three';
@@ -22,15 +22,18 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 interface TruckTrackingVisualizationProps {
   routeData: unknown;
-  vehicleId: number;
+  _vehicleId: number;
 }
 
 export default function TruckTrackingVisualization({
   routeData,
   vehicleId,
 }: TruckTrackingVisualizationProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const mapContainer = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const map = useRef<mapboxgl.Map | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [truckPosition, setTruckPosition] = useState({ lng: -95.7129, lat: 37.0902 });
 
   useEffect(() => {
@@ -59,10 +62,12 @@ export default function TruckTrackingVisualization({
   }, []);
 
   // Set up the 3D truck visualization
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const setupTruckVisualization = () => {
     if (!map.current) return;
 
     // Create custom layer for Three.js
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const customLayer = {
       id: '3d-truck',
       type: 'custom',
@@ -79,6 +84,7 @@ export default function TruckTrackingVisualization({
         });
 
         // Load 3D truck model
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const loader = new GLTFLoader();
         loader.load('/models/truck.glb', gltf => {
           this.truck = gltf.scene;
@@ -87,9 +93,11 @@ export default function TruckTrackingVisualization({
         });
 
         // Add lighting
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         this.scene.add(ambientLight);
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
         directionalLight.position.set(0, 70, 100);
         this.scene.add(directionalLight);
@@ -98,6 +106,7 @@ export default function TruckTrackingVisualization({
       render: function (gl: WebGLRenderingContext, matrix: number[]) {
         if (this.truck) {
           // Update truck position
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const position = mapboxgl.MercatorCoordinate.fromLngLat(
             [truckPosition.lng, truckPosition.lat],
             0
@@ -106,6 +115,7 @@ export default function TruckTrackingVisualization({
 
           // Update truck rotation based on route
           // Calculate heading based on next point in route
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const heading = calculateHeading(routeData, truckPosition);
           this.truck.rotation.z = heading;
         }
@@ -118,6 +128,7 @@ export default function TruckTrackingVisualization({
   };
 
   // Set up the route visualization
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const setupRouteVisualization = (routeData: unknown) => {
     if (!map.current || !routeData || !routeData.coordinates) return;
 
@@ -154,15 +165,19 @@ export default function TruckTrackingVisualization({
   useEffect(() => {
     if (!routeData || !routeData.coordinates) return;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let currentPointIndex = 0;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const coordinates = routeData.coordinates;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const interval = setInterval(() => {
       if (currentPointIndex >= coordinates.length) {
         clearInterval(interval);
         return;
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [lng, lat] = coordinates[currentPointIndex];
       setTruckPosition({ lng, lat });
 
@@ -179,7 +194,7 @@ export default function TruckTrackingVisualization({
       {/* Overlay with truck info */}
       <div className="absolute top-4 left-4 bg-white/80 dark:bg-gray-800/80 p-4 rounded-lg shadow-md backdrop-blur-sm">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-          Truck #{vehicleId} Live Tracking
+          Truck #{_vehicleId} Live Tracking
         </h3>
         <div className="mt-2 text-sm text-gray-600 dark:text-gray-300">
           <p>

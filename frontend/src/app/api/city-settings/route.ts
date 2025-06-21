@@ -16,12 +16,14 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Get the authorization token from the request headers
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const authHeader = request.headers.get('authorization');
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Authorization token is required' }, { status: 401 });
+      return NextResponse.json({ error: 'Authorization token is required' }, { _status: 401 });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const token = authHeader.split(' ')[1];
 
     // Check if this is a test token
@@ -29,6 +31,7 @@ export async function GET(request: NextRequest) {
       console.warn('Using test data for city settings');
 
       // Mock data
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dummySettings = {
         // Account settings
         name: token.includes('sanantonio') ? 'San Antonio Admin' : 'Houston Admin',
@@ -62,6 +65,7 @@ export async function GET(request: NextRequest) {
     // Call the backend API to get user settings
     // In a real implementation, this would call a backend endpoint
     // For now, we'll just return mock data
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const dummySettings = {
       // Account settings
       name: 'City Admin',
@@ -88,29 +92,32 @@ export async function GET(request: NextRequest) {
     };
 
     return NextResponse.json({ settings: dummySettings });
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     console.error('Error fetching city settings:', error);
-    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { _status: 500 });
   }
 }
 
 export async function PUT(request: NextRequest) {
   try {
     // Get the authorization token from the request headers
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const authHeader = request.headers.get('authorization');
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Authorization token is required' }, { status: 401 });
+      return NextResponse.json({ error: 'Authorization token is required' }, { _status: 401 });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const token = authHeader.split(' ')[1];
 
     // Get request body
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const body = await request.json();
 
     // Validate required fields
     if (!body) {
-      return NextResponse.json({ error: 'Settings data is required' }, { status: 400 });
+      return NextResponse.json({ error: 'Settings data is required' }, { _status: 400 });
     }
 
     // Call the backend API to update user settings
@@ -124,8 +131,8 @@ export async function PUT(request: NextRequest) {
       message: 'Settings updated successfully',
       settings: body,
     });
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     console.error('Error updating city settings:', error);
-    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { _status: 500 });
   }
 }

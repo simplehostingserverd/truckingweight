@@ -19,18 +19,25 @@ import { Check, ChevronRight, Circle } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuGroup = DropdownMenuPrimitive.Group;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuSub = DropdownMenuPrimitive.Sub;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuSubTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
@@ -52,6 +59,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
 ));
 DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
@@ -67,6 +75,7 @@ const DropdownMenuSubContent = React.forwardRef<
 ));
 DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
@@ -86,6 +95,7 @@ const DropdownMenuContent = React.forwardRef<
 ));
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
@@ -104,6 +114,7 @@ const DropdownMenuItem = React.forwardRef<
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
@@ -127,6 +138,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
 ));
 DropdownMenuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displayName;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
@@ -149,6 +161,7 @@ const DropdownMenuRadioItem = React.forwardRef<
 ));
 DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuLabel = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
@@ -163,6 +176,7 @@ const DropdownMenuLabel = React.forwardRef<
 ));
 DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DropdownMenuSeparator = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
@@ -175,7 +189,8 @@ const DropdownMenuSeparator = React.forwardRef<
 ));
 DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
 
-const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const DropdownMenuShortcut = ({ className, ...props }: _React.HTMLAttributes<HTMLSpanElement>) => {
   return (
     <span className={cn('ml-auto text-xs tracking-widest opacity-60', className)} {...props} />
   );

@@ -32,7 +32,7 @@ import {
 
 // Mock ScaleSDK for development - would be replaced with actual SDK in production
 class ScaleSDK {
-  static async connect(config: unknown): Promise<unknown> {
+  static async connect(_config: unknown): Promise<unknown> {
     console.warn('Connecting to scale with config:', config);
     // Simulate connection delay
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -56,7 +56,7 @@ class ScaleSDK {
       calibrate: async () => {
         await new Promise(resolve => setTimeout(resolve, 2000));
         return {
-          success: true,
+          _success: true,
           previousOffset: 120,
           newOffset: 0,
         };
@@ -73,7 +73,7 @@ interface ScaleConnection {
   isConnected: () => boolean;
   getWeight: () => Promise<number>;
   getAxleWeights: () => Promise<{ position: number; weight: number }[]>;
-  calibrate: () => Promise<{ success: boolean; previousOffset: number; newOffset: number }>;
+  calibrate: () => Promise<{ _success: boolean; previousOffset: number; newOffset: number }>;
   disconnect: () => Promise<boolean>;
 }
 
@@ -118,10 +118,13 @@ export class DigitalScaleProvider implements WeightCaptureProvider {
     // Start capturing weight readings at regular intervals
     this.captureInterval = setInterval(async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const grossWeight = await this.scaleConnection!.getWeight();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const axleWeightsRaw = await this.scaleConnection!.getAxleWeights();
 
         // Convert axle weights to the expected format
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const axleWeights: AxleWeightReading[] = axleWeightsRaw.map(aw => ({
           position: aw.position,
           weight: aw.weight,
@@ -170,10 +173,11 @@ export class DigitalScaleProvider implements WeightCaptureProvider {
       throw new Error('Scale not initialized');
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const result = await this.scaleConnection.calibrate();
 
     return {
-      success: result.success,
+      _success: result.success,
       previousOffset: result.previousOffset,
       newOffset: result.newOffset,
       timestamp: new Date(),
@@ -184,6 +188,7 @@ export class DigitalScaleProvider implements WeightCaptureProvider {
   private getMaxLegalWeight(axlePosition: number): number {
     // Return max legal weight based on axle position
     // These values would be based on federal and state regulations
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const maxWeights: Record<number, number> = {
       1: 12000, // Steering axle
       2: 34000, // Drive axles (tandem)

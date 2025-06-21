@@ -47,8 +47,11 @@ export default function MobileNav({
   companyNavigation = [],
   isAdmin = false,
 }: MobileNavProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [open, setOpen] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const pathname = usePathname();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isMobile = useIsMobile();
 
   // Close the mobile menu when the screen size changes to desktop
@@ -136,6 +139,7 @@ export default function MobileNav({
                 <div className="mt-5 h-0 flex-1 overflow-y-auto">
                   <nav className="space-y-1 px-2">
                     {navigation.map(item => {
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
                       const isActive =
                         pathname === item.href || pathname.startsWith(`${item.href}/`);
                       return (
@@ -172,6 +176,7 @@ export default function MobileNav({
                         </h3>
 
                         {companyNavigation.map(item => {
+                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
                           const isActive =
                             pathname === item.href || pathname.startsWith(`${item.href}/`);
                           return (
@@ -210,6 +215,7 @@ export default function MobileNav({
                         </h3>
 
                         {adminNavigation.map(item => {
+                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
                           const isActive =
                             pathname === item.href || pathname.startsWith(`${item.href}/`);
                           return (

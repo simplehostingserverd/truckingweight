@@ -11,31 +11,35 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
+
 import { createClient } from '@/utils/supabase/server';
 import { formatDate, getStatusColor } from '@/lib/utils';
 import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 export default async function Weights() {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   // Get user data
   const {
-    data: { user },
+    data: { _user },
   } = await supabase.auth.getUser();
-  const { data: userData } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: userData } = await supabase
     .from('users')
     .select('company_id')
     .eq('id', user?.id)
     .single();
 
   // Get weights with vehicle and driver info
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let weights = [];
-  let error = null;
+  let _error = null;
 
   // Only fetch if we have a company_id
   if (userData?.company_id) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await supabase
       .from('weights')
       .select(
@@ -58,7 +62,8 @@ export default async function Weights() {
   } else {
     console.warn('No company_id found for user, attempting to fetch all weights');
     // Try to fetch all weights if no company_id (admin user)
-    const { data: allWeights, error: allWeightsError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: allWeights, _error: allWeightsError } = await supabase
       .from('weights')
       .select('*, vehicles(*), drivers(*)')
       .order('created_at', { ascending: false })

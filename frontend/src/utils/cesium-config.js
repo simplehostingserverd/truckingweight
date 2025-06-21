@@ -28,6 +28,7 @@ export function initCesium() {
     window.CESIUM_BASE_URL = '/static/chunks/cesium';
 
     // Set the Cesium Ion token
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const cesiumToken = process.env.NEXT_PUBLIC_CESIUM_TOKEN;
     if (cesiumToken) {
       // Import Cesium dynamically to avoid SSR issues

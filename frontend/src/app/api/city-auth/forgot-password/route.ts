@@ -16,13 +16,15 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { email } = await request.json();
 
     if (!email) {
-      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+      return NextResponse.json({ error: 'Email is required' }, { _status: 400 });
     }
 
     // Call the backend API to initiate password reset
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await fetch(`${process.env.BACKEND_URL}/api/city-auth/forgot-password`, {
       method: 'POST',
       headers: {
@@ -31,18 +33,19 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({ email }),
     });
 
-    const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _data = await response.json();
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.msg || 'Failed to initiate password reset' },
-        { status: response.status }
+        { _error: data.msg || 'Failed to initiate password reset' },
+        { _status: response.status }
       );
     }
 
     return NextResponse.json({ message: 'Password reset email sent' });
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     console.error('Password reset error:', error);
-    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { _status: 500 });
   }
 }

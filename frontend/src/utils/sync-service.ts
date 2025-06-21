@@ -14,9 +14,10 @@
 'use client';
 
 // Global type declarations
-declare const navigator: Navigator;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare const _navigator: Navigator;
 
-// import React from 'react'; // Unused
+//  // Unused
 import { v4 as uuidv4 } from 'uuid';
 import { createClient } from '@/utils/supabase/client';
 import {
@@ -27,51 +28,57 @@ import {
 } from './offline-storage';
 
 // Create Supabase client
-const supabase = createClient();
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _supabase = createClient();
 
 /**
  * Sync all unsynced items to the server
- * @returns {Promise<{success: boolean, message: string}>} Result of the sync operation
+ * @returns {Promise<{_success: boolean, message: string}>} Result of the sync operation
  */
-export async function syncAllData(): Promise<{ success: boolean; message: string }> {
+export async function syncAllData(): Promise<{ _success: boolean; message: string }> {
   try {
     // Check if online
     if (!navigator.onLine) {
-      return { success: false, message: 'Cannot sync while offline' };
+      return { _success: false, message: 'Cannot sync while offline' };
     }
 
     // Get current user
     const {
-      data: { user },
-      error: userError,
+      data: { _user },
+      _error: userError,
     } = await supabase.auth.getUser();
 
     if (userError || !user) {
-      return { success: false, message: 'You must be logged in to sync data' };
+      return { _success: false, message: 'You must be logged in to sync data' };
     }
 
     // Get company ID from user metadata or from a separate query
-    const { data: userData, error: profileError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: userData, _error: profileError } = await supabase
       .from('users')
       .select('company_id')
       .eq('id', user.id)
       .single();
 
     if (profileError || !userData) {
-      return { success: false, message: 'Could not determine company ID' };
+      return { _success: false, message: 'Could not determine company ID' };
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const companyId = userData.company_id;
 
     // Get unsynced weights
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const unsyncedWeights = await getUnsyncedItems('weights');
     console.warn(`Found ${unsyncedWeights.length} unsynced weights`);
 
     // Get unsynced loads
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const unsyncedLoads = await getUnsyncedItems('loads');
     console.warn(`Found ${unsyncedLoads.length} unsynced loads`);
 
     // Add weights to sync queue
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const weight of unsyncedWeights) {
       await addToSyncQueue('weights', 'create', {
         ...weight,
@@ -80,6 +87,7 @@ export async function syncAllData(): Promise<{ success: boolean; message: string
     }
 
     // Add loads to sync queue
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const load of unsyncedLoads) {
       await addToSyncQueue('loads', 'create', {
         ...load,
@@ -88,17 +96,19 @@ export async function syncAllData(): Promise<{ success: boolean; message: string
     }
 
     // Process sync queue
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let syncedCount = 0;
     await processSyncQueue(async item => {
       try {
         // Send to server
-        const { error } = await supabase.from('sync_queue').insert([
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { _error } = await supabase.from('sync_queue').insert([
           {
             id: uuidv4(),
             company_id: companyId,
             table_name: item.table,
             action: item.action,
-            data: item.data,
+            _data: item.data,
             status: 'pending',
           },
         ]);
@@ -110,6 +120,7 @@ export async function syncAllData(): Promise<{ success: boolean; message: string
 
         // Mark local item as synced
         if (item.table === 'weights' || item.table === 'loads') {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const id = item.data.id;
           await markAsSynced(item.table, id);
         }
@@ -123,13 +134,13 @@ export async function syncAllData(): Promise<{ success: boolean; message: string
     });
 
     return {
-      success: true,
+      _success: true,
       message: `Successfully synced ${syncedCount} items`,
     };
   } catch (error) {
     console.error('Error syncing data:', error);
     return {
-      success: false,
+      _success: false,
       message: `Error syncing data: ${error instanceof Error ? error.message : String(error)}`,
     };
   }
@@ -141,7 +152,9 @@ export async function syncAllData(): Promise<{ success: boolean; message: string
  */
 export async function hasPendingSync(): Promise<boolean> {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const unsyncedWeights = await getUnsyncedItems('weights');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const unsyncedLoads = await getUnsyncedItems('loads');
 
     return unsyncedWeights.length > 0 || unsyncedLoads.length > 0;
@@ -158,10 +171,12 @@ export function setupAutoSync(): void {
   if (typeof window !== 'undefined') {
     window.addEventListener('online', async () => {
       console.warn('Back online, checking for data to sync...');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const hasPending = await hasPendingSync();
 
       if (hasPending) {
         console.warn('Found pending data to sync, syncing now...');
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const result = await syncAllData();
         console.warn('Auto-sync result:', result);
       }

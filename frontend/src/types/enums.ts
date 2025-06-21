@@ -114,14 +114,18 @@ export enum ThemeMode {
 // ============================================================================
 
 /**
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
  * Available languages as const assertion
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const LANGUAGES = ['en', 'es', 'fr', 'de'] as const;
 export type Language = typeof LANGUAGES[number];
 
 /**
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
  * Time zones as const assertion
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const TIME_ZONES = [
   'America/New_York',
   'America/Chicago',
@@ -132,14 +136,18 @@ export const TIME_ZONES = [
 export type TimeZone = typeof TIME_ZONES[number];
 
 /**
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
  * File types as const assertion
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const FILE_TYPES = ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx'] as const;
 export type FileType = typeof FILE_TYPES[number];
 
 /**
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
  * Sort directions as const assertion
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const SORT_DIRECTIONS = ['asc', 'desc'] as const;
 export type SortDirection = typeof SORT_DIRECTIONS[number];
 

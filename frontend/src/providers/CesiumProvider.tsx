@@ -27,6 +27,7 @@ export function CesiumProvider({ children }: { children: React.ReactNode }) {
       window.CESIUM_BASE_URL = 'https://cesium.com/downloads/cesiumjs/releases/1.113/Build/Cesium';
 
       // Add Cesium script
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const script = document.createElement('script');
       script.id = 'cesium-script';
       script.src = 'https://cesium.com/downloads/cesiumjs/releases/1.113/Build/Cesium/Cesium.js';
@@ -34,6 +35,7 @@ export function CesiumProvider({ children }: { children: React.ReactNode }) {
       document.head.appendChild(script);
 
       // Add Cesium CSS
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href =

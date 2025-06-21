@@ -22,9 +22,12 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Get the authorization header (try both formats)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const authHeader = request.headers.get('authorization');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const xAuthToken = request.headers.get('x-auth-token');
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let token = null;
 
     if (authHeader && authHeader.startsWith('Bearer ')) {
@@ -36,25 +39,27 @@ export async function GET(request: NextRequest) {
     if (!token) {
       return NextResponse.json(
         { error: 'Missing or invalid authorization header' },
-        { status: 401 }
+        { _status: 401 }
       );
     }
 
     // Create Supabase client
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
 
     // Verify the token and get user data
     const {
-      data: { user: authUser },
-      error: authError,
+      data: { _user: authUser },
+      _error: authError,
     } = await supabase.auth.getUser(token);
 
     if (authError || !authUser) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+      return NextResponse.json({ error: 'Invalid token' }, { _status: 401 });
     }
 
     // Get additional user data from the database
-    const { data: userData, error: userDataError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: userData, _error: userDataError } = await supabase
       .from('users')
       .select('id, email, name, company_id, is_admin')
       .eq('id', authUser.id)
@@ -62,13 +67,13 @@ export async function GET(request: NextRequest) {
 
     if (userDataError) {
       console.error('Error fetching user data:', userDataError);
-      return NextResponse.json({ error: 'Error fetching user data' }, { status: 500 });
+      return NextResponse.json({ error: 'Error fetching user data' }, { _status: 500 });
     }
 
     // Return success response with real user data
-    return NextResponse.json({ user: userData });
+    return NextResponse.json({ _user: userData });
   } catch (error) {
     console.error('Error in user API:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
   }
 }

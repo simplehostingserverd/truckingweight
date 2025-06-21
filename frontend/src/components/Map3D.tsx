@@ -11,10 +11,11 @@
  * in any way without explicit written permission.
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect useState } from 'react';
 import dynamic from 'next/dynamic';
 
 // Dynamically import Cesium components with no SSR
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CesiumMap = dynamic(() => import('./CesiumMap'), {
   ssr: false,
   loading: () => <MapLoadingPlaceholder />,
@@ -45,6 +46,7 @@ interface Map3DProps {
   onMarkerClick?: (markerId: string) => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Map3D: React.FC<Map3DProps> = ({
   latitude,
   longitude,
@@ -52,6 +54,7 @@ const Map3D: React.FC<Map3DProps> = ({
   markers = [],
   onMarkerClick,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isClient, setIsClient] = useState(false);
 
   // Only render on client side

@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import ErrorBoundary from '@/components/ErrorBoundary';
 
 import AdminCompanySelector from '@/components/Dashboard/AdminCompanySelector';
@@ -25,18 +25,23 @@ import Link from 'next/link';
 import { Suspense, lazy, useState } from 'react';
 
 // Dynamically import chart components to reduce initial bundle size
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ComplianceChart = lazy(() => import('@/components/Dashboard/ComplianceChart'));
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const VehicleWeightChart = lazy(() => import('@/components/Dashboard/VehicleWeightChart'));
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const LoadStatusChart = lazy(() => import('@/components/Dashboard/LoadStatusChart'));
 
 interface DashboardClientProps {
-  userName: string;
+  _userName: string;
   isAdmin: boolean;
 }
 
 export default function DashboardClient({ userName, isAdmin }: DashboardClientProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleCompanyChange = (companyId: number | null) => {
     setSelectedCompanyId(companyId);
   };

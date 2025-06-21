@@ -1,5 +1,6 @@
 // Global type declarations
-declare const performance: Performance;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare const _performance: Performance;
 
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
@@ -26,12 +27,14 @@ declare const performance: Performance;
  * @param fontFamily The font family to check
  * @returns Promise that resolves when the font check is complete
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const checkFontLoaded = (fontFamily: string): Promise<boolean> => {
   return new Promise(resolve => {
     try {
       // Use the document.fonts API if available
       if (typeof document !== 'undefined' && 'fonts' in document) {
         document.fonts.ready.then(() => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const isLoaded = document.fonts.check(`1em ${fontFamily}`);
           if (!isLoaded) {
             console.warn(`Font ${fontFamily} not loaded, using fallbacks`);

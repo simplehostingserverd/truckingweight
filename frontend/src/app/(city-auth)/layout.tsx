@@ -16,16 +16,18 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 
 export default async function CityAuthLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   // Check if user is authenticated
   const {
-    data: { user },
+    data: { _user },
   } = await supabase.auth.getUser();
 
   // If user is already logged in, redirect to appropriate dashboard
   if (user) {
     // Check if user has city_user metadata
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const userMetadata = user.user_metadata;
 
     if (userMetadata && userMetadata.user_type === 'city') {

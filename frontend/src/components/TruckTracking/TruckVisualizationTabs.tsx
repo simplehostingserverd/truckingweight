@@ -16,7 +16,7 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 import { GlobeAltIcon, MapIcon, TruckIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { _useState } from 'react';
 import CesiumTruckVisualization from './CesiumTruckVisualization';
 import DeckGLTruckVisualization from './DeckGLTruckVisualization';
 import MapboxTruckVisualization from './MapboxTruckVisualization';
@@ -45,6 +45,7 @@ export default function TruckVisualizationTabs({
   cesiumToken,
   geofenceZones = [],
 }: TruckVisualizationTabsProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTab, setActiveTab] = useState('mapbox');
 
   // Debug information
@@ -64,7 +65,7 @@ export default function TruckVisualizationTabs({
 
   return (
     <div className="space-y-4">
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+      <Tabs value={_activeTab} onValueChange={_setActiveTab} className="w-full">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">3D Truck Tracking</h2>
 

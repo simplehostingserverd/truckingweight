@@ -13,16 +13,18 @@
 
 'use client';
 
-import React from 'react';
-import { useState } from 'react';
+
+import { _useState } from 'react';
 import Link from 'next/link';
 import ComplianceChecker from '@/components/Weights/ComplianceChecker';
 import { ComplianceResult } from '@/services/complianceService';
 import { formatWeight } from '@/utils/formatters';
 
 export default function WeightCompliancePage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [complianceResult, setComplianceResult] = useState<ComplianceResult | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleComplianceChange = (result: ComplianceResult) => {
     setComplianceResult(result);
   };

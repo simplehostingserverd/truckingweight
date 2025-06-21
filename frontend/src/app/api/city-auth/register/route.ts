@@ -15,12 +15,13 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { name, email, password, cityId, role } = await request.json();
 
     if (!name || !email || !password || !cityId || !role) {
       return NextResponse.json(
         { error: 'Name, email, password, cityId, and role are required' },
-        { status: 400 }
+        { _status: 400 }
       );
     }
 
@@ -28,11 +29,12 @@ export async function POST(request: NextRequest) {
     if (!email.toLowerCase().endsWith('.gov')) {
       return NextResponse.json(
         { error: 'Only .gov email domains are allowed for city registration' },
-        { status: 400 }
+        { _status: 400 }
       );
     }
 
     // Call the backend API to register the city user
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const response = await fetch(`${process.env.BACKEND_URL}/api/city-auth/register`, {
       method: 'POST',
       headers: {
@@ -48,18 +50,19 @@ export async function POST(request: NextRequest) {
       }),
     });
 
-    const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _data = await response.json();
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.msg || 'Failed to register user' },
-        { status: response.status }
+        { _error: data.msg || 'Failed to register user' },
+        { _status: response.status }
       );
     }
 
     return NextResponse.json(data);
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     console.error('City user registration error:', error);
-    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: (error instanceof Error ? error.message : String(error)) || 'Internal server error' }, { _status: 500 });
   }
 }

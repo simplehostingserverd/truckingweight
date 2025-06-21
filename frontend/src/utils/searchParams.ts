@@ -57,7 +57,9 @@ export function toSearchParamString(value: SearchParamValue, defaultValue: strin
  * @returns A number representation of the search parameter
  */
 export function toSearchParamNumber(value: SearchParamValue, defaultValue: number = 0): number {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const stringValue = toSearchParamString(value, String(defaultValue));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const numberValue = Number(stringValue);
 
   return isNaN(numberValue) ? defaultValue : numberValue;
@@ -78,6 +80,7 @@ export function toSearchParamBoolean(
     return defaultValue;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const stringValue = toSearchParamString(value).toLowerCase();
 
   // Check for common truthy values
@@ -93,8 +96,10 @@ export function toSearchParamBoolean(
 export function parseSearchParams(
   searchParams: Record<string, SearchParamValue>
 ): ParsedSearchParams {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const result: ParsedSearchParams = {};
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   for (const [key, value] of Object.entries(searchParams)) {
     result[key] = toSearchParamString(value);
   }
@@ -111,8 +116,10 @@ export function parseSearchParams(
 export function createSearchParams(
   params: Record<string, string | number | boolean | undefined>
 ): URLSearchParams {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const searchParams = new URLSearchParams();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined) {
       searchParams.append(key, String(value));

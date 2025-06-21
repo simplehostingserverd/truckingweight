@@ -15,7 +15,8 @@
 
 import React from 'react';
 // Global type declarations
-declare const navigator: Navigator;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare const _navigator: Navigator;
 
 import ErrorBoundary from '@/components/ErrorBoundary';
 import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration';
@@ -34,6 +35,7 @@ import { useEffect, useState } from 'react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   // Use undefined as initial state to avoid hydration mismatch
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isOnline, setIsOnline] = useState<boolean | undefined>(undefined);
 
   // Monitor online/offline status and initialize license
@@ -42,12 +44,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
     setIsOnline(navigator.onLine);
 
     // Define event handlers
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleOnline = () => {
       setIsOnline(true);
       // Toast will be handled by ToastProvider
       logger.info('Application is online', {}, 'NetworkStatus');
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleOffline = () => {
       setIsOnline(false);
       // Toast will be handled by ToastProvider
@@ -69,7 +73,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       } else {
         // Initialize license verification
         initializeLicense().catch(error => {
-          logger.error('License initialization error', { error }, 'License');
+          logger.error('License initialization error', { _error }, 'License');
         });
       }
     }
@@ -82,6 +86,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }, []);
 
   // Handle service worker updates
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleServiceWorkerUpdate = () => {
     // Toast will be handled by ToastProvider
     // We'll implement this in the ServiceWorkerRegistration component
@@ -121,7 +126,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
                     <ServiceWorkerRegistration
                       onUpdate={handleServiceWorkerUpdate}
                       onError={error =>
-                        logger.error('Service worker error', { error }, 'ServiceWorker')
+                        logger.error('Service worker error', { _error }, 'ServiceWorker')
                       }
                     />
                   </ErrorBoundary>

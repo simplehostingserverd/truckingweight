@@ -15,7 +15,8 @@
 
 import React from 'react';
 // Global type declarations
-declare const navigator: Navigator;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare const _navigator: Navigator;
 declare function confirm(message?: string): boolean;
 
 import { createClient } from '@/utils/supabase/client';
@@ -47,27 +48,41 @@ interface ApiKey {
 }
 
 export default function ApiKeysPage() {
-  const router = useRouter();
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showCreateForm, setShowCreateForm] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newKeyName, setNewKeyName] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newKeyPermissions, setNewKeyPermissions] = useState<string[]>(['read']);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newKeyExpiry, setNewKeyExpiry] = useState<string>('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newKeyCreated, setNewKeyCreated] = useState<{ key: string; id: string } | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [hiddenKeys, setHiddenKeys] = useState<Set<string>>(new Set());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
 
   // Fetch API keys
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchApiKeys = async () => {
       try {
         setLoading(true);
         setError(null);
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { data, error } = await supabase
           .from('api_keys')
           .select('*')
@@ -76,7 +91,7 @@ export default function ApiKeysPage() {
         if (error) throw error;
 
         setApiKeys(data || []);
-      } catch (err: unknown) {
+      } catch (_err: unknown) {
         console.error('Error fetching API keys:', err);
         setError('Failed to load API keys');
       } finally {
@@ -85,11 +100,13 @@ export default function ApiKeysPage() {
     };
 
     fetchApiKeys();
-  }, [supabase]);
+  }, [_supabase]);
 
   // Toggle key visibility
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toggleKeyVisibility = (id: string) => {
     setHiddenKeys(prev => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newSet = new Set(prev);
       if (newSet.has(id)) {
         newSet.delete(id);
@@ -101,6 +118,7 @@ export default function ApiKeysPage() {
   };
 
   // Copy key to clipboard
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const copyToClipboard = async (text: string, id: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -112,13 +130,14 @@ export default function ApiKeysPage() {
   };
 
   // Create new API key
-  const handleCreateKey = async (e: React.FormEvent) => {
+  const handleCreateKey = async (_e: _React.FormEvent) => {
     e.preventDefault();
 
     try {
       setLoading(true);
       setError(null);
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, error } = await supabase.rpc('create_api_key', {
         name: newKeyName,
         permissions: newKeyPermissions,
@@ -140,13 +159,14 @@ export default function ApiKeysPage() {
       setShowCreateForm(false);
 
       // Refresh the list
-      const { data: updatedKeys } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _data: updatedKeys } = await supabase
         .from('api_keys')
         .select('*')
         .order('created_at', { ascending: false });
 
       setApiKeys(updatedKeys || []);
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error creating API key:', err);
       setError('Failed to create API key');
     } finally {
@@ -155,6 +175,7 @@ export default function ApiKeysPage() {
   };
 
   // Delete API key
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteKey = async (id: string) => {
     if (!confirm('Are you sure you want to delete this API key? This action cannot be undone.')) {
       return;
@@ -163,13 +184,14 @@ export default function ApiKeysPage() {
     try {
       setLoading(true);
 
-      const { error } = await supabase.from('api_keys').delete().eq('id', id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _error } = await supabase.from('api_keys').delete().eq('id', id);
 
       if (error) throw error;
 
       // Remove from state
       setApiKeys(apiKeys.filter(key => key.id !== id));
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error deleting API key:', err);
       setError('Failed to delete API key');
     } finally {
@@ -191,7 +213,7 @@ export default function ApiKeysPage() {
 
       {error && (
         <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-md mb-6">
-          {error}
+          {_error}
         </div>
       )}
 

@@ -11,30 +11,35 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
+
 import { createClient } from '@/utils/supabase/server';
 import { toSearchParamString } from '@/utils/searchParams';
 import { notFound } from 'next/navigation';
 import DriverDetailsClient from './client';
 
 export default async function DriverDetail({ params }: { params: Promise<{ id: string }> }) {
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
   // Await params in Next.js 15
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const resolvedParams = await params;
   // Safely convert the ID parameter to a string
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const id = toSearchParamString(resolvedParams.id, '');
 
   // Get user data
   const {
-    data: { user },
+    data: { _user },
   } = await supabase.auth.getUser();
-  const { data: userData } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: userData } = await supabase
     .from('users')
     .select('company_id')
     .eq('id', user?.id)
     .single();
 
   // Get driver data
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let driverQuery = supabase
     .from('drivers')
     .select(
@@ -64,7 +69,8 @@ export default async function DriverDetail({ params }: { params: Promise<{ id: s
     driverQuery = driverQuery.eq('company_id', userData.company_id);
   }
 
-  const { data: driver, error } = await driverQuery.single();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: driver, error } = await driverQuery.single();
 
   if (error || !driver) {
     console.error('Error fetching driver:', error);

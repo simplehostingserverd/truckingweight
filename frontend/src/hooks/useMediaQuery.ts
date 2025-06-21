@@ -13,10 +13,10 @@
 
 'use client';
 
-import React from 'react';
 import { useEffect, useState } from 'react';
 
 // Predefined breakpoints based on Tailwind CSS defaults
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const breakpoints = {
   sm: '(min-width: 640px)',
   md: '(min-width: 768px)',
@@ -32,6 +32,7 @@ export const breakpoints = {
  */
 export function useMediaQuery(query: string): boolean {
   // Initialize with null to avoid hydration mismatch
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [matches, setMatches] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -39,9 +40,11 @@ export function useMediaQuery(query: string): boolean {
     setMatches(window.matchMedia(query).matches);
 
     // Create media query list
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const mediaQueryList = window.matchMedia(query);
 
     // Define callback for media query change
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleChange = (event: MediaQueryListEvent) => {
       setMatches(event.matches);
     };
@@ -68,7 +71,9 @@ export function useIsMobile(): boolean {
 }
 
 /**
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
  * Hook to check if the viewport is tablet size (768px - 1023px)
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
  * @returns Boolean indicating if the viewport is tablet size
  */
 export function useIsTablet(): boolean {

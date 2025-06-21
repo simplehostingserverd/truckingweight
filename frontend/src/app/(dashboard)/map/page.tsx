@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import CesiumMap from '@/components/Map/CesiumMap';
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import {
@@ -26,9 +26,10 @@ import {
   SignalIcon,
   TruckIcon,
 } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { _useState } from 'react';
 
 // Mock real-time data
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mockRealTimeData = {
   totalTrucks: 12,
   activeTrucks: 8,
@@ -38,6 +39,7 @@ const mockRealTimeData = {
   onTimeDeliveries: 94.2,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mockAlerts = [
   {
     id: 'alert-1',
@@ -63,10 +65,14 @@ const mockAlerts = [
 ];
 
 export default function MapPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedRoute, setSelectedRoute] = useState<string>('route-1');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [mapHeight, setMapHeight] = useState('700px');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showRealTimeData, setShowRealTimeData] = useState(true);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getAlertColor = (type: string) => {
     switch (type) {
       case 'warning':

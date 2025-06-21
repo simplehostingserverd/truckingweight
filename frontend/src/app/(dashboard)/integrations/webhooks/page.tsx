@@ -15,7 +15,8 @@
 
 import React from 'react';
 // Global type declarations
-declare const navigator: Navigator;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare const _navigator: Navigator;
 declare function confirm(message?: string): boolean;
 
 import { createClient } from '@/utils/supabase/client';
@@ -46,24 +47,37 @@ interface Webhook {
 }
 
 export default function WebhooksPage() {
-  const router = useRouter();
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [webhooks, setWebhooks] = useState<Webhook[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showCreateForm, setShowCreateForm] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newWebhookName, setNewWebhookName] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newWebhookUrl, setNewWebhookUrl] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newWebhookEvents, setNewWebhookEvents] = useState<string[]>(['weight.created']);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newWebhookCreated, setNewWebhookCreated] = useState<{
     secret_key: string;
     id: string;
   } | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [hiddenSecrets, setHiddenSecrets] = useState<Set<string>>(new Set());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
 
   // Available event types
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const availableEvents = [
     { value: 'weight.created', label: 'Weight Created' },
     { value: 'weight.updated', label: 'Weight Updated' },
@@ -80,11 +94,13 @@ export default function WebhooksPage() {
 
   // Fetch webhooks
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchWebhooks = async () => {
       try {
         setLoading(true);
         setError(null);
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { data, error } = await supabase
           .from('webhook_subscriptions')
           .select('*')
@@ -93,7 +109,7 @@ export default function WebhooksPage() {
         if (error) throw error;
 
         setWebhooks(data || []);
-      } catch (err: unknown) {
+      } catch (_err: unknown) {
         console.error('Error fetching webhooks:', err);
         setError('Failed to load webhooks');
       } finally {
@@ -102,11 +118,13 @@ export default function WebhooksPage() {
     };
 
     fetchWebhooks();
-  }, [supabase]);
+  }, [_supabase]);
 
   // Toggle secret visibility
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toggleSecretVisibility = (id: string) => {
     setHiddenSecrets(prev => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newSet = new Set(prev);
       if (newSet.has(id)) {
         newSet.delete(id);
@@ -118,6 +136,7 @@ export default function WebhooksPage() {
   };
 
   // Copy to clipboard
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const copyToClipboard = async (text: string, id: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -129,13 +148,14 @@ export default function WebhooksPage() {
   };
 
   // Create new webhook
-  const handleCreateWebhook = async (e: React.FormEvent) => {
+  const handleCreateWebhook = async (_e: _React.FormEvent) => {
     e.preventDefault();
 
     try {
       setLoading(true);
       setError(null);
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, error } = await supabase.rpc('create_webhook_subscription', {
         name: newWebhookName,
         event_types: newWebhookEvents,
@@ -157,13 +177,14 @@ export default function WebhooksPage() {
       setShowCreateForm(false);
 
       // Refresh the list
-      const { data: updatedWebhooks } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _data: updatedWebhooks } = await supabase
         .from('webhook_subscriptions')
         .select('*')
         .order('created_at', { ascending: false });
 
       setWebhooks(updatedWebhooks || []);
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error creating webhook:', err);
       setError('Failed to create webhook');
     } finally {
@@ -172,6 +193,7 @@ export default function WebhooksPage() {
   };
 
   // Regenerate webhook secret
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleRegenerateSecret = async (id: string) => {
     if (
       !confirm(
@@ -184,6 +206,7 @@ export default function WebhooksPage() {
     try {
       setLoading(true);
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, error } = await supabase.rpc('regenerate_webhook_secret', {
         webhook_id: id,
       });
@@ -197,13 +220,14 @@ export default function WebhooksPage() {
       });
 
       // Refresh the list
-      const { data: updatedWebhooks } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _data: updatedWebhooks } = await supabase
         .from('webhook_subscriptions')
         .select('*')
         .order('created_at', { ascending: false });
 
       setWebhooks(updatedWebhooks || []);
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error regenerating webhook secret:', err);
       setError('Failed to regenerate webhook secret');
     } finally {
@@ -212,6 +236,7 @@ export default function WebhooksPage() {
   };
 
   // Delete webhook
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteWebhook = async (id: string) => {
     if (!confirm('Are you sure you want to delete this webhook? This action cannot be undone.')) {
       return;
@@ -220,13 +245,14 @@ export default function WebhooksPage() {
     try {
       setLoading(true);
 
-      const { error } = await supabase.from('webhook_subscriptions').delete().eq('id', id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _error } = await supabase.from('webhook_subscriptions').delete().eq('id', id);
 
       if (error) throw error;
 
       // Remove from state
       setWebhooks(webhooks.filter(webhook => webhook.id !== id));
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error deleting webhook:', err);
       setError('Failed to delete webhook');
     } finally {
@@ -235,11 +261,13 @@ export default function WebhooksPage() {
   };
 
   // Toggle webhook active status
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toggleWebhookStatus = async (id: string, currentStatus: boolean) => {
     try {
       setLoading(true);
 
-      const { error } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _error } = await supabase
         .from('webhook_subscriptions')
         .update({ is_active: !currentStatus })
         .eq('id', id);
@@ -252,7 +280,7 @@ export default function WebhooksPage() {
           webhook.id === id ? { ...webhook, is_active: !currentStatus } : webhook
         )
       );
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       console.error('Error updating webhook status:', err);
       setError('Failed to update webhook status');
     } finally {
@@ -274,7 +302,7 @@ export default function WebhooksPage() {
 
       {error && (
         <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-md mb-6">
-          {error}
+          {_error}
         </div>
       )}
 

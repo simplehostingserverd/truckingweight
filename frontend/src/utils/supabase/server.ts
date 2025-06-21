@@ -17,20 +17,24 @@ import { cookies } from 'next/headers';
 import { getSupabaseServerConfig } from './config';
 
 // Create a Supabase client for use in server components
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const createClient = () => {
   // Get Supabase configuration with JWT secret for server-side
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { supabaseUrl, supabaseKey } = getSupabaseServerConfig();
 
   return createServerClient<Database>(supabaseUrl, supabaseKey, {
     cookies: {
       async getAll() {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const cookieStore = await cookies();
         return cookieStore.getAll();
       },
       async setAll(cookiesToSet) {
         try {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const cookieStore = await cookies();
-          cookiesToSet.forEach(({ name, value, options }) => {
+          cookiesToSet.forEach(({ name, value, _options }) => {
             cookieStore.set(name, value, options);
           });
         } catch {

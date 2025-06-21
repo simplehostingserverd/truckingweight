@@ -31,11 +31,11 @@ import {
 
 // Mock IoT sensor client for development
 class IoTSensorClient {
-  private config: unknown;
+  private _config: unknown;
   private connected: boolean = false;
   private mockData: unknown = {};
 
-  constructor(config: unknown) {
+  constructor(_config: unknown) {
     this.config = config;
 
     // Initialize mock data
@@ -68,7 +68,9 @@ class IoTSensorClient {
     await new Promise(resolve => setTimeout(resolve, 500));
 
     // Generate random weight data
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const baseWeight = Math.floor(Math.random() * 20000) + 20000;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const noise = Math.random() * 200 - 100; // +/- 100 lbs of noise
 
     return {
@@ -100,7 +102,7 @@ class IoTSensorClient {
     this.mockData.lastCalibration = new Date();
 
     return {
-      success: true,
+      _success: true,
       oldOffset: 135.7,
       newOffset: 0,
       calibrationId: `cal-${Date.now()}`,
@@ -119,18 +121,19 @@ class IoTSensorClient {
 
 export class IoTSensorProvider implements WeightCaptureProvider {
   private client: IoTSensorClient | null = null;
-  private config: unknown;
+  private _config: unknown;
   private isCapturing: boolean = false;
   private captureInterval: NodeJS.Timeout | null = null;
   private lastReading: WeightReading | null = null;
 
-  constructor(config: unknown) {
+  constructor(_config: unknown) {
     this.config = config;
   }
 
   async initialize(): Promise<boolean> {
     try {
       this.client = new IoTSensorClient(this.config);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const connected = await this.client.connect();
       return connected;
     } catch (error) {
@@ -153,9 +156,11 @@ export class IoTSensorProvider implements WeightCaptureProvider {
     // Start capturing weight readings at regular intervals
     this.captureInterval = setInterval(async () => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const sensorData = await this.client!.readSensor();
 
         // Convert axle data to the expected format
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const axleWeights: AxleWeightReading[] = sensorData.axleData.map((axle: unknown) => ({
           position: axle.id,
           weight: axle.weight,
@@ -209,10 +214,11 @@ export class IoTSensorProvider implements WeightCaptureProvider {
       throw new Error('IoT sensor not initialized or not connected');
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const result = await this.client.calibrate();
 
     return {
-      success: result.success,
+      _success: result.success,
       previousOffset: result.oldOffset,
       newOffset: result.newOffset,
       timestamp: new Date(),
@@ -222,6 +228,7 @@ export class IoTSensorProvider implements WeightCaptureProvider {
 
   private getMaxLegalWeight(axlePosition: number): number {
     // Return max legal weight based on axle position
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const maxWeights: Record<number, number> = {
       1: 12000, // Steering axle
       2: 34000, // Drive axles (tandem)

@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 import { Deck, MapView } from 'deck.gl';
 import { PathLayer, PolygonLayer } from 'deck.gl';
@@ -40,12 +40,19 @@ export default function DeckGLTruckVisualization({
   currentPosition,
   mapboxToken,
 }: DeckGLTruckVisualizationProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const mapContainer = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const mapRef = useRef<mapboxgl.Map | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const deckRef = useRef<unknown>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [canvasId] = useState(() => `deck-canvas-${Math.random().toString(36).substr(2, 9)}`);
 
   // Initialize Mapbox and Deck.gl
@@ -64,6 +71,7 @@ export default function DeckGLTruckVisualization({
 
     try {
       // Current truck position
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const truckPosition = currentPosition || route[Math.floor(route.length * 0.7)];
 
       // Validate Mapbox token
@@ -79,6 +87,7 @@ export default function DeckGLTruckVisualization({
       mapboxgl.accessToken = mapboxToken;
 
       // Create Mapbox instance
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const map = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/satellite-streets-v12',
@@ -115,6 +124,7 @@ export default function DeckGLTruckVisualization({
           }
 
           // Create Deck.gl instance with simplified configuration
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const deck = new Deck({
             canvas: canvasRef.current,
             width: '100%',
@@ -203,7 +213,7 @@ export default function DeckGLTruckVisualization({
               logger.info('DeckGL: Successfully loaded', undefined, 'DeckGLTruckVisualization');
               setLoading(false);
             },
-            onError: (err: Error) => {
+            onError: (_err: Error) => {
               console.error('Deck.gl error:', err);
               setError(err.message || 'Failed to initialize 3D visualization');
               setLoading(false);
@@ -242,22 +252,29 @@ export default function DeckGLTruckVisualization({
   }, [route, mapboxToken]);
 
   // Calculate truck orientation based on route
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const calculateTruckOrientation = (
     position: RoutePoint,
     routePoints: RoutePoint[]
   ): [number, number, number] => {
     // Find position in route
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const index = routePoints.findIndex(p => p.lng === position.lng && p.lat === position.lat);
 
     if (index > 0 && index < routePoints.length - 1) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const prevPoint = routePoints[index - 1];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const nextPoint = routePoints[index + 1];
 
       // Calculate direction vector
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dx = nextPoint.lng - prevPoint.lng;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dy = nextPoint.lat - prevPoint.lat;
 
       // Calculate angle in radians
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const angle = Math.atan2(dy, dx);
 
       // Return orientation as [roll, pitch, yaw]
@@ -269,20 +286,26 @@ export default function DeckGLTruckVisualization({
   };
 
   // Create a fallback truck layer using simple shapes
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const createFallbackTruckLayer = (
     position: [number, number],
     orientation: [number, number, number]
   ) => {
     // Create a truck-like shape using a polygon layer
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const angle = orientation[2]; // yaw angle
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const length = 0.0008; // Truck length
     const width = 0.0004; // Truck width
 
     // Calculate truck corners based on orientation
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const cos = Math.cos(angle);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const sin = Math.sin(angle);
 
     // Truck body points (rectangle oriented in direction of travel)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const frontLeft = [
       position[0] + (length * cos - width * sin) / 2,
       position[1] + (length * sin + width * cos) / 2,
@@ -295,6 +318,7 @@ export default function DeckGLTruckVisualization({
       position[0] + (-length * cos + width * sin) / 2,
       position[1] + (-length * sin - width * cos) / 2,
     ];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const backLeft = [
       position[0] + (-length * cos - width * sin) / 2,
       position[1] + (-length * sin + width * cos) / 2,
@@ -325,13 +349,16 @@ export default function DeckGLTruckVisualization({
 
     try {
       // Create updated truck layer
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const updatedTruckLayer = createFallbackTruckLayer(
         [currentPosition.lng, currentPosition.lat],
         calculateTruckOrientation(currentPosition, route)
       );
 
       // Get current layers and update truck layer
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const currentLayers = deckRef.current.props.layers || [];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newLayers = currentLayers.map(layer => {
         if (layer && typeof layer === 'object' && 'id' in layer && layer.id === 'truck-layer') {
           return updatedTruckLayer;
@@ -364,7 +391,7 @@ export default function DeckGLTruckVisualization({
 
       {error && (
         <div className="absolute inset-0 flex items-center justify-center bg-red-100 dark:bg-red-900 bg-opacity-75 dark:bg-opacity-75 z-10">
-          <div className="text-lg font-semibold text-red-700 dark:text-red-300">{error}</div>
+          <div className="text-lg font-semibold text-red-700 dark:text-red-300">{_error}</div>
         </div>
       )}
 

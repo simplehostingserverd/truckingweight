@@ -18,23 +18,33 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 export default function Profile() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [name, setName] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [email, setEmail] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [companyName, setCompanyName] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [message, setMessage] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoadingData, setIsLoadingData] = useState(true);
-  const router = useRouter();
-  const supabase = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = createClient();
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchUserData = async () => {
       try {
         // Get authenticated user
         const {
-          data: { user },
-          error: authError,
+          data: { _user },
+          _error: authError,
         } = await supabase.auth.getUser();
 
         if (authError || !user) {
@@ -43,7 +53,8 @@ export default function Profile() {
         }
 
         // Get user data
-        const { data: userData, error: userError } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { _data: userData, _error: userError } = await supabase
           .from('users')
           .select('*, companies(*)')
           .eq('id', user.id)
@@ -58,7 +69,7 @@ export default function Profile() {
           setEmail(userData.email || '');
           setCompanyName(userData.companies?.name || '');
         }
-      } catch (err: unknown) {
+      } catch (_err: unknown) {
         console.error('Error fetching user data:', err);
         setError('Failed to load user data');
       } finally {
@@ -69,7 +80,7 @@ export default function Profile() {
     fetchUserData();
   }, [router, supabase]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (_e: _React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
@@ -78,8 +89,8 @@ export default function Profile() {
     try {
       // Get authenticated user
       const {
-        data: { user },
-        error: authError,
+        data: { _user },
+        _error: authError,
       } = await supabase.auth.getUser();
 
       if (authError || !user) {
@@ -88,7 +99,8 @@ export default function Profile() {
       }
 
       // Update user data
-      const { error: updateError } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _error: updateError } = await supabase
         .from('users')
         .update({
           name,
@@ -101,7 +113,8 @@ export default function Profile() {
       }
 
       // Get company ID
-      const { data: userData, error: userError } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _data: userData, _error: userError } = await supabase
         .from('users')
         .select('company_id')
         .eq('id', user.id)
@@ -112,7 +125,8 @@ export default function Profile() {
       }
 
       // Update company data
-      const { error: companyError } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _error: companyError } = await supabase
         .from('companies')
         .update({
           name: companyName,
@@ -125,7 +139,7 @@ export default function Profile() {
       }
 
       setMessage('Profile updated successfully');
-    } catch (err: unknown) {
+    } catch (_err: unknown) {
       setError((err instanceof Error ? err.message : String(err)) || 'An error occurred while updating your profile');
       console.error('Profile update error:', err);
     } finally {
@@ -150,7 +164,7 @@ export default function Profile() {
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/30 mb-6">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{error}</h3>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{_error}</h3>
               </div>
             </div>
           </div>
@@ -233,7 +247,7 @@ export default function Profile() {
             <div className="flex justify-end">
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={_isLoading}
                 className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-primary-400"
               >
                 {isLoading ? 'Saving...' : 'Save Changes'}

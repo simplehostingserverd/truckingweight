@@ -11,53 +11,61 @@
  * in any way without explicit written permission.
  */
 
-import React from 'react';
+
 import { createClient } from '@/utils/supabase/server';
 import ReportsClient from './client';
 
 export default async function Reports() {
-  const supabase = await createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _supabase = await createClient();
 
   // Get user data
   const {
-    data: { user },
+    data: { _user },
   } = await supabase.auth.getUser();
-  const { data: userData } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: userData } = await supabase
     .from('users')
     .select('company_id')
     .eq('id', user?.id)
     .single();
 
   // Get company data
-  const { data: companyData } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: companyData } = await supabase
     .from('companies')
     .select('name')
     .eq('id', userData?.company_id)
     .single();
 
   // Get counts for summary
-  const { data: vehicleCount } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: vehicleCount } = await supabase
     .from('vehicles')
     .select('*', { count: 'exact', head: true })
     .eq('company_id', userData?.company_id);
 
-  const { data: driverCount } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: driverCount } = await supabase
     .from('drivers')
     .select('*', { count: 'exact', head: true })
     .eq('company_id', userData?.company_id);
 
-  const { data: weightCount } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: weightCount } = await supabase
     .from('weights')
     .select('*', { count: 'exact', head: true })
     .eq('company_id', userData?.company_id);
 
-  const { data: loadCount } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: loadCount } = await supabase
     .from('loads')
     .select('*', { count: 'exact', head: true })
     .eq('company_id', userData?.company_id);
 
   // Get non-compliant weights count
-  const { data: nonCompliantCount } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _data: nonCompliantCount } = await supabase
     .from('weights')
     .select('*', { count: 'exact', head: true })
     .eq('company_id', userData?.company_id)

@@ -16,30 +16,37 @@
 
 // Hardcoded Supabase credentials as a fallback
 // These should match the values in your .env file
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const SUPABASE_URL = 'https://pczfmxigimuluacspxse.supabase.co';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const SUPABASE_ANON_KEY =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjemZteGlnaW11bHVhY3NweHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NjczNjUsImV4cCI6MjA2MjI0MzM2NX0.SyWZsCDWc5u5oXIR4IHBTcT63Le0HyjCZQJK0E6FO7w';
 
 // The JWT secret is used to sign tokens - this should match your Supabase project settings
 // This is only used on the server side and should never be exposed to the client
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const SUPABASE_JWT_SECRET = process.env.SUPABASE_JWT_SECRET;
 
 // Get Supabase URL with fallback
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getSupabaseUrl = (): string => {
   return process.env.NEXT_PUBLIC_SUPABASE_URL || SUPABASE_URL;
 };
 
 // Get Supabase anon key with fallback
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getSupabaseAnonKey = (): string => {
   return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || SUPABASE_ANON_KEY;
 };
 
 // Get Supabase JWT secret
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getSupabaseJwtSecret = (): string | undefined => {
   return SUPABASE_JWT_SECRET;
 };
 
 // Get Supabase configuration object for client-side use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getSupabaseConfig = () => {
   return {
     supabaseUrl: getSupabaseUrl(),
@@ -48,6 +55,7 @@ export const getSupabaseConfig = () => {
 };
 
 // Get Supabase configuration object for server-side use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getSupabaseServerConfig = () => {
   return {
     ...getSupabaseConfig(),

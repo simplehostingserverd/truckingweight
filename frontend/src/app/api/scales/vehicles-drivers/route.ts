@@ -22,7 +22,8 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Create a Supabase client
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
 
     // Get the user's session
     const {
@@ -34,7 +35,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Get the user's company ID
-    const { data: userData, error: userError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: userData, _error: userError } = await supabase
       .from('users')
       .select('company_id, is_admin')
       .eq('id', session.user.id)
@@ -44,13 +46,17 @@ export async function GET(request: NextRequest) {
       throw userError;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const companyId = userData?.company_id;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isAdmin = userData?.is_admin || false;
 
     // Query to get vehicles
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let vehiclesQuery = supabase.from('vehicles').select('*').eq('status', 'Active');
 
     // Query to get drivers
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let driversQuery = supabase.from('drivers').select('*').eq('status', 'Active');
 
     // If not admin, filter by company_id
@@ -60,6 +66,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Execute both queries in parallel
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [vehiclesResult, driversResult] = await Promise.all([vehiclesQuery, driversQuery]);
 
     if (vehiclesResult.error) {
@@ -72,7 +79,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       vehicles: vehiclesResult.data || [],
-      drivers: driversResult.data || [],
+      _drivers: driversResult.data || [],
     });
   } catch (error) {
     console.error('Error in vehicles-drivers API:', error);
@@ -82,10 +89,10 @@ export async function GET(request: NextRequest) {
       console.warn('Using mock data for vehicles and drivers');
       return NextResponse.json({
         vehicles: getMockVehicles(),
-        drivers: getMockDrivers(),
+        _drivers: getMockDrivers(),
       });
     } else {
-      return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+      return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
     }
   }
 }

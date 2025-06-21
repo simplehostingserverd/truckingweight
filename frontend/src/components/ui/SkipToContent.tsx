@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 
 /**
  * SkipToContent component

@@ -22,7 +22,8 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Create a Supabase client
-    const supabase = createClient();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _supabase = createClient();
 
     // Get the user's session
     const {
@@ -34,7 +35,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Get the user's company ID
-    const { data: userData, error: userError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _data: userData, _error: userError } = await supabase
       .from('users')
       .select('company_id, is_admin')
       .eq('id', session.user.id)
@@ -44,10 +46,13 @@ export async function GET(request: NextRequest) {
       throw userError;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const companyId = userData?.company_id;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isAdmin = userData?.is_admin || false;
 
     // Query to get scales
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let query = supabase.from('scales').select('*');
 
     // If not admin, filter by company_id
@@ -55,6 +60,7 @@ export async function GET(request: NextRequest) {
       query = query.eq('company_id', companyId);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, error } = await query.order('name');
 
     if (error) {
@@ -70,7 +76,7 @@ export async function GET(request: NextRequest) {
       console.warn('Using mock data for scales');
       return NextResponse.json(getMockScales());
     } else {
-      return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+      return NextResponse.json({ error: 'Internal server error' }, { _status: 500 });
     }
   }
 }

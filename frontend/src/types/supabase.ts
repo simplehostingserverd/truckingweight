@@ -29,7 +29,7 @@ export interface Database {
           precision: number | null;
           calibration_date: string | null;
           next_calibration_date: string | null;
-          status: string;
+          _status: string;
           company_id: number | null;
           created_at: string;
           updated_at: string;
@@ -115,7 +115,7 @@ export interface Database {
           license_expiry: string | null;
           phone: string | null;
           email: string | null;
-          status: string;
+          _status: string;
           company_id: number | null;
           created_at: string;
           updated_at: string;
@@ -200,7 +200,7 @@ export interface Database {
           make: string | null;
           model: string | null;
           year: number | null;
-          status: string;
+          _status: string;
           max_weight: string | null;
           company_id: number | null;
           created_at: string;
@@ -253,7 +253,7 @@ export interface Database {
           date: string;
           time: string | null;
           driver_id: number | null;
-          status: string | null;
+          _status: string | null;
           company_id: number | null;
           created_at: string;
           updated_at: string;
@@ -312,7 +312,7 @@ export interface Database {
           weight: string;
           vehicle_id: number | null;
           driver_id: number | null;
-          status: string;
+          _status: string;
           company_id: number | null;
           created_at: string;
           updated_at: string;

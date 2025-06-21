@@ -93,6 +93,7 @@ describe('searchParams utilities', () => {
         c: undefined,
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const result = parseSearchParams(params);
 
       expect(result).toEqual({
@@ -112,6 +113,7 @@ describe('searchParams utilities', () => {
         empty: undefined,
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const searchParams = createSearchParams(params);
 
       expect(searchParams.toString()).toBe('query=test&page=2&active=true');

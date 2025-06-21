@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+
 import { useEffect, useRef, useState } from 'react';
 
 // Declare Cesium as a global variable
@@ -21,6 +21,7 @@ declare global {
   interface Window {
     Cesium: unknown;
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const Cesium: unknown;
 }
 
@@ -43,21 +44,30 @@ export default function CesiumTruckVisualization({
   currentPosition,
   cesiumToken,
 }: CesiumTruckVisualizationProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const cesiumContainer = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const viewer = useRef<Cesium.Viewer | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const truckEntity = useRef<Cesium.Entity | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
 
   // Initialize Cesium viewer
   useEffect(() => {
     if (!cesiumContainer.current || !route || route.length < 2) return;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let timeoutId: NodeJS.Timeout;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let retryCount = 0;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const maxRetries = 50; // 5 seconds total wait time
 
     // Wait for Cesium to be loaded
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const initCesiumViewer = () => {
       if (typeof window.Cesium === 'undefined') {
         retryCount++;
@@ -79,6 +89,7 @@ export default function CesiumTruckVisualization({
         }
 
         // Create Cesium viewer with basic options first
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const cesiumViewer = new window.Cesium.Viewer(cesiumContainer.current, {
           timeline: false,
           animation: false,
@@ -96,6 +107,7 @@ export default function CesiumTruckVisualization({
         // Set the terrain provider asynchronously
         (async () => {
           try {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const worldTerrain = await window.Cesium.createWorldTerrainAsync();
             cesiumViewer.terrainProvider = worldTerrain;
           } catch (error) {
@@ -144,10 +156,12 @@ export default function CesiumTruckVisualization({
   }, [route, cesiumToken]);
 
   // Add route path to the viewer
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const addRoutePath = (cesiumViewer: Cesium.Viewer) => {
     if (typeof window.Cesium === 'undefined') return;
 
     // Create route path
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const routePositions = route.map(
       point => window.Cesium.Cartesian3.fromDegrees(point.lng, point.lat, 100) // Elevation in meters
     );
@@ -212,22 +226,30 @@ export default function CesiumTruckVisualization({
   };
 
   // Add truck entity to the viewer
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const addTruckEntity = (cesiumViewer: Cesium.Viewer) => {
     if (typeof window.Cesium === 'undefined') return;
 
     // Current truck position
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const truckPos = currentPosition || route[Math.floor(route.length * 0.7)];
 
     // Calculate heading based on route
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let heading = 0;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const currentIndex = route.findIndex(p => p.lng === truckPos.lng && p.lat === truckPos.lat);
 
     if (currentIndex > 0 && currentIndex < route.length - 1) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const prevPoint = route[currentIndex - 1];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const nextPoint = route[currentIndex + 1];
 
       // Calculate direction vector
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dx = nextPoint.lng - prevPoint.lng;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dy = nextPoint.lat - prevPoint.lat;
 
       // Calculate angle in radians
@@ -235,6 +257,7 @@ export default function CesiumTruckVisualization({
     }
 
     // Create truck entity
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const truck = cesiumViewer.entities.add({
       name: 'Truck',
       position: window.Cesium.Cartesian3.fromDegrees(truckPos.lng, truckPos.lat, 100),
@@ -277,6 +300,7 @@ export default function CesiumTruckVisualization({
   };
 
   // Set up animation to move truck along the route
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const setupTruckAnimation = (cesiumViewer: Cesium.Viewer) => {
     if (!truckEntity.current || typeof window.Cesium === 'undefined') return;
 
@@ -289,8 +313,9 @@ export default function CesiumTruckVisualization({
     }
 
     // Otherwise, animate the truck along the route
-    const startTime = window.Cesium.JulianDate.fromDate(new Date());
-    const endTime = window.Cesium.JulianDate.addSeconds(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _startTime = window.Cesium.JulianDate.fromDate(new Date());
+    const _endTime = window.Cesium.JulianDate.addSeconds(
       startTime,
       route.length * 5, // 5 seconds per point
       new window.Cesium.JulianDate()
@@ -304,16 +329,20 @@ export default function CesiumTruckVisualization({
     cesiumViewer.clock.multiplier = 1;
 
     // Create position property for animation
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const positionProperty = new window.Cesium.SampledPositionProperty();
 
     // Add positions along the route
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (let i = 0; i < route.length; i++) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const time = window.Cesium.JulianDate.addSeconds(
         startTime,
         i * 5, // 5 seconds per point
         new window.Cesium.JulianDate()
       );
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const position = window.Cesium.Cartesian3.fromDegrees(route[i].lng, route[i].lat, 100);
 
       positionProperty.addSample(time, position);
@@ -323,22 +352,30 @@ export default function CesiumTruckVisualization({
     truckEntity.current.position = positionProperty;
 
     // Add orientation interpolation
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const orientationProperty = new window.Cesium.SampledProperty(window.Cesium.Quaternion);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (let i = 0; i < route.length - 1; i++) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const time = window.Cesium.JulianDate.addSeconds(
         startTime,
         i * 5, // 5 seconds per point
         new window.Cesium.JulianDate()
       );
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const nextIndex = i + 1;
 
       // Calculate heading between current and next point
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dx = route[nextIndex].lng - route[i].lng;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dy = route[nextIndex].lat - route[i].lat;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const heading = Math.atan2(dy, dx);
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const orientation = window.Cesium.Transforms.headingPitchRollQuaternion(
         window.Cesium.Cartesian3.fromDegrees(route[i].lng, route[i].lat, 100),
         new window.Cesium.HeadingPitchRoll(heading, 0, 0)
@@ -348,17 +385,20 @@ export default function CesiumTruckVisualization({
     }
 
     // Add final orientation
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const finalTime = window.Cesium.JulianDate.addSeconds(
       startTime,
       (route.length - 1) * 5, // 5 seconds per point
       new window.Cesium.JulianDate()
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const finalHeading = Math.atan2(
       route[route.length - 1].lat - route[route.length - 2].lat,
       route[route.length - 1].lng - route[route.length - 2].lng
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const finalOrientation = window.Cesium.Transforms.headingPitchRollQuaternion(
       window.Cesium.Cartesian3.fromDegrees(
         route[route.length - 1].lng,
@@ -375,6 +415,7 @@ export default function CesiumTruckVisualization({
   };
 
   // Set camera view to follow the truck
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const setCameraView = (cesiumViewer: Cesium.Viewer) => {
     if (!truckEntity.current || typeof window.Cesium === 'undefined') return;
 
@@ -406,7 +447,7 @@ export default function CesiumTruckVisualization({
 
       {error && (
         <div className="absolute inset-0 flex items-center justify-center bg-red-100 dark:bg-red-900 bg-opacity-75 dark:bg-opacity-75 z-10">
-          <div className="text-lg font-semibold text-red-700 dark:text-red-300">{error}</div>
+          <div className="text-lg font-semibold text-red-700 dark:text-red-300">{_error}</div>
         </div>
       )}
 

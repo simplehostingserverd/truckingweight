@@ -30,6 +30,7 @@ function DataTable<T extends { id: string | number }>({
   onRowClick,
 }: DataTableProps<T>) {
   // Use SWR to fetch data
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, error, isLoading, mutate } = useSWRFetch<T[]>(url);
 
   // Handle loading state
