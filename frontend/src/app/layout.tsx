@@ -94,6 +94,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="CargoScalePro" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
+        {/* Note: theme-color is not supported by Firefox, but works in Chrome/Safari/Edge */}
         <meta name="theme-color" content="#0D2B4B" />
         <meta name="copyright" content="© 2025 Cargo Scale Pro. All Rights Reserved." />
         <meta name="author" content="Michael Anthony Trevino Jr." />

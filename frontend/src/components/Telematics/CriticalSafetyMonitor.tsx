@@ -28,6 +28,7 @@ import {
   PhoneIcon,
   TruckIcon,
 } from '@heroicons/react/24/outline';
+import styles from './CriticalSafetyMonitor.module.css';
 
 interface CriticalSafetyData {
   vehicleId: string;
@@ -262,14 +263,16 @@ export default function CriticalSafetyMonitor({
         <CardContent>
           <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
             <div
-              className={`h-4 rounded-full transition-all duration-500 ${
+              className={`h-4 rounded-full transition-all duration-500 ${styles.safetyScoreBar} ${
                 data.overallSafetyScore >= 80
                   ? 'bg-green-500'
                   : data.overallSafetyScore >= 60
                     ? 'bg-yellow-500'
                     : 'bg-red-500'
               }`}
-              style={{ width: `${data.overallSafetyScore}%` }}
+              style={
+                { '--safety-score-width': `${data.overallSafetyScore}%` } as React.CSSProperties
+              }
             ></div>
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400">
