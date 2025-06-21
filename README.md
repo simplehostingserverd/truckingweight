@@ -281,9 +281,9 @@ Built with modern, enterprise-grade technologies for maximum performance, scalab
 
 **Ready to revolutionize your fleet operations?**
 
-📞 **Schedule a Demo**: Contact us at [sales@truckingsemis.com](mailto:sales@truckingsemis.com)
+📞 **Schedule a Demo**: Contact us at [sales@cargoscalepro.com](mailto:sales@cargoscalepro.com)
 🎯 **Free Trial**: 30-day free trial with full feature access
-📊 **ROI Calculator**: See your potential savings at [cosmoexploitgroup.com/roi](https://cosmoexploitgroup.com/roi)
+📊 **ROI Calculator**: See your potential savings at [cargoscalepro.com/roi](https://cargoscalepro.com/roi)
 🤝 **Implementation**: White-glove onboarding with dedicated success manager
 
 **Pricing Plans:**
