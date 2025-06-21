@@ -40,10 +40,13 @@ async function verifyAdminUser(request: NextRequest) {
     }
 
     const token = authHeader.substring(7);
-    
+
     // Verify the token with Supabase
-    const { data: { user }, error } = await supabase.auth.getUser(token);
-    
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser(token);
+
     if (error || !user) {
       return null;
     }
@@ -67,10 +70,7 @@ async function verifyAdminUser(request: NextRequest) {
 }
 
 // PUT /api/admin/users/[id] - Update user
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Verify admin user
     const adminUser = await verifyAdminUser(request);
@@ -78,7 +78,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const { name, company_id, is_admin } = body;
 
@@ -121,7 +121,7 @@ export async function PUT(
 // DELETE /api/admin/users/[id] - Delete user
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify admin user
@@ -130,7 +130,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     // Check if user exists
     const { data: existingUser, error: checkError } = await supabase
@@ -150,17 +150,14 @@ export async function DELETE(
 
     // Delete user from Supabase Auth
     const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(id);
-    
+
     if (authError) {
       console.error('Error deleting auth user:', authError);
       return NextResponse.json({ error: 'Failed to delete user from auth' }, { status: 500 });
     }
 
     // Delete user record from users table
-    const { error: deleteError } = await supabase
-      .from('users')
-      .delete()
-      .eq('id', id);
+    const { error: deleteError } = await supabase.from('users').delete().eq('id', id);
 
     if (deleteError) {
       console.error('Error deleting user record:', deleteError);

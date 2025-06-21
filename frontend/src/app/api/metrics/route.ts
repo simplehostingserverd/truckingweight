@@ -127,23 +127,5 @@ export async function GET(_: NextRequest) {
   }
 }
 
-// Function to record page view
-export function recordPageView(page: string) {
-  if (pageViewsCounter) {
-    pageViewsCounter.inc({ page });
-  }
-}
-
-// Function to record API request
-export function recordApiRequest(method: string, endpoint: string, status: string) {
-  if (apiRequestsCounter) {
-    apiRequestsCounter.inc({ method, endpoint, status });
-  }
-}
-
-// Function to record API request duration
-export function recordApiRequestDuration(method: string, endpoint: string, duration: number) {
-  if (apiRequestDuration) {
-    apiRequestDuration.observe({ method, endpoint }, duration);
-  }
-}
+// Note: Utility functions for recording metrics have been moved to a separate module
+// to avoid conflicts with Next.js API route exports

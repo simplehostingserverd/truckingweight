@@ -49,10 +49,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const supabase = createClient();
-    const cameraId = params.id;
+    const resolvedParams = await params;
+    const cameraId = resolvedParams.id;
 
     // Get the current user
     const {
@@ -138,10 +139,14 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const supabase = createClient();
-    const cameraId = params.id;
+    const resolvedParams = await params;
+    const cameraId = resolvedParams.id;
 
     // Get the current user
     const {

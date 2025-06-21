@@ -14,9 +14,10 @@
 import { createClient } from '@/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const scaleId = params.id;
+    const resolvedParams = await params;
+    const scaleId = resolvedParams.id;
 
     if (!scaleId) {
       return NextResponse.json({ success: false, error: 'Scale ID is required' }, { status: 400 });

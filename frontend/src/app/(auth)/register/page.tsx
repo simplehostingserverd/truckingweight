@@ -279,7 +279,7 @@ export default function Register() {
       // Redirect to login page
       router.push('/login?registered=true');
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred during registration');
+      setError(err instanceof Error ? err.message : 'An error occurred during registration');
       console.error('Registration error:', err);
     } finally {
       setIsLoading(false);

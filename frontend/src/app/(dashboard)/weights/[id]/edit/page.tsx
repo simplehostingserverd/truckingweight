@@ -19,7 +19,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function EditWeight({ params }: { params: { id: string } }) {
+export default function EditWeight({ params }: { params: Promise<{ id: string }> }) {
   const [vehicleId, setVehicleId] = useState('');
   const [driverId, setDriverId] = useState('');
   const [weight, setWeight] = useState('');
@@ -31,12 +31,23 @@ export default function EditWeight({ params }: { params: { id: string } }) {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
+  const [id, setId] = useState<string>('');
   const router = useRouter();
   const supabase = createClient();
-  const { id } = params;
+
+  // Resolve params in useEffect
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      setId(resolvedParams.id);
+    };
+    resolveParams();
+  }, [params]);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!id) return; // Wait for id to be resolved
+
       try {
         // Get session
         const {

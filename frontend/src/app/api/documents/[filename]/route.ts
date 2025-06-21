@@ -15,9 +15,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import PDFDocument from 'pdfkit';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     filename: string;
-  };
+  }>;
 }
 
 /**
@@ -26,7 +26,7 @@ interface RouteParams {
  */
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
-    const { filename } = params;
+    const { filename } = await params;
 
     // Generate realistic PDF content based on filename
     const pdfContent = await generatePDFContent(filename);

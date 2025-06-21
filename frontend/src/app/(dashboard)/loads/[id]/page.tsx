@@ -34,20 +34,30 @@ const LoadStatusUpdater = dynamic(() => import('@/components/Loads/LoadStatusUpd
   ssr: false,
 });
 
-export default function LoadDetail({ params }: { params: { id: string } }) {
+export default function LoadDetail({ params }: { params: Promise<{ id: string }> }) {
   const [load, setLoad] = useState<unknown>(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [statusUpdated, setStatusUpdated] = useState(false);
+  const [id, setId] = useState<string>('');
   const router = useRouter();
   const supabase = createClient();
-  // Safely convert the ID parameter to a string
-  const id = toSearchParamString(params.id, '');
+
+  // Resolve params in useEffect
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      setId(toSearchParamString(resolvedParams.id, ''));
+    };
+    resolveParams();
+  }, [params]);
 
   useEffect(() => {
     const fetchLoad = async () => {
+      if (!id) return; // Wait for id to be resolved
+
       try {
         // Get session
         const {

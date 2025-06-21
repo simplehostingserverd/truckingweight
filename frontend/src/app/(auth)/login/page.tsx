@@ -17,6 +17,7 @@ import { useSupabaseAuth } from '@/providers/SupabaseAuthProvider';
 // import _HCaptcha from '@hcaptcha/react-hcaptcha'; // Unused
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 import styles from './login.module.css';
 
@@ -61,8 +62,8 @@ export default function Login() {
       setError(err instanceof Error ? err.message : 'Invalid email or password');
       console.error('Login error:', err);
 
-      // Reset captcha on error
-      captchaRef.current?.resetCaptcha();
+      // Reset captcha on error - TEMPORARILY DISABLED
+      // captchaRef.current?.resetCaptcha();
       setCaptchaToken(null);
     } finally {
       setIsLoading(false);

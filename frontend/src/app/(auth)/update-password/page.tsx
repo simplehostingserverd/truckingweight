@@ -74,7 +74,9 @@ export default function UpdatePassword() {
         router.push('/dashboard');
       }, 2000);
     } catch (err: unknown) {
-      setError(err.message || 'An error occurred while updating your password');
+      setError(
+        err instanceof Error ? err.message : 'An error occurred while updating your password'
+      );
       console.error('Update password error:', err);
     } finally {
       setIsLoading(false);

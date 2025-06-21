@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 
-export default function EditLoad({ params }: { params: { id: string } }) {
+export default function EditLoad({ params }: { params: Promise<{ id: string }> }) {
   const [description, setDescription] = useState('');
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
@@ -32,12 +32,23 @@ export default function EditLoad({ params }: { params: { id: string } }) {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
+  const [id, setId] = useState<string>('');
   const router = useRouter();
   const supabase = createClient();
-  const { id } = params;
+
+  // Resolve params in useEffect
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      setId(resolvedParams.id);
+    };
+    resolveParams();
+  }, [params]);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!id) return; // Wait for id to be resolved
+
       try {
         // Get session
         const {

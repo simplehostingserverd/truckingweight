@@ -20,7 +20,10 @@ import { NextRequest, NextResponse } from 'next/server';
  * This provides real data from the database with fallback to mock data
  */
 
-export async function GET(request: NextRequest, { params }: { params: { route: string[] } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ route: string[] }> }
+) {
   // In Next.js 15.3.2, we need to handle params differently to avoid the
   // "params should be awaited" error
   const paramsValue = await params;

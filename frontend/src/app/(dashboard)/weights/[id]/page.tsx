@@ -21,18 +21,29 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function WeightDetail({ params }: { params: { id: string } }) {
+export default function WeightDetail({ params }: { params: Promise<{ id: string }> }) {
   const [weight, setWeight] = useState<unknown>(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [id, setId] = useState<string>('');
   const router = useRouter();
   const supabase = createClient();
-  const { id } = params;
+
+  // Resolve params in useEffect
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      setId(resolvedParams.id);
+    };
+    resolveParams();
+  }, [params]);
 
   useEffect(() => {
     const fetchWeight = async () => {
+      if (!id) return; // Wait for id to be resolved
+
       try {
         // Get session
         const {

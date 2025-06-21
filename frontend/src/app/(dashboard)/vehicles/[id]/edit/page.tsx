@@ -28,7 +28,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function EditVehicle({ params }: { params: { id: string } }) {
+export default function EditVehicle({ params }: { params: Promise<{ id: string }> }) {
   const [name, setName] = useState('');
   const [type, setType] = useState('');
   const [licensePlate, setLicensePlate] = useState('');
@@ -42,14 +42,25 @@ export default function EditVehicle({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [id, setId] = useState<string>('');
 
   const router = useRouter();
   const supabase = createClient();
-  const { id } = params;
+
+  // Resolve params in useEffect
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      setId(resolvedParams.id);
+    };
+    resolveParams();
+  }, [params]);
 
   // Load vehicle data
   useEffect(() => {
     const fetchVehicle = async () => {
+      if (!id) return; // Wait for id to be resolved
+
       try {
         const { data: vehicle, error } = await supabase
           .from('vehicles')
