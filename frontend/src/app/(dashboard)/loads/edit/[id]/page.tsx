@@ -27,8 +27,8 @@ export default function EditLoad({ params }: { params: Promise<{ id: string }> }
   const [vehicleId, setVehicleId] = useState('');
   const [driverId, setDriverId] = useState('');
   const [status, setStatus] = useState('');
-  const [vehicles, setVehicles] = useState<any[]>([]);
-  const [drivers, setDrivers] = useState<any[]>([]);
+  const [vehicles, setVehicles] = useState<unknown[]>([]);
+  const [drivers, setDrivers] = useState<unknown[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);

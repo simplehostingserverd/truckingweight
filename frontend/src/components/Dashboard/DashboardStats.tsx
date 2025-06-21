@@ -31,12 +31,12 @@ interface DashboardStatsProps {
 
 function DashboardStats({ initialUserName, companyId }: DashboardStatsProps) {
   const supabase = createClient();
-  const [stats, setStats] = useState<any[]>([]);
+  const [stats, setStats] = useState<unknown[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [userName, setUserName] = useState(initialUserName);
   const [expiringLicenses, setExpiringLicenses] = useState<number>(0);
-  const [recentWeights, setRecentWeights] = useState<any[]>([]);
+  const [recentWeights, setRecentWeights] = useState<unknown[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

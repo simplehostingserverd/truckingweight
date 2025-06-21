@@ -15,9 +15,9 @@
 // It should never be imported on the client side
 
 // Define types for metrics to help with TypeScript
-export type MetricsRegistry = any;
-export type MetricsCounter = any;
-export type MetricsHistogram = any;
+export type MetricsRegistry = unknown;
+export type MetricsCounter = unknown;
+export type MetricsHistogram = unknown;
 
 // Variables to hold metrics objects
 let register: MetricsRegistry | null = null;

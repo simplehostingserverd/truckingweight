@@ -49,8 +49,8 @@ interface TollTransaction {
   company_toll_accounts: {
     toll_providers: TollProvider;
   };
-  vehicles?: any;
-  drivers?: any;
+  vehicles?: unknown;
+  drivers?: unknown;
 }
 
 interface TollSummary {
@@ -101,8 +101,8 @@ interface RouteEstimate {
   estimated_distance_miles?: number;
   estimated_duration_minutes?: number;
   vehicle_class?: string;
-  toll_breakdown?: any;
-  route_alternatives?: any;
+  toll_breakdown?: unknown;
+  route_alternatives?: unknown;
   toll_provider_id?: number;
   load_id?: number;
   vehicle_id?: number;
@@ -117,23 +117,26 @@ export const useToll = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const apiCall = useCallback(async (endpoint: string, options: RequestInit = {}) => {
-    const response = await fetch(`/api/toll${endpoint}`, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-        ...options.headers,
-      },
-    });
+  const apiCall = useCallback(
+    async (endpoint: string, options: RequestInit = {}) => {
+      const response = await fetch(`/api/toll${endpoint}`, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          ...options.headers,
+        },
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
-    }
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+      }
 
-    return response.json();
-  }, [token]);
+      return response.json();
+    },
+    [token]
+  );
 
   // Provider management
   const fetchProviders = useCallback(async () => {
@@ -150,82 +153,100 @@ export const useToll = () => {
     }
   }, [apiCall]);
 
-  const testConnection = useCallback(async (providerId: number, credentials: unknown) => {
-    try {
-      return await apiCall(`/providers/${providerId}/test`, {
-        method: 'POST',
-        body: JSON.stringify({ credentials }),
-      });
-    } catch (error) {
-      console.error('Error testing connection:', error);
-      throw error;
-    }
-  }, [apiCall]);
+  const testConnection = useCallback(
+    async (providerId: number, credentials: unknown) => {
+      try {
+        return await apiCall(`/providers/${providerId}/test`, {
+          method: 'POST',
+          body: JSON.stringify({ credentials }),
+        });
+      } catch (error) {
+        console.error('Error testing connection:', error);
+        throw error;
+      }
+    },
+    [apiCall]
+  );
 
   // Account management
-  const fetchAccounts = useCallback(async (filters?: any) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const params = new URLSearchParams(filters || {});
-      const data = await apiCall(`/accounts?${params}`);
-      setAccounts(data.accounts || []);
-    } catch (error) {
-      setError(error.message);
-      console.error('Error fetching toll accounts:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [apiCall]);
+  const fetchAccounts = useCallback(
+    async (filters?: Record<string, unknown>) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams(filters || {});
+        const data = await apiCall(`/accounts?${params}`);
+        setAccounts(data.accounts || []);
+      } catch (error) {
+        setError(error.message);
+        console.error('Error fetching toll accounts:', error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [apiCall]
+  );
 
-  const createAccount = useCallback(async (accountData: Partial<TollAccount>) => {
-    try {
-      const data = await apiCall('/accounts', {
-        method: 'POST',
-        body: JSON.stringify(accountData),
-      });
-      return data.account;
-    } catch (error) {
-      console.error('Error creating toll account:', error);
-      throw error;
-    }
-  }, [apiCall]);
+  const createAccount = useCallback(
+    async (accountData: Partial<TollAccount>) => {
+      try {
+        const data = await apiCall('/accounts', {
+          method: 'POST',
+          body: JSON.stringify(accountData),
+        });
+        return data.account;
+      } catch (error) {
+        console.error('Error creating toll account:', error);
+        throw error;
+      }
+    },
+    [apiCall]
+  );
 
-  const updateAccount = useCallback(async (accountId: number, accountData: Partial<TollAccount>) => {
-    try {
-      const data = await apiCall(`/accounts/${accountId}`, {
-        method: 'PUT',
-        body: JSON.stringify(accountData),
-      });
-      return data.account;
-    } catch (error) {
-      console.error('Error updating toll account:', error);
-      throw error;
-    }
-  }, [apiCall]);
+  const updateAccount = useCallback(
+    async (accountId: number, accountData: Partial<TollAccount>) => {
+      try {
+        const data = await apiCall(`/accounts/${accountId}`, {
+          method: 'PUT',
+          body: JSON.stringify(accountData),
+        });
+        return data.account;
+      } catch (error) {
+        console.error('Error updating toll account:', error);
+        throw error;
+      }
+    },
+    [apiCall]
+  );
 
-  const deleteAccount = useCallback(async (accountId: number) => {
-    try {
-      await apiCall(`/accounts/${accountId}`, {
-        method: 'DELETE',
-      });
-    } catch (error) {
-      console.error('Error deleting toll account:', error);
-      throw error;
-    }
-  }, [apiCall]);
+  const deleteAccount = useCallback(
+    async (accountId: number) => {
+      try {
+        await apiCall(`/accounts/${accountId}`, {
+          method: 'DELETE',
+        });
+      } catch (error) {
+        console.error('Error deleting toll account:', error);
+        throw error;
+      }
+    },
+    [apiCall]
+  );
 
-  const syncAccount = useCallback(async (accountId: number) => {
-    try {
-      const data = await apiCall(`/accounts/${accountId}/sync`, {
-        method: 'POST',
-      });
-      return data.syncResult;
-    } catch (error) {
-      console.error('Error syncing toll account:', error);
-      throw error;
-    }
-  }, [apiCall]);
+  const syncAccount = useCallback(
+    async (accountId: number) => {
+      try {
+        const data = await apiCall(`/accounts/${accountId}/sync`, {
+          method: 'POST',
+        });
+        return data.syncResult;
+      } catch (error) {
+        console.error('Error syncing toll account:', error);
+        throw error;
+      }
+    },
+    [apiCall]
+  );
 
   const syncAllAccounts = useCallback(async () => {
     try {
@@ -240,105 +261,126 @@ export const useToll = () => {
   }, [apiCall]);
 
   // Route calculation
-  const calculateTolls = useCallback(async (request: RouteCalculationRequest) => {
-    try {
-      const data = await apiCall('/routes/calculate', {
-        method: 'POST',
-        body: JSON.stringify(request),
-      });
-      return data;
-    } catch (error) {
-      console.error('Error calculating tolls:', error);
-      throw error;
-    }
-  }, [apiCall]);
+  const calculateTolls = useCallback(
+    async (request: RouteCalculationRequest) => {
+      try {
+        const data = await apiCall('/routes/calculate', {
+          method: 'POST',
+          body: JSON.stringify(request),
+        });
+        return data;
+      } catch (error) {
+        console.error('Error calculating tolls:', error);
+        throw error;
+      }
+    },
+    [apiCall]
+  );
 
-  const saveRouteEstimate = useCallback(async (estimate: RouteEstimate) => {
-    try {
-      const data = await apiCall('/routes/estimates', {
-        method: 'POST',
-        body: JSON.stringify(estimate),
-      });
-      return data.estimate;
-    } catch (error) {
-      console.error('Error saving route estimate:', error);
-      throw error;
-    }
-  }, [apiCall]);
+  const saveRouteEstimate = useCallback(
+    async (estimate: RouteEstimate) => {
+      try {
+        const data = await apiCall('/routes/estimates', {
+          method: 'POST',
+          body: JSON.stringify(estimate),
+        });
+        return data.estimate;
+      } catch (error) {
+        console.error('Error saving route estimate:', error);
+        throw error;
+      }
+    },
+    [apiCall]
+  );
 
-  const fetchRouteEstimates = useCallback(async (filters?: any) => {
-    try {
-      const params = new URLSearchParams(filters || {});
-      const data = await apiCall(`/routes/estimates?${params}`);
-      return data.estimates || [];
-    } catch (error) {
-      console.error('Error fetching route estimates:', error);
-      throw error;
-    }
-  }, [apiCall]);
+  const fetchRouteEstimates = useCallback(
+    async (filters?: Record<string, unknown>) => {
+      try {
+        const params = new URLSearchParams(filters || {});
+        const data = await apiCall(`/routes/estimates?${params}`);
+        return data.estimates || [];
+      } catch (error) {
+        console.error('Error fetching route estimates:', error);
+        throw error;
+      }
+    },
+    [apiCall]
+  );
 
   // Transaction management
-  const fetchTransactions = useCallback(async (filters?: any) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const params = new URLSearchParams(filters || {});
-      const data = await apiCall(`/transactions?${params}`);
-      setTransactions(data.transactions || []);
-      return data;
-    } catch (error) {
-      setError(error.message);
-      console.error('Error fetching toll transactions:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [apiCall]);
+  const fetchTransactions = useCallback(
+    async (filters?: Record<string, unknown>) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams(filters || {});
+        const data = await apiCall(`/transactions?${params}`);
+        setTransactions(data.transactions || []);
+        return data;
+      } catch (error) {
+        setError(error.message);
+        console.error('Error fetching toll transactions:', error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [apiCall]
+  );
 
-  const fetchTransaction = useCallback(async (transactionId: number) => {
-    try {
-      const data = await apiCall(`/transactions/${transactionId}`);
-      return data.transaction;
-    } catch (error) {
-      console.error('Error fetching toll transaction:', error);
-      throw error;
-    }
-  }, [apiCall]);
+  const fetchTransaction = useCallback(
+    async (transactionId: number) => {
+      try {
+        const data = await apiCall(`/transactions/${transactionId}`);
+        return data.transaction;
+      } catch (error) {
+        console.error('Error fetching toll transaction:', error);
+        throw error;
+      }
+    },
+    [apiCall]
+  );
 
   // Reporting
-  const fetchSummary = useCallback(async (period?: string, startDate?: string, endDate?: string) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const params = new URLSearchParams();
-      if (period) params.append('period', period);
-      if (startDate) params.append('start_date', startDate);
-      if (endDate) params.append('end_date', endDate);
+  const fetchSummary = useCallback(
+    async (period?: string, startDate?: string, endDate?: string) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams();
+        if (period) params.append('period', period);
+        if (startDate) params.append('start_date', startDate);
+        if (endDate) params.append('end_date', endDate);
 
-      const data = await apiCall(`/summary?${params}`);
-      setSummary(data.summary);
-      return data.summary;
-    } catch (error) {
-      setError(error.message);
-      console.error('Error fetching toll summary:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [apiCall]);
+        const data = await apiCall(`/summary?${params}`);
+        setSummary(data.summary);
+        return data.summary;
+      } catch (error) {
+        setError(error.message);
+        console.error('Error fetching toll summary:', error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [apiCall]
+  );
 
-  const fetchReports = useCallback(async (reportType: string, format?: string, startDate?: string, endDate?: string) => {
-    try {
-      const params = new URLSearchParams({ report_type: reportType });
-      if (format) params.append('format', format);
-      if (startDate) params.append('start_date', startDate);
-      if (endDate) params.append('end_date', endDate);
+  const fetchReports = useCallback(
+    async (reportType: string, format?: string, startDate?: string, endDate?: string) => {
+      try {
+        const params = new URLSearchParams({ report_type: reportType });
+        if (format) params.append('format', format);
+        if (startDate) params.append('start_date', startDate);
+        if (endDate) params.append('end_date', endDate);
 
-      const data = await apiCall(`/reports?${params}`);
-      return data;
-    } catch (error) {
-      console.error('Error fetching toll reports:', error);
-      throw error;
-    }
-  }, [apiCall]);
+        const data = await apiCall(`/reports?${params}`);
+        return data;
+      } catch (error) {
+        console.error('Error fetching toll reports:', error);
+        throw error;
+      }
+    },
+    [apiCall]
+  );
 
   return {
     // State

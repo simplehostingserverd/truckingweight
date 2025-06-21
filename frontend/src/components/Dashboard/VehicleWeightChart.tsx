@@ -32,12 +32,12 @@ interface VehicleWeightChartProps {
 
 function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
   const supabase = createClient();
-  const [weightData, setWeightData] = useState<any[]>([]);
+  const [weightData, setWeightData] = useState<unknown[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [dateRange, setDateRange] = useState('week'); // 'week', 'month', 'year'
   const [isAdmin, setIsAdmin] = useState(false);
-  const [companyData, setCompanyData] = useState<any[]>([]);
+  const [companyData, setCompanyData] = useState<unknown[]>([]);
   const [selectedCompany, setSelectedCompany] = useState<string>('overall');
 
   useEffect(() => {

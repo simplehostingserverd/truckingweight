@@ -82,12 +82,8 @@ interface TollAccountDetailsProps {
   account: TollAccount;
 }
 
-const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
-  open,
-  onClose,
-  account,
-}) => {
-  const [syncHistory, setSyncHistory] = useState<any[]>([]);
+const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({ open, onClose, account }) => {
+  const [syncHistory, setSyncHistory] = useState<unknown[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
 
   useEffect(() => {
@@ -186,9 +182,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
         <Box display="flex" alignItems="center" gap={2}>
           <AccountIcon />
           <Box>
-            <Typography variant="h6">
-              {account.account_name || account.account_number}
-            </Typography>
+            <Typography variant="h6">{account.account_name || account.account_number}</Typography>
             <Typography variant="body2" color="text.secondary">
               {account.toll_providers.name} Account
             </Typography>
@@ -206,13 +200,10 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                   <SettingsIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
                   Account Information
                 </Typography>
-                
+
                 <List dense>
                   <ListItem>
-                    <ListItemText
-                      primary="Account Number"
-                      secondary={account.account_number}
-                    />
+                    <ListItemText primary="Account Number" secondary={account.account_number} />
                   </ListItem>
                   <ListItem>
                     <ListItemText
@@ -243,10 +234,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                     />
                   </ListItem>
                   <ListItem>
-                    <ListItemText
-                      primary="Created"
-                      secondary={formatDate(account.created_at)}
-                    />
+                    <ListItemText primary="Created" secondary={formatDate(account.created_at)} />
                   </ListItem>
                   <ListItem>
                     <ListItemText
@@ -266,18 +254,17 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                 <Typography variant="h6" gutterBottom>
                   Provider Details
                 </Typography>
-                
+
                 <List dense>
                   <ListItem>
-                    <ListItemText
-                      primary="Provider"
-                      secondary={account.toll_providers.name}
-                    />
+                    <ListItemText primary="Provider" secondary={account.toll_providers.name} />
                   </ListItem>
                   <ListItem>
                     <ListItemText
                       primary="Type"
-                      secondary={account.toll_providers.provider_type?.replace('_', ' ').toUpperCase()}
+                      secondary={account.toll_providers.provider_type
+                        ?.replace('_', ' ')
+                        .toUpperCase()}
                     />
                   </ListItem>
                   <ListItem>
@@ -291,9 +278,9 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                       primary="Features"
                       secondary={
                         account.toll_providers.features
-                          ? Object.keys(account.toll_providers.features).filter(
-                              key => account.toll_providers.features[key]
-                            ).join(', ')
+                          ? Object.keys(account.toll_providers.features)
+                              .filter(key => account.toll_providers.features[key])
+                              .join(', ')
                           : 'N/A'
                       }
                     />
@@ -311,7 +298,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                   <SyncIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
                   Sync Status
                 </Typography>
-                
+
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={4}>
                     <Box textAlign="center">
@@ -328,10 +315,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                   <Grid item xs={12} sm={4}>
                     <Box textAlign="center">
                       <Typography variant="body1">
-                        {account.last_sync_at
-                          ? formatDate(account.last_sync_at)
-                          : 'Never'
-                        }
+                        {account.last_sync_at ? formatDate(account.last_sync_at) : 'Never'}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Last Sync
@@ -340,9 +324,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Box textAlign="center">
-                      <Typography variant="body1">
-                        {syncHistory.length}
-                      </Typography>
+                      <Typography variant="body1">{syncHistory.length}</Typography>
                       <Typography variant="body2" color="text.secondary">
                         Total Syncs
                       </Typography>
@@ -367,7 +349,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                   <Typography variant="h6" gutterBottom>
                     Assigned Transponders ({account.vehicle_toll_transponders.length})
                   </Typography>
-                  
+
                   <TableContainer>
                     <Table size="small">
                       <TableHead>
@@ -380,7 +362,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {account.vehicle_toll_transponders.map((transponder) => (
+                        {account.vehicle_toll_transponders.map(transponder => (
                           <TableRow key={transponder.id}>
                             <TableCell>{transponder.transponder_id}</TableCell>
                             <TableCell>{transponder.transponder_type}</TableCell>
@@ -419,7 +401,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                   <HistoryIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
                   Sync History
                 </Typography>
-                
+
                 {loadingHistory ? (
                   <Box display="flex" justifyContent="center" p={2}>
                     <CircularProgress />
@@ -438,7 +420,7 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {syncHistory.map((sync) => (
+                        {syncHistory.map(sync => (
                           <TableRow key={sync.id}>
                             <TableCell>{sync.sync_type}</TableCell>
                             <TableCell>
@@ -456,10 +438,16 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                                 <Typography variant="body2">
                                   {sync.records_processed} processed
                                   {sync.records_created && (
-                                    <><br />{sync.records_created} created</>
+                                    <>
+                                      <br />
+                                      {sync.records_created} created
+                                    </>
                                   )}
                                   {sync.records_updated && (
-                                    <><br />{sync.records_updated} updated</>
+                                    <>
+                                      <br />
+                                      {sync.records_updated} updated
+                                    </>
                                   )}
                                 </Typography>
                               ) : (
@@ -469,12 +457,9 @@ const TollAccountDetails: React.FC<TollAccountDetailsProps> = ({
                             <TableCell>
                               {sync.sync_duration_seconds
                                 ? `${sync.sync_duration_seconds}s`
-                                : 'N/A'
-                              }
+                                : 'N/A'}
                             </TableCell>
-                            <TableCell>
-                              {formatDate(sync.started_at)}
-                            </TableCell>
+                            <TableCell>{formatDate(sync.started_at)}</TableCell>
                             <TableCell>
                               {sync.completed_at ? formatDate(sync.completed_at) : 'N/A'}
                             </TableCell>

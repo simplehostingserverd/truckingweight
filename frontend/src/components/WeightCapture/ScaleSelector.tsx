@@ -31,7 +31,7 @@ interface ScaleSelectorProps {
 
 export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
   const supabase = createClient();
-  const [scales, setScales] = useState<any[]>([]);
+  const [scales, setScales] = useState<unknown[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showQrScanner, setShowQrScanner] = useState(false);
@@ -66,9 +66,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
         const scalesData = await response.json();
 
         // Filter only active scales
-        const activeScales = scalesData.filter(
-          (scale: unknown) => scale.status === 'Active'
-        );
+        const activeScales = scalesData.filter((scale: unknown) => scale.status === 'Active');
 
         setScales(activeScales);
       } catch (error: unknown) {

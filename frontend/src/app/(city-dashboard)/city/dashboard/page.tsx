@@ -397,10 +397,9 @@ const CityDashboardPageClient = () => {
                 <p>Using mock data for demonstration purposes.</p>
               </div>
               <Button
-                variant="outlined"
-                size="md"
-                color="primary"
-                className="mt-3 md:mt-0"
+                variant="outline"
+                size="default"
+                className="mt-3 md:mt-0 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                 onClick={generateDummyData}
                 startDecorator={<ArrowPathIcon className="h-5 w-5" />}
               >
