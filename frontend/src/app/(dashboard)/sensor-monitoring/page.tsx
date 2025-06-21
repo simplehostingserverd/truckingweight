@@ -30,7 +30,6 @@ import {
   SignalIcon,
   ThermometerIcon,
 } from '@heroicons/react/24/outline';
-import ThermometerIcon from '@/components/icons/ThermometerIcon';
 import {
   Card,
   CardContent,
