@@ -18,6 +18,19 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+
+// Interface for weighing data
+interface WeighingData {
+  id: number;
+  ticketNumber: string;
+  vehicleInfo: string;
+  companyName: string;
+  grossWeight: number;
+  netWeight: number;
+  weighDate: string;
+  status: 'Compliant' | 'Non-Compliant' | 'Warning';
+  scaleName: string;
+}
 import {
   ArrowPathIcon,
   CheckCircleIcon,
@@ -61,7 +74,7 @@ const CityDashboardPageClient = () => {
     recentViolations: 0,
   });
 
-  const [recentWeighings, setRecentWeighings] = useState([]);
+  const [recentWeighings, setRecentWeighings] = useState<WeighingData[]>([]);
   const [complianceData, setComplianceData] = useState({
     labels: [],
     compliant: [],
@@ -561,7 +574,7 @@ const CityDashboardPageClient = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {recentWeighings.map((weighing: unknown) => (
+                        {recentWeighings.map(weighing => (
                           <tr
                             key={weighing.id}
                             className="border-b border-gray-700 hover:bg-gray-700/50"
