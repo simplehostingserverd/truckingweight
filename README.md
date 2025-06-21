@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Cosmo Exploit Group LLC Banner](frontend/public/images/banner.svg)
+![CargoScalePro Banner](frontend/public/images/screenshots/cargoscalepro-main-dashboard.svg)
 
 [![CI/CD Pipeline](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml/badge.svg)](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml)
 [![Next.js](https://img.shields.io/badge/Next.js-15.1.7-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
@@ -37,7 +37,7 @@ What started as Cargo Scale Pro's flagship weight management project in 2022 has
 - 📈 **23% improvement** in driver satisfaction scores
 
 <div align="center">
-  <img src="frontend/public/images/dashboard-preview.svg" alt="Advanced TMS Dashboard" width="80%">
+  <img src="frontend/public/images/screenshots/cargoscalepro-login.svg" alt="CargoScalePro Professional Login" width="80%">
 </div>
 
 ## 💼 Why Industry Leaders Choose Our TMS
@@ -75,19 +75,19 @@ The trucking industry is complex, and we've built a system that actually underst
 ## 🖼️ Application Screenshots
 
 <div align="center">
-  <h3>City Portal</h3>
-  <img src="frontend/public/images/screenshots/city-login.svg" alt="City Login" width="80%">
-  <p><em>City Login Screen</em></p>
+  <h3>🏢 Municipal Compliance Portal</h3>
+  <img src="frontend/public/images/screenshots/cargoscalepro-city-login.svg" alt="CargoScalePro City Login" width="80%">
+  <p><em>Municipal Login Portal - Secure access for city inspectors and DOT officials</em></p>
 
-  <img src="frontend/public/images/screenshots/city-dashboard.svg" alt="City Dashboard" width="80%">
-  <p><em>City Dashboard</em></p>
+  <img src="frontend/public/images/screenshots/cargoscalepro-city-dashboard.svg" alt="CargoScalePro City Dashboard" width="80%">
+  <p><em>City Compliance Dashboard - Real-time monitoring of permits, violations, and scale activity</em></p>
 
-  <h3>Trucking Portal</h3>
-  <img src="frontend/public/images/screenshots/trucking-login.svg" alt="Trucking Login" width="80%">
-  <p><em>Trucking Login Screen</em></p>
+  <h3>🚛 Professional Trucking Portal</h3>
+  <img src="frontend/public/images/screenshots/cargoscalepro-trucking-login.svg" alt="CargoScalePro Trucking Login" width="80%">
+  <p><em>Fleet Manager Login - Professional access for trucking companies and fleet operators</em></p>
 
-  <img src="frontend/public/images/screenshots/trucking-dashboard.svg" alt="Trucking Dashboard" width="80%">
-  <p><em>Trucking Dashboard</em></p>
+  <img src="frontend/public/images/screenshots/cargoscalepro-trucking-dashboard.svg" alt="CargoScalePro Trucking Dashboard" width="80%">
+  <p><em>Fleet Operations Dashboard - Comprehensive fleet management with real-time tracking and compliance monitoring</em></p>
 </div>
 
 ## ✨ Comprehensive Features
