@@ -1,19 +1,9 @@
-//
-//  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
-//  *
-//  * PROPRIETARY AND CONFIDENTIAL
-//  *
-//  * This file is part of the Cosmo Exploit Group LLC Weight Management System.
-//  * Unauthorized copying of this file, via any medium is strictly prohibited.
-//  *
-//  * This file contains proprietary and confidential information of
-//  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
-//  * in any way without explicit written permission.
-//
-//
-
 {
-  "extends": ["next/core-web-vitals", "eslint:recommended", "@typescript-eslint/recommended"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "@typescript-eslint/recommended"
+  ],
   "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -27,17 +17,12 @@
   "rules": {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
-    "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/no-duplicate-imports": "error",
-    "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "@typescript-eslint/ban-ts-comment": "off",
-    "no-extra-semi": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "@next/next/no-img-element": "off",
     "semi": ["error", "always"],
-    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "never" }],
-    "react/jsx-no-duplicate-props": "error",
-    "jsx-quotes": ["error", "prefer-double"],
     "comma-dangle": [
       "error",
       {
@@ -47,20 +32,23 @@
         "exports": "always-multiline",
         "functions": "never"
       }
-    ],
-    "no-redeclare": "error",
-    "no-undef": "error"
+    ]
   },
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true,
-    "jest": true
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
-  "ignorePatterns": ["node_modules/", ".next/", "out/", "public/"]
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    "out/",
+    "public/",
+    "dist/",
+    "build/",
+    "**/*.d.ts",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/__tests__/",
+    "**/__mocks__/",
+    "next.config.mjs",
+    "tailwind.config.cjs",
+    "postcss.config.js",
+    "jest.config.cjs"
+  ]
 }

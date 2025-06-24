@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && npm run dev",
-    "build": "cd frontend && npm ci && npm run build",
+    "build": "cd frontend && npm run build",
     "start": "cd frontend && npm start",
     "start:frontend": "cd frontend && npm run start",
     "start:backend": "cd backend && npm run start",
@@ -47,6 +47,9 @@
   },
   "homepage": "https://github.com/Simple-Hosting-Holdings-Inc/truckingweight#readme",
   "devDependencies": {
+    "@next/eslint-plugin-next": "15.3.4",
+    "@typescript-eslint/eslint-plugin": "8.35.0",
+    "@typescript-eslint/parser": "8.35.0",
     "concurrently": "^8.2.2"
   },
   "engines": {

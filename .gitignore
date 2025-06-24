@@ -76,6 +76,7 @@ debug.log
 
 # Build artifacts
 *.tsbuildinfo
+backend/generated/
 
 # Fix scripts and temporary files
 fix-*.js

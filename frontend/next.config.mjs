@@ -1,50 +1,6 @@
-/**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- *
- * PROPRIETARY AND CONFIDENTIAL
- *
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
- *
- * This file contains proprietary and confidential information of
- * Cosmo Exploit Group LLC and may not be copied, distributed, or used
- * in any way without explicit written permission.
- */
-
 /** @type {import('next').NextConfig} */
 
-// Import required modules
-import withPWA from '@ducanh2912/next-pwa';
-import bundleAnalyzer from '@next/bundle-analyzer';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// Get __dirname equivalent in ESM
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Add bundle analyzer in analyze mode
-const withBundleAnalyzer =
-  process.env.ANALYZE === 'true' ? bundleAnalyzer({ enabled: true }) : config => config;
-
-// Check if SSL certificates exist
-const sslCertPath = path.join(__dirname, '../ssl/localhost.crt');
-const sslKeyPath = path.join(__dirname, '../ssl/localhost.key');
-const sslEnabled = fs.existsSync(sslCertPath) && fs.existsSync(sslKeyPath);
-
 const nextConfig = {
-  // HTTPS configuration for development
-  ...(process.env.NODE_ENV === 'development' && sslEnabled
-    ? {
-        server: {
-          https: {
-            key: fs.readFileSync(sslKeyPath),
-            cert: fs.readFileSync(sslCertPath),
-          },
-        },
-      }
-    : {}),
   // Webpack configuration
   webpack: (config, { dev, isServer }) => {
     // We're using Cesium from CDN, so we don't need to process it
@@ -335,12 +291,4 @@ const nextConfig = {
   transpilePackages: ['@mui/material', '@mui/joy', '@mui/icons-material', 'lucide-react'],
 };
 
-// Apply bundle analyzer and PWA wrappers
-export default withBundleAnalyzer(
-  withPWA({
-    dest: 'public',
-    disable: process.env.NODE_ENV === 'development',
-    register: true,
-    skipWaiting: true,
-  })(nextConfig)
-);
+export default nextConfig;

@@ -36,5 +36,5 @@
     "sourceMap": true
   },
   "include": ["**/*.ts", "**/*.js"],
-  "exclude": ["node_modules", "dist", "generated/**/*", "prisma/**/*"]
+  "exclude": ["node_modules", "dist"]
 }

@@ -59,6 +59,8 @@
     "@radix-ui/react-toast": "^1.2.13",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.49.8",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/cesium": "^1.67.14",
     "@types/react-datepicker": "^6.0.1",
     "@yudiel/react-qr-scanner": "^2.0.8",
