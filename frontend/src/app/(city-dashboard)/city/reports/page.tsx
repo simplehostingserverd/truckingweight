@@ -51,8 +51,28 @@ const CityReportsPageClient = () => {
   const [dateRange, setDateRange] = useState('last30');
   const [reportFormat, setReportFormat] = useState('pdf');
   const [generatingReport, setGeneratingReport] = useState(false);
-  const [recentReports, setRecentReports] = useState([]);
-  const [savedReports, setSavedReports] = useState([]);
+  const [recentReports, setRecentReports] = useState<
+    {
+      id: number;
+      name: string;
+      type: string;
+      date: string;
+      format: string;
+      status: string;
+      url: string;
+    }[]
+  >([]);
+  const [savedReports, setSavedReports] = useState<
+    {
+      id: number;
+      name: string;
+      type: string;
+      date: string;
+      format: string;
+      status: string;
+      url: string;
+    }[]
+  >([]);
 
   // Standard report types
   const standardReports = [
@@ -399,7 +419,7 @@ const CityReportsPageClient = () => {
                           <Label htmlFor={field.id} className="text-gray-400">
                             {field.name}
                           </Label>
-                          {field.type === 'select' ? (
+                          {field.type === 'select' && field.options ? (
                             <Select defaultValue={field.options[0].value}>
                               <SelectTrigger
                                 id={field.id}

@@ -24,7 +24,17 @@ import React, { useEffect, useState } from 'react';
 // Create a client-side only component to avoid hydration issues
 const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [userData, setUserData] = useState<unknown>(null);
+  const [userData, setUserData] = useState<{
+    id: string;
+    name: string;
+    email: string;
+    cityId: number;
+    role: string;
+    city: {
+      name: string;
+      state: string;
+    };
+  } | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
@@ -59,8 +69,8 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
             if (userMetadata && userMetadata.user_type === 'city') {
               // Get city user data from Supabase
               const { data: cityUserData, error: cityUserError } = await supabase
-                .from('city_users')
-                .select('*, cities(*)')
+                .from('users')
+                .select('*, city:cities(*)')
                 .eq('id', user.id)
                 .single();
 
@@ -72,7 +82,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
                   email: cityUserData.email,
                   cityId: cityUserData.city_id,
                   role: cityUserData.role,
-                  city: cityUserData.cities,
+                  city: cityUserData.city,
                 };
 
                 setUserData(formattedUserData);
@@ -92,7 +102,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
           const cityUser = localStorage.getItem('cityUser');
 
           if (!cityToken || !cityUser) {
-            router.push(createSafeUrl('/city/login'));
+            router.push('/city/login');
             return;
           }
 
@@ -139,7 +149,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
                   localStorage.removeItem('cityToken');
                   localStorage.removeItem('cityUser');
                 }
-                router.push(createSafeUrl('/city/login'));
+                router.push('/city/login');
               }
             };
 
@@ -148,13 +158,13 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
             console.error('Error parsing city user data:', error);
             localStorage.removeItem('cityToken');
             localStorage.removeItem('cityUser');
-            router.push(createSafeUrl('/city/login'));
+            router.push('/city/login');
             return;
           }
         }
       } catch (error) {
         console.error('Error checking auth:', error);
-        router.push(createSafeUrl('/city/login'));
+        router.push('/city/login');
       }
     };
 

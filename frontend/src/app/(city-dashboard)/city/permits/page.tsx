@@ -54,7 +54,27 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 
 // Create a client-side only component to avoid hydration issues
 const CityPermitsPageClient = () => {
-  const [permits, setPermits] = useState([]);
+  const [permits, setPermits] = useState<
+    {
+      id: number;
+      permitNumber: string;
+      companyName: string;
+      vehicleInfo: string;
+      permitType: string;
+      maxWeight?: number;
+      dimensions?: {
+        length: number;
+        width: number;
+        height: number;
+      };
+      startDate: string;
+      endDate: string;
+      feeAmount: number;
+      paymentStatus: string;
+      status: string;
+      createdAt: string;
+    }[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -332,7 +352,31 @@ const CityPermitsPageClient = () => {
 };
 
 // Permits table component
-const PermitsTable = ({ permits, isLoading }) => {
+const PermitsTable = ({
+  permits,
+  isLoading,
+}: {
+  permits: {
+    id: number;
+    permitNumber: string;
+    companyName: string;
+    vehicleInfo: string;
+    permitType: string;
+    maxWeight?: number;
+    dimensions?: {
+      length: number;
+      width: number;
+      height: number;
+    };
+    startDate: string;
+    endDate: string;
+    feeAmount: number;
+    paymentStatus: string;
+    status: string;
+    createdAt: string;
+  }[];
+  isLoading: boolean;
+}) => {
   if (isLoading) {
     return (
       <div className="space-y-4">
@@ -422,7 +466,7 @@ const PermitsTable = ({ permits, isLoading }) => {
 };
 
 // Status badge component
-const StatusBadge = ({ status }) => {
+const StatusBadge = ({ status }: { status: string }) => {
   switch (status) {
     case 'Active':
       return (
@@ -458,7 +502,7 @@ const StatusBadge = ({ status }) => {
 };
 
 // Payment status badge component
-const PaymentStatusBadge = ({ status }) => {
+const PaymentStatusBadge = ({ status }: { status: string }) => {
   if (status === 'Paid') {
     return (
       <Badge className="ml-2 bg-blue-500/20 text-blue-400 hover:bg-blue-500/20 border-blue-500/30">

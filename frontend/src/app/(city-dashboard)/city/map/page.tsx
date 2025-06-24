@@ -50,7 +50,35 @@ const CityMapPageClient = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('scales');
-  const [mapData, setMapData] = useState({
+  const [mapData, setMapData] = useState<{
+    scales: {
+      id: number;
+      name: string;
+      location: string;
+      coordinates: { lat: number; lng: number };
+      status: string;
+      lastCalibration: string;
+      type: string;
+    }[];
+    violations: {
+      id: number;
+      violationNumber: string;
+      location: string;
+      coordinates: { lat: number; lng: number };
+      date: string;
+      type: string;
+      status: string;
+    }[];
+    activeVehicles: {
+      id: number;
+      vehicleId: string;
+      coordinates: { lat: number; lng: number };
+      status: string;
+      lastUpdate: string;
+      heading: number;
+      speed: number;
+    }[];
+  }>({
     scales: [],
     violations: [],
     activeVehicles: [],
@@ -398,8 +426,8 @@ const CityMapPageClient = () => {
                             }))
                           : []),
                         ...(showActiveVehicles
-                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                          ? mapData.activeVehicles.map(vehicle => ({
+                          ? // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                            mapData.activeVehicles.map(vehicle => ({
                               id: `vehicle-${vehicle.id}`,
                               latitude: vehicle.coordinates.lat,
                               longitude: vehicle.coordinates.lng,

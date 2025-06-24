@@ -75,14 +75,23 @@ const CityDashboardPageClient = () => {
   });
 
   const [recentWeighings, setRecentWeighings] = useState<WeighingData[]>([]);
-  const [complianceData, setComplianceData] = useState({
+  const [complianceData, setComplianceData] = useState<{
+    labels: string[];
+    compliant: number[];
+    nonCompliant: number[];
+    warning: number[];
+  }>({
     labels: [],
     compliant: [],
     nonCompliant: [],
     warning: [],
   });
 
-  const [revenueData, setRevenueData] = useState({
+  const [revenueData, setRevenueData] = useState<{
+    labels: string[];
+    permitRevenue: number[];
+    fineRevenue: number[];
+  }>({
     labels: [],
     permitRevenue: [],
     fineRevenue: [],
@@ -306,7 +315,7 @@ const CityDashboardPageClient = () => {
         grossWeight: grossWeight,
         netWeight: netWeight,
         weighDate: date.toISOString(),
-        status: status,
+        status: status as 'Compliant' | 'Non-Compliant' | 'Warning',
         scaleName: scaleNames[scaleIndex],
       };
     });

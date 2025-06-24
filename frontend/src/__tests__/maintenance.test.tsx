@@ -26,7 +26,15 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock fetch for API calls
-global.fetch = jest.fn();
+const fetchMock = jest.fn();
+
+beforeEach(() => {
+  global.fetch = fetchMock;
+});
+
+afterEach(() => {
+  jest.restoreAllMocks();
+});
 
 // Import components to test
 import MaintenancePage from '../app/(dashboard)/maintenance/page';
@@ -43,13 +51,13 @@ const mockWorkOrders = [
       id: 1,
       unit_number: 'T001',
       make: 'Freightliner',
-      model: 'Cascadia'
+      model: 'Cascadia',
     },
     vendor: {
       id: 1,
-      name: 'ABC Service Center'
+      name: 'ABC Service Center',
     },
-    estimated_cost: 150.00
+    estimated_cost: 150.0,
   },
   {
     id: 2,
@@ -61,14 +69,14 @@ const mockWorkOrders = [
       id: 2,
       unit_number: 'T002',
       make: 'Peterbilt',
-      model: '579'
+      model: '579',
     },
     vendor: {
       id: 2,
-      name: 'Quick Fix Garage'
+      name: 'Quick Fix Garage',
     },
-    estimated_cost: 450.00
-  }
+    estimated_cost: 450.0,
+  },
 ];
 
 const mockMaintenanceMetrics = {
@@ -78,21 +86,21 @@ const mockMaintenanceMetrics = {
       pending: 8,
       in_progress: 5,
       completed: 10,
-      cancelled: 2
-    }
+      cancelled: 2,
+    },
   },
   costs: {
     total: 12500,
-    average: 500
+    average: 500,
   },
   scheduling: {
     upcoming: 6,
     overdue: 2,
-    avgCompletionTime: 2.5
+    avgCompletionTime: 2.5,
   },
   inventory: {
-    lowStockParts: 4
-  }
+    lowStockParts: 4,
+  },
 };
 
 const mockUpcomingMaintenance = [
@@ -102,8 +110,8 @@ const mockUpcomingMaintenance = [
     next_due_date: '2025-01-28',
     vehicle: {
       unit_number: 'T001',
-      current_mileage: 125000
-    }
+      current_mileage: 125000,
+    },
   },
   {
     id: 2,
@@ -111,44 +119,42 @@ const mockUpcomingMaintenance = [
     next_due_date: '2025-01-30',
     vehicle: {
       unit_number: 'T003',
-      current_mileage: 98000
-    }
-  }
+      current_mileage: 98000,
+    },
+  },
 ];
 
 describe('Maintenance Management Tests', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    
-    // Setup default fetch responses
-    (global.fetch as jest.Mock).mockImplementation((url: string) => {
+    fetchMock.mockImplementation((url: string, options?: RequestInit) => {
       if (url.includes('/api/maintenance/work-orders')) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({
-            workOrders: mockWorkOrders,
-            pagination: { page: 1, limit: 20, total: 2, pages: 1 }
-          })
+          json: () =>
+            Promise.resolve({
+              workOrders: mockWorkOrders,
+              pagination: { page: 1, limit: 20, total: 2, pages: 1 },
+            }),
         });
       }
-      
+
       if (url.includes('/api/maintenance/metrics')) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve(mockMaintenanceMetrics)
+          json: () => Promise.resolve(mockMaintenanceMetrics),
         });
       }
-      
+
       if (url.includes('/api/maintenance/schedules')) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve(mockUpcomingMaintenance)
+          json: () => Promise.resolve(mockUpcomingMaintenance),
         });
       }
-      
+
       return Promise.resolve({
         ok: true,
-        json: () => Promise.resolve({})
+        json: () => Promise.resolve({}),
       });
     });
   });
@@ -220,7 +226,7 @@ describe('Maintenance Management Tests', () => {
       await waitFor(() => {
         const statusFilter = screen.getByDisplayValue('All Statuses');
         fireEvent.click(statusFilter);
-        
+
         const pendingOption = screen.getByText('Pending');
         fireEvent.click(pendingOption);
       });
@@ -241,7 +247,7 @@ describe('Maintenance Management Tests', () => {
       await waitFor(() => {
         const priorityFilter = screen.getByDisplayValue('All Priorities');
         fireEvent.click(priorityFilter);
-        
+
         const highOption = screen.getByText('High');
         fireEvent.click(highOption);
       });
@@ -304,7 +310,7 @@ describe('Maintenance Management Tests', () => {
 
   describe('Error Handling', () => {
     it('should handle API errors gracefully', async () => {
-      (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('API Error'));
+      fetchMock.mockRejectedValueOnce(new Error('API Error'));
 
       render(<MaintenancePage />);
 
@@ -314,9 +320,7 @@ describe('Maintenance Management Tests', () => {
     });
 
     it('should show loading state', () => {
-      (global.fetch as jest.Mock).mockImplementation(() => 
-        new Promise(resolve => setTimeout(resolve, 1000))
-      );
+      fetchMock.mockImplementation(() => new Promise(resolve => setTimeout(resolve, 1000)));
 
       render(<MaintenancePage />);
 
@@ -381,24 +385,25 @@ describe('Maintenance Management Tests', () => {
 // Integration test for work order creation flow
 describe('Work Order Creation Integration', () => {
   it('should create a new work order successfully', async () => {
-    (global.fetch as jest.Mock).mockImplementation((url: string, options: unknown) => {
+    fetchMock.mockImplementation((url: string, options?: RequestInit) => {
       if (options?.method === 'POST' && url.includes('/api/maintenance/work-orders')) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({
-            success: true,
-            workOrder: {
-              id: 3,
-              title: 'New Work Order',
-              status: 'pending'
-            }
-          })
+          json: () =>
+            Promise.resolve({
+              success: true,
+              workOrder: {
+                id: 3,
+                title: 'New Work Order',
+                status: 'pending',
+              },
+            }),
         });
       }
-      
+
       return Promise.resolve({
         ok: true,
-        json: () => Promise.resolve({})
+        json: () => Promise.resolve({}),
       });
     });
 

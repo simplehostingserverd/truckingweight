@@ -99,7 +99,7 @@ export default function CityLogin() {
         }
 
         // Redirect to city dashboard
-        router.push(createSafeUrl('/city/dashboard'));
+        router.push('/city/dashboard');
         router.refresh(); // Important to refresh the router
         return;
       }
@@ -138,7 +138,7 @@ export default function CityLogin() {
       }
 
       // Redirect to city dashboard
-      router.push(createSafeUrl('/city/dashboard'));
+      router.push('/city/dashboard');
       router.refresh(); // Important to refresh the router
     } catch (err: unknown) {
       setError(
@@ -188,7 +188,7 @@ export default function CityLogin() {
         localStorage.setItem('cityUser', JSON.stringify(demoUser));
 
         // Redirect to city dashboard
-        router.push(createSafeUrl('/city/dashboard'));
+        router.push('/city/dashboard');
         router.refresh(); // Important to refresh the router
         return;
       }
@@ -211,7 +211,7 @@ export default function CityLogin() {
       localStorage.setItem('cityUser', JSON.stringify(demoUser));
 
       // Redirect to city dashboard
-      router.push(createSafeUrl('/city/dashboard'));
+      router.push('/city/dashboard');
     } catch (error) {
       console.error('Error during demo login:', error);
       setError('Demo login failed. Please try again.');

@@ -103,7 +103,13 @@ export default function CityWeighingPage() {
       }
     } catch (err: unknown) {
       console.error('Error fetching scales:', err);
-      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to load scales');
+      setError(
+        err instanceof Error
+          ? err instanceof Error
+            ? err.message
+            : String(err)
+          : 'Failed to load scales'
+      );
 
       // Use dummy data for demo
       const dummyScales = [
@@ -183,7 +189,7 @@ export default function CityWeighingPage() {
       if (!response.ok) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const errorData = await response.json();
+        const errorData: { msg?: string } = await response.json();
         throw new Error(errorData.msg || 'Failed to create weigh ticket');
       }
 
@@ -196,7 +202,13 @@ export default function CityWeighingPage() {
       resetForm();
     } catch (err: unknown) {
       console.error('Error creating weigh ticket:', err);
-      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'Failed to create weigh ticket');
+      setError(
+        err instanceof Error
+          ? err instanceof Error
+            ? err.message
+            : String(err)
+          : 'Failed to create weigh ticket'
+      );
 
       // For demo purposes, create a dummy ticket
       if (process.env.NODE_ENV !== 'production') {
@@ -261,12 +273,7 @@ export default function CityWeighingPage() {
               <CardTitle>Record Weight</CardTitle>
             </CardHeader>
             <CardContent>
-              <Tabs
-                defaultValue="manual"
-                value={activeTab}
-                onValueChange={setActiveTab}
-                className="space-y-6"
-              >
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
                 <TabsList className="grid grid-cols-3 w-full max-w-md">
                   <TabsTrigger value="manual">Manual Entry</TabsTrigger>
                   <TabsTrigger value="camera">Camera Scan</TabsTrigger>

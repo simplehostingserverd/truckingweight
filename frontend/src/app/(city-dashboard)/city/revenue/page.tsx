@@ -67,7 +67,11 @@ const CityRevenuePageClient = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [timeRange, setTimeRange] = useState('6');
 
-  const [revenueData, setRevenueData] = useState({
+  const [revenueData, setRevenueData] = useState<{
+    labels: string[];
+    permitRevenue: number[];
+    fineRevenue: number[];
+  }>({
     labels: [],
     permitRevenue: [],
     fineRevenue: [],
@@ -81,7 +85,17 @@ const CityRevenuePageClient = () => {
     revenueGrowth: 0,
   });
 
-  const [recentTransactions, setRecentTransactions] = useState([]);
+  const [recentTransactions, setRecentTransactions] = useState<
+    {
+      id: number;
+      date: string;
+      type: string;
+      reference: string;
+      company: string;
+      amount: number;
+      status: string;
+    }[]
+  >([]);
 
   // Fetch revenue data
   const fetchRevenueData = async () => {
@@ -113,8 +127,11 @@ const CityRevenuePageClient = () => {
       setRevenueData(data);
 
       // Calculate revenue stats
-      const totalPermitRevenue = data.permitRevenue.reduce((sum, val) => sum + val, 0);
-      const totalFineRevenue = data.fineRevenue.reduce((sum, val) => sum + val, 0);
+      const totalPermitRevenue = data.permitRevenue.reduce(
+        (sum: number, val: number) => sum + val,
+        0
+      );
+      const totalFineRevenue = data.fineRevenue.reduce((sum: number, val: number) => sum + val, 0);
       const totalRevenue = totalPermitRevenue + totalFineRevenue;
 
       // Calculate growth (compare last month to previous month)
@@ -166,8 +183,8 @@ const CityRevenuePageClient = () => {
       fineRevenue,
     });
 
-    const totalPermitRevenue = permitRevenue.reduce((sum, val) => sum + val, 0);
-    const totalFineRevenue = fineRevenue.reduce((sum, val) => sum + val, 0);
+    const totalPermitRevenue = permitRevenue.reduce((sum: number, val: number) => sum + val, 0);
+    const totalFineRevenue = fineRevenue.reduce((sum: number, val: number) => sum + val, 0);
 
     setRevenueStats({
       totalRevenue: totalPermitRevenue + totalFineRevenue,

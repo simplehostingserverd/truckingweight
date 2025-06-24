@@ -55,7 +55,7 @@ export default function ResetPassword() {
   const searchParams = useSearchParams();
 
   // Get token from URL
-  const token = searchParams.get('token');
+  const token = searchParams ? searchParams.get('token') : null;
 
   useEffect(() => {
     if (!token) {
@@ -102,7 +102,7 @@ export default function ResetPassword() {
 
       // Redirect to login page after a delay
       setTimeout(() => {
-        router.push(createSafeUrl('/city/login'));
+        router.push('/city/login');
       }, 3000);
     } catch (err: unknown) {
       setError(
@@ -258,7 +258,7 @@ export default function ResetPassword() {
                   </Typography>
                   <Button
                     startDecorator={<ArrowBackIcon />}
-                    onClick={() => router.push(createSafeUrl('/city/login'))}
+                    onClick={() => router.push('/city/login')}
                     sx={{
                       bgcolor: 'primary.500',
                       color: 'white',

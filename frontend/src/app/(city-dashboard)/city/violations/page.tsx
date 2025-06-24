@@ -57,7 +57,33 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 
 // Create a client-side only component to avoid hydration issues
 const CityViolationsPageClient = () => {
-  const [violations, setViolations] = useState([]);
+  const [violations, setViolations] = useState<
+    {
+      id: number;
+      violationNumber: string;
+      companyName: string;
+      vehicleInfo: string;
+      violationType: string;
+      violationDate: string;
+      location: string;
+      weight?: number;
+      permittedWeight?: number;
+      overageAmount?: number;
+      dimensions?: {
+        length?: number;
+        width?: number;
+        height?: number;
+        permittedWidth?: number;
+        permittedHeight?: number;
+        overageAmount?: number;
+      };
+      fineAmount: number;
+      paymentStatus: string;
+      status: string;
+      notes: string;
+      createdAt: string;
+    }[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -93,9 +119,9 @@ const CityViolationsPageClient = () => {
 
       const data = await response.json();
       setViolations(data.violations || []);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error fetching violations:', err);
-      setError(err.message || 'Failed to load violations');
+      setError(err instanceof Error ? err.message : 'Failed to load violations');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
@@ -309,12 +335,7 @@ const CityViolationsPageClient = () => {
           </div>
         </div>
 
-        <Tabs
-          defaultValue="all"
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="space-y-6"
-        >
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid grid-cols-4 w-full max-w-md mx-auto">
             <TabsTrigger value="all">All ({violations.length})</TabsTrigger>
             <TabsTrigger value="open">Open ({openViolationsCount})</TabsTrigger>
@@ -353,7 +374,37 @@ const CityViolationsPageClient = () => {
 };
 
 // Violations table component
-const ViolationsTable = ({ violations, isLoading }) => {
+const ViolationsTable = ({
+  violations,
+  isLoading,
+}: {
+  violations: {
+    id: number;
+    violationNumber: string;
+    companyName: string;
+    vehicleInfo: string;
+    violationType: string;
+    violationDate: string;
+    location: string;
+    weight?: number;
+    permittedWeight?: number;
+    overageAmount?: number;
+    dimensions?: {
+      length?: number;
+      width?: number;
+      height?: number;
+      permittedWidth?: number;
+      permittedHeight?: number;
+      overageAmount?: number;
+    };
+    fineAmount: number;
+    paymentStatus: string;
+    status: string;
+    notes: string;
+    createdAt: string;
+  }[];
+  isLoading: boolean;
+}) => {
   if (isLoading) {
     return (
       <div className="space-y-4">
@@ -453,7 +504,7 @@ const ViolationsTable = ({ violations, isLoading }) => {
 };
 
 // Status badge component
-const StatusBadge = ({ status }) => {
+const StatusBadge = ({ status }: { status: string }) => {
   switch (status) {
     case 'Open':
       return (
@@ -482,7 +533,7 @@ const StatusBadge = ({ status }) => {
 };
 
 // Payment status badge component
-const PaymentStatusBadge = ({ status }) => {
+const PaymentStatusBadge = ({ status }: { status: string }) => {
   if (status === 'Paid') {
     return (
       <Badge className="ml-2 bg-green-500/20 text-green-400 hover:bg-green-500/20 border-green-500/30">

@@ -65,7 +65,17 @@ import {
 const CityUsersPageClient = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<
+    {
+      id: number;
+      name: string;
+      email: string;
+      role: string;
+      status: string;
+      lastLogin: string | null;
+      createdAt: string;
+    }[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -102,7 +112,7 @@ const CityUsersPageClient = () => {
         return;
       }
       setUserRole(userData.role);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error parsing user data:', err);
       router.push('/city/login');
     }
@@ -136,9 +146,9 @@ const CityUsersPageClient = () => {
 
       const data = await response.json();
       setUsers(data.users || []);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error fetching users:', err);
-      setError(err.message || 'Failed to load users');
+      setError(err instanceof Error ? err.message : 'Failed to load users');
       // Generate dummy data for testing
       generateDummyData();
     } finally {
@@ -223,18 +233,18 @@ const CityUsersPageClient = () => {
   const viewerCount = users.filter(user => user.role === 'viewer').length;
 
   // Handle form input changes
-  const handleInputChange = e => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewUser({ ...newUser, [name]: value });
   };
 
   // Handle role selection
-  const handleRoleChange = value => {
+  const handleRoleChange = (value: string) => {
     setNewUser({ ...newUser, role: value });
   };
 
   // Handle form submission
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError('');
 
@@ -498,7 +508,21 @@ const CityUsersPageClient = () => {
 };
 
 // Users table component
-const UsersTable = ({ users, isLoading }) => {
+const UsersTable = ({
+  users,
+  isLoading,
+}: {
+  users: {
+    id: number;
+    name: string;
+    email: string;
+    role: string;
+    status: string;
+    lastLogin: string | null;
+    createdAt: string;
+  }[];
+  isLoading: boolean;
+}) => {
   if (isLoading) {
     return (
       <div className="space-y-4">
@@ -578,7 +602,7 @@ const UsersTable = ({ users, isLoading }) => {
 };
 
 // Role badge component
-const RoleBadge = ({ role }) => {
+const RoleBadge = ({ role }: { role: string }) => {
   switch (role) {
     case 'admin':
       return (
@@ -614,7 +638,7 @@ const RoleBadge = ({ role }) => {
 };
 
 // Status badge component
-const StatusBadge = ({ status }) => {
+const StatusBadge = ({ status }: { status: string }) => {
   return status === 'active' ? (
     <Badge className="bg-green-500/20 text-green-400 hover:bg-green-500/20 border-green-500/30">
       Active

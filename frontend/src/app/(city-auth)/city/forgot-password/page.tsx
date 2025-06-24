@@ -230,7 +230,7 @@ export default function ForgotPassword() {
                   </Typography>
                   <Button
                     startDecorator={<ArrowBackIcon />}
-                    onClick={() => router.push(createSafeUrl('/city/login'))}
+                    onClick={() => router.push('/city/login')}
                     sx={{
                       bgcolor: 'primary.500',
                       color: 'white',

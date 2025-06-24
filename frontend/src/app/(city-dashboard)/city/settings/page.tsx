@@ -51,9 +51,9 @@ const CitySettingsPageClient = () => {
     // Account settings
     name: '',
     email: '',
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
+    currentPassword: '' as string | undefined,
+    newPassword: '' as string | undefined,
+    confirmPassword: '' as string | undefined,
 
     // Notification settings
     emailNotifications: true,
@@ -195,7 +195,7 @@ const CitySettingsPageClient = () => {
           return;
         }
 
-        if (userSettings.newPassword.length < 8) {
+        if (userSettings.newPassword && userSettings.newPassword.length < 8) {
           setError('New password must be at least 8 characters long');
           setIsSaving(false);
           return;
@@ -251,7 +251,7 @@ const CitySettingsPageClient = () => {
     }
   };
 
-  const handleInputChange = e => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserSettings({
       ...userSettings,

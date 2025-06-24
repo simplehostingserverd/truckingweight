@@ -37,7 +37,7 @@ export default function Register() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [captchaError, setCaptchaError] = useState('');
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const captchaRef = useRef<HCaptcha>(null); // TEMPORARILY DISABLED
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -197,7 +197,9 @@ export default function Register() {
     // Validate email before submission
     const emailValidation = validateEmail(email);
     if (!emailValidation.isValid || emailValidation.isDisposable) {
-      setError((emailValidation instanceof Error ? emailValidation.message : String(emailValidation)));
+      setError(
+        emailValidation instanceof Error ? emailValidation.message : String(emailValidation)
+      );
       setIsLoading(false);
       return;
     }
@@ -248,6 +250,10 @@ export default function Register() {
         throw authError;
       }
 
+      if (!authData.user) {
+        throw new Error('User not created');
+      }
+
       // 2. Create company
       const { data: companyData, error: companyError } = await supabase
         .from('companies')
@@ -282,7 +288,13 @@ export default function Register() {
       // Redirect to login page
       router.push('/login?registered=true');
     } catch (err: unknown) {
-      setError(err instanceof Error ? (err instanceof Error ? err.message : String(err)) : 'An error occurred during registration');
+      setError(
+        err instanceof Error
+          ? err instanceof Error
+            ? err.message
+            : String(err)
+          : 'An error occurred during registration'
+      );
       console.error('Registration error:', err);
     } finally {
       setIsLoading(false);

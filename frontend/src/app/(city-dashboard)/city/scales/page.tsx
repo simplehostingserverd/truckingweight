@@ -54,7 +54,19 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 
 // Create a client-side only component to avoid hydration issues
 const CityScalesPageClient = () => {
-  const [scales, setScales] = useState([]);
+  const [scales, setScales] = useState<
+    {
+      id: number;
+      name: string;
+      location: string;
+      scale_type: string;
+      status: string;
+      max_capacity: number;
+      precision: number;
+      calibration_date: string;
+      next_calibration_date: string;
+    }[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('all');
@@ -300,7 +312,23 @@ const CityScalesPageClient = () => {
 };
 
 // Scales table component
-const ScalesTable = ({ scales, isLoading }) => {
+const ScalesTable = ({
+  scales,
+  isLoading,
+}: {
+  scales: {
+    id: number;
+    name: string;
+    location: string;
+    scale_type: string;
+    status: string;
+    max_capacity: number;
+    precision: number;
+    calibration_date: string;
+    next_calibration_date: string;
+  }[];
+  isLoading: boolean;
+}) => {
   if (isLoading) {
     return (
       <div className="space-y-4">
@@ -377,7 +405,7 @@ const ScalesTable = ({ scales, isLoading }) => {
 };
 
 // Status badge component
-const StatusBadge = ({ status }) => {
+const StatusBadge = ({ status }: { status: string }) => {
   switch (status) {
     case 'Active':
       return (

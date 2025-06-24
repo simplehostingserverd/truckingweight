@@ -258,17 +258,8 @@ const nextConfig = {
     // Better scroll handling
     scrollRestoration: true,
 
-    // Enable webpack caching for CI/CD
-    turbotrace: {
-      logLevel: 'error',
-      memoryLimit: 4000, // Increase memory limit for better performance
-    },
-
     // Improved type checking
     typedRoutes: true,
-
-    // Serverless improvements
-    serverComponentsExternalPackages: ['sharp'],
 
     // Improved image optimization
     workerThreads: true,
@@ -289,6 +280,9 @@ const nextConfig = {
 
   // Transpile UI libraries
   transpilePackages: ['@mui/material', '@mui/joy', '@mui/icons-material', 'lucide-react'],
+
+  // External packages for server components
+  serverExternalPackages: ['sharp'],
 };
 
 export default nextConfig;
