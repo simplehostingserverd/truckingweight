@@ -177,6 +177,7 @@ export const checkStateCompliance = (
  * @returns Compliance result
  */
 export const checkCompliance = (vehicle: VehicleConfig, limits: WeightLimits): ComplianceResult => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { axles, grossWeight } = vehicle;
   const { axleWeights, axleSpacing } = axles;
 

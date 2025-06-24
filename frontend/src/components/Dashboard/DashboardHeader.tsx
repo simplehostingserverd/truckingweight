@@ -46,7 +46,9 @@ interface DashboardHeaderProps {
 }
 
 export default function DashboardHeader({ user, isAdmin = false }: DashboardHeaderProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);

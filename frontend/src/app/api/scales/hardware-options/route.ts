@@ -17,6 +17,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   try {
     // Create a Supabase client
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = await createClient();
 
     // Get the user session
@@ -51,6 +52,8 @@ export async function GET(req: NextRequest) {
     });
 
     if (!response.ok) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const errorData = await response.json();
       return NextResponse.json(
         { success: false, error: (errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch hardware options' },

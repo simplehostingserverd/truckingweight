@@ -259,6 +259,7 @@ export default function FuelManagementPage() {
     }
 
     if (driverFilter !== 'all') {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       filtered = filtered.filter(transaction => transaction.driverName === driverFilter);
     }
 

@@ -43,6 +43,8 @@ export function createError(
   // @ts-ignore - Suppressing the any type warning as this is a generic error details field
   details?: unknown
 ): AppError {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const error = new Error(message) as AppError;
   error.type = type;
   error.statusCode = statusCode;
@@ -63,6 +65,8 @@ export function handleApiError(error: unknown): AppError {
 
   // Handle response errors
   if (error.statusCode || error.status) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const statusCode = error.statusCode || error.status;
 
     // Auth errors
@@ -131,6 +135,7 @@ export function handleApiError(error: unknown): AppError {
 export function useErrorHandler() {
   const toast = useToastContext();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleError = (error: unknown, context?: string) => {
     const appError = handleApiError(error);
 

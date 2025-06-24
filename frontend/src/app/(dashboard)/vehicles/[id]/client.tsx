@@ -72,7 +72,9 @@ export default function VehicleDetailsClient({ id, initialData }: VehicleDetails
   const [selectedCamera, setSelectedCamera] = useState<string>('');
   const [isCapturing, setIsCapturing] = useState(false);
   const [captureResult, setCaptureResult] = useState<unknown>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {

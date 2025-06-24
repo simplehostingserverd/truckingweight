@@ -236,6 +236,7 @@ const RouteMap3D: React.FC<RouteMap3DProps> = ({ route, currentPosition }) => {
           setLoading(false);
         },
         undefined,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         error => {
           console.error('Error loading truck model:', error);
           // Fallback to a simple box

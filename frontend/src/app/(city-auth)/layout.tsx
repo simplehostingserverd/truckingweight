@@ -16,6 +16,7 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 
 export default async function CityAuthLayout({ children }: { children: React.ReactNode }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Check if user is authenticated

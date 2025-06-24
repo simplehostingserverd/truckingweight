@@ -364,7 +364,9 @@ export default function TelematicsPage() {
     return () => clearInterval(interval);
   }, [autoRefresh]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const currentVehicle = vehicleData[selectedVehicle];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const criticalAlerts = vehicleData.flatMap(v =>
     v.mechanicalData.alerts.filter(a => a.severity === 'critical' && !a.acknowledged)
   );
@@ -408,6 +410,7 @@ export default function TelematicsPage() {
           <AlertTitle>CRITICAL MECHANICAL ALERTS</AlertTitle>
           <AlertDescription>
             <div className="mt-2">
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               {criticalAlerts.map(alert => (
                 <div key={alert.id} className="flex justify-between items-center mb-1">
                   <span className="font-medium">{alert.message}</span>

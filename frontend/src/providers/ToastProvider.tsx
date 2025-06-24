@@ -72,6 +72,8 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     [toast]
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const error = useCallback(
     (options: Omit<ToastOptions, 'type'>) => toast({ ...options, type: 'error' }),
     [toast]

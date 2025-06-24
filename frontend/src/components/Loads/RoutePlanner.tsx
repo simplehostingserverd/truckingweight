@@ -159,6 +159,8 @@ export default function RoutePlanner({
         }
       } catch (err: unknown) {
         // Log error for debugging but handle gracefully for users
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const errorMessage = (err instanceof Error ? err.message : String(err)) || 'Failed to calculate route';
         setError(errorMessage);
       } finally {

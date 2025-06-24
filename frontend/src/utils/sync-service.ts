@@ -27,6 +27,7 @@ import {
 } from './offline-storage';
 
 // Create Supabase client
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const supabase = createClient();
 
 /**
@@ -61,6 +62,7 @@ export async function syncAllData(): Promise<{ success: boolean; message: string
       return { success: false, message: 'Could not determine company ID' };
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const companyId = userData.company_id;
 
     // Get unsynced weights

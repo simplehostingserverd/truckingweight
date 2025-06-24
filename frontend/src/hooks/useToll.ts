@@ -129,6 +129,8 @@ export const useToll = () => {
       });
 
       if (!response.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
       }

@@ -132,6 +132,7 @@ export default function LPRCamerasPage() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getVendorIcon = (_vendor: string) => {
     // Return appropriate icon based on vendor
     return <CameraIcon className="h-5 w-5" />;

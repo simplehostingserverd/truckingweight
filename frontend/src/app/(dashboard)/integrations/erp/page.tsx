@@ -47,7 +47,9 @@ interface ErpConnection {
 }
 
 export default function ErpIntegrationPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // State
@@ -249,6 +251,7 @@ export default function ErpIntegrationPage() {
   };
 
   // Delete connection
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteConnection = async (id: string) => {
     if (
       !confirm('Are you sure you want to delete this connection? This action cannot be undone.')

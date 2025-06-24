@@ -16,6 +16,7 @@ import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Check if user is authenticated

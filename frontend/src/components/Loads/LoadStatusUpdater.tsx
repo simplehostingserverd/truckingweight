@@ -34,6 +34,7 @@ export default function LoadStatusUpdater({
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const statusOptions = [

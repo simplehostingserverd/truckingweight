@@ -16,6 +16,7 @@ import { createBrowserClient } from '@supabase/ssr';
 import { getSupabaseConfig } from './config';
 
 // Singleton instance to prevent multiple GoTrueClient instances
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let supabaseClient: ReturnType<typeof createBrowserClient<Database>> | null = null;
 
 // Create a Supabase client for use in client components

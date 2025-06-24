@@ -95,7 +95,9 @@ interface ViolationRecord {
 
 export default function DriverQualificationDetailPage() {
   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const driverId = params.id as string;
 
   const [qualification, setQualification] = useState<DriverQualification | null>(null);

@@ -398,6 +398,7 @@ const CityMapPageClient = () => {
                             }))
                           : []),
                         ...(showActiveVehicles
+                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
                           ? mapData.activeVehicles.map(vehicle => ({
                               id: `vehicle-${vehicle.id}`,
                               latitude: vehicle.coordinates.lat,
@@ -570,6 +571,7 @@ const CityMapPageClient = () => {
                       </div>
                     ) : (
                       <div className="space-y-3">
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         {mapData.activeVehicles.map(vehicle => (
                           <div
                             key={vehicle.id}

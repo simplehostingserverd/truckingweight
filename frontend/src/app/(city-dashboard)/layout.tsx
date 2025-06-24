@@ -26,6 +26,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<unknown>(null);
   const [isMounted, setIsMounted] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
 
   useEffect(() => {
@@ -35,6 +36,7 @@ const CityDashboardLayoutClient = ({ children }: { children: React.ReactNode }) 
       try {
         // First try to use Supabase Auth
         const { createClient } = await import('@/utils/supabase/client');
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const supabase = createClient();
 
         // Get the current session

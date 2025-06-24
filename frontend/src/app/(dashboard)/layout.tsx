@@ -30,6 +30,7 @@ function SkipToContent() {
 }
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const {

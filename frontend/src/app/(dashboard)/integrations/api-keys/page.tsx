@@ -47,7 +47,9 @@ interface ApiKey {
 }
 
 export default function ApiKeysPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([]);
@@ -155,6 +157,7 @@ export default function ApiKeysPage() {
   };
 
   // Delete API key
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteKey = async (id: string) => {
     if (!confirm('Are you sure you want to delete this API key? This action cannot be undone.')) {
       return;

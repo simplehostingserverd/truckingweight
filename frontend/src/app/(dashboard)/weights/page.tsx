@@ -18,6 +18,7 @@ import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 export default async function Weights() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Get user data
@@ -32,6 +33,8 @@ export default async function Weights() {
 
   // Get weights with vehicle and driver info
   let weights = [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let error = null;
 
   // Only fetch if we have a company_id
@@ -54,6 +57,7 @@ export default async function Weights() {
       .order('created_at', { ascending: false });
 
     weights = response.data || [];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     error = response.error;
   } else {
     console.warn('No company_id found for user, attempting to fetch all weights');

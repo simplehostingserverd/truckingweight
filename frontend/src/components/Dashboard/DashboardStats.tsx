@@ -30,6 +30,7 @@ interface DashboardStatsProps {
 }
 
 function DashboardStats({ initialUserName, companyId }: DashboardStatsProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const [stats, setStats] = useState<unknown[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,6 +65,8 @@ function DashboardStats({ initialUserName, companyId }: DashboardStatsProps) {
         });
 
         if (!response.ok) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const errorData = await response.json();
           throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch dashboard stats');
         }

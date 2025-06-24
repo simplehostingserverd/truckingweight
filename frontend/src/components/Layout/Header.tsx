@@ -20,6 +20,7 @@ import LogoutButton from '@/components/Auth/LogoutButton';
 
 const Header: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {
@@ -36,6 +37,7 @@ const Header: React.FC = () => {
     // Listen for auth changes
     const {
       data: { subscription },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setIsLoggedIn(!!session);
     });

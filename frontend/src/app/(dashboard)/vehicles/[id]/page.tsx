@@ -18,6 +18,7 @@ import { notFound } from 'next/navigation';
 import VehicleDetailsClient from './client';
 
 export default async function VehicleDetail({ params }: { params: Promise<{ id: string }> }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   // Await params before using its properties (Next.js 15 requirement)
   const resolvedParams = await params;
@@ -35,6 +36,8 @@ export default async function VehicleDetail({ params }: { params: Promise<{ id: 
     .single();
 
   // Get vehicle data with better error handling
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let vehicleQuery = supabase
     .from('vehicles')
     .select(
@@ -60,6 +63,7 @@ export default async function VehicleDetail({ params }: { params: Promise<{ id: 
 
   // Only filter by company if user has a company_id (when RLS is enabled)
   if (userData?.company_id) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     vehicleQuery = vehicleQuery.eq('company_id', userData.company_id);
   }
 

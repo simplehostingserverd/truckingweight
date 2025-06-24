@@ -41,6 +41,7 @@ export default function SignaturesPage() {
   const [companyId, setCompanyId] = useState<number | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {

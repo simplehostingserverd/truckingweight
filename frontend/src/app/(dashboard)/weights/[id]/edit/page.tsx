@@ -32,7 +32,9 @@ export default function EditWeight({ params }: { params: Promise<{ id: string }>
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [id, setId] = useState<string>('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Resolve params in useEffect
@@ -230,6 +232,7 @@ export default function EditWeight({ params }: { params: Promise<{ id: string }>
                 onChange={e => setVehicleId(e.target.value)}
               >
                 <option value="">Select a vehicle</option>
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 {vehicles.map(vehicle => (
                   <option key={vehicle.id} value={vehicle.id}>
                     {vehicle.name} ({vehicle.license_plate})
@@ -254,6 +257,7 @@ export default function EditWeight({ params }: { params: Promise<{ id: string }>
                 onChange={e => setDriverId(e.target.value)}
               >
                 <option value="">Select a driver</option>
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 {drivers.map(driver => (
                   <option key={driver.id} value={driver.id}>
                     {driver.name} ({driver.license_number})

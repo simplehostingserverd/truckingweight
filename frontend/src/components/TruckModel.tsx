@@ -124,6 +124,7 @@ const TruckModel: React.FC<TruckModelProps> = ({
         }
       },
       undefined,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       error => {
         console.error('Error loading model:', error);
       }

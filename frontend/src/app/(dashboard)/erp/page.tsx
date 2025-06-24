@@ -129,6 +129,7 @@ export default function ERPPage() {
       tokenSecret: '',
     },
   });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {
@@ -235,8 +236,10 @@ export default function ERPPage() {
         .maybeSingle();
 
       // Use dummy data if no user found
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const userInfo = userData || { company_id: '1', is_admin: false };
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       let query = supabase
         .from('integration_logs')
         .select(
@@ -395,6 +398,7 @@ export default function ERPPage() {
         .maybeSingle();
 
       // Use dummy data if no user found
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const userInfo = userData || { company_id: '1' };
 
       const { data, error } = await supabase

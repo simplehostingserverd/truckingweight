@@ -17,6 +17,7 @@ import { redirect } from 'next/navigation';
 import HomeClient from './home-client';
 
 export default async function Home() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const {

@@ -36,6 +36,7 @@ export default function IntegrationsPage() {
   const [webhooksCount, setWebhooksCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {

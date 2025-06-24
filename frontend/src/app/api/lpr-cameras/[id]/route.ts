@@ -16,6 +16,7 @@ import { createClient } from '@/utils/supabase/server';
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
     // Await params before using its properties (Next.js 15 requirement)
     const resolvedParams = await params;
@@ -51,6 +52,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
     const resolvedParams = await params;
     const cameraId = resolvedParams.id;
@@ -144,6 +146,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
     const resolvedParams = await params;
     const cameraId = resolvedParams.id;

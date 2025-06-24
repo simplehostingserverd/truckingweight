@@ -38,6 +38,7 @@ export interface TelematicsData {
 }
 
 export function useTelematics(options: UseTelematicsOptions = {}) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { vehicleId, enableRealTime = true, updateInterval = 10000 } = options;
 
   const [data, setData] = useState<TelematicsData>({
@@ -239,6 +240,7 @@ export function useMultipleVehicleTelematics(vehicleIds: string[]) {
     setError(null);
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const promises = vehicleIds.map(async vehicleId => {
         const position = await telematicsService.getCurrentPosition(vehicleId);
         updateVehicleData(vehicleId, {

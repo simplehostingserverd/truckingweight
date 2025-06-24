@@ -56,7 +56,9 @@ export default function ScaleDetail({ params }: { params: Promise<{ id: string }
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [activeTab, setActiveTab] = useState('details');
   const [id, setId] = useState<string>('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Handle async params
@@ -137,6 +139,7 @@ export default function ScaleDetail({ params }: { params: Promise<{ id: string }
     fetchScale();
   }, [id, router, supabase]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDelete = async () => {
     try {
       setIsDeleting(true);

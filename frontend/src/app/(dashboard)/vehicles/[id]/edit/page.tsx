@@ -44,7 +44,9 @@ export default function EditVehicle({ params }: { params: Promise<{ id: string }
   const [isSuccess, setIsSuccess] = useState(false);
   const [id, setId] = useState<string>('');
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Resolve params in useEffect

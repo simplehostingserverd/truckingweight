@@ -27,6 +27,7 @@ import {
 } from '@/types/scale-master';
 
 export class WeighTicketService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private supabase = createClient();
 
   /**

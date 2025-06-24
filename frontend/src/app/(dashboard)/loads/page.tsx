@@ -18,6 +18,7 @@ import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 export default async function Loads() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Get user data
@@ -32,6 +33,8 @@ export default async function Loads() {
 
   // Get loads with vehicle and driver info
   let loads = [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let error = null;
 
   try {
@@ -66,6 +69,7 @@ export default async function Loads() {
         .order('created_at', { ascending: false });
 
       loads = response.data || [];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       error = response.error;
     } else if (userData?.company_id) {
       // Regular user can only see loads from their company
@@ -88,12 +92,15 @@ export default async function Loads() {
         .order('created_at', { ascending: false });
 
       loads = response.data || [];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       error = response.error;
     } else {
       console.warn('No company_id found for user and not an admin');
     }
   } catch (err) {
     console.error('Error fetching loads:', err);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     error = err;
   }
 

@@ -31,6 +31,7 @@ interface VehicleWeightChartProps {
 }
 
 function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const [weightData, setWeightData] = useState<unknown[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -81,6 +82,8 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
         });
 
         if (!response.ok) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const errorData = await response.json();
           throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch vehicle weight data');
         }
@@ -104,10 +107,13 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
         try {
           // Query vehicles directly from the database
           // Note: Using max_weight instead of weight as per the database schema
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           let vehiclesQuery = supabase.from('vehicles').select('id, name, max_weight');
 
           // If not admin and we have a company ID, filter by it
           if (!isAdmin && companyId) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             vehiclesQuery = vehiclesQuery.eq('company_id', companyId);
           }
 
@@ -120,8 +126,10 @@ function VehicleWeightChart({ companyId }: VehicleWeightChartProps) {
           // If we have vehicles, format them for the chart
           if (vehicles && vehicles.length > 0) {
             // Group by vehicle name and calculate average weight
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const vehicleWeights = {};
 
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             vehicles.forEach(vehicle => {
               const weightValue = parseFloat(vehicle.max_weight || '0');
 

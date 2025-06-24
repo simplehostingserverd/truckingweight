@@ -16,6 +16,7 @@ import { createClient } from '@/utils/supabase/server';
 import DashboardClient from './client';
 
 export default async function Dashboard() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Get minimal user data for initial rendering

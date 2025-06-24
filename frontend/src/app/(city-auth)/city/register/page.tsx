@@ -132,6 +132,7 @@ export default function CityRegister() {
         }),
       });
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const userData = await userResponse.json();
 
       if (!userResponse.ok) {

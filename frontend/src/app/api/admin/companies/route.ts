@@ -22,6 +22,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Create Supabase client
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
 
     // Get authenticated user

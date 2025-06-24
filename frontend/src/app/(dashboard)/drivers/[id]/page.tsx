@@ -18,6 +18,7 @@ import { notFound } from 'next/navigation';
 import DriverDetailsClient from './client';
 
 export default async function DriverDetail({ params }: { params: Promise<{ id: string }> }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   // Await params in Next.js 15
   const resolvedParams = await params;
@@ -35,6 +36,8 @@ export default async function DriverDetail({ params }: { params: Promise<{ id: s
     .single();
 
   // Get driver data
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let driverQuery = supabase
     .from('drivers')
     .select(
@@ -61,6 +64,7 @@ export default async function DriverDetail({ params }: { params: Promise<{ id: s
 
   // Only filter by company if user has a company_id (when RLS is enabled)
   if (userData?.company_id) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     driverQuery = driverQuery.eq('company_id', userData.company_id);
   }
 

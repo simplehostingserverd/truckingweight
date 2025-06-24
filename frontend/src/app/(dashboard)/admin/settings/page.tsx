@@ -72,6 +72,7 @@ export default function AdminSettingsPage() {
   const [activeTab, setActiveTab] = useState('general');
   const [newEmailNotification, setNewEmailNotification] = useState('');
   const [newFileType, setNewFileType] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {

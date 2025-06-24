@@ -29,6 +29,7 @@ interface ComplianceCheckProps {
 }
 
 export default function ComplianceCheck({ ticketId }: ComplianceCheckProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const [ticket, setTicket] = useState<WeighTicket | null>(null);
   const [axleWeights, setAxleWeights] = useState<AxleWeight[]>([]);

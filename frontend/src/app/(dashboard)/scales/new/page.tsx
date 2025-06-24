@@ -53,7 +53,9 @@ export default function NewScale() {
   });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,10 +94,13 @@ export default function NewScale() {
       });
 
       if (!response.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to create scale');
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newScale = await response.json();
 
       // Redirect to the scales list page

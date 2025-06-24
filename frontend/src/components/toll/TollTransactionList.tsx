@@ -185,6 +185,7 @@ const TollTransactionList: React.FC = () => {
                   onChange={e => handleFilterChange('vehicle_id', e.target.value)}
                 >
                   <MenuItem value="">All Vehicles</MenuItem>
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
                   {vehicles.map(vehicle => (
                     <MenuItem key={vehicle.id} value={vehicle.id.toString()}>
                       {vehicle.make} {vehicle.model} ({vehicle.license_plate})

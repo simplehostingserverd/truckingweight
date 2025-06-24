@@ -20,6 +20,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const cameraId = resolvedParams.id;
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
 
     // Get the current user

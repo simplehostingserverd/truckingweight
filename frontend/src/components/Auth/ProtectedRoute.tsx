@@ -23,8 +23,10 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {

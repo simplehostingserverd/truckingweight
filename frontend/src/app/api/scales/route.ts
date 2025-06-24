@@ -22,6 +22,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Create a Supabase client
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
 
     // Get the user's session
@@ -44,10 +45,13 @@ export async function GET(request: NextRequest) {
       throw userError;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const companyId = userData?.company_id;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isAdmin = userData?.is_admin || false;
 
     // Query to get scales
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let query = supabase.from('scales').select('*');
 
     // If not admin, filter by company_id

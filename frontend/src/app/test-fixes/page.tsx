@@ -18,6 +18,7 @@ export default function TestFixesPage() {
 
   useEffect(() => {
     const runTests = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const supabase = createClient();
 
       // Test 1: Signatures table access
@@ -62,6 +63,7 @@ export default function TestFixesPage() {
         img.onload = () => {
           setTestResults(prev => ({ ...prev, images: `✅ Success: Placeholder images load` }));
         };
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         img.onerror = () => {
           setTestResults(prev => ({ ...prev, images: `❌ Error: Placeholder images blocked` }));
         };

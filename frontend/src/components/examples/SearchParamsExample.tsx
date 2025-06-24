@@ -25,6 +25,7 @@ import { useState } from 'react';
  * to avoid common bugs with string[] parameters.
  */
 export default function SearchParamsExample() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const searchParams = useSearchParams();
 

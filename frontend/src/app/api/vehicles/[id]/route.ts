@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
     const { data, error } = await supabase.from('vehicles').select('*').eq('id', id).single();
 
@@ -20,6 +21,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
     const body = await request.json();
 
@@ -46,6 +48,7 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
 
     const { error } = await supabase.from('vehicles').delete().eq('id', id);

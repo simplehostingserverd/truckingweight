@@ -40,6 +40,7 @@ import { uploadCityLogo } from '@/utils/supabase/storage';
 
 // Create a client-side only component to avoid hydration issues
 const CityProfilePageClient = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -86,6 +87,7 @@ const CityProfilePageClient = () => {
     }
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const userData = JSON.parse(cityUser);
       if (userData.role !== 'admin') {
         router.push('/city/dashboard');

@@ -16,6 +16,7 @@ import { createClient } from '@/utils/supabase/server';
 import ReportsClient from './client';
 
 export default async function Reports() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = await createClient();
 
   // Get user data

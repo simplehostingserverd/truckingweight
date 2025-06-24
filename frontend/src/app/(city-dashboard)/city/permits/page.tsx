@@ -213,6 +213,7 @@ const CityPermitsPageClient = () => {
   });
 
   // Get counts for tabs
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const activePermitsCount = permits.filter(permit => permit.status === 'Active').length;
   const pendingPermitsCount = permits.filter(permit => permit.status === 'Pending').length;
   const expiredPermitsCount = permits.filter(permit => permit.status === 'Expired').length;

@@ -33,6 +33,7 @@ export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
   // Create a Supabase client for the middleware
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

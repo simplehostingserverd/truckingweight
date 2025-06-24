@@ -63,6 +63,7 @@ import {
 
 // Create a client-side only component to avoid hydration issues
 const CityUsersPageClient = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -94,6 +95,7 @@ const CityUsersPageClient = () => {
     }
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const userData = JSON.parse(cityUser);
       if (userData.role !== 'admin') {
         router.push('/city/dashboard');
@@ -345,12 +347,7 @@ const CityUsersPageClient = () => {
           </div>
         </div>
 
-        <Tabs
-          defaultValue="all"
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="space-y-6"
-        >
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid grid-cols-5 w-full max-w-2xl mx-auto">
             <TabsTrigger value="all">All ({users.length})</TabsTrigger>
             <TabsTrigger value="admin">Admin ({adminCount})</TabsTrigger>

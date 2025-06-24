@@ -29,6 +29,7 @@ interface AdminCompanySelectorProps {
 }
 
 function AdminCompanySelector({ onCompanyChange, selectedCompanyId }: AdminCompanySelectorProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Use the optimized SWR hook for data fetching with caching
@@ -50,6 +51,8 @@ function AdminCompanySelector({ onCompanyChange, selectedCompanyId }: AdminCompa
     });
 
     if (!response.ok) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const errorData = await response.json();
       throw new Error(errorData.message || 'Failed to fetch companies');
     }

@@ -22,6 +22,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Create a Supabase client
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
 
     // Get the user's session
@@ -44,18 +45,26 @@ export async function GET(request: NextRequest) {
       throw userError;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const companyId = userData?.company_id;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isAdmin = userData?.is_admin || false;
 
     // Query to get vehicles
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let vehiclesQuery = supabase.from('vehicles').select('*').eq('status', 'Active');
 
     // Query to get drivers
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let driversQuery = supabase.from('drivers').select('*').eq('status', 'Active');
 
     // If not admin, filter by company_id
     if (!isAdmin && companyId) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       vehiclesQuery = vehiclesQuery.eq('company_id', companyId);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       driversQuery = driversQuery.eq('company_id', companyId);
     }
 

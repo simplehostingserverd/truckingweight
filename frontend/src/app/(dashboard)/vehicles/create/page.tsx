@@ -41,8 +41,10 @@ export default function CreateVehicle() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   null;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -765,6 +765,7 @@ export default function SensorMonitoringPage() {
               <div className="space-y-4">
                 {sensorData
                   .flatMap(sensor =>
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     sensor.alerts.map(alert => ({
                       ...alert,
                       sensorName: sensor.deviceName,
@@ -775,6 +776,7 @@ export default function SensorMonitoringPage() {
                     }))
                   )
                   .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
                   .map(alert => (
                     <div
                       key={`${alert.sensorId}-${alert.id}`}

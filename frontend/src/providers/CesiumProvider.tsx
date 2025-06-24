@@ -55,6 +55,8 @@ export function CesiumProvider({ children }: { children: React.ReactNode }) {
       };
 
       // Handle script loading errors
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       script.onerror = error => {
         console.error('Failed to load Cesium script:', error);
       };

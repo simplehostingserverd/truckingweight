@@ -61,6 +61,7 @@ export default function CityRegister() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -134,6 +135,7 @@ export default function CityRegister() {
         }),
       });
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const userData = await userResponse.json();
 
       if (!userResponse.ok) {

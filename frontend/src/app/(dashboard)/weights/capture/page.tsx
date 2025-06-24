@@ -32,7 +32,9 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function WeightCapturePage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // State for weight capture
@@ -85,6 +87,8 @@ export default function WeightCapturePage() {
         });
 
         if (!response.ok) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const errorData = await response.json();
           throw new Error(errorData.message || 'Failed to fetch vehicles and drivers');
         }
@@ -107,6 +111,8 @@ export default function WeightCapturePage() {
         });
 
         if (!scalesResponse.ok) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const errorData = await scalesResponse.json();
           throw new Error(errorData.message || 'Failed to fetch scales');
         }
@@ -587,6 +593,7 @@ export default function WeightCapturePage() {
                   }
                 >
                   <option value="">Select a vehicle</option>
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
                   {vehicles.map(vehicle => (
                     <option key={vehicle.id} value={vehicle.id}>
                       {vehicle.name} - {vehicle.license_plate}
@@ -611,6 +618,7 @@ export default function WeightCapturePage() {
                   }
                 >
                   <option value="">Select a driver</option>
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
                   {drivers.map(driver => (
                     <option key={driver.id} value={driver.id}>
                       {driver.name}

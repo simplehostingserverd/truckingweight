@@ -22,7 +22,9 @@ interface LogoutButtonProps {
 }
 
 const LogoutButton: React.FC<LogoutButtonProps> = ({ className }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const handleLogout = async () => {

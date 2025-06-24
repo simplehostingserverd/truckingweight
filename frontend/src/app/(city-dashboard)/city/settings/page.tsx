@@ -35,6 +35,7 @@ import { useEffect, useState } from 'react';
 
 // Create a client-side only component to avoid hydration issues
 const CitySettingsPageClient = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -115,6 +116,7 @@ const CitySettingsPageClient = () => {
         throw new Error('Failed to fetch user data');
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const userData = await userResponse.json();
       setUserData(userData.user);
 

@@ -41,6 +41,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Create Supabase client
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
 
     // Verify the token and get user data

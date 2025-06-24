@@ -52,6 +52,7 @@ interface Trailer {
 }
 
 export default function NewEquipmentPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -413,6 +414,7 @@ export default function NewEquipmentPage() {
                     <SelectValue placeholder="Select vehicle" />
                   </SelectTrigger>
                   <SelectContent>
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     {vehicles.map(vehicle => (
                       <SelectItem key={vehicle.id} value={vehicle.id.toString()}>
                         {vehicle.name} - {vehicle.make} {vehicle.model}

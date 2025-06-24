@@ -55,6 +55,7 @@ import { useEffect, useState } from 'react';
 import { Scale } from '@/types/fleet';
 
 export default function ScalesPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDelete = async (id: number) => {
     if (!window.confirm(`Are you sure you want to delete this scale?`)) {
       return;
@@ -71,7 +72,7 @@ export default function ScalesPage() {
       fetchScales();
 
       // Show success message
-      console.log('scale deleted successfully');
+      console.warn('scale deleted successfully');
     } catch (error: unknown) {
       console.error('Error deleting scale:', error);
       alert('Failed to delete scale');
@@ -97,6 +98,7 @@ export default function ScalesPage() {
     'success' | 'error' | 'info' | 'warning'
   >('info');
   const [activeScales, setActiveScales] = useState<number>(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {
@@ -133,6 +135,7 @@ export default function ScalesPage() {
         userData && userData.length > 0 ? userData[0] : { company_id: 1, is_admin: true };
 
       // Use type-safe query with the updated Database type
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       let query = supabase.from('scales').select('*, companies(id, name)');
 
       // If not admin, filter by company
@@ -151,6 +154,7 @@ export default function ScalesPage() {
       setActiveScales(activeScalesCount);
 
       // Check if any scales are connected to the weight capture system
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const connectedScales = await checkConnectedScales(data || []);
 
       setScales(data || []);

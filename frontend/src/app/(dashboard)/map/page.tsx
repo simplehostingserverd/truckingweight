@@ -258,6 +258,7 @@ export default function MapPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 {mockAlerts.map(alert => (
                   <div key={alert.id} className={`p-3 rounded-lg ${getAlertColor(alert.type)}`}>
                     <div className="flex justify-between items-start mb-1">

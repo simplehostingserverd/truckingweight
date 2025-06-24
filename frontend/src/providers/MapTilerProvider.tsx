@@ -50,6 +50,7 @@ export function MapTilerProvider({ children }: { children: React.ReactNode }) {
         }
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       script.onerror = () => {
         console.error('Failed to load MapTiler SDK');
       };

@@ -83,12 +83,14 @@ export default function CityDashboardHeader({ user }: CityDashboardHeaderProps) 
     setMounted(true);
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
 
   const handleLogout = async () => {
     try {
       // Import Supabase client dynamically to avoid SSR issues
       const { createClient } = await import('@/utils/supabase/client');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const supabase = createClient();
 
       // Sign out using Supabase Auth

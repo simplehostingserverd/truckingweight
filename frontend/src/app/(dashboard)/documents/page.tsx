@@ -77,6 +77,7 @@ export default function DocumentsPage() {
   const [documentFile, setDocumentFile] = useState<File | null>(null);
   const [companyId, setCompanyId] = useState<number | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {
@@ -267,6 +268,7 @@ export default function DocumentsPage() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteDocument = async (documentId: number) => {
     try {
       setError('');

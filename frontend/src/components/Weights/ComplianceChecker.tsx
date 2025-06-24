@@ -131,6 +131,7 @@ export default function ComplianceChecker({
 
   // Check compliance
   const checkCompliance = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const vehicleConfig: VehicleConfig = {
       type: vehicleType,
       axles: {

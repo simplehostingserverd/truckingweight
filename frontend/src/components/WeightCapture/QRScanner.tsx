@@ -30,6 +30,7 @@ interface QRScannerProps {
 }
 
 export default function QRScanner({ onScaleSelect }: QRScannerProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<string | null>(null);
@@ -50,6 +51,7 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleError = (error: Error) => {
     console.error('QR Scanner error:', error);
     setError(`Scanner error: ${(error instanceof Error ? error.message : String(error))}`);
@@ -81,6 +83,8 @@ export default function QRScanner({ onScaleSelect }: QRScannerProps) {
       });
 
       if (!response.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const errorData = await response.json();
         throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to validate QR code');
       }

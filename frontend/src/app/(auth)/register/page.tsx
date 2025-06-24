@@ -38,8 +38,11 @@ export default function Register() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [captchaError, setCaptchaError] = useState('');
   const canvasRef = useRef(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const captchaRef = useRef<HCaptcha>(null); // TEMPORARILY DISABLED
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Calculate form progress whenever form fields change

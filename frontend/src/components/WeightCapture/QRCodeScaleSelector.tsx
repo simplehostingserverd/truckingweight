@@ -25,6 +25,7 @@ interface QRCodeScaleSelectorProps {
 }
 
 export default function QRCodeScaleSelector({ onScaleSelected }: QRCodeScaleSelectorProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const [scales, setScales] = useState<Scale[]>([]);
   const [selectedScale, setSelectedScale] = useState<Scale | null>(null);

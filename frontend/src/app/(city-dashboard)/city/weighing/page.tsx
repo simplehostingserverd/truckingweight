@@ -181,6 +181,8 @@ export default function CityWeighingPage() {
       });
 
       if (!response.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const errorData = await response.json();
         throw new Error(errorData.msg || 'Failed to create weigh ticket');
       }

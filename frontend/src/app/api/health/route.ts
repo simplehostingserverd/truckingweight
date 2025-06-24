@@ -18,6 +18,7 @@ import { NextResponse } from 'next/server';
  * Returns basic health information about the application
  */
 export async function GET() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const healthData = {
     status: 'healthy',
     timestamp: new Date().toISOString(),

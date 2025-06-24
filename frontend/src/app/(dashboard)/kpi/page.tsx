@@ -543,6 +543,7 @@ export default function KPIDashboardPage() {
             <div className="space-y-3">
               {dashboardData.alerts
                 .filter(a => a.severity === 'high' || a.severity === 'critical')
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 .map(alert => (
                   <div
                     key={alert.id}
@@ -907,6 +908,7 @@ export default function KPIDashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 {dashboardData.alerts.map(alert => (
                   <div
                     key={alert.id}

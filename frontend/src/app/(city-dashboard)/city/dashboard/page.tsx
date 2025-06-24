@@ -256,6 +256,7 @@ const CityDashboardPageClient = () => {
     ];
 
     // Vehicle types and states for more realistic data
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const vehicleTypes = ['Semi', 'Dump Truck', 'Tanker', 'Flatbed', 'Box Truck'];
     const states = ['TX', 'CA', 'FL', 'NY', 'IL', 'PA', 'OH', 'GA', 'NC', 'MI'];
 
@@ -266,6 +267,7 @@ const CityDashboardPageClient = () => {
 
       const companyIndex = Math.floor(Math.random() * companyNames.length);
       const scaleIndex = Math.floor(Math.random() * scaleNames.length);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const vehicleType = vehicleTypes[Math.floor(Math.random() * vehicleTypes.length)];
       const state = states[Math.floor(Math.random() * states.length)];
       const plateNumber = `${state}-${Math.floor(1000 + Math.random() * 9000)}`;

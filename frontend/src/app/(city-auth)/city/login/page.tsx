@@ -55,6 +55,7 @@ export default function CityLogin() {
   const [rememberMe, setRememberMe] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_showDemoLogin, setShowDemoLogin] = useState(process.env.NODE_ENV === 'development');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,6 +65,7 @@ export default function CityLogin() {
     try {
       // Import Supabase client dynamically to avoid SSR issues
       const { createClient } = await import('@/utils/supabase/client');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const supabase = createClient();
 
       // First try direct Supabase Auth
@@ -160,6 +162,7 @@ export default function CityLogin() {
     try {
       // Import Supabase client dynamically to avoid SSR issues
       const { createClient } = await import('@/utils/supabase/client');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const supabase = createClient();
 
       // Try to sign in with demo credentials

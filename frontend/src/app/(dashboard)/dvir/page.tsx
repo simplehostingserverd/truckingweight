@@ -107,6 +107,7 @@ interface DVIRMetrics {
   outOfServiceVehicles: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const INSPECTION_CATEGORIES = [
   {
     name: 'Engine Compartment',

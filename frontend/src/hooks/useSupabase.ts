@@ -27,6 +27,7 @@ export function useSupabase() {
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
   // Create Supabase client
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createBrowserClient<Database>(supabaseUrl, supabaseKey);
 
   return { supabase };

@@ -110,11 +110,13 @@ const TollAccountList: React.FC = () => {
     handleMenuClose();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteClick = () => {
     setDeleteDialogOpen(true);
     handleMenuClose();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteConfirm = async () => {
     if (selectedAccount) {
       try {

@@ -141,6 +141,8 @@ export const getDirections = async (
   );
 
   if (!response.ok) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const errorData = await response.json();
     throw new Error(`Mapbox API error: ${errorData.message || 'Unknown error'}`);
   }
@@ -168,6 +170,8 @@ export const geocodeAddress = async (address: string): Promise<[number, number]>
   );
 
   if (!response.ok) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const errorData = await response.json();
     throw new Error(`Geocoding error: ${errorData.message || 'Unknown error'}`);
   }

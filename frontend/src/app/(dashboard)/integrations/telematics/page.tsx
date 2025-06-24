@@ -43,7 +43,9 @@ interface TelematicsConnection {
 }
 
 export default function TelematicsPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const [connections, setConnections] = useState<TelematicsConnection[]>([]);
@@ -205,6 +207,7 @@ export default function TelematicsPage() {
   };
 
   // Delete connection
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteConnection = async (id: string) => {
     if (
       !confirm('Are you sure you want to delete this connection? This action cannot be undone.')

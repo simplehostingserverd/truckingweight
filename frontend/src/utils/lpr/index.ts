@@ -138,6 +138,7 @@ export async function captureLicensePlate(cameraId: string): Promise<LPRCaptureR
 export async function captureLPRImage(cameraId: string): Promise<LPRCaptureResult> {
   try {
     // Get camera configuration
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
     const { data: camera, error: cameraError } = await supabase
       .from('lpr_cameras')
@@ -343,6 +344,7 @@ function simulateLPRCapture(camera: LPRCameraConfig): LPRCaptureResult {
   if (success) {
     // Generate a random license plate image URL from our Supabase storage
     // In a real implementation, this would be the actual image captured by the camera
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
     const timestamp = Date.now();
     const imageFileName = `lpr_${camera.id}_${timestamp}.jpg`;
@@ -351,6 +353,7 @@ function simulateLPRCapture(camera: LPRCameraConfig): LPRCaptureResult {
     // For simulation, we'll just return a URL that would point to our bucket
     const {
       data: { publicUrl },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } = supabase.storage.from('license-plate-images').getPublicUrl(imageFileName);
 
     return {

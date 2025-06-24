@@ -31,6 +31,7 @@ export default function Login() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [captchaError, setCaptchaError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const captchaRef = useRef<HTMLElement | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();

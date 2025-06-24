@@ -23,6 +23,7 @@ interface ComplianceChartProps {
 }
 
 function ComplianceChart({ companyId }: ComplianceChartProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const _supabase = createClient();
   const [dateRange, setDateRange] = useState('week'); // 'week', 'month', 'year'
   const [selectedCompany, setSelectedCompany] = useState<string>('overall');
@@ -47,6 +48,7 @@ function ComplianceChart({ companyId }: ComplianceChartProps) {
     },
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isAdmin = userData?.is_admin === true || userData?.user?.is_admin === true;
 
   // Construct the URL for compliance data

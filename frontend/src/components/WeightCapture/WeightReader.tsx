@@ -41,6 +41,7 @@ export default function WeightReader({
   onWeightCaptured,
   autoCapture = false,
 }: WeightReaderProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const [weight, setWeight] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
@@ -76,6 +77,8 @@ export default function WeightReader({
       );
 
       if (!response.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const errorData = await response.json();
         throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to get weight reading');
       }

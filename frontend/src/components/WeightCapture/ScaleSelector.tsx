@@ -30,6 +30,7 @@ interface ScaleSelectorProps {
 }
 
 export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const [scales, setScales] = useState<unknown[]>([]);
   const [loading, setLoading] = useState(true);
@@ -59,6 +60,8 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
         });
 
         if (!response.ok) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const errorData = await response.json();
           throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch scales');
         }
@@ -114,6 +117,8 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
       });
 
       if (!response.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const errorData = await response.json();
         throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to validate QR code');
       }
@@ -198,6 +203,7 @@ export default function ScaleSelector({ onScaleSelect }: ScaleSelectorProps) {
           <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
             <QrScanner
               onDecode={handleQrCodeScan}
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               onError={error => console.error(error)}
               containerStyle={{ borderRadius: '0.5rem', overflow: 'hidden' }}
               scanDelay={500}

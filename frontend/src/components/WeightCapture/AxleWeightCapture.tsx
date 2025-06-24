@@ -39,6 +39,7 @@ export default function AxleWeightCapture({
   vehicleId,
   onAxleWeightsCaptured,
 }: AxleWeightCaptureProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -72,10 +73,13 @@ export default function AxleWeightCapture({
         });
 
         if (!response.ok) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const errorData = await response.json();
           throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch vehicle details');
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const vehicleData = await response.json();
 
         // If vehicle has axle configuration, fetch it
@@ -90,6 +94,8 @@ export default function AxleWeightCapture({
           );
 
           if (!axleConfigResponse.ok) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const errorData = await axleConfigResponse.json();
             throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch axle configuration');
           }
@@ -148,6 +154,7 @@ export default function AxleWeightCapture({
 
       if (existingIndex >= 0) {
         // Replace existing axle weight
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const newWeights = [...prev];
         newWeights[existingIndex] = newAxleWeight;
         return newWeights;

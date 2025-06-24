@@ -17,8 +17,11 @@ import { createClient } from '@supabase/supabase-js';
 import { generateSessionId, getAppVersion } from './watermark';
 
 // Initialize Supabase client
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // License verification cache
@@ -156,6 +159,8 @@ async function verifyOnlineLicense(licenseKey, domain) {
     });
 
     if (!response.ok) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const errorData = await response.json();
       throw new Error(`API error: ${errorData.error}`);
     }

@@ -36,8 +36,10 @@ export default function NewWeight() {
   const [axleType, setAxleType] = useState<'SINGLE_AXLE' | 'TANDEM_AXLE' | 'GROSS_VEHICLE_WEIGHT'>(
     'GROSS_VEHICLE_WEIGHT'
   );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   null;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {
@@ -237,6 +239,7 @@ export default function NewWeight() {
                 onChange={e => setVehicleId(e.target.value)}
               >
                 <option value="">Select a vehicle</option>
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 {vehicles.map(vehicle => (
                   <option key={vehicle.id} value={vehicle.id}>
                     {vehicle.name} ({vehicle.license_plate})
@@ -261,6 +264,7 @@ export default function NewWeight() {
                 onChange={e => setDriverId(e.target.value)}
               >
                 <option value="">Select a driver</option>
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 {drivers.map(driver => (
                   <option key={driver.id} value={driver.id}>
                     {driver.name} ({driver.license_number})

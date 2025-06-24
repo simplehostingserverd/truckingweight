@@ -116,6 +116,7 @@ const INDUSTRIES = [
   'Other',
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const COMMODITIES = [
   'General Merchandise',
   'Groceries',
@@ -134,6 +135,7 @@ const COMMODITIES = [
   'Oversized/Heavy Haul',
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const REGIONS = [
   'Local',
   'Regional',
@@ -147,6 +149,7 @@ const REGIONS = [
 ];
 
 export default function NewTradingPartnerPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('basic');
   const [isSubmitting, setIsSubmitting] = useState(false);

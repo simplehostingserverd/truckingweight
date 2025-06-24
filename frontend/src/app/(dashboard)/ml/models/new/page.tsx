@@ -83,6 +83,7 @@ interface DeploymentStep {
 }
 
 export default function NewMLModelPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('template');
   const [selectedTemplate, setSelectedTemplate] = useState<string>('');

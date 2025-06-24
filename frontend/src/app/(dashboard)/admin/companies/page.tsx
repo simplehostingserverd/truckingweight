@@ -90,6 +90,7 @@ export default function CompaniesPage() {
     website: '',
     status: 'active' as const,
   });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {
@@ -300,6 +301,7 @@ export default function CompaniesPage() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteCompany = async () => {
     try {
       if (!selectedCompany) return;

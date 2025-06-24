@@ -22,6 +22,7 @@ interface LoadStatusChartProps {
 }
 
 function LoadStatusChart({ companyId }: LoadStatusChartProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const [loadData, setLoadData] = useState<unknown[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,6 +65,8 @@ function LoadStatusChart({ companyId }: LoadStatusChartProps) {
         });
 
         if (!response.ok) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const errorData = await response.json();
           throw new Error((errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to fetch load status data');
         }

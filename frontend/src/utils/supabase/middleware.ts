@@ -88,6 +88,7 @@ export async function middleware(req: NextRequest) {
   const { supabaseUrl, supabaseKey } = getSupabaseConfig();
 
   // Create the client with explicit URL and key
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createServerClient<Database>(supabaseUrl, supabaseKey, {
     cookies: {
       getAll() {

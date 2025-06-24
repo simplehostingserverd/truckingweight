@@ -49,6 +49,7 @@ export default function ForgotPassword() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {

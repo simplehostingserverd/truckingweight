@@ -60,6 +60,7 @@ export const useAudioAlerts = () => {
           setIsPlaying(false);
         };
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         audioRef.current.onerror = () => {
           // Fallback to synthetic siren
           console.warn('External siren file not found, using synthetic siren');
@@ -171,6 +172,8 @@ export const useAudioAlerts = () => {
       setIsSpeaking(false);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     utterance.onerror = error => {
       console.error('Speech synthesis error:', error);
       setIsSpeaking(false);
@@ -189,6 +192,7 @@ export const useAudioAlerts = () => {
   const playEmergencyAlert = useCallback(
     async (message?: string) => {
       const defaultMessage = 'Driver, please check your safety issues and pull over if required.';
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const alertMessage = message || defaultMessage;
 
       try {

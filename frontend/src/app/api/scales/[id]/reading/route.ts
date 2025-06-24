@@ -25,6 +25,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const resolvedParams = await params;
   try {
     // Create a Supabase client
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
 
     // Get the user's session

@@ -34,6 +34,7 @@ const memoryLogs: LogEntry[] = [];
 
 // Environment detection
 const isProduction = process.env.NODE_ENV === 'production';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _isDevelopment = process.env.NODE_ENV === 'development';
 
 // Default minimum log level based on environment

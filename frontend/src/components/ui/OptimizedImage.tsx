@@ -97,6 +97,7 @@ export function OptimizedImage({
   };
 
   // Handle image error
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleError = () => {
     setHasError(true);
     if (onError) onError();
@@ -214,6 +215,7 @@ export function OptimizedBackgroundImage({
       setIsLoaded(true);
       if (onLoad) onLoad();
     };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     img.onerror = () => {
       setHasError(true);
       if (onError) onError();
@@ -278,6 +280,7 @@ export function OptimizedAvatar({
   };
 
   // Handle image error
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleError = () => {
     setHasError(true);
     if (onError) onError();

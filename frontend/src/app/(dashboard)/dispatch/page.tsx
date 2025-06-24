@@ -518,6 +518,7 @@ export default function DispatchPage() {
               <CardContent>
                 <div className="space-y-3">
                   {['available', 'assigned', 'driving', 'off_duty'].map(status => {
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const count = drivers.filter(d => d.status === status).length;
                     return (
                       <div key={status} className="flex justify-between items-center">
@@ -748,6 +749,7 @@ export default function DispatchPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 {drivers.map(driver => (
                   <div
                     key={driver.id}

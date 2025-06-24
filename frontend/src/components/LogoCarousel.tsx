@@ -202,6 +202,7 @@ export default function LogoCarousel({
                       // Fallback to placeholder if image fails to load
                       (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
                       // Prevent infinite error loops
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
                       (e.target as HTMLImageElement).onerror = null;
                     }}
                   />
@@ -232,6 +233,7 @@ export default function LogoCarousel({
                       // Fallback to placeholder if image fails to load
                       (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
                       // Prevent infinite error loops
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
                       (e.target as HTMLImageElement).onerror = null;
                     }}
                   />

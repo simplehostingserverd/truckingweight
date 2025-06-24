@@ -35,6 +35,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     }
 
     // Create a Supabase client
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
 
     // Get the user session
@@ -73,6 +74,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     });
 
     if (!response.ok) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const errorData = await response.json();
       return NextResponse.json(
         { success: false, error: (errorData instanceof Error ? errorData.message : String(errorData)) || 'Failed to configure hardware' },

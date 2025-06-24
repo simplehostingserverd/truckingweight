@@ -150,6 +150,7 @@ export default function LoadBoardsPage() {
   const [showMCIDialog, setShowMCIDialog] = useState(false);
   const [showCarrierWatchDialog, setShowCarrierWatchDialog] = useState(false);
   const [datPlan, setDatPlan] = useState<'basic' | 'combo' | 'premium'>('combo');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {

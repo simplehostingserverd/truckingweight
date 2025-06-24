@@ -77,6 +77,8 @@ export default function ServiceWorkerRegistration({
 
         // Registration error
         wb.addEventListener('error', event => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const error = new Error('Service worker registration failed');
           logger.error('Service Worker registration failed', { event }, 'ServiceWorker');
 
@@ -114,6 +116,7 @@ export default function ServiceWorkerRegistration({
               );
             }
           })
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           .catch(error => {
             logger.error('Service Worker registration failed', { error }, 'ServiceWorker');
 

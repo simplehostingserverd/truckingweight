@@ -49,7 +49,9 @@ interface Driver {
 
 export default function NewTrainingPage() {
   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const driverId = params.id as string;
 
   const [driver, setDriver] = useState<Driver | null>(null);

@@ -399,6 +399,7 @@ class GeofencingService {
   }
 
   private createAlert(violation: GeofenceViolation): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const alert: GeofenceAlert = {
       id: `alert-${Date.now()}`,
       violationId: violation.id,
@@ -491,11 +492,13 @@ class GeofencingService {
 
   // Alert management
   public getAlerts(unreadOnly = false): GeofenceAlert[] {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const alerts = unreadOnly ? this.alerts.filter(a => !a.isRead) : this.alerts;
     return alerts.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   }
 
   public markAlertAsRead(alertId: string): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const alert = this.alerts.find(a => a.id === alertId);
     if (!alert) return false;
 

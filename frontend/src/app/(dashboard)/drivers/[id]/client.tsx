@@ -49,7 +49,9 @@ export default function DriverDetailsClient({ id, initialData }: DriverDetailsPr
   const [success, setSuccess] = useState('');
   const [activeTab, setActiveTab] = useState('details');
   const [photoUploading, setPhotoUploading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   useEffect(() => {

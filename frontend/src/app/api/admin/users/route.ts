@@ -15,6 +15,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client with service role key for admin operations
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
@@ -27,6 +28,7 @@ const supabaseAdmin = createClient(
 );
 
 // Regular Supabase client for user verification
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!

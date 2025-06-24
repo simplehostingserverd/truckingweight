@@ -25,6 +25,7 @@ interface SignatureCaptureProps {
 }
 
 export default function SignatureCapture({ ticketId, onSignatureAdded }: SignatureCaptureProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
   const sigCanvas = useRef<SignatureCanvas>(null);
   const [name, setName] = useState('');
@@ -84,6 +85,7 @@ export default function SignatureCapture({ ticketId, onSignatureAdded }: Signatu
       }
 
       // Get the public URL
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data: urlData } = supabase.storage.from('signatures').getPublicUrl(filename);
 
       if (!urlData || !urlData.publicUrl) {

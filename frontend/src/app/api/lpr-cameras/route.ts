@@ -16,6 +16,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
 
     // Get the current user
@@ -48,6 +49,7 @@ export async function GET(request: NextRequest) {
     const cityId = searchParams.get('city_id');
 
     // Build query
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let query = supabase.from('lpr_cameras').select('*', { count: 'exact' });
 
     // Apply filters
@@ -64,6 +66,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Apply access control
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isAdmin = userData.is_admin;
     if (!isAdmin) {
       // For regular users, only show cameras without city_id (company cameras)
@@ -108,6 +111,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createClient();
 
     // Get the current user

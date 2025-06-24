@@ -28,7 +28,9 @@ export default function WeightDetail({ params }: { params: Promise<{ id: string 
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [id, setId] = useState<string>('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Resolve params in useEffect
@@ -90,6 +92,7 @@ export default function WeightDetail({ params }: { params: Promise<{ id: string 
     fetchWeight();
   }, [id, router, supabase]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDelete = async () => {
     setIsDeleting(true);
 

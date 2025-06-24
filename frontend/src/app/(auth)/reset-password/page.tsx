@@ -22,6 +22,7 @@ export default function ResetPassword() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {

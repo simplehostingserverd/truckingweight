@@ -68,6 +68,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         }
       } else {
         // Initialize license verification
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         initializeLicense().catch(error => {
           logger.error('License initialization error', { error }, 'License');
         });
@@ -120,6 +121,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
                     )}
                     <ServiceWorkerRegistration
                       onUpdate={handleServiceWorkerUpdate}
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
                       onError={error =>
                         logger.error('Service worker error', { error }, 'ServiceWorker')
                       }

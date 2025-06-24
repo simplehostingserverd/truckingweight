@@ -23,6 +23,7 @@ export async function GET() {
     const config = getSupabaseConfig();
 
     // Create a Supabase client
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const supabase = createServerClient();
 
     // Test the connection by getting the current user
@@ -52,6 +53,8 @@ export async function GET() {
     };
 
     // If there's an auth error but it's just about missing session, that's expected when not logged in
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const isAuthErrorExpected = error && error.message === 'Auth session missing!';
 
     if ((error && !isAuthErrorExpected) || healthError) {

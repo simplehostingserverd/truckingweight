@@ -49,9 +49,11 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
 
   // Initialize the Supabase client
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Sign in function
@@ -252,6 +254,7 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
     // Set up the auth state change listener
     const {
       data: { subscription },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } = supabase.auth.onAuthStateChange(async (_event, _session) => {
       setSession(session);
       setUser(session?.user ?? null);

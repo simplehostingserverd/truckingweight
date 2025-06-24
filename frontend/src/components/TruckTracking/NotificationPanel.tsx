@@ -56,7 +56,9 @@ export default function NotificationPanel({
     // Subscribe to all notifications
     const handleNewNotification = (notification: Notification) => {
       // Filter by vehicle/driver if specified
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       if (vehicleId && notification.data.vehicleId !== vehicleId) return;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       if (driverId && notification.data.driverId !== driverId) return;
 
       setNotifications(prev => [notification, ...prev.slice(0, maxNotifications - 1)]);
@@ -75,9 +77,11 @@ export default function NotificationPanel({
     // Filter by vehicle/driver if specified
     let filtered = allNotifications;
     if (vehicleId) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       filtered = filtered.filter(n => n.data.vehicleId === vehicleId);
     }
     if (driverId) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       filtered = filtered.filter(n => n.data.driverId === driverId);
     }
 

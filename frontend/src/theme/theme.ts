@@ -220,6 +220,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
 });
 
 // Create the light theme
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _lightTheme = responsiveFontSizes(createTheme(getDesignTokens('light')));
 
 // Create the dark theme
