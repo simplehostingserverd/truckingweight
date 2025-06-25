@@ -35,5 +35,4 @@
       }
     }
   ],
-  "ignorePatterns": ["frontend/**/*"]
 }
