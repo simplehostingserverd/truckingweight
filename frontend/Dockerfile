@@ -12,6 +12,9 @@ RUN npm ci --include=dev
 # Copy the rest of the application
 COPY . .
 
+# Ensure public directory exists (create if missing)
+RUN mkdir -p public
+
 # Set environment variables for build
 ARG NEXT_PUBLIC_SUPABASE_URL
 ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
