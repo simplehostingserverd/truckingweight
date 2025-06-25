@@ -75,14 +75,14 @@ services:
     # Coolify handles scaling and resource management
 
   nginx:
-    image: nginx:alpine
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
       - '80:80'
       - '443:443'
     volumes:
-      - ./nginx/production.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/ssl:/etc/nginx/ssl
-      - ./nginx/www:/var/www/html
     depends_on:
       - frontend
       - backend
