@@ -78,8 +78,6 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
-    volumes:
-      - ./nginx/ssl:/etc/nginx/ssl
     depends_on:
       - frontend
       - backend
