@@ -14,7 +14,7 @@
     "db:push": "npx prisma db push",
     "db:migrate": "npx prisma migrate dev",
     "db:studio": "npx prisma studio",
-    "lint": "eslint .",
+    "lint": "eslint \"**/*.{js,ts}\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"generated/**\" --ignore-pattern \"prisma/**\"",
     "lint:check": "eslint \"**/*.{js,ts}\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"generated/**\" --ignore-pattern \"prisma/**\"",
     "lint:fix": "eslint \"**/*.{js,ts}\" --fix --ignore-pattern \"node_modules/**\" --ignore-pattern \"generated/**\" --ignore-pattern \"prisma/**\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",

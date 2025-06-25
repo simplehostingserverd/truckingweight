@@ -20,21 +20,4 @@
       }
     ]
   },
-  "ignorePatterns": [
-    "node_modules/",
-    ".next/",
-    "out/",
-    "public/",
-    "dist/",
-    "build/",
-    "**/*.d.ts",
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "**/__tests__/",
-    "**/__mocks__/",
-    "next.config.mjs",
-    "tailwind.config.cjs",
-    "postcss.config.js",
-    "jest.config.cjs"
-  ]
 }
