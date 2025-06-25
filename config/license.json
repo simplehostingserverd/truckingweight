@@ -1,17 +1,25 @@
 {
-  "licenseKey": "CEG-7NANHMX_G71E-XYGNCLZY",
+  "licenseKey": "CEG-6CC6D8E50E6F-1F5C8AEB",
   "customer": {
-    "name": "Horizon Freight Systems",
-    "email": "admin@horizonfreight.com",
-    "company": "Horizon Freight Systems"
+    "name": "Juan Martinez",
+    "email": "info@cargoscalepro.com",
+    "company": "Cargo Scale Pro"
   },
   "plan": "enterprise",
-  "features": ["basic", "advanced", "api", "premium"],
-  "maxUsers": 50,
-  "maxTenants": 5,
-  "expiresAt": "2026-05-17T03:42:28.100-05:00",
-  "status": "active",
-  "domains": ["localhost", "127.0.0.1"],
-  "createdAt": "2025-01-16T12:00:00.000Z",
-  "instanceId": "dev-instance-001"
+  "features": [
+    "basic",
+    "advanced",
+    "api",
+    "premium"
+  ],
+  "maxUsers": 150,
+  "maxTenants": 1,
+  "expiresAt": "2026-06-25T19:32:56.297Z",
+  "createdAt": "2025-06-25T19:32:56.303Z",
+  "instanceId": "b73749a50c1d695ad19a56ad43b2c617",
+  "domains": [
+    "localhost",
+    "127.0.0.1"
+  ],
+  "status": "active"
 }
