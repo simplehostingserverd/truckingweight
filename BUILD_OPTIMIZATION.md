@@ -5,12 +5,12 @@ The Docker build is failing with `ENOSPC: no space left on device` errors during
 
 ## Solutions Implemented
 
-### 1. Dockerfile Optimizations
+### 1. Dockerfile Optimizations (Updated for Coolify Compatibility)
 - Added npm configuration optimizations for better retry handling
-- Implemented aggressive cache cleanup after each npm install
-- Added `--no-audit --no-fund --prefer-offline` flags to reduce network overhead
-- Removed unnecessary files and directories after installation
-- Cleaned npm test and binary directories to save space
+- Implemented cache cleanup after each npm install
+- Added `--no-audit --no-fund` flags to reduce network overhead
+- Simplified cleanup commands for deployment environment compatibility
+- Removed aggressive file system operations that could fail in containerized environments
 
 ### 2. Build Environment Recommendations
 

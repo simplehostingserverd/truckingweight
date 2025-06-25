@@ -8,13 +8,12 @@ RUN npm config set fetch-retry-mintimeout 20000 && \
     npm config set fetch-retry-maxtimeout 120000 && \
     npm config set fetch-retries 3
 
-# Copy package files and npm configuration
-COPY package*.json .npmrc ./
+# Copy package files
+COPY package*.json ./
 
-# Install dependencies with aggressive optimization
-RUN npm ci --include=dev --no-audit --no-fund --prefer-offline && \
-    npm cache clean --force && \
-    rm -rf /tmp/* /var/tmp/*
+# Install dependencies with optimization
+RUN npm ci --include=dev --no-audit --no-fund && \
+    npm cache clean --force
 
 # Copy the rest of the application
 COPY . .
@@ -40,8 +39,7 @@ ENV SUPABASE_JWT_SECRET=$SUPABASE_JWT_SECRET
 
 # Build the application and cleanup
 RUN npm run build && \
-    npm cache clean --force && \
-    rm -rf /tmp/* /var/tmp/* /root/.npm
+    npm cache clean --force
 
 # Production stage
 FROM node:20.19.0-alpine AS runner
@@ -56,14 +54,13 @@ RUN npm config set fetch-retry-mintimeout 20000 && \
     npm config set fetch-retry-maxtimeout 120000 && \
     npm config set fetch-retries 3
 
-# Copy package files and npm configuration
-COPY package*.json .npmrc ./
+# Copy package files
+COPY package*.json ./
 
-# Install only production dependencies with aggressive optimization
-RUN npm ci --omit=dev --no-audit --no-fund --prefer-offline --production && \
+# Install only production dependencies with optimization
+RUN npm ci --omit=dev --no-audit --no-fund && \
     npm cache clean --force && \
-    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache && \
-    find /usr/local/lib/node_modules/npm -name test -o -name .bin -type d | xargs rm -rf
+    rm -rf /tmp/* /var/tmp/* /root/.npm
 
 # Copy built application from builder stage
 COPY --from=builder /app/.next ./.next
