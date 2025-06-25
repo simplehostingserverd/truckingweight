@@ -24,32 +24,50 @@ import { logger } from '../utils/logger';
 import { generateTicketQRCode } from './qrCodeService';
 import { checkWeightCompliance } from '../utils/compliance';
 
+// Type definitions
+interface AxleWeight {
+  axleNumber: number;
+  weight: number;
+  axleType?: string;
+}
+
+interface WeightData {
+  vehicleId: number;
+  driverId: number;
+  scaleId: number;
+  grossWeight: number;
+  tareWeight?: number;
+  axleWeights?: AxleWeight[];
+  weighType: string; // 'gross_only', 'tare_only', 'gross_tare', 'split_weigh'
+  weighMethod: string; // 'scale_api', 'manual_entry', 'camera_scan', 'iot_sensor'
+  notes?: string;
+  ticketImageUrl?: string;
+  signatureImageUrl?: string;
+  signatureName?: string;
+  signatureRole?: string;
+}
+
+interface WeighTicketResult {
+  success: boolean;
+  ticket?: any; // TODO: Define proper Prisma type when available
+  error?: string;
+}
+
+interface ServiceError {
+  message: string;
+}
+
 /**
  * Generate a new weigh ticket
  * @param weightData - The weight data for the ticket
  * @param companyId - The company ID for context
  * @param userId - The ID of the user creating the ticket
  */
-export function generateWeighTicket(
-  weightData: {
-    vehicleId: number;
-    driverId: number;
-    scaleId: number;
-    grossWeight: number;
-    tareWeight?: number;
-    axleWeights?: Array<{ axleNumber: number; weight: number; axleType?: string }>;
-    weighType: string; // 'gross_only', 'tare_only', 'gross_tare', 'split_weigh'
-    weighMethod: string; // 'scale_api', 'manual_entry', 'camera_scan', 'iot_sensor'
-    notes?: string;
-    ticketImageUrl?: string;
-    signatureImageUrl?: string;
-    signatureName?: string;
-    signatureRole?: string;
-  },
+export async function generateWeighTicket(
+  weightData: WeightData,
   companyId: number,
   userId: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<{ success: boolean; ticket?: any; error?: string }> {
+): Promise<WeighTicketResult> {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId);
@@ -184,13 +202,10 @@ export function generateWeighTicket(
         qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,
       },
     };
-  } catch (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error: any /* @ts-expect-error Catching unknown error type */
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error generating weigh ticket: ${error.message}`, { error });
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    logger.error(`Error generating weigh ticket: ${errorMessage}`, { error });
+    return { success: false, error: errorMessage };
   }
 }
 
@@ -200,12 +215,11 @@ export function generateWeighTicket(
  * @param companyId - The company ID for context
  * @param isAdmin - Whether the user is an admin
  */
-export function getWeighTicket(
+export async function getWeighTicket(
   ticketId: number,
   companyId: number,
   isAdmin: boolean = false
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<{ success: boolean; ticket?: any; error?: string }> {
+): Promise<WeighTicketResult> {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId, isAdmin);
@@ -242,13 +256,10 @@ export function getWeighTicket(
         qrCode: qrCodeResult.success ? qrCodeResult.qrCodeDataUrl : undefined,
       },
     };
-  } catch (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error: any /* @ts-expect-error Catching unknown error type */
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error getting weigh ticket: ${error.message}`, { error });
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    logger.error(`Error getting weigh ticket: ${errorMessage}`, { error });
+    return { success: false, error: errorMessage };
   }
 }
 
@@ -259,21 +270,22 @@ export function getWeighTicket(
  * @param companyId - The company ID for context
  * @param userId - The ID of the user updating the ticket
  */
-export function updateWeighTicket(
+interface UpdateWeighTicketData {
+  grossWeight?: number;
+  tareWeight?: number;
+  notes?: string;
+  ticketImageUrl?: string;
+  signatureImageUrl?: string;
+  signatureName?: string;
+  signatureRole?: string;
+}
+
+export async function updateWeighTicket(
   ticketId: number,
-  updateData: {
-    grossWeight?: number;
-    tareWeight?: number;
-    notes?: string;
-    ticketImageUrl?: string;
-    signatureImageUrl?: string;
-    signatureName?: string;
-    signatureRole?: string;
-  },
+  updateData: UpdateWeighTicketData,
   companyId: number,
   userId: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<{ success: boolean; ticket?: any; error?: string }> {
+): Promise<WeighTicketResult> {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId);
@@ -390,12 +402,9 @@ export function updateWeighTicket(
     });
 
     return { success: true, ticket: completeTicket };
-  } catch (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error: any /* @ts-expect-error Catching unknown error type */
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error updating weigh ticket: ${error.message}`, { error });
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    logger.error(`Error updating weigh ticket: ${errorMessage}`, { error });
+    return { success: false, error: errorMessage };
   }
 }

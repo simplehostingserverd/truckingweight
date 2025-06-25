@@ -111,10 +111,10 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
       complianceRate,
       nonCompliantWeights,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any /* @ts-expect-error Catching unknown error type */) {
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
     console.error('Error fetching dashboard stats:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   } finally {
     // Clear company context
     setCompanyContext(undefined);
@@ -172,10 +172,10 @@ export const getRecentWeights = async (req: AuthenticatedRequest, res: Response)
     });
 
     res.json(recentWeights);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any /* @ts-expect-error Catching unknown error type */) {
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
     console.error('Error fetching recent weights:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   } finally {
     // Clear company context
     setCompanyContext(undefined);
@@ -327,10 +327,10 @@ export const getComplianceData = async (req: AuthenticatedRequest, res: Response
 
       res.json(complianceData);
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any /* @ts-expect-error Catching unknown error type */) {
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
     console.error('Error fetching compliance data:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   } finally {
     // Clear company context
     setCompanyContext(undefined);
@@ -552,10 +552,10 @@ export const getVehicleWeightData = async (req: AuthenticatedRequest, res: Respo
 
       res.json(weightsByVehicleArray);
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any /* @ts-expect-error Catching unknown error type */) {
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
     console.error('Error fetching vehicle weight data:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   } finally {
     // Clear company context
     setCompanyContext(undefined);
@@ -604,10 +604,10 @@ export const getLoadStatusData = async (req: AuthenticatedRequest, res: Response
     }));
 
     res.json(loadsByStatusArray);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any /* @ts-expect-error Catching unknown error type */) {
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
     console.error('Error fetching load status data:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Server error', error: errorMessage });
   } finally {
     // Clear company context
     setCompanyContext(undefined);

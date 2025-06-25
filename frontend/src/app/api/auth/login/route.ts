@@ -18,9 +18,30 @@ import { NextRequest, NextResponse } from 'next/server';
  * This provides a temporary login mechanism while the backend is being developed
  */
 
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+function isValidLoginRequest(body: unknown): body is LoginRequest {
+  return (
+    typeof body === 'object' &&
+    body !== null &&
+    'email' in body &&
+    'password' in body &&
+    typeof (body as any).email === 'string' &&
+    typeof (body as any).password === 'string'
+  );
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body: unknown = await request.json();
+    
+    if (!isValidLoginRequest(body)) {
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+    }
+    
     const { email, password } = body;
 
     // Predefined test accounts

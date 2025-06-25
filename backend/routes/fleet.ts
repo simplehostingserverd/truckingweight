@@ -10,6 +10,30 @@ import { MLService } from '../services/ai/MLService';
 import prisma from '../config/prisma';
 import { logger } from '../utils/logger';
 
+// Type definitions for fleet queries
+interface VehicleWhereClause {
+  company_id: number;
+  status?: string;
+  type?: string;
+  alertLevel?: string;
+}
+
+interface MaintenanceScheduleWhereClause {
+  company_id: number;
+  active: boolean;
+  next_due_at?: {
+    lte?: Date;
+    lt?: Date;
+  };
+}
+
+interface PredictiveAlertWhereClause {
+  company_id: number;
+  resolved: boolean;
+  severity?: string;
+  alert_type?: string;
+}
+
 const router = express.Router();
 const mlService = new MLService();
 
@@ -25,7 +49,7 @@ router.get('/vehicles', async (req, res) => {
   try {
     const { status, type, alertLevel } = req.query;
     
-    const whereClause: any = {
+    const whereClause: VehicleWhereClause = {
       company_id: req.user.companyId
     };
 
@@ -350,7 +374,7 @@ router.get('/maintenance/schedule', async (req, res) => {
     const { upcoming, overdue } = req.query;
     const companyId = req.user.companyId;
 
-    const whereClause: any = {
+    const whereClause: MaintenanceScheduleWhereClause = {
       company_id: companyId,
       active: true
     };
@@ -513,7 +537,7 @@ router.get('/alerts', async (req, res) => {
     const { severity, type, resolved = 'false' } = req.query;
     const companyId = req.user.companyId;
 
-    const whereClause: any = {
+    const whereClause: PredictiveAlertWhereClause = {
       company_id: companyId,
       resolved: resolved === 'true'
     };

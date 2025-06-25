@@ -11,6 +11,36 @@ import { TelematicsService } from '../services/telematics/TelematicsService';
 import prisma from '../config/prisma';
 import { logger } from '../utils/logger';
 
+// Type definitions for IoT queries
+interface IoTDeviceWhereClause {
+  company_id: number;
+  device_type?: string;
+  status?: string;
+  vehicle_id?: number;
+}
+
+interface IoTSensorDataWhereClause {
+  iot_devices: {
+    company_id: number;
+    vehicle_id?: number;
+  };
+  device_id?: number;
+  sensor_type?: string;
+  timestamp?: {
+    gte: Date;
+    lte: Date;
+  };
+}
+
+interface IoTAlertWhereClause {
+  iot_devices: {
+    company_id: number;
+  };
+  severity?: string;
+  status?: string;
+  device_id?: number;
+}
+
 const router = express.Router();
 const iotService = new IoTService();
 const telematicsService = new TelematicsService();
@@ -27,7 +57,7 @@ router.get('/devices', async (req, res) => {
   try {
     const { type, status, vehicleId, page = 1, limit = 20 } = req.query;
     
-    const whereClause: any = {
+    const whereClause: IoTDeviceWhereClause = {
       company_id: req.user.companyId
     };
 
@@ -222,7 +252,7 @@ router.get('/sensor-data', async (req, res) => {
       limit = 100 
     } = req.query;
     
-    const whereClause: any = {
+    const whereClause: IoTSensorDataWhereClause = {
       iot_devices: {
         company_id: req.user.companyId
       }
@@ -373,7 +403,7 @@ router.get('/alerts', async (req, res) => {
   try {
     const { severity, status, deviceId, page = 1, limit = 20 } = req.query;
     
-    const whereClause: any = {
+    const whereClause: IoTAlertWhereClause = {
       iot_devices: {
         company_id: req.user.companyId
       }

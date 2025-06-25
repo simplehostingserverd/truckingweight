@@ -11,6 +11,32 @@ import { TradingPartnerService } from '../services/edi/TradingPartnerService';
 import prisma from '../config/prisma';
 import { logger } from '../utils/logger';
 
+// Type definitions for EDI queries
+interface EDITradingPartnerWhereClause {
+  company_id: number;
+  partner_type?: string;
+  status?: string;
+  connection_type?: string;
+  OR?: Array<{
+    name?: { contains: string; mode: string };
+    edi_id?: { contains: string; mode: string };
+  }>;
+}
+
+interface EDITransactionWhereClause {
+  edi_trading_partners: {
+    company_id: number;
+  };
+  trading_partner_id?: number;
+  transaction_type?: string;
+  status?: string;
+  direction?: string;
+  created_at?: {
+    gte: Date;
+    lte: Date;
+  };
+}
+
 const router = express.Router();
 const ediService = new EDIService();
 const tradingPartnerService = new TradingPartnerService();
@@ -27,7 +53,7 @@ router.get('/trading-partners', async (req, res) => {
   try {
     const { type, status, connectionType, search, page = 1, limit = 20 } = req.query;
     
-    const whereClause: any = {
+    const whereClause: EDITradingPartnerWhereClause = {
       company_id: req.user.companyId
     };
 
@@ -214,7 +240,7 @@ router.get('/transactions', async (req, res) => {
       limit = 20 
     } = req.query;
     
-    const whereClause: any = {
+    const whereClause: EDITransactionWhereClause = {
       edi_trading_partners: {
         company_id: req.user.companyId
       }

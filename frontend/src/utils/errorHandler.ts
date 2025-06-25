@@ -31,7 +31,6 @@ export enum ErrorType {
 export interface AppError extends Error {
   type?: ErrorType;
   statusCode?: number;
-  // @ts-ignore - Suppressing the any type warning as this is a generic error details field
   details?: unknown;
 }
 
@@ -40,11 +39,8 @@ export function createError(
   message: string,
   type: ErrorType = ErrorType.UNKNOWN,
   statusCode?: number,
-  // @ts-ignore - Suppressing the any type warning as this is a generic error details field
   details?: unknown
 ): AppError {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const error = new Error(message) as AppError;
   error.type = type;
   error.statusCode = statusCode;
@@ -52,21 +48,49 @@ export function createError(
   return error;
 }
 
+// Type guard to check if error has name property
+function hasName(error: unknown): error is { name: string } {
+  return typeof error === 'object' && error !== null && 'name' in error;
+}
+
+// Type guard to check if error has message property
+function hasMessage(error: unknown): error is { message: string } {
+  return typeof error === 'object' && error !== null && 'message' in error;
+}
+
+// Type guard to check if error has status properties
+function hasStatus(error: unknown): error is { statusCode?: number; status?: number } {
+  return typeof error === 'object' && error !== null && ('statusCode' in error || 'status' in error);
+}
+
+// Type guard to check if error has details/data properties
+function hasDetails(error: unknown): error is { details?: unknown; data?: unknown } {
+  return typeof error === 'object' && error !== null && ('details' in error || 'data' in error);
+}
+
+// Type guard to check if error has code property
+function hasCode(error: unknown): error is { code: string } {
+  return typeof error === 'object' && error !== null && 'code' in error && typeof (error as any).code === 'string';
+}
+
+// Type guard to check if error has Supabase error properties
+function hasSupabaseError(error: unknown): error is { error_description?: string; error?: string; code?: string; status?: number } {
+  return typeof error === 'object' && error !== null && ('error_description' in error || 'error' in error);
+}
+
 // Function to handle API errors
 export function handleApiError(error: unknown): AppError {
   // Network errors
-  if (error.name === 'AbortError') {
+  if (hasName(error) && error.name === 'AbortError') {
     return createError('Request was aborted', ErrorType.NETWORK);
   }
 
-  if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+  if (hasName(error) && hasMessage(error) && error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
     return createError('Network error. Please check your connection.', ErrorType.NETWORK);
   }
 
   // Handle response errors
-  if (error.statusCode || error.status) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  if (hasStatus(error)) {
     const statusCode = error.statusCode || error.status;
 
     // Auth errors
@@ -88,11 +112,13 @@ export function handleApiError(error: unknown): AppError {
 
     // Validation errors
     if (statusCode === 400 || statusCode === 422) {
+      const message = hasMessage(error) ? error.message : 'Invalid data provided. Please check your input.';
+      const details = hasDetails(error) ? (error.details || error.data) : undefined;
       return createError(
-        error.message || 'Invalid data provided. Please check your input.',
+        message,
         ErrorType.VALIDATION,
         statusCode,
-        error.details || error.data
+        details
       );
     }
 
@@ -103,31 +129,38 @@ export function handleApiError(error: unknown): AppError {
   }
 
   // Database errors
-  if (error.code && (error.code.startsWith('PGDB') || error.message?.includes('database'))) {
+  if (hasCode(error) && (error.code.startsWith('PGDB') || (hasMessage(error) && error.message.includes('database')))) {
+    const details = hasDetails(error) ? error.details : undefined;
     return createError(
       'Database error. Please try again later.',
       ErrorType.DATABASE,
       500,
-      error.details
+      details
     );
   }
 
   // Supabase errors
-  if (error.error_description || error.error) {
+  if (hasSupabaseError(error)) {
+    const message = error.error_description || (hasMessage(error) ? error.message : 'An error occurred');
+    const errorType = error.code === 'PGRST' ? ErrorType.DATABASE : ErrorType.UNKNOWN;
     return createError(
-      error.error_description || error.message || 'An error occurred',
-      error.code === 'PGRST' ? ErrorType.DATABASE : ErrorType.UNKNOWN,
+      message,
+      errorType,
       error.status || 500,
       error
     );
   }
 
   // Default unknown error
+  const message = hasMessage(error) ? error.message : 'An unexpected error occurred';
+  const statusCode = hasStatus(error) ? (error.statusCode || error.status || 500) : 500;
+  const details = hasDetails(error) ? (error.details || error.data) : undefined;
+  
   return createError(
-    error.message || 'An unexpected error occurred',
+    message,
     ErrorType.UNKNOWN,
-    error.statusCode || error.status || 500,
-    error.details || error.data
+    statusCode,
+    details
   );
 }
 
@@ -135,7 +168,6 @@ export function handleApiError(error: unknown): AppError {
 export function useErrorHandler() {
   const toast = useToastContext();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleError = (error: unknown, context?: string) => {
     const appError = handleApiError(error);
 

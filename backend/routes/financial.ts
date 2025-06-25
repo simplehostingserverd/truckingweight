@@ -10,6 +10,28 @@ import { BillingService } from '../services/financial/BillingService';
 import { MLService } from '../services/ai/MLService';
 import prisma from '../config/prisma';
 import { logger } from '../utils/logger';
+import { FinancialService } from '../services/financial/FinancialService';
+
+// Type definitions for financial queries
+interface InvoiceWhereClause {
+  company_id: number;
+  status?: string;
+  customer_id?: number;
+  invoice_date?: {
+    gte?: Date;
+    lte?: Date;
+  };
+}
+
+interface FuelTransactionWhereClause {
+  company_id: number;
+  driver_id?: number;
+  vehicle_id?: number;
+  transaction_date?: {
+    gte?: Date;
+    lte?: Date;
+  };
+}
 
 const router = express.Router();
 const billingService = new BillingService();
@@ -34,7 +56,7 @@ router.get('/invoices', async (req, res) => {
       limit = '50' 
     } = req.query;
 
-    const whereClause: any = {
+    const whereClause: InvoiceWhereClause = {
       company_id: req.user.companyId
     };
 
@@ -412,7 +434,7 @@ router.get('/fuel-transactions', async (req, res) => {
       limit = '50' 
     } = req.query;
 
-    const whereClause: any = {
+    const whereClause: FuelTransactionWhereClause = {
       company_id: req.user.companyId
     };
 

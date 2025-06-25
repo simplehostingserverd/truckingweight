@@ -11,6 +11,50 @@ import { MLService } from '../services/ai/MLService';
 import prisma from '../config/prisma';
 import { logger } from '../utils/logger';
 
+// Type definitions for maintenance queries
+interface MaintenanceWorkOrderWhereClause {
+  company_id: number;
+  status?: string;
+  priority?: string;
+  vehicle_id?: number;
+  scheduled_date?: {
+    gte: Date;
+    lte: Date;
+  };
+}
+
+interface MaintenanceScheduleWhereClause {
+  company_id: number;
+  is_active: boolean;
+  vehicle_id?: number;
+  next_due_date?: {
+    lte: Date;
+  };
+}
+
+interface MaintenancePartWhereClause {
+  company_id: number;
+  OR?: Array<{
+    part_number?: { contains: string; mode: string };
+    description?: { contains: string; mode: string };
+  }>;
+  category?: string;
+  quantity_on_hand?: {
+    lte: any;
+  };
+}
+
+interface MaintenanceVendorWhereClause {
+  company_id: number;
+  OR?: Array<{
+    name?: { contains: string; mode: string };
+    contact_email?: { contains: string; mode: string };
+  }>;
+  specialties?: {
+    has: string;
+  };
+}
+
 const router = express.Router();
 const maintenanceService = new MaintenanceService();
 const mlService = new MLService();
@@ -27,7 +71,7 @@ router.get('/work-orders', async (req, res) => {
   try {
     const { status, priority, vehicleId, dateRange, page = 1, limit = 20 } = req.query;
 
-    const whereClause: any = {
+    const whereClause: MaintenanceWorkOrderWhereClause = {
       company_id: req.user.companyId,
     };
 
@@ -245,7 +289,7 @@ router.get('/schedules', async (req, res) => {
   try {
     const { vehicleId, upcoming = true } = req.query;
 
-    const whereClause: any = {
+    const whereClause: MaintenanceScheduleWhereClause = {
       company_id: req.user.companyId,
       is_active: true,
     };
@@ -330,7 +374,7 @@ router.get('/parts', async (req, res) => {
   try {
     const { search, category, lowStock = false, page = 1, limit = 20 } = req.query;
 
-    const whereClause: any = {
+    const whereClause: MaintenancePartWhereClause = {
       company_id: req.user.companyId,
     };
 
@@ -437,7 +481,7 @@ router.get('/vendors', async (req, res) => {
   try {
     const { search, specialty, page = 1, limit = 20 } = req.query;
 
-    const whereClause: any = {
+    const whereClause: MaintenanceVendorWhereClause = {
       company_id: req.user.companyId,
     };
 

@@ -12,6 +12,20 @@ import { MLService } from '../services/ai/MLService';
 import prisma from '../config/prisma';
 import { logger } from '../utils/logger';
 
+// Type definitions for dispatch queries
+interface LoadWhereClause {
+  company_id: number;
+  status?: string;
+  dispatch_priority?: {
+    gte: number;
+  };
+  equipment_type?: string;
+  pickup_date?: {
+    gte: Date;
+    lte: Date;
+  };
+}
+
 const router = express.Router();
 const dispatchService = new DispatchService();
 const routeOptimizer = new RouteOptimizationService();
@@ -29,7 +43,7 @@ router.get('/loads', async (req, res) => {
   try {
     const { status, priority, equipmentType, dateRange } = req.query;
     
-    const whereClause: any = {
+    const whereClause: LoadWhereClause = {
       company_id: req.user.companyId
     };
 

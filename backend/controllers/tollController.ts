@@ -10,6 +10,13 @@ import { logger } from '../utils/logger';
 
 const prisma = new PrismaClient();
 
+// Type definitions for toll queries
+interface CompanyTollAccountWhereClause {
+  company_id: number;
+  toll_provider_id?: number;
+  account_status?: string;
+}
+
 // ===== TOLL PROVIDER CONTROLLERS =====
 
 /**
@@ -171,7 +178,7 @@ export const getCompanyTollAccounts = async (req: Request, res: Response) => {
     const companyId = req.user?.companyId;
     const { provider_id, status, limit = '50', offset = '0' } = req.query;
 
-    const where: any = { company_id: companyId };
+    const where: CompanyTollAccountWhereClause = { company_id: companyId };
     if (provider_id) where.toll_provider_id = parseInt(provider_id as string);
     if (status) where.account_status = status;
 

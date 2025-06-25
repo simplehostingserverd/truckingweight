@@ -11,6 +11,17 @@ import { KPIService } from '../services/analytics/KPIService';
 import prisma from '../config/prisma';
 import { logger } from '../utils/logger';
 
+// Type definitions for analytics queries
+interface LoadAnalyticsWhereClause {
+  company_id: number;
+  created_at: { gte: Date };
+  vehicle_id?: number;
+  driver_id?: number;
+  status?: string;
+  pickup_city?: { contains: string; mode: 'insensitive' };
+  delivery_city?: { contains: string; mode: 'insensitive' };
+}
+
 const router = express.Router();
 const analyticsService = new AnalyticsService();
 const kpiService = new KPIService();
@@ -54,7 +65,7 @@ router.get('/fleet-performance', async (req, res) => {
     const startDate = new Date(Date.now() - daysBack * 24 * 60 * 60 * 1000);
     const companyId = req.user.companyId;
 
-    const whereClause: any = {
+    const whereClause: LoadAnalyticsWhereClause = {
       company_id: companyId,
       created_at: { gte: startDate }
     };
@@ -132,7 +143,7 @@ router.get('/driver-performance', async (req, res) => {
     const startDate = new Date(Date.now() - daysBack * 24 * 60 * 60 * 1000);
     const companyId = req.user.companyId;
 
-    const whereClause: any = {
+    const whereClause: LoadAnalyticsWhereClause = {
       company_id: companyId,
       created_at: { gte: startDate }
     };
@@ -232,7 +243,7 @@ router.get('/route-analysis', async (req, res) => {
     const startDate = new Date(Date.now() - daysBack * 24 * 60 * 60 * 1000);
     const companyId = req.user.companyId;
 
-    const whereClause: any = {
+    const whereClause: LoadAnalyticsWhereClause = {
       company_id: companyId,
       created_at: { gte: startDate },
       status: 'delivered'

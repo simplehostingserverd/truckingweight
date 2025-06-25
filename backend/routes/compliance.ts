@@ -11,6 +11,52 @@ import { DOTService } from '../services/compliance/DOTService';
 import prisma from '../config/prisma';
 import { logger } from '../utils/logger';
 
+// Type definitions for where clauses
+interface HOSLogWhereClause {
+  drivers: {
+    company_id: number;
+  };
+  driver_id?: number;
+  status?: string;
+  log_date?: {
+    gte: Date;
+    lte: Date;
+  };
+}
+
+interface DVIRReportWhereClause {
+  drivers: {
+    company_id: number;
+  };
+  driver_id?: number;
+  vehicle_id?: number;
+  status?: string;
+  inspection_date?: {
+    gte: Date;
+    lte: Date;
+  };
+}
+
+interface ComplianceDocumentWhereClause {
+  company_id: number;
+  document_type?: string;
+  status?: string;
+  expiration_date?: {
+    lte: Date;
+  };
+}
+
+interface ComplianceAuditTrailWhereClause {
+  company_id: number;
+  entity_type?: string;
+  entity_id?: number;
+  action?: string;
+  timestamp?: {
+    gte: Date;
+    lte: Date;
+  };
+}
+
 const router = express.Router();
 const complianceService = new ComplianceService();
 const _dotService = new DOTService();
@@ -27,7 +73,7 @@ router.get('/hos-logs', async (req, res) => {
   try {
     const { driverId, startDate, endDate, status, page = 1, limit = 20 } = req.query;
     
-    const whereClause: any = {
+    const whereClause: HOSLogWhereClause = {
       drivers: {
         company_id: req.user.companyId
       }
@@ -200,7 +246,7 @@ router.get('/dvir-reports', async (req, res) => {
   try {
     const { driverId, vehicleId, startDate, endDate, status, page = 1, limit = 20 } = req.query;
     
-    const whereClause: any = {
+    const whereClause: DVIRReportWhereClause = {
       drivers: {
         company_id: req.user.companyId
       }
@@ -324,7 +370,7 @@ router.get('/documents', async (req, res) => {
   try {
     const { type, status, expirationDate, page = 1, limit = 20 } = req.query;
     
-    const whereClause: any = {
+    const whereClause: ComplianceDocumentWhereClause = {
       company_id: req.user.companyId
     };
 
@@ -418,7 +464,7 @@ router.get('/audit-trail', async (req, res) => {
   try {
     const { entityType, entityId, action, startDate, endDate, page = 1, limit = 50 } = req.query;
     
-    const whereClause: any = {
+    const whereClause: ComplianceAuditTrailWhereClause = {
       company_id: req.user.companyId
     };
 

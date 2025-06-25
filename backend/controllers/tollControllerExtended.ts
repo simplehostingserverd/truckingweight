@@ -10,6 +10,26 @@ import { logger } from '../utils/logger';
 
 const prisma = new PrismaClient();
 
+// Type definitions for toll queries
+interface TollRouteEstimateWhereClause {
+  company_id: number;
+  load_id?: number;
+  vehicle_id?: number;
+}
+
+interface TollTransactionWhereClause {
+  company_toll_accounts: {
+    company_id: number;
+  };
+  company_toll_account_id?: number;
+  vehicle_id?: number;
+  driver_id?: number;
+  transaction_date?: {
+    gte?: Date;
+    lte?: Date;
+  };
+}
+
 /**
  * Update transponder information
  */
@@ -286,7 +306,7 @@ export const getRouteEstimates = async (req: Request, res: Response) => {
     const companyId = req.user?.companyId;
     const { load_id, vehicle_id, limit = '50', offset = '0' } = req.query;
 
-    const where: any = { company_id: companyId };
+    const where: TollRouteEstimateWhereClause = { company_id: companyId };
     if (load_id) where.load_id = parseInt(load_id as string);
     if (vehicle_id) where.vehicle_id = parseInt(vehicle_id as string);
 
@@ -339,7 +359,7 @@ export const getTollTransactions = async (req: Request, res: Response) => {
       offset = '0',
     } = req.query;
 
-    const where: any = {
+    const where: TollTransactionWhereClause = {
       company_toll_accounts: {
         company_id: companyId,
       },

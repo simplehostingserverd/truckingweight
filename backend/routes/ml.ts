@@ -11,6 +11,26 @@ import { ModelManagementService } from '../services/ml/ModelManagementService';
 import prisma from '../config/prisma';
 import { logger } from '../utils/logger';
 
+// Type definitions for ML queries
+interface MLModelWhereClause {
+  company_id: number;
+  model_type?: string;
+  status?: string;
+}
+
+interface MLPredictionWhereClause {
+  ml_models: {
+    company_id: number;
+    model_type?: string;
+  };
+  model_id?: number;
+  status?: string;
+  created_at?: {
+    gte: Date;
+    lte: Date;
+  };
+}
+
 const router = express.Router();
 const mlService = new MLService();
 const modelManagementService = new ModelManagementService();
@@ -27,7 +47,7 @@ router.get('/models', async (req, res) => {
   try {
     const { type, status, page = 1, limit = 20 } = req.query;
     
-    const whereClause: any = {
+    const whereClause: MLModelWhereClause = {
       company_id: req.user.companyId
     };
 
@@ -204,7 +224,7 @@ router.get('/predictions', async (req, res) => {
       limit = 50 
     } = req.query;
     
-    const whereClause: any = {
+    const whereClause: MLPredictionWhereClause = {
       ml_models: {
         company_id: req.user.companyId
       }
