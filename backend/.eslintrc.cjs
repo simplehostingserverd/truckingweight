@@ -51,5 +51,12 @@ module.exports = {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
       },
     },
+    {
+      files: ['**/*.test.js', '**/*.test.ts', '**/tests/**/*.js', '**/tests/**/*.ts'],
+      env: {
+        jest: true,
+        node: true,
+      },
+    },
   ],
 };

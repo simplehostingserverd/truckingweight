@@ -255,13 +255,8 @@ class PCMilerService extends BaseTollService {
   }
 
   async testConnection() {
-    try {
-      // Mock implementation
-      return true;
-    } catch (error) {
-      console.error('PC Miler connection test failed:', error);
-      return false;
-    }
+    // Mock implementation
+    return true;
   }
 
   async validateCredentials() {
@@ -293,7 +288,7 @@ class PCMilerService extends BaseTollService {
 
   async getAccountInfo(_accountNumber) {
     return {
-      accountNumber,
+      accountNumber: _accountNumber,
       accountName: 'PC Miler Account',
       balance: 100,
       currency: 'USD',
@@ -365,7 +360,7 @@ class IPassService extends BaseTollService {
 
   async getAccountInfo(_accountNumber) {
     return {
-      accountNumber,
+      accountNumber: _accountNumber,
       accountName: 'I-Pass Account',
       balance: 50,
       currency: 'USD',
@@ -437,7 +432,7 @@ class BestPassService extends BaseTollService {
 
   async getAccountInfo(_accountNumber) {
     return {
-      accountNumber,
+      accountNumber: _accountNumber,
       accountName: 'BestPass Account',
       balance: 200,
       currency: 'USD',
@@ -509,7 +504,7 @@ class PrePassService extends BaseTollService {
 
   async getAccountInfo(_accountNumber) {
     return {
-      accountNumber,
+      accountNumber: _accountNumber,
       accountName: 'PrePass Account',
       balance: 75,
       currency: 'USD',
