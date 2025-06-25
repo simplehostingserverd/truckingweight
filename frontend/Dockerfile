@@ -3,11 +3,18 @@ FROM node:20.19.0-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Set npm configurations for optimization
+RUN npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm config set fetch-retries 3
 
-# Install dependencies
-RUN npm ci --include=dev
+# Copy package files and npm configuration
+COPY package*.json .npmrc ./
+
+# Install dependencies with aggressive optimization
+RUN npm ci --include=dev --no-audit --no-fund --prefer-offline && \
+    npm cache clean --force && \
+    rm -rf /tmp/* /var/tmp/*
 
 # Copy the rest of the application
 COPY . .
@@ -31,8 +38,10 @@ ENV NEXT_PUBLIC_CESIUM_TOKEN=$NEXT_PUBLIC_CESIUM_TOKEN
 ENV SUPABASE_SERVICE_ROLE_KEY=$SUPABASE_SERVICE_ROLE_KEY
 ENV SUPABASE_JWT_SECRET=$SUPABASE_JWT_SECRET
 
-# Build the application
-RUN npm run build
+# Build the application and cleanup
+RUN npm run build && \
+    npm cache clean --force && \
+    rm -rf /tmp/* /var/tmp/* /root/.npm
 
 # Production stage
 FROM node:20.19.0-alpine AS runner
@@ -42,11 +51,19 @@ WORKDIR /app
 # Set to production environment
 ENV NODE_ENV=production
 
-# Copy package files
-COPY package*.json ./
+# Set npm configurations for optimization
+RUN npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm config set fetch-retries 3
 
-# Install only production dependencies
-RUN npm ci --omit=dev
+# Copy package files and npm configuration
+COPY package*.json .npmrc ./
+
+# Install only production dependencies with aggressive optimization
+RUN npm ci --omit=dev --no-audit --no-fund --prefer-offline --production && \
+    npm cache clean --force && \
+    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache && \
+    find /usr/local/lib/node_modules/npm -name test -o -name .bin -type d | xargs rm -rf
 
 # Copy built application from builder stage
 COPY --from=builder /app/.next ./.next
