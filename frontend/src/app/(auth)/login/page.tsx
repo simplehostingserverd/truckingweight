@@ -148,7 +148,7 @@ export default function Login() {
         <div className="w-full max-w-md">
           <div className="text-center mb-10">
             <h1 className="text-3xl font-bold text-white mb-2">
-              Welcome to Simple Scale Solutions! 👋
+              Welcome to Cargo Scale Pro! 👋
             </h1>
             <p className="text-gray-400">Please sign in to your account and start the adventure</p>
           </div>
