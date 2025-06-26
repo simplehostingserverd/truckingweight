@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
-
-const prisma = new PrismaClient();
+import prisma from '../config/prisma';
 
 // Validation schemas
 const createWorkOrderSchema = z.object({

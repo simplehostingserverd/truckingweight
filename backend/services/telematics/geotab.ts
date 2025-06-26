@@ -283,6 +283,7 @@ export class GeotabService implements TelematicsProvider {
           drivingTime,
           dutyTime,
           restTime,
+          cycleRemaining: Math.max(0, 70 - (drivingTime + dutyTime)), // 70-hour cycle limit
           status: driverLogs.length > 0 ? driverLogs[0].status : 'Unknown',
         },
       };
@@ -360,6 +361,7 @@ export class GeotabService implements TelematicsProvider {
 
       return {
         subscriptionId: subscription.id,
+        status: 'active',
         eventTypes: geotabEventTypes,
       };
     } catch (error) {

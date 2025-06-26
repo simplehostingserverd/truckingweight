@@ -12,7 +12,7 @@
  */
 
 import axios from 'axios';
-import { TelematicsProvider, TelematicsData } from './index';
+import { TelematicsProvider, TelematicsData, TelematicsDriverData, TelematicsEvent, TelematicsSubscription } from './index';
 import { logger } from '../../utils/logger';
 
 export interface SamsaraDriverData {
@@ -130,7 +130,7 @@ export class SamsaraService implements TelematicsProvider {
   /**
    * Fetch driver data from Samsara
    */
-  async fetchDriverData(driverId: string): Promise<SamsaraDriverData> {
+  async fetchDriverData(driverId: string): Promise<TelematicsDriverData> {
     try {
       // Validate API key
       if (!this.apiKey) {
@@ -177,7 +177,7 @@ export class SamsaraService implements TelematicsProvider {
   /**
    * Fetch events from Samsara
    */
-  async fetchEvents(startTime: Date, endTime: Date): Promise<SamsaraEvent[]> {
+  async fetchEvents(startTime: Date, endTime: Date): Promise<TelematicsEvent[]> {
     try {
       // Validate API key
       if (!this.apiKey) {
@@ -219,7 +219,7 @@ export class SamsaraService implements TelematicsProvider {
   /**
    * Subscribe to events from Samsara
    */
-  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<SamsaraSubscription> {
+  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<TelematicsSubscription> {
     try {
       // Validate API key
       if (!this.apiKey) {
