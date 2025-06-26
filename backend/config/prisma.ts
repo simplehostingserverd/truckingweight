@@ -18,7 +18,7 @@
  */
 
 import { PrismaClient } from '@prisma/client';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
 // Load environment variables
 dotenv.config();
@@ -77,9 +77,9 @@ const prismaWithExtensions = (prisma: PrismaClient) => {
 
 // Declare global augmentation for the companyId and isAdmin flag
 declare global {
-  let companyId: number | undefined;
-  let isAdmin: boolean | undefined;
-  let prisma: ReturnType<typeof prismaWithExtensions> | undefined;
+  var companyId: number | undefined;
+  var isAdmin: boolean | undefined;
+  var prisma: ReturnType<typeof prismaWithExtensions> | undefined;
 }
 
 // Create Prisma client with logging in development

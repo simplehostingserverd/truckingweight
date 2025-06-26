@@ -18,7 +18,7 @@
  */
 
 import prisma, { setCompanyContext } from '../config/prisma';
-import { logger } from './logger';
+import logger from './logger';
 
 // Federal weight limits (in pounds)
 const FEDERAL_WEIGHT_LIMITS = {
@@ -568,26 +568,10 @@ const parseWeight = (weightStr: string): number => {
 };
 
 export {
-  applicableGrossLimit,
-  applicableSingleAxleLimit,
-  applicableTandemAxleLimit,
-  axleCount,
-  axleSpacing,
-  axleType,
-  axleWeight,
-  bridgeFormulaLimit,
   checkWeightCompliance,
   COMPLIANCE_STATUS,
   FEDERAL_WEIGHT_LIMITS,
-  grossWeight,
   ISSUE_SEVERITY,
-  issues,
-  nextAxleWeight,
-  numericStr,
   parseWeight,
   STATE_WEIGHT_LIMITS,
-  stateCode,
-  tandemWeight,
-  weight,
-  wheelbaseLength,
 };

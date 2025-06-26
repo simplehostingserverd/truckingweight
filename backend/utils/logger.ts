@@ -15,9 +15,9 @@
  * Logger utility for consistent logging across the application
  */
 
-import winston from 'winston';
-import path from 'path';
-import fs from 'fs';
+import * as winston from 'winston';
+import * as path from 'path';
+import * as fs from 'fs';
 
 // Create logs directory if it doesn't exist
 const logsDir = path.join(__dirname, '../logs');
@@ -80,6 +80,7 @@ const stream: LoggerStream = {
   },
 };
 
-logger.stream = stream;
+// Export stream separately to avoid type conflicts
+export { stream };
 
 export default logger;

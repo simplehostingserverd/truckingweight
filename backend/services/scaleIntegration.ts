@@ -22,7 +22,7 @@
 
 import axios from 'axios';
 import prisma, { setCompanyContext } from '../config/prisma';
-import { logger } from '../utils/logger';
+import logger from '../utils/logger';
 
 // Supported scale manufacturers and their integration methods
 const SUPPORTED_SCALES = {
@@ -455,21 +455,9 @@ export {
   configureIoTHardware,
   getAvailableHardwareOptions,
   getScaleReading,
-  hardwareOptions,
   IOT_HARDWARE,
-  options,
   processCameraScannedTicket,
   processIoTSensorData,
-  reading,
-  reading,
   READING_TYPES,
-  response,
-  response,
-  scale,
-  scale,
-  scale,
-  scaleReading,
   SUPPORTED_SCALES,
-  ticketData,
-  validHardware,
 };
