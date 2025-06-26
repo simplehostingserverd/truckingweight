@@ -83,4 +83,6 @@ const stream: LoggerStream = {
 // Export stream separately to avoid type conflicts
 export { stream };
 
+// Export both default and named export for compatibility
+export { logger };
 export default logger;

@@ -41,22 +41,44 @@ export class DriverMatchingService {
         where: {
           company_id: criteria.companyId,
           status: 'Active'
-        },
-        include: {
-          vehicles: {
-            where: {
-              status: 'Active'
-            }
-          }
         }
       });
 
       const matches: DriverMatch[] = [];
 
-      for (const driver of drivers) {
-        if (driver.vehicles.length === 0) continue;
+      // Get available vehicles for the company
+      const availableVehicles = await prisma.vehicles.findMany({
+        where: {
+          company_id: criteria.companyId,
+          status: 'Active',
+          // Vehicle not currently assigned to an active load
+          loads: {
+            none: {
+              status: {
+                in: ['In Progress', 'Assigned']
+              }
+            }
+          }
+        }
+      });
 
-        const vehicle = driver.vehicles[0]; // Use first available vehicle
+      for (const driver of drivers) {
+        // Check if driver is not currently assigned to an active load
+        const activeLoad = await prisma.loads.findFirst({
+          where: {
+            driver_id: driver.id,
+            status: {
+              in: ['In Progress', 'Assigned']
+            }
+          }
+        });
+
+        if (activeLoad) continue; // Driver is busy
+
+        // Assign first available vehicle
+        const vehicle = availableVehicles[0];
+        if (!vehicle) continue; // No vehicles available
+
         const score = await this.calculateDriverScore(driver, criteria);
 
         matches.push({
@@ -64,8 +86,11 @@ export class DriverMatchingService {
           vehicleId: vehicle.id,
           score,
           availability: true,
-          reasons: [`Driver ${driver.name} available with vehicle ${vehicle.id}`]
+          reasons: [`Driver ${driver.name} available with vehicle ${vehicle.license_plate}`]
         });
+
+        // Remove assigned vehicle from available list
+        availableVehicles.shift();
       }
 
       // Sort by score (highest first) and return top matches

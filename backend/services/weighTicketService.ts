@@ -21,7 +21,7 @@
 import prisma from '../config/prisma';
 import { setCompanyContext } from '../config/prisma';
 import { logger } from '../utils/logger';
-import { generateTicketQRCode } from './qrCodeService';
+import { generateTicketQRCode } from './QRCodeService';
 import { checkWeightCompliance } from '../utils/compliance';
 
 // Type definitions

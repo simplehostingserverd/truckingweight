@@ -424,23 +424,18 @@ export class RouteOptimizationService {
 
   /**
    * Save route to database
+   * Note: Storing route data in loads table since routes model doesn't exist
    */
   private async saveRoute(loadId: number, vehicleId: number, driverId: number, trailerId: number | undefined, route: OptimizedRoute) {
-    return await prisma.routes.create({
+    // Update the load with route optimization data
+    return await prisma.loads.update({
+      where: { id: loadId },
       data: {
-        load_id: loadId,
         vehicle_id: vehicleId,
         driver_id: driverId,
-        trailer_id: trailerId,
-        total_miles: route.totalMiles,
-        estimated_duration_hours: route.estimatedDurationHours,
-        fuel_cost_estimate: route.fuelCostEstimate,
-        toll_cost_estimate: route.tollCostEstimate,
-        route_geometry: route.routeGeometry,
-        waypoints: route.waypoints,
-        restrictions: route.restrictions,
-        optimization_score: route.optimizationScore,
-        status: 'planned'
+        status: 'Assigned'
+        // Note: Route details like geometry, waypoints etc. would need additional fields in loads table
+        // or a separate routes table to be added to the schema
       }
     });
   }
