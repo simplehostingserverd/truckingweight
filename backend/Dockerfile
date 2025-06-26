@@ -48,10 +48,11 @@ COPY --from=builder /app/routes ./routes
 COPY --from=builder /app/controllers ./controllers
 COPY --from=builder /app/middleware ./middleware
 COPY --from=builder /app/services ./services
-COPY --from=builder /app/utils ./utils
 COPY --from=builder /app/plugins ./plugins
+COPY --from=builder /app/utils ./utils
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/generated ./generated
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
 # Set non-root user for security
 RUN addgroup --system --gid 1001 nodejs && \
