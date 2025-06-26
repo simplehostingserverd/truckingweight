@@ -1,12 +1,11 @@
 import express from 'express';
 import { z } from 'zod';
-import { PrismaClient } from '@prisma/client';
 import { protect } from '../middleware/authMiddleware';
 import { setCompanyContextMiddleware } from '../middleware/companyContext';
 import { MaintenanceService } from '../services/MaintenanceService';
+import prisma from '../config/prisma';
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
 // Validation schemas
 const createEquipmentSchema = z.object({
