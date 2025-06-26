@@ -14,6 +14,84 @@ export interface BestPassConfig extends TollProviderConfig {
   refreshToken?: string;
 }
 
+export interface BestPassTransaction {
+  transactionId: string;
+  tollFacility?: {
+    name: string;
+    id: string;
+  };
+  facilityName?: string;
+  facilityId?: string;
+  tollAmount: number;
+  transactionDateTime: string;
+  vehicleClass?: string;
+  location?: {
+    latitude: number;
+    longitude: number;
+    address?: string;
+  };
+  entryDateTime?: string;
+  exitDateTime?: string;
+  transactionStatus?: string;
+}
+
+export interface BestPassViolation {
+  violationId: string;
+  facilityName: string;
+  violationDate: string;
+  amount: number;
+  status: string;
+  vehicleId?: string;
+}
+
+export interface BestPassVehicle {
+  vehicleId: string;
+  licensePlate: string;
+  vehicleClass: string;
+  transponderNumber?: string;
+  status: string;
+}
+
+export interface BestPassRouteResponse {
+  primaryRoute?: {
+    totalTollCost: number;
+    totalDistance: number;
+    estimatedTravelTime: number;
+    routeGeometry?: any;
+    tollFacilities: BestPassTollFacility[];
+  };
+  alternativeRoutes?: BestPassRouteResponse[];
+  totalTollCost?: number;
+  totalDistance?: number;
+  estimatedTravelTime?: number;
+  routeGeometry?: any;
+  tollFacilities?: BestPassTollFacility[];
+}
+
+export interface BestPassTollFacility {
+  name: string;
+  id: string;
+  location?: {
+    latitude: number;
+    longitude: number;
+    address?: string;
+  };
+  tollCost: number;
+  vehicleClass?: string;
+}
+
+export interface BestPassTollPoint {
+  facilityName: string;
+  facilityId: string;
+  location: {
+    latitude: number;
+    longitude: number;
+    address?: string;
+  };
+  cost: number;
+  vehicleClass?: string;
+}
+
 export class BestPassService extends BaseTollService {
   private config: BestPassConfig;
   private accessToken?: string;
@@ -129,7 +207,7 @@ export class BestPassService extends BaseTollService {
 
       const response = await this.makeRequest('GET', `/accounts/${accountNumber}/transactions?${params}`);
 
-      return response.transactions?.map((tx: any) => ({
+      return response.transactions?.map((tx: BestPassTransaction) => ({
         transactionId: tx.transactionId,
         facilityName: tx.tollFacility?.name || tx.facilityName,
         facilityId: tx.tollFacility?.id || tx.facilityId,
@@ -234,7 +312,7 @@ export class BestPassService extends BaseTollService {
     }
   }
 
-  public async getViolations(accountNumber: string): Promise<any[]> {
+  public async getViolations(accountNumber: string): Promise<BestPassViolation[]> {
     try {
       await this.ensureAuthenticated();
       const response = await this.makeRequest('GET', `/accounts/${accountNumber}/violations`);
@@ -245,7 +323,7 @@ export class BestPassService extends BaseTollService {
     }
   }
 
-  public async getFleetVehicles(accountNumber: string): Promise<any[]> {
+  public async getFleetVehicles(accountNumber: string): Promise<BestPassVehicle[]> {
     try {
       await this.ensureAuthenticated();
       const response = await this.makeRequest('GET', `/accounts/${accountNumber}/vehicles`);
@@ -304,7 +382,7 @@ export class BestPassService extends BaseTollService {
     return mapping[vehicleClass?.toLowerCase() || 'truck'] || '3-axle';
   }
 
-  private parseRouteResponse(response: any): TollCalculation {
+  private parseRouteResponse(response: BestPassRouteResponse): TollCalculation {
     const route = response.primaryRoute || response;
     
     return {
@@ -316,12 +394,12 @@ export class BestPassService extends BaseTollService {
         duration: route.estimatedTravelTime || 0,
         coordinates: route.routeGeometry,
       },
-      alternatives: response.alternativeRoutes?.map((alt: any) => this.parseRouteResponse(alt)) || [],
+      alternatives: response.alternativeRoutes?.map((alt: BestPassRouteResponse) => this.parseRouteResponse(alt)) || [],
     };
   }
 
-  private parseTollPoints(tollFacilities: any[]): any[] {
-    return tollFacilities.map((facility: any) => ({
+  private parseTollPoints(tollFacilities: BestPassTollFacility[]): BestPassTollPoint[] {
+    return tollFacilities.map((facility: BestPassTollFacility) => ({
       facilityName: facility.name,
       facilityId: facility.id,
       location: {

@@ -62,6 +62,64 @@ export interface MaintenancePrediction {
   costImpact: number;
 }
 
+export interface RouteData {
+  total_miles: number;
+  vehicles?: { type: string };
+  driver_id: number;
+}
+
+export interface ETAFeatures {
+  distance: number;
+  trafficFactor: number;
+  weatherFactor: number;
+  timeOfDay: number;
+  dayOfWeek: number;
+  routeComplexity: number;
+  vehicleType: number;
+  driverExperience: number;
+  historicalPerformance: number;
+  currentSpeed: number;
+}
+
+export interface PredictionData {
+  predictedValue?: number;
+  adjustedRate?: number;
+  failureProbability?: number;
+  confidenceScore: number;
+  companyId?: number;
+}
+
+export interface PricingFeatures {
+  distance: number;
+  weight: number;
+  equipmentType: number;
+  demandIndex: number;
+  fuelPrice: number;
+  seasonalFactor: number;
+}
+
+export interface LocationData {
+  latitude: number;
+  longitude: number;
+  address?: string;
+}
+
+export interface VehicleData {
+  id: number;
+  type: string;
+  mileage?: number;
+  age?: number;
+  maintenance_work_orders?: any[];
+  vehicle_telematics_data?: any[];
+}
+
+export interface MaintenanceFeatures {
+  vehicleAge?: number;
+  mileage?: number;
+  componentAge?: number;
+  usagePattern?: string;
+}
+
 export class MLService {
   private etaModel: tf.LayersModel | null = null;
   private pricingModel: tf.LayersModel | null = null;
@@ -332,7 +390,7 @@ export class MLService {
   /**
    * Prepare features for ETA prediction
    */
-  private async prepareETAFeatures(request: ETAPredictionRequest, route: any): Promise<any> {
+  private async prepareETAFeatures(request: ETAPredictionRequest, route: RouteData): Promise<ETAFeatures> {
     return {
       distance: route.total_miles,
       trafficFactor: this.getTrafficFactor(request.trafficConditions),
@@ -350,7 +408,7 @@ export class MLService {
   /**
    * Run ETA prediction
    */
-  private async runETAPrediction(_features: any): Promise<{ hours: number }> {
+  private async runETAPrediction(features: ETAFeatures): Promise<{ hours: number }> {
     if (!this.etaModel) {
       throw new Error('ETA model not initialized');
     }
@@ -380,7 +438,7 @@ export class MLService {
   /**
    * Store prediction for accuracy tracking
    */
-  private async storePrediction(type: string, data: any): Promise<void> {
+  private async storePrediction(type: string, data: PredictionData): Promise<void> {
     await prisma.ml_predictions.create({
       data: {
         model_id: 1, // Would reference actual model
@@ -414,7 +472,7 @@ export class MLService {
     }
   }
 
-  private calculateRouteComplexity(route: any): number {
+  private calculateRouteComplexity(route: RouteData): number {
     // Simplified complexity calculation
     return Math.min(route.total_miles / 100, 5.0);
   }
@@ -443,7 +501,7 @@ export class MLService {
       : 0.8; // Default
   }
 
-  private calculateETAConfidence(features: any, prediction: any): number {
+  private calculateETAConfidence(features: ETAFeatures, prediction: ETAPrediction): number {
     // Simplified confidence calculation
     let confidence = 0.8;
     
@@ -494,7 +552,7 @@ export class MLService {
     };
   }
 
-  private async runPricingPrediction(_features: any): Promise<number> {
+  private async runPricingPrediction(features: PricingFeatures): Promise<number> {
     // Simplified pricing adjustment (would use actual model)
     let multiplier = 1.0;
     
@@ -505,7 +563,7 @@ export class MLService {
     return multiplier;
   }
 
-  private async getDemandFactor(origin: any, destination: any, date: Date): Promise<number> {
+  private async getDemandFactor(origin: LocationData, destination: LocationData, date: Date): Promise<number> {
     // Would analyze historical demand patterns
     return 0.8; // Mock value
   }
@@ -524,17 +582,17 @@ export class MLService {
     return 1.0;
   }
 
-  private async getCapacityFactor(origin: any, date: Date): Promise<number> {
+  private async getCapacityFactor(origin: LocationData, date: Date): Promise<number> {
     // Would analyze available capacity in the area
     return 1.0; // Mock value
   }
 
-  private async getMarketFactor(_origin: any, _destination: any): Promise<number> {
+  private async getMarketFactor(_origin: LocationData, _destination: LocationData): Promise<number> {
     // Would analyze market conditions for this lane
     return 1.0; // Mock value
   }
 
-  private calculatePricingConfidence(_features: any): number {
+  private calculatePricingConfidence(_features: PricingFeatures): number {
     return 0.85; // Mock confidence
   }
 
@@ -543,17 +601,17 @@ export class MLService {
     return 3.45;
   }
 
-  private async getDemandIndex(_origin: any, _destination: any): Promise<number> {
+  private async getDemandIndex(_origin: LocationData, _destination: LocationData): Promise<number> {
     // Would calculate demand index for this lane
     return 0.7;
   }
 
-  private async prepareMaintenanceFeatures(vehicle: any, component: string): Promise<any> {
+  private async prepareMaintenanceFeatures(vehicle: VehicleData, component: string): Promise<MaintenanceFeatures> {
     // Would prepare features based on vehicle data, telematics, maintenance history
     return {};
   }
 
-  private async runMaintenancePrediction(_features: any): Promise<any> {
+  private async runMaintenancePrediction(_features: MaintenanceFeatures): Promise<MaintenancePrediction> {
     // Would run actual maintenance prediction model
     return {
       failureProbability: Math.random() * 0.3, // Mock

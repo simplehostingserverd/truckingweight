@@ -12,6 +12,79 @@ export interface IPassConfig extends TollProviderConfig {
   environment?: 'production' | 'sandbox';
 }
 
+export interface IPassTransaction {
+  transactionId: string;
+  tollPlaza?: string;
+  facilityName?: string;
+  plazaId?: string;
+  facilityId?: string;
+  amount: number;
+  transactionDate: string;
+  vehicleClass?: string;
+  latitude?: number;
+  longitude?: number;
+  location?: string;
+  entryTime?: string;
+  exitTime?: string;
+  status?: string;
+}
+
+export interface IPassViolation {
+  violationId: string;
+  amount: number;
+  date: string;
+  facilityName?: string;
+  status?: string;
+  vehicleClass?: string;
+}
+
+export interface IPassTransponder {
+  transponderId: string;
+  accountNumber: string;
+  status: string;
+  balance?: number;
+  vehicleInfo?: {
+    make?: string;
+    model?: string;
+    year?: number;
+    licensePlate?: string;
+  };
+}
+
+export interface IPassRouteResponse {
+  totalTollCost?: number;
+  distance?: number;
+  estimatedTime?: number;
+  routeCoordinates?: Array<[number, number]>;
+  tollPlazas?: IPassTollPlaza[];
+  alternativeRoutes?: IPassRouteResponse[];
+}
+
+export interface IPassTollPlaza {
+  name?: string;
+  plazaName?: string;
+  id?: string;
+  plazaId?: string;
+  latitude?: number;
+  longitude?: number;
+  address?: string;
+  toll?: number;
+  cost?: number;
+  vehicleClass?: string;
+}
+
+export interface IPassTollPoint {
+  facilityName: string;
+  facilityId?: string;
+  location: {
+    latitude?: number;
+    longitude?: number;
+    address?: string;
+  };
+  cost: number;
+  vehicleClass?: string;
+}
+
 export class IPassService extends BaseTollService {
   private config: IPassConfig;
 
@@ -110,7 +183,7 @@ export class IPassService extends BaseTollService {
 
       const response = await this.makeRequest('GET', `/accounts/${accountNumber}/transactions?${params}`);
 
-      return response.transactions?.map((tx: any) => ({
+      return response.transactions?.map((tx: IPassTransaction) => ({
         transactionId: tx.transactionId,
         facilityName: tx.tollPlaza || tx.facilityName,
         facilityId: tx.plazaId || tx.facilityId,
@@ -197,7 +270,7 @@ export class IPassService extends BaseTollService {
     return await this.testConnection();
   }
 
-  public async getViolations(accountNumber: string): Promise<any[]> {
+  public async getViolations(accountNumber: string): Promise<IPassViolation[]> {
     try {
       const response = await this.makeRequest('GET', `/accounts/${accountNumber}/violations`);
       return response.violations || [];
@@ -207,7 +280,7 @@ export class IPassService extends BaseTollService {
     }
   }
 
-  public async getTransponders(accountNumber: string): Promise<any[]> {
+  public async getTransponders(accountNumber: string): Promise<IPassTransponder[]> {
     try {
       const response = await this.makeRequest('GET', `/accounts/${accountNumber}/transponders`);
       return response.transponders || [];
@@ -242,7 +315,7 @@ export class IPassService extends BaseTollService {
     return mapping[vehicleClass?.toLowerCase() || 'car'] || 'Class1';
   }
 
-  private parseRouteResponse(response: any): TollCalculation {
+  private parseRouteResponse(response: IPassRouteResponse): TollCalculation {
     return {
       totalCost: response.totalTollCost || 0,
       currency: 'USD',
@@ -252,12 +325,12 @@ export class IPassService extends BaseTollService {
         duration: response.estimatedTime || 0,
         coordinates: response.routeCoordinates,
       },
-      alternatives: response.alternativeRoutes?.map((alt: any) => this.parseRouteResponse(alt)) || [],
+      alternatives: response.alternativeRoutes?.map((alt: IPassRouteResponse) => this.parseRouteResponse(alt)) || [],
     };
   }
 
-  private parseTollPoints(tollPlazas: any[]): any[] {
-    return tollPlazas.map((plaza: any) => ({
+  private parseTollPoints(tollPlazas: IPassTollPlaza[]): IPassTollPoint[] {
+    return tollPlazas.map((plaza: IPassTollPlaza) => ({
       facilityName: plaza.name || plaza.plazaName,
       facilityId: plaza.id || plaza.plazaId,
       location: {

@@ -13,6 +13,65 @@ export interface PCMilerConfig extends TollProviderConfig {
   routeType?: 'Practical' | 'Shortest' | 'Fastest';
 }
 
+export interface PCMilerUsage {
+  id: string;
+  cost?: number;
+  timestamp: string;
+}
+
+export interface PCMilerRouteResponse {
+  Route?: {
+    TollCost: number;
+    TMiles: number;
+    TTime: number;
+    Geometry?: any;
+    TollDetails: PCMilerTollDetail[];
+    Alternatives?: PCMilerRouteResponse[];
+  };
+  TollCost?: number;
+  TMiles?: number;
+  Distance?: number;
+  TTime?: number;
+  Duration?: number;
+  Geometry?: any;
+  TollDetails?: PCMilerTollDetail[];
+  Alternatives?: PCMilerRouteResponse[];
+}
+
+export interface PCMilerTollDetail {
+  Name?: string;
+  FacilityName?: string;
+  Id?: string;
+  FacilityId?: string;
+  Lat?: number;
+  Latitude?: number;
+  Lon?: number;
+  Longitude?: number;
+  Address?: string;
+  Cost?: number;
+  Amount?: number;
+  VehicleClass?: string;
+}
+
+export interface PCMilerTollPoint {
+  facilityName: string;
+  facilityId?: string;
+  location: {
+    latitude: number;
+    longitude: number;
+    address?: string;
+  };
+  cost: number;
+  vehicleClass?: string;
+}
+
+export interface PCMilerGeometryPoint {
+  Lat?: number;
+  Latitude?: number;
+  Lon?: number;
+  Longitude?: number;
+}
+
 export class PCMilerService extends BaseTollService {
   private config: PCMilerConfig;
 
@@ -123,7 +182,7 @@ export class PCMilerService extends BaseTollService {
         limit: limit || 100,
       });
 
-      return response.usage?.map((usage: any) => ({
+      return response.usage?.map((usage: PCMilerUsage) => ({
         transactionId: usage.id,
         facilityName: 'PC Miler API Usage',
         amount: usage.cost || 0,
@@ -215,7 +274,7 @@ export class PCMilerService extends BaseTollService {
     return mapping[vehicleType?.toLowerCase() || 'truck'] || 'Truck';
   }
 
-  private parseRouteResponse(response: any): TollCalculation {
+  private parseRouteResponse(response: PCMilerRouteResponse): TollCalculation {
     const route = response.Route || response;
     
     return {
@@ -227,12 +286,12 @@ export class PCMilerService extends BaseTollService {
         duration: route.TTime || route.Duration || 0,
         coordinates: this.parseRouteGeometry(route.Geometry),
       },
-      alternatives: route.Alternatives?.map((alt: any) => this.parseRouteResponse(alt)) || [],
+      alternatives: route.Alternatives?.map((alt: PCMilerRouteResponse) => this.parseRouteResponse(alt)) || [],
     };
   }
 
-  private parseTollPoints(tollDetails: any[]): any[] {
-    return tollDetails.map((toll: any) => ({
+  private parseTollPoints(tollDetails: PCMilerTollDetail[]): PCMilerTollPoint[] {
+    return tollDetails.map((toll: PCMilerTollDetail) => ({
       facilityName: toll.Name || toll.FacilityName || 'Unknown Toll',
       facilityId: toll.Id || toll.FacilityId,
       location: {
@@ -245,12 +304,12 @@ export class PCMilerService extends BaseTollService {
     }));
   }
 
-  private parseRouteGeometry(geometry: any): Array<[number, number]> | undefined {
+  private parseRouteGeometry(geometry: PCMilerGeometryPoint[] | any): Array<[number, number]> | undefined {
     if (!geometry) return undefined;
     
     // PC Miler typically returns geometry as encoded polyline or coordinate array
     if (Array.isArray(geometry)) {
-      return geometry.map((point: any) => [point.Lat || point[1], point.Lon || point[0]]);
+      return geometry.map((point: PCMilerGeometryPoint | any) => [point.Lat || point[1], point.Lon || point[0]]);
     }
     
     return undefined;

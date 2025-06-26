@@ -31,6 +31,60 @@ export interface FuelSurchargeCalculation {
   surchargeAmount: number;
 }
 
+export interface LoadData {
+  id: number;
+  total_rate?: number;
+  pickup_location?: string;
+  delivery_location?: string;
+  temperature_min?: number;
+  temperature_max?: number;
+  load_stops: Array<{
+    id: number;
+    arrival_time?: Date;
+    departure_time?: Date;
+    stop_number: number;
+  }>;
+  routes?: any;
+  customers?: any;
+}
+
+export interface CustomerData {
+  id: number;
+  name: string;
+  billing_address?: string;
+  tax_id?: string;
+}
+
+export interface InvoiceData {
+  id: number;
+  invoice_number: string;
+  total_amount: number;
+  balance_due: number;
+  due_date: Date;
+  created_at: Date;
+  customer_id: number;
+  company_id: number;
+}
+
+export interface AgingReportData {
+  current: number;
+  thirtyDays: number;
+  sixtyDays: number;
+  ninetyDays: number;
+  overNinety: number;
+  totalOutstanding: number;
+  customerBreakdown: Array<{
+    customerId: number;
+    customerName: string;
+    current: number;
+    thirtyDays: number;
+    sixtyDays: number;
+    ninetyDays: number;
+    overNinety: number;
+    total: number;
+  }>;
+}
+
 export class BillingService {
   private ediService: EDIService;
 
@@ -41,7 +95,7 @@ export class BillingService {
   /**
    * Create an automated invoice for a completed load
    */
-  async createInvoice(request: InvoiceRequest): Promise<any> {
+  async createInvoice(request: InvoiceRequest): Promise<InvoiceData> {
     try {
       logger.info(`Creating invoice for load ${request.loadId}`);
 
@@ -133,7 +187,7 @@ export class BillingService {
   /**
    * Calculate line items automatically based on load details
    */
-  private async calculateLineItems(load: any): Promise<InvoiceLineItem[]> {
+  private async calculateLineItems(load: LoadData): Promise<InvoiceLineItem[]> {
     const lineItems: InvoiceLineItem[] = [];
 
     // Base freight charge
@@ -171,7 +225,7 @@ export class BillingService {
   /**
    * Calculate fuel surcharge based on current fuel prices
    */
-  private async calculateFuelSurcharge(load: any): Promise<FuelSurchargeCalculation> {
+  private async calculateFuelSurcharge(load: LoadData): Promise<FuelSurchargeCalculation> {
     const baseRate = load.total_rate || 0;
     const baseFuelPrice = 2.50; // Base fuel price for surcharge calculation
     
@@ -196,7 +250,7 @@ export class BillingService {
   /**
    * Calculate accessorial charges
    */
-  private async calculateAccessorialCharges(load: any): Promise<InvoiceLineItem[]> {
+  private async calculateAccessorialCharges(load: LoadData): Promise<InvoiceLineItem[]> {
     const accessorials: InvoiceLineItem[] = [];
 
     // Check for special equipment requirements
@@ -235,7 +289,7 @@ export class BillingService {
   /**
    * Calculate detention charges based on stop times
    */
-  private async calculateDetentionCharges(load: any): Promise<InvoiceLineItem[]> {
+  private async calculateDetentionCharges(load: LoadData): Promise<InvoiceLineItem[]> {
     const detentionCharges: InvoiceLineItem[] = [];
     const detentionRate = 50; // $50 per hour
     const freeTime = 2; // 2 hours free time
@@ -265,7 +319,7 @@ export class BillingService {
   /**
    * Calculate tax amount
    */
-  private async calculateTax(_subtotal: number, _customer: any): Promise<number> {
+  private async calculateTax(_subtotal: number, _customer: CustomerData): Promise<number> {
     // Tax calculation would be based on customer location and tax rules
     // For now, return 0 (many freight services are tax-exempt)
     return 0;
@@ -419,7 +473,7 @@ export class BillingService {
   /**
    * Generate aging report
    */
-  async generateAgingReport(companyId: number): Promise<any> {
+  async generateAgingReport(companyId: number): Promise<AgingReportData> {
     const today = new Date();
     const _thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
     const _sixtyDaysAgo = new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000);
