@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Sky gradient -->
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4682B4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="roadGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#696969;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2F2F2F;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="truckGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D2001F;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Sky background -->
+  <rect width="800" height="400" fill="url(#skyGradient)"/>
+  
+  <!-- Mountains in background -->
+  <polygon points="0,300 150,200 300,250 450,180 600,220 800,160 800,400 0,400" fill="#8B7355" opacity="0.6"/>
+  <polygon points="100,320 250,220 400,270 550,200 700,240 800,180 800,400 0,400" fill="#A0522D" opacity="0.4"/>
+  
+  <!-- Trees -->
+  <ellipse cx="120" cy="280" rx="15" ry="40" fill="#228B22"/>
+  <ellipse cx="180" cy="290" rx="12" ry="35" fill="#32CD32"/>
+  <ellipse cx="250" cy="275" rx="18" ry="45" fill="#228B22"/>
+  <ellipse cx="320" cy="285" rx="14" ry="38" fill="#32CD32"/>
+  <ellipse cx="680" cy="270" rx="16" ry="42" fill="#228B22"/>
+  <ellipse cx="720" cy="280" rx="13" ry="36" fill="#32CD32"/>
+  
+  <!-- Road -->
+  <polygon points="0,400 200,350 600,350 800,400 800,600 0,600" fill="url(#roadGradient)"/>
+  
+  <!-- Road markings -->
+  <rect x="390" y="370" width="20" height="4" fill="#FFFF00"/>
+  <rect x="390" y="385" width="20" height="4" fill="#FFFF00"/>
+  <rect x="390" y="400" width="20" height="4" fill="#FFFF00"/>
+  <rect x="390" y="415" width="20" height="4" fill="#FFFF00"/>
+  <rect x="390" y="430" width="20" height="4" fill="#FFFF00"/>
+  
+  <!-- Semi truck -->
+  <g transform="translate(450,320)">
+    <!-- Truck cab -->
+    <rect x="0" y="20" width="60" height="40" fill="url(#truckGradient)" rx="5"/>
+    <!-- Windshield -->
+    <rect x="5" y="25" width="50" height="20" fill="#87CEEB" opacity="0.7" rx="3"/>
+    <!-- Grille -->
+    <rect x="55" y="25" width="8" height="30" fill="#2F2F2F"/>
+    <rect x="57" y="27" width="4" height="26" fill="#C0C0C0"/>
+    
+    <!-- Trailer -->
+    <rect x="65" y="15" width="120" height="50" fill="#F5F5F5" rx="3"/>
+    <rect x="70" y="20" width="110" height="40" fill="#FFFFFF" stroke="#D3D3D3" stroke-width="1"/>
+    
+    <!-- Wheels -->
+    <circle cx="15" cy="65" r="8" fill="#2F2F2F"/>
+    <circle cx="15" cy="65" r="5" fill="#C0C0C0"/>
+    <circle cx="45" cy="65" r="8" fill="#2F2F2F"/>
+    <circle cx="45" cy="65" r="5" fill="#C0C0C0"/>
+    <circle cx="150" cy="65" r="8" fill="#2F2F2F"/>
+    <circle cx="150" cy="65" r="5" fill="#C0C0C0"/>
+    <circle cx="170" cy="65" r="8" fill="#2F2F2F"/>
+    <circle cx="170" cy="65" r="5" fill="#C0C0C0"/>
+  </g>
+  
+  <!-- Clouds -->
+  <ellipse cx="150" cy="80" rx="30" ry="15" fill="#FFFFFF" opacity="0.8"/>
+  <ellipse cx="170" cy="75" rx="25" ry="12" fill="#FFFFFF" opacity="0.8"/>
+  <ellipse cx="190" cy="80" rx="20" ry="10" fill="#FFFFFF" opacity="0.8"/>
+  
+  <ellipse cx="600" cy="100" rx="35" ry="18" fill="#FFFFFF" opacity="0.7"/>
+  <ellipse cx="625" cy="95" rx="28" ry="14" fill="#FFFFFF" opacity="0.7"/>
+  <ellipse cx="650" cy="100" rx="22" ry="11" fill="#FFFFFF" opacity="0.7"/>
+  
+  <!-- Sun -->
+  <circle cx="700" cy="80" r="25" fill="#FFD700" opacity="0.9"/>
+  <circle cx="700" cy="80" r="20" fill="#FFA500"/>
+</svg>

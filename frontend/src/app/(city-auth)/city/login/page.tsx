@@ -253,7 +253,7 @@ export default function CityLogin() {
               }}
             />
             <Image
-              src="/images/city-weighing-bg.jpg"
+              src="/images/city-login-image.jpg"
               alt="City Weighing System"
               fill
               sizes="(max-width: 1200px) 100vw, 50vw"
