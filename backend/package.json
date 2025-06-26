@@ -61,7 +61,7 @@
     "jest": "^29.7.0",
     "nodemon": "^3.1.10",
     "prettier": "^3.5.3",
-    "prisma": "^6.7.0",
+    "prisma": "^6.10.1",
     "prisma-generator-plantuml-erd": "^1.6.0",
     "supertest": "^6.3.4",
     "ts-node": "^10.9.2",
