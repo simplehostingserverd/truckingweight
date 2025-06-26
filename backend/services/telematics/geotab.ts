@@ -12,8 +12,20 @@
  */
 
 import axios from 'axios';
-import { TelematicsProvider, TelematicsData } from './index';
+import { TelematicsProvider, TelematicsData, TelematicsDriverData, TelematicsEvent, TelematicsSubscription } from './index';
 import { logger } from '../../utils/logger';
+
+interface GeotabApiResponse {
+  result?: any;
+  error?: {
+    name: string;
+    message: string;
+  };
+}
+
+interface GeotabApiParams {
+  [key: string]: any;
+}
 
 interface GeotabCredentials {
   database: string;
@@ -90,7 +102,7 @@ export class GeotabService implements TelematicsProvider {
   /**
    * Make an authenticated call to Geotab API
    */
-  private async callApi(method: string, params: any = {}): Promise<any> {
+  private async callApi(method: string, params: GeotabApiParams = {}): Promise<any> {
     const sessionId = await this.authenticate();
 
     try {
@@ -213,7 +225,7 @@ export class GeotabService implements TelematicsProvider {
   /**
    * Fetch driver data from Geotab
    */
-  async fetchDriverData(driverId: string): Promise<any> {
+  async fetchDriverData(driverId: string): Promise<TelematicsDriverData> {
     try {
       // Get driver info
       const driver = await this.callApi('Get', {
@@ -283,7 +295,7 @@ export class GeotabService implements TelematicsProvider {
   /**
    * Fetch events from Geotab
    */
-  async fetchEvents(startTime: Date, endTime: Date): Promise<any[]> {
+  async fetchEvents(startTime: Date, endTime: Date): Promise<TelematicsEvent[]> {
     try {
       // Get exception events
       const events = await this.callApi('Get', {
@@ -318,7 +330,7 @@ export class GeotabService implements TelematicsProvider {
   /**
    * Subscribe to events from Geotab
    */
-  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<any> {
+  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<TelematicsSubscription> {
     try {
       // Map our event types to Geotab event types
       const geotabEventTypes = eventTypes.map(type => {

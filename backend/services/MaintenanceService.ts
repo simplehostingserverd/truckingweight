@@ -247,7 +247,7 @@ export class MaintenanceService {
       category?: string;
       vendor_id?: number;
       quantity_in_stock?: {
-        lte: any;
+        lte: number;
       };
     }
 

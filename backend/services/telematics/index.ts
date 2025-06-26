@@ -40,15 +40,60 @@ export interface TelematicsData {
   events?: {
     type: string;
     timestamp: Date;
-    details: any;
+    details: TelematicsEventDetails;
   }[];
+}
+
+export interface TelematicsEventDetails {
+  location?: {
+    latitude: number;
+    longitude: number;
+    address?: string;
+  };
+  severity?: string;
+  eventType?: string;
+  description?: string;
+  [key: string]: unknown;
+}
+
+export interface TelematicsDriverData {
+  driverId: string;
+  name: string;
+  phone?: string;
+  licenseNumber?: string;
+  licenseState?: string;
+  eldExempt?: boolean;
+  eldExemptReason?: string;
+  hoursOfService?: {
+    drivingTime: number;
+    dutyTime: number;
+    restTime: number;
+    cycleRemaining: number;
+    status: string;
+  };
+  [key: string]: unknown;
+}
+
+export interface TelematicsEvent {
+  type: string;
+  timestamp: Date;
+  vehicleId?: string;
+  driverId?: string;
+  details: TelematicsEventDetails;
+}
+
+export interface TelematicsSubscription {
+  subscriptionId: string;
+  status: string;
+  eventTypes: string[];
+  [key: string]: unknown;
 }
 
 export interface TelematicsProvider {
   fetchVehicleData(vehicleId: string): Promise<TelematicsData>;
-  fetchDriverData(driverId: string): Promise<any>;
-  fetchEvents(startTime: Date, endTime: Date): Promise<any[]>;
-  subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<any>;
+  fetchDriverData(driverId: string): Promise<TelematicsDriverData>;
+  fetchEvents(startTime: Date, endTime: Date): Promise<TelematicsEvent[]>;
+  subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<TelematicsSubscription>;
 }
 
 export class TelematicsService {
@@ -228,7 +273,7 @@ export class TelematicsService {
     connectionId: string,
     eventType: string,
     status: 'success' | 'error' | 'warning',
-    details: any
+    details: Record<string, unknown>
   ): Promise<void> {
     try {
       await prisma.integration_logs.create({

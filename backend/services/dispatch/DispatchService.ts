@@ -8,6 +8,39 @@ import { RouteOptimizationService } from './RouteOptimizationService';
 import { DriverMatchingService } from './DriverMatchingService';
 import { logger } from '../../utils/logger';
 
+interface LoadData {
+  id: number;
+  hazmat_class?: string;
+  temperature_min?: number;
+  load_stops?: {
+    type: string;
+    latitude?: number;
+    longitude?: number;
+    stop_number: number;
+  }[];
+}
+
+interface VehicleData {
+  id: number;
+  company_id: number;
+  drivers: DriverData[];
+}
+
+interface DriverData {
+  id: number;
+  latitude?: number;
+  longitude?: number;
+}
+
+interface DispatchOption {
+  vehicleId: number;
+  driverId: number;
+  trailerId: number | null;
+  score: number;
+  vehicle: VehicleData;
+  driver: DriverData;
+}
+
 export interface LoadAssignmentRequest {
   loadId: number;
   companyId: number;
@@ -129,7 +162,7 @@ export class DispatchService {
   /**
    * Get available vehicles that can handle the load
    */
-  private async getAvailableVehicles(companyId: number, load: any) {
+  private async getAvailableVehicles(companyId: number, load: LoadData) {
     const vehicles = await prisma.vehicles.findMany({
       where: {
         company_id: companyId,
@@ -159,7 +192,7 @@ export class DispatchService {
   /**
    * Score dispatch options based on multiple criteria
    */
-  private async scoreDispatchOptions(load: any, vehicles: any[]) {
+  private async scoreDispatchOptions(load: LoadData, vehicles: VehicleData[]) {
     const scoredOptions = [];
 
     for (const vehicle of vehicles) {
@@ -186,7 +219,7 @@ export class DispatchService {
   /**
    * Calculate dispatch score based on multiple factors
    */
-  private async calculateDispatchScore(load: any, vehicle: any, driver: any): Promise<number> {
+  private async calculateDispatchScore(load: LoadData, vehicle: VehicleData, driver: DriverData): Promise<number> {
     let score = 100; // Start with perfect score
 
     // Distance factor (closer is better)
@@ -215,7 +248,7 @@ export class DispatchService {
   /**
    * Calculate distance-based score
    */
-  private async calculateDistanceScore(load: any, vehicle: any, driver: any): Promise<number> {
+  private async calculateDistanceScore(load: LoadData, vehicle: VehicleData, driver: DriverData): Promise<number> {
     // Get pickup location
     const pickupStop = load.load_stops?.find(stop => stop.type === 'pickup');
     if (!pickupStop) return 0.5;
@@ -342,7 +375,7 @@ export class DispatchService {
   /**
    * Calculate equipment matching score
    */
-  private calculateEquipmentScore(_load: any, _vehicle: any): number {
+  private calculateEquipmentScore(_load: LoadData, _vehicle: VehicleData): number {
     // This would check for specific equipment requirements
     // For now, return 1.0 (perfect match)
     return 1.0;
@@ -351,7 +384,7 @@ export class DispatchService {
   /**
    * Find the best available trailer for the load
    */
-  private async findBestTrailer(load: any, companyId: number): Promise<number | null> {
+  private async findBestTrailer(load: LoadData, companyId: number): Promise<number | null> {
     const trailers = await prisma.trailers.findMany({
       where: {
         company_id: companyId,
@@ -366,7 +399,7 @@ export class DispatchService {
   /**
    * Assign the load to the selected vehicle/driver/trailer
    */
-  private async assignLoad(loadId: number, option: any, routeId?: number) {
+  private async assignLoad(loadId: number, option: DispatchOption, routeId?: number) {
     await prisma.loads.update({
       where: { id: loadId },
       data: {

@@ -7,6 +7,15 @@ import prisma from '../../config/prisma';
 import { logger } from '../../utils/logger';
 import axios from 'axios';
 
+interface RestStop {
+  id: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  amenities: string[];
+  truckParking: boolean;
+}
+
 export interface RouteOptimizationRequest {
   loadId: number;
   vehicleId: number;
@@ -389,7 +398,7 @@ export class RouteOptimizationService {
   /**
    * Recommend rest stops for HOS compliance
    */
-  private async recommendRestStops(route: OptimizedRoute): Promise<any[]> {
+  private async recommendRestStops(route: OptimizedRoute): Promise<RestStop[]> {
     // This would find rest areas and truck stops
     return [];
   }

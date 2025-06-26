@@ -6,6 +6,17 @@
 import prisma from '../../config/prisma';
 import { logger } from '../../utils/logger';
 
+interface HOSLog {
+  id: number;
+  driver_id: number;
+  duty_status: string;
+  start_time: Date;
+  end_time?: Date;
+  log_date: Date;
+  duration_minutes?: number;
+  violation_indicators?: string[];
+}
+
 export interface HOSStatus {
   driverId: number;
   currentStatus: 'off_duty' | 'sleeper_berth' | 'driving' | 'on_duty_not_driving';
@@ -296,7 +307,7 @@ export class ELDService {
   /**
    * Calculate total drive time from logs
    */
-  private calculateDriveTime(logs: any[]): number {
+  private calculateDriveTime(logs: HOSLog[]): number {
     return logs
       .filter(log => log.duty_status === 'driving')
       .reduce((total, log) => total + (log.duration_minutes || 0), 0);
@@ -305,7 +316,7 @@ export class ELDService {
   /**
    * Calculate total on-duty time from logs
    */
-  private calculateOnDutyTime(logs: any[]): number {
+  private calculateOnDutyTime(logs: HOSLog[]): number {
     return logs
       .filter(log => log.duty_status !== 'off_duty' && log.duty_status !== 'sleeper_berth')
       .reduce((total, log) => total + (log.duration_minutes || 0), 0);
@@ -314,14 +325,14 @@ export class ELDService {
   /**
    * Calculate cycle time (past 8 days)
    */
-  private calculateCycleTime(logs: any[]): number {
+  private calculateCycleTime(logs: HOSLog[]): number {
     return this.calculateOnDutyTime(logs);
   }
 
   /**
    * Find work shift start time
    */
-  private findWorkShiftStart(todayLogs: any[]): Date | null {
+  private findWorkShiftStart(todayLogs: HOSLog[]): Date | null {
     // Find first on-duty status of the day
     const firstOnDuty = todayLogs.find(log => 
       log.duty_status !== 'off_duty' && log.duty_status !== 'sleeper_berth'
@@ -332,7 +343,7 @@ export class ELDService {
   /**
    * Detect HOS violations
    */
-  private async detectViolations(driverId: number, logs: any[]): Promise<HOSViolation[]> {
+  private async detectViolations(driverId: number, logs: HOSLog[]): Promise<HOSViolation[]> {
     const violations: HOSViolation[] = [];
 
     // Check for 8-hour break requirement
@@ -352,7 +363,7 @@ export class ELDService {
   /**
    * Calculate continuous drive time without break
    */
-  private calculateContinuousDriveTime(logs: any[]): number {
+  private calculateContinuousDriveTime(logs: HOSLog[]): number {
     let continuousDriveTime = 0;
     const _lastBreakTime = 0;
 
@@ -372,7 +383,7 @@ export class ELDService {
   /**
    * Calculate next required break time
    */
-  private calculateNextRequiredBreak(todayLogs: any[]): Date | null {
+  private calculateNextRequiredBreak(todayLogs: HOSLog[]): Date | null {
     const driveTime = this.calculateDriveTime(todayLogs);
     if (driveTime >= this.HOS_LIMITS.BREAK_REQUIRED_AFTER) {
       return new Date(); // Break required now
@@ -383,7 +394,7 @@ export class ELDService {
   /**
    * Calculate next required rest period
    */
-  private calculateNextRequiredRest(todayLogs: any[]): Date | null {
+  private calculateNextRequiredRest(todayLogs: HOSLog[]): Date | null {
     const workShiftStart = this.findWorkShiftStart(todayLogs);
     if (workShiftStart) {
       const restTime = new Date(workShiftStart.getTime() + this.HOS_LIMITS.WORK_SHIFT_LIMIT * 60000);
@@ -411,7 +422,7 @@ export class ELDService {
   /**
    * Calculate average daily drive time
    */
-  private calculateAverageDailyDriveTime(logs: any[]): number {
+  private calculateAverageDailyDriveTime(logs: HOSLog[]): number {
     const dailyTotals = new Map<string, number>();
     
     logs.forEach(log => {
@@ -429,7 +440,7 @@ export class ELDService {
   /**
    * Calculate compliance rate
    */
-  private calculateComplianceRate(logs: any[], violations: any[]): number {
+  private calculateComplianceRate(logs: HOSLog[], violations: HOSViolation[]): number {
     if (logs.length === 0) return 100;
     return ((logs.length - violations.length) / logs.length) * 100;
   }

@@ -15,6 +15,46 @@ import axios from 'axios';
 import { TelematicsProvider, TelematicsData } from './index';
 import { logger } from '../../utils/logger';
 
+export interface SamsaraDriverData {
+  driverId: string;
+  name: string;
+  phone?: string;
+  licenseNumber?: string;
+  licenseState?: string;
+  eldExempt?: boolean;
+  eldExemptReason?: string;
+  hoursOfService: {
+    drivingTime: number;
+    dutyTime: number;
+    restTime: number;
+    cycleRemaining: number;
+    status: string;
+  };
+}
+
+export interface SamsaraEvent {
+  type: string;
+  timestamp: Date;
+  vehicleId?: string;
+  driverId?: string;
+  details: {
+    location?: {
+      latitude: number;
+      longitude: number;
+      address?: string;
+    };
+    severity?: string;
+    eventType?: string;
+    description?: string;
+  };
+}
+
+export interface SamsaraSubscription {
+  subscriptionId: string;
+  status: string;
+  eventTypes: string[];
+}
+
 const SAMSARA_API_BASE_URL = 'https://api.samsara.com/v1';
 
 export class SamsaraService implements TelematicsProvider {
@@ -90,7 +130,7 @@ export class SamsaraService implements TelematicsProvider {
   /**
    * Fetch driver data from Samsara
    */
-  async fetchDriverData(driverId: string): Promise<any> {
+  async fetchDriverData(driverId: string): Promise<SamsaraDriverData> {
     try {
       // Validate API key
       if (!this.apiKey) {
@@ -137,7 +177,7 @@ export class SamsaraService implements TelematicsProvider {
   /**
    * Fetch events from Samsara
    */
-  async fetchEvents(startTime: Date, endTime: Date): Promise<any[]> {
+  async fetchEvents(startTime: Date, endTime: Date): Promise<SamsaraEvent[]> {
     try {
       // Validate API key
       if (!this.apiKey) {
@@ -179,7 +219,7 @@ export class SamsaraService implements TelematicsProvider {
   /**
    * Subscribe to events from Samsara
    */
-  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<any> {
+  async subscribeToEvents(eventTypes: string[], callbackUrl: string): Promise<SamsaraSubscription> {
     try {
       // Validate API key
       if (!this.apiKey) {

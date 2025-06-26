@@ -25,6 +25,81 @@ export interface WeighStationBypass {
   lastBypassTime?: Date;
 }
 
+export interface PrePassTransaction {
+  transactionId: string;
+  tollFacility?: string;
+  facilityName?: string;
+  facilityId: string;
+  amount: number;
+  timestamp: string;
+  vehicleId?: string;
+}
+
+export interface PrePassBypassEvent {
+  eventId: string;
+  stationId: string;
+  stationName: string;
+  timestamp: string;
+  bypassGranted: boolean;
+  vehicleId: string;
+}
+
+export interface PrePassWeighStation {
+  id: string;
+  name: string;
+  location: {
+    latitude: number;
+    longitude: number;
+    address: string;
+  };
+  bypassEligible: boolean;
+  currentStatus?: string;
+}
+
+export interface PrePassVehicleStatus {
+  vehicleId: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  bypassEligible: boolean;
+  complianceStatus: string;
+  lastUpdate: string;
+}
+
+export interface PrePassRouteResponse {
+  totalTollCost?: number;
+  totalDistance?: number;
+  estimatedTravelTime?: number;
+  routeCoordinates?: Array<{ latitude: number; longitude: number }>;
+  tollFacilities?: PrePassTollFacility[];
+  alternativeRoutes?: PrePassRouteResponse[];
+}
+
+export interface PrePassTollFacility {
+  name: string;
+  id: string;
+  location?: {
+    latitude?: number;
+    longitude?: number;
+    address?: string;
+  };
+  tollCost?: number;
+  vehicleClass?: string;
+}
+
+export interface PrePassTollPoint {
+  facilityName: string;
+  facilityId: string;
+  location: {
+    latitude: number;
+    longitude: number;
+    address?: string;
+  };
+  cost: number;
+  vehicleClass?: string;
+}
+
 export class PrePassService extends BaseTollService {
   private config: PrePassConfig;
 
@@ -127,7 +202,7 @@ export class PrePassService extends BaseTollService {
 
       const response = await this.makeRequest('GET', `/customers/${accountNumber}/transactions?${params}`);
 
-      return response.transactions?.map((tx: any) => ({
+      return response.transactions?.map((tx: PrePassTransaction) => ({
         transactionId: tx.transactionId,
         facilityName: tx.tollFacility || tx.facilityName,
         facilityId: tx.facilityId,
@@ -223,7 +298,7 @@ export class PrePassService extends BaseTollService {
     accountNumber: string,
     startDate: Date,
     endDate: Date
-  ): Promise<any[]> {
+  ): Promise<PrePassBypassEvent[]> {
     try {
       const params = new URLSearchParams({
         startDate: startDate.toISOString().split('T')[0],
@@ -251,7 +326,7 @@ export class PrePassService extends BaseTollService {
 
       const response = await this.makeRequest('POST', '/routes/weigh-stations', routeData);
 
-      return response.weighStations?.map((station: any) => ({
+      return response.weighStations?.map((station: PrePassWeighStation) => ({
         stationId: station.id,
         stationName: station.name,
         location: {
@@ -268,7 +343,7 @@ export class PrePassService extends BaseTollService {
     }
   }
 
-  public async getVehicleStatus(vehicleId: string): Promise<any> {
+  public async getVehicleStatus(vehicleId: string): Promise<PrePassVehicleStatus | null> {
     try {
       const response = await this.makeRequest('GET', `/vehicles/${vehicleId}/status`);
       return {
@@ -309,7 +384,7 @@ export class PrePassService extends BaseTollService {
     return mapping[vehicleClass?.toLowerCase() || 'truck'] || 'commercial';
   }
 
-  private parseRouteResponse(response: any): TollCalculation {
+  private parseRouteResponse(response: PrePassRouteResponse): TollCalculation {
     return {
       totalCost: response.totalTollCost || 0,
       currency: 'USD',
@@ -319,12 +394,12 @@ export class PrePassService extends BaseTollService {
         duration: response.estimatedTravelTime || 0,
         coordinates: response.routeCoordinates,
       },
-      alternatives: response.alternativeRoutes?.map((alt: any) => this.parseRouteResponse(alt)) || [],
+      alternatives: response.alternativeRoutes?.map((alt: PrePassRouteResponse) => this.parseRouteResponse(alt)) || [],
     };
   }
 
-  private parseTollPoints(tollFacilities: any[]): any[] {
-    return tollFacilities.map((facility: any) => ({
+  private parseTollPoints(tollFacilities: PrePassTollFacility[]): PrePassTollPoint[] {
+    return tollFacilities.map((facility: PrePassTollFacility) => ({
       facilityName: facility.name,
       facilityId: facility.id,
       location: {
