@@ -1,678 +1,198 @@
-/**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
- *
- * PROPRIETARY AND CONFIDENTIAL
- *
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
- * Unauthorized copying of this file, via any medium is strictly prohibited.
- *
- * This file contains proprietary and confidential information of
- * Cosmo Exploit Group LLC and may not be copied, distributed, or used
- * in any way without explicit written permission.
- */
-
-'use client';
+"use client";
 
 import React from 'react';
-import ErrorBoundary from '@/components/ErrorBoundary';
-import Layout from '@/components/Layout/Layout';
+import Head from 'next/head';
+import { ArrowRight, Truck, Weight, Zap } from 'lucide-react';
 import LogoCarousel from '@/components/LogoCarousel';
-import Image from 'next/image';
-import Link from 'next/link';
 
-interface Testimonial {
-  id: string;
-  name: string;
-  position: string;
-  company: string;
-  rating: number;
-  review: string;
-}
-
-interface HomeClientProps {
-  testimonials: Testimonial[] | null;
-}
-
-export default function HomeClient({ testimonials }: HomeClientProps) {
+const HomeClient = () => {
   return (
-    <ErrorBoundary>
-      <Layout>
-        <main>
-          {/* Hero Section */}
-          <section className="relative bg-gradient-to-r from-primary-700 to-primary-500 text-white overflow-hidden">
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-20 left-20 w-40 h-40 rounded-full bg-white blur-3xl"></div>
-              <div className="absolute bottom-20 right-20 w-60 h-60 rounded-full bg-white blur-3xl"></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-white blur-3xl"></div>
-            </div>
+    <>
+      <Head>
+        <title>CargoScale Pro - Smart Truck Weighing & Management</title>
+        <meta
+          name="description"
+          content="Revolutionizing the trucking industry with AI-powered weight management, automated tolling, and real-time compliance solutions. Boost efficiency and profitability with CargoScale Pro."
+        />
+        <meta name="keywords" content="truck weighing, logistics, fleet management, AI, compliance, tolling, transportation" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="canonical" href="https://cargoscalepro.com" />
+        <meta property="og:title" content="CargoScale Pro - Smart Truck Weighing & Management" />
+        <meta property="og:description" content="AI-powered solutions for modern trucking. Optimize loads, automate tolls, and ensure compliance effortlessly." />
+        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:url" content="https://cargoscalepro.com" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
 
-            <div className="container mx-auto px-4 py-20 relative z-10">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-                <div className="md:w-1/2 space-y-6">
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                    Streamline Your Trucking Operations
+      <div className="min-h-screen bg-gray-900 text-white">
+        <main className="isolate">
+          {/* Hero Section */}
+          <div className="relative pt-14">
+            <div
+              className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+              aria-hidden="true"
+            >
+              <div
+                className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+                style={{
+                  clipPath:
+                    'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+                }}
+              />
+            </div>
+            <div className="py-24 sm:py-32">
+              <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <div className="mx-auto max-w-2xl text-center">
+                  <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+                    The Future of Trucking is Here
                   </h1>
-                  <p className="text-xl md:text-2xl opacity-90">
-                    Comprehensive weight management and load tracking for modern trucking companies
+                  <p className="mt-6 text-lg leading-8 text-gray-300">
+                    CargoScale Pro integrates AI-powered weight management, automated tolling, and real-time compliance to streamline your logistics operations. Drive smarter, not harder.
                   </p>
-                  <div className="flex flex-wrap gap-4 pt-4">
-                    <Link
-                      href="/register"
-                      className="px-8 py-3 bg-white text-primary-700 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
-                    >
-                      Get Started
-                    </Link>
-                    <Link
-                      href="/login"
-                      className="px-8 py-3 bg-transparent border-2 border-white rounded-lg font-semibold hover:bg-white/10 transition-colors"
-                    >
-                      Trucking Login
-                    </Link>
-                    <Link
+                  <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
+                    <a
                       href="/city/login"
-                      className="px-8 py-3 bg-blue-600 border-2 border-blue-600 rounded-lg font-semibold hover:bg-blue-700 hover:border-blue-700 transition-colors shadow-lg"
+                      className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                       City Login
-                    </Link>
-                  </div>
-                </div>
-                <div className="md:w-1/2 flex justify-center">
-                  <div className="relative w-full max-w-xl">
-                    <Image
-                      src="/images/new-hero-banner.svg"
-                      alt="Trucking Weight Management System"
-                      width={800}
-                      height={400}
-                      className="drop-shadow-2xl"
-                      priority
-                    />
+                    </a>
+                    <a
+                      href="/login"
+                      className="rounded-md bg-gray-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700"
+                    >
+                      Trucking Dashboard Login
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div className="absolute bottom-0 left-0 right-0">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120">
-                <path
-                  fill="#ffffff"
-                  fillOpacity="1"
-                  d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
-                ></path>
-              </svg>
-            </div>
-          </section>
-
-          {/* Trucking Companies Logo Carousel */}
-          <LogoCarousel
-            type="trucking"
-            title="Trusted by Leading Trucking Companies"
-            subtitle="Join these industry leaders who rely on our platform for their weight management needs"
-          />
-
-          {/* City Partners Logo Carousel */}
-          <LogoCarousel
-            type="city"
-            title="In Partnership with Major Texas Cities"
-            subtitle="We collaborate with municipalities to ensure seamless and compliant city-wide logistics."
-          />
-
-          {/* Video Demo Section */}
-          <section className="py-20 bg-white">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  See Our Platform in Action
-                </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Watch how our system helps trucking companies manage weights, ensure compliance,
-                  and optimize operations.
-                </p>
-              </div>
-
-              <div className="max-w-4xl mx-auto bg-gray-100 rounded-xl overflow-hidden shadow-lg mb-20">
-                <div className="aspect-w-16 aspect-h-9 relative">
-                  <video
-                    className="w-full h-full object-cover"
-                    poster="/images/video-thumbnail.svg"
-                    controls
-                    preload="metadata"
-                    playsInline
-                    onError={e => {
-                      console.error('Video loading error:', e);
-                      // Add fallback image if video fails to load
-                      const videoElement = e.target as HTMLVideoElement;
-                      if (videoElement) {
-                        videoElement.style.display = 'none';
-                        const fallbackImg = document.createElement('img');
-                        fallbackImg.src = '/images/video-thumbnail.svg';
-                        fallbackImg.alt = 'Video thumbnail';
-                        fallbackImg.className = 'w-full h-full object-cover';
-                        videoElement.parentNode?.appendChild(fallbackImg);
-                      }
-                    }}
-                  >
-                    <source src="/videos/truck-highway.mp4" type="video/mp4" />
-                    <source src="/videos/truck-highway.webm" type="video/webm" />
-                    Your browser does not support the video tag.
-                  </video>
-                  <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 video-overlay pointer-events-none">
-                    <div className="text-center">
-                      <div className="w-20 h-20 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-primary-700 transition-colors">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-10 w-10 text-white"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                      </div>
-                      <p className="text-white text-lg font-bold drop-shadow-md">
-                        Click to watch traffic demo
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <style jsx>{`
-                .video-overlay {
-                  opacity: 1;
-                  transition: opacity 0.3s ease;
-                }
-                video:playing + .video-overlay {
-                  opacity: 0;
-                }
-              `}</style>
-            </div>
-          </section>
+          </div>
 
           {/* Features Section */}
-          <section className="py-20 bg-gray-50">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  Powerful Features for Your Fleet
-                </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Our comprehensive solution helps you manage weights, track loads, and ensure
-                  compliance with federal regulations.
+          <section id="features" className="py-24 sm:py-32">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              <div className="mx-auto max-w-2xl lg:text-center">
+                <h2 className="text-base font-semibold leading-7 text-indigo-400">Everything You Need</h2>
+                <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  A Unified Platform for Modern Logistics
+                </p>
+                <p className="mt-6 text-lg leading-8 text-gray-300">
+                  From weigh station automation to predictive maintenance, our platform provides the tools you need to stay ahead of the curve.
                 </p>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {/* Feature 1 */}
-                <div className="bg-gray-50 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
-                  <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-8 w-8 text-primary-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
-                      />
-                    </svg>
+              <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+                <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+                  <div className="relative pl-16">
+                    <dt className="text-base font-semibold leading-7 text-white">
+                      <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                        <Weight className="h-6 w-6 text-white" aria-hidden="true" />
+                      </div>
+                      AI-Powered Weight Management
+                    </dt>
+                    <dd className="mt-2 text-base leading-7 text-gray-300">
+                      Optimize load distribution in real-time to maximize capacity and avoid costly overweight fines. Our AI analyzes axle weights and suggests adjustments instantly.
+                    </dd>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Weight Management</h3>
-                  <p className="text-gray-600">
-                    Track and manage vehicle weights to ensure compliance with state and federal
-                    regulations.
-                  </p>
-                </div>
-
-                {/* Feature 2 */}
-                <div className="bg-gray-50 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
-                  <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-8 w-8 text-primary-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"
-                      />
-                    </svg>
+                  <div className="relative pl-16">
+                    <dt className="text-base font-semibold leading-7 text-white">
+                      <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                        <Truck className="h-6 w-6 text-white" aria-hidden="true" />
+                      </div>
+                      Automated Tolling & Compliance
+                    </dt>
+                    <dd className="mt-2 text-base leading-7 text-gray-300">
+                      Seamlessly integrate with national tolling systems and automate IFTA reporting. Stay compliant with ELD and HOS regulations effortlessly.
+                    </dd>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Load Tracking</h3>
-                  <p className="text-gray-600">
-                    Monitor your loads from origin to destination with real-time updates and status
-                    tracking.
-                  </p>
-                </div>
-
-                {/* Feature 3 */}
-                <div className="bg-gray-50 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
-                  <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-8 w-8 text-primary-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                      />
-                    </svg>
+                  <div className="relative pl-16">
+                    <dt className="text-base font-semibold leading-7 text-white">
+                      <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                        <Zap className="h-6 w-6 text-white" aria-hidden="true" />
+                      </div>
+                      Predictive Maintenance
+                    </dt>
+                    <dd className="mt-2 text-base leading-7 text-gray-300">
+                      Leverage telematics data to predict maintenance needs before they become critical issues, reducing downtime and extending vehicle lifespan.
+                    </dd>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Compliance Reporting</h3>
-                  <p className="text-gray-600">
-                    Generate compliance reports to ensure your fleet meets all regulatory
-                    requirements.
-                  </p>
-                </div>
-
-                {/* Feature 4 */}
-                <div className="bg-gray-50 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
-                  <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-8 w-8 text-primary-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
+                   <div className="relative pl-16">
+                    <dt className="text-base font-semibold leading-7 text-white">
+                      <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                        <ArrowRight className="h-6 w-6 text-white" aria-hidden="true" />
+                      </div>
+                      Route & Dispatch Optimization
+                    </dt>
+                    <dd className="mt-2 text-base leading-7 text-gray-300">
+                      Our smart routing algorithms consider traffic, weather, and weight restrictions to find the most efficient path for every haul.
+                    </dd>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Driver Management</h3>
-                  <p className="text-gray-600">
-                    Keep track of driver information, licenses, and certifications in one central
-                    location.
-                  </p>
-                </div>
+                </dl>
               </div>
             </div>
           </section>
 
-          {/* Testimonials Section */}
-          <section className="py-20 bg-gray-50">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  Trusted by Trucking Companies
-                </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  See what our customers have to say about our weight management system.
+          {/* Key Features Section */}
+          <section className="py-24 sm:py-32">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              <div className="mx-auto max-w-2xl lg:text-center">
+                <h2 className="text-base font-semibold leading-7 text-indigo-400">Core Advantages</h2>
+                <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  Why Choose CargoScale Pro?
+                </p>
+                <p className="mt-6 text-lg leading-8 text-gray-300">
+                  Our platform is built from the ground up to address the most critical challenges in the transportation industry, delivering tangible benefits to your bottom line.
                 </p>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {!testimonials || testimonials.length === 0 ? (
-                  // Fallback testimonials
-                  <>
-                    {/* Testimonial 1 */}
-                    <div className="bg-white rounded-xl p-8 shadow-sm">
-                      <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
-                          <span className="text-primary-700 font-bold text-xl">MT</span>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-gray-900">Michael Thompson</h4>
-                          <p className="text-gray-500 text-sm">Fleet Manager, Thompson Logistics</p>
-                        </div>
-                      </div>
-                      <p className="text-gray-600 italic">
-                        "TruckingWeight has completely transformed our weight compliance process.
-                        The real-time monitoring has saved us thousands in potential fines and
-                        improved our efficiency by 30%."
-                      </p>
-                    </div>
-
-                    {/* Testimonial 2 */}
-                    <div className="bg-white rounded-xl p-8 shadow-sm">
-                      <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
-                          <span className="text-primary-700 font-bold text-xl">SR</span>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-gray-900">Sarah Rodriguez</h4>
-                          <p className="text-gray-500 text-sm">
-                            Operations Director, Express Freight Solutions
-                          </p>
-                        </div>
-                      </div>
-                      <p className="text-gray-600 italic">
-                        "The analytics dashboard gives us insights we never had before. We can now
-                        make data-driven decisions that have improved our load efficiency and
-                        reduced overweight incidents to nearly zero."
-                      </p>
-                    </div>
-
-                    {/* Testimonial 3 */}
-                    <div className="bg-white rounded-xl p-8 shadow-sm">
-                      <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
-                          <span className="text-primary-700 font-bold text-xl">DC</span>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-gray-900">David Chen</h4>
-                          <p className="text-gray-500 text-sm">CEO, Pacific Northwest Transport</p>
-                        </div>
-                      </div>
-                      <p className="text-gray-600 italic">
-                        "Implementation was smooth and the support team was incredibly helpful. The
-                        system paid for itself within the first three months through avoided fines
-                        and improved route planning."
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  // Render testimonials from the database
-                  testimonials.map(testimonial => {
-                    // Get initials for the avatar
-                    const initials = testimonial.name
-                      .split(' ')
-                      .map(n => n[0])
-                      .join('')
-                      .toUpperCase();
-
-                    return (
-                      <div key={testimonial.id} className="bg-white rounded-xl p-8 shadow-sm">
-                        <div className="flex items-center mb-4">
-                          <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
-                            <span className="text-primary-700 font-bold text-xl">{initials}</span>
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                            <p className="text-gray-500 text-sm">
-                              {testimonial.position}, {testimonial.company}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center mb-2">
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <svg
-                              key={i}
-                              className={`w-5 h-5 ${
-                                i < testimonial.rating ? 'text-yellow-400' : 'text-gray-300'
-                              }`}
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                          ))}
-                        </div>
-                        <p className="text-gray-600 italic">"{testimonial.review}"</p>
-                      </div>
-                    );
-                  })
-                )}
-              </div>
-            </div>
-          </section>
-
-          {/* Texas Cities Logo Carousel */}
-          <LogoCarousel
-            type="city"
-            title="Serving Texas Municipalities"
-            subtitle="Partnering with cities across Texas to ensure road safety and infrastructure protection"
-          />
-
-          {/* City Login Section */}
-          <section className="py-20 bg-gray-100">
-            <div className="container mx-auto px-4">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-                <div className="md:w-1/2">
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                    Texas Municipal Weighing System
-                  </h2>
-                  <p className="text-xl text-gray-600 mb-8">
-                    A centralized platform for city employees across Texas to manage municipal
-                    weighing operations, enforce compliance, and generate reports.
-                  </p>
-                  <div className="bg-white p-8 rounded-xl shadow-md">
-                    <h3 className="text-2xl font-semibold text-gray-800 mb-6">
-                      City Employee Login
-                    </h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label
-                          htmlFor="city"
-                          className="block text-sm font-medium text-gray-700 mb-1"
-                        >
-                          Select City
-                        </label>
-                        <select
-                          id="city"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                        >
-                          <option value="">Select your city</option>
-                          <option value="austin">Austin</option>
-                          <option value="dallas">Dallas</option>
-                          <option value="houston">Houston</option>
-                          <option value="san-antonio">San Antonio</option>
-                          <option value="fort-worth">Fort Worth</option>
-                          <option value="el-paso">El Paso</option>
-                          <option value="arlington">Arlington</option>
-                          <option value="corpus-christi">Corpus Christi</option>
-                          <option value="plano">Plano</option>
-                          <option value="laredo">Laredo</option>
-                          <option value="lubbock">Lubbock</option>
-                          <option value="garland">Garland</option>
-                          <option value="irving">Irving</option>
-                          <option value="amarillo">Amarillo</option>
-                          <option value="grand-prairie">Grand Prairie</option>
-                          <option value="brownsville">Brownsville</option>
-                          <option value="mckinney">McKinney</option>
-                          <option value="frisco">Frisco</option>
-                          <option value="waco">Waco</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="email"
-                          className="block text-sm font-medium text-gray-700 mb-1"
-                        >
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                          placeholder="city.employee@cityname.gov"
-                        />
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="password"
-                          className="block text-sm font-medium text-gray-700 mb-1"
-                        >
-                          Password
-                        </label>
-                        <input
-                          type="password"
-                          id="password"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                          placeholder="••••••••"
-                        />
-                      </div>
-                      <div className="pt-2">
-                        <Link
-                          href="/city-weighing"
-                          className="w-full inline-flex justify-center items-center px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-                        >
-                          Sign In
-                        </Link>
-                      </div>
-                      <div className="text-center text-sm text-gray-500">
-                        <Link
-                          href="/city-register"
-                          className="text-primary-600 hover:text-primary-500"
-                        >
-                          Request City Access
-                        </Link>
-                        {' | '}
-                        <Link
-                          href="/city-forgot-password"
-                          className="text-primary-600 hover:text-primary-500"
-                        >
-                          Forgot Password?
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
+              <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                <div className="group relative rounded-2xl bg-gray-800/50 p-8 transition-all duration-300 hover:bg-gray-800/80 ring-1 ring-white/10 hover:ring-indigo-400">
+                  <div className="absolute -inset-px rounded-2xl opacity-0 transition-all duration-300 group-hover:opacity-100"
+                       style={{background: 'radial-gradient(400px at 50% 50%, rgba(79, 70, 229, 0.15), transparent 80%)'}}></div>
+                  <h3 className="text-lg font-semibold leading-7 text-white">Enhanced Efficiency</h3>
+                  <p className="mt-4 text-base leading-7 text-gray-300">Automate manual processes, from weight verification to toll payments, freeing up your team to focus on core operations and strategic growth.</p>
                 </div>
-                <div className="md:w-1/2">
-                  <div className="relative">
-                    <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary-100 rounded-lg z-0"></div>
-                    <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary-100 rounded-lg z-0"></div>
-                    <div className="relative z-10 bg-white p-6 rounded-xl shadow-lg">
-                      <Image
-                        src="/images/texas-map.svg"
-                        alt="Texas Municipal Network"
-                        width={500}
-                        height={400}
-                        className="w-full h-auto"
-                      />
-                      <div className="mt-6 space-y-4">
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-6 w-6 text-green-600"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                              />
-                            </svg>
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-900">Statewide Compliance</h4>
-                            <p className="text-gray-600 text-sm">
-                              Unified weight enforcement across all Texas municipalities
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-6 w-6 text-blue-600"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                              />
-                            </svg>
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-900">Centralized Reporting</h4>
-                            <p className="text-gray-600 text-sm">
-                              Generate comprehensive reports for your municipality
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-6 w-6 text-purple-600"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
-                              />
-                            </svg>
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-900">Permit Management</h4>
-                            <p className="text-gray-600 text-sm">
-                              Issue and track overweight permits efficiently
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div className="group relative rounded-2xl bg-gray-800/50 p-8 transition-all duration-300 hover:bg-gray-800/80 ring-1 ring-white/10 hover:ring-indigo-400">
+                  <div className="absolute -inset-px rounded-2xl opacity-0 transition-all duration-300 group-hover:opacity-100"
+                       style={{background: 'radial-gradient(400px at 50% 50%, rgba(79, 70, 229, 0.15), transparent 80%)'}}></div>
+                  <h3 className="text-lg font-semibold leading-7 text-white">Cost Reduction</h3>
+                  <p className="mt-4 text-base leading-7 text-gray-300">Minimize overweight fines, reduce fuel consumption through optimized routing, and lower administrative overhead with our integrated platform.</p>
+                </div>
+                <div className="group relative rounded-2xl bg-gray-800/50 p-8 transition-all duration-300 hover:bg-gray-800/80 ring-1 ring-white/10 hover:ring-indigo-400">
+                  <div className="absolute -inset-px rounded-2xl opacity-0 transition-all duration-300 group-hover:opacity-100"
+                       style={{background: 'radial-gradient(400px at 50% 50%, rgba(79, 70, 229, 0.15), transparent 80%)'}}></div>
+                  <h3 className="text-lg font-semibold leading-7 text-white">Data-Driven Insights</h3>
+                  <p className="mt-4 text-base leading-7 text-gray-300">Gain a competitive edge with powerful analytics. Access real-time data on fleet performance, compliance metrics, and financial reporting to make informed decisions.</p>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* CTA Section */}
-          <section className="py-20 bg-primary-700 text-white">
-            <div className="container mx-auto px-4 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Ready to Optimize Your Trucking Operations?
-              </h2>
-              <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
-                Join hundreds of trucking companies that have streamlined their operations with our
-                weight management system.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link
-                  href="/register"
-                  className="px-8 py-3 bg-white text-primary-700 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
-                >
-                  Get Started Today
-                </Link>
-                <Link
-                  href="/about"
-                  className="px-8 py-3 bg-transparent border-2 border-white rounded-lg font-semibold hover:bg-white/10 transition-colors"
-                >
-                  Learn More
-                </Link>
-              </div>
-            </div>
-          </section>
         </main>
-      </Layout>
-    </ErrorBoundary>
+
+        {/* Footer */}
+        <footer className="bg-gray-900 border-t border-gray-800">
+          <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
+            <nav className="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+              <div className="pb-6">
+                <a href="#features" className="text-sm leading-6 text-gray-300 hover:text-white">Features</a>
+              </div>
+              <div className="pb-6">
+                <a href="#" className="text-sm leading-6 text-gray-300 hover:text-white">Pricing</a>
+              </div>
+              <div className="pb-6">
+                <a href="#" className="text-sm leading-6 text-gray-300 hover:text-white">Company</a>
+              </div>
+              <div className="pb-6">
+                <a href="#" className="text-sm leading-6 text-gray-300 hover:text-white">Contact</a>
+              </div>
+            </nav>
+            <p className="mt-10 text-center text-xs leading-5 text-gray-400">
+              &copy; {new Date().getFullYear()} CargoScale Pro, Inc. All rights reserved.
+            </p>
+          </div>
+        </footer>
+      </div>
+    </>
   );
-}
+};
+
+export default HomeClient;

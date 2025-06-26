@@ -115,9 +115,12 @@ const PLACEHOLDER_IMAGE =
 
 export default function LogoCarousel({
   type = 'all',
-  title = 'Trusted by Industry Leaders',
-  subtitle = 'Join the growing network of companies and municipalities using our platform',
+  title: propTitle,
+  subtitle: propSubtitle,
 }: LogoCarouselProps) {
+  const title = propTitle ?? (type === 'trucking' ? 'Trusted by Leading Trucking Companies' : 'Partnered with Cities Nationwide');
+  const subtitle = propSubtitle ?? (type === 'trucking' ? 'Our platform powers fleets of all sizes, from owner-operators to large enterprises.' : 'We collaborate with municipalities to streamline city logistics and improve infrastructure.');
+
   const [logos, setLogos] = useState<Logo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { handleError } = useErrorHandler();
@@ -150,14 +153,14 @@ export default function LogoCarousel({
 
   if (isLoading) {
     return (
-      <div className="py-12 bg-gray-50">
+      <div className="py-12 bg-transparent">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{title}</h2>
-            <p className="text-gray-600 mt-2">{subtitle}</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-white">{title}</h2>
+            <p className="text-gray-300 mt-2">{subtitle}</p>
           </div>
           <div className="flex justify-center items-center h-24">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
           </div>
         </div>
       </div>
@@ -169,22 +172,22 @@ export default function LogoCarousel({
   }
 
   return (
-    <div className="py-12 bg-gray-50">
+    <div className="py-12 bg-transparent">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{title}</h2>
-          <p className="text-gray-600 mt-2">{subtitle}</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-white">{title}</h2>
+          <p className="text-gray-300 mt-2">{subtitle}</p>
         </div>
 
         {/* Logo carousel */}
         <div className="relative overflow-hidden">
           <div className="flex animate-carousel">
-            {/* First set of logos */}
-            {logos.map(logo => (
+            {/* Duplicated logos for seamless animation */}
+            {[...logos, ...logos].map((logo, index) => (
               <div
-                key={`first-${logo.id}`}
-                className="flex-shrink-0 flex items-center justify-center mx-8 w-32 h-20 md:w-40 md:h-24"
-              >
+                  key={`${logo.id}-${index}`}
+                  className="flex-shrink-0 flex items-center justify-center mx-8 w-32 h-20 md:w-40 md:h-24"
+                >
                 <a
                   href={logo.website}
                   target="_blank"

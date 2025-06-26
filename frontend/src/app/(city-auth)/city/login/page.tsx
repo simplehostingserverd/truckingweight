@@ -63,9 +63,7 @@ export default function CityLogin() {
     setError('');
 
     try {
-      // Import Supabase client dynamically to avoid SSR issues
       const { createClient } = await import('@/utils/supabase/client');
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const supabase = createClient();
 
       // First try direct Supabase Auth
@@ -160,9 +158,6 @@ export default function CityLogin() {
     setError('');
 
     try {
-      // Import Supabase client dynamically to avoid SSR issues
-      const { createClient } = await import('@/utils/supabase/client');
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const supabase = createClient();
 
       // Try to sign in with demo credentials

@@ -14,6 +14,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  @keyframes carousel {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-carousel {
+    animation: carousel 40s linear infinite;
+  }
+}
 @import '../styles/fonts.css';
 
 @layer base {
