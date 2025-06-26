@@ -37,14 +37,14 @@ const equipmentTypes = [
   'Load Securement',
   'Safety Equipment',
   'Communication',
-  'Other'
+  'Other',
 ];
 
 const statusOptions = [
   'Available',
   'In Use', 
   'Maintenance',
-  'Out of Service'
+  'Out of Service',
 ];
 
 export default function EditEquipmentPage() {
@@ -73,7 +73,7 @@ export default function EditEquipmentPage() {
       purchasePrice: 1200,
       currentValue: 800,
       lastMaintenanceDate: '2024-06-15',
-      nextMaintenanceDue: '2024-12-15'
+      nextMaintenanceDue: '2024-12-15',
     },
     {
       id: 2,
@@ -87,8 +87,8 @@ export default function EditEquipmentPage() {
       status: 'Available',
       purchasePrice: 450,
       currentValue: 350,
-      lastMaintenanceDate: '2024-01-10'
-    }
+      lastMaintenanceDate: '2024-01-10',
+    },
   ];
 
   useEffect(() => {
@@ -122,7 +122,7 @@ export default function EditEquipmentPage() {
   const handleInputChange = (field: keyof Equipment, value: any) => {
     setFormData(prev => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 

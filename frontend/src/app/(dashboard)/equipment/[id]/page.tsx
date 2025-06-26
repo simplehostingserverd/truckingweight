@@ -68,7 +68,7 @@ export default function EquipmentDetailPage() {
       currentValue: 800,
       lastMaintenanceDate: '2024-06-15',
       nextMaintenanceDue: '2024-12-15',
-      notes: 'High-precision GPS tracker with real-time monitoring capabilities.'
+      notes: 'High-precision GPS tracker with real-time monitoring capabilities.',
     },
     {
       id: 2,
@@ -83,8 +83,8 @@ export default function EquipmentDetailPage() {
       purchasePrice: 450,
       currentValue: 350,
       lastMaintenanceDate: '2024-01-10',
-      notes: 'Heavy-duty tire chains for winter driving conditions.'
-    }
+      notes: 'Heavy-duty tire chains for winter driving conditions.',
+    },
   ];
 
   useEffect(() => {
@@ -148,14 +148,14 @@ export default function EquipmentDetailPage() {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'USD',
     }).format(amount);
   };
 
