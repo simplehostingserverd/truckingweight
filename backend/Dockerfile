@@ -23,6 +23,9 @@ ENV SUPABASE_URL=$SUPABASE_URL
 ENV SUPABASE_KEY=$SUPABASE_KEY
 ENV JWT_SECRET=$JWT_SECRET
 
+# Generate Prisma client first
+RUN npx prisma generate
+
 # Build the application
 RUN npm run build
 
@@ -40,6 +43,12 @@ COPY package*.json ./
 # Install only production dependencies
 RUN npm ci --omit=dev
 
+# Copy prisma directory first
+COPY --from=builder /app/prisma ./prisma
+
+# Generate Prisma client in production stage
+RUN npx prisma generate
+
 # Copy built application from builder stage (no .env file needed in production)
 COPY --from=builder /app/server-fastify.mjs ./
 COPY --from=builder /app/server.cjs ./
@@ -50,7 +59,6 @@ COPY --from=builder /app/middleware ./middleware
 COPY --from=builder /app/services ./services
 COPY --from=builder /app/plugins ./plugins
 COPY --from=builder /app/utils ./utils
-COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
