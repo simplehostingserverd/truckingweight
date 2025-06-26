@@ -36,11 +36,10 @@ export async function uploadFile(
   file: File | Blob,
   contentType?: string
 ): Promise<string> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   // Upload the file
-  const { data: uploadData, error: uploadError } = await supabase.storage
+  const { error: uploadError } = await supabase.storage
     .from(bucket)
     .upload(path, file, {
       contentType,
@@ -54,7 +53,6 @@ export async function uploadFile(
   }
 
   // Get the public URL
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(path);
 
   if (!urlData || !urlData.publicUrl) {
@@ -71,7 +69,6 @@ export async function uploadFile(
  * @returns True if successful
  */
 export async function deleteFile(bucket: string, path: string): Promise<boolean> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
   const { error } = await supabase.storage.from(bucket).remove([path]);
@@ -91,9 +88,7 @@ export async function deleteFile(bucket: string, path: string): Promise<boolean>
  * @returns Public URL of the file
  */
 export function getPublicUrl(bucket: string, path: string): string {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data } = supabase.storage.from(bucket).getPublicUrl(path);
   return data.publicUrl;
 }

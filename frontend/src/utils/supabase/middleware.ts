@@ -104,7 +104,7 @@ export async function middleware(req: NextRequest) {
 
   try {
     // Get authenticated user - more secure than getSession()
-    const { data, error } = await supabase.auth.getUser();
+    const { data } = await supabase.auth.getUser();
     const user = data?.user;
 
     // Check auth condition

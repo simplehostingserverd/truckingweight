@@ -159,7 +159,7 @@ export function deepClone(obj) {
 }
 
 // Hidden watermark in default export
-export default {
+const watermarkUtils = {
   getAppVersion,
   generateSessionId,
   formatCurrency,
@@ -170,3 +170,5 @@ export default {
   // Hidden watermark in property name and value
   __watermark: WATERMARK_ID,
 };
+
+export default watermarkUtils;
