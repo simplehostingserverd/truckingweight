@@ -42,6 +42,36 @@ export interface TollProviderEnvironmentConfig {
   };
 }
 
+export type TollProviderRuntimeConfig = 
+  | {
+      apiKey?: string;
+      baseUrl: string;
+      region: string;
+      units: string;
+      routeType: string;
+      timeout: number;
+    }
+  | {
+      apiKey?: string;
+      baseUrl: string;
+      environment: string;
+      timeout: number;
+    }
+  | {
+      clientId?: string;
+      clientSecret?: string;
+      baseUrl: string;
+      environment: string;
+      timeout: number;
+    }
+  | {
+      apiKey?: string;
+      baseUrl: string;
+      customerId?: string;
+      environment: string;
+      timeout: number;
+    };
+
 /**
  * Load toll provider configuration from environment variables
  */
@@ -98,7 +128,7 @@ export function loadTollConfig(): TollProviderEnvironmentConfig {
 /**
  * Get configuration for a specific toll provider
  */
-export function getTollProviderConfig(providerName: string): any {
+export function getTollProviderConfig(providerName: string): TollProviderRuntimeConfig {
   const config = loadTollConfig();
   
   switch (providerName.toLowerCase()) {

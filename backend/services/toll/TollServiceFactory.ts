@@ -19,6 +19,18 @@ export interface TollProviderCredentials {
   prepass?: PrePassConfig;
 }
 
+export type TollProviderConfig = PCMilerConfig | IPassConfig | BestPassConfig | PrePassConfig;
+
+export interface TollProviderInfo {
+  name: string;
+  type: string;
+  description: string;
+  supportedRegions: string[];
+  features: Record<string, boolean>;
+  authType: string;
+  website: string;
+}
+
 export class TollServiceFactory {
   private static instances: Map<string, BaseTollService> = new Map();
 
@@ -27,7 +39,7 @@ export class TollServiceFactory {
    */
   public static createService(
     provider: TollProviderType,
-    config: any
+    config: TollProviderConfig
   ): BaseTollService {
     const key = `${provider}_${JSON.stringify(config)}`;
     
@@ -70,7 +82,7 @@ export class TollServiceFactory {
   /**
    * Get provider information
    */
-  public static getProviderInfo(provider: TollProviderType): any {
+  public static getProviderInfo(provider: TollProviderType): TollProviderInfo {
     const providerInfo = {
       pcmiler: {
         name: 'PC Miler',
@@ -141,7 +153,7 @@ export class TollServiceFactory {
   /**
    * Validate provider configuration
    */
-  public static validateConfig(provider: TollProviderType, config: any): boolean {
+  public static validateConfig(provider: TollProviderType, config: TollProviderConfig): boolean {
     try {
       switch (provider) {
         case 'pcmiler':
