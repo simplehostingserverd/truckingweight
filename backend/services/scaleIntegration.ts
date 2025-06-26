@@ -329,8 +329,6 @@ const configureIoTHardware = async (
     await prisma.scales.update({
       where: { id: scaleId },
       data: {
-        hardware_type: hardwareType,
-        hardware_config: config,
         updated_at: new Date(),
       },
     });
