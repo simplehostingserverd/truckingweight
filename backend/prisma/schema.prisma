@@ -77,6 +77,7 @@ model companies {
   updated_at              DateTime?                 @default(now()) @db.Timestamptz(6)
   api_keys                api_keys[]
   drivers                 drivers[]
+  equipment               equipment[]
   hardware_connections    hardware_connections[]
   integration_connections integration_connections[]
   loads                   loads[]
@@ -318,6 +319,7 @@ model vehicles {
   last_inspection_date  DateTime?            @db.Date
   loads                 loads[]
   predictive_alerts     predictive_alerts[]
+  equipment             equipment[]
   axle_configurations   axle_configurations? @relation(fields: [axle_configuration_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   companies             companies?           @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   weigh_tickets         weigh_tickets[]
@@ -851,4 +853,133 @@ model toll_sync_logs {
 
   /// Relations
   company_toll_accounts    company_toll_accounts  @relation(fields: [company_toll_account_id], references: [id], onDelete: Cascade)
+}
+
+/// Equipment Management
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model equipment {
+  id                      Int                    @id @default(autoincrement())
+  company_id              Int
+  name                    String                 @db.VarChar(255)
+  type                    String                 @db.VarChar(100)
+  manufacturer            String?                @db.VarChar(100)
+  model                   String?                @db.VarChar(100)
+  serial_number           String                 @db.VarChar(100)
+  purchase_date           DateTime?              @db.Date
+  warranty_expires        DateTime?              @db.Date
+  status                  String                 @default("Available") @db.VarChar(50)
+  assigned_vehicle_id     Int?
+  assigned_trailer_id     Int?
+  purchase_price          Decimal?               @db.Decimal(10, 2)
+  current_value           Decimal?               @db.Decimal(10, 2)
+  last_maintenance_date   DateTime?              @db.Date
+  next_maintenance_due    DateTime?              @db.Date
+  notes                   String?                @db.Text
+  created_at              DateTime               @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime               @updatedAt @db.Timestamptz(6)
+
+  /// Relations
+  company                 companies              @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  assigned_vehicle        vehicles?              @relation("EquipmentToVehicle", fields: [assigned_vehicle_id], references: [id], onDelete: SetNull)
+  assigned_trailer        vehicles?              @relation("EquipmentToTrailer", fields: [assigned_trailer_id], references: [id], onDelete: SetNull)
+  maintenance_records     maintenance_work_orders[] @relation("EquipmentMaintenance")
+
+  @@unique([company_id, serial_number])
+  @@index([company_id, status])
+  @@index([company_id, type])
+  @@index([warranty_expires])
+  @@index([next_maintenance_due])
+}
+
+/// Maintenance Work Orders
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model maintenance_work_orders {
+  id                      Int                    @id @default(autoincrement())
+  company_id              Int
+  equipment_id            Int?
+  vehicle_id              Int?
+  work_order_number       String                 @db.VarChar(50)
+  title                   String                 @db.VarChar(255)
+  description             String?                @db.Text
+  type                    String                 @db.VarChar(50)
+  priority                String                 @default("Medium") @db.VarChar(20)
+  status                  String                 @default("Open") @db.VarChar(50)
+  assigned_to             String?                @db.VarChar(100)
+  scheduled_date          DateTime?              @db.Timestamptz(6)
+  started_date            DateTime?              @db.Timestamptz(6)
+  completed_date          DateTime?              @db.Timestamptz(6)
+  estimated_hours         Decimal?               @db.Decimal(5, 2)
+  actual_hours            Decimal?               @db.Decimal(5, 2)
+  estimated_cost          Decimal?               @db.Decimal(10, 2)
+  actual_cost             Decimal?               @db.Decimal(10, 2)
+  vendor_id               Int?
+  notes                   String?                @db.Text
+  created_by              Int
+  created_at              DateTime               @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime               @updatedAt @db.Timestamptz(6)
+
+  /// Relations
+  company                 companies              @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  equipment               equipment?             @relation("EquipmentMaintenance", fields: [equipment_id], references: [id], onDelete: SetNull)
+  vehicle                 vehicles?              @relation("VehicleMaintenance", fields: [vehicle_id], references: [id], onDelete: SetNull)
+  vendor                  maintenance_vendors?   @relation(fields: [vendor_id], references: [id], onDelete: SetNull)
+  created_by_user         users                  @relation(fields: [created_by], references: [id], onDelete: Restrict)
+  parts                   maintenance_parts[]    @relation("WorkOrderParts")
+
+  @@unique([company_id, work_order_number])
+  @@index([company_id, status])
+  @@index([company_id, type])
+  @@index([scheduled_date])
+  @@index([equipment_id])
+  @@index([vehicle_id])
+}
+
+/// Maintenance Parts
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model maintenance_parts {
+  id                      Int                    @id @default(autoincrement())
+  company_id              Int
+  work_order_id           Int
+  part_name               String                 @db.VarChar(255)
+  part_number             String?                @db.VarChar(100)
+  quantity                Int
+  unit_cost               Decimal?               @db.Decimal(10, 2)
+  total_cost              Decimal?               @db.Decimal(10, 2)
+  vendor_id               Int?
+  notes                   String?                @db.Text
+  created_at              DateTime               @default(now()) @db.Timestamptz(6)
+
+  /// Relations
+  company                 companies              @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  work_order              maintenance_work_orders @relation("WorkOrderParts", fields: [work_order_id], references: [id], onDelete: Cascade)
+  vendor                  maintenance_vendors?   @relation(fields: [vendor_id], references: [id], onDelete: SetNull)
+
+  @@index([company_id])
+  @@index([work_order_id])
+}
+
+/// Maintenance Vendors
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model maintenance_vendors {
+  id                      Int                    @id @default(autoincrement())
+  company_id              Int
+  name                    String                 @db.VarChar(255)
+  contact_person          String?                @db.VarChar(100)
+  phone                   String?                @db.VarChar(20)
+  email                   String?                @db.VarChar(100)
+  address                 String?                @db.Text
+  specialties             String[]               @default([])
+  rating                  Decimal?               @db.Decimal(3, 2)
+  notes                   String?                @db.Text
+  is_active               Boolean                @default(true)
+  created_at              DateTime               @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime               @updatedAt @db.Timestamptz(6)
+
+  /// Relations
+  company                 companies              @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  work_orders             maintenance_work_orders[]
+  parts                   maintenance_parts[]
+
+  @@index([company_id])
+  @@index([is_active])
 }

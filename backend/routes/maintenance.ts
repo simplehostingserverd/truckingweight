@@ -6,7 +6,7 @@
 import express from 'express';
 import { protect } from '../middleware/authMiddleware';
 import { setCompanyContextMiddleware } from '../middleware/companyContext';
-import { MaintenanceService } from '../services/maintenance/MaintenanceService';
+import { MaintenanceService } from '../services/MaintenanceService';
 import { MLService } from '../services/ai/MLService';
 import prisma from '../config/prisma';
 import { logger } from '../utils/logger';
