@@ -222,7 +222,15 @@ export default function CityLogin() {
 
   return (
     <ErrorBoundary>
-      <CssVarsProvider defaultMode="dark" theme={cityTheme}>
+      <CssVarsProvider theme={cityTheme}>
+        <Image
+          alt="City background"
+          src="/images/city-login-bg.svg"
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+          style={{ zIndex: -1 }}
+        />
         <Box
           sx={{
             display: 'flex',
@@ -303,16 +311,16 @@ export default function CityLogin() {
             </Box>
           </Box>
 
-          {/* Right side - Login form */}
-          <Box
-            sx={{
-              width: { xs: '100%', lg: '50%' },
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              p: 4,
-            }}
-          >
+<Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '100vh',
+            padding: 4,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Add a semi-transparent overlay
+          }}
+        >
             <Card
               variant="outlined"
               sx={{

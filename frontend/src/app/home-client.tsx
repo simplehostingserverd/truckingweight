@@ -79,7 +79,7 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
                 <div className="md:w-1/2 flex justify-center">
                   <div className="relative w-full max-w-xl">
                     <Image
-                      src="/images/hero-banner.svg"
+                      src="/images/new-hero-banner.svg"
                       alt="Trucking Weight Management System"
                       width={800}
                       height={400}
