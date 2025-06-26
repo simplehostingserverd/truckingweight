@@ -36,7 +36,19 @@ router.get('/', protect, setCompanyContextMiddleware, async (req, res) => {
     const companyId = req.user.companyId;
     const { status, type, search } = req.query;
 
-    const where: any = {
+    interface EquipmentWhereClause {
+      company_id: number;
+      status?: string;
+      type?: string;
+      OR?: Array<{
+        name?: { contains: string; mode: 'insensitive' };
+        manufacturer?: { contains: string; mode: 'insensitive' };
+        model?: { contains: string; mode: 'insensitive' };
+        serialNumber?: { contains: string; mode: 'insensitive' };
+      }>;
+    }
+
+    const where: EquipmentWhereClause = {
       company_id: companyId
     };
 
@@ -273,7 +285,23 @@ router.put('/:id', protect, setCompanyContextMiddleware, async (req, res) => {
       }
     }
 
-    const updateData: any = {
+    interface EquipmentUpdateData {
+      name: string;
+      type: string;
+      manufacturer: string;
+      model: string;
+      serial_number: string;
+      status: string;
+      purchase_price?: number;
+      current_value?: number;
+      notes?: string;
+      purchase_date?: Date;
+      warranty_expires?: Date;
+      last_maintenance_date?: Date;
+      next_maintenance_due?: Date;
+    }
+
+    const updateData: EquipmentUpdateData = {
       name: validatedData.name,
       type: validatedData.type,
       manufacturer: validatedData.manufacturer,
@@ -390,7 +418,13 @@ router.post('/:id/assign', protect, setCompanyContextMiddleware, async (req, res
       return res.status(400).json({ error: 'Equipment is not available for assignment' });
     }
 
-    const updateData: any = {
+    interface EquipmentAssignmentData {
+      status: string;
+      assigned_vehicle_id?: number | null;
+      assigned_trailer_id?: number | null;
+    }
+
+    const updateData: EquipmentAssignmentData = {
       status: 'In Use'
     };
 

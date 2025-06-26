@@ -85,7 +85,17 @@ export class MaintenanceService {
     priority?: string;
     assigned_to?: string;
   }) {
-    const where: any = {
+    interface MaintenanceWorkOrderWhereClause {
+      equipment: {
+        company_id: number;
+      };
+      equipment_id?: number;
+      status?: string;
+      priority?: string;
+      assigned_to?: string;
+    }
+
+    const where: MaintenanceWorkOrderWhereClause = {
       equipment: {
         company_id: companyId,
       },
@@ -141,7 +151,22 @@ export class MaintenanceService {
       throw new Error('Work order not found or does not belong to company');
     }
     
-    const updateData: any = { ...validatedData };
+    interface WorkOrderUpdateData {
+      title?: string;
+      description?: string;
+      priority?: 'low' | 'medium' | 'high' | 'critical';
+      status?: 'pending' | 'in_progress' | 'completed' | 'cancelled';
+      scheduled_date?: Date;
+      completed_date?: Date;
+      estimated_hours?: number;
+      actual_hours?: number;
+      estimated_cost?: number;
+      actual_cost?: number;
+      assigned_to?: string;
+      notes?: string;
+    }
+
+    const updateData: WorkOrderUpdateData = { ...validatedData };
     
     if (validatedData.scheduled_date) {
       updateData.scheduled_date = new Date(validatedData.scheduled_date);
@@ -217,7 +242,16 @@ export class MaintenanceService {
     vendor_id?: number;
     low_stock?: boolean;
   }) {
-    const where: any = {
+    interface PartsWhereClause {
+      company_id: number;
+      category?: string;
+      vendor_id?: number;
+      quantity_in_stock?: {
+        lte: any;
+      };
+    }
+
+    const where: PartsWhereClause = {
       company_id: companyId,
     };
     
@@ -271,7 +305,14 @@ export class MaintenanceService {
   
   // Maintenance Metrics
   static async getMaintenanceMetrics(companyId: number, equipmentId?: number) {
-    const where: any = {
+    interface MaintenanceMetricsWhereClause {
+      equipment: {
+        company_id: number;
+      };
+      equipment_id?: number;
+    }
+
+    const where: MaintenanceMetricsWhereClause = {
       equipment: {
         company_id: companyId,
       },

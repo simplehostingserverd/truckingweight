@@ -29,7 +29,7 @@ import { logger } from '../utils/logger';
  * @param companyId - The company ID for context
  * @param isAdmin - Whether the user is an admin
  */
-export function generateScaleQRCode(
+export async function generateScaleQRCode(
   scaleId: number,
   companyId: number,
   isAdmin: boolean = false
@@ -76,13 +76,10 @@ export function generateScaleQRCode(
     });
 
     return { success: true, qrCodeDataUrl, qrCodeUuid };
-  } catch (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error: any /* @ts-expect-error Catching unknown error type */
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error generating scale QR code: ${error.message}`, { error });
-    return { success: false, error: error.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    logger.error(`Error generating scale QR code: ${errorMessage}`, { error });
+    return { success: false, error: errorMessage };
   }
 }
 
@@ -92,7 +89,7 @@ export function generateScaleQRCode(
  * @param companyId - The company ID for context
  * @param isAdmin - Whether the user is an admin
  */
-export function generateTicketQRCode(
+export async function generateTicketQRCode(
   ticketId: number,
   companyId: number,
   isAdmin: boolean = false
@@ -143,13 +140,10 @@ export function generateTicketQRCode(
     });
 
     return { success: true, qrCodeDataUrl };
-  } catch (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error: any /* @ts-expect-error Catching unknown error type */
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error generating ticket QR code: ${error.message}`, { error });
-    return { success: false, error: error.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    logger.error(`Error generating ticket QR code: ${errorMessage}`, { error });
+    return { success: false, error: errorMessage };
   }
 }
 
@@ -158,12 +152,31 @@ export function generateTicketQRCode(
  * @param qrCodeData - The data from the scanned QR code
  * @param companyId - The company ID for context
  */
-export function validateScaleQRCode(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  qrCodeData: any /* @ts-expect-error Unknown QR code data format */,
+interface QRCodeData {
+  type: string;
+  scaleId?: number;
+  uuid?: string;
+  name?: string;
+  companyId?: number;
+  timestamp?: string;
+}
+
+interface ScaleValidationResult {
+  success: boolean;
+  scale?: {
+    id: number;
+    name: string;
+    location?: string;
+    qr_code_uuid?: string;
+    company_id: number;
+  };
+  error?: string;
+}
+
+export async function validateScaleQRCode(
+  qrCodeData: string | QRCodeData,
   companyId: number
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<{ success: boolean; scale?: any; error?: string }> {
+): Promise<ScaleValidationResult> {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId);
@@ -194,13 +207,10 @@ export function validateScaleQRCode(
     }
 
     return { success: true, scale };
-  } catch (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error: any /* @ts-expect-error Catching unknown error type */
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error validating scale QR code: ${error.message}`, { error });
-    return { success: false, error: error.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    logger.error(`Error validating scale QR code: ${errorMessage}`, { error });
+    return { success: false, error: errorMessage };
   }
 }
 
@@ -209,12 +219,33 @@ export function validateScaleQRCode(
  * @param qrCodeData - The data from the scanned QR code
  * @param companyId - The company ID for context
  */
-export function validateTicketQRCode(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  qrCodeData: any /* @ts-expect-error Unknown QR code data format */,
+interface TicketValidationResult {
+  success: boolean;
+  ticket?: {
+    id: number;
+    ticket_number: string;
+    gross_weight?: number;
+    tare_weight?: number;
+    net_weight?: number;
+    created_at: Date;
+    weights?: {
+      vehicle_id?: number;
+      driver_id?: number;
+      vehicles?: {
+        name: string;
+      };
+      drivers?: {
+        name: string;
+      };
+    };
+  };
+  error?: string;
+}
+
+export async function validateTicketQRCode(
+  qrCodeData: string | QRCodeData,
   companyId: number
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<{ success: boolean; ticket?: any; error?: string }> {
+): Promise<TicketValidationResult> {
   try {
     // Set company context for Prisma queries
     setCompanyContext(companyId);
@@ -248,12 +279,9 @@ export function validateTicketQRCode(
     }
 
     return { success: true, ticket };
-  } catch (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error: any /* @ts-expect-error Catching unknown error type */
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logger.error(`Error validating ticket QR code: ${error.message}`, { error });
-    return { success: false, error: error.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    logger.error(`Error validating ticket QR code: ${errorMessage}`, { error });
+    return { success: false, error: errorMessage };
   }
 }

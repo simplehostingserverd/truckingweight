@@ -47,14 +47,31 @@ interface WeightData {
   signatureRole?: string;
 }
 
-interface WeighTicketResult {
-  success: boolean;
-  ticket?: any; // TODO: Define proper Prisma type when available
-  error?: string;
+interface WeighTicket {
+  id: number;
+  ticketNumber: string;
+  vehicleId: number;
+  driverId: number;
+  scaleId: number;
+  grossWeight: number;
+  tareWeight?: number;
+  netWeight?: number;
+  weighType: string;
+  weighMethod: string;
+  notes?: string;
+  ticketImageUrl?: string;
+  signatureImageUrl?: string;
+  signatureName?: string;
+  signatureRole?: string;
+  qrCode?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-interface ServiceError {
-  message: string;
+interface WeighTicketResult {
+  success: boolean;
+  ticket?: WeighTicket;
+  error?: string;
 }
 
 /**
