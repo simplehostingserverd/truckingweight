@@ -200,7 +200,7 @@ export const createScale = async (req: AuthenticatedRequest, res: Response) => {
           : undefined,
         ip_address: req.body.ip_address,
         port: req.body.port ? parseInt(req.body.port) : undefined,
-        protocol: req.body.protocol
+        protocol: req.body.protocol,
         status: req.body.status || 'Active',
         company_id: isAdmin && req.body.company_id ? parseInt(req.body.company_id) : companyId,
       },
@@ -271,7 +271,7 @@ export const updateScale = async (req: AuthenticatedRequest, res: Response) => {
           : undefined,
         ip_address: req.body.ip_address,
         port: req.body.port ? parseInt(req.body.port) : undefined,
-        protocol: req.body.protocol
+        protocol: req.body.protocol,
         status: req.body.status,
         company_id: isAdmin && req.body.company_id ? parseInt(req.body.company_id) : undefined,
         updated_at: new Date(),
