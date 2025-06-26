@@ -98,17 +98,12 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
 
     // Add vehicle filter if provided
     if (req.query.vehicleId) {
-      filter.weights = {
-        vehicle_id: parseInt(req.query.vehicleId as string),
-      };
+      filter.vehicle_id = parseInt(req.query.vehicleId as string);
     }
 
     // Add driver filter if provided
     if (req.query.driverId) {
-      filter.weights = {
-        ...filter.weights,
-        driver_id: parseInt(req.query.driverId as string),
-      };
+      filter.driver_id = parseInt(req.query.driverId as string);
     }
 
     // Get total count for pagination
@@ -123,22 +118,18 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
       skip,
       take: limit,
       include: {
-        weights: {
-          include: {
-            vehicles: {
-              select: {
-                id: true,
-                name: true,
-                license_plate: true,
-              },
-            },
-            drivers: {
-              select: {
-                id: true,
-                name: true,
-                license_number: true,
-              },
-            },
+        vehicles: {
+          select: {
+            id: true,
+            name: true,
+            license_plate: true,
+          },
+        },
+        drivers: {
+          select: {
+            id: true,
+            name: true,
+            license_number: true,
           },
         },
         scales: {
@@ -156,7 +147,7 @@ export const getWeighTickets = async (req: AuthenticatedRequest, res: Response) 
               },
             }
           : undefined,
-      },
+      }
     });
 
     res.json({

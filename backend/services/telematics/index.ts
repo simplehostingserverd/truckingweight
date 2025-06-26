@@ -133,8 +133,8 @@ export class TelematicsService {
       // Check cache first
       const cacheKey = `telematics:vehicle:${vehicleId}`;
       const cachedData = await cacheService.get(cacheKey);
-      if (cachedData) {
-        return cachedData;
+      if (cachedData && typeof cachedData === 'object' && 'vehicleId' in cachedData && 'timestamp' in cachedData) {
+        return cachedData as TelematicsData;
       }
 
       // Fetch data from provider

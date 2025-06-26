@@ -139,9 +139,9 @@ export const getScaleById = async (req: AuthenticatedRequest, res: Response) => 
           },
         },
         scale_calibrations: {
-          orderBy: { calibration_date: 'desc' },
+          orderBy: { created_at: 'desc' },
           take: 1,
-        },
+        }
       },
     });
 
@@ -190,16 +190,17 @@ export const createScale = async (req: AuthenticatedRequest, res: Response) => {
         manufacturer: req.body.manufacturer,
         model: req.body.model,
         serial_number: req.body.serial_number,
-        max_capacity: req.body.max_capacity ? parseFloat(req.body.max_capacity) : undefined,
-        precision: req.body.precision ? parseFloat(req.body.precision) : undefined,
-        calibration_date: req.body.calibration_date
+        max_capacity: req.body.max_capacity ? parseInt(req.body.max_capacity) : 0,
+        precision: req.body.precision ? parseFloat(req.body.precision) : 0.01,
+        last_calibration_date: req.body.calibration_date
           ? new Date(req.body.calibration_date)
           : undefined,
         next_calibration_date: req.body.next_calibration_date
           ? new Date(req.body.next_calibration_date)
           : undefined,
-        api_endpoint: req.body.api_endpoint,
-        api_key: req.body.api_key,
+        ip_address: req.body.ip_address,
+        port: req.body.port ? parseInt(req.body.port) : undefined,
+        protocol: req.body.protocol
         status: req.body.status || 'Active',
         company_id: isAdmin && req.body.company_id ? parseInt(req.body.company_id) : companyId,
       },
@@ -260,16 +261,17 @@ export const updateScale = async (req: AuthenticatedRequest, res: Response) => {
         manufacturer: req.body.manufacturer,
         model: req.body.model,
         serial_number: req.body.serial_number,
-        max_capacity: req.body.max_capacity ? parseFloat(req.body.max_capacity) : undefined,
+        max_capacity: req.body.max_capacity ? parseInt(req.body.max_capacity) : undefined,
         precision: req.body.precision ? parseFloat(req.body.precision) : undefined,
-        calibration_date: req.body.calibration_date
+        last_calibration_date: req.body.calibration_date
           ? new Date(req.body.calibration_date)
           : undefined,
         next_calibration_date: req.body.next_calibration_date
           ? new Date(req.body.next_calibration_date)
           : undefined,
-        api_endpoint: req.body.api_endpoint,
-        api_key: req.body.api_key,
+        ip_address: req.body.ip_address,
+        port: req.body.port ? parseInt(req.body.port) : undefined,
+        protocol: req.body.protocol
         status: req.body.status,
         company_id: isAdmin && req.body.company_id ? parseInt(req.body.company_id) : undefined,
         updated_at: new Date(),
