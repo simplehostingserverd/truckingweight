@@ -5,10 +5,10 @@
 
 import { BaseTollService } from './BaseTollService';
 import { PCMilerService, PCMilerConfig } from './PCMilerService';
-import { IPassService, IPassConfig } from './IPassService';
-import { BestPassService, BestPassConfig } from './BestPassService';
-import { PrePassService, PrePassConfig } from './PrePassService';
-import { logger } from '../../utils/logger';
+import { IPassService, IPassConfig } from './IPassService.js';
+import { BestPassService, BestPassConfig } from './BestPassService.js';
+import { PrePassService, PrePassConfig } from './PrePassService.js';
+import { logger } from '../../utils/logger.js';
 
 export type TollProviderType = 'pcmiler' | 'ipass' | 'bestpass' | 'prepass';
 

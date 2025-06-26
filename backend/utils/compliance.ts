@@ -17,8 +17,8 @@
  * This utility handles weight compliance checking against federal and state regulations
  */
 
-import prisma, { setCompanyContext } from '../config/prisma';
-import logger from './logger';
+import prisma, { setCompanyContext } from '../config/prisma.js';
+import logger from './logger.js';
 
 // Federal weight limits (in pounds)
 const FEDERAL_WEIGHT_LIMITS = {

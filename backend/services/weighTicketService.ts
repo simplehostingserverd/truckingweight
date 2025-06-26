@@ -18,11 +18,11 @@
  */
 
 // UUID import removed as it's not used in this file
-import prisma from '../config/prisma';
-import { setCompanyContext } from '../config/prisma';
-import { logger } from '../utils/logger';
-import { generateTicketQRCode } from './QRCodeService';
-import { checkWeightCompliance } from '../utils/compliance';
+import prisma from '../config/prisma.js';
+import { setCompanyContext } from '../config/prisma.js';
+import { logger } from '../utils/logger.js';
+import { generateTicketQRCode } from './QRCodeService.js';
+import { checkWeightCompliance } from '../utils/compliance.js';
 
 // Type definitions
 interface AxleWeight {
