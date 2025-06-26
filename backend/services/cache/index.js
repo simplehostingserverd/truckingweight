@@ -12,7 +12,7 @@
  */
 
 /**
- * High-performance LRU cache service for the TruckingSemis API
+ * High-performance LRU cache service for the Cargo Scale Pro API
  * This service provides caching capabilities to improve API performance
  */
 

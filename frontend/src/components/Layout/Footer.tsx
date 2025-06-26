@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-semibold mb-4">TruckingSemis</h3>
+            <h3 className="text-xl font-semibold mb-4">Cargo Scale Pro</h3>
             <p className="text-gray-300">
               A modern web application for trucking companies to manage weight checking and load
               management.
@@ -49,12 +49,12 @@ const Footer: React.FC = () => {
           </div>
           <div>
             <h3 className="text-xl font-semibold mb-4">Contact</h3>
-            <p className="text-gray-300">Email: info@truckingsemis.com</p>
+            <p className="text-gray-300">Email: info@cargoscalepro.com</p>
             <p className="text-gray-300">Phone: (123) 456-7890</p>
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} TruckingSemis. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Cargo Scale Pro. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -1,8 +1,8 @@
-# 🚚 TruckingSemis - Weight Management System
+# 🚚 Cargo Scale Pro - Weight Management System
 
 <div align="center">
 
-![TruckingSemis Banner](frontend/public/images/banner.svg)
+![Cargo Scale Pro Banner](frontend/public/images/banner.svg)
 
 [![CI/CD Pipeline](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml/badge.svg)](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml)
 [![Next.js](https://img.shields.io/badge/Next.js-15.3.2-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
@@ -25,7 +25,7 @@
 
 ## 📋 Overview
 
-TruckingSemis started as our weekend project back in 2022 and grew into what you see today - a weight management system built by truckers, for truckers. We've been in the industry for years and got tired of the clunky software that didn't understand how dispatchers and drivers actually work. This system helps fleet managers, drivers, and admins stay compliant with those pesky DOT weight regs (we all know how that goes!) while making load management way less of a headache. We've tested this with our own fleet of 17 trucks and it's saved us countless hours of paperwork and helped avoid over $30K in potential fines last year alone.
+Cargo Scale Pro started as our weekend project back in 2022 and grew into what you see today - a weight management system built by truckers, for truckers. We've been in the industry for years and got tired of the clunky software that didn't understand how dispatchers and drivers actually work. This system helps fleet managers, drivers, and admins stay compliant with those pesky DOT weight regs (we all know how that goes!) while making load management way less of a headache. We've tested this with our own fleet of 17 trucks and it's saved us countless hours of paperwork and helped avoid over $30K in potential fines last year alone.
 
 <div align="center">
   <img src="frontend/public/images/dashboard-preview.svg" alt="Dashboard Preview" width="80%">

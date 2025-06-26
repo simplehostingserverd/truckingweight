@@ -19,12 +19,12 @@
 const swaggerOptions = {
   swagger: {
     info: {
-      title: 'TruckingSemis API',
-      description: 'API documentation for TruckingSemis weight management system',
+      title: 'Cargo Scale Pro API',
+      description: 'API documentation for Cargo Scale Pro weight management system',
       version: '1.0.0',
       contact: {
         name: 'API Support',
-        email: 'support@truckingsemis.com',
+        email: 'support@cargoscalepro.com',
       },
       license: {
         name: 'MIT',
@@ -32,7 +32,7 @@ const swaggerOptions = {
       },
     },
     externalDocs: {
-      url: 'https://truckingsemis.com/docs',
+      url: 'https://cargoscalepro.com/docs',
       description: 'Find more info here',
     },
     host: process.env.API_HOST || 'localhost:5000',

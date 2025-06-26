@@ -51,7 +51,7 @@ const Header: React.FC = () => {
     <header className="bg-primary-700 text-white shadow-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
-          TruckingSemis
+          Cargo Scale Pro
         </Link>
         <nav>
           <ul className="flex space-x-6">

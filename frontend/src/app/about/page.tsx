@@ -17,9 +17,9 @@ import Link from 'next/link';
 import Layout from '@/components/Layout/Layout';
 
 export const metadata = {
-  title: 'About Us | TruckingSemis',
+  title: 'About Us | Cargo Scale Pro',
   description:
-    'Learn about TruckingSemis, our mission, and how our weight management system helps trucking companies stay compliant and efficient.',
+    'Learn about Cargo Scale Pro, our mission, and how our weight management system helps trucking companies stay compliant and efficient.',
 };
 
 export default function AboutPage() {
@@ -30,7 +30,7 @@ export default function AboutPage() {
         <section className="bg-primary-700 text-white py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">About TruckingSemis</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">About Cargo Scale Pro</h1>
               <p className="text-xl opacity-90 mb-8">
                 Revolutionizing weight management and load tracking for the modern trucking industry
               </p>
@@ -48,7 +48,7 @@ export default function AboutPage() {
               <div className="md:w-1/2">
                 <Image
                   src="/icons/truck-icon.svg"
-                  alt="TruckingSemis Mission"
+                  alt="Cargo Scale Pro Mission"
                   width={400}
                   height={400}
                   className="rounded-lg shadow-lg"
@@ -57,7 +57,7 @@ export default function AboutPage() {
               <div className="md:w-1/2">
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Mission</h2>
                 <p className="text-lg text-gray-700 mb-6">
-                  At TruckingSemis, our mission is to provide trucking companies with the most
+                  At Cargo Scale Pro, our mission is to provide trucking companies with the most
                   comprehensive and user-friendly weight management system on the market. We
                   understand the challenges faced by the trucking industry when it comes to
                   compliance with weight regulations and efficient load management.
@@ -267,7 +267,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
               Join the hundreds of trucking companies that have improved compliance, reduced costs,
-              and optimized their operations with TruckingSemis.
+              and optimized their operations with Cargo Scale Pro.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link

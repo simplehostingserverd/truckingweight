@@ -59,7 +59,7 @@ jobs:
           echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Backend API URL" >> frontend/.env.local
-          echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.truckingsemis.com' }}" >> frontend/.env.local
+          echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.cargoscalepro.com' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Node Environment" >> frontend/.env.local
           echo "NODE_ENV=production" >> frontend/.env.local
@@ -113,7 +113,7 @@ jobs:
           echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Backend API URL" >> frontend/.env.local
-          echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.truckingsemis.com' }}" >> frontend/.env.local
+          echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.cargoscalepro.com' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Node Environment" >> frontend/.env.local
           echo "NODE_ENV=test" >> frontend/.env.local
@@ -184,7 +184,7 @@ jobs:
           echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Backend API URL" >> frontend/.env.local
-          echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.truckingsemis.com' }}" >> frontend/.env.local
+          echo "BACKEND_URL=${{ secrets.BACKEND_URL || 'https://api.cargoscalepro.com' }}" >> frontend/.env.local
           echo "" >> frontend/.env.local
           echo "# Node Environment" >> frontend/.env.local
           echo "NODE_ENV=production" >> frontend/.env.local

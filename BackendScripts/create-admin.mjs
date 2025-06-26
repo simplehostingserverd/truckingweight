@@ -20,10 +20,10 @@ const supabaseKey =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqbXJ1a3VtdGxkaWplaG9nZ2ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2MDcxMzAsImV4cCI6MjA2MjE4MzEzMH0.Wy2IcOhbhiefmSN8vzfcSVa1TszUVa5PcxIniwO1p64';
 
 // Admin user details
-const adminEmail = 'admin@truckingsemis.com';
+const adminEmail = 'admin@cargoscalepro.com';
 const adminPassword = 'Admin123!';
 const adminName = 'Admin User';
-const companyName = 'TruckingSemis Admin';
+const companyName = 'Cargo Scale Pro Admin';
 
 async function createAdminUser() {
   // Initialize Supabase client

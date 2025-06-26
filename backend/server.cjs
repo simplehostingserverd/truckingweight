@@ -70,7 +70,7 @@ app.use('/api/api-keys', apiKeyRoutes);
 
 // Root route
 app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to TruckingSemis API' });
+  res.json({ message: 'Welcome to Cargo Scale Pro API' });
 });
 
 // Error handling middleware

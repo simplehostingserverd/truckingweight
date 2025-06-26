@@ -119,8 +119,8 @@ const PROCESS_PATTERNS = [
   'next dev',
   'node server-fastify.js',
   'nodemon server-fastify.js',
-  'truckingsemis-frontend',
-  'truckingsemis-backend',
+  'cargo-scale-pro-frontend',
+  'cargo-scale-pro-backend',
   'node',  // More aggressive - will catch any node process
   'npm',   // Even more aggressive - will catch npm processes
 ];

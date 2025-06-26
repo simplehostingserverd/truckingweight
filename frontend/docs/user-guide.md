@@ -14,11 +14,11 @@
 
 -->
 
-# TruckingSemis User Guide
+# Cargo Scale Pro User Guide
 
 ## Introduction
 
-Welcome to TruckingSemis, a comprehensive weight management system for trucking companies. This guide will help you navigate the application and make the most of its features.
+Welcome to Cargo Scale Pro, a comprehensive weight management system for trucking companies. This guide will help you navigate the application and make the most of its features.
 
 ## Getting Started
 
@@ -30,7 +30,7 @@ Welcome to TruckingSemis, a comprehensive weight management system for trucking 
 
 ### Installation (Mobile)
 
-TruckingSemis is a Progressive Web App (PWA) that can be installed on your mobile device:
+Cargo Scale Pro is a Progressive Web App (PWA) that can be installed on your mobile device:
 
 1. Open the application in your mobile browser by navigating to the application URL
 2. For iOS:
@@ -179,6 +179,6 @@ For general issues:
 
 For additional help:
 
-- Email: support@truckingsemis.com
+- Email: support@cargoscalepro.com
 - Phone: (123) 456-7890
 - Hours: Monday-Friday, 9am-5pm EST

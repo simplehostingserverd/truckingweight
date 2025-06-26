@@ -104,7 +104,7 @@ app.use('/api/ml', mlRoutes);
 
 // Root route
 app.get('/', (req: Request, res: Response) => {
-  res.json({ message: 'Welcome to TruckingSemis API' });
+  res.json({ message: 'Welcome to Cargo Scale Pro API' });
 });
 
 // Error handling middleware

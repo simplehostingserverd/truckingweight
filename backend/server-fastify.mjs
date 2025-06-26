@@ -244,7 +244,7 @@ async function registerRoutes() {
 
   // Root route
   fastify.get('/', async () => {
-    return { message: 'Welcome to TruckingSemis API' };
+    return { message: 'Welcome to Cargo Scale Pro API' };
   });
 
   // Error handler

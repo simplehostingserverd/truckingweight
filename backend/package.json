@@ -1,7 +1,7 @@
 {
-  "name": "truckingsemis-backend",
+  "name": "cargo-scale-pro-backend",
   "version": "1.0.0",
-  "description": "Backend for TruckingSemis weight management system",
+  "description": "Backend for Cargo Scale Pro weight management system",
   "main": "server-fastify.mjs",
   "type": "module",
   "scripts": {

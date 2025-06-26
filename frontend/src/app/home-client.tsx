@@ -109,6 +109,13 @@ export default function HomeClient({ testimonials }: HomeClientProps) {
             subtitle="Join these industry leaders who rely on our platform for their weight management needs"
           />
 
+          {/* City Partners Logo Carousel */}
+          <LogoCarousel
+            type="city"
+            title="In Partnership with Major Texas Cities"
+            subtitle="We collaborate with municipalities to ensure seamless and compliant city-wide logistics."
+          />
+
           {/* Video Demo Section */}
           <section className="py-20 bg-white">
             <div className="container mx-auto px-4">
