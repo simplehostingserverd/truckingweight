@@ -252,8 +252,8 @@ export default function CityLogin() {
               }}
             />
             <Image
-              src="/images/city-login-image.jpg"
-              alt="City Weighing System"
+              src="/images/city-government-building.svg"
+              alt="City Government Building"
               fill
               sizes="(max-width: 1200px) 100vw, 50vw"
               className="object-cover"

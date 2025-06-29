@@ -95,8 +95,8 @@ export default function Login() {
       {/* Left side - Image */}
       <div className="hidden lg:flex lg:w-1/2 relative">
         <Image
-          src="/images/truck-login-image.jpg"
-          alt="Semi truck on highway"
+          src="/images/professional-truck-logistics.svg"
+          alt="Professional Truck Logistics"
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
           className={styles.backgroundImage}
