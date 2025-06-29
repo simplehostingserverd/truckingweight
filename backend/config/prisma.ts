@@ -60,9 +60,10 @@ const prismaWithExtensions = (prisma: PrismaClient) => {
 
             // For operations that support filtering, we can also add a where clause
             // This provides an additional layer of security beyond RLS
-            if (['findMany', 'count', 'findFirst', 'aggregate', 'groupBy'].includes(operation)) {
-              args.where = {
-                ...args.where,
+            if (['findMany', 'count', 'findFirst', 'aggregate', 'groupBy'].includes(operation) && 'where' in args) {
+              const argsWithWhere = args as { where?: Record<string, unknown> };
+              argsWithWhere.where = {
+                ...argsWithWhere.where,
                 company_id: companyId,
               };
             }
@@ -77,8 +78,11 @@ const prismaWithExtensions = (prisma: PrismaClient) => {
 
 // Declare global augmentation for the companyId and isAdmin flag
 declare global {
+  // eslint-disable-next-line no-var
   var companyId: number | undefined;
+  // eslint-disable-next-line no-var
   var isAdmin: boolean | undefined;
+  // eslint-disable-next-line no-var
   var prisma: ReturnType<typeof prismaWithExtensions> | undefined;
 }
 

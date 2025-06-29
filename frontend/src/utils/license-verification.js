@@ -145,7 +145,7 @@ export async function verifyLicense() {
       try {
         const parsed = JSON.parse(cachedStatus);
         return parsed.valid;
-      } catch (e) {
+      } catch {
         return false;
       }
     }
@@ -268,10 +268,12 @@ export function getLicensedFeatures() {
 }
 
 // Export default object
-export default {
+const licenseVerificationUtils = {
   verifyLicense,
   initializeLicenseVerification,
   hasValidLicense,
   getLicensedFeatures,
   scheduleVerification,
 };
+
+export default licenseVerificationUtils;

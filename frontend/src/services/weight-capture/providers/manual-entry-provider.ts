@@ -21,7 +21,6 @@ import {
   WeightReading,
   CalibrationResult,
   AxleWeightReading,
-  GeoLocation,
 } from '@/types/scale-master';
 
 export class ManualEntryProvider implements WeightCaptureProvider {

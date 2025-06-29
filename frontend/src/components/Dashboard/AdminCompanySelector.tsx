@@ -17,11 +17,9 @@ import { createClient } from '@/utils/supabase/client';
 import { useSWROptimized } from '@/hooks/useSWROptimized';
 import { BuildingOfficeIcon } from '@heroicons/react/24/outline';
 import React from 'react';
+import { AdminCompany } from '@/lib/validations';
 
-interface Company {
-  id: number;
-  name: string;
-}
+// Company type is now imported as AdminCompany from validations
 
 interface AdminCompanySelectorProps {
   onCompanyChange: (companyId: number | null) => void;
@@ -65,7 +63,7 @@ function AdminCompanySelector({ onCompanyChange, selectedCompanyId }: AdminCompa
     data: companies,
     error,
     isLoading,
-  } = useSWROptimized<Company[]>('admin-companies', fetchCompanies, {
+  } = useSWROptimized<AdminCompany[]>('admin-companies', fetchCompanies, {
     localCache: true,
     localCacheTtl: 3600, // Cache for 1 hour
     revalidateOnFocus: true,

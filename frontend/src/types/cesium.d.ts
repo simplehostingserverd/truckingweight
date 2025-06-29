@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
  *
@@ -9,6 +11,10 @@
  * This file contains proprietary and confidential information of
  * Cosmo Exploit Group LLC and may not be copied, distributed, or used
  * in any way without explicit written permission.
+ */
+
+/**
+ * Type definitions for Cesium
  */
 
 /**

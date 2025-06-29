@@ -336,7 +336,7 @@ export function isFeatureEnabled(feature) {
   return licenseCache.features.includes(feature);
 }
 
-export default {
+const licenseUtils = {
   initializeLicense,
   verifyLicense,
   activateKillSwitch,
@@ -344,3 +344,5 @@ export default {
   getLicenseInfo,
   isFeatureEnabled,
 };
+
+export default licenseUtils;

@@ -17,7 +17,6 @@
  */
 
 // Global type declarations
-declare const navigator: Navigator;
 declare namespace NodeJS {
   interface Timeout {}
 }

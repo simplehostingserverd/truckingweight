@@ -14,6 +14,7 @@
 'use client';
 
 import React from 'react';
+import { SimpleCompany } from '@/lib/validations';
 import { createClient } from '@/utils/supabase/client';
 import {
   Alert,
@@ -67,14 +68,11 @@ type User = {
   } | null;
 };
 
-type Company = {
-  id: string;
-  name: string;
-};
+// Company type is now imported as SimpleCompany from validations
 
 export default function UsersPage() {
   const [users, setUsers] = useState<User[]>([]);
-  const [companies, setCompanies] = useState<Company[]>([]);
+  const [companies, setCompanies] = useState<SimpleCompany[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');

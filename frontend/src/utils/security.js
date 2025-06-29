@@ -194,7 +194,7 @@ function detectDevTools() {
     if (devToolsDetected) {
       reportUnauthorizedUse({ reason: 'devtools_detected', method: 'debugger_constructor' });
     }
-  } catch (error) {
+  } catch {
     // Ignore errors in debug detection
   }
 
@@ -329,9 +329,11 @@ async function generateRequestSignature(url, options, timestamp, secret) {
 }
 
 // Export default object
-export default {
+const securityUtils = {
   activateKillSwitch,
   reportUnauthorizedUse,
   isApplicationDisabled,
   initializeSecurity,
 };
+
+export default securityUtils;

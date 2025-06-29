@@ -16,7 +16,8 @@
 import ErrorBoundary from '@/components/ErrorBoundary';
 import React from 'react';
 
-import { createSafeUrl } from '@/utils/navigation';
+
+import { createClient } from '@/utils/supabase/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -63,7 +64,6 @@ export default function CityLogin() {
     setError('');
 
     try {
-      const { createClient } = await import('@/utils/supabase/client');
       const supabase = createClient();
 
       // First try direct Supabase Auth
@@ -221,10 +221,9 @@ export default function CityLogin() {
         <Image
           alt="City background"
           src="/images/city-login-bg.svg"
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: 'cover', zIndex: -1 }}
           quality={100}
-          style={{ zIndex: -1 }}
         />
         <Box
           sx={{
@@ -464,7 +463,7 @@ export default function CityLogin() {
 
                   <Box sx={{ textAlign: 'center' }}>
                     <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
-                      Don't have an account?{' '}
+                      Don&apos;t have an account?{' '}
                       <Link href="/city/register" style={{ textDecoration: 'none' }}>
                         <Typography
                           component="span"

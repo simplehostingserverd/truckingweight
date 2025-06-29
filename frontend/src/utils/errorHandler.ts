@@ -13,7 +13,6 @@
 
 'use client';
 
-import React from 'react';
 import { useToastContext } from '@/providers/ToastProvider';
 import logger from '@/utils/logger';
 
@@ -70,7 +69,7 @@ function hasDetails(error: unknown): error is { details?: unknown; data?: unknow
 
 // Type guard to check if error has code property
 function hasCode(error: unknown): error is { code: string } {
-  return typeof error === 'object' && error !== null && 'code' in error && typeof (error as any).code === 'string';
+  return typeof error === 'object' && error !== null && 'code' in error && typeof (error as { code: unknown }).code === 'string';
 }
 
 // Type guard to check if error has Supabase error properties

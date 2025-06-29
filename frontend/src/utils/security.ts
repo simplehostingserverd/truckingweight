@@ -50,7 +50,7 @@ export function isSafeUrl(url: string): boolean {
     const safeProtocols = ['http:', 'https:'];
 
     return safeProtocols.includes(parsedUrl.protocol);
-  } catch (e) {
+  } catch {
     // If URL parsing fails, check if it's a relative URL (which is safe)
     return url.startsWith('/') && !url.startsWith('//');
   }

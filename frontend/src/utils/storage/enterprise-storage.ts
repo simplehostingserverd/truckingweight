@@ -288,41 +288,41 @@ export class EnterpriseStorageManager {
     return !!(config.name && config.type && config.protocol && config.host && config.path);
   }
 
-  private async initializeConnection(config: StorageConfig): Promise<void> {
+  private async initializeConnection(_config: StorageConfig): Promise<void> {
     // Initialize connection based on protocol
     // This would create actual connections to storage systems
   }
 
   private async testNFSConnection(
-    config: StorageConfig
+    _config: StorageConfig
   ): Promise<{ success: boolean; error?: string }> {
     // Test NFS connection
     return { success: true };
   }
 
   private async testSMBConnection(
-    config: StorageConfig
+    _config: StorageConfig
   ): Promise<{ success: boolean; error?: string }> {
     // Test SMB/CIFS connection
     return { success: true };
   }
 
   private async testiSCSIConnection(
-    config: StorageConfig
+    _config: StorageConfig
   ): Promise<{ success: boolean; error?: string }> {
     // Test iSCSI connection
     return { success: true };
   }
 
   private async testHTTPConnection(
-    config: StorageConfig
+    _config: StorageConfig
   ): Promise<{ success: boolean; error?: string }> {
     // Test HTTP/HTTPS connection
     return { success: true };
   }
 
   private async testFTPConnection(
-    config: StorageConfig
+    _config: StorageConfig
   ): Promise<{ success: boolean; error?: string }> {
     // Test FTP/SFTP connection
     return { success: true };
@@ -330,24 +330,24 @@ export class EnterpriseStorageManager {
 
   private async storeByProtocol(
     config: StorageConfig,
-    data: Blob | Buffer,
+    _data: Blob | Buffer,
     filename: string,
-    options: DataTransferOptions
+    _options: DataTransferOptions
   ): Promise<{ success: boolean; url?: string; error?: string }> {
     // Implementation would handle storage based on protocol
     return { success: true, url: `${config.protocol}://${config.host}${config.path}/${filename}` };
   }
 
   private async retrieveByProtocol(
-    config: StorageConfig,
-    filename: string,
-    options: DataTransferOptions
+    _config: StorageConfig,
+    _filename: string,
+    _options: DataTransferOptions
   ): Promise<Blob> {
     // Implementation would handle retrieval based on protocol
     return new Blob();
   }
 
-  private async getMetricsByProtocol(config: StorageConfig): Promise<StorageMetrics> {
+  private async getMetricsByProtocol(_config: StorageConfig): Promise<StorageMetrics> {
     // Implementation would get actual metrics from storage system
     return {
       used_tb: 12.5,
@@ -382,21 +382,21 @@ export class EnterpriseStorageManager {
     return data;
   }
 
-  private async verifyChecksum(data: Blob | Buffer, filename: string): Promise<boolean> {
+  private async verifyChecksum(_data: Blob | Buffer, _filename: string): Promise<boolean> {
     // Implementation would verify data integrity
     return true;
   }
 
-  private async scheduleBackupJob(job: BackupJob): Promise<void> {
+  private async scheduleBackupJob(_job: BackupJob): Promise<void> {
     // Implementation would schedule backup job using cron
   }
 
   private async logStorageOperation(
-    storageId: string,
-    operation: string,
-    dataType: string,
-    filename: string,
-    success: boolean
+    _storageId: string,
+    _operation: string,
+    _dataType: string,
+    _filename: string,
+    _success: boolean
   ): Promise<void> {
     // Implementation would log storage operations for audit
   }

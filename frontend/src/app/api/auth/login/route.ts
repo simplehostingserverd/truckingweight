@@ -12,37 +12,31 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { Database } from '@/types/supabase';
+import { validateLoginRequest } from '@/lib/validations';
 
 /**
  * Mock login API endpoint
  * This provides a temporary login mechanism while the backend is being developed
  */
 
-interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-function isValidLoginRequest(body: unknown): body is LoginRequest {
-  return (
-    typeof body === 'object' &&
-    body !== null &&
-    'email' in body &&
-    'password' in body &&
-    typeof (body as any).email === 'string' &&
-    typeof (body as any).password === 'string'
-  );
-}
+// LoginRequest interface and validation is now handled by Zod in validations.ts
 
 export async function POST(request: NextRequest) {
   try {
     const body: unknown = await request.json();
     
-    if (!isValidLoginRequest(body)) {
-      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+    const validation = validateLoginRequest(body);
+    if (!validation.success) {
+      return NextResponse.json({ 
+        error: 'Invalid request body', 
+        details: validation.error.errors 
+      }, { status: 400 });
     }
     
-    const { email, password } = body;
+    const { email, password } = validation.data;
 
     // Predefined test accounts
     const testAccounts = [

@@ -178,7 +178,7 @@ export function formatNumber(value: number): string {
   return value.toLocaleString();
 }
 
-export default {
+const formatters = {
   formatDistance,
   formatDuration,
   formatWeight,
@@ -190,3 +190,5 @@ export default {
   truncateText,
   formatNumber,
 };
+
+export default formatters;

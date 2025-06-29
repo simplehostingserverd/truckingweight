@@ -14,6 +14,7 @@
 'use client';
 
 import React from 'react';
+import { Company, validateCompany } from '@/lib/validations';
 import {
   Alert,
   AlertDescription,
@@ -49,24 +50,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
-type Company = {
-  id: string;
-  name: string;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  phone: string;
-  email: string;
-  website: string;
-  created_at: string;
-  status: 'active' | 'inactive' | 'pending';
-  _count?: {
-    users: number;
-    vehicles: number;
-    drivers: number;
-  };
-};
+// Company type is now imported from validations
 
 export default function CompaniesPage() {
   const [companies, setCompanies] = useState<Company[]>([]);

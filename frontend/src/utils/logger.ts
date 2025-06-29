@@ -71,21 +71,7 @@ function shouldLog(level: LogLevel): boolean {
   return levelIndex >= minIndex;
 }
 
-/**
- * Format data for logging
- * @param data - The data to format
- * @returns Formatted data string
- */
-function formatData(data: unknown): string {
-  try {
-    if (typeof data === 'object') {
-      return JSON.stringify(data, null, 2);
-    }
-    return String(data);
-  } catch (error) {
-    return '[Unserializable data]';
-  }
-}
+
 
 /**
  * Add a log entry to memory storage

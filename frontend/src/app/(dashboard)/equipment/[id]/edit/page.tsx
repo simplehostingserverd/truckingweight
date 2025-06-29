@@ -10,25 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { toast } from 'sonner';
+import { Equipment, EquipmentFieldValue, validateEquipment } from '@/lib/validations';
 
-interface Equipment {
-  id: number;
-  name: string;
-  type: string;
-  manufacturer: string;
-  model: string;
-  serialNumber: string;
-  purchaseDate: string;
-  warrantyExpires: string;
-  status: 'Available' | 'In Use' | 'Maintenance' | 'Out of Service';
-  assignedToVehicle?: string;
-  assignedToTrailer?: string;
-  purchasePrice: number;
-  currentValue: number;
-  lastMaintenanceDate?: string;
-  nextMaintenanceDue?: string;
-  notes?: string;
-}
+// Equipment interface is now imported from validations
 
 const equipmentTypes = [
   'GPS Tracking',
@@ -119,7 +103,7 @@ export default function EditEquipmentPage() {
     fetchEquipment();
   }, [equipmentId, router]);
 
-  const handleInputChange = (field: keyof Equipment, value: any) => {
+  const handleInputChange = (field: keyof Equipment, value: EquipmentFieldValue) => {
     setFormData(prev => ({
       ...prev,
       [field]: value,
