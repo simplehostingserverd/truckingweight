@@ -1,6 +1,6 @@
 # 🚀 Quick Setup Guide
 
-This guide will help you get the Cosmo Exploit Group LLC Weight Management System running locally in under 10 minutes.
+This guide will help you get the Cargo Scale Pro Inc Weight Management System running locally in under 10 minutes.
 
 ## Prerequisites
 

@@ -1,8 +1,8 @@
-# Cosmo Exploit Group LLC - Netlify Deployment Guide
+# Cargo Scale Pro Inc - Netlify Deployment Guide
 
 **CONFIDENTIAL DOCUMENT - FOR INTERNAL USE ONLY**
 
-© 2025 Cosmo Exploit Group LLC. All Rights Reserved.  
+© 2025 Cargo Scale Pro Inc. All Rights Reserved.  
 Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
 
 ## Table of Contents
@@ -18,7 +18,7 @@ Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
 
 ## Introduction
 
-This guide provides step-by-step instructions for deploying the Cosmo Exploit Group LLC Weight Management System to Netlify. The deployment process includes security measures to protect our proprietary code and intellectual property.
+This guide provides step-by-step instructions for deploying the Cargo Scale Pro Inc Weight Management System to Netlify. The deployment process includes security measures to protect our proprietary code and intellectual property.
 
 ## Prerequisites
 
@@ -317,5 +317,5 @@ Perform regular security audits to ensure the application remains secure:
 
 **CONFIDENTIAL DOCUMENT - FOR INTERNAL USE ONLY**
 
-© 2025 Cosmo Exploit Group LLC. All Rights Reserved.  
+© 2025 Cargo Scale Pro Inc. All Rights Reserved.  
 Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer

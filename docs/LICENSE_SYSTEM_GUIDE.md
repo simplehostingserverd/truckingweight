@@ -1,8 +1,8 @@
-# Cosmo Exploit Group LLC License System Guide
+# Cargo Scale Pro Inc License System Guide
 
 ## Overview
 
-This guide provides comprehensive information on the license system for the Cosmo Exploit Group LLC Weight Management System. It covers how to generate, validate, and manage licenses for the application.
+This guide provides comprehensive information on the license system for the Cargo Scale Pro Inc Weight Management System. It covers how to generate, validate, and manage licenses for the application.
 
 ## License System Components
 

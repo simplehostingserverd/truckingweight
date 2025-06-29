@@ -225,4 +225,4 @@ Example: `CEG-7NANHMX_G71E-XYGNCLZY`
 
 ---
 
-**© 2025 Cosmo Exploit Group LLC. All Rights Reserved.**
+**© 2025 Cargo Scale Pro Inc. All Rights Reserved.**

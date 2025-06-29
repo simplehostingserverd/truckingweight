@@ -1,13 +1,13 @@
 /**
- * Copyright (c) 2025 Cosmo Exploit Group LLC. All Rights Reserved.
+ * Copyright (c) 2025 Cargo Scale Pro Inc. All Rights Reserved.
  *
  * PROPRIETARY AND CONFIDENTIAL
  *
- * This file is part of the Cosmo Exploit Group LLC Weight Management System.
+ * This file is part of the Cargo Scale Pro Inc Weight Management System.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  *
  * This file contains proprietary and confidential information of
- * Cosmo Exploit Group LLC and may not be copied, distributed, or used
+ * Cargo Scale Pro Inc and may not be copied, distributed, or used
  * in any way without explicit written permission.
  *
  * Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer
@@ -31,7 +31,7 @@ export function Providers({ children }) {
 
     // Add attribution comment to console
     console.warn(
-      '%c© 2025 Cosmo Exploit Group LLC. All Rights Reserved.\n' +
+      '%c© 2025 Cargo Scale Pro Inc. All Rights Reserved.\n' +
         'Designed and built by Michael Anthony Trevino Jr., Lead Full-Stack Developer',
       'color: #3b82f6; font-weight: bold; font-size: 12px;'
     );

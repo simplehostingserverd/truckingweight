@@ -2,7 +2,7 @@
 
 ## ⚠️ Critical: Node.js 20.x Required
 
-The Cosmo Exploit Group LLC Weight Management System is specifically designed for **Node.js 20.x**. Using other versions (especially newer ones like 24.x) may cause compatibility issues.
+The Cargo Scale Pro Inc Weight Management System is specifically designed for **Node.js 20.x**. Using other versions (especially newer ones like 24.x) may cause compatibility issues.
 
 ## 🔍 Check Your Current Version
 

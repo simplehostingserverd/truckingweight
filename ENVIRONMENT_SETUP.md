@@ -1,6 +1,6 @@
 # 🔧 Environment Configuration Guide
 
-This guide explains how to properly configure environment variables for the Cosmo Exploit Group LLC Weight Management System.
+This guide explains how to properly configure environment variables for the Cargo Scale Pro Inc Weight Management System.
 
 ## 📁 Environment Files Structure
 
