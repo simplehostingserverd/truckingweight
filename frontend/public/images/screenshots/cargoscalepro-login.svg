@@ -24,27 +24,8 @@
   <rect x="0" y="0" width="700" height="900" fill="url(#leftBg)" />
   
   <!-- Left side content -->
-  <g transform="translate(50, 150)">
-    <!-- Weight Compliance Card -->
-    <rect x="50" y="50" width="180" height="120" rx="12" fill="#334155" opacity="0.8" />
-    <text x="140" y="80" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Weight Compliance</text>
-    <text x="140" y="130" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle">98.4%</text>
-    
-    <!-- Cargo Delivered Card -->
-    <rect x="50" y="350" width="180" height="120" rx="12" fill="#4f46e5" opacity="0.8" />
-    <text x="140" y="380" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Cargo Delivered</text>
-    <text x="140" y="430" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle">124k</text>
-    <!-- Simple chart bars -->
-    <rect x="100" y="450" width="8" height="20" fill="#60a5fa" />
-    <rect x="112" y="440" width="8" height="30" fill="#60a5fa" />
-    <rect x="124" y="435" width="8" height="35" fill="#60a5fa" />
-    <rect x="136" y="445" width="8" height="25" fill="#60a5fa" />
-    <rect x="148" y="430" width="8" height="40" fill="#60a5fa" />
-    <rect x="160" y="450" width="8" height="20" fill="#60a5fa" />
-    <rect x="172" y="440" width="8" height="30" fill="#60a5fa" />
-    
-    <!-- Background text -->
-    <text x="350" y="300" font-family="Arial, sans-serif" font-size="18" fill="#475569" text-anchor="middle">Trucking Login Background</text>
+  <g transform="translate(50, 100)">
+    <text x="0" y="200" font-family="Arial, sans-serif" font-size="16" fill="#64748b">Trucking Login Background</text>
   </g>
   
   <!-- Right side - Login form -->
@@ -100,64 +81,4 @@
        <text x="140" y="25" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">I</text>
      </g>
    </g>
-    
-    <!-- Right side - Features showcase -->
-    <g transform="translate(400, 50)">
-      <!-- Feature highlights -->
-      <text x="0" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">Why Choose CargoScalePro?</text>
-      
-      <!-- Feature 1 -->
-      <g transform="translate(0, 80)">
-        <circle cx="15" cy="15" r="15" fill="#4f46e5" opacity="0.2" />
-        <circle cx="15" cy="15" r="8" fill="#4f46e5" />
-        <text x="40" y="12" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Real-time Compliance</text>
-        <text x="40" y="30" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">DOT-compliant weight monitoring</text>
-      </g>
-      
-      <!-- Feature 2 -->
-      <g transform="translate(0, 140)">
-        <circle cx="15" cy="15" r="15" fill="#10b981" opacity="0.2" />
-        <circle cx="15" cy="15" r="8" fill="#10b981" />
-        <text x="40" y="12" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Fleet Tracking</text>
-        <text x="40" y="30" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Live vehicle location and routes</text>
-      </g>
-      
-      <!-- Feature 3 -->
-      <g transform="translate(0, 200)">
-        <circle cx="15" cy="15" r="15" fill="#f59e0b" opacity="0.2" />
-        <circle cx="15" cy="15" r="8" fill="#f59e0b" />
-        <text x="40" y="12" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Advanced Analytics</text>
-        <text x="40" y="30" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Comprehensive reporting dashboard</text>
-      </g>
-      
-      <!-- Feature 4 -->
-      <g transform="translate(0, 260)">
-        <circle cx="15" cy="15" r="15" fill="#ef4444" opacity="0.2" />
-        <circle cx="15" cy="15" r="8" fill="#ef4444" />
-        <text x="40" y="12" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Safety Alerts</text>
-        <text x="40" y="30" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Instant violation notifications</text>
-      </g>
-      
-      <!-- Stats -->
-      <g transform="translate(0, 350)">
-        <rect x="0" y="0" width="220" height="120" rx="12" fill="#1e293b" opacity="0.6" stroke="#334155" stroke-width="1" />
-        
-        <text x="20" y="30" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Trusted by</text>
-        <text x="20" y="55" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">500+</text>
-        <text x="20" y="75" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Fleet operators</text>
-        
-        <text x="120" y="30" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Processing</text>
-        <text x="120" y="55" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">2M+</text>
-        <text x="120" y="75" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Weight checks</text>
-        
-        <text x="20" y="105" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">99.9% uptime • SOC 2 compliant • 24/7 support</text>
-      </g>
-    </g>
-  </g>
-  
-  <!-- Footer -->
-  <g transform="translate(0, 850)">
-    <rect x="0" y="0" width="1400" height="50" fill="#0f172a" opacity="0.8" />
-    <text x="700" y="30" font-family="Arial, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">© 2025 Cargo Scale Pro. All Rights Reserved. | Professional Truck Weight Management</text>
-  </g>
 </svg>
