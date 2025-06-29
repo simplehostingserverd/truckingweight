@@ -114,11 +114,26 @@ export default function DashboardHeader({ user, isAdmin = false }: DashboardHead
     { name: 'Reports', href: '/reports', icon: ChartBarIcon },
   ];
 
-  const adminNavigation = [
-    { name: 'Users', href: '/admin/users', icon: UsersIcon },
-    { name: 'Companies', href: '/admin/companies', icon: BuildingOfficeIcon },
-    { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
-  ];
+  // Filter admin navigation based on user type
+  const getAdminNavigation = () => {
+    const baseAdminNavigation = [
+      { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
+    ];
+
+    // Super admin gets access to all features
+    const superAdminNavigation = [
+      { name: 'Users', href: '/admin/users', icon: UsersIcon },
+      { name: 'Companies', href: '/admin/companies', icon: BuildingOfficeIcon },
+      ...baseAdminNavigation,
+    ];
+
+    // Company admins are restricted from user management and company management
+    const isCompanyAdmin = user?.is_admin && user?.company_id;
+    
+    return isCompanyAdmin ? baseAdminNavigation : superAdminNavigation;
+  };
+
+  const adminNavigation = getAdminNavigation();
 
   // Company-specific navigation for mobile
   const companyNavigation = [

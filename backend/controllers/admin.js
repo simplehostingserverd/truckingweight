@@ -20,6 +20,28 @@ import supabase from '../config/supabase.js';
 // @access  Private/Admin
 export const getDashboardData = async (req, res) => {
   try {
+    // Check if user is a company admin (restricted to their company data)
+    const isCompanyAdmin = req.user.isAdmin && req.user.companyId;
+    const companyId = req.user.companyId;
+
+    // Build queries with company filtering for company admins
+    let userQuery = supabase.from('users').select('*', { count: 'exact', head: true });
+    let companyQuery = supabase.from('companies').select('*', { count: 'exact', head: true });
+    let vehicleQuery = supabase.from('vehicles').select('*', { count: 'exact', head: true });
+    let driverQuery = supabase.from('drivers').select('*', { count: 'exact', head: true });
+    let weightQuery = supabase.from('weights').select('*', { count: 'exact', head: true });
+    let loadQuery = supabase.from('loads').select('*', { count: 'exact', head: true });
+
+    // Apply company filtering for company admins
+    if (isCompanyAdmin && companyId) {
+      userQuery = userQuery.eq('company_id', companyId);
+      companyQuery = companyQuery.eq('id', companyId);
+      vehicleQuery = vehicleQuery.eq('company_id', companyId);
+      driverQuery = driverQuery.eq('company_id', companyId);
+      weightQuery = weightQuery.eq('company_id', companyId);
+      loadQuery = loadQuery.eq('company_id', companyId);
+    }
+
     // Get counts for various entities
     const [
       { count: userCount, error: userError },
@@ -29,12 +51,12 @@ export const getDashboardData = async (req, res) => {
       { count: weightCount, error: weightError },
       { count: loadCount, error: loadError },
     ] = await Promise.all([
-      supabase.from('users').select('*', { count: 'exact', head: true }),
-      supabase.from('companies').select('*', { count: 'exact', head: true }),
-      supabase.from('vehicles').select('*', { count: 'exact', head: true }),
-      supabase.from('drivers').select('*', { count: 'exact', head: true }),
-      supabase.from('weights').select('*', { count: 'exact', head: true }),
-      supabase.from('loads').select('*', { count: 'exact', head: true }),
+      userQuery,
+      companyQuery,
+      vehicleQuery,
+      driverQuery,
+      weightQuery,
+      loadQuery,
     ]);
 
     if (userError || companyError || vehicleError || driverError || weightError || loadError) {
@@ -45,35 +67,53 @@ export const getDashboardData = async (req, res) => {
       return res.status(500).json({ msg: 'Server error' });
     }
 
-    // Get recent users
-    const { data: recentUsers, error: recentUsersError } = await supabase
+    // Get recent users with company filtering for company admins
+    let recentUsersQuery = supabase
       .from('users')
       .select('id, name, email, company_id, is_admin, created_at')
       .order('created_at', { ascending: false })
       .limit(5);
+    
+    if (isCompanyAdmin && companyId) {
+      recentUsersQuery = recentUsersQuery.eq('company_id', companyId);
+    }
+    
+    const { data: recentUsers, error: recentUsersError } = await recentUsersQuery;
 
     if (recentUsersError) {
       console.error('Error fetching recent users:', recentUsersError);
       return res.status(500).json({ msg: 'Server error' });
     }
 
-    // Get recent weights
-    const { data: recentWeights, error: recentWeightsError } = await supabase
+    // Get recent weights with company filtering for company admins
+    let recentWeightsQuery = supabase
       .from('weights')
       .select('id, vehicle_id, weight, date, status, company_id, created_at')
       .order('created_at', { ascending: false })
       .limit(5);
+    
+    if (isCompanyAdmin && companyId) {
+      recentWeightsQuery = recentWeightsQuery.eq('company_id', companyId);
+    }
+    
+    const { data: recentWeights, error: recentWeightsError } = await recentWeightsQuery;
 
     if (recentWeightsError) {
       console.error('Error fetching recent weights:', recentWeightsError);
       return res.status(500).json({ msg: 'Server error' });
     }
 
-    // Get compliance stats
-    const { data: complianceStats, error: complianceError } = await supabase
+    // Get compliance stats with company filtering for company admins
+    let complianceQuery = supabase
       .from('weights')
       .select('status')
       .order('created_at', { ascending: false });
+    
+    if (isCompanyAdmin && companyId) {
+      complianceQuery = complianceQuery.eq('company_id', companyId);
+    }
+    
+    const { data: complianceStats, error: complianceError } = await complianceQuery;
 
     if (complianceError) {
       console.error('Error fetching compliance stats:', complianceError);

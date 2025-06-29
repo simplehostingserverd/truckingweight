@@ -20,9 +20,11 @@ import AdminCompanySelector from '@/components/Dashboard/AdminCompanySelector';
 import DashboardStats from '@/components/Dashboard/DashboardStats';
 import QuickActions from '@/components/Dashboard/QuickActions';
 import RecentWeightsTable from '@/components/Dashboard/RecentWeightsTable';
-import { ScaleIcon } from '@heroicons/react/24/outline';
+import { Alert, AlertDescription } from '@/components/ui';
+import { ScaleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { Suspense, lazy, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, lazy, useState, useEffect } from 'react';
 
 // Dynamically import chart components to reduce initial bundle size
 const ComplianceChart = lazy(() => import('@/components/Dashboard/ComplianceChart'));
@@ -36,6 +38,19 @@ interface DashboardClientProps {
 
 export default function DashboardClient({ userName, isAdmin }: DashboardClientProps) {
   const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
+  const [showAccessDenied, setShowAccessDenied] = useState(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // Check for access denied error in URL parameters
+    if (searchParams.get('error') === 'access_denied') {
+      setShowAccessDenied(true);
+      // Clear the error parameter from URL without page reload
+      const url = new URL(window.location.href);
+      url.searchParams.delete('error');
+      window.history.replaceState({}, '', url.toString());
+    }
+  }, [searchParams]);
 
   const handleCompanyChange = (companyId: number | null) => {
     setSelectedCompanyId(companyId);
@@ -44,6 +59,21 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
   return (
     <ErrorBoundary>
       <div className="container mx-auto px-4 py-6">
+        {/* Access Denied Alert */}
+        {showAccessDenied && (
+          <Alert className="mb-6 border-red-600 bg-red-900/20">
+            <XMarkIcon className="h-4 w-4 text-red-400" />
+            <AlertDescription className="text-red-300">
+              Access denied. Company administrators do not have permission to access that feature.
+              <button
+                onClick={() => setShowAccessDenied(false)}
+                className="ml-2 text-red-400 hover:text-red-300 underline"
+              >
+                Dismiss
+              </button>
+            </AlertDescription>
+          </Alert>
+        )}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-bold text-white">Dashboard</h1>

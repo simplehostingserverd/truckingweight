@@ -53,7 +53,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <div className="flex h-screen bg-black text-white">
       <SkipToContent />
-      <DashboardSidebar isAdmin={userData?.is_admin || false} />
+      <DashboardSidebar isAdmin={userData?.is_admin || false} user={userData} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <DashboardHeader user={userData} isAdmin={userData?.is_admin || false} />
         <main

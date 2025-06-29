@@ -56,9 +56,18 @@ const BREAKPOINTS = {
 
 interface SidebarProps {
   isAdmin: boolean;
+  user?: {
+    id: string;
+    company_id?: string;
+    is_admin: boolean;
+    companies?: {
+      id: string;
+      name: string;
+    };
+  };
 }
 
-export default function DashboardSidebar({ isAdmin }: SidebarProps) {
+export default function DashboardSidebar({ isAdmin, user }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -177,14 +186,29 @@ export default function DashboardSidebar({ isAdmin }: SidebarProps) {
     { name: 'AI/ML Models', href: '/ml', icon: BeakerIcon },
   ];
 
-  const adminNavigation = [
-    { name: 'Users', href: '/admin/users', icon: UsersIcon },
-    { name: 'Companies', href: '/admin/companies', icon: BuildingOfficeIcon },
-    { name: 'LPR Cameras', href: '/admin/lpr-cameras', icon: CameraIcon },
-    { name: 'Storage Systems', href: '/admin/storage-systems', icon: ServerIcon },
-    { name: 'City Dashboard', href: '/city-weighing', icon: MapPinIcon },
-    { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
-  ];
+  // Filter admin navigation based on user type
+  const getAdminNavigation = () => {
+    const baseAdminNavigation = [
+      { name: 'LPR Cameras', href: '/admin/lpr-cameras', icon: CameraIcon },
+      { name: 'Storage Systems', href: '/admin/storage-systems', icon: ServerIcon },
+      { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
+    ];
+
+    // Super admin gets access to all features
+    const superAdminNavigation = [
+      { name: 'Users', href: '/admin/users', icon: UsersIcon },
+      { name: 'Companies', href: '/admin/companies', icon: BuildingOfficeIcon },
+      { name: 'City Dashboard', href: '/city-weighing', icon: MapPinIcon },
+      ...baseAdminNavigation,
+    ];
+
+    // Company admins are restricted from user management, company management, and city features
+    const isCompanyAdmin = user?.is_admin && user?.company_id;
+    
+    return isCompanyAdmin ? baseAdminNavigation : superAdminNavigation;
+  };
+
+  const adminNavigation = getAdminNavigation();
 
   // Company-specific navigation
   const companyNavigation = [

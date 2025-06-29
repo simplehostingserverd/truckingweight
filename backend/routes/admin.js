@@ -21,6 +21,7 @@ import adminController from '../controllers/admin.js';
 // Import middleware
 import auth from '../middleware/auth.js';
 import admin from '../middleware/admin.js';
+import companyAdmin from '../middleware/companyAdmin.js';
 
 // @route   GET api/admin/dashboard
 // @desc    Get admin dashboard data
@@ -29,17 +30,18 @@ router.get('/dashboard', [auth, admin], adminController.getDashboardData);
 
 // @route   GET api/admin/users
 // @desc    Get all users
-// @access  Private/Admin
-router.get('/users', [auth, admin], adminController.getAllUsers);
+// @access  Private/Super Admin Only (Company admins cannot access user management)
+router.get('/users', [auth, admin, companyAdmin], adminController.getAllUsers);
 
 // @route   POST api/admin/users
 // @desc    Create a new user
-// @access  Private/Admin
+// @access  Private/Super Admin Only (Company admins cannot create users)
 router.post(
   '/users',
   [
     auth,
     admin,
+    companyAdmin,
     [
       check('name', 'Name is required').not().isEmpty(),
       check('email', 'Please include a valid email').isEmail(),
@@ -53,13 +55,13 @@ router.post(
 
 // @route   PUT api/admin/users/:id
 // @desc    Update a user
-// @access  Private/Admin
-router.put('/users/:id', [auth, admin], adminController.updateUser);
+// @access  Private/Super Admin Only (Company admins cannot update users)
+router.put('/users/:id', [auth, admin, companyAdmin], adminController.updateUser);
 
 // @route   DELETE api/admin/users/:id
 // @desc    Delete a user
-// @access  Private/Admin
-router.delete('/users/:id', [auth, admin], adminController.deleteUser);
+// @access  Private/Super Admin Only (Company admins cannot delete users)
+router.delete('/users/:id', [auth, admin, companyAdmin], adminController.deleteUser);
 
 // @route   GET api/admin/reports/weights
 // @desc    Get weight reports
