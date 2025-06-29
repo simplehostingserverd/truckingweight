@@ -48,7 +48,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 // Company type is now imported from validations
 
@@ -79,13 +79,13 @@ export default function CompaniesPage() {
 
   useEffect(() => {
     fetchCompanies();
-  }, []);
+  }, [fetchCompanies]);
 
   useEffect(() => {
     filterCompanies();
-  }, [companies, searchTerm, statusFilter]);
+  }, [companies, searchTerm, statusFilter, filterCompanies]);
 
-  const fetchCompanies = async () => {
+  const fetchCompanies = useCallback(async () => {
     try {
       setIsLoading(true);
       setError('');
@@ -129,19 +129,19 @@ export default function CompaniesPage() {
       const companiesWithCounts = await Promise.all(
         (data || []).map(async company => {
           // Get user count
-          const { count: userCount, error: userCountError } = await supabase
+          const { count: userCount } = await supabase
             .from('users')
             .select('*', { count: 'exact', head: true })
             .eq('company_id', company.id);
 
           // Get vehicle count
-          const { count: vehicleCount, error: vehicleCountError } = await supabase
+          const { count: vehicleCount } = await supabase
             .from('vehicles')
             .select('*', { count: 'exact', head: true })
             .eq('company_id', company.id);
 
           // Get driver count
-          const { count: driverCount, error: driverCountError } = await supabase
+          const { count: driverCount } = await supabase
             .from('drivers')
             .select('*', { count: 'exact', head: true })
             .eq('company_id', company.id);
@@ -165,9 +165,9 @@ export default function CompaniesPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [supabase]);
 
-  const filterCompanies = () => {
+  const filterCompanies = useCallback(() => {
     let filtered = [...companies];
 
     // Apply search filter
@@ -186,7 +186,7 @@ export default function CompaniesPage() {
     }
 
     setFilteredCompanies(filtered);
-  };
+  }, [companies, searchTerm, statusFilter]);
 
   const handleCreateCompany = async () => {
     try {
@@ -201,7 +201,7 @@ export default function CompaniesPage() {
       }
 
       // Create company
-      const { data: _data, error: companyError } = await supabase
+      const { error: companyError } = await supabase
         .from('companies')
         .insert({
           name: newCompany.name,
