@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { toast } from 'sonner';
-import { Equipment, EquipmentFieldValue, validateEquipment } from '@/lib/validations';
+import { Equipment, EquipmentFieldValue } from '@/lib/validations';
 
 // Equipment interface is now imported from validations
 
@@ -31,49 +31,48 @@ const statusOptions = [
   'Out of Service',
 ];
 
+// Mock data - will be replaced with API calls
+const mockEquipment: Equipment[] = [
+  {
+    id: 1,
+    name: 'GPS Tracker Pro',
+    type: 'GPS Tracking',
+    manufacturer: 'Garmin',
+    model: 'Fleet 790',
+    serialNumber: 'GPS001',
+    purchaseDate: '2023-01-15',
+    warrantyExpires: '2026-01-15',
+    status: 'In Use',
+    assignedToVehicle: 'Truck 001',
+    purchasePrice: 1200,
+    currentValue: 800,
+    lastMaintenanceDate: '2024-06-15',
+    nextMaintenanceDue: '2024-12-15',
+  },
+  {
+    id: 2,
+    name: 'Heavy Duty Tire Chains',
+    type: 'Tire Chains',
+    manufacturer: 'Pewag',
+    model: 'Servo SUV',
+    serialNumber: 'TC002',
+    purchaseDate: '2023-03-20',
+    warrantyExpires: '2025-03-20',
+    status: 'Available',
+    purchasePrice: 450,
+    currentValue: 350,
+    lastMaintenanceDate: '2024-01-10',
+  },
+];
+
 export default function EditEquipmentPage() {
   const router = useRouter();
-  const params = useParams();
-  const equipmentId = params.id as string;
-  
+  const { id: equipmentId } = useParams();
   const [equipment, setEquipment] = useState<Equipment | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [formData, setFormData] = useState<Partial<Equipment>>({});
 
-  // Mock data - will be replaced with API calls
-  const mockEquipment: Equipment[] = [
-    {
-      id: 1,
-      name: 'GPS Tracker Pro',
-      type: 'GPS Tracking',
-      manufacturer: 'Garmin',
-      model: 'Fleet 790',
-      serialNumber: 'GPS001',
-      purchaseDate: '2023-01-15',
-      warrantyExpires: '2026-01-15',
-      status: 'In Use',
-      assignedToVehicle: 'Truck 001',
-      purchasePrice: 1200,
-      currentValue: 800,
-      lastMaintenanceDate: '2024-06-15',
-      nextMaintenanceDue: '2024-12-15',
-    },
-    {
-      id: 2,
-      name: 'Heavy Duty Tire Chains',
-      type: 'Tire Chains',
-      manufacturer: 'Pewag',
-      model: 'Servo SUV',
-      serialNumber: 'TC002',
-      purchaseDate: '2023-03-20',
-      warrantyExpires: '2025-03-20',
-      status: 'Available',
-      purchasePrice: 450,
-      currentValue: 350,
-      lastMaintenanceDate: '2024-01-10',
-    },
-  ];
 
   useEffect(() => {
     // Simulate API call to fetch equipment
@@ -154,7 +153,7 @@ export default function EditEquipmentPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Equipment Not Found</h2>
-          <p className="text-gray-600 mb-4">The equipment you're looking for doesn't exist.</p>
+          <p className="text-gray-600 mb-4">The equipment you&apos;re looking for doesn&apos;t exist.</p>
           <Button onClick={() => router.push('/equipment')}>Back to Equipment</Button>
         </div>
       </div>

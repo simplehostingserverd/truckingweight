@@ -14,7 +14,7 @@
 'use client';
 
 import React from 'react';
-import { Company, validateCompany } from '@/lib/validations';
+import { Company } from '@/lib/validations';
 import {
   Alert,
   AlertDescription,
@@ -201,7 +201,7 @@ export default function CompaniesPage() {
       }
 
       // Create company
-      const { data, error: companyError } = await supabase
+      const { data: _data, error: companyError } = await supabase
         .from('companies')
         .insert({
           name: newCompany.name,
