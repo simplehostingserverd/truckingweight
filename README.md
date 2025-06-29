@@ -40,6 +40,16 @@ What started as Cargo Scale Pro's flagship weight management project in 2022 has
   <img src="frontend/public/images/screenshots/cargoscalepro-login.svg" alt="CargoScalePro Professional Login" width="80%">
 </div>
 
+<div align="center">
+  <h3>🚛 Trucking Dashboard</h3>
+  <img src="frontend/public/images/screenshots/cargoscalepro-trucking-dashboard.svg" alt="CargoScalePro Trucking Dashboard" width="80%">
+  <p><em>Comprehensive fleet management dashboard with real-time tracking, load management, and compliance monitoring</em></p>
+
+  <h3>🏢 City Compliance Dashboard</h3>
+  <img src="frontend/public/images/screenshots/cargoscalepro-city-dashboard.svg" alt="CargoScalePro City Dashboard" width="80%">
+  <p><em>Municipal compliance portal for city inspectors with permit management and violation tracking</em></p>
+</div>
+
 ## 💼 Why Industry Leaders Choose Our TMS
 
 The trucking industry is complex, and we've built a system that actually understands your daily challenges:
@@ -300,44 +310,60 @@ Built with modern, enterprise-grade technologies for maximum performance, scalab
 1. **Access the codebase:**
 
    ```bash
-   # If you have access to the repository
-   # Contact development team for repository access
-   cd truckingweight
+
    ```
+
+# If you have access to the repository
+
+# Contact development team for repository access
+
+cd truckingweight
+
+````
 
 2. **Install dependencies:**
 
    ```bash
-   # Install all dependencies for frontend and backend
+# Install all dependencies for frontend and backend
    npm run install-deps
-   ```
+````
 
 3. **Environment setup:**
 
    ```bash
-   # Copy environment templates
-   cp frontend/.env.example frontend/.env.local
-   cp backend/.env.example backend/.env
 
-   # Configure your Supabase credentials in the .env files
    ```
+
+# Copy environment templates
+
+cp frontend/.env.example frontend/.env.local
+cp backend/.env.example backend/.env
+
+# Configure your Supabase credentials in the .env files
+
+````
 
 4. **Database setup:**
 
    ```bash
-   # Initialize database schema
+# Initialize database schema
    npm run setup-db
 
    # Run migrations for telematics and advanced features
    npm run add-telematics-columns
-   ```
+````
 
 5. **Start development servers:**
 
    ```bash
-   # Start both frontend and backend in development mode
-   npm run dev
+
    ```
+
+# Start both frontend and backend in development mode
+
+npm run dev
+
+````
 
 6. **Access the application:**
    - Frontend: [http://localhost:3000](http://localhost:3000)
@@ -351,8 +377,8 @@ We've included a Netlify configuration file (`netlify.toml`) for easy deployment
 1. Install the Netlify CLI:
 
    ```bash
-   npm install -g netlify-cli
-   ```
+npm install -g netlify-cli
+````
 
 2. Login to Netlify:
 
@@ -360,11 +386,13 @@ We've included a Netlify configuration file (`netlify.toml`) for easy deployment
    netlify login
    ```
 
+````
+
 3. Deploy to Netlify:
 
    ```bash
-   netlify deploy --prod
-   ```
+netlify deploy --prod
+````
 
 For detailed deployment instructions, see the [Linux Netlify Deployment Guide](Information/LINUX_NETLIFY_DEPLOYMENT.md).
 

@@ -6,78 +6,100 @@
       <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
     </linearGradient>
-    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:0.8" />
-      <stop offset="100%" style="stop-color:#334155;stop-opacity:0.6" />
+    <linearGradient id="leftBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#94a3b8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#64748b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="rightBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
     </linearGradient>
   </defs>
   
   <rect width="1400" height="900" fill="url(#bgGradient)" />
   
-  <!-- Background pattern -->
-  <g opacity="0.1">
-    <circle cx="200" cy="150" r="100" fill="#4f46e5" />
-    <circle cx="1200" cy="200" r="150" fill="#4f46e5" />
-    <circle cx="300" cy="700" r="80" fill="#4f46e5" />
-    <circle cx="1100" cy="750" r="120" fill="#4f46e5" />
+  <!-- Split screen layout -->
+  
+  <!-- Left side - Trucking background -->
+  <rect x="0" y="0" width="700" height="900" fill="url(#leftBg)" />
+  
+  <!-- Left side content -->
+  <g transform="translate(50, 150)">
+    <!-- Weight Compliance Card -->
+    <rect x="50" y="50" width="180" height="120" rx="12" fill="#334155" opacity="0.8" />
+    <text x="140" y="80" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Weight Compliance</text>
+    <text x="140" y="130" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle">98.4%</text>
+    
+    <!-- Cargo Delivered Card -->
+    <rect x="50" y="350" width="180" height="120" rx="12" fill="#4f46e5" opacity="0.8" />
+    <text x="140" y="380" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Cargo Delivered</text>
+    <text x="140" y="430" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle">124k</text>
+    <!-- Simple chart bars -->
+    <rect x="100" y="450" width="8" height="20" fill="#60a5fa" />
+    <rect x="112" y="440" width="8" height="30" fill="#60a5fa" />
+    <rect x="124" y="435" width="8" height="35" fill="#60a5fa" />
+    <rect x="136" y="445" width="8" height="25" fill="#60a5fa" />
+    <rect x="148" y="430" width="8" height="40" fill="#60a5fa" />
+    <rect x="160" y="450" width="8" height="20" fill="#60a5fa" />
+    <rect x="172" y="440" width="8" height="30" fill="#60a5fa" />
+    
+    <!-- Background text -->
+    <text x="350" y="300" font-family="Arial, sans-serif" font-size="18" fill="#475569" text-anchor="middle">Trucking Login Background</text>
   </g>
   
-  <!-- Main container -->
-  <g transform="translate(350, 150)">
-    <!-- Login card -->
-    <rect x="0" y="0" width="700" height="600" rx="20" fill="url(#cardGradient)" stroke="#475569" stroke-width="1" />
-    
-    <!-- Left side - Login form -->
-    <g transform="translate(50, 50)">
-      <!-- Logo and branding -->
-      <g>
-        <rect x="0" y="0" width="60" height="60" rx="12" fill="#4f46e5" />
-        <path d="M15,45 L15,25 L45,25 L45,45 M10,45 L50,45 M20,25 L20,15 L40,15 L40,25" stroke="white" stroke-width="3" fill="none" />
-        <path d="M15,55 L15,45 L45,45 L45,55 L15,55 Z M20,45 L20,35 L40,35 L40,45" stroke="white" stroke-width="3" fill="none" />
-        
-        <text x="80" y="35" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white">CargoScalePro</text>
-        <text x="80" y="60" font-family="Arial, sans-serif" font-size="16" fill="#94a3b8">Professional Weight Management Platform</text>
-      </g>
-      
-      <!-- Welcome text -->
-      <g transform="translate(0, 120)">
-        <text x="0" y="0" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">Welcome Back</text>
-        <text x="0" y="30" font-family="Arial, sans-serif" font-size="16" fill="#94a3b8">Sign in to your CargoScalePro account</text>
-      </g>
-      
-      <!-- Login form -->
-      <g transform="translate(0, 200)">
-        <!-- Email field -->
-        <text x="0" y="0" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Email Address</text>
-        <rect x="0" y="10" width="300" height="45" rx="8" fill="#334155" stroke="#475569" stroke-width="1" />
-        <text x="15" y="38" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">admin@cargoscalepro.com</text>
-        
-        <!-- Password field -->
-        <text x="0" y="80" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Password</text>
-        <rect x="0" y="90" width="300" height="45" rx="8" fill="#334155" stroke="#475569" stroke-width="1" />
-        <text x="15" y="118" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">••••••••••••</text>
-        
-        <!-- Remember me and forgot password -->
-        <g transform="translate(0, 160)">
-          <rect x="0" y="0" width="16" height="16" rx="3" fill="#4f46e5" />
-          <path d="M3,8 L7,12 L13,4" stroke="white" stroke-width="2" fill="none" />
-          <text x="25" y="12" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Remember me</text>
-          
-          <text x="200" y="12" font-family="Arial, sans-serif" font-size="14" fill="#4f46e5">Forgot password?</text>
-        </g>
-        
-        <!-- Sign in button -->
-        <rect x="0" y="200" width="300" height="50" rx="8" fill="#4f46e5" />
-        <text x="150" y="230" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Sign In</text>
-        
-        <!-- Divider -->
-        <line x1="0" y1="280" x2="300" y2="280" stroke="#475569" stroke-width="1" />
-        
-        <!-- Register link -->
-        <text x="0" y="310" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">New to CargoScalePro?</text>
-        <text x="180" y="310" font-family="Arial, sans-serif" font-size="14" fill="#4f46e5">Create an account</text>
-      </g>
-    </g>
+  <!-- Right side - Login form -->
+  <rect x="700" y="0" width="700" height="900" fill="url(#rightBg)" />
+  
+  <!-- Right side content -->
+   <g transform="translate(800, 150)">
+     <!-- Welcome header -->
+     <text x="250" y="50" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle">Welcome to Cargo Scale Pro!</text>
+     <text x="250" y="80" font-family="Arial, sans-serif" font-size="16" fill="#94a3b8" text-anchor="middle">Please sign in to your account and start the adventure</text>
+     
+     <!-- Email field -->
+     <text x="50" y="150" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Email or Username</text>
+     <rect x="50" y="165" width="400" height="45" rx="8" fill="#334155" stroke="#475569" stroke-width="1" />
+     <text x="65" y="192" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Enter your email</text>
+     
+     <!-- Password field -->
+     <text x="50" y="240" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Password</text>
+     <rect x="50" y="255" width="400" height="45" rx="8" fill="#334155" stroke="#475569" stroke-width="1" />
+     <text x="65" y="282" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">Enter your password</text>
+     <text x="380" y="282" font-family="Arial, sans-serif" font-size="14" fill="#4f46e5">Forgot password?</text>
+     
+     <!-- Remember me -->
+     <g transform="translate(50, 320)">
+       <rect x="0" y="0" width="16" height="16" rx="3" fill="#334155" stroke="#475569" stroke-width="1" />
+       <text x="25" y="12" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Remember me</text>
+     </g>
+     
+     <!-- Login button -->
+     <rect x="50" y="360" width="400" height="50" rx="8" fill="#4f46e5" />
+     <text x="250" y="390" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Login</text>
+     
+     <!-- Register link -->
+     <text x="180" y="450" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">New on our platform?</text>
+     <text x="320" y="450" font-family="Arial, sans-serif" font-size="14" fill="#4f46e5">Create an account</text>
+     
+     <!-- Social icons -->
+     <g transform="translate(200, 480)">
+       <!-- Twitter icon -->
+       <circle cx="20" cy="20" r="15" fill="#334155" />
+       <text x="20" y="25" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">T</text>
+       
+       <!-- Facebook icon -->
+       <circle cx="60" cy="20" r="15" fill="#334155" />
+       <text x="60" y="25" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">F</text>
+       
+       <!-- GitHub icon -->
+       <circle cx="100" cy="20" r="15" fill="#334155" />
+       <text x="100" y="25" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">G</text>
+       
+       <!-- Instagram icon -->
+       <circle cx="140" cy="20" r="15" fill="#334155" />
+       <text x="140" y="25" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">I</text>
+     </g>
+   </g>
     
     <!-- Right side - Features showcase -->
     <g transform="translate(400, 50)">
