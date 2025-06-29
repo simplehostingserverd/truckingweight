@@ -29,7 +29,8 @@ admin.cargoscalepro.com → cargoscalepro.com
 
 1. **Clone and Setup**
 ```bash
-git clone https://github.com/simplehostingserverd/truckingweight.git
+# Contact development team for repository access
+# git clone [PRIVATE_REPOSITORY_URL]
 cd truckingweight
 cp .env.example .env
 ```
@@ -152,7 +153,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 ### 2. Application Deployment
 ```bash
 # Clone repository
-git clone https://github.com/simplehostingserverd/truckingweight.git
+# Contact development team for repository access
+# git clone [PRIVATE_REPOSITORY_URL]
 cd truckingweight
 
 # Setup environment

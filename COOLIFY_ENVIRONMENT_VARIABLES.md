@@ -160,7 +160,7 @@ NEXT_PUBLIC_ENABLE_PWA=true
 ## 🚀 **Coolify Deployment Steps**
 
 1. **Create New Project** in Coolify
-2. **Set Git Repository**: `https://github.com/simplehostingserverd/truckingweight.git`
+2. **Set Git Repository**: Contact development team for private repository access
 3. **Set Build Context**: `frontend/`
 4. **Set Dockerfile Path**: `frontend/Dockerfile`
 5. **Add ALL environment variables** listed above

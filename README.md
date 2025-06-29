@@ -4,7 +4,7 @@
 
 ![CargoScalePro Banner](frontend/public/images/screenshots/cargoscalepro-main-dashboard.svg)
 
-[![CI/CD Pipeline](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml/badge.svg)](https://github.com/simplehostingserverd/truckingweight/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/License-Proprietary-red.svg?style=for-the-badge)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-15.1.7-black?style=for-the-badge&logo=next.js&logoColor=white&labelColor=000000)](https://nextjs.org/)
 [![Fastify](https://img.shields.io/badge/Fastify-4.29.1-000000?style=for-the-badge&logo=fastify&logoColor=white&labelColor=000000)](https://fastify.dev/)
 [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white&labelColor=3ECF8E)](https://supabase.com/)
@@ -297,10 +297,11 @@ Built with modern, enterprise-grade technologies for maximum performance, scalab
 
 **Quick Start Development Environment:**
 
-1. **Clone the repository:**
+1. **Access the codebase:**
 
    ```bash
-   git clone https://github.com/simplehostingserverd/truckingweight.git
+   # If you have access to the repository
+   # Contact development team for repository access
    cd truckingweight
    ```
 
@@ -340,8 +341,8 @@ Built with modern, enterprise-grade technologies for maximum performance, scalab
 
 6. **Access the application:**
    - Frontend: [http://localhost:3000](http://localhost:3000)
-   - Backend API: [http://localhost:8000](http://localhost:8000)
-   - API Documentation: [http://localhost:8000/docs](http://localhost:8000/docs)
+   - Backend API: [http://localhost:5001](http://localhost:5001)
+   - API Documentation: [http://localhost:5001/docs](http://localhost:5001/docs)
 
 ### Deployment to Netlify
 
@@ -495,9 +496,9 @@ truckingweight/
 
 **GitHub Repository:**
 
-- 🔗 [https://github.com/simplehostingserverd/truckingweight](https://github.com/simplehostingserverd/truckingweight)
-- 🐛 Issues: [GitHub Issues](https://github.com/simplehostingserverd/truckingweight/issues)
-- 📋 Roadmap: [GitHub Projects](https://github.com/simplehostingserverd/truckingweight/projects)
+- 🔗 Repository: Contact development team for access
+- 🐛 Issues: Contact support for bug reports
+- 📋 Roadmap: Available upon request for enterprise clients
 
 ## 📄 License & Legal
 

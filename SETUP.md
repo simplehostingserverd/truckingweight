@@ -30,7 +30,8 @@ nvm use 20
 
 ```bash
 # Clone the repository
-git clone https://github.com/simplehostingserverd/truckingweight.git
+# Contact development team for repository access
+# git clone [PRIVATE_REPOSITORY_URL]
 cd truckingweight
 
 # Install all dependencies (frontend, backend, and root)

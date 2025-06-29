@@ -107,31 +107,31 @@ Docker containers with GitHub Actions for CI/CD. We're not AWS experts, so havin
 1. Clone the repository:
 
    ```bash
-   # Contact development team for repository access
+# Contact development team for repository access
 # git clone [PRIVATE_REPOSITORY_URL]
    cd truckingweight
-   ```
+```
 
 2. Install dependencies:
 
    ```bash
-   npm run install-deps
-   ```
+npm run install-deps
+```
 
 3. Set up environment variables:
 
    ```bash
-   cp frontend/.env.example frontend/.env.local
+cp frontend/.env.example frontend/.env.local
    cp backend/.env.example backend/.env
-   ```
+```
 
    Update the environment files with your Supabase credentials.
 
 4. Run the development server:
 
    ```bash
-   npm run dev
-   ```
+npm run dev
+```
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
@@ -386,4 +386,148 @@ Project Link: Contact development team for access
 
 <div align="center">
   <sub>Built with ❤️ by Cargo Scale Pro Development Team</sub>
+</div>
+│   │   │   └── api/             # API route handlers
+│   │   ├── components/          # Reusable React components
+│   │   │   ├── ui/              # Base UI components (Radix)
+│   │   │   ├── forms/           # Form components
+│   │   │   ├── charts/          # Data visualization
+│   │   │   ├── maps/            # 3D mapping (Cesium)
+│   │   │   └── ...              # Feature-specific components
+│   │   ├── lib/                 # Utility functions and configs
+│   │   ├── hooks/               # Custom React hooks
+│   │   ├── providers/           # Context providers
+│   │   └── types/               # TypeScript type definitions
+├── backend/                     # Fastify Backend API
+│   ├── controllers/             # Request handlers
+│   ├── routes/                  # API route definitions
+│   │   ├── fastify/             # Fastify-specific routes
+│   │   ├── auth.ts              # Authentication
+│   │   ├── fleet.ts             # Fleet management
+│   │   ├── edi.ts               # EDI processing
+│   │   ├── telematics.ts        # Telematics integration
+│   │   └── ...                  # Feature-specific routes
+│   ├── services/                # Business logic layer
+│   │   ├── edi/                 # EDI transaction processing
+│   │   ├── telematics/          # Telematics providers
+│   │   ├── toll/                # Toll provider integrations
+│   │   ├── financial/           # Billing and invoicing
+│   │   └── ...                  # Service modules
+│   ├── middleware/              # Express/Fastify middleware
+│   ├── config/                  # Configuration files
+│   ├── utils/                   # Utility functions
+│   └── prisma/                  # Database schema and migrations
+├── scripts/                     # Deployment and utility scripts
+├── docs/                        # Documentation
+└── docker/                      # Container configurations
+```
+
+### 🏗️ **Key Architectural Decisions**
+
+**Frontend:**
+
+- **Next.js App Router**: Modern routing with server components
+- **TypeScript**: Full type safety across the application
+- **Component Architecture**: Modular, reusable components
+- **State Management**: Zustand for global state, React Query for server state
+
+**Backend:**
+
+- **Fastify**: High-performance alternative to Express
+- **Prisma ORM**: Type-safe database access with migrations
+- **Service Layer**: Clean separation of business logic
+- **Multi-tenancy**: Row-level security for data isolation
+
+**Database:**
+
+- **PostgreSQL**: Robust relational database for complex trucking data
+- **Supabase**: Managed PostgreSQL with real-time features
+- **Migrations**: Version-controlled schema changes
+- **Indexing**: Optimized for high-performance queries
+
+## 🎯 Demo & Live Examples
+
+### 🌐 **Live Demo Environments**
+
+**Trucking Company Portal:**
+
+- Demo URL: [https://demo.cargoscalepro.com](https://demo.cargoscalepro.com)
+- Login: `demo@trucking.com` / `demo123`
+- Features: Full TMS functionality with sample data
+
+**City/Municipal Portal:**
+
+- Demo URL: [https://city.cargoscalepro.com](https://city.cargoscalepro.com)
+- Login: `inspector@city.gov` / `city123`
+- Features: Compliance monitoring and permit management
+
+**Mobile PWA:**
+
+- Install from any demo URL on mobile device
+- Offline functionality demonstration
+- Driver-focused interface
+
+## 📬 Contact & Support
+
+### 🏢 **Business Inquiries**
+
+**Sales & Partnerships:**
+
+- 📧 Email: [sales@cargoscalepro.com](mailto:sales@cargoscalepro.com)
+- 📞 Phone: (555) 123-CARGO
+- 🌐 Website: [https://cargoscalepro.com](https://cargoscalepro.com)
+- 📅 Schedule Demo: [calendly.com/cargoscalepro/demo](https://calendly.com/cargoscalepro/demo)
+
+**Technical Support:**
+
+- 📧 Support: [support@cargoscalepro.com](mailto:support@cargoscalepro.com)
+- 📞 24/7 Hotline: (555) 123-HELP
+- 💬 Live Chat: Available on our website
+- 📚 Documentation: [docs.cargoscalepro.com](https://docs.cargoscalepro.com)
+
+### 👨‍💻 **Development Team**
+
+**Lead Developer:** Michael Anthony Trevino Jr.
+
+- 🎯 35+ years software development experience
+- 🚛 Trucking industry specialist
+- 💼 Lead Full-Stack Developer at Cargo Scale Pro
+- 📧 Contact: [michael@cargoscalepro.com](mailto:michael@cargoscalepro.com)
+
+**GitHub Repository:**
+
+- 🔗 Repository: Contact development team for access
+- 🐛 Issues: Contact support for bug reports
+- 📋 Roadmap: Available upon request for enterprise clients
+
+## 📄 License & Legal
+
+© 2025 Cargo Scale Pro. All Rights Reserved.
+
+**PROPRIETARY AND CONFIDENTIAL SOFTWARE**
+
+This Transportation Management System is proprietary software owned exclusively by Cargo Scale Pro. The source code, documentation, and all associated files contain confidential and proprietary information protected by intellectual property laws.
+
+**Restrictions:**
+
+- ❌ No redistribution, copying, or modification without written permission
+- ❌ No reverse engineering or decompilation
+- ❌ No use for competitive analysis or development
+- ✅ Licensed use only through official agreements
+
+**For Licensing Inquiries:**
+Contact [legal@cargoscalepro.com](mailto:legal@cargoscalepro.com)
+
+---
+
+<div align="center">
+
+**🚚 Built with ❤️ for the Trucking Industry**
+
+_Designed and developed by industry experts who understand your challenges_
+
+**Cargo Scale Pro** | **Est. 2022** | **Trusted by 50+ Fleets**
+
+</div>
+
 </div>

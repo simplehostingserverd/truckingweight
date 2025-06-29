@@ -30,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Simple-Hosting-Holdings-Inc/truckingweight.git"
+    "url": "private"
   },
   "keywords": [
     "trucking",
@@ -43,9 +43,9 @@
   "license": "PROPRIETARY",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/Simple-Hosting-Holdings-Inc/truckingweight/issues"
+    "url": "mailto:support@cargoscalepro.com"
   },
-  "homepage": "https://github.com/Simple-Hosting-Holdings-Inc/truckingweight#readme",
+  "homepage": "https://cargoscalepro.com",
   "devDependencies": {
     "@next/eslint-plugin-next": "15.3.4",
     "@typescript-eslint/eslint-plugin": "8.35.0",
