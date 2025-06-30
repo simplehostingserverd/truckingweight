@@ -543,8 +543,7 @@ export default function KPIDashboardPage() {
             <div className="space-y-3">
               {dashboardData.alerts
                 .filter(a => a.severity === 'high' || a.severity === 'critical')
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                .map(alert => (
+                .map((alert) => (
                   <div
                     key={alert.id}
                     className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border"
@@ -908,8 +907,7 @@ export default function KPIDashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                {dashboardData.alerts.map(alert => (
+                {dashboardData.alerts.map((alert) => (
                   <div
                     key={alert.id}
                     className="flex items-center justify-between p-4 border rounded-lg"
