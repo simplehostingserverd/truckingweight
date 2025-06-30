@@ -13,7 +13,7 @@
 
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo, useMemo } from 'react';
 import { useDriverDashboardData } from '@/hooks/useDriverDashboardData';
 import {
   ExclamationTriangleIcon,
@@ -44,7 +44,7 @@ interface UnifiedDriverDashboardProps {
   companyId?: string;
 }
 
-export default function UnifiedDriverDashboard({
+const UnifiedDriverDashboardComponent = function UnifiedDriverDashboard({
   driverId,
   driverName,
   driverLicense,
@@ -70,6 +70,7 @@ export default function UnifiedDriverDashboard({
   } = useDriverDashboardData(driverId);
 
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [lastRefresh, setLastRefresh] = useState(Date.now());
 
   // Update time every minute
   useEffect(() => {
@@ -79,20 +80,26 @@ export default function UnifiedDriverDashboard({
     return () => clearInterval(timer);
   }, []);
 
-  // Auto-refresh for non-critical data every 30 seconds
+  // Optimized data refresh strategy
   useEffect(() => {
-    const interval = setInterval(() => {
-      refetch();
-    }, 30000);
-    return () => clearInterval(interval);
-  }, [refetch]);
+    let criticalInterval: NodeJS.Timeout;
+    let nonCriticalInterval: NodeJS.Timeout;
 
-  // Real-time updates for critical data every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetch();
-    }, 5000);
-    return () => clearInterval(interval);
+    // Critical data (alerts, telematics) - every 10 seconds
+    criticalInterval = setInterval(() => {
+      refetch(['alerts', 'telematics']);
+      setLastRefresh(Date.now());
+    }, 10000);
+
+    // Non-critical data (cargo, load, activity) - every 60 seconds
+    nonCriticalInterval = setInterval(() => {
+      refetch(['cargo', 'load', 'activity', 'vehicle']);
+    }, 60000);
+
+    return () => {
+      clearInterval(criticalInterval);
+      clearInterval(nonCriticalInterval);
+    };
   }, [refetch]);
 
   const handleVoiceCommand = (command: string, transcript: string) => {
@@ -103,34 +110,44 @@ export default function UnifiedDriverDashboard({
     console.log('Emergency activated at:', location);
   };
 
-  if (isLoading) {
-    return (
-      <div className="h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
-          <p className="text-lg text-cyan-400">Loading TMS Dashboard...</p>
+  // Memoize loading and error states to prevent unnecessary re-renders
+  const loadingState = useMemo(() => {
+    if (isLoading) {
+      return (
+        <div className="h-screen bg-black text-white flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
+            <p className="text-lg text-cyan-400">Loading TMS Dashboard...</p>
+          </div>
         </div>
-      </div>
-    );
-  }
+      );
+    }
+    return null;
+  }, [isLoading]);
 
-  if (error) {
-    return (
-      <div className="h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <ExclamationTriangleIcon className="h-16 w-16 text-red-400 mx-auto mb-4" />
-          <p className="text-lg text-red-400 mb-4">Error loading dashboard</p>
-          <p className="text-gray-400 mb-4">{error}</p>
-          <button
-            onClick={() => refetch()}
-            className="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-lg transition-colors"
-          >
-            Retry
-          </button>
+  const errorState = useMemo(() => {
+    if (error) {
+      return (
+        <div className="h-screen bg-black text-white flex items-center justify-center">
+          <div className="text-center">
+            <ExclamationTriangleIcon className="h-16 w-16 text-red-400 mx-auto mb-4" />
+            <p className="text-lg text-red-400 mb-4">Error loading dashboard</p>
+            <p className="text-gray-400 mb-4">{error}</p>
+            <button
+              onClick={() => refetch()}
+              className="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-lg transition-colors"
+            >
+              Retry
+            </button>
+          </div>
         </div>
-      </div>
-    );
-  }
+      );
+    }
+    return null;
+  }, [error, refetch]);
+
+  if (loadingState) return loadingState;
+  if (errorState) return errorState;
 
   return (
     <div className="h-screen bg-black text-white overflow-hidden flex flex-col">
@@ -164,15 +181,31 @@ export default function UnifiedDriverDashboard({
           {/* Real-time Safety Alerts */}
           <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800">
             <div className="flex items-center space-x-2 mb-3">
-              <ExclamationTriangleSolid className="h-5 w-5 text-orange-400" />
-              <span className="text-orange-400 text-xs font-semibold uppercase tracking-wide">
+              <ExclamationTriangleSolid className={`h-5 w-5 ${
+                alertsData && alertsData.length > 0 ? 'text-red-400' : 'text-orange-400'
+              }`} />
+              <span className={`text-xs font-semibold uppercase tracking-wide ${
+                alertsData && alertsData.length > 0 ? 'text-red-400' : 'text-orange-400'
+              }`}>
                 Real-time
               </span>
             </div>
-            <div className="text-orange-400 text-xs font-semibold uppercase mb-1">
+            <div className={`text-xs font-semibold uppercase mb-1 ${
+              alertsData && alertsData.length > 0 ? 'text-red-400' : 'text-orange-400'
+            }`}>
               Safety Alerts
             </div>
-            <div className="text-white text-sm font-medium">Lane departure warning</div>
+            <div className="text-white text-sm font-medium">
+              {alertsData && alertsData.length > 0 
+                ? alertsData[0].message 
+                : 'All systems normal'
+              }
+            </div>
+            {alertsData && alertsData.length > 1 && (
+              <div className="text-gray-400 text-xs mt-1">
+                +{alertsData.length - 1} more alert{alertsData.length > 2 ? 's' : ''}
+              </div>
+            )}
           </div>
 
           {/* Health Status */}
@@ -210,48 +243,61 @@ export default function UnifiedDriverDashboard({
               <div>
                 <div className="text-white text-xs">Weight</div>
                 <div className="text-cyan-400 text-lg font-bold">
-                  35,220 <span className="text-sm">kg</span>
+                  {cargoData?.currentWeight?.toLocaleString() || '0'} <span className="text-sm">kg</span>
                 </div>
+                {cargoData?.isOverweight && (
+                  <div className="text-red-400 text-xs font-semibold">OVERWEIGHT</div>
+                )}
               </div>
               <div>
                 <div className="text-white text-xs">Temperature</div>
-                <div className="text-cyan-400 text-lg font-bold">2.6°C</div>
+                <div className="text-cyan-400 text-lg font-bold">
+                  {telematicsData?.location ? '2.6°C' : '--'}
+                </div>
               </div>
             </div>
           </div>
 
           {/* Route Optimization */}
           <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800">
-            <div className="text-cyan-400 text-xs font-semibold uppercase mb-3">Route</div>
-            <div className="text-cyan-400 text-xs font-semibold uppercase mb-2">Optimization</div>
-
-            {/* Route visualization */}
-            <div className="relative h-16 mb-3">
-              <svg className="w-full h-full" viewBox="0 0 100 60">
-                {/* Grid lines */}
-                <defs>
-                  <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#1f2937" strokeWidth="0.5" />
-                  </pattern>
-                </defs>
-                <rect width="100" height="60" fill="url(#grid)" />
-
-                {/* Route line */}
-                <path
-                  d="M 10 45 Q 30 20 50 30 Q 70 40 90 15"
-                  fill="none"
-                  stroke="#f59e0b"
-                  strokeWidth="2"
-                  className="animate-pulse"
-                />
-
-                {/* Route points */}
-                <circle cx="10" cy="45" r="2" fill="#06b6d4" />
-                <circle cx="90" cy="15" r="2" fill="#f59e0b" />
-              </svg>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center space-x-2">
+                <MapPinSolid className="h-5 w-5 text-blue-400" />
+                <span className="text-blue-400 text-xs font-semibold uppercase tracking-wide">
+                  Route
+                </span>
+              </div>
+              <div className={`text-xs font-semibold ${
+                loadData?.status === 'in_transit' ? 'text-green-400' : 'text-yellow-400'
+              }`}>
+                {loadData?.status === 'in_transit' ? 'OPTIMIZED' : 'PLANNING'}
+              </div>
             </div>
-
-            <div className="text-cyan-400 text-lg font-bold">2.6°C</div>
+            <div className="text-blue-400 text-xs font-semibold uppercase mb-2">
+              Next Destination
+            </div>
+            <div className="text-white text-sm font-medium mb-3">
+              {loadData?.destination || 'Calgary Distribution Center'}
+            </div>
+            
+            {/* Route visualization */}
+            <div className="relative h-20 bg-gray-800 rounded-lg overflow-hidden">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full h-1 bg-gray-700 relative">
+                  <div className="absolute left-0 w-3 h-3 bg-green-400 rounded-full -top-1"></div>
+                  <div className="absolute left-1/3 w-2 h-2 bg-blue-400 rounded-full -top-0.5"></div>
+                  <div className="absolute right-0 w-3 h-3 bg-red-400 rounded-full -top-1"></div>
+                  <div className="absolute left-0 w-1/3 h-1 bg-green-400"></div>
+                </div>
+              </div>
+              <div className="absolute bottom-1 left-0 text-xs text-green-400">
+                {loadData?.origin || 'Start'}
+              </div>
+              <div className="absolute bottom-1 left-1/3 text-xs text-blue-400">Current</div>
+              <div className="absolute bottom-1 right-0 text-xs text-red-400">
+                {loadData?.destination || 'End'}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -325,4 +371,7 @@ export default function UnifiedDriverDashboard({
       </div>
     </div>
   );
-}
+};
+
+// Export memoized component to prevent unnecessary re-renders
+export default memo(UnifiedDriverDashboardComponent);

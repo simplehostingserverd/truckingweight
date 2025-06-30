@@ -15,15 +15,15 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { 
-  TruckIcon, 
-  ExclamationTriangleIcon, 
-  ClockIcon, 
+import {
+  TruckIcon,
+  ExclamationTriangleIcon,
+  ClockIcon,
   MapPinIcon,
   ScaleIcon,
   WrenchScrewdriverIcon,
   ChatBubbleLeftIcon,
-  ShieldExclamationIcon
+  ShieldExclamationIcon,
 } from '@heroicons/react/24/outline';
 
 interface DriverActivity {
@@ -70,7 +70,7 @@ const getActivityColor = (type: string, severity?: string) => {
   if (severity === 'critical' || type === 'emergency') return 'text-red-400 bg-red-900/20';
   if (severity === 'high') return 'text-orange-400 bg-orange-900/20';
   if (severity === 'medium') return 'text-yellow-400 bg-yellow-900/20';
-  
+
   switch (type) {
     case 'weight_check':
     case 'weigh':
@@ -96,7 +96,7 @@ const formatTimeAgo = (timestamp: string) => {
   const now = new Date();
   const time = new Date(timestamp);
   const diffInSeconds = Math.floor((now.getTime() - time.getTime()) / 1000);
-  
+
   if (diffInSeconds < 60) return 'Just now';
   if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
   if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
@@ -113,7 +113,8 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
     try {
       let query = supabase
         .from('driver_activities')
-        .select(`
+        .select(
+          `
           id,
           driver_id,
           activity_type,
@@ -124,7 +125,8 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
           drivers(
             name
           )
-        `)
+        `
+        )
         .order('timestamp', { ascending: false })
         .limit(maxItems);
 
@@ -137,16 +139,18 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
 
       if (error) throw error;
 
-      const formattedActivities = data?.map(activity => ({
-        id: activity.id,
-        driver_id: activity.driver_id,
-        driver_name: activity.drivers?.name || 'Unknown Driver',
-        activity_type: activity.activity_type,
-        description: activity.description,
-        location: activity.location,
-        timestamp: activity.timestamp,
-        metadata: activity.metadata
-      })) || [];
+      const formattedActivities =
+        data?.map(activity => ({
+          id: activity.id as string,
+          driver_id: activity.driver_id,
+          driver_name: activity.drivers?.name || 'Unknown Driver',
+          activity_type: activity.activity_type,
+          description: activity.description,
+          location: activity.location,
+          timestamp: activity.timestamp,
+          metadata: activity.metadata,
+          severity: (activity as any).metadata?.severity as 'low' | 'medium' | 'high' | 'critical',
+        })) || [];
 
       setActivities(formattedActivities);
     } catch (err) {
@@ -160,8 +164,9 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
   const fetchAlerts = useCallback(async () => {
     try {
       let query = supabase
-        .from('predictive_alerts')
-        .select(`
+        .from('alerts')
+        .select(
+          `
           id,
           driver_id,
           alert_type,
@@ -171,7 +176,8 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
           drivers(
             name
           )
-        `)
+        `
+        )
         .eq('acknowledged', false)
         .order('created_at', { ascending: false })
         .limit(10);
@@ -185,15 +191,16 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
 
       if (error) throw error;
 
-      const alertActivities = data?.map(alert => ({
-        id: `alert-${alert.id}`,
-        driver_id: alert.driver_id,
-        driver_name: alert.drivers?.name || 'Unknown Driver',
-        activity_type: 'alert',
-        description: alert.message,
-        timestamp: alert.created_at,
-        severity: alert.severity as 'low' | 'medium' | 'high' | 'critical'
-      })) || [];
+      const alertActivities =
+        data?.map(alert => ({
+          id: `alert-${alert.id}`,
+          driver_id: alert.driver_id,
+          driver_name: alert.drivers?.name || 'Unknown Driver',
+          activity_type: 'alert',
+          description: alert.message,
+          timestamp: alert.created_at,
+          severity: alert.severity as 'low' | 'medium' | 'high' | 'critical',
+        })) || [];
 
       // Merge with existing activities and sort
       setActivities(prev => {
@@ -219,9 +226,9 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'driver_activities'
+          table: 'driver_activities',
         },
-        (payload) => {
+        payload => {
           console.log('New driver activity:', payload);
           fetchActivities(); // Refresh data when new activity is inserted
         }
@@ -235,9 +242,9 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
         {
           event: '*',
           schema: 'public',
-          table: 'predictive_alerts'
+          table: 'predictive_alerts',
         },
-        (payload) => {
+        payload => {
           console.log('Alert change:', payload);
           fetchAlerts(); // Refresh alerts when they change
         }
@@ -313,10 +320,10 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
           </div>
         ) : (
           <div className="divide-y divide-gray-800">
-            {activities.map((activity) => {
+            {activities.map(activity => {
               const IconComponent = getActivityIcon(activity.activity_type);
               const colorClasses = getActivityColor(activity.activity_type, activity.severity);
-              
+
               return (
                 <div key={activity.id} className="p-4 hover:bg-gray-800/50 transition-colors">
                   <div className="flex items-start space-x-3">
@@ -328,13 +335,9 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
                         <p className="text-sm font-medium text-white truncate">
                           {activity.driver_name}
                         </p>
-                        <p className="text-xs text-gray-400">
-                          {formatTimeAgo(activity.timestamp)}
-                        </p>
+                        <p className="text-xs text-gray-400">{formatTimeAgo(activity.timestamp)}</p>
                       </div>
-                      <p className="text-sm text-gray-300 mt-1">
-                        {activity.description}
-                      </p>
+                      <p className="text-sm text-gray-300 mt-1">{activity.description}</p>
                       {activity.location && (
                         <div className="flex items-center mt-1">
                           <MapPinIcon className="h-3 w-3 text-gray-500 mr-1" />

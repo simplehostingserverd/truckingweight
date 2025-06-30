@@ -13,7 +13,7 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, memo, useCallback, useMemo } from 'react';
 import { AlertData } from '@/hooks/useDriverDashboardData';
 import { ExclamationTriangleIcon, XMarkIcon, CheckIcon } from '@heroicons/react/24/solid';
 
@@ -21,21 +21,22 @@ interface CriticalAlertsBarProps {
   alerts: AlertData[];
 }
 
-export default function CriticalAlertsBar({ alerts }: CriticalAlertsBarProps) {
+const CriticalAlertsBarComponent = function CriticalAlertsBar({ alerts }: CriticalAlertsBarProps) {
   const [acknowledgedAlerts, setAcknowledgedAlerts] = useState<Set<string>>(new Set());
 
-  const handleAcknowledge = (alertId: string) => {
+  const handleAcknowledge = useCallback((alertId: string) => {
     setAcknowledgedAlerts(prev => new Set([...prev, alertId]));
     // TODO: Send acknowledgment to backend
-  };
+  }, []);
 
-  const handleDismiss = (alertId: string) => {
+  const handleDismiss = useCallback((alertId: string) => {
     setAcknowledgedAlerts(prev => new Set([...prev, alertId]));
     // TODO: Send dismissal to backend
-  };
+  }, []);
 
-  const visibleAlerts = alerts.filter(
-    alert => !acknowledgedAlerts.has(alert.id) && !alert.acknowledged
+  const visibleAlerts = useMemo(() => 
+    alerts.filter(alert => !acknowledgedAlerts.has(alert.id) && !alert.acknowledged),
+    [alerts, acknowledgedAlerts]
   );
 
   if (visibleAlerts.length === 0) {
@@ -111,4 +112,7 @@ export default function CriticalAlertsBar({ alerts }: CriticalAlertsBarProps) {
       )}
     </div>
   );
-}
+};
+
+// Export memoized component to prevent unnecessary re-renders
+export default memo(CriticalAlertsBarComponent);

@@ -15,6 +15,7 @@ import React from 'react';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import UnifiedDriverDashboard from '@/components/Dashboard/driver/UnifiedDriverDashboard';
+import DashboardErrorBoundary from '@/components/Dashboard/driver/DashboardErrorBoundary';
 
 export default async function DriverDashboardPage() {
   const supabase = createClient();
@@ -69,14 +70,16 @@ export default async function DriverDashboardPage() {
   }
 
   return (
-    <UnifiedDriverDashboard
-      driverId={finalDriverData.id.toString()}
-      driverName={finalDriverData.name}
-      driverLicense={finalDriverData.license_number}
-      driverPhone={finalDriverData.phone}
-      companyName={finalCompanyData?.name || 'Unknown Company'}
-      companyId={finalDriverData.company_id?.toString()}
-    />
+    <DashboardErrorBoundary>
+      <UnifiedDriverDashboard
+        driverId={finalDriverData.id.toString()}
+        driverName={finalDriverData.name}
+        driverLicense={finalDriverData.license_number}
+        driverPhone={finalDriverData.phone}
+        companyName={finalCompanyData?.name || 'Unknown Company'}
+        companyId={finalDriverData.company_id?.toString()}
+      />
+    </DashboardErrorBoundary>
   );
 }
 

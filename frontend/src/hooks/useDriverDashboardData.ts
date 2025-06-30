@@ -120,6 +120,9 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
 
   const fetchCargoData = useCallback(async (): Promise<CargoData | null> => {
     try {
+      // Handle both UUID strings and integer IDs
+      const driverIdValue = isNaN(parseInt(driverId)) ? driverId : parseInt(driverId);
+      
       // Get current load for the driver
       const { data: currentLoad, error } = await supabase
         .from('loads')
@@ -144,7 +147,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
           )
         `
         )
-        .eq('driver_id', parseInt(driverId))
+        .eq('driver_id', driverIdValue)
         .in('status', ['assigned', 'in_transit', 'at_pickup', 'at_delivery'])
         .order('created_at', { ascending: false })
         .limit(1)
@@ -183,6 +186,9 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
 
   const fetchTelematicsData = useCallback(async (): Promise<TelematicsData | null> => {
     try {
+      // Handle both UUID strings and integer IDs
+      const driverIdValue = isNaN(parseInt(driverId)) ? driverId : parseInt(driverId);
+      
       // Mock telematics data - replace with actual API call
       return {
         currentSpeed: Math.floor(Math.random() * 70) + 10, // 10-80 mph
@@ -200,10 +206,13 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
       console.error('Error fetching telematics data:', err);
       return null;
     }
-  }, []);
+  }, [driverId]);
 
   const fetchAlertsData = useCallback(async (): Promise<AlertData[]> => {
     try {
+      // Handle both UUID strings and integer IDs
+      const driverIdValue = isNaN(parseInt(driverId)) ? driverId : parseInt(driverId);
+      
       // Fetch active alerts for the driver
       const { data: driverAlerts, error } = await supabase
         .from('predictive_alerts')
@@ -217,7 +226,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
           acknowledged
         `
         )
-        .eq('driver_id', parseInt(driverId))
+        .eq('driver_id', driverIdValue)
         .eq('acknowledged', false)
         .order('created_at', { ascending: false });
 
@@ -265,10 +274,13 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
 
   const fetchLoadData = useCallback(async (): Promise<LoadData | null> => {
     try {
+      // Handle both UUID strings and integer IDs
+      const driverIdValue = isNaN(parseInt(driverId)) ? driverId : parseInt(driverId);
+      
       const { data: currentLoad, error } = await supabase
         .from('loads')
         .select('*')
-        .eq('driver_id', parseInt(driverId))
+        .eq('driver_id', driverIdValue)
         .in('status', ['assigned', 'in_transit', 'at_pickup', 'at_delivery'])
         .order('created_at', { ascending: false })
         .limit(1)
@@ -305,6 +317,9 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
 
   const fetchVehicleData = useCallback(async (): Promise<VehicleData | null> => {
     try {
+      // Handle both UUID strings and integer IDs
+      const driverIdValue = isNaN(parseInt(driverId)) ? driverId : parseInt(driverId);
+      
       // Get current vehicle assignment for the driver
       const { data: driverVehicle } = await supabase
         .from('drivers')
@@ -323,7 +338,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
           )
         `
         )
-        .eq('id', parseInt(driverId))
+        .eq('id', driverIdValue)
         .single();
 
       if (driverVehicle?.vehicles) {
@@ -358,13 +373,16 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
 
   const fetchRecentActivity = useCallback(async (): Promise<ActivityItem[]> => {
     try {
+      // Handle both UUID strings and integer IDs
+      const driverIdValue = isNaN(parseInt(driverId)) ? driverId : parseInt(driverId);
+      
       const activities: ActivityItem[] = [];
 
       // Fetch recent weigh tickets
       const { data: weighTickets, error: weighError } = await supabase
         .from('weigh_tickets')
         .select('id, gross_weight, net_weight, created_at, location')
-        .eq('driver_id', parseInt(driverId))
+        .eq('driver_id', driverIdValue)
         .order('created_at', { ascending: false })
         .limit(5);
 
@@ -386,7 +404,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
       const { data: loads, error: loadsError } = await supabase
         .from('loads')
         .select('id, status, pickup_location, delivery_location, updated_at')
-        .eq('driver_id', parseInt(driverId))
+        .eq('driver_id', driverIdValue)
         .order('updated_at', { ascending: false })
         .limit(5);
 
@@ -435,50 +453,82 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
     }
   }, [driverId, supabase]);
 
-  const fetchAllData = useCallback(
-    async (sections?: string[]) => {
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        const shouldFetch = (section: string) => !sections || sections.includes(section);
-
-        const promises = [];
-
-        if (shouldFetch('cargo')) promises.push(fetchCargoData());
-        if (shouldFetch('telematics')) promises.push(fetchTelematicsData());
-        if (shouldFetch('alerts')) promises.push(fetchAlertsData());
-        if (shouldFetch('hos')) promises.push(fetchHOSData());
-        if (shouldFetch('load')) promises.push(fetchLoadData());
-        if (shouldFetch('vehicle')) promises.push(fetchVehicleData());
-        if (shouldFetch('activity')) promises.push(fetchRecentActivity());
-
-        const results = await Promise.all(promises);
-
-        let index = 0;
-        if (shouldFetch('cargo')) setCargoData(results[index++] as CargoData);
-        if (shouldFetch('telematics')) setTelematicsData(results[index++] as TelematicsData);
-        if (shouldFetch('alerts')) setAlertsData(results[index++] as AlertData[]);
-        if (shouldFetch('hos')) setHOSData(results[index++] as HOSData);
-        if (shouldFetch('load')) setLoadData(results[index++] as LoadData);
-        if (shouldFetch('vehicle')) setVehicleData(results[index++] as VehicleData);
-        if (shouldFetch('activity')) setRecentActivity(results[index++] as ActivityItem[]);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch dashboard data');
-      } finally {
+  const fetchAllData = useCallback(async (sections?: string[]) => {
+    const sectionsToFetch = sections || ['cargo', 'telematics', 'alerts', 'hos', 'load', 'vehicle', 'activity'];
+    
+    // Only set loading if fetching all data
+    if (!sections) {
+      setIsLoading(true);
+    }
+    setError(null);
+    
+    try {
+      const promises: Promise<any>[] = [];
+      const sectionMap: { [key: string]: number } = {};
+      
+      sectionsToFetch.forEach((section, index) => {
+        sectionMap[section] = index;
+        switch (section) {
+          case 'cargo':
+            promises.push(fetchCargoData());
+            break;
+          case 'telematics':
+            promises.push(fetchTelematicsData());
+            break;
+          case 'alerts':
+            promises.push(fetchAlertsData());
+            break;
+          case 'hos':
+            promises.push(fetchHOSData());
+            break;
+          case 'load':
+            promises.push(fetchLoadData());
+            break;
+          case 'vehicle':
+            promises.push(fetchVehicleData());
+            break;
+          case 'activity':
+            promises.push(fetchRecentActivity());
+            break;
+        }
+      });
+      
+      const results = await Promise.all(promises);
+      
+      sectionsToFetch.forEach((section, index) => {
+        const result = results[index];
+        switch (section) {
+          case 'cargo':
+            setCargoData(result);
+            break;
+          case 'telematics':
+            setTelematicsData(result);
+            break;
+          case 'alerts':
+            setAlertsData(result);
+            break;
+          case 'hos':
+            setHosData(result);
+            break;
+          case 'load':
+            setLoadData(result);
+            break;
+          case 'vehicle':
+            setVehicleData(result);
+            break;
+          case 'activity':
+            setRecentActivity(result);
+            break;
+        }
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch data');
+    } finally {
+      if (!sections) {
         setIsLoading(false);
       }
-    },
-    [
-      fetchCargoData,
-      fetchTelematicsData,
-      fetchAlertsData,
-      fetchHOSData,
-      fetchLoadData,
-      fetchVehicleData,
-      fetchRecentActivity,
-    ]
-  );
+    }
+  }, [fetchCargoData, fetchTelematicsData, fetchAlertsData, fetchHOSData, fetchLoadData, fetchVehicleData, fetchRecentActivity]);
 
   useEffect(() => {
     if (driverId) {
@@ -490,11 +540,14 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
   const acknowledgeAlert = useCallback(
     async (alertId: string) => {
       try {
+        // Handle both UUID strings and integer IDs
+        const driverIdValue = isNaN(parseInt(driverId)) ? driverId : parseInt(driverId);
+        
         const { error } = await supabase
           .from('predictive_alerts')
           .update({ acknowledged: true, acknowledged_at: new Date().toISOString() })
           .eq('id', parseInt(alertId))
-          .eq('driver_id', parseInt(driverId));
+          .eq('driver_id', driverIdValue);
 
         if (error) {
           console.error('Supabase error acknowledging alert:', error);
@@ -515,9 +568,12 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
   const updateDriverStatus = useCallback(
     async (status: string, location?: string) => {
       try {
+        // Handle both UUID strings and integer IDs
+        const driverIdValue = isNaN(parseInt(driverId)) ? driverId : parseInt(driverId);
+        
         // Insert activity log
         const { error } = await supabase.from('driver_activities').insert({
-          driver_id: parseInt(driverId),
+          driver_id: driverIdValue,
           activity_type: 'status_update',
           description: `Status updated to ${status}`,
           location: location,
@@ -543,9 +599,12 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
   const reportIncident = useCallback(
     async (incident: { type: string; description: string; location?: string }) => {
       try {
+        // Handle both UUID strings and integer IDs
+        const driverIdValue = isNaN(parseInt(driverId)) ? driverId : parseInt(driverId);
+        
         // Insert incident report
         const { error } = await supabase.from('incident_reports').insert({
-          driver_id: parseInt(driverId),
+          driver_id: driverIdValue,
           incident_type: incident.type,
           description: incident.description,
           location: incident.location,
@@ -571,9 +630,12 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
   const logBreak = useCallback(
     async (breakType: string, duration?: number) => {
       try {
+        // Handle both UUID strings and integer IDs
+        const driverIdValue = isNaN(parseInt(driverId)) ? driverId : parseInt(driverId);
+        
         // Insert break log
         const { error } = await supabase.from('driver_activities').insert({
-          driver_id: parseInt(driverId),
+          driver_id: driverIdValue,
           activity_type: 'break',
           description: `${breakType} break started`,
           timestamp: new Date().toISOString(),

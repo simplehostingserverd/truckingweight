@@ -13,7 +13,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 // Remove unused import since Driver type is not used in this component
 import { SignalIcon, Battery0Icon, ClockIcon, WifiIcon } from '@heroicons/react/24/outline';
 import { SignalSlashIcon, ExclamationTriangleIcon } from '@heroicons/react/24/solid';
@@ -27,7 +27,7 @@ interface DriverHeaderProps {
   lastUpdate: string | Date;
 }
 
-export default function DriverHeader({
+const DriverHeaderComponent = function DriverHeader({
   driverName,
   driverLicense,
   companyName,
@@ -35,21 +35,21 @@ export default function DriverHeader({
   batteryLevel,
   lastUpdate,
 }: DriverHeaderProps) {
-  const formatTime = (date: Date) => {
+  const formatTime = useMemo(() => (date: Date) => {
     return date.toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: true,
     });
-  };
+  }, []);
 
-  const formatDate = (date: Date) => {
+  const formatDate = useMemo(() => (date: Date) => {
     return date.toLocaleDateString('en-US', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
     });
-  };
+  }, []);
 
   const getBatteryColor = (level?: number) => {
     if (!level) return 'text-gray-400';
@@ -156,4 +156,7 @@ export default function DriverHeader({
       </div>
     </header>
   );
-}
+};
+
+// Export memoized component to prevent unnecessary re-renders
+export default memo(DriverHeaderComponent);
