@@ -93,6 +93,7 @@ model companies {
   maintenance_work_orders maintenance_work_orders[]
   maintenance_vendors     maintenance_vendors[]
   maintenance_parts       maintenance_parts[]
+  signatures              signatures[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -294,6 +295,7 @@ model users {
   webhook_subscriptions   webhook_subscriptions[]
   weigh_tickets           weigh_tickets[]
   created_maintenance_work_orders maintenance_work_orders[]
+  signatures              signatures[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -1013,4 +1015,23 @@ model hos_logs {
   @@index([driver_id])
   @@index([log_date])
   @@index([duty_status])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model signatures {
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(255)
+  signature_url String?
+  company_id   Int?
+  created_by   String?   @db.Uuid
+  created_at   DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime? @default(now()) @db.Timestamptz(6)
+  
+  /// Relations
+  company      companies? @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user         users?     @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@index([company_id])
+  @@index([created_by])
+  @@index([created_at])
 }
