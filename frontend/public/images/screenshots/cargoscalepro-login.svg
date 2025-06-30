@@ -24,8 +24,84 @@
   <rect x="0" y="0" width="700" height="900" fill="url(#leftBg)" />
   
   <!-- Left side content -->
-  <g transform="translate(50, 100)">
-    <text x="0" y="200" font-family="Arial, sans-serif" font-size="16" fill="#64748b">Trucking Login Background</text>
+  <g transform="translate(50, 80)">
+    <!-- Company Logo Area -->
+    <rect x="50" y="50" width="500" height="80" rx="12" fill="#ffffff" opacity="0.95" />
+    <text x="300" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#1e293b" text-anchor="middle">🚛 CargoScalePro</text>
+    <text x="300" y="110" font-family="Arial, sans-serif" font-size="16" fill="#64748b" text-anchor="middle">Professional Transportation Management System</text>
+    
+    <!-- Key Statistics -->
+    <g transform="translate(0, 180)">
+      <!-- Fleet Size Card -->
+      <rect x="50" y="0" width="140" height="100" rx="12" fill="#ffffff" opacity="0.9" stroke="#e2e8f0" stroke-width="2" />
+      <text x="120" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#64748b" text-anchor="middle">Active Fleet</text>
+      <text x="120" y="55" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#059669" text-anchor="middle">2,847</text>
+      <text x="120" y="75" font-family="Arial, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">Vehicles Tracked</text>
+      <text x="120" y="90" font-family="Arial, sans-serif" font-size="10" fill="#059669" text-anchor="middle">↗ +12% this month</text>
+      
+      <!-- Compliance Rate Card -->
+      <rect x="210" y="0" width="140" height="100" rx="12" fill="#ffffff" opacity="0.9" stroke="#e2e8f0" stroke-width="2" />
+      <text x="280" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#64748b" text-anchor="middle">DOT Compliance</text>
+      <text x="280" y="55" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0ea5e9" text-anchor="middle">99.2%</text>
+      <text x="280" y="75" font-family="Arial, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">Safety Rating</text>
+      <text x="280" y="90" font-family="Arial, sans-serif" font-size="10" fill="#0ea5e9" text-anchor="middle">Industry Leading</text>
+      
+      <!-- Revenue Card -->
+      <rect x="370" y="0" width="140" height="100" rx="12" fill="#ffffff" opacity="0.9" stroke="#e2e8f0" stroke-width="2" />
+      <text x="440" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#64748b" text-anchor="middle">Monthly Revenue</text>
+      <text x="440" y="55" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#7c3aed" text-anchor="middle">$2.4M</text>
+      <text x="440" y="75" font-family="Arial, sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">Gross Revenue</text>
+      <text x="440" y="90" font-family="Arial, sans-serif" font-size="10" fill="#7c3aed" text-anchor="middle">↗ +18% YoY</text>
+    </g>
+    
+    <!-- Feature Highlights -->
+    <g transform="translate(50, 320)">
+      <rect x="0" y="0" width="460" height="120" rx="12" fill="#ffffff" opacity="0.9" stroke="#e2e8f0" stroke-width="2" />
+      <text x="230" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1e293b" text-anchor="middle">Trusted by Industry Leaders</text>
+      
+      <!-- Feature icons and text -->
+      <g transform="translate(20, 45)">
+        <circle cx="15" cy="15" r="12" fill="#059669" opacity="0.1" />
+        <text x="15" y="20" font-family="Arial, sans-serif" font-size="12" fill="#059669" text-anchor="middle">✓</text>
+        <text x="40" y="12" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">Real-time Weight Monitoring</text>
+        <text x="40" y="25" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">DOT compliant scale integration</text>
+      </g>
+      
+      <g transform="translate(240, 45)">
+        <circle cx="15" cy="15" r="12" fill="#0ea5e9" opacity="0.1" />
+        <text x="15" y="20" font-family="Arial, sans-serif" font-size="12" fill="#0ea5e9" text-anchor="middle">📊</text>
+        <text x="40" y="12" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">Advanced Analytics</text>
+        <text x="40" y="25" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">Predictive maintenance & routing</text>
+      </g>
+      
+      <g transform="translate(20, 75)">
+        <circle cx="15" cy="15" r="12" fill="#7c3aed" opacity="0.1" />
+        <text x="15" y="20" font-family="Arial, sans-serif" font-size="12" fill="#7c3aed" text-anchor="middle">🛡️</text>
+        <text x="40" y="12" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">Enterprise Security</text>
+        <text x="40" y="25" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">SOC 2 Type II certified</text>
+      </g>
+      
+      <g transform="translate(240, 75)">
+        <circle cx="15" cy="15" r="12" fill="#dc2626" opacity="0.1" />
+        <text x="15" y="20" font-family="Arial, sans-serif" font-size="12" fill="#dc2626" text-anchor="middle">⚡</text>
+        <text x="40" y="12" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">24/7 Support</text>
+        <text x="40" y="25" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">Dedicated fleet specialists</text>
+      </g>
+    </g>
+    
+    <!-- Client Testimonial -->
+    <g transform="translate(50, 480)">
+      <rect x="0" y="0" width="460" height="80" rx="12" fill="#f8fafc" opacity="0.95" stroke="#e2e8f0" stroke-width="1" />
+      <text x="20" y="25" font-family="Arial, sans-serif" font-size="14" font-style="italic" fill="#475569">"CargoScalePro reduced our compliance violations by 94% and</text>
+      <text x="20" y="45" font-family="Arial, sans-serif" font-size="14" font-style="italic" fill="#475569">increased our operational efficiency by 31% in just 6 months."</text>
+      <text x="20" y="65" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1e293b">- Sarah Johnson, Fleet Director at TransGlobal Logistics</text>
+    </g>
+    
+    <!-- Bottom branding -->
+    <g transform="translate(50, 600)">
+      <text x="230" y="20" font-family="Arial, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Powering 500+ fleets across North America</text>
+      <text x="230" y="40" font-family="Arial, sans-serif" font-size="10" fill="#9ca3af" text-anchor="middle">Processing 2M+ weight checks monthly • 99.9% uptime • Enterprise grade</text>
+    </g>
   </g>
   
   <!-- Right side - Login form -->
