@@ -15,10 +15,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDriverDashboardData } from '@/hooks/useDriverDashboardData';
-import { 
-  ExclamationTriangleIcon, 
-  HeartIcon, 
-  TruckIcon, 
+import {
+  ExclamationTriangleIcon,
+  HeartIcon,
+  TruckIcon,
   MapIcon,
   ChartBarIcon,
   MicrophoneIcon,
@@ -28,11 +28,11 @@ import {
   MapPinIcon,
   Bars3Icon,
   WifiIcon,
-  BatteryIcon
+  SignalIcon,
 } from '@heroicons/react/24/outline';
-import { 
+import {
   ExclamationTriangleIcon as ExclamationTriangleSolid,
-  HeartIcon as HeartSolid
+  HeartIcon as HeartSolid,
 } from '@heroicons/react/24/solid';
 
 interface UnifiedDriverDashboardProps {
@@ -44,13 +44,13 @@ interface UnifiedDriverDashboardProps {
   companyId?: string;
 }
 
-export default function UnifiedDriverDashboard({ 
-  driverId, 
-  driverName, 
-  driverLicense, 
-  driverPhone, 
-  companyName, 
-  companyId 
+export default function UnifiedDriverDashboard({
+  driverId,
+  driverName,
+  driverLicense,
+  driverPhone,
+  companyName,
+  companyId,
 }: UnifiedDriverDashboardProps) {
   const {
     cargoData,
@@ -62,11 +62,11 @@ export default function UnifiedDriverDashboard({
     recentActivity,
     isLoading,
     error,
-    refreshData,
+    refetch,
     acknowledgeAlert,
     updateDriverStatus,
     reportIncident,
-    logBreak
+    logBreak,
   } = useDriverDashboardData(driverId);
 
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -82,18 +82,18 @@ export default function UnifiedDriverDashboard({
   // Auto-refresh for non-critical data every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      refreshData(false);
+      refetch();
     }, 30000);
     return () => clearInterval(interval);
-  }, [refreshData]);
+  }, [refetch]);
 
   // Real-time updates for critical data every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      refreshData(true);
+      refetch();
     }, 5000);
     return () => clearInterval(interval);
-  }, [refreshData]);
+  }, [refetch]);
 
   const handleVoiceCommand = (command: string, transcript: string) => {
     console.log('Voice command received:', command, transcript);
@@ -121,8 +121,8 @@ export default function UnifiedDriverDashboard({
           <ExclamationTriangleIcon className="h-16 w-16 text-red-400 mx-auto mb-4" />
           <p className="text-lg text-red-400 mb-4">Error loading dashboard</p>
           <p className="text-gray-400 mb-4">{error}</p>
-          <button 
-            onClick={() => refreshData(true)}
+          <button
+            onClick={() => refetch()}
             className="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-lg transition-colors"
           >
             Retry
@@ -137,15 +137,15 @@ export default function UnifiedDriverDashboard({
       {/* Status Bar */}
       <div className="flex justify-between items-center px-4 py-2 text-sm">
         <div className="text-cyan-400 font-semibold">
-          {currentTime.toLocaleTimeString('en-US', { 
-            hour: 'numeric', 
+          {currentTime.toLocaleTimeString('en-US', {
+            hour: 'numeric',
             minute: '2-digit',
-            hour12: false 
+            hour12: false,
           })}
         </div>
         <div className="flex items-center space-x-1">
           <WifiIcon className="h-4 w-4 text-cyan-400" />
-          <BatteryIcon className="h-4 w-4 text-cyan-400" />
+          <SignalIcon className="h-4 w-4 text-cyan-400" />
         </div>
       </div>
 
@@ -165,9 +165,13 @@ export default function UnifiedDriverDashboard({
           <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800">
             <div className="flex items-center space-x-2 mb-3">
               <ExclamationTriangleSolid className="h-5 w-5 text-orange-400" />
-              <span className="text-orange-400 text-xs font-semibold uppercase tracking-wide">Real-time</span>
+              <span className="text-orange-400 text-xs font-semibold uppercase tracking-wide">
+                Real-time
+              </span>
             </div>
-            <div className="text-orange-400 text-xs font-semibold uppercase mb-1">Safety Alerts</div>
+            <div className="text-orange-400 text-xs font-semibold uppercase mb-1">
+              Safety Alerts
+            </div>
             <div className="text-white text-sm font-medium">Lane departure warning</div>
           </div>
 
@@ -187,7 +191,7 @@ export default function UnifiedDriverDashboard({
           {/* Cargo */}
           <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800">
             <div className="text-cyan-400 text-xs font-semibold uppercase mb-3">Cargo</div>
-            
+
             {/* 3D Truck Visualization */}
             <div className="flex justify-center mb-4">
               <div className="relative">
@@ -201,11 +205,13 @@ export default function UnifiedDriverDashboard({
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <div>
                 <div className="text-white text-xs">Weight</div>
-                <div className="text-cyan-400 text-lg font-bold">35,220 <span className="text-sm">kg</span></div>
+                <div className="text-cyan-400 text-lg font-bold">
+                  35,220 <span className="text-sm">kg</span>
+                </div>
               </div>
               <div>
                 <div className="text-white text-xs">Temperature</div>
@@ -218,33 +224,33 @@ export default function UnifiedDriverDashboard({
           <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800">
             <div className="text-cyan-400 text-xs font-semibold uppercase mb-3">Route</div>
             <div className="text-cyan-400 text-xs font-semibold uppercase mb-2">Optimization</div>
-            
+
             {/* Route visualization */}
             <div className="relative h-16 mb-3">
               <svg className="w-full h-full" viewBox="0 0 100 60">
                 {/* Grid lines */}
                 <defs>
                   <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#1f2937" strokeWidth="0.5"/>
+                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#1f2937" strokeWidth="0.5" />
                   </pattern>
                 </defs>
                 <rect width="100" height="60" fill="url(#grid)" />
-                
+
                 {/* Route line */}
-                <path 
-                  d="M 10 45 Q 30 20 50 30 Q 70 40 90 15" 
-                  fill="none" 
-                  stroke="#f59e0b" 
+                <path
+                  d="M 10 45 Q 30 20 50 30 Q 70 40 90 15"
+                  fill="none"
+                  stroke="#f59e0b"
                   strokeWidth="2"
                   className="animate-pulse"
                 />
-                
+
                 {/* Route points */}
                 <circle cx="10" cy="45" r="2" fill="#06b6d4" />
                 <circle cx="90" cy="15" r="2" fill="#f59e0b" />
               </svg>
             </div>
-            
+
             <div className="text-cyan-400 text-lg font-bold">2.6°C</div>
           </div>
         </div>
@@ -255,14 +261,14 @@ export default function UnifiedDriverDashboard({
           <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800">
             <div className="text-cyan-400 text-xs font-semibold uppercase mb-2">Performance</div>
             <div className="text-cyan-400 text-xs font-semibold uppercase mb-3">Analytics</div>
-            
+
             {/* Performance chart */}
             <div className="h-12 flex items-end space-x-1 mb-2">
               <svg className="w-full h-full" viewBox="0 0 60 40">
-                <path 
-                  d="M 5 35 Q 15 25 25 30 Q 35 20 45 15 Q 55 10 60 5" 
-                  fill="none" 
-                  stroke="#06b6d4" 
+                <path
+                  d="M 5 35 Q 15 25 25 30 Q 35 20 45 15 Q 55 10 60 5"
+                  fill="none"
+                  stroke="#06b6d4"
                   strokeWidth="2"
                   className="animate-pulse"
                 />
@@ -272,13 +278,23 @@ export default function UnifiedDriverDashboard({
 
           {/* Incident Reporting */}
           <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800">
-            <div className="text-orange-400 text-xs font-semibold uppercase mb-3">Incident Reporting</div>
-            
+            <div className="text-orange-400 text-xs font-semibold uppercase mb-3">
+              Incident Reporting
+            </div>
+
             <div className="flex justify-center space-x-4">
-              <button className="bg-gray-800 p-3 rounded-full border border-gray-700 hover:border-orange-400 transition-colors">
+              <button
+                className="bg-gray-800 p-3 rounded-full border border-gray-700 hover:border-orange-400 transition-colors"
+                title="Record Voice"
+                aria-label="Record voice for incident reporting"
+              >
                 <MicrophoneIcon className="h-6 w-6 text-orange-400" />
               </button>
-              <button className="bg-gray-800 p-3 rounded-full border border-gray-700 hover:border-orange-400 transition-colors">
+              <button
+                className="bg-gray-800 p-3 rounded-full border border-gray-700 hover:border-orange-400 transition-colors"
+                title="Take Photo"
+                aria-label="Take photo for incident reporting"
+              >
                 <CameraIcon className="h-6 w-6 text-orange-400" />
               </button>
             </div>

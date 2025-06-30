@@ -99,6 +99,10 @@ export interface DriverDashboardData {
   isLoading: boolean;
   error: string | null;
   refetch: (sections?: string[]) => Promise<void>;
+  acknowledgeAlert: (alertId: string) => Promise<void>;
+  updateDriverStatus: (status: string) => Promise<void>;
+  reportIncident: (incident: any) => Promise<void>;
+  logBreak: (breakType: string) => Promise<void>;
 }
 
 export function useDriverDashboardData(driverId: string): DriverDashboardData {
@@ -119,7 +123,8 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
       // Get current load for the driver
       const { data: currentLoad } = await supabase
         .from('loads')
-        .select(`
+        .select(
+          `
           id,
           description,
           status,
@@ -137,7 +142,8 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
             net_weight,
             created_at
           )
-        `)
+        `
+        )
         .eq('driver_id', parseInt(driverId))
         .in('status', ['assigned', 'in_transit', 'at_pickup', 'at_delivery'])
         .order('created_at', { ascending: false })
@@ -149,14 +155,14 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
         return {
           currentWeight: latestWeighTicket?.gross_weight || currentLoad.weight || 0,
           weightLimit: 80000, // This should come from vehicle data
-          isOverweight: (latestWeighTicket?.gross_weight || currentLoad.weight || 0) > 80000
+          isOverweight: (latestWeighTicket?.gross_weight || currentLoad.weight || 0) > 80000,
         };
       } else {
         // No active load
         return {
           currentWeight: 0,
           weightLimit: 80000,
-          isOverweight: false
+          isOverweight: false,
         };
       }
     } catch (err) {
@@ -174,11 +180,11 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
         isOverSpeed: false,
         location: {
           lat: 32.7767 + (Math.random() - 0.5) * 0.1,
-          lng: -96.7970 + (Math.random() - 0.5) * 0.1,
-          address: 'Dallas, TX'
+          lng: -96.797 + (Math.random() - 0.5) * 0.1,
+          address: 'Dallas, TX',
         },
         isOnline: true,
-        batteryLevel: Math.floor(Math.random() * 30) + 70 // 70-100%
+        batteryLevel: Math.floor(Math.random() * 30) + 70, // 70-100%
       };
     } catch (err) {
       console.error('Error fetching telematics data:', err);
@@ -191,14 +197,16 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
       // Fetch active alerts for the driver
       const { data: driverAlerts } = await supabase
         .from('predictive_alerts')
-        .select(`
+        .select(
+          `
           id,
           alert_type,
           severity,
           message,
           created_at,
           acknowledged
-        `)
+        `
+        )
         .eq('driver_id', parseInt(driverId))
         .eq('acknowledged', false)
         .order('created_at', { ascending: false });
@@ -210,7 +218,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
           priority: alert.severity as 'critical' | 'high' | 'medium' | 'low',
           message: alert.message,
           timestamp: alert.created_at,
-          acknowledged: alert.acknowledged || false
+          acknowledged: alert.acknowledged || false,
         }));
         return formattedAlerts;
       } else {
@@ -232,7 +240,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
         remainingOnDutyTime: 2.0,
         nextBreakRequired: '2:30 PM',
         status: 'driving',
-        violationRisk: 'medium'
+        violationRisk: 'medium',
       };
     } catch (err) {
       console.error('Error fetching HOS data:', err);
@@ -251,7 +259,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
 
       if (!currentLoad) {
         return {
-          status: 'assigned'
+          status: 'assigned',
         };
       }
 
@@ -261,11 +269,11 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
           pickupLocation: currentLoad.pickup_location,
           deliveryLocation: currentLoad.delivery_location,
           weight: currentLoad.weight,
-          status: currentLoad.status
+          status: currentLoad.status,
         },
         pickupETA: currentLoad.pickup_eta,
         deliveryETA: currentLoad.delivery_eta,
-        status: currentLoad.status
+        status: currentLoad.status,
       };
     } catch (err) {
       console.error('Error fetching load data:', err);
@@ -278,7 +286,8 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
       // Get current vehicle assignment for the driver
       const { data: driverVehicle } = await supabase
         .from('drivers')
-        .select(`
+        .select(
+          `
           id,
           vehicles(
             id,
@@ -290,7 +299,8 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
             fuel_capacity,
             max_weight
           )
-        `)
+        `
+        )
         .eq('id', parseInt(driverId))
         .single();
 
@@ -303,11 +313,11 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
             {
               type: 'oil_change',
               severity: 'medium',
-              message: 'Oil change due in 500 miles'
-            }
+              message: 'Oil change due in 500 miles',
+            },
           ],
           engineStatus: 'good',
-          tireStatus: 'good'
+          tireStatus: 'good',
         };
       } else {
         // No vehicle assigned
@@ -315,7 +325,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
           fuelLevel: 0,
           maintenanceAlerts: [],
           engineStatus: 'good',
-          tireStatus: 'good'
+          tireStatus: 'good',
         };
       }
     } catch (err) {
@@ -327,7 +337,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
   const fetchRecentActivity = useCallback(async (): Promise<ActivityItem[]> => {
     try {
       const activities: ActivityItem[] = [];
-      
+
       // Fetch recent weigh tickets
       const { data: weighTickets } = await supabase
         .from('weigh_tickets')
@@ -342,7 +352,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
           type: 'weight_check',
           message: `Weight verified: ${ticket.gross_weight} lbs`,
           timestamp: ticket.created_at,
-          location: ticket.location || 'Unknown location'
+          location: ticket.location || 'Unknown location',
         });
       });
 
@@ -360,7 +370,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
           type: 'status_update',
           message: `Load status updated to ${load.status}`,
           timestamp: load.updated_at,
-          location: load.pickup_location || load.delivery_location
+          location: load.pickup_location || load.delivery_location,
         });
       });
 
@@ -377,10 +387,10 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
           id: `alert-${alert.id}`,
           type: 'maintenance',
           message: alert.message,
-          timestamp: alert.created_at
+          timestamp: alert.created_at,
         });
       });
-      
+
       // Sort all activities by timestamp and return latest 10
       return activities
         .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
@@ -391,40 +401,50 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
     }
   }, [driverId, supabase]);
 
-  const fetchAllData = useCallback(async (sections?: string[]) => {
-    try {
-      setIsLoading(true);
-      setError(null);
+  const fetchAllData = useCallback(
+    async (sections?: string[]) => {
+      try {
+        setIsLoading(true);
+        setError(null);
 
-      const shouldFetch = (section: string) => !sections || sections.includes(section);
+        const shouldFetch = (section: string) => !sections || sections.includes(section);
 
-      const promises = [];
-      
-      if (shouldFetch('cargo')) promises.push(fetchCargoData());
-      if (shouldFetch('telematics')) promises.push(fetchTelematicsData());
-      if (shouldFetch('alerts')) promises.push(fetchAlertsData());
-      if (shouldFetch('hos')) promises.push(fetchHOSData());
-      if (shouldFetch('load')) promises.push(fetchLoadData());
-      if (shouldFetch('vehicle')) promises.push(fetchVehicleData());
-      if (shouldFetch('activity')) promises.push(fetchRecentActivity());
+        const promises = [];
 
-      const results = await Promise.all(promises);
-      
-      let index = 0;
-      if (shouldFetch('cargo')) setCargoData(results[index++] as CargoData);
-      if (shouldFetch('telematics')) setTelematicsData(results[index++] as TelematicsData);
-      if (shouldFetch('alerts')) setAlertsData(results[index++] as AlertData[]);
-      if (shouldFetch('hos')) setHOSData(results[index++] as HOSData);
-      if (shouldFetch('load')) setLoadData(results[index++] as LoadData);
-      if (shouldFetch('vehicle')) setVehicleData(results[index++] as VehicleData);
-      if (shouldFetch('activity')) setRecentActivity(results[index++] as ActivityItem[]);
+        if (shouldFetch('cargo')) promises.push(fetchCargoData());
+        if (shouldFetch('telematics')) promises.push(fetchTelematicsData());
+        if (shouldFetch('alerts')) promises.push(fetchAlertsData());
+        if (shouldFetch('hos')) promises.push(fetchHOSData());
+        if (shouldFetch('load')) promises.push(fetchLoadData());
+        if (shouldFetch('vehicle')) promises.push(fetchVehicleData());
+        if (shouldFetch('activity')) promises.push(fetchRecentActivity());
 
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch dashboard data');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [fetchCargoData, fetchTelematicsData, fetchAlertsData, fetchHOSData, fetchLoadData, fetchVehicleData, fetchRecentActivity]);
+        const results = await Promise.all(promises);
+
+        let index = 0;
+        if (shouldFetch('cargo')) setCargoData(results[index++] as CargoData);
+        if (shouldFetch('telematics')) setTelematicsData(results[index++] as TelematicsData);
+        if (shouldFetch('alerts')) setAlertsData(results[index++] as AlertData[]);
+        if (shouldFetch('hos')) setHOSData(results[index++] as HOSData);
+        if (shouldFetch('load')) setLoadData(results[index++] as LoadData);
+        if (shouldFetch('vehicle')) setVehicleData(results[index++] as VehicleData);
+        if (shouldFetch('activity')) setRecentActivity(results[index++] as ActivityItem[]);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch dashboard data');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [
+      fetchCargoData,
+      fetchTelematicsData,
+      fetchAlertsData,
+      fetchHOSData,
+      fetchLoadData,
+      fetchVehicleData,
+      fetchRecentActivity,
+    ]
+  );
 
   useEffect(() => {
     if (driverId) {
@@ -433,93 +453,99 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
   }, [driverId, fetchAllData]);
 
   // Functions to handle driver actions and update Supabase
-  const acknowledgeAlert = useCallback(async (alertId: string) => {
-    try {
-      const { error } = await supabase
-        .from('predictive_alerts')
-        .update({ acknowledged: true, acknowledged_at: new Date().toISOString() })
-        .eq('id', parseInt(alertId))
-        .eq('driver_id', parseInt(driverId));
+  const acknowledgeAlert = useCallback(
+    async (alertId: string) => {
+      try {
+        const { error } = await supabase
+          .from('predictive_alerts')
+          .update({ acknowledged: true, acknowledged_at: new Date().toISOString() })
+          .eq('id', parseInt(alertId))
+          .eq('driver_id', parseInt(driverId));
 
-      if (error) throw error;
-      
-      // Refresh alerts data
-      await fetchAlertsData();
-    } catch (error) {
-      console.error('Error acknowledging alert:', error);
-      setError('Failed to acknowledge alert');
-    }
-  }, [driverId, supabase, fetchAlertsData]);
+        if (error) throw error;
 
-  const updateDriverStatus = useCallback(async (status: string, location?: string) => {
-    try {
-      // Insert activity log
-      const { error } = await supabase
-        .from('driver_activities')
-        .insert({
+        // Refresh alerts data
+        await fetchAlertsData();
+      } catch (error) {
+        console.error('Error acknowledging alert:', error);
+        setError('Failed to acknowledge alert');
+      }
+    },
+    [driverId, supabase, fetchAlertsData]
+  );
+
+  const updateDriverStatus = useCallback(
+    async (status: string, location?: string) => {
+      try {
+        // Insert activity log
+        const { error } = await supabase.from('driver_activities').insert({
           driver_id: parseInt(driverId),
           activity_type: 'status_update',
           description: `Status updated to ${status}`,
           location: location,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         });
 
-      if (error) throw error;
-      
-      // Refresh activity data
-      await fetchRecentActivity();
-    } catch (error) {
-      console.error('Error updating driver status:', error);
-      setError('Failed to update status');
-    }
-  }, [driverId, supabase, fetchRecentActivity]);
+        if (error) throw error;
 
-  const reportIncident = useCallback(async (type: string, description: string, location?: string) => {
-    try {
-      // Insert incident report
-      const { error } = await supabase
-        .from('incident_reports')
-        .insert({
+        // Refresh activity data
+        await fetchRecentActivity();
+      } catch (error) {
+        console.error('Error updating driver status:', error);
+        setError('Failed to update status');
+      }
+    },
+    [driverId, supabase, fetchRecentActivity]
+  );
+
+  const reportIncident = useCallback(
+    async (type: string, description: string, location?: string) => {
+      try {
+        // Insert incident report
+        const { error } = await supabase.from('incident_reports').insert({
           driver_id: parseInt(driverId),
           incident_type: type,
           description: description,
           location: location,
           reported_at: new Date().toISOString(),
-          status: 'reported'
+          status: 'reported',
         });
 
-      if (error) throw error;
-      
-      // Also log as activity
-      await updateDriverStatus('incident_reported', location);
-    } catch (error) {
-      console.error('Error reporting incident:', error);
-      setError('Failed to report incident');
-    }
-  }, [driverId, supabase, updateDriverStatus]);
+        if (error) throw error;
 
-  const logBreak = useCallback(async (breakType: 'rest' | 'meal' | 'fuel', duration?: number) => {
-    try {
-      // Insert break log
-      const { error } = await supabase
-        .from('driver_activities')
-        .insert({
+        // Also log as activity
+        await updateDriverStatus('incident_reported', location);
+      } catch (error) {
+        console.error('Error reporting incident:', error);
+        setError('Failed to report incident');
+      }
+    },
+    [driverId, supabase, updateDriverStatus]
+  );
+
+  const logBreak = useCallback(
+    async (breakType: 'rest' | 'meal' | 'fuel', duration?: number) => {
+      try {
+        // Insert break log
+        const { error } = await supabase.from('driver_activities').insert({
           driver_id: parseInt(driverId),
           activity_type: 'break',
           description: `${breakType} break started`,
           timestamp: new Date().toISOString(),
-          metadata: { break_type: breakType, duration: duration }
+          metadata: { break_type: breakType, duration: duration },
         });
 
-      if (error) throw error;
-      
-      // Refresh activity data
-      await fetchRecentActivity();
-    } catch (error) {
-      console.error('Error logging break:', error);
-      setError('Failed to log break');
-    }
-  }, [driverId, supabase, fetchRecentActivity]);
+        if (error) throw error;
+
+        // Refresh activity data
+        await fetchRecentActivity();
+      } catch (error) {
+        console.error('Error logging break:', error);
+        setError('Failed to log break');
+      }
+    },
+    [driverId, supabase, fetchRecentActivity]
+  );
 
   return {
     cargoData,
@@ -536,6 +562,6 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
     acknowledgeAlert,
     updateDriverStatus,
     reportIncident,
-    logBreak
+    logBreak,
   };
 }

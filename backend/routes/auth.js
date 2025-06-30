@@ -47,6 +47,11 @@ router.post(
   authController.login
 );
 
+// @route   POST api/auth/exchange-token
+// @desc    Exchange Supabase token for Paseto token
+// @access  Public
+router.post('/exchange-token', authController.exchangeToken);
+
 // @route   GET api/auth/user
 // @desc    Get user data
 // @access  Private
