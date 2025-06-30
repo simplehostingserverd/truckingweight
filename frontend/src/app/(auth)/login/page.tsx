@@ -104,43 +104,7 @@ export default function Login() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-transparent z-10"></div>
 
-        {/* Stats overlays similar to the example */}
-        <div className="absolute top-1/4 left-1/4 bg-gray-800/80 backdrop-blur-sm rounded-lg p-4 z-20 text-white">
-          <div className="text-sm text-gray-400">Weight Compliance</div>
-          <div className="text-2xl font-bold">98.4%</div>
-          <div className="flex items-center mt-2">
-            <div className="h-1 w-24 bg-gray-700 rounded-full overflow-hidden">
-              <div className="h-full w-[98%] bg-green-500 rounded-full"></div>
-            </div>
-          </div>
-        </div>
 
-        <div className="absolute bottom-1/4 left-1/3 bg-gray-800/80 backdrop-blur-sm rounded-lg p-4 z-20 text-white">
-          <div className="text-sm text-gray-400">Loads Delivered</div>
-          <div className="text-2xl font-bold">124k</div>
-          <div className="flex items-center mt-2">
-            <div className="flex space-x-1">
-              {[1, 2, 3, 4, 5, 6, 7].map(i => {
-                // Use consistent heights to avoid hydration mismatch
-                const chartBarClasses = [
-                  styles.chartBar1,
-                  styles.chartBar2,
-                  styles.chartBar3,
-                  styles.chartBar4,
-                  styles.chartBar5,
-                  styles.chartBar6,
-                  styles.chartBar7,
-                ];
-                return (
-                  <div
-                    key={i}
-                    className={`w-2 bg-indigo-500 rounded-sm ${chartBarClasses[i - 1]}`}
-                  ></div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Right side - Login form */}
