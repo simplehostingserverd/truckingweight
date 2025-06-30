@@ -13,21 +13,39 @@
 
 import React from 'react';
 import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
 import DashboardClient from './client';
 
 export default async function Dashboard() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClient();
 
-  // Get minimal user data for initial rendering
+  // Get user data
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  
+  if (!user) {
+    redirect('/login');
+  }
+
   const { data: userData } = await supabase
     .from('users')
-    .select('name, is_admin')
+    .select('name, is_admin, email')
     .eq('id', user?.id)
     .single();
+
+  // Check if user is a driver by matching email
+  const { data: driverData } = await supabase
+    .from('drivers')
+    .select('id, name, status')
+    .eq('email', user.email)
+    .eq('status', 'Active')
+    .single();
+
+  // If user is an active driver, redirect to driver dashboard
+  if (driverData && !userData?.is_admin) {
+    redirect('/driver-dashboard');
+  }
 
   return (
     <DashboardClient userName={userData?.name || 'User'} isAdmin={userData?.is_admin || false} />

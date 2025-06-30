@@ -20,6 +20,7 @@ import AdminCompanySelector from '@/components/Dashboard/AdminCompanySelector';
 import DashboardStats from '@/components/Dashboard/DashboardStats';
 import QuickActions from '@/components/Dashboard/QuickActions';
 import RecentWeightsTable from '@/components/Dashboard/RecentWeightsTable';
+import LiveDriverActivity from '@/components/Dashboard/LiveDriverActivity';
 import { Alert, AlertDescription } from '@/components/ui';
 import { ScaleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -141,9 +142,9 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
           </div>
         </div>
 
-        {/* Recent Weights and Alerts */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="lg:col-span-2 bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
+        {/* Recent Weights and Live Driver Activity */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
             <div className="px-4 sm:px-6 py-4 border-b border-gray-800 flex flex-wrap justify-between items-center">
               <h2 className="text-lg sm:text-xl font-semibold text-white">
                 Recent Weight Measurements
@@ -167,30 +168,8 @@ export default function DashboardClient({ userName, isAdmin }: DashboardClientPr
             </div>
           </div>
 
-          <div className="bg-[#1A1A1A] rounded-lg shadow-lg overflow-hidden border border-gray-800">
-            <div className="px-4 sm:px-6 py-4 border-b border-gray-800 flex flex-wrap justify-between items-center">
-              <h2 className="text-lg sm:text-xl font-semibold text-white">
-                Alerts & Notifications
-              </h2>
-              <div className="h-2 w-2 rounded-full bg-red-500"></div>
-            </div>
-            <div className="p-4 sm:p-6">
-              <div className="space-y-4">
-                <div className="flex items-start p-3 bg-gray-800/50 rounded-lg border border-gray-700">
-                  <div
-                    className="h-5 w-5 bg-blue-600 rounded-full mt-0.5 mr-3 flex-shrink-0 animate-pulse"
-                    aria-hidden="true"
-                  ></div>
-                  <div>
-                    <h3 className="text-sm font-medium text-blue-400">Loading alerts...</h3>
-                    <p className="mt-1 text-sm text-gray-400">
-                      Please wait while we fetch your notifications.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Live Driver Activity - Real-time updates from driver dashboard */}
+          <LiveDriverActivity companyId={selectedCompanyId} maxItems={15} />
         </div>
 
         {/* Load Status Chart and Quick Actions Row */}
