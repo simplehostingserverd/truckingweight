@@ -111,8 +111,17 @@ export default function Login() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="text-center mb-10">
+            <div className="flex justify-center mb-4">
+              <Image
+                src="/logos/companylogo.png"
+                alt="Cargo Scale Pro Logo"
+                width={120}
+                height={60}
+                className="object-contain"
+              />
+            </div>
             <h1 className="text-3xl font-bold text-white mb-2">
-              Welcome to Cargo Scale Pro! 👋
+              Welcome to Cargo Scale Pro!
             </h1>
             <p className="text-gray-400">Please sign in to your account and start the adventure</p>
           </div>
