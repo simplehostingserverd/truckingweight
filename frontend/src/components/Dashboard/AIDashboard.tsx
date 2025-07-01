@@ -20,7 +20,7 @@ import {
   Truck,
   Users,
   Wrench,
-  Zap
+  Zap,
 } from 'lucide-react';
 
 interface AIMetrics {
@@ -109,7 +109,7 @@ const AIDashboard: React.FC = () => {
   const fetchAIMetrics = async () => {
     try {
       setLoading(true);
-      
+
       // Fetch AI dashboard data from backend
       const response = await fetch('/api/ai/dashboard', {
         method: 'GET',
@@ -117,13 +117,13 @@ const AIDashboard: React.FC = () => {
           'Content-Type': 'application/json',
         },
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
-      
+
       // Transform backend data to match our interface
       const transformedMetrics: AIMetrics = {
         predictiveMaintenance: {
@@ -131,34 +131,34 @@ const AIDashboard: React.FC = () => {
           alertsGenerated: data.predictiveMaintenance?.alertsGenerated || 12,
           downtimePrevented: data.predictiveMaintenance?.downtimePrevented || 85,
           costSavings: data.predictiveMaintenance?.costSavings || 125000,
-          riskScore: data.predictiveMaintenance?.riskScore || 23
+          riskScore: data.predictiveMaintenance?.riskScore || 23,
         },
         routeOptimization: {
           routesOptimized: data.routeOptimization?.routesOptimized || 156,
           fuelSaved: data.routeOptimization?.fuelSaved || 2340,
           timeSaved: data.routeOptimization?.timeSaved || 89,
           costReduction: data.routeOptimization?.costReduction || 15.2,
-          efficiency: data.routeOptimization?.efficiency || 92
+          efficiency: data.routeOptimization?.efficiency || 92,
         },
         driverSafety: {
           driversMonitored: data.driverSafety?.driversMonitored || 78,
           safetyScore: data.driverSafety?.safetyScore || 87,
           incidentsReduced: data.driverSafety?.incidentsReduced || 34,
           complianceRate: data.driverSafety?.complianceRate || 96,
-          trainingRecommendations: data.driverSafety?.trainingRecommendations || 8
+          trainingRecommendations: data.driverSafety?.trainingRecommendations || 8,
         },
         dynamicPricing: {
           loadsAnalyzed: data.dynamicPricing?.loadsAnalyzed || 234,
           profitIncrease: data.dynamicPricing?.profitIncrease || 8.7,
           marketPosition: data.dynamicPricing?.marketPosition || 85,
           pricingAccuracy: data.dynamicPricing?.pricingAccuracy || 94,
-          revenueOptimization: data.dynamicPricing?.revenueOptimization || 12.3
-        }
+          revenueOptimization: data.dynamicPricing?.revenueOptimization || 12.3,
+        },
       };
 
       // Set the transformed metrics
       setMetrics(transformedMetrics);
-      
+
       // Set realistic mock data for alerts and recommendations
       const mockAlerts: PredictiveAlert[] = data.alerts || [
         {
@@ -169,7 +169,7 @@ const AIDashboard: React.FC = () => {
           prediction: 'Oil pressure sensor failure predicted',
           confidence: 89,
           estimatedFailureDate: '2024-02-15',
-          recommendedAction: 'Schedule maintenance within 7 days'
+          recommendedAction: 'Schedule maintenance within 7 days',
         },
         {
           id: '2',
@@ -179,7 +179,7 @@ const AIDashboard: React.FC = () => {
           prediction: 'Brake pad wear approaching limit',
           confidence: 76,
           estimatedFailureDate: '2024-03-01',
-          recommendedAction: 'Inspect brake pads within 2 weeks'
+          recommendedAction: 'Inspect brake pads within 2 weeks',
         },
         {
           id: '3',
@@ -189,10 +189,10 @@ const AIDashboard: React.FC = () => {
           prediction: 'Transmission fluid change due',
           confidence: 92,
           estimatedFailureDate: '2024-03-20',
-          recommendedAction: 'Schedule routine maintenance'
-        }
+          recommendedAction: 'Schedule routine maintenance',
+        },
       ];
-      
+
       const mockRouteOptimizations: RouteOptimization[] = data.routeOptimizations || [
         {
           id: '1',
@@ -203,7 +203,7 @@ const AIDashboard: React.FC = () => {
           optimizedDistance: 362,
           fuelSavings: 45,
           timeSavings: 32,
-          costSavings: 180
+          costSavings: 180,
         },
         {
           id: '2',
@@ -214,10 +214,10 @@ const AIDashboard: React.FC = () => {
           optimizedDistance: 231,
           fuelSavings: 28,
           timeSavings: 18,
-          costSavings: 95
-        }
+          costSavings: 95,
+        },
       ];
-      
+
       const mockSafetyInsights: SafetyInsight[] = data.safetyInsights || [
         {
           id: '1',
@@ -226,7 +226,7 @@ const AIDashboard: React.FC = () => {
           safetyScore: 92,
           riskFactors: ['Hard braking events', 'Late night driving'],
           recommendations: ['Defensive driving course', 'Rest schedule optimization'],
-          lastIncident: '2024-01-15'
+          lastIncident: '2024-01-15',
         },
         {
           id: '2',
@@ -235,10 +235,10 @@ const AIDashboard: React.FC = () => {
           safetyScore: 88,
           riskFactors: ['Speed variance', 'Weather conditions'],
           recommendations: ['Weather driving training', 'Speed management coaching'],
-          lastIncident: '2024-01-08'
-        }
+          lastIncident: '2024-01-08',
+        },
       ];
-      
+
       const mockPricingRecommendations: PricingRecommendation[] = data.pricingRecommendations || [
         {
           id: '1',
@@ -248,7 +248,7 @@ const AIDashboard: React.FC = () => {
           recommendedPrice: 2750,
           confidence: 87,
           marketPosition: 'competitive',
-          factors: ['High demand corridor', 'Fuel price increase', 'Limited capacity']
+          factors: ['High demand corridor', 'Fuel price increase', 'Limited capacity'],
         },
         {
           id: '2',
@@ -258,15 +258,15 @@ const AIDashboard: React.FC = () => {
           recommendedPrice: 1950,
           confidence: 92,
           marketPosition: 'premium',
-          factors: ['Peak season', 'Express delivery', 'Specialized equipment']
-        }
+          factors: ['Peak season', 'Express delivery', 'Specialized equipment'],
+        },
       ];
-       
-       // Set all the state variables
-       setPredictiveAlerts(mockAlerts);
-       setRouteOptimizations(mockRouteOptimizations);
-       setSafetyInsights(mockSafetyInsights);
-       setPricingRecommendations(mockPricingRecommendations);
+
+      // Set all the state variables
+      setPredictiveAlerts(mockAlerts);
+      setRouteOptimizations(mockRouteOptimizations);
+      setSafetyInsights(mockSafetyInsights);
+      setPricingRecommendations(mockPricingRecommendations);
     } catch (error) {
       console.error('Error fetching AI metrics:', error);
     } finally {
@@ -276,21 +276,31 @@ const AIDashboard: React.FC = () => {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'bg-red-500';
-      case 'high': return 'bg-orange-500';
-      case 'medium': return 'bg-yellow-500';
-      case 'low': return 'bg-green-500';
-      default: return 'bg-gray-500';
+      case 'critical':
+        return 'bg-red-500';
+      case 'high':
+        return 'bg-orange-500';
+      case 'medium':
+        return 'bg-yellow-500';
+      case 'low':
+        return 'bg-green-500';
+      default:
+        return 'bg-gray-500';
     }
   };
 
   const getSeverityTextColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'text-red-700';
-      case 'high': return 'text-orange-700';
-      case 'medium': return 'text-yellow-700';
-      case 'low': return 'text-green-700';
-      default: return 'text-gray-700';
+      case 'critical':
+        return 'text-red-700';
+      case 'high':
+        return 'text-orange-700';
+      case 'medium':
+        return 'text-yellow-700';
+      case 'low':
+        return 'text-green-700';
+      default:
+        return 'text-gray-700';
     }
   };
 
@@ -340,10 +350,10 @@ const AIDashboard: React.FC = () => {
             <Wrench className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${metrics.predictiveMaintenance.costSavings.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
-              Cost savings this month
-            </p>
+            <div className="text-2xl font-bold">
+              ${metrics.predictiveMaintenance.costSavings.toLocaleString()}
+            </div>
+            <p className="text-xs text-muted-foreground">Cost savings this month</p>
             <div className="mt-2">
               <div className="flex items-center justify-between text-xs">
                 <span>Risk Level</span>
@@ -361,9 +371,7 @@ const AIDashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{metrics.routeOptimization.efficiency}%</div>
-            <p className="text-xs text-muted-foreground">
-              Route efficiency
-            </p>
+            <p className="text-xs text-muted-foreground">Route efficiency</p>
             <div className="mt-2">
               <div className="flex items-center justify-between text-xs">
                 <span>Fuel Saved</span>
@@ -381,9 +389,7 @@ const AIDashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{metrics.driverSafety.safetyScore}</div>
-            <p className="text-xs text-muted-foreground">
-              Average safety score
-            </p>
+            <p className="text-xs text-muted-foreground">Average safety score</p>
             <div className="mt-2">
               <div className="flex items-center justify-between text-xs">
                 <span>Compliance</span>
@@ -401,9 +407,7 @@ const AIDashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">+{metrics.dynamicPricing.profitIncrease}%</div>
-            <p className="text-xs text-muted-foreground">
-              Profit increase
-            </p>
+            <p className="text-xs text-muted-foreground">Profit increase</p>
             <div className="mt-2">
               <div className="flex items-center justify-between text-xs">
                 <span>Accuracy</span>
@@ -432,15 +436,18 @@ const AIDashboard: React.FC = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-600" />
                   Critical Alerts
                 </CardTitle>
-                <CardDescription>
-                  AI-generated alerts requiring immediate attention
-                </CardDescription>
+                <CardDescription>AI-generated alerts requiring immediate attention</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {predictiveAlerts.map((alert) => (
-                    <div key={alert.id} className="flex items-start space-x-3 p-3 border rounded-lg">
-                      <div className={`w-3 h-3 rounded-full mt-1 ${getSeverityColor(alert.severity)}`}></div>
+                  {predictiveAlerts.map(alert => (
+                    <div
+                      key={alert.id}
+                      className="flex items-start space-x-3 p-3 border rounded-lg"
+                    >
+                      <div
+                        className={`w-3 h-3 rounded-full mt-1 ${getSeverityColor(alert.severity)}`}
+                      ></div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
                           <p className="font-medium text-sm">{alert.vehicleId}</p>
@@ -465,9 +472,7 @@ const AIDashboard: React.FC = () => {
                   <TrendingUp className="h-5 w-5 text-green-600" />
                   Performance Trends
                 </CardTitle>
-                <CardDescription>
-                  AI-driven performance insights and trends
-                </CardDescription>
+                <CardDescription>AI-driven performance insights and trends</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -504,21 +509,27 @@ const AIDashboard: React.FC = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">{metrics.predictiveMaintenance.vehiclesMonitored}</div>
+                  <div className="text-2xl font-bold text-blue-600">
+                    {metrics.predictiveMaintenance.vehiclesMonitored}
+                  </div>
                   <p className="text-sm text-gray-600">Vehicles Monitored</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-600">{metrics.predictiveMaintenance.alertsGenerated}</div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    {metrics.predictiveMaintenance.alertsGenerated}
+                  </div>
                   <p className="text-sm text-gray-600">Active Alerts</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">{metrics.predictiveMaintenance.downtimePrevented}%</div>
+                  <div className="text-2xl font-bold text-green-600">
+                    {metrics.predictiveMaintenance.downtimePrevented}%
+                  </div>
                   <p className="text-sm text-gray-600">Downtime Prevented</p>
                 </div>
               </div>
-              
+
               <div className="space-y-3">
-                {predictiveAlerts.map((alert) => (
+                {predictiveAlerts.map(alert => (
                   <div key={alert.id} className="border rounded-lg p-4">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
@@ -526,9 +537,7 @@ const AIDashboard: React.FC = () => {
                         <span className="font-medium">{alert.vehicleId}</span>
                         <Badge variant="outline">{alert.component}</Badge>
                       </div>
-                      <Badge className={getSeverityColor(alert.severity)}>
-                        {alert.severity}
-                      </Badge>
+                      <Badge className={getSeverityColor(alert.severity)}>{alert.severity}</Badge>
                     </div>
                     <p className="text-sm text-gray-700 mb-2">{alert.prediction}</p>
                     <p className="text-sm text-blue-600 mb-2">{alert.recommendedAction}</p>
@@ -554,23 +563,31 @@ const AIDashboard: React.FC = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">{metrics.routeOptimization.routesOptimized}</div>
+                  <div className="text-2xl font-bold text-blue-600">
+                    {metrics.routeOptimization.routesOptimized}
+                  </div>
                   <p className="text-sm text-gray-600">Routes Optimized</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">{metrics.routeOptimization.fuelSaved}L</div>
+                  <div className="text-2xl font-bold text-green-600">
+                    {metrics.routeOptimization.fuelSaved}L
+                  </div>
                   <p className="text-sm text-gray-600">Fuel Saved</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-purple-600">{metrics.routeOptimization.timeSaved}h</div>
+                  <div className="text-2xl font-bold text-purple-600">
+                    {metrics.routeOptimization.timeSaved}h
+                  </div>
                   <p className="text-sm text-gray-600">Time Saved</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-600">{metrics.routeOptimization.costReduction}%</div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    {metrics.routeOptimization.costReduction}%
+                  </div>
                   <p className="text-sm text-gray-600">Cost Reduction</p>
                 </div>
               </div>
-              
+
               <div className="bg-gray-50 rounded-lg p-4">
                 <h4 className="font-medium mb-3">Recent Optimizations</h4>
                 <div className="space-y-2">
@@ -603,23 +620,31 @@ const AIDashboard: React.FC = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">{metrics.driverSafety.driversMonitored}</div>
+                  <div className="text-2xl font-bold text-blue-600">
+                    {metrics.driverSafety.driversMonitored}
+                  </div>
                   <p className="text-sm text-gray-600">Drivers Monitored</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">{metrics.driverSafety.safetyScore}</div>
+                  <div className="text-2xl font-bold text-green-600">
+                    {metrics.driverSafety.safetyScore}
+                  </div>
                   <p className="text-sm text-gray-600">Avg Safety Score</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-600">{metrics.driverSafety.incidentsReduced}%</div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    {metrics.driverSafety.incidentsReduced}%
+                  </div>
                   <p className="text-sm text-gray-600">Incidents Reduced</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-purple-600">{metrics.driverSafety.complianceRate}%</div>
+                  <div className="text-2xl font-bold text-purple-600">
+                    {metrics.driverSafety.complianceRate}%
+                  </div>
                   <p className="text-sm text-gray-600">HOS Compliance</p>
                 </div>
               </div>
-              
+
               <div className="bg-gray-50 rounded-lg p-4">
                 <h4 className="font-medium mb-3">Safety Insights</h4>
                 <div className="space-y-3">

@@ -25,7 +25,7 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { AlertCircle, Truck, MapPin, Navigation, Clock, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { driverTrackingService, LiveDriver } from '@/services/driverTrackingService';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
 
 const LiveTrackingMap = () => {
   const [drivers, setDrivers] = useState<LiveDriver[]>([]);

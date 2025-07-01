@@ -22,7 +22,26 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { DatePickerWithRange } from '@/components/ui/date-range-picker';
 import { Progress } from '@/components/ui/progress';
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { TrendingUp, TrendingDown, Users, Truck, MapPin, Clock, Fuel, AlertTriangle, CheckCircle, Activity } from 'lucide-react';
+import { 
+  TrendingUp, 
+  TrendingDown, 
+  Users, 
+  Truck, 
+  MapPin, 
+  Clock, 
+  Fuel, 
+  AlertTriangle, 
+  CheckCircle, 
+  Activity,
+  ArrowUp as ArrowTrendingUpIcon,
+  ArrowDown as ArrowTrendingDownIcon,
+  BarChart3 as ChartBarIcon,
+  User as UserIcon,
+  Truck as TruckIcon,
+  CheckCircle as CheckCircleIcon,
+  AlertTriangle as ExclamationTriangleIcon,
+  Calendar as CalendarIcon
+} from 'lucide-react';
 import { driverTrackingService, AnalyticsData } from '@/services/driverTrackingService';
 import { toast } from '@/hooks/use-toast';
 
@@ -68,6 +87,12 @@ export default function DriverAnalyticsDashboard({
     setSelectedTimeRange(range as any);
     onTimeRangeChange?.(range);
   };
+
+  // Extract data from analyticsData
+  const fleetMetrics = analyticsData?.fleetMetrics;
+  const performanceData = analyticsData?.timeSeriesData?.performance || [];
+  const safetyData = analyticsData?.timeSeriesData?.safety || [];
+  const fuelData = analyticsData?.timeSeriesData?.efficiency || [];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -139,14 +164,14 @@ export default function DriverAnalyticsDashboard({
     }
   };
 
-  const topPerformers = driverMetrics
-    .sort((a, b) => b.safetyScore - a.safetyScore)
-    .slice(0, 5);
+  const topPerformers = analyticsData?.driverMetrics
+    ?.sort((a, b) => b.safetyScore - a.safetyScore)
+    .slice(0, 5) || [];
 
-  const recentViolations = driverMetrics
-    .filter(driver => driver.violations > 0)
+  const recentViolations = analyticsData?.driverMetrics
+    ?.filter(driver => driver.violations > 0)
     .sort((a, b) => b.violations - a.violations)
-    .slice(0, 5);
+    .slice(0, 5) || [];
 
   if (!fleetMetrics) {
     return (
@@ -194,8 +219,8 @@ export default function DriverAnalyticsDashboard({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Active Drivers</p>
-                <p className="text-2xl font-bold">{fleetMetrics.activeDrivers}</p>
-                <p className="text-xs text-gray-500">of {fleetMetrics.totalDrivers} total</p>
+                <p className="text-2xl font-bold">{fleetMetrics?.activeDrivers || 0}</p>
+                <p className="text-xs text-gray-500">of {fleetMetrics?.totalDrivers || 0} total</p>
               </div>
               <UserIcon className="h-8 w-8 text-blue-500" />
             </div>
@@ -214,7 +239,7 @@ export default function DriverAnalyticsDashboard({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Total Miles</p>
-                <p className="text-2xl font-bold">{fleetMetrics.totalMiles.toLocaleString()}</p>
+                <p className="text-2xl font-bold">{fleetMetrics?.totalDistance?.toLocaleString() || '0'}</p>
                 <p className="text-xs text-gray-500">this period</p>
               </div>
               <TruckIcon className="h-8 w-8 text-green-500" />
@@ -234,7 +259,7 @@ export default function DriverAnalyticsDashboard({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Avg Safety Score</p>
-                <p className="text-2xl font-bold">{fleetMetrics.avgSafetyScore}%</p>
+                <p className="text-2xl font-bold">{fleetMetrics?.safetyScore || 0}%</p>
                 <p className="text-xs text-gray-500">fleet average</p>
               </div>
               <CheckCircleIcon className="h-8 w-8 text-green-500" />
@@ -254,7 +279,7 @@ export default function DriverAnalyticsDashboard({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Violations</p>
-                <p className="text-2xl font-bold">{fleetMetrics.totalViolations}</p>
+                <p className="text-2xl font-bold">{analyticsData?.driverMetrics?.reduce((sum, driver) => sum + driver.violations, 0) || 0}</p>
                 <p className="text-xs text-gray-500">this period</p>
               </div>
               <ExclamationTriangleIcon className="h-8 w-8 text-red-500" />
