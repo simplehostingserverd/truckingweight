@@ -164,7 +164,7 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
   const fetchAlerts = useCallback(async () => {
     try {
       let query = supabase
-        .from('alerts')
+        .from('predictive_alerts')
         .select(
           `
           id,

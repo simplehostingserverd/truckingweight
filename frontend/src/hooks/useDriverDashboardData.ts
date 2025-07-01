@@ -508,7 +508,7 @@ export function useDriverDashboardData(driverId: string): DriverDashboardData {
             setAlertsData(result);
             break;
           case 'hos':
-            setHosData(result);
+            setHOSData(result);
             break;
           case 'load':
             setLoadData(result);

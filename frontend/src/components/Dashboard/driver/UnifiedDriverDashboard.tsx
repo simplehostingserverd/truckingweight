@@ -33,6 +33,7 @@ import {
 import {
   ExclamationTriangleIcon as ExclamationTriangleSolid,
   HeartIcon as HeartSolid,
+  MapPinIcon as MapPinSolid,
 } from '@heroicons/react/24/solid';
 
 interface UnifiedDriverDashboardProps {
@@ -104,10 +105,60 @@ const UnifiedDriverDashboardComponent = function UnifiedDriverDashboard({
 
   const handleVoiceCommand = (command: string, transcript: string) => {
     console.log('Voice command received:', command, transcript);
+    // TODO: Implement voice command processing
   };
 
   const handleEmergencyActivated = (location?: { lat: number; lng: number }) => {
     console.log('Emergency activated at:', location);
+    reportIncident({
+      type: 'emergency',
+      description: 'Emergency button activated',
+      location: location ? `${location.lat}, ${location.lng}` : 'Unknown location',
+      timestamp: new Date().toISOString()
+    });
+  };
+
+  const handleRecordVoice = () => {
+    console.log('Recording voice for incident report');
+    // TODO: Implement voice recording functionality
+    alert('Voice recording feature will be implemented');
+  };
+
+  const handleTakePhoto = () => {
+    console.log('Taking photo for incident report');
+    // TODO: Implement camera functionality
+    alert('Camera feature will be implemented');
+  };
+
+  const handleViolationsClick = () => {
+    console.log('Violations button clicked');
+    // TODO: Navigate to violations page
+    alert('Violations page will be implemented');
+  };
+
+  const handleMessagesClick = () => {
+    console.log('Messages button clicked');
+    // TODO: Navigate to messages page
+    alert('Messages page will be implemented');
+  };
+
+  const handleNavigationClick = () => {
+    console.log('Navigation button clicked');
+    // TODO: Open navigation/GPS functionality
+    alert('Navigation feature will be implemented');
+  };
+
+  const handleMenuClick = () => {
+    console.log('Menu button clicked');
+    // TODO: Open main menu
+    alert('Menu will be implemented');
+  };
+
+  const handleAcknowledgeAlert = () => {
+    if (alertsData && alertsData.length > 0) {
+      const firstAlert = alertsData[0];
+      acknowledgeAlert(firstAlert.id);
+    }
   };
 
   // Memoize loading and error states to prevent unnecessary re-renders
@@ -179,7 +230,10 @@ const UnifiedDriverDashboardComponent = function UnifiedDriverDashboard({
         {/* Top Row - Safety Alerts & Health */}
         <div className="grid grid-cols-2 gap-4">
           {/* Real-time Safety Alerts */}
-          <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800">
+          <button 
+            onClick={handleAcknowledgeAlert}
+            className="bg-gray-900 rounded-2xl p-4 border border-gray-800 hover:border-orange-400 transition-colors w-full text-left"
+          >
             <div className="flex items-center space-x-2 mb-3">
               <ExclamationTriangleSolid className={`h-5 w-5 ${
                 alertsData && alertsData.length > 0 ? 'text-red-400' : 'text-orange-400'
@@ -206,7 +260,12 @@ const UnifiedDriverDashboardComponent = function UnifiedDriverDashboard({
                 +{alertsData.length - 1} more alert{alertsData.length > 2 ? 's' : ''}
               </div>
             )}
-          </div>
+            {alertsData && alertsData.length > 0 && (
+              <div className="text-xs text-orange-400 mt-2 font-semibold">
+                Tap to acknowledge
+              </div>
+            )}
+          </button>
 
           {/* Health Status */}
           <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800">
