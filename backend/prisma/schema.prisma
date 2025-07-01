@@ -94,6 +94,7 @@ model companies {
   maintenance_vendors     maintenance_vendors[]
   maintenance_parts       maintenance_parts[]
   signatures              signatures[]
+  trailers                trailers[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -129,6 +130,8 @@ model drivers {
   weights           weights[]
   toll_transactions toll_transactions[]
   hos_logs          hos_logs[]
+  dvir_reports      dvir_reports[]
+  dot_inspections   dot_inspections[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -335,6 +338,8 @@ model vehicles {
   vehicle_toll_transponders vehicle_toll_transponders[]
   toll_transactions     toll_transactions[]
   toll_route_estimates  toll_route_estimates[]
+  dvir_reports          dvir_reports[]
+  dot_inspections       dot_inspections[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -1034,4 +1039,85 @@ model signatures {
   @@index([company_id])
   @@index([created_by])
   @@index([created_at])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model trailers {
+  id                Int       @id @default(autoincrement())
+  trailer_number    String    @unique @db.VarChar(50)
+  company_id        Int?
+  type              String?   @db.VarChar(100)
+  make              String?   @db.VarChar(100)
+  model             String?   @db.VarChar(100)
+  year              Int?
+  capacity_weight   Int?
+  status            String?   @default("Available") @db.VarChar(50)
+  created_at        DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime? @default(now()) @db.Timestamptz(6)
+  
+  /// Relations
+  companies         companies? @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  dvir_reports      dvir_reports[]
+  
+  @@index([company_id])
+  @@index([trailer_number])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model dvir_reports {
+  id                     Int       @id @default(autoincrement())
+  driver_id              Int
+  vehicle_id             Int?
+  trailer_id             Int?
+  inspection_date        DateTime  @db.Date
+  inspection_type        String    @db.VarChar(50)
+  odometer               Int?
+  defects_found          Boolean   @default(false)
+  defects_list           Json?     @db.Json
+  satisfactory_condition Boolean   @default(true)
+  driver_signature       String?   @db.VarChar(255)
+  mechanic_signature     String?   @db.VarChar(255)
+  notes                  String?
+  status                 String?   @default("Pending") @db.VarChar(50)
+  created_at             DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at             DateTime? @default(now()) @db.Timestamptz(6)
+  
+  /// Relations
+  driver                 drivers   @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  vehicle                vehicles? @relation(fields: [vehicle_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  trailer                trailers? @relation(fields: [trailer_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@index([driver_id])
+  @@index([vehicle_id])
+  @@index([trailer_id])
+  @@index([inspection_date])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model dot_inspections {
+  id                    Int       @id @default(autoincrement())
+  driver_id             Int
+  vehicle_id            Int?
+  inspection_date       DateTime  @db.Date
+  inspection_level      String    @db.VarChar(50)
+  inspector_name        String    @db.VarChar(255)
+  inspector_badge       String?   @db.VarChar(100)
+  location              String?   @db.VarChar(255)
+  violations            Json?     @db.Json
+  out_of_service        Boolean   @default(false)
+  driver_oos            Boolean   @default(false)
+  vehicle_oos           Boolean   @default(false)
+  total_violations      Int?      @default(0)
+  severity_weight       Decimal?  @db.Decimal(5, 2)
+  created_at            DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at            DateTime? @default(now()) @db.Timestamptz(6)
+  
+  /// Relations
+  driver                drivers   @relation(fields: [driver_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  vehicle               vehicles? @relation(fields: [vehicle_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@index([driver_id])
+  @@index([vehicle_id])
+  @@index([inspection_date])
+  @@index([out_of_service])
 }

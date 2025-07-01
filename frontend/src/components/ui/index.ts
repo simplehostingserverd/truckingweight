@@ -81,6 +81,7 @@ export { Switch } from './switch';
 export { Progress } from './progress';
 export { Textarea } from './textarea';
 export { Checkbox } from './checkbox';
+export { RadioGroup, RadioGroupItem } from './radio-group';
 
 // Re-export existing components
 export { default as MobileNav } from './MobileNav';

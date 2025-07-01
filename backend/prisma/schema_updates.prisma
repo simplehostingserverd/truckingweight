@@ -135,4 +135,84 @@ model companies {
   scales               scales[]
   scale_calibrations   scale_calibrations[]
   scale_readings       scale_readings[]
+  dvir_reports         dvir_reports[]
+  dot_inspections      dot_inspections[]
+}
+
+// DVIR (Driver Vehicle Inspection Report) table
+model dvir_reports {
+  id                    Int       @id @default(autoincrement())
+  driver_id             Int
+  vehicle_id            Int
+  trailer_id            Int?
+  inspection_date       DateTime  @db.Date
+  inspection_type       String    @db.VarChar(20) // 'pre_trip', 'post_trip', 'en_route'
+  odometer_reading      Int?
+  location              String?   @db.VarChar(255)
+  defects_found         Boolean   @default(false)
+  defects_list          String?   @db.Text
+  satisfactory_condition Boolean  @default(true)
+  driver_signature      String    @db.Text
+  mechanic_signature    String?   @db.Text
+  notes                 String?   @db.Text
+  inspection_items      String?   @db.Text // JSON string of inspection items
+  status                String    @db.VarChar(20) @default("pending") // 'pending', 'satisfactory', 'defects_found', 'repaired'
+  created_at            DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at            DateTime  @default(now()) @db.Timestamptz(6)
+  
+  // Relations
+  drivers               drivers   @relation(fields: [driver_id], references: [id], onDelete: Cascade)
+  vehicles              vehicles  @relation(fields: [vehicle_id], references: [id], onDelete: Cascade)
+  trailers              trailers? @relation(fields: [trailer_id], references: [id], onDelete: SetNull)
+  
+  @@index([driver_id])
+  @@index([vehicle_id])
+  @@index([inspection_date])
+  @@index([status])
+}
+
+// DOT Inspection records
+model dot_inspections {
+  id                        Int       @id @default(autoincrement())
+  vehicle_id                Int
+  driver_id                 Int
+  inspection_date           DateTime  @db.Date
+  inspection_level          Int       // 1-6 based on DOT levels
+  violations                String?   @db.Text // JSON string of violations
+  out_of_service_violations String?   @db.Text // JSON string of OOS violations
+  inspector_name            String    @db.VarChar(100)
+  inspector_badge           String    @db.VarChar(50)
+  location                  String    @db.VarChar(255)
+  created_at                DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at                DateTime  @default(now()) @db.Timestamptz(6)
+  
+  // Relations
+  vehicles                  vehicles  @relation(fields: [vehicle_id], references: [id], onDelete: Cascade)
+  drivers                   drivers   @relation(fields: [driver_id], references: [id], onDelete: Cascade)
+  
+  @@index([vehicle_id])
+  @@index([driver_id])
+  @@index([inspection_date])
+}
+
+// Trailers table (if not already exists)
+model trailers {
+  id                Int           @id @default(autoincrement())
+  trailer_number    String        @unique @db.VarChar(50)
+  company_id        Int
+  type              String?       @db.VarChar(50)
+  make              String?       @db.VarChar(50)
+  model             String?       @db.VarChar(50)
+  year              Int?
+  capacity_weight   Int?          // in pounds
+  status            String        @db.VarChar(20) @default("available") // 'available', 'in_use', 'maintenance', 'out_of_service'
+  created_at        DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime      @default(now()) @db.Timestamptz(6)
+  
+  // Relations
+  companies         companies     @relation(fields: [company_id], references: [id], onDelete: Cascade)
+  dvir_reports      dvir_reports[]
+  
+  @@index([company_id])
+  @@index([status])
 }
