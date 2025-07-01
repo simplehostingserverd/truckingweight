@@ -153,6 +153,7 @@ export default function DashboardSidebar({ isAdmin, user }: SidebarProps) {
 
   // Technology Navigation
   const technologyNavigation = [
+    { name: 'AI Intelligence', href: '/ai-intelligence', icon: CpuChipIcon },
     { name: 'Telematics', href: '/telematics', icon: SignalIcon },
     { name: 'IoT Devices', href: '/iot-devices', icon: CpuChipIcon },
     { name: 'Sensor Monitoring', href: '/sensor-monitoring', icon: DevicePhoneMobileIcon },

@@ -62,6 +62,7 @@ import complianceRoutes from './routes/compliance';
 import analyticsRoutes from './routes/analytics';
 import ediRoutes from './routes/edi';
 import mlRoutes from './routes/ml';
+import aiRoutes from './routes/ai';
 
 // Create Express app
 const app = express();
@@ -101,6 +102,7 @@ app.use('/api/compliance', complianceRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/edi', ediRoutes);
 app.use('/api/ml', mlRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Root route
 app.get('/', (req: Request, res: Response) => {
