@@ -156,7 +156,11 @@ const AIDashboard: React.FC = () => {
         }
       };
 
-      const mockAlerts: PredictiveAlert[] = [
+      // Set the transformed metrics
+      setMetrics(transformedMetrics);
+      
+      // Set realistic mock data for alerts and recommendations
+      const mockAlerts: PredictiveAlert[] = data.alerts || [
         {
           id: '1',
           vehicleId: 'TRK-001',
@@ -176,11 +180,93 @@ const AIDashboard: React.FC = () => {
           confidence: 76,
           estimatedFailureDate: '2024-03-01',
           recommendedAction: 'Inspect brake pads within 2 weeks'
+        },
+        {
+          id: '3',
+          vehicleId: 'TRK-007',
+          component: 'Transmission',
+          severity: 'low',
+          prediction: 'Transmission fluid change due',
+          confidence: 92,
+          estimatedFailureDate: '2024-03-20',
+          recommendedAction: 'Schedule routine maintenance'
         }
       ];
-
-      setMetrics(mockMetrics);
-      setPredictiveAlerts(mockAlerts);
+      
+      const mockRouteOptimizations: RouteOptimization[] = data.routeOptimizations || [
+        {
+          id: '1',
+          routeId: 'RT-001',
+          origin: 'Los Angeles, CA',
+          destination: 'Phoenix, AZ',
+          originalDistance: 385,
+          optimizedDistance: 362,
+          fuelSavings: 45,
+          timeSavings: 32,
+          costSavings: 180
+        },
+        {
+          id: '2',
+          routeId: 'RT-002',
+          origin: 'Dallas, TX',
+          destination: 'Houston, TX',
+          originalDistance: 245,
+          optimizedDistance: 231,
+          fuelSavings: 28,
+          timeSavings: 18,
+          costSavings: 95
+        }
+      ];
+      
+      const mockSafetyInsights: SafetyInsight[] = data.safetyInsights || [
+        {
+          id: '1',
+          driverId: 'DRV-001',
+          driverName: 'John Smith',
+          safetyScore: 92,
+          riskFactors: ['Hard braking events', 'Late night driving'],
+          recommendations: ['Defensive driving course', 'Rest schedule optimization'],
+          lastIncident: '2024-01-15'
+        },
+        {
+          id: '2',
+          driverId: 'DRV-005',
+          driverName: 'Maria Garcia',
+          safetyScore: 88,
+          riskFactors: ['Speed variance', 'Weather conditions'],
+          recommendations: ['Weather driving training', 'Speed management coaching'],
+          lastIncident: '2024-01-08'
+        }
+      ];
+      
+      const mockPricingRecommendations: PricingRecommendation[] = data.pricingRecommendations || [
+        {
+          id: '1',
+          loadId: 'LD-001',
+          route: 'LA to Phoenix',
+          currentPrice: 2500,
+          recommendedPrice: 2750,
+          confidence: 87,
+          marketPosition: 'competitive',
+          factors: ['High demand corridor', 'Fuel price increase', 'Limited capacity']
+        },
+        {
+          id: '2',
+          loadId: 'LD-002',
+          route: 'Dallas to Houston',
+          currentPrice: 1800,
+          recommendedPrice: 1950,
+          confidence: 92,
+          marketPosition: 'premium',
+          factors: ['Peak season', 'Express delivery', 'Specialized equipment']
+        }
+      ];
+       
+       // Set all the state variables
+       setPredictiveAlerts(mockAlerts);
+       setRouteOptimizations(mockRouteOptimizations);
+       setSafetyInsights(mockSafetyInsights);
+       setPricingRecommendations(mockPricingRecommendations);
     } catch (error) {
       console.error('Error fetching AI metrics:', error);
     } finally {

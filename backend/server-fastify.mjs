@@ -210,6 +210,12 @@ async function registerRoutes() {
   // Import Grafana integration routes
   const grafanaRoutes = await import('./routes/fastify/grafana.js');
 
+  // Import AI routes
+  const aiRoutes = await import('./routes/fastify/ai.js');
+
+  // Import driver tracking routes
+  const driverTrackingRoutes = await import('./routes/fastify/driver-tracking.js');
+
   // Register routes
   fastify.register(authRoutes.default, { prefix: '/api/auth' });
   fastify.register(weightRoutes.default, { prefix: '/api/weights' });
@@ -241,6 +247,12 @@ async function registerRoutes() {
 
   // Register Grafana integration routes
   fastify.register(grafanaRoutes.default, { prefix: '/api/grafana' });
+
+  // Register AI routes
+  fastify.register(aiRoutes.default, { prefix: '/api/ai' });
+
+  // Register driver tracking routes
+  fastify.register(driverTrackingRoutes.default, { prefix: '/api/driver-tracking' });
 
   // Root route
   fastify.get('/', async () => {
