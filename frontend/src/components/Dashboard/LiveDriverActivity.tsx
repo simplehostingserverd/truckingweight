@@ -15,54 +15,75 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import {
-  TruckIcon,
-  ExclamationTriangleIcon,
-  ClockIcon,
-  MapPinIcon,
-  ScaleIcon,
-  WrenchScrewdriverIcon,
-  ChatBubbleLeftIcon,
-  ShieldExclamationIcon,
-} from '@heroicons/react/24/outline';
+import { Clock, MapPin, AlertTriangle, Truck, User, Activity } from 'lucide-react';
 
+// Define interfaces for type safety
 interface DriverActivity {
   id: string;
   driver_id: number;
   driver_name: string;
   activity_type: string;
   description: string;
-  location?: string;
+  location: string;
   timestamp: string;
-  severity?: 'low' | 'medium' | 'high' | 'critical';
-  metadata?: any;
+  metadata?: Record<string, unknown> | null;
+  severity?: string;
 }
 
 interface LiveDriverActivityProps {
-  companyId?: number | null;
+  companyId: number;
   maxItems?: number;
 }
 
-const getActivityIcon = (type: string) => {
-  switch (type) {
+// Database response interfaces
+interface DatabaseDriverActivity {
+  id: string;
+  driver_id: number;
+  activity_type: string;
+  description: string;
+  location: string;
+  timestamp: string;
+  metadata: Record<string, unknown> | null;
+  drivers: {
+    name: string;
+    company_id: number;
+  } | null;
+}
+
+interface DatabaseAlert {
+  id: string;
+  driver_id: number;
+  alert_type: string;
+  message: string;
+  severity: string;
+  created_at: string;
+  drivers: {
+    name: string;
+    company_id: number;
+  } | null;
+}
+
+// Helper function to get appropriate icon for activity type
+const getActivityIcon = (activityType: string) => {
+  switch (activityType) {
     case 'weight_check':
     case 'weigh':
-      return ScaleIcon;
+      return Activity;
     case 'status_update':
-      return TruckIcon;
+      return Truck;
     case 'break':
-      return ClockIcon;
+      return Clock;
     case 'location':
-      return MapPinIcon;
+      return MapPin;
     case 'maintenance':
-      return WrenchScrewdriverIcon;
+      return AlertTriangle;
     case 'alert':
     case 'emergency':
-      return ShieldExclamationIcon;
+      return AlertTriangle;
     case 'communication':
-      return ChatBubbleLeftIcon;
+      return User;
     default:
-      return TruckIcon;
+      return Truck;
   }
 };
 
@@ -103,18 +124,17 @@ const formatTimeAgo = (timestamp: string) => {
   return `${Math.floor(diffInSeconds / 86400)}d ago`;
 };
 
-export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDriverActivityProps) {
+export default function LiveDriverActivity({ companyId, maxItems = 10 }: LiveDriverActivityProps) {
   const [activities, setActivities] = useState<DriverActivity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const supabase = createClient();
 
-  const fetchActivities = useCallback(async () => {
+  const fetchActivities = useCallback(async (): Promise<DriverActivity[]> => {
     try {
-      let query = supabase
+      const { data, error } = await supabase
         .from('driver_activities')
-        .select(
-          `
+        .select(`
           id,
           driver_id,
           activity_type,
@@ -122,147 +142,203 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
           location,
           timestamp,
           metadata,
-          drivers(
-            name
-          )
-        `
-        )
+          drivers!inner(name, company_id)
+        `)
+        .eq('drivers.company_id', companyId)
         .order('timestamp', { ascending: false })
-        .limit(maxItems);
+        .limit(maxItems || 10);
 
-      // Filter by company if specified
-      if (companyId) {
-        query = query.eq('drivers.company_id', companyId);
+      if (error) {
+        console.error('Error fetching activities:', error);
+        throw new Error(`Failed to fetch activities: ${error.message}`);
       }
 
-      const { data, error } = await query;
-
-      if (error) throw error;
-
-      const formattedActivities =
-        data?.map(activity => ({
-          id: activity.id as string,
-          driver_id: activity.driver_id,
-          driver_name: activity.drivers?.name || 'Unknown Driver',
-          activity_type: activity.activity_type,
-          description: activity.description,
-          location: activity.location,
-          timestamp: activity.timestamp,
-          metadata: activity.metadata,
-          severity: (activity as any).metadata?.severity as 'low' | 'medium' | 'high' | 'critical',
-        })) || [];
-
-      setActivities(formattedActivities);
+      const typedData = data as DatabaseDriverActivity[] | null;
+      
+      return (typedData || []).map(activity => ({
+        id: activity.id,
+        driver_id: activity.driver_id,
+        driver_name: activity.drivers?.name || 'Unknown Driver',
+        activity_type: activity.activity_type,
+        description: activity.description,
+        location: activity.location,
+        timestamp: activity.timestamp,
+        metadata: activity.metadata,
+        severity: (activity.metadata?.severity as string) || undefined,
+      }));
     } catch (err) {
-      console.error('Error fetching driver activities:', err);
-      setError('Failed to load driver activities');
-    } finally {
-      setLoading(false);
+      console.error('Error in fetchActivities:', err);
+      throw err;
     }
   }, [supabase, companyId, maxItems]);
 
-  const fetchAlerts = useCallback(async () => {
+  const fetchAlerts = useCallback(async (): Promise<DriverActivity[]> => {
     try {
-      let query = supabase
+      const { data, error } = await supabase
         .from('predictive_alerts')
-        .select(
-          `
+        .select(`
           id,
           driver_id,
           alert_type,
           message,
           severity,
           created_at,
-          drivers(
-            name
-          )
-        `
-        )
+          drivers!inner(name, company_id)
+        `)
+        .eq('drivers.company_id', companyId)
         .eq('acknowledged', false)
         .order('created_at', { ascending: false })
-        .limit(10);
+        .limit(5);
 
-      // Filter by company if specified
-      if (companyId) {
-        query = query.eq('drivers.company_id', companyId);
+      if (error) {
+        console.error('Error fetching alerts:', error);
+        // Return empty array instead of throwing to not break the main flow
+        return [];
       }
 
-      const { data, error } = await query;
-
-      if (error) throw error;
-
-      const alertActivities =
-        data?.map(alert => ({
-          id: `alert-${alert.id}`,
-          driver_id: alert.driver_id,
-          driver_name: alert.drivers?.name || 'Unknown Driver',
-          activity_type: 'alert',
-          description: alert.message,
-          timestamp: alert.created_at,
-          severity: alert.severity as 'low' | 'medium' | 'high' | 'critical',
-        })) || [];
-
-      // Merge with existing activities and sort
-      setActivities(prev => {
-        const combined = [...prev, ...alertActivities];
-        return combined
-          .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-          .slice(0, maxItems);
-      });
+      const typedData = data as DatabaseAlert[] | null;
+      
+      // Convert alerts to activities format
+      return (typedData || []).map(alert => ({
+        id: `alert-${alert.id}`,
+        driver_id: alert.driver_id,
+        driver_name: alert.drivers?.name || 'Unknown Driver',
+        activity_type: 'alert',
+        description: alert.message,
+        location: '', // Alerts might not have location
+        timestamp: alert.created_at,
+        metadata: { alert_type: alert.alert_type },
+        severity: alert.severity,
+      }));
     } catch (err) {
-      console.error('Error fetching alerts:', err);
+      console.error('Error in fetchAlerts:', err);
+      // Return empty array instead of throwing to not break the main flow
+      return [];
     }
-  }, [supabase, companyId, maxItems]);
+  }, [supabase, companyId]);
 
   useEffect(() => {
-    fetchActivities();
-    fetchAlerts();
+    let isMounted = true;
+    let refreshInterval: ReturnType<typeof setInterval> | null = null;
+    let activityChannel: ReturnType<typeof supabase.channel> | null = null;
+    let alertChannel: ReturnType<typeof supabase.channel> | null = null;
+
+    const loadData = async () => {
+      if (!isMounted) return;
+      
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Load activities and alerts in parallel
+        const [activitiesData, alertsData] = await Promise.all([
+          fetchActivities(),
+          fetchAlerts(),
+        ]);
+        
+        if (!isMounted) return;
+        
+        // Combine and sort activities
+        const combined = [...activitiesData, ...alertsData];
+        const sorted = combined
+          .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+          .slice(0, maxItems || 10);
+        
+        setActivities(sorted);
+      } catch (err) {
+        if (isMounted) {
+          const errorMessage = err instanceof Error ? err.message : 'Failed to load data';
+          console.error('Error loading data:', err);
+          setError(errorMessage);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
 
     // Set up real-time subscriptions
-    const activitiesChannel = supabase
-      .channel('driver_activities_changes')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'driver_activities',
-        },
-        payload => {
-          console.log('New driver activity:', payload);
-          fetchActivities(); // Refresh data when new activity is inserted
-        }
-      )
-      .subscribe();
+    const setupSubscriptions = () => {
+      try {
+        // Subscribe to driver activities
+        activityChannel = supabase
+          .channel(`driver-activities-${companyId}-${Date.now()}`)
+          .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'driver_activities',
+            },
+            () => {
+              if (isMounted) {
+                loadData();
+              }
+            }
+          )
+          .subscribe();
 
-    const alertsChannel = supabase
-      .channel('alerts_changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'predictive_alerts',
-        },
-        payload => {
-          console.log('Alert change:', payload);
-          fetchAlerts(); // Refresh alerts when they change
-        }
-      )
-      .subscribe();
+        // Subscribe to alerts
+        alertChannel = supabase
+          .channel(`predictive-alerts-${companyId}-${Date.now()}`)
+          .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: 'predictive_alerts',
+            },
+            () => {
+              if (isMounted) {
+                loadData();
+              }
+            }
+          )
+          .subscribe();
+      } catch (err) {
+        console.error('Error setting up subscriptions:', err);
+      }
+    };
 
-    // Refresh data every 30 seconds as fallback
-    const interval = setInterval(() => {
-      fetchActivities();
-      fetchAlerts();
+    // Initial data load
+    loadData();
+
+    // Set up subscriptions
+    setupSubscriptions();
+
+    // Set up periodic refresh (every 30 seconds)
+    refreshInterval = setInterval(() => {
+      if (isMounted) {
+        loadData();
+      }
     }, 30000);
 
+    // Cleanup function
     return () => {
-      supabase.removeChannel(activitiesChannel);
-      supabase.removeChannel(alertsChannel);
-      clearInterval(interval);
+      isMounted = false;
+      
+      if (activityChannel) {
+        try {
+          supabase.removeChannel(activityChannel);
+        } catch (err) {
+          console.error('Error removing activity channel:', err);
+        }
+      }
+      
+      if (alertChannel) {
+        try {
+          supabase.removeChannel(alertChannel);
+        } catch (err) {
+          console.error('Error removing alert channel:', err);
+        }
+      }
+      
+      if (refreshInterval) {
+        clearInterval(refreshInterval);
+      }
     };
-  }, [fetchActivities, fetchAlerts, supabase]);
+  }, [supabase, companyId, maxItems, fetchActivities, fetchAlerts]);
 
   if (loading) {
     return (
@@ -295,7 +371,7 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
         </div>
         <div className="p-6">
           <div className="text-center text-red-400">
-            <ExclamationTriangleIcon className="h-8 w-8 mx-auto mb-2" />
+            <AlertTriangle className="h-8 w-8 mx-auto mb-2" />
             <p>{error}</p>
           </div>
         </div>
@@ -315,7 +391,7 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
       <div className="max-h-96 overflow-y-auto">
         {activities.length === 0 ? (
           <div className="p-6 text-center text-gray-400">
-            <TruckIcon className="h-8 w-8 mx-auto mb-2 opacity-50" />
+            <Truck className="h-8 w-8 mx-auto mb-2 opacity-50" />
             <p>No recent driver activity</p>
           </div>
         ) : (
@@ -340,7 +416,7 @@ export default function LiveDriverActivity({ companyId, maxItems = 20 }: LiveDri
                       <p className="text-sm text-gray-300 mt-1">{activity.description}</p>
                       {activity.location && (
                         <div className="flex items-center mt-1">
-                          <MapPinIcon className="h-3 w-3 text-gray-500 mr-1" />
+                          <MapPin className="h-3 w-3 text-gray-500 mr-1" />
                           <p className="text-xs text-gray-500">{activity.location}</p>
                         </div>
                       )}
